@@ -5,8 +5,9 @@ import history from '../history'
 import { Paths } from './types'
 import { NotFound } from './NotFound'
 import { StyledRoutes, StyledRoutesContainer } from './style'
-import Home from 'modules/home'
-import LandingPage from 'modules/dashboard'
+import Dashboard from 'modules/dashboard'
+import PropertyForm from 'modules/property-form'
+import PropertyDetails from 'modules/property-details'
 
 const notFoundRoute: RouteDefinition = {
   path: '*',
@@ -17,7 +18,19 @@ const notFoundRoute: RouteDefinition = {
 export const routes: RouteDefinition[] = [
   {
     path: Paths.root,
-    component: LandingPage,
+    component: Dashboard,
+    protected: false,
+    title: '',
+  },
+  {
+    path: Paths.addPropertyForm,
+    component: PropertyForm,
+    protected: false,
+    title: '',
+  },
+  {
+    path: Paths.propertyDetails,
+    component: PropertyDetails,
     protected: false,
     title: '',
   },

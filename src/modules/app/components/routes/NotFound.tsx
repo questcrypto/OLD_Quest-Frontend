@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import PageNotFoundImg from 'assets/image/page-not-found.svg'
+import PageNotFoundImg from 'assets/images/page-not-found.svg'
 
 const StyledNotFound = styled.div`
   display: flex;

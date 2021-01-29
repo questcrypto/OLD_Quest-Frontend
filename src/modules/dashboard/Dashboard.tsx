@@ -1,10 +1,10 @@
 import React from 'react'
-import LandingPage from './components/landing-page/LandingPage'
+import DashPage from './components/dashboard-page/Dashboard'
 
 const Dashboard = () => {
   return (
     <div>
-      <LandingPage />
+      <DashPage />
     </div>
   )
 }

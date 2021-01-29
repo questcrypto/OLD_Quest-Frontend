@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors, screenSizes } from 'shared/styles/theme'
+import { colors } from 'shared/styles/theme'
 import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyle = makeStyles({

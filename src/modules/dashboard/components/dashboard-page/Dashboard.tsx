@@ -13,6 +13,7 @@ import EventIcon from '@material-ui/icons/Event'
 import AdjustIcon from '@material-ui/icons/Adjust'
 import Property from '../property/Property'
 import Button from '@material-ui/core/Button'
+import Logo from 'assets/images/QuestLogo.svg'
 
 import './dashboard.css'
 
@@ -69,7 +70,7 @@ const DashPage = () => {
           <div className="wrapper_left">
             <div className="wrapper_topicon">
               <p className="logo">
-                <img src="./logo.png" alt="LOGO" height="40" />{' '}
+                <img src={Logo} alt="LOGO" height="40" />{' '}
               </p>
             </div>
             <div className="wrapper_tabs">

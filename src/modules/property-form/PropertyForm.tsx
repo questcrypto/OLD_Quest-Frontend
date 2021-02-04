@@ -32,66 +32,114 @@ import chatIcon from 'assets/images/chatIcon.svg'
 import './PropertyForm.css'
 
 const initialValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  walletPubKey: '',
-  propertyType: '',
-  propertyName: '',
-  propertyCurrentValue: '',
-  comments: '',
-  yearBuilt: '',
-  zoning: '',
-  landscaping: '',
-  lotFacts: '',
-  address1: '',
-  address2: '',
-  city: '',
-  state: '',
-  postalCode: '',
-  subdivision: '',
-  taxId: '',
-  zoning2: '',
-  schoolDistrict: '',
-  schoolDistrict2: '',
-  elementary: '',
-  jrHigh: '',
-  highSchool: '',
-  insurance: '',
-  maintenance: '',
-  hoaFees: '',
+  Fname: '',
+  Lname: '',
+  Email: '',
+  PublicAddress: '',
+  PropertyType: '',
+  PropertyName: '',
+  CurrentValue: '',
+  Comments: '',
+  YearBuilt: '',
+  Zoning: '',
+  Landscaping: '',
+  LotFacts: '',
+  Address1: '',
+  Address2: '',
+  City: '',
+  State: '',
+  PostalCode: '',
+  Subdivision: '',
+  TaxId: '',
+  Zoning1: '',
+  SchoolDistrict: '',
+  SchoolDistrict1: '',
+  Elementary: '',
+  JrHigh: '',
+  HighSchool: '',
+  Insurance: '',
+  Maintenance: '',
+  HOAFees: '',
   squareFoot: '',
   bedRoom: '',
   family: '',
   kitchen: '',
   laundry: '',
   bath: '',
-  heating: '',
-  ac: '',
-  roof: '',
-  floor: '',
-  windowCovering: '',
-  pool: '',
-  poolFeature: '',
-  style: '',
-  deck: '',
-  patio: '',
-  garage: '',
-  carport: '',
-  parkingSpace: '',
-  finBsmt: '',
-  basement: '',
-  driveway: '',
-  water: '',
-  waterShares: '',
-  spa: '',
+  Amenties: '',
+  AC: '',
+  Roof: '',
+  Floor: '',
+  WindowCovering: '',
+  Pool: '',
+  PoolFeature: '',
+  Style: '',
+  Deck: '',
+  Patio: '',
+  Garage: '',
+  Carpot: '',
+  ParkingSpace: '',
+  FinBasmt: '',
+  Basement: '',
+  Driveway: '',
+  Water: '',
+  WaterShare: '',
+  Spa: '',
 }
 const propertyFormSchema = Yup.object().shape({
-  firstName: Yup.string().required('First name is required'),
-  lastName: Yup.string().required('Last name is required'),
-  email: Yup.string().required('email is required'),
-  walletPubKey: Yup.string().required('Wallet public key is required'),
-  propertyType: Yup.string().required('Property Type is required'),
+  Fname: Yup.string().required('First name is required'),
+  Lname: Yup.string().required('Last name is required'),
+  Email: Yup.string().required('email is required'),
+  PublicAddress: Yup.string().required('Wallet public key is required'),
+  PropertyType: Yup.string().required('Property Type is required'),
+  PropertyName: Yup.string().required('This field is required'),
+  CurrentValue: Yup.string().required('This field is required'),
+  Comments: Yup.string().required('This field is required'),
+  YearBuilt: Yup.date().required('This field is required'),
+  Zoning: Yup.string().required('This field is required'),
+  Landscaping: Yup.string().required('This field is required'),
+  LotFacts: Yup.string().required('This field is required'),
+  Address1: Yup.string().required('This field is required'),
+  Address2: Yup.string().required('This field is required'),
+  City: Yup.string().required('This field is required'),
+  State: Yup.string().required('This field is required'),
+  PostalCode: Yup.string().required('This field is required'),
+  Subdivision: Yup.string().required('This field is required'),
+  TaxId: Yup.string().required('This field is required'),
+  Zoning1: Yup.string().required('This field is required'),
+  SchoolDistrict: Yup.string().required('This field is required'),
+  SchoolDistrict1: Yup.string().required('This field is required'),
+  Elementary: Yup.string().required('This field is required'),
+  JrHigh: Yup.string().required('This field is required'),
+  HighSchool: Yup.string().required('This field is required'),
+  Insurance: Yup.string().required('This field is required'),
+  Maintenance: Yup.string().required('This field is required'),
+  HOAFees: Yup.string().required('This field is required'),
+  squareFoot: Yup.string().required('This field is required'),
+  bedRoom: Yup.string().required('This field is required'),
+  family: Yup.string().required('This field is required'),
+  kitchen: Yup.string().required('This field is required'),
+  laundry: Yup.string().required('This field is required'),
+  bath: Yup.string().required('This field is required'),
+  Amenties: Yup.string().required('This field is required'),
+  AC: Yup.string().required('This field is required'),
+  Roof: Yup.string().required('This field is required'),
+  Floor: Yup.string().required('This field is required'),
+  WindowCovering: Yup.string().required('This field is required'),
+  Pool: Yup.string().required('This field is required'),
+  PoolFeature: Yup.string().required('This field is required'),
+  Style: Yup.string().required('This field is required'),
+  Deck: Yup.string().required('This field is required'),
+  Patio: Yup.string().required('This field is required'),
+  Garage: Yup.string().required('This field is required'),
+  Carpot: Yup.string().required('This field is required'),
+  ParkingSpace: Yup.string().required('This field is required'),
+  FinBasmt: Yup.string().required('This field is required'),
+  Basement: Yup.string().required('This field is required'),
+  Driveway: Yup.string().required('This field is required'),
+  Water: Yup.string().required('This field is required'),
+  WaterShare: Yup.string().required('This field is required'),
+  Spa: Yup.string().required('This field is required'),
 })
 
 const PropertyForm = () => {
@@ -134,12 +182,12 @@ const PropertyForm = () => {
   return (
     <>
       <div className="AddNewProperty_changelog displayFlex_pa">
-        <div className="flex_ch_01 add_new_property">
+        {/* <div className="flex_ch_01 add_new_property">
           Properties / Add new property
           <br />
           Add new property
         </div>
-        <div className="flex_ch_02 change_log">Change Log</div>
+        <div className="flex_ch_02 change_log">Change Log</div> */}
       </div>
       <PropertyFormWrapper>
         <PropertyFormCont>
@@ -165,29 +213,29 @@ const PropertyForm = () => {
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
-                        <CustomTextField label="First name" name="firstName" />
+                        <CustomTextField label="First name" name="Fname" />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
-                      <ErrorMessage component={err} name="firstName" />
+                      <ErrorMessage component={err} name="Fname" />
 
                       <FieldMsgBox>
-                        <CustomTextField label="Last name" name="lastName" />
+                        <CustomTextField label="Last name" name="Lname" />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
-                      <ErrorMessage component={err} name="lastName" />
+                      <ErrorMessage component={err} name="Lname" />
 
                       <FieldMsgBox>
-                        <CustomTextField label="Email Address" type="email" name="email" />
+                        <CustomTextField label="Email Address" type="email" name="Email" />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="email" />
 
                       <FieldMsgBox>
-                        <CustomTextField label="Wallet public key" name="walletPubKey" />
+                        <CustomTextField label="Wallet public key" name="PublicAddress" />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
 
-                      <ErrorMessage component={err} name="walletPubKey" />
+                      <ErrorMessage component={err} name="PublicAddress" />
                     </Grid>
                     <Divider classes={{ root: classes.dividerStyle }} />
                   </Grid>
@@ -202,22 +250,46 @@ const PropertyForm = () => {
                         <FormTitle>Property info</FormTitle>
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
-                      <FieldSelect label="Type of property" name="propertyType" />
-                      <ErrorMessage component={err} name="propertyType" />
-                      <CustomTextField label="Property name" name="propertyName" />
-                      <ErrorMessage component={err} name="propertyName" />
-                      <CustomTextField label="Property current value" name="propertyCurrentValue" />
-                      <ErrorMessage component={err} name="propertyCurrentValue" />
-                      <CustomTextField label="Comments" name="comments" />
-                      <ErrorMessage component={err} name="comments" />
-                      <CustomTextField label="Year built" name="yearBuilt" />
-                      <ErrorMessage component={err} name="yearBuilt" />
-                      <CustomTextField label="Zoning" name="zoning" />
+                      <FieldMsgBox>
+                        <FieldSelect label="Type of property" name="PropertyType" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="PropertyType" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Property name" name="PropertyName" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="PropertyName" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Property current value" name="CurrentValue" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="CurrentValue" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Comments" name="Comments" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Comments" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Year built" name="YearBuilt" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="YearBuilt" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Zoning" name="Zoning" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
                       <ErrorMessage component={err} name="zoning" />
-                      <CustomTextField label="Landscaping" name="landscaping" />
-                      <ErrorMessage component={err} name="landscaping" />
-                      <CustomTextField label="Lot facts" name="lotFacts" />
-                      <ErrorMessage component={err} name="lotFacts" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Landscaping" name="Landscaping" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Landscaping" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Lot facts" name="LotFacts" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="LotFacts" />
                     </Grid>
                     <Divider classes={{ root: classes.dividerStyle }} />
                   </Grid>
@@ -233,30 +305,54 @@ const PropertyForm = () => {
                         <FormTitle>Address</FormTitle>
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
-                      <FieldSelect label="Address 1" name="address1" />
-                      <ErrorMessage component={err} name="address1" />
-                      <CustomTextField label="Address 2" name="address2" />
-                      <ErrorMessage component={err} name="address2" />
-                      <CustomTextField label="City" name="city" />
-                      <ErrorMessage component={err} name="city" />
-                      <Grid container spacing={1} xs={12}>
+                      <FieldMsgBox>
+                        <FieldSelect label="Address 1" name="Address1" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Address1" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Address 2" name="Address2" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Address2" />
+                      <FieldMsgBox>
+                        <CustomTextField label="City" name="City" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="City" />
+                      <Grid container spacing={1} xs={15}>
                         <Grid item xs={12} sm={6}>
-                          <CustomTextField label="State" name="state" />
-                          <ErrorMessage component={err} name="state" />
+                          <CustomTextField label="State" name="State" />
+                          <ErrorMessage component={err} name="State" />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <CustomTextField label="Postal code" name="postalCode" />
-                          <ErrorMessage component={err} name="postalCode" />
+                          <FieldMsgBox>
+                            <CustomTextField label="Postal code" name="PostalCode" />
+                            <img src={chatIcon} alt="" />
+                          </FieldMsgBox>
+                          <ErrorMessage component={err} name="PostalCode" />
                         </Grid>
                       </Grid>
-                      <CustomTextField label="Subdivision" name="subdivision" />
-                      <ErrorMessage component={err} name="subdivision" />
-                      <CustomTextField label="Tax Id" name="taxId" />
-                      <ErrorMessage component={err} name="taxId" />
-                      <CustomTextField label="Zoning" name="zoning2" />
-                      <ErrorMessage component={err} name="zoning2" />
-                      <CustomTextField label="School district" name="schoolDistrict" />
-                      <ErrorMessage component={err} name="schoolDistrict" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Subdivision" name="Subdivision" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Subdivision" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Tax Id" name="TaxId" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="TaxId" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Zoning" name="Zoning1" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Zoning1" />
+                      <FieldMsgBox>
+                        <CustomTextField label="School district" name="SchoolDistrict" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="SchoolDistrict" />
                     </Grid>
                     <Divider classes={{ root: classes.dividerStyle }} />
                   </Grid>
@@ -272,14 +368,26 @@ const PropertyForm = () => {
                         <FormTitle>Locality / Neighbourhood insight</FormTitle>
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
-                      <CustomTextField label="School district" name="schoolDistrict2" />
-                      <ErrorMessage component={err} name="schoolDistrict2" />
-                      <CustomTextField label="Elementary" name="elementary" />
-                      <ErrorMessage component={err} name="elementary" />
-                      <CustomTextField label="Jr high" name="jrHigh" />
-                      <ErrorMessage component={err} name="jrHigh" />
-                      <CustomTextField label="High school" name="highSchool" />
-                      <ErrorMessage component={err} name="highSchool" />
+                      <FieldMsgBox>
+                        <CustomTextField label="School district" name="SchoolDistrict1" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="SchoolDistrict1" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Elementary" name="Elementary" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Elementary" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Jr high" name="JrHigh" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="JrHigh" />
+                      <FieldMsgBox>
+                        <CustomTextField label="High school" name="HighSchool" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="HighSchool" />
                     </Grid>
                     <Divider classes={{ root: classes.dividerStyle }} />
                   </Grid>
@@ -295,12 +403,21 @@ const PropertyForm = () => {
                         <FormTitle>T.I.M.E contract</FormTitle>
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
-                      <CustomTextField label="Insurance" name="insurance" />
-                      <ErrorMessage component={err} name="insurance" />
-                      <CustomTextField label="Maintenance" name="maintenance" />
-                      <ErrorMessage component={err} name="maintenance" />
-                      <CustomTextField label="HOA fees" name="hoaFees" />
-                      <ErrorMessage component={err} name="hoaFees" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Insurance" name="Insurance" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Insurance" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Maintenance" name="Maintenance" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Maintenance" />
+                      <FieldMsgBox>
+                        <CustomTextField label="HOA fees" name="HOAFees" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="HOAFees" />
                     </Grid>
                     <Divider classes={{ root: classes.dividerStyle }} />
                   </Grid>
@@ -386,17 +503,35 @@ const PropertyForm = () => {
                         <FormTitle>Floor Wise Configuration</FormTitle>
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
-                      <CustomTextField label="Square Foot" name="squareFoot" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Square Foot" name="squareFoot" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
                       <ErrorMessage component={err} name="squareFoot" />
-                      <CustomTextField label="Bedroom" name="bedRoom" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Bedroom" name="bedRoom" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
                       <ErrorMessage component={err} name="bedRoom" />
-                      <CustomTextField label="Family" name="family" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Family" name="family" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
                       <ErrorMessage component={err} name="family" />
-                      <CustomTextField label="Kitchen" name="kitchen" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Kitchen" name="kitchen" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
                       <ErrorMessage component={err} name="kitchen" />
-                      <CustomTextField label="Laundry" name="laundry" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Laundry" name="laundry" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
                       <ErrorMessage component={err} name="laundry" />
-                      <CustomTextField label="Bath" name="bath" />
+                      <FieldMsgBox>
+                        <CustomTextField label="Bath" name="bath" />
+                        <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
                       <ErrorMessage component={err} name="bath" />
                     </Grid>
                     <Divider classes={{ root: classes.dividerStyle }} />
@@ -413,20 +548,41 @@ const PropertyForm = () => {
                         <FormTitle>Amenities</FormTitle>
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
-                      <CustomTextField label="Heating" name="heating" />
-                      <ErrorMessage component={err} name="heating" />
-                      <CustomTextField label="AC" name="ac" />
-                      <ErrorMessage component={err} name="ac" />
-                      <CustomTextField label="Roof" name="roof" />
-                      <ErrorMessage component={err} name="roof" />
-                      <CustomTextField label="Floor" name="floor" />
-                      <ErrorMessage component={err} name="floor" />
-                      <CustomTextField label="Window Covering" name="windowCovering" />
-                      <ErrorMessage component={err} name="windowCovering" />
-                      <CustomTextField label="Pool" name="pool" />
-                      <ErrorMessage component={err} name="pool" />
-                      <CustomTextField label="Pool Feature" name="poolFeature" />
-                      <ErrorMessage component={err} name="poolFeature" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Heating" name="Amenties" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Amenties" />
+                      <FieldMsgBox>
+                      <CustomTextField label="AC" name="AC" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="AC" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Roof" name="Roof" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Roof" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Floor" name="Floor" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Floor" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Window Covering" name="WindowCovering" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="WindowCovering" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Pool" name="Pool" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Pool" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Pool Feature" name="PoolFeature" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="PoolFeature" />
                     </Grid>
                     <Divider classes={{ root: classes.dividerStyle }} />
                   </Grid>
@@ -442,30 +598,66 @@ const PropertyForm = () => {
                         <FormTitle>More Details</FormTitle>
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
-                      <CustomTextField label="Style" name="style" />
-                      <ErrorMessage component={err} name="style" />
-                      <CustomTextField label="Deck" name="deck" />
-                      <ErrorMessage component={err} name="deck" />
-                      <CustomTextField label="Patio" name="patio" />
-                      <ErrorMessage component={err} name="patio" />
-                      <CustomTextField label="Garage" name="garage" />
-                      <ErrorMessage component={err} name="garage" />
-                      <CustomTextField label="Carport" name="carport" />
-                      <ErrorMessage component={err} name="carport" />
-                      <CustomTextField label="Parking Space" name="parkingSpace" />
-                      <ErrorMessage component={err} name="parkingSpace" />
-                      <CustomTextField label="Fin Bsmt" name="finBsmt" />
-                      <ErrorMessage component={err} name="finBsmt" />
-                      <CustomTextField label="Basement" name="basement" />
-                      <ErrorMessage component={err} name="basement" />
-                      <CustomTextField label="Driveway" name="driveway" />
-                      <ErrorMessage component={err} name="driveway" />
-                      <CustomTextField label="Water" name="water" />
-                      <ErrorMessage component={err} name="water" />
-                      <CustomTextField label="Water Shares" name="waterShares" />
-                      <ErrorMessage component={err} name="waterShares" />
-                      <CustomTextField label="Spa" name="spa" />
-                      <ErrorMessage component={err} name="spa" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Style" name="Style" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Style" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Deck" name="Deck" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Deck" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Patio" name="Patio" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Patio" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Garage" name="Garage" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Garage" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Carport" name="Carpot" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Carpot" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Parking Space" name="ParkingSpace" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="ParkingSpace" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Fin Bsmt" name="FinBasmt" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="FinBasmt" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Basement" name="Basement" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Basement" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Driveway" name="Driveway" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Driveway" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Water" name="Water" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Water" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Water Shares" name="WaterShare" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="WaterShare" />
+                      <FieldMsgBox>
+                      <CustomTextField label="Spa" name="Spa" />
+                      <img src={chatIcon} alt="" />
+                      </FieldMsgBox>
+                      <ErrorMessage component={err} name="Spa" />
                     </Grid>
                     <Divider classes={{ root: classes.dividerStyle }} />
                   </Grid>

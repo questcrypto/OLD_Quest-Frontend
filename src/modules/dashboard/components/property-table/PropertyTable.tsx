@@ -1,11 +1,10 @@
 import React from 'react'
-import { useStyles, CustomTableHead, CustomTableCell } from './style'
+import { CustomTableHead, CustomTableCell } from './style'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import { ButtonBaseClassKey } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
@@ -22,22 +21,20 @@ const rows = [
 ]
 
 const PropertyTable = () => {
-  const classes = useStyles()
-
   const handleAction = () => {
     history.push(Paths.propertyDetails)
   }
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
+      <Table aria-label="simple table">
         <CustomTableHead>
           <TableRow>
             <CustomTableCell>LOCATION</CustomTableCell>
             <CustomTableCell>MANAGER</CustomTableCell>
             <CustomTableCell>TYPE</CustomTableCell>
             <CustomTableCell>STATUS</CustomTableCell>
-            <CustomTableCell>OWNER</CustomTableCell>
+            <CustomTableCell>VALUE</CustomTableCell>
             <CustomTableCell>ACTION</CustomTableCell>
           </TableRow>
         </CustomTableHead>

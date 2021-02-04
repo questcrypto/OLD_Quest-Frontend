@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles, createStyles, Theme, createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -21,14 +21,16 @@ import plot from 'assets/images/plot.png'
 import coin from 'assets/images/coin.png'
 import pdf from 'assets/images/pdf.svg'
 import files from 'assets/images/files.svg'
-import roof from 'assets/images/roof.png'
+import roof from 'assets/images/roof.svg'
 import pool from 'assets/images/pool.png'
 import heating from 'assets/images/heating.png'
-import exterior from 'assets/images/exterior.png'
-import land from 'assets/images/land.png'
-import floor from 'assets/images/floor.png'
 import air from 'assets/images/air.png'
+import exterior from 'assets/images/exterior.png'
+import floor from 'assets/images/floor.png'
+import land from 'assets/images/land.png'
 import window from 'assets/images/window.png'
+
+import { SpaceBarSharp } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 'auto',
       maxWidth: 1010,
       marginTop: 100,
-      height: 600,
+      height: 650,
     },
 
     image: {
@@ -59,43 +61,37 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-function createData(name: string, features: string, name2: string, features2: string) {
-  return { name, features, name2, features2 }
-}
-
-const rows = [
-  createData('Roof', 'Asphault Shingle', 'Pool', 'Yes'),
-  createData('Heating', 'Forced Air', 'Pool Features', 'Heated,filters'),
-  createData('Air Conditioning', 'Central', 'Exterior ', 'Yes'),
-  createData('Floor', 'Hardwood,Carpet', 'Landscaping', 'Brick'),
-  createData('Window Covering', 'None', 'Lot Facts', '.25 Acre'),
-  createData('Exterior Features', 'Brick', '-', '-'),
-  // createData('Pool', 'Yes'),
-  // createData('Pool Features', 'Heated,filters'),
-  // createData('Exterior ', 'Yes'),
-  // createData('Landscaping', 'Brick'),
-  // createData('Lot Facts', '.25 Acre'),
-]
-const rows1 = [
-  createData('Type', 'SFR', 'Parking Spaces', '3'),
-  createData('Style', 'Rambler', 'Fin Bsmt', '95%'),
-  createData('Year Built', '1977', 'Basement', 'Yes'),
-  createData('Acres', '0.25', 'Driveway', 'Yes'),
-  createData('Deck', 'Yes', 'Water Shares', 'None'),
-  createData('Patio', 'Yes', 'Spa', 'None'),
-  createData('Garage', '2 Car', 'Zoning', 'Residential'),
-  createData('Carport', 'No', '-', '-'),
-  // createData('Parking Spaces', '3'),
-  // createData('Fin Bsmt', '95%'),
-  // createData('Basement', 'Yes'),
-  // createData('Driveway', 'Yes'),
-  // createData('Water Shares', 'None'),
-  // createData('Spa', 'None'),
-  // createData('Zoning', 'Residential'),
-]
-
 const PropertyDetails = () => {
   const classes = useStyles()
+
+  const [roof1, setroof] = useState('Asphault Shingle')
+  const [pool1, setpool] = useState('Yes')
+  const [heating1, setheating1] = useState('Forced air')
+  const [pool2, setpool1] = useState('Heated Features')
+  const [air1, setair1] = useState('Central')
+  const [exterior1, setexterior1] = useState('Brick 70%')
+  const [floor1, setfloor1] = useState('Hardwood,Carpet')
+  const [land1, setland1] = useState('Yes')
+  const [window1, setwindow1] = useState('None')
+  const [lot, setlot] = useState('25 Acre')
+  const [exterior2, setexterior2] = useState('Brick')
+  const [type, settype] = useState('SFR')
+  const [parking, setparking] = useState('3')
+  const [style, setstyle] = useState('Rambler')
+  const [fin, setfin] = useState('95%')
+  const [year, setyear] = useState('1997')
+  const [bsmt, setbsmt] = useState('Yes')
+  const [acres, setacres] = useState('0.25')
+  const [driveway, setdriveway] = useState('Yes')
+  const [deck, setdeck] = useState('Yes')
+  const [water, setwater] = useState('City')
+  const [patio, setpatio] = useState('Yes')
+  const [water1, setwater1] = useState('None')
+  const [garage, setgarage] = useState('2 Car')
+  const [spa, setspa] = useState('None')
+  const [carport, setcarport] = useState('No')
+  const [zoning, setzoning] = useState('Residential')
+
 
   return (
     <div className={classes.root}>
@@ -263,165 +259,232 @@ const PropertyDetails = () => {
       </Paper>
 
       <Paper className={classes.paper}>
-        {/* <Grid container>
-          <Grid item xs={12}>
-            <Paper>Rental facts and features</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={roof} alt="roof"></img> Roof
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={pool} alt="pool"></img> Pool
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={heating} alt="heating"></img> Heating
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={pool} alt="pool"></img> Pool Features
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={air} alt="air"></img> Air Conditioning
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={exterior} alt="exterior"></img> Exterior
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={floor} alt="floor"></img> Floor
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={land} alt="land"></img> Landscaping
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={window} alt="window"></img> Window Covering
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={land} alt="land"></img> Lot Facts
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>
-              <img src={exterior} alt="exterior"></img> Exterior Features
-            </Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>Features</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Type</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Parking Spaces</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Style</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Fin Bsmt</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Year Built</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Basement</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Acres</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Driveway</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Deck</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Water</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Patio</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Water Shares</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Garage</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Spa</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Carport</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper>Zoning</Paper>
-          </Grid>
-        </Grid> */}
+        <div className="displayFlex_pa01">
+          <h4 className="flex_ch_01">Rental facts and features</h4>
+        </div>
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01">
+                <img src={roof} alt="" /> Roof
+              </p>
+              <p className="flex_ch_02">{roof1}</p>
+            </div>
 
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Rental facts and features</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="left">{row.features}</TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="left">{row.features}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01">
+                <img src={pool} alt="" /> Pool
+              </p>
+              <p className="flex_ch_02">{pool1}</p>
+            </div>
+          </div>
+        </div>
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01">
+                <img src={heating} alt="" /> Heating
+              </p>
+              <p className="flex_ch_02">{heating1}</p>
+            </div>
 
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Features</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows1.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="left">{row.features}</TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="left">{row.features}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01">
+                <img src={pool} alt="" /> Pool Features
+              </p>
+              <p className="flex_ch_02">{pool2}</p>
+            </div>
+          </div>
+        </div>
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01">
+                <img src={air} alt="" /> Air Conditioning
+              </p>
+              <p className="flex_ch_02">{air1}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01">
+                <img src={exterior} alt="" /> Exterior
+              </p>
+              <p className="flex_ch_02">{exterior1}</p>
+            </div>
+          </div>
+        </div>
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01">
+                <img src={floor} alt="" /> Floor
+              </p>
+              <p className="flex_ch_02">{floor1}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01">
+                <img src={land} alt="" /> Landscaping
+              </p>
+              <p className="flex_ch_02">{land1}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01">
+                <img src={window} alt="" /> Window Covering
+              </p>
+              <p className="flex_ch_02">{window1}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01">
+                <img src={land} alt="" /> Lot Facts
+              </p>
+              <p className="flex_ch_02">{lot}</p>
+            </div>
+          </div>
+        </div>
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01">
+                <img src={exterior} alt="" /> Exterior Features
+              </p>
+              <p className="flex_ch_02">{exterior2}</p>
+            </div>
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}/>
+          </div>
+        </div>
+
+        <div className="displayFlex_pa01">
+          <h4 className="flex_ch_01">Features</h4>
+        </div>
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01"> Type
+              </p>
+              <p className="flex_ch_02">{type}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01"> Parking Spaces
+              </p>
+              <p className="flex_ch_02">{parking}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01"> Style
+              </p>
+              <p className="flex_ch_02">{style}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01"> Fin Bsmt
+              </p>
+              <p className="flex_ch_02">{fin}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01"> Year Built
+              </p>
+              <p className="flex_ch_02">{year}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01"> Basement
+              </p>
+              <p className="flex_ch_02">{bsmt}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01"> Acres
+              </p>
+              <p className="flex_ch_02">{acres}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01"> Driveway
+              </p>
+              <p className="flex_ch_02">{driveway}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01"> Deck
+              </p>
+              <p className="flex_ch_02">{deck}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01"> Water
+              </p>
+              <p className="flex_ch_02">{water}</p>
+            </div>
+          </div>
+        </div>
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01"> Patio
+              </p>
+              <p className="flex_ch_02">{patio}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01"> Water Shares
+              </p>
+              <p className="flex_ch_02">{water1}</p>
+            </div>
+          </div>
+        </div>
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01"> Garage
+              </p>
+              <p className="flex_ch_02">{garage}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01"> Spa
+              </p>
+              <p className="flex_ch_02">{spa}</p>
+            </div>
+          </div>
+        </div>
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_01"> Carport</p>
+              <p className="flex_ch_02">{carport}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_01"> Zoning</p>
+              <p className="flex_ch_02">{zoning}</p>
+            </div>
+          </div>
+        </div>
       </Paper>
     </div>
   )

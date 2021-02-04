@@ -1,10 +1,10 @@
 import React from 'react'
-import DashPage from './components/dashboard-page/Dashboard'
+import Property from './components/property/Property'
 
 const Dashboard = () => {
   return (
     <div>
-      <DashPage />
+      <Property />
     </div>
   )
 }

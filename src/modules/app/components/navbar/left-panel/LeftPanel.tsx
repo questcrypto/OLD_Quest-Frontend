@@ -11,11 +11,10 @@ import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import EventIcon from '@material-ui/icons/Event'
 import AdjustIcon from '@material-ui/icons/Adjust'
-import Property from '../property/Property'
 import Button from '@material-ui/core/Button'
 import Logo from 'assets/images/QuestLogo.svg'
 
-import './dashboard.css'
+import './LeftPanel.css'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -29,9 +28,11 @@ function TabPanel(props: TabPanelProps) {
   return (
     <div role="tabpanel" hidden={value !== index} id={`vertical-tabpanel-${index}`} aria-labelledby={`vertical-tab-${index}`} {...other}>
       {value === index && (
-        <Box p={2}>
-          <Typography>{children}</Typography>
-        </Box>
+        <div style={{ marginTop: '200px' }}>
+          <Box p={2}>
+            <Typography>{children}</Typography>
+          </Box>
+        </div>
       )}
     </div>
   )
@@ -54,10 +55,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   tabs: {
     borderLeft: `0px solid ${theme.palette.divider}`,
+    indicator: {
+      backgroundColor: '2px solid white',
+    },
   },
 }))
 
-const DashPage = () => {
+const LeftPanel = () => {
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -79,6 +83,7 @@ const DashPage = () => {
                 variant="scrollable"
                 value={value}
                 onChange={handleChange}
+                indicatorColor="primary"
                 aria-label="Vertical tabs"
                 className={classes.tabs}
                 style={{ height: '88vh' }}
@@ -236,7 +241,7 @@ const DashPage = () => {
               </Tabs>
             </div>
           </div>
-          <div className="wrapper_right">
+          {/* <div className="wrapper_right">
             <div
               className="wrapper_right_top"
               style={{
@@ -249,25 +254,10 @@ const DashPage = () => {
                 Connect Wallet
               </Button>
             </div>
-            <TabPanel value={value} index={0}>
-              <Property />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <h1>Add Content here</h1>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-              <h1>Add Content here</h1>
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-              <h1>Add Content here</h1>
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-              <h1>Add Content here</h1>
-            </TabPanel>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
   )
 }
-export default DashPage
+export default LeftPanel

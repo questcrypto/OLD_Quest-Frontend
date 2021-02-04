@@ -28,7 +28,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit',
-    border: '1px solid grey',
+    border: '1px solid rgb(218, 208, 208)',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -36,7 +36,7 @@ export const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: '12ch',
+      width: '17ch',
       '&:focus': {
         width: '12ch',
       },
@@ -51,8 +51,8 @@ export const useStyles = makeStyles((theme) => ({
   addPropertyBtnStyle: {
     color: colors.white,
     backgroundColor: colors.primary,
-    fontSize: '14px',
-    padding: '10px !important',
+    fontSize: '12px',
+    padding: '9px !important',
     '&:hover': {
       backgroundColor: colors.primary,
     },

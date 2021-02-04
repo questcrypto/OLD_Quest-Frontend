@@ -27,6 +27,14 @@
   overflow: hidden;
 }
 
+.headtitle{
+  font-family: Avenir LT Std;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 29px;
+  color: #302E35;
+}
+
 .Property_table {
   background-color: rgb(236, 236, 236);
   box-shadow: none;

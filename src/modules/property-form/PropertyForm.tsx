@@ -182,12 +182,12 @@ const PropertyForm = () => {
   return (
     <>
       <div className="AddNewProperty_changelog displayFlex_pa">
-        {/* <div className="flex_ch_01 add_new_property">
+        <div className="flex_ch_01 add_new_property">
           Properties / Add new property
           <br />
-          Add new property
+          <div className="flex_ch_02 add_new_property"> Add new property</div>
         </div>
-        <div className="flex_ch_02 change_log">Change Log</div> */}
+        {/* <div className="flex_ch_02 change_log">Change Log</div> */}
       </div>
       <PropertyFormWrapper>
         <PropertyFormCont>
@@ -320,7 +320,7 @@ const PropertyForm = () => {
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="City" />
-                      <Grid container spacing={1} xs={15}>
+                      <Grid container spacing={1} xs={12}>
                         <Grid item xs={12} sm={6}>
                           <CustomTextField label="State" name="State" />
                           <ErrorMessage component={err} name="State" />
@@ -549,38 +549,38 @@ const PropertyForm = () => {
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
-                      <CustomTextField label="Heating" name="Amenties" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Heating" name="Amenties" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Amenties" />
                       <FieldMsgBox>
-                      <CustomTextField label="AC" name="AC" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="AC" name="AC" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="AC" />
                       <FieldMsgBox>
-                      <CustomTextField label="Roof" name="Roof" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Roof" name="Roof" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Roof" />
                       <FieldMsgBox>
-                      <CustomTextField label="Floor" name="Floor" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Floor" name="Floor" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Floor" />
                       <FieldMsgBox>
-                      <CustomTextField label="Window Covering" name="WindowCovering" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Window Covering" name="WindowCovering" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="WindowCovering" />
                       <FieldMsgBox>
-                      <CustomTextField label="Pool" name="Pool" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Pool" name="Pool" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Pool" />
                       <FieldMsgBox>
-                      <CustomTextField label="Pool Feature" name="PoolFeature" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Pool Feature" name="PoolFeature" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="PoolFeature" />
                     </Grid>
@@ -599,63 +599,63 @@ const PropertyForm = () => {
                         <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
-                      <CustomTextField label="Style" name="Style" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Style" name="Style" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Style" />
                       <FieldMsgBox>
-                      <CustomTextField label="Deck" name="Deck" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Deck" name="Deck" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Deck" />
                       <FieldMsgBox>
-                      <CustomTextField label="Patio" name="Patio" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Patio" name="Patio" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Patio" />
                       <FieldMsgBox>
-                      <CustomTextField label="Garage" name="Garage" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Garage" name="Garage" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Garage" />
                       <FieldMsgBox>
-                      <CustomTextField label="Carport" name="Carpot" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Carport" name="Carpot" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Carpot" />
                       <FieldMsgBox>
-                      <CustomTextField label="Parking Space" name="ParkingSpace" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Parking Space" name="ParkingSpace" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="ParkingSpace" />
                       <FieldMsgBox>
-                      <CustomTextField label="Fin Bsmt" name="FinBasmt" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Fin Bsmt" name="FinBasmt" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="FinBasmt" />
                       <FieldMsgBox>
-                      <CustomTextField label="Basement" name="Basement" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Basement" name="Basement" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Basement" />
                       <FieldMsgBox>
-                      <CustomTextField label="Driveway" name="Driveway" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Driveway" name="Driveway" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Driveway" />
                       <FieldMsgBox>
-                      <CustomTextField label="Water" name="Water" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Water" name="Water" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Water" />
                       <FieldMsgBox>
-                      <CustomTextField label="Water Shares" name="WaterShare" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Water Shares" name="WaterShare" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="WaterShare" />
                       <FieldMsgBox>
-                      <CustomTextField label="Spa" name="Spa" />
-                      <img src={chatIcon} alt="" />
+                        <CustomTextField label="Spa" name="Spa" />
+                        <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Spa" />
                     </Grid>

@@ -6,8 +6,8 @@ export const useStyles = makeStyles({
   buttonStyle: {
     color: colors.white,
     backgroundColor: colors.primary,
-    fontSize: '14px',
-    padding: '10px !important',
+    fontSize: '12px',
+    padding: '9px !important',
     '&:hover': {
       backgroundColor: colors.primary,
     },

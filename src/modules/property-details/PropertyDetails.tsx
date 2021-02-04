@@ -29,6 +29,7 @@ import exterior from 'assets/images/exterior.png'
 import floor from 'assets/images/floor.png'
 import land from 'assets/images/land.png'
 import window from 'assets/images/window.png'
+import './PropertyDetails.css'
 
 import { SpaceBarSharp } from '@material-ui/icons'
 
@@ -260,73 +261,73 @@ const PropertyDetails = () => {
 
       <Paper className={classes.paper}>
         <div className="displayFlex_pa01">
-          <h4 className="flex_ch_01">Rental facts and features</h4>
+          <h4 className="flex_ch_011">Rental facts and features</h4>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+        <div className="displayFlex01">
+          <div className="displayFlex01">
+            <div className="displayFlex01">
+              <p className="flex_ch_011">
                 <img src={roof} alt="" /> Roof
               </p>
-              <p className="flex_ch_02">{roof1}</p>
+              <p className="flex_ch_022">{roof1}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={pool} alt="" /> Pool
               </p>
-              <p className="flex_ch_02">{pool1}</p>
+              <p className="flex_ch_022">{pool1}</p>
             </div>
           </div>
         </div>
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={heating} alt="" /> Heating
               </p>
-              <p className="flex_ch_02">{heating1}</p>
+              <p className="flex_ch_022">{heating1}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={pool} alt="" /> Pool Features
               </p>
-              <p className="flex_ch_02">{pool2}</p>
+              <p className="flex_ch_022">{pool2}</p>
             </div>
           </div>
         </div>
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={air} alt="" /> Air Conditioning
               </p>
-              <p className="flex_ch_02">{air1}</p>
+              <p className="flex_ch_022">{air1}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={exterior} alt="" /> Exterior
               </p>
-              <p className="flex_ch_02">{exterior1}</p>
+              <p className="flex_ch_022">{exterior1}</p>
             </div>
           </div>
         </div>
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={floor} alt="" /> Floor
               </p>
-              <p className="flex_ch_02">{floor1}</p>
+              <p className="flex_ch_022">{floor1}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={land} alt="" /> Landscaping
               </p>
-              <p className="flex_ch_02">{land1}</p>
+              <p className="flex_ch_022">{land1}</p>
             </div>
           </div>
         </div>
@@ -334,63 +335,45 @@ const PropertyDetails = () => {
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={window} alt="" /> Window Covering
               </p>
-              <p className="flex_ch_02">{window1}</p>
+              <p className="flex_ch_022">{window1}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={land} alt="" /> Lot Facts
               </p>
-              <p className="flex_ch_02">{lot}</p>
+              <p className="flex_ch_022">{lot}</p>
             </div>
           </div>
         </div>
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+              <p className="flex_ch_011">
                 <img src={exterior} alt="" /> Exterior Features
               </p>
-              <p className="flex_ch_02">{exterior2}</p>
+              <p className="flex_ch_022">{exterior2}</p>
             </div>
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}/>
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }} />
           </div>
         </div>
 
         <div className="displayFlex_pa01">
-          <h4 className="flex_ch_01">Features</h4>
+          <h4 className="flex_ch_011">Features</h4>
         </div>
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Type
-              </p>
-              <p className="flex_ch_02">{type}</p>
+              <p className="flex_ch_011"> Type</p>
+              <p className="flex_ch_022">{type}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Parking Spaces
-              </p>
-              <p className="flex_ch_02">{parking}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Style
-              </p>
-              <p className="flex_ch_02">{style}</p>
-            </div>
-
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Fin Bsmt
-              </p>
-              <p className="flex_ch_02">{fin}</p>
+              <p className="flex_ch_011"> Parking Spaces</p>
+              <p className="flex_ch_022">{parking}</p>
             </div>
           </div>
         </div>
@@ -398,15 +381,13 @@ const PropertyDetails = () => {
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Year Built
-              </p>
-              <p className="flex_ch_02">{year}</p>
+              <p className="flex_ch_011"> Style</p>
+              <p className="flex_ch_022">{style}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Basement
-              </p>
-              <p className="flex_ch_02">{bsmt}</p>
+              <p className="flex_ch_011"> Fin Bsmt</p>
+              <p className="flex_ch_022">{fin}</p>
             </div>
           </div>
         </div>
@@ -414,15 +395,13 @@ const PropertyDetails = () => {
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Acres
-              </p>
-              <p className="flex_ch_02">{acres}</p>
+              <p className="flex_ch_011"> Year Built</p>
+              <p className="flex_ch_022">{year}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Driveway
-              </p>
-              <p className="flex_ch_02">{driveway}</p>
+              <p className="flex_ch_011"> Basement</p>
+              <p className="flex_ch_022">{bsmt}</p>
             </div>
           </div>
         </div>
@@ -430,58 +409,66 @@ const PropertyDetails = () => {
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Deck
-              </p>
-              <p className="flex_ch_02">{deck}</p>
+              <p className="flex_ch_011"> Acres</p>
+              <p className="flex_ch_022">{acres}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Water
-              </p>
-              <p className="flex_ch_02">{water}</p>
+              <p className="flex_ch_011"> Driveway</p>
+              <p className="flex_ch_022">{driveway}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="displayFlex_pa01">
+          <div className="displayFlex_pa01">
+            <div className="displayFlex_pa01">
+              <p className="flex_ch_011"> Deck</p>
+              <p className="flex_ch_022">{deck}</p>
+            </div>
+
+            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
+              <p className="flex_ch_011"> Water</p>
+              <p className="flex_ch_022">{water}</p>
             </div>
           </div>
         </div>
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Patio
-              </p>
-              <p className="flex_ch_02">{patio}</p>
+              <p className="flex_ch_011"> Patio</p>
+              <p className="flex_ch_022">{patio}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Water Shares
-              </p>
-              <p className="flex_ch_02">{water1}</p>
+              <p className="flex_ch_011"> Water Shares</p>
+              <p className="flex_ch_022">{water1}</p>
             </div>
           </div>
         </div>
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Garage
-              </p>
-              <p className="flex_ch_02">{garage}</p>
+              <p className="flex_ch_011"> Garage</p>
+              <p className="flex_ch_022">{garage}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Spa
-              </p>
-              <p className="flex_ch_02">{spa}</p>
+              <p className="flex_ch_011"> Spa</p>
+              <p className="flex_ch_022">{spa}</p>
             </div>
           </div>
         </div>
         <div className="displayFlex_pa01">
           <div className="displayFlex_pa01">
             <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Carport</p>
-              <p className="flex_ch_02">{carport}</p>
+              <p className="flex_ch_011"> Carport</p>
+              <p className="flex_ch_022">{carport}</p>
             </div>
 
             <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Zoning</p>
-              <p className="flex_ch_02">{zoning}</p>
+              <p className="flex_ch_011"> Zoning</p>
+              <p className="flex_ch_022">{zoning}</p>
             </div>
           </div>
         </div>

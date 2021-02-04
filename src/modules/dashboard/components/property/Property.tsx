@@ -9,6 +9,7 @@ import history from 'modules/app/components/history'
 import { useStyles, PropertyHeader, HeaderTitle, ProgressText, PropertyTabCont, TabTitle, PropertySearchBox } from './style'
 import { Grid } from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import './Property.css'
 
 const Property = () => {
   const classes = useStyles()
@@ -24,7 +25,7 @@ const Property = () => {
       <PropertyHeader>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <HeaderTitle>Properties</HeaderTitle>
+            <HeaderTitle className="headtitle">Properties</HeaderTitle>
           </Grid>
           <Grid item xs={3}>
             <LinearProgress variant="determinate" value={progress} className={classes.progressStyle} />

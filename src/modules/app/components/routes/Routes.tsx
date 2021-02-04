@@ -4,11 +4,11 @@ import { Router, Route } from 'react-router-dom'
 import history from '../history'
 import { Paths } from './types'
 import { NotFound } from './NotFound'
-import { StyledRoutes } from './style'
+import { StyledRoutesContainer, StyledRoutes } from './style'
 import Dashboard from 'modules/dashboard'
 import PropertyForm from 'modules/property-form'
 import PropertyDetails from 'modules/property-details'
-import { Login } from 'modules/Login/Login'
+import { Login } from 'modules/auth/login/Login'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
 import { Grid } from '@material-ui/core'
@@ -64,7 +64,7 @@ function getRouteRenderWithAuth(route: RouteDefinition, i: number) {
 
 const Routes: React.FC<Props & RoutesProps & StateProps> = () => {
   return (
-    <div>
+    <StyledRoutesContainer>
       <Router history={history}>
         <Grid container>
           {window.location.pathname !== '/' && (
@@ -74,21 +74,20 @@ const Routes: React.FC<Props & RoutesProps & StateProps> = () => {
           )}
 
           <Grid item xs={10}>
-            {window.location.pathname !== '/' && <TopPanel />}
-
             <StyledRoutes>
+              {window.location.pathname !== '/' && <TopPanel />}
               <Switch>
                 {routes.map((route, i) => {
                   const render = getRouteRenderWithAuth(route, i)
                   const rest = { render }
-                  return <Route key={i} path={route.path} exact={true} {...rest} />
+                  return <Route key={i} path={route.path} exact {...rest} />
                 })}
               </Switch>
             </StyledRoutes>
           </Grid>
         </Grid>
       </Router>
-    </div>
+    </StyledRoutesContainer>
   )
 }
 

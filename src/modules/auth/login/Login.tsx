@@ -3,7 +3,7 @@ import './Login.css'
 import React from 'react'
 import Web3 from 'web3'
 
-import { Auth } from '../types'
+import { Auth } from '../../types'
 import { Paper } from '@material-ui/core'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'

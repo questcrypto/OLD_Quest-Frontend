@@ -8,11 +8,12 @@
   display: flex !important;
 }
 .wrapper_left {
-  position: relative;
+  position: absolute;
   width: 10% !important;
   color: grey !important;
   text-align: center !important;
   border: 1px solid #fbfbfb;
+  top: -10px;
 }
 
 .wrapper_tab > p {
@@ -21,7 +22,8 @@
 }
 
 .wrapper_tabs {
-  max-height: 100vh;
+  max-height: 50vh;
+  width: 10vw;
 }
 
 .wrapper_right {
@@ -34,7 +36,7 @@
   margin-left: 990px !important;
   color: white !important;
   background-color: #1e3444 !important;
-  width: 15%;
+  width: 13.5%;
 }
 
 .wrapper_right_top {
@@ -86,6 +88,7 @@
 
 .Flex02 {
   flex: 2;
+  margin-bottom: 20px;
 }
 
 .FlexForLinks {
@@ -106,6 +109,7 @@
 
 .powericon {
   margin-right: -40px;
+  margin-bottom: 20px;
 }
 
 .FlexForFlexforpaginationpa {

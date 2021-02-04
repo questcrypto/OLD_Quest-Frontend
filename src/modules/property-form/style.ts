@@ -3,7 +3,7 @@ import { colors } from 'shared/styles/theme'
 import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyle = makeStyles({
-  root: { background: 'red' },
+  root: { background: 'white' },
   inputStyle: { margin: '50px', required: true },
   formGroup: {
     width: '100%',
@@ -14,7 +14,7 @@ export const useStyle = makeStyles({
     },
   },
   dividerStyle: {
-    margin: '35px 0 !important',
+    margin: '50px 0 !important',
   },
   saveBtn: {
     color: colors.white,
@@ -38,8 +38,9 @@ export const useStyle = makeStyles({
 })
 
 export const PropertyFormWrapper = styled.div`
-  margin: 0 auto;
-  padding: 20px;
+  margin: 15%;
+  padding: 10px 10px;
+  margin-top: 5px;
 `
 export const PropertyFormCont = styled.div`
   box-sizing: border-box;
@@ -102,3 +103,13 @@ export const DocText = styled.p`
 `
 
 export const FileImageList = styled.div``
+export const FieldMsgBox = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    width: 35px;
+    height: 35px;
+    margin-left: 24px;
+    margin-bottom: 20px;
+  }
+`

@@ -4,7 +4,7 @@ const initialState = {
   authLoading: false,
   loading: false,
   loggedIn: false,
-  isLoaded: false,
+  isLoaded: true,
   userInfo: '',
 }
 
@@ -33,5 +33,7 @@ export const userReducer = (state = initialState, action: any) => {
         loggedIn: false,
         isLoaded: true,
       }
+    default:
+      return state
   }
 }

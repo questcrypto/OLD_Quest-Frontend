@@ -1,1 +1,1 @@
-export const apiBaseUrl = 'https://apialpha.careergig.com'
+export const apiBaseUrl = 'https://13.82.217.131:3001'

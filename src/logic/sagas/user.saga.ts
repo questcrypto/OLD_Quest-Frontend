@@ -17,9 +17,7 @@ function* loginWorker(action: any) {
   try {
     const data = action.payload
     const res = yield call(loginUser, data)
-
-    const userInfo = yield call(getUserInfo, res.data.token)
-    const successData = { token: res.data.token, userInfo }
+    const successData = { token: res.data.accessToken }
     yield put(loginSuccess(successData))
     history.push(`${Paths.dashboard}`)
   } catch (error) {
@@ -28,7 +26,7 @@ function* loginWorker(action: any) {
 }
 
 function loginUser(data: any) {
-  return axios.post(`${apiBaseUrl}/user/login`, { email: data.email, hash: data.password })
+  return axios.post(`${apiBaseUrl}/user/getAuth`, { publicaddress: data.publicaddress, signature: data.signature })
 }
 
 /*=======================getUserInfo  ============================*/

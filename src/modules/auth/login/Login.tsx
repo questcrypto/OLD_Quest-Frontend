@@ -1,43 +1,42 @@
-import './Login.css'
-
-import React from 'react'
+import React, { useState } from 'react'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+import { loginStart } from 'logic/actions/user.actions'
+import { useStyle, LoginContainer, LoginImgCont, LoginText } from './style'
 import Web3 from 'web3'
-
-import { Auth } from '../../types'
+import { Formik, Form, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
 import { Paper } from '@material-ui/core'
-import { Paths } from 'modules/app/components/routes/types'
-import history from 'modules/app/components/history'
 import CustomTextField from 'shared/components/custom-text-field'
-import { ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
-
-interface Props {
-  onLoggedIn: (auth: Auth) => void
-}
+import Button from '@material-ui/core/Button'
+import { apiBaseUrl } from 'services/global-constant'
+import axios from 'axios'
+import QuestLogo from 'assets/images/questLogo.svg'
 
 let web3: Web3 // Will hold the web3 instance
 
-export class Login extends React.Component<Props> {
-  state = {
-    loading: false, // Loading button state
+const initialValues = {
+  email: '',
+}
+const loginSchema = Yup.object().shape({
+  email: Yup.string().required('Email is required'),
+})
+
+const Login = (props: any) => {
+  const [dataLoading, setDataLoading] = useState(false)
+  const classes = useStyle()
+  const { loading, loginStart } = props
+
+  const getSignature = async (data: any) => {
+    try {
+      const signature = await web3.eth.personal.sign(`I am signing my one-time nonce: ${data.nonce}`, data.publicaddress, '')
+      return signature
+    } catch (error) {
+      console.log('error=>', error)
+    }
   }
-
-  goToDashboard() {
-    history.push(Paths.dashboard)
-  }
-
-  handleAuthenticate = ({ publicaddress, signature }: { publicaddress: string; signature: string }) =>
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/user/getAuth`, {
-      body: JSON.stringify({ publicaddress, signature }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    }).then((response) => response.json())
-
-  handleClick = async () => {
-    const { onLoggedIn } = this.props
-
+  const handleSubmit = async (values: any) => {
     // Check if MetaMask is installed
     if (!window.ethereum) {
       window.alert('Please install MetaMask first.')
@@ -63,74 +62,67 @@ export class Login extends React.Component<Props> {
       window.alert('Please activate MetaMask first.')
       return
     }
-
     const publicaddress = coinbase.toLowerCase()
-    this.setState({ loading: true })
-
-    // Look if user with current publicaddress is already present on backend
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/user/${publicaddress}`)
-      .then((response) => response.json())
-      // If yes, retrieve it. If no, create it.
-      .then((users) => (users.length ? users[0] : this.handleSignac(publicaddress, 'email')))
-      // Popup MetaMask confirmation modal to sign message
-      .then(this.handleSignMessage)
-      // Send signature to backend on the /auth route
-      .then(this.handleAuthenticate)
-      // Pass accessToken back to parent component (to save it in localStorage)
-      .then(onLoggedIn)
-      .then(this.goToDashboard)
-
-      .catch((err) => {
-        window.alert(err)
-        this.setState({ loading: false })
-      })
-  }
-
-  handleSignMessage = async ({ publicaddress, nonce }: { publicaddress: string; nonce: string }) => {
     try {
-      console.log(publicaddress + ' ' + nonce)
-      const signature = await web3.eth.personal.sign(
-        `I am signing my one-time nonce: ${nonce}`,
-        publicaddress,
-        '' // MetaMask will ignore the password argument here
-      )
-
-      return { publicaddress, signature }
-    } catch (err) {
-      throw new Error('You need to sign the message to be able to log in.')
+      setDataLoading(true)
+      let signatureData: any = ''
+      const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
+      if (!!result && result.data && result.data.length === 0) {
+        const data: any = { email: values.email, publicaddress }
+        const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
+        signatureData = { publicaddress: signUpRes.data[0].publicaddress, nonce: signUpRes.data[0].nonce }
+      } else {
+        signatureData = { publicaddress: result.data[0].publicaddress, nonce: result.data[0].nonce }
+      }
+      const signature = await getSignature(signatureData)
+      const loginData = { publicaddress, signature }
+      loginStart(loginData)
+    } catch (error) {
+      console.log('error-->', error)
+    } finally {
+      setDataLoading(false)
     }
   }
 
-  handleSignac = (publicaddress: string, email: string) => {
-    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user/signUp`, {
-      body: JSON.stringify({ email, publicaddress }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    }).then((response) => response.json())
-  }
+  return (
+    <LoginContainer>
+      <Paper className={classes.loginBoxStyle}>
+        <LoginImgCont>
+          <img src={QuestLogo} alt="" />
+        </LoginImgCont>
 
-  render() {
-    const { loading } = this.state
-    return (
-      <div>
-        <Paper className="Login">
-          <p className="Login-title">
-            <br />
-            for Login use your Card details
-          </p>
-          <label className="Email">
-            Email:
-            <input type="text" />
-          </label>
-
-          {/* <ErrorMessage component={err} name="email" /> */}
-          <button className="Login-button Login-mm" onClick={this.handleClick}>
-            {loading ? 'Loading...' : 'Login with MetaMask'}
-          </button>
-        </Paper>
-      </div>
-    )
-  }
+        <LoginText>Login into quest</LoginText>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={loginSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            handleSubmit(values)
+            setSubmitting(false)
+          }}
+        >
+          {() => (
+            <Form>
+              <CustomTextField name="email" label="email" />
+              <ErrorMessage component={err} name="email" />
+              <Button
+                type="submit"
+                variant="contained"
+                classes={{
+                  root: classes.loginBtnStyle,
+                }}
+              >
+                {loading || dataLoading ? 'Loading...' : 'Login with MetaMask'}
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </Paper>
+    </LoginContainer>
+  )
 }
+
+const mapStateToProps = (state: any) => ({
+  loading: state.user.loading,
+})
+
+export default withRouter(connect(mapStateToProps, { loginStart })(Login))

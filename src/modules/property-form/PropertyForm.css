@@ -174,10 +174,10 @@
 .flex_ch_01 {
   flex: 1;
   margin-left: 1px;
-  margin-top: -100px;
+  margin-top: -80px;
   font-family: Avenir LT Std;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 550;
   font-size: 16px;
   line-height: 19px;
    color: #302E35;
@@ -187,12 +187,37 @@
 .flex_ch_02 {
   flex: 1;
   margin-left: 1px;
-  margin-top: 10px;
+  margin-top: 20px;
   font-family: Avenir LT Std;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 550;
   font-size: 24px;
-  line-height: 29px;
+  line-height: 24px;
   color: #302E35;
-  /* background: blue */
 }
+
+.displayFlex{
+  display: flex;
+  width: 100%;
+}
+
+.Flex01_floor{
+flex: 8;
+background: '#E0E0E0',
+}
+
+.Flex02_floor{
+flex: 1;
+  /* background: red; */
+
+}
+
+.form_title{
+  font-family: Avenir LT Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px;
+  color: #302E35;
+}
+

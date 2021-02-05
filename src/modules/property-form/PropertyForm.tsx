@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as Yup from 'yup'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
@@ -29,7 +29,52 @@ import CrossIcon from 'assets/icons/crossIcon.svg'
 import FileIcon from 'assets/icons/fileIcon.svg'
 import chatIcon from 'assets/images/chatIcon.svg'
 
+import { makeStyles } from '@material-ui/core/styles'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+// import AccordionActions from '@material-ui/core/AccordionActions';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import DeleteIcon from '@material-ui/icons/Delete'
+import Typography from '@material-ui/core/Typography'
+import AddIcon from '@material-ui/icons/Add'
+
 import './PropertyForm.css'
+
+const useStyle01 = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+  },
+  icon: {
+    verticalAlign: 'bottom',
+    height: 20,
+    width: 20,
+  },
+  details: {
+    alignItems: 'center',
+  },
+  column: {
+    flexBasis: '33.33%',
+  },
+  helper: {
+    borderLeft: `2px solid ${theme.palette.divider}`,
+    padding: theme.spacing(1, 2),
+  },
+  link: {
+    color: theme.palette.primary.main,
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
+}))
 
 const initialValues = {
   Fname: '',
@@ -60,12 +105,6 @@ const initialValues = {
   Insurance: '',
   Maintenance: '',
   HOAFees: '',
-  squareFoot: '',
-  bedRoom: '',
-  family: '',
-  kitchen: '',
-  laundry: '',
-  bath: '',
   Amenties: '',
   AC: '',
   Roof: '',
@@ -85,25 +124,40 @@ const initialValues = {
   Water: '',
   WaterShare: '',
   Spa: '',
+  FloorDetails: [
+    {
+      squareFoot: '',
+      bedRoom: '',
+      family: '',
+      kitchen: '',
+      laundry: '',
+      bath: '',
+    },
+  ],
 }
 const propertyFormSchema = Yup.object().shape({
   Fname: Yup.string().required('First name is required'),
   Lname: Yup.string().required('Last name is required'),
   Email: Yup.string().required('email is required'),
   PublicAddress: Yup.string().required('Wallet public key is required'),
-  PropertyType: Yup.string().required('Property Type is required'),
   PropertyName: Yup.string().required('This field is required'),
-  CurrentValue: Yup.string().required('This field is required'),
+  CurrentValue: Yup.number().integer().required('This field is required'),
   Comments: Yup.string().required('This field is required'),
-  YearBuilt: Yup.date().required('This field is required'),
+  YearBuilt: Yup.date()
+    .default(function () {
+      return new Date()
+    })
+    .required('This field is required'),
   Zoning: Yup.string().required('This field is required'),
   Landscaping: Yup.string().required('This field is required'),
-  LotFacts: Yup.string().required('This field is required'),
+  LotFacts: Yup.number().integer().required('This field is required'),
   Address1: Yup.string().required('This field is required'),
   Address2: Yup.string().required('This field is required'),
   City: Yup.string().required('This field is required'),
   State: Yup.string().required('This field is required'),
-  PostalCode: Yup.string().required('This field is required'),
+  PostalCode: Yup.string()
+    .matches(/^[0-9]{5}$/, 'Must be exactly 5 digits')
+    .required('This field is required'),
   Subdivision: Yup.string().required('This field is required'),
   TaxId: Yup.string().required('This field is required'),
   Zoning1: Yup.string().required('This field is required'),
@@ -112,46 +166,67 @@ const propertyFormSchema = Yup.object().shape({
   Elementary: Yup.string().required('This field is required'),
   JrHigh: Yup.string().required('This field is required'),
   HighSchool: Yup.string().required('This field is required'),
-  Insurance: Yup.string().required('This field is required'),
-  Maintenance: Yup.string().required('This field is required'),
-  HOAFees: Yup.string().required('This field is required'),
+  Insurance: Yup.number().integer().required('This field is required'),
+  Maintenance: Yup.number().integer().required('This field is required'),
+  HOAFees: Yup.number().integer().required('This field is required'),
   squareFoot: Yup.string().required('This field is required'),
   bedRoom: Yup.string().required('This field is required'),
   family: Yup.string().required('This field is required'),
   kitchen: Yup.string().required('This field is required'),
   laundry: Yup.string().required('This field is required'),
   bath: Yup.string().required('This field is required'),
-  Amenties: Yup.string().required('This field is required'),
-  AC: Yup.string().required('This field is required'),
-  Roof: Yup.string().required('This field is required'),
-  Floor: Yup.string().required('This field is required'),
-  WindowCovering: Yup.string().required('This field is required'),
-  Pool: Yup.string().required('This field is required'),
-  PoolFeature: Yup.string().required('This field is required'),
-  Style: Yup.string().required('This field is required'),
-  Deck: Yup.string().required('This field is required'),
-  Patio: Yup.string().required('This field is required'),
-  Garage: Yup.string().required('This field is required'),
-  Carpot: Yup.string().required('This field is required'),
-  ParkingSpace: Yup.string().required('This field is required'),
-  FinBasmt: Yup.string().required('This field is required'),
-  Basement: Yup.string().required('This field is required'),
-  Driveway: Yup.string().required('This field is required'),
-  Water: Yup.string().required('This field is required'),
-  WaterShare: Yup.string().required('This field is required'),
-  Spa: Yup.string().required('This field is required'),
+  Amenties: Yup.number().integer().required('This field is required'),
+  AC: Yup.number().integer().required('This field is required'),
+  Roof: Yup.number().integer().required('This field is required'),
+  Floor: Yup.number().integer().required('This field is required'),
+  WindowCovering: Yup.number().integer().required('This field is required'),
+  Pool: Yup.number().integer().required('This field is required'),
+  PoolFeature: Yup.number().integer().required('This field is required'),
+  Style: Yup.number().integer().required('This field is required'),
+  Deck: Yup.number().integer().required('This field is required'),
+  Patio: Yup.number().integer().required('This field is required'),
+  Garage: Yup.number().integer().required('This field is required'),
+  Carpot: Yup.number().integer().required('This field is required'),
+  ParkingSpace: Yup.number().integer().required('This field is required'),
+  FinBasmt: Yup.number().integer().required('This field is required'),
+  Basement: Yup.number().integer().required('This field is required'),
+  Driveway: Yup.number().integer().required('This field is required'),
+  Water: Yup.number().integer().required('This field is required'),
+  WaterShare: Yup.number().integer().required('This field is required'),
+  Spa: Yup.number().integer().required('This field is required'),
 })
+
+var arr01: number[] = [1]
 
 const PropertyForm = () => {
   const [showImgModal, setShowImgModal] = useState(false)
+  const [trackArray, settrackArray] = useState({
+    arr01,
+  })
   const [imageList, setImageList] = useState<any>([])
   const [showDocModal, setShowDocModal] = useState(false)
   const [documentList, setDocumentList] = useState<any>([])
   const classes = useStyle()
+  const classes01 = useStyle01()
 
   const handleSubmit = (values: any) => {
     console.log('Values-->', values)
   }
+  const handleAddFloor = () => {
+    // console.log("clicked")
+    // console.log("arr01.length ", trackArray.arr01.length)
+    // console.log("trackArray ", trackArray)
+    arr01.push(arr01.length + 1)
+    settrackArray({ arr01: arr01 })
+  }
+
+  const handleRemoveFloor = (idx: number) => {
+    let someArray = trackArray.arr01
+    someArray.splice(idx, 1)
+    settrackArray({ arr01: someArray })
+  }
+
+  useEffect(() => {}, [trackArray])
 
   const renderSelectedFileName = (fileList: any, type: string) => {
     return fileList.map((item: any, k: number) => {
@@ -183,7 +258,7 @@ const PropertyForm = () => {
     <>
       <div className="AddNewProperty_changelog displayFlex_pa">
         <div className="flex_ch_01 add_new_property">
-          Properties / Add new property
+          <span style={{ color: ' grey' }}> Properties /</span> Add new property
           <br />
           <div className="flex_ch_02 add_new_property"> Add new property</div>
         </div>
@@ -209,8 +284,7 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle>Owner details</FormTitle>
-                        <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                        <FormTitle className="form_title">Owner details</FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <CustomTextField label="First name" name="Fname" />
@@ -247,8 +321,7 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle>Property info</FormTitle>
-                        <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                        <FormTitle className="form_title">Property info</FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <FieldSelect label="Type of property" name="PropertyType" />
@@ -302,8 +375,7 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle>Address</FormTitle>
-                        <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                        <FormTitle className="form_title">Address</FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <FieldSelect label="Address 1" name="Address1" />
@@ -365,8 +437,7 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle>Locality / Neighbourhood insight</FormTitle>
-                        <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                        <FormTitle className="form_title">Locality / Neighbourhood insight</FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <CustomTextField label="School district" name="SchoolDistrict1" />
@@ -400,8 +471,7 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle>T.I.M.E contract</FormTitle>
-                        <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                        <FormTitle className="form_title">T.I.M.E contract</FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <CustomTextField label="Insurance" name="Insurance" />
@@ -429,8 +499,7 @@ const PropertyForm = () => {
                   </Grid>
                   <Grid item xs={11} container direction="column">
                     <FormTitleCont>
-                      <FormTitle>Upload property images</FormTitle>
-                      <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                      <FormTitle className="form_title">Upload property images</FormTitle>
                     </FormTitleCont>
                     <Grid container spacing={3} xs={12}>
                       <Grid item xs={12} sm={6}>
@@ -464,8 +533,7 @@ const PropertyForm = () => {
                   </Grid>
                   <Grid item xs={11} container direction="column">
                     <FormTitleCont>
-                      <FormTitle>Upload property documents</FormTitle>
-                      <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                      <FormTitle className="form_title">Upload property documents</FormTitle>
                     </FormTitleCont>
                     <Grid container spacing={3} xs={12}>
                       <Grid item xs={12} sm={6}>
@@ -500,40 +568,80 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle>Floor Wise Configuration</FormTitle>
-                        <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                        <FormTitle className="form_title">Floor Wise Configuration</FormTitle>
                       </FormTitleCont>
-                      <FieldMsgBox>
-                        <CustomTextField label="Square Foot" name="squareFoot" />
-                        <img src={chatIcon} alt="" />
-                      </FieldMsgBox>
-                      <ErrorMessage component={err} name="squareFoot" />
-                      <FieldMsgBox>
-                        <CustomTextField label="Bedroom" name="bedRoom" />
-                        <img src={chatIcon} alt="" />
-                      </FieldMsgBox>
-                      <ErrorMessage component={err} name="bedRoom" />
-                      <FieldMsgBox>
-                        <CustomTextField label="Family" name="family" />
-                        <img src={chatIcon} alt="" />
-                      </FieldMsgBox>
-                      <ErrorMessage component={err} name="family" />
-                      <FieldMsgBox>
-                        <CustomTextField label="Kitchen" name="kitchen" />
-                        <img src={chatIcon} alt="" />
-                      </FieldMsgBox>
-                      <ErrorMessage component={err} name="kitchen" />
-                      <FieldMsgBox>
-                        <CustomTextField label="Laundry" name="laundry" />
-                        <img src={chatIcon} alt="" />
-                      </FieldMsgBox>
-                      <ErrorMessage component={err} name="laundry" />
-                      <FieldMsgBox>
-                        <CustomTextField label="Bath" name="bath" />
-                        <img src={chatIcon} alt="" />
-                      </FieldMsgBox>
-                      <ErrorMessage component={err} name="bath" />
+
+                      {trackArray.arr01.map((floor, idx) => (
+                        <div key={idx} className="displayFlex">
+                          <div className="Flex01_floor">
+                            <Accordion
+                              defaultExpanded
+                              style={{
+                                marginTop: '20px',
+                                width: '400px',
+                              }}
+                            >
+                              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1c-content" id="panel1c-header">
+                                <div className={classes01.column}>
+                                  <Typography className={classes01.heading}>Floor {floor}</Typography>
+                                </div>
+                              </AccordionSummary>
+                              <AccordionDetails className={classes01.details}>
+                                <div style={{ width: '100%' }}>
+                                  <FieldMsgBox>
+                                    <CustomTextField label="Square Foot" name="squareFoot" />
+                                    <img src={chatIcon} alt="" />
+                                  </FieldMsgBox>
+                                  <ErrorMessage component={err} name="squareFoot" />
+                                  <FieldMsgBox>
+                                    <CustomTextField label="Bedroom" name="bedRoom" />
+                                    <img src={chatIcon} alt="" />
+                                  </FieldMsgBox>
+                                  <ErrorMessage component={err} name="bedRoom" />
+                                  <FieldMsgBox>
+                                    <CustomTextField label="Family" name="family" />
+                                    <img src={chatIcon} alt="" />
+                                  </FieldMsgBox>
+                                  <ErrorMessage component={err} name="family" />
+                                  <FieldMsgBox>
+                                    <CustomTextField label="Kitchen" name="kitchen" />
+                                    <img src={chatIcon} alt="" />
+                                  </FieldMsgBox>
+                                  <ErrorMessage component={err} name="kitchen" />
+                                  <FieldMsgBox>
+                                    <CustomTextField label="Laundry" name="laundry" />
+                                    <img src={chatIcon} alt="" />
+                                  </FieldMsgBox>
+                                  <ErrorMessage component={err} name="laundry" />
+                                  <FieldMsgBox>
+                                    <CustomTextField label="Bath" name="bath" />
+                                    <img src={chatIcon} alt="" />
+                                  </FieldMsgBox>
+                                  <ErrorMessage component={err} name="bath" />
+                                </div>
+                              </AccordionDetails>
+                            </Accordion>
+                          </div>
+                          {idx !== 0 && (
+                            <div className="Flex02_floor" onClick={() => handleRemoveFloor(idx)}>
+                              <DeleteIcon
+                                style={{
+                                  margin: '30px 0px 0px 10px',
+                                  color: 'red',
+                                  cursor: 'pointer',
+                                }}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      <div style={{ position: 'relative', cursor: 'pointer' }} onClick={handleAddFloor}>
+                        {' '}
+                        <AddIcon style={{ marginTop: '10px' }} />{' '}
+                        <span style={{ marginTop: '13px', position: 'absolute' }}>Add Another Floor</span>{' '}
+                      </div>
                     </Grid>
+
                     <Divider classes={{ root: classes.dividerStyle }} />
                   </Grid>
                 </Grid>
@@ -545,8 +653,7 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle>Amenities</FormTitle>
-                        <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                        <FormTitle className="form_title">Amenities</FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <CustomTextField label="Heating" name="Amenties" />
@@ -595,8 +702,7 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle>More Details</FormTitle>
-                        <FormSubTitle>Lorem ipsum dolor sit </FormSubTitle>
+                        <FormTitle className="form_title">More Details</FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <CustomTextField label="Style" name="Style" />
@@ -680,7 +786,12 @@ const PropertyForm = () => {
                     classes={{
                       root: classes.saveBtn,
                     }}
-                    style={{ marginLeft: '30px', textTransform: 'none', backgroundColor: '#E0E0E0', color: 'black' }}
+                    style={{
+                      marginLeft: '30px',
+                      textTransform: 'none',
+                      backgroundColor: '#E0E0E0',
+                      color: 'black',
+                    }}
                   >
                     SAVE AS DRAFT
                   </Button>

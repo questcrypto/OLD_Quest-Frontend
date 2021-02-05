@@ -38,9 +38,11 @@ export const useStyle = makeStyles({
 })
 
 export const PropertyFormWrapper = styled.div`
-  margin: 15%;
+  margin: 2%;
   padding: 10px 10px;
   margin-top: 70px;
+  background: #ffffff;
+  max-width: 600px;
 `
 export const PropertyFormCont = styled.div`
   box-sizing: border-box;

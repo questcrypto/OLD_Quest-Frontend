@@ -46,7 +46,7 @@ function a11yProps(index: any) {
 }
 const iconStyles = {
   fontSize: '36px',
-  color: '#12005e',
+  color: '#1E3444',
 }
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -74,7 +74,7 @@ const LeftPanel = () => {
           <div className="wrapper_left">
             <div className="wrapper_topicon">
               <p className="logo">
-                <img src={Logo} alt="LOGO" height="40" />{' '}
+                <img src={Logo} alt="LOGO" height="50" />{' '}
               </p>
             </div>
             <div className="wrapper_tabs">
@@ -241,20 +241,6 @@ const LeftPanel = () => {
               </Tabs>
             </div>
           </div>
-          {/* <div className="wrapper_right">
-            <div
-              className="wrapper_right_top"
-              style={{
-                // background: "red",
-                position: 'relative',
-                height: '50px',
-              }}
-            >
-              <Button className="wrapper_button" variant="contained" style={{ right: '3vw', position: 'absolute' }}>
-                Connect Wallet
-              </Button>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

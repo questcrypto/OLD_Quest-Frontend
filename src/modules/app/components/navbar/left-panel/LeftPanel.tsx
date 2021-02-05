@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button'
 import Logo from 'assets/images/QuestLogo.svg'
 
 import './LeftPanel.css'
+import { Divider } from '@material-ui/core'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -74,9 +75,10 @@ const LeftPanel = () => {
           <div className="wrapper_left">
             <div className="wrapper_topicon">
               <p className="logo">
-                <img src={Logo} alt="LOGO" height="50" />{' '}
+                <img src={Logo} alt="LOGO" height="45" />
               </p>
             </div>
+            <Divider className="divider_logo"/>
             <div className="wrapper_tabs">
               <Tabs
                 orientation="vertical"
@@ -232,7 +234,7 @@ const LeftPanel = () => {
                   }
                   aria-label="Home"
                 />
-
+                <Divider className="divider_signout" />
                 <Tab style={{ position: 'absolute', bottom: '20px', textTransform: 'capitalize' }} aria-label="Home" {...a11yProps(0)} />
                 <div className=" displayFlex01">
                   <PowerSettingsNewIcon className="Flex01 powericon" style={{ color: 'black', fontSize: '22px' }} />

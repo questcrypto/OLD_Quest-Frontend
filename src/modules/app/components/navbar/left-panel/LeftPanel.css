@@ -10,7 +10,7 @@
 .wrapper_left {
   position: absolute;
   width: 10% !important;
-  color: grey !important;
+  background-color: #FBFBFB !important;
   text-align: center !important;
   border: 1px solid #fbfbfb;
   top: -10px;
@@ -22,8 +22,10 @@
 }
 
 .wrapper_tabs {
-  max-height: 50vh;
+  max-height: 60vh;
   width: 11vw;
+  
+  margin-top: 30px !important;
 }
 
 .wrapper_right {
@@ -45,7 +47,7 @@
 }
 
 .wrapper_topicon {
-  border-bottom: 1px solid rgb(236, 236, 236);
+  border-bottom: 1px  rgb(236, 236, 236);
   padding-top: 7px;
   padding-bottom: 8px;
 }
@@ -60,9 +62,9 @@
   line-height: 30px;
   letter-spacing: 0em;
   text-align: left;
-  color: #1e3444;
   /* background: yellow; */
   width: 100%;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -129,4 +131,20 @@
   position: absolute;
   align-items: flex-end;
   right: 30px;
+}
+
+.displayFlex01{
+margin-bottom: 50px;
+}
+
+.divider_logo{
+  margin-top: 20px !important;
+  width: 70px !important;
+  margin-left: 10px !important;
+}
+
+.divider_signout{
+  margin-top: 20px !important;
+  width: 70px !important;
+  margin-left: 10px !important;
 }

@@ -7,7 +7,10 @@ export const useStyles = makeStyles({
     color: colors.white,
     backgroundColor: colors.primary,
     fontSize: '12px',
-    padding: '9px !important',
+    padding: '8px !important',
+    fontWeight: 400,
+    marginRight: '20px',
+    
     '&:hover': {
       backgroundColor: colors.primary,
     },
@@ -15,7 +18,7 @@ export const useStyles = makeStyles({
 })
 
 export const TopPanelCont = styled.div`
-  padding: 24px 10px 0 0;
+  padding: 15px 10px 0 0;
   display: flex;
   justify-content: flex-end;
 `

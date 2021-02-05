@@ -29,17 +29,19 @@ import CrossIcon from 'assets/icons/crossIcon.svg'
 import FileIcon from 'assets/icons/fileIcon.svg'
 import chatIcon from 'assets/images/chatIcon.svg'
 
-import { makeStyles } from '@material-ui/core/styles'
-import Accordion from '@material-ui/core/Accordion'
-import AccordionDetails from '@material-ui/core/AccordionDetails'
-import AccordionSummary from '@material-ui/core/AccordionSummary'
+import { makeStyles } from '@material-ui/core/styles';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
 // import AccordionActions from '@material-ui/core/AccordionActions';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import DeleteIcon from '@material-ui/icons/Delete'
-import Typography from '@material-ui/core/Typography'
-import AddIcon from '@material-ui/icons/Add'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
+
 
 import './PropertyForm.css'
+
 
 const useStyle01 = makeStyles((theme) => ({
   root: {
@@ -74,7 +76,7 @@ const useStyle01 = makeStyles((theme) => ({
       textDecoration: 'underline',
     },
   },
-}))
+}));
 
 const initialValues = {
   Fname: '',
@@ -124,16 +126,14 @@ const initialValues = {
   Water: '',
   WaterShare: '',
   Spa: '',
-  FloorDetails: [
-    {
-      squareFoot: '',
-      bedRoom: '',
-      family: '',
-      kitchen: '',
-      laundry: '',
-      bath: '',
-    },
-  ],
+  FloorDetails: {
+    squareFoot: '',
+    bedRoom: '',
+    family: '',
+    kitchen: '',
+    laundry: '',
+    bath: '',
+  },
 }
 const propertyFormSchema = Yup.object().shape({
   Fname: Yup.string().required('First name is required'),
@@ -145,7 +145,7 @@ const propertyFormSchema = Yup.object().shape({
   Comments: Yup.string().required('This field is required'),
   YearBuilt: Yup.date()
     .default(function () {
-      return new Date()
+      return new Date();
     })
     .required('This field is required'),
   Zoning: Yup.string().required('This field is required'),
@@ -169,12 +169,14 @@ const propertyFormSchema = Yup.object().shape({
   Insurance: Yup.number().integer().required('This field is required'),
   Maintenance: Yup.number().integer().required('This field is required'),
   HOAFees: Yup.number().integer().required('This field is required'),
-  squareFoot: Yup.string().required('This field is required'),
-  bedRoom: Yup.string().required('This field is required'),
-  family: Yup.string().required('This field is required'),
-  kitchen: Yup.string().required('This field is required'),
-  laundry: Yup.string().required('This field is required'),
-  bath: Yup.string().required('This field is required'),
+  FloorDetails: Yup.object().shape({
+    squareFoot: Yup.string().required('This field is required'),
+    bedRoom: Yup.string().required('This field is required'),
+    family: Yup.string().required('This field is required'),
+    kitchen: Yup.string().required('This field is required'),
+    laundry: Yup.string().required('This field is required'),
+    bath: Yup.string().required('This field is required'),
+  }),
   Amenties: Yup.number().integer().required('This field is required'),
   AC: Yup.number().integer().required('This field is required'),
   Roof: Yup.number().integer().required('This field is required'),
@@ -194,20 +196,23 @@ const propertyFormSchema = Yup.object().shape({
   Water: Yup.number().integer().required('This field is required'),
   WaterShare: Yup.number().integer().required('This field is required'),
   Spa: Yup.number().integer().required('This field is required'),
-})
+});
+
 
 var arr01: number[] = [1]
+
 
 const PropertyForm = () => {
   const [showImgModal, setShowImgModal] = useState(false)
   const [trackArray, settrackArray] = useState({
-    arr01,
+    arr01
   })
   const [imageList, setImageList] = useState<any>([])
   const [showDocModal, setShowDocModal] = useState(false)
   const [documentList, setDocumentList] = useState<any>([])
   const classes = useStyle()
   const classes01 = useStyle01()
+
 
   const handleSubmit = (values: any) => {
     console.log('Values-->', values)
@@ -218,15 +223,19 @@ const PropertyForm = () => {
     // console.log("trackArray ", trackArray)
     arr01.push(arr01.length + 1)
     settrackArray({ arr01: arr01 })
+
   }
 
   const handleRemoveFloor = (idx: number) => {
-    let someArray = trackArray.arr01
-    someArray.splice(idx, 1)
+    let someArray = trackArray.arr01;
+    someArray.splice(idx, 1);
     settrackArray({ arr01: someArray })
   }
 
-  useEffect(() => {}, [trackArray])
+  useEffect(() => {
+  }, [trackArray])
+
+
 
   const renderSelectedFileName = (fileList: any, type: string) => {
     return fileList.map((item: any, k: number) => {
@@ -248,7 +257,12 @@ const PropertyForm = () => {
   const renderSelectedFileImage = (fileList: any) => {
     return fileList.map((item: any, k: number) => {
       return (
-        <div key={k} style={{ width: '70px', height: '70px', boxSizing: 'border-box' }}>
+        <div
+          key={k}
+          style={{ width: '70px',
+                    height: '70px', 
+                    boxSizing: 'border-box' }}
+        >
           <img src={item.path} alt="" />
         </div>
       )
@@ -270,8 +284,8 @@ const PropertyForm = () => {
             initialValues={initialValues}
             validationSchema={propertyFormSchema}
             onSubmit={(values, { setSubmitting }) => {
-              handleSubmit(values)
-              setSubmitting(false)
+              handleSubmit(values);
+              setSubmitting(false);
             }}
           >
             {() => (
@@ -284,7 +298,9 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle className="form_title">Owner details</FormTitle>
+                        <FormTitle className="form_title">
+                          Owner details
+                        </FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <CustomTextField label="First name" name="Fname" />
@@ -299,13 +315,20 @@ const PropertyForm = () => {
                       <ErrorMessage component={err} name="Lname" />
 
                       <FieldMsgBox>
-                        <CustomTextField label="Email Address" type="email" name="Email" />
+                        <CustomTextField
+                          label="Email Address"
+                          type="email"
+                          name="Email"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="email" />
 
                       <FieldMsgBox>
-                        <CustomTextField label="Wallet public key" name="PublicAddress" />
+                        <CustomTextField
+                          label="Wallet public key"
+                          name="PublicAddress"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
 
@@ -321,20 +344,31 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle className="form_title">Property info</FormTitle>
+                        <FormTitle className="form_title">
+                          Property info
+                        </FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
-                        <FieldSelect label="Type of property" name="PropertyType" />
+                        <FieldSelect
+                          label="Type of property"
+                          name="PropertyType"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="PropertyType" />
                       <FieldMsgBox>
-                        <CustomTextField label="Property name" name="PropertyName" />
+                        <CustomTextField
+                          label="Property name"
+                          name="PropertyName"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="PropertyName" />
                       <FieldMsgBox>
-                        <CustomTextField label="Property current value" name="CurrentValue" />
+                        <CustomTextField
+                          label="Property current value"
+                          name="CurrentValue"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="CurrentValue" />
@@ -354,7 +388,10 @@ const PropertyForm = () => {
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="zoning" />
                       <FieldMsgBox>
-                        <CustomTextField label="Landscaping" name="Landscaping" />
+                        <CustomTextField
+                          label="Landscaping"
+                          name="Landscaping"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Landscaping" />
@@ -399,14 +436,20 @@ const PropertyForm = () => {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FieldMsgBox>
-                            <CustomTextField label="Postal code" name="PostalCode" />
+                            <CustomTextField
+                              label="Postal code"
+                              name="PostalCode"
+                            />
                             <img src={chatIcon} alt="" />
                           </FieldMsgBox>
                           <ErrorMessage component={err} name="PostalCode" />
                         </Grid>
                       </Grid>
                       <FieldMsgBox>
-                        <CustomTextField label="Subdivision" name="Subdivision" />
+                        <CustomTextField
+                          label="Subdivision"
+                          name="Subdivision"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Subdivision" />
@@ -421,7 +464,10 @@ const PropertyForm = () => {
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Zoning1" />
                       <FieldMsgBox>
-                        <CustomTextField label="School district" name="SchoolDistrict" />
+                        <CustomTextField
+                          label="School district"
+                          name="SchoolDistrict"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="SchoolDistrict" />
@@ -437,10 +483,15 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle className="form_title">Locality / Neighbourhood insight</FormTitle>
+                        <FormTitle className="form_title">
+                          Locality / Neighbourhood insight
+                        </FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
-                        <CustomTextField label="School district" name="SchoolDistrict1" />
+                        <CustomTextField
+                          label="School district"
+                          name="SchoolDistrict1"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="SchoolDistrict1" />
@@ -455,7 +506,10 @@ const PropertyForm = () => {
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="JrHigh" />
                       <FieldMsgBox>
-                        <CustomTextField label="High school" name="HighSchool" />
+                        <CustomTextField
+                          label="High school"
+                          name="HighSchool"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="HighSchool" />
@@ -471,7 +525,9 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle className="form_title">T.I.M.E contract</FormTitle>
+                        <FormTitle className="form_title">
+                          T.I.M.E contract
+                        </FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <CustomTextField label="Insurance" name="Insurance" />
@@ -479,7 +535,10 @@ const PropertyForm = () => {
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Insurance" />
                       <FieldMsgBox>
-                        <CustomTextField label="Maintenance" name="Maintenance" />
+                        <CustomTextField
+                          label="Maintenance"
+                          name="Maintenance"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Maintenance" />
@@ -499,7 +558,9 @@ const PropertyForm = () => {
                   </Grid>
                   <Grid item xs={11} container direction="column">
                     <FormTitleCont>
-                      <FormTitle className="form_title">Upload property images</FormTitle>
+                      <FormTitle className="form_title">
+                        Upload property images
+                      </FormTitle>
                     </FormTitleCont>
                     <Grid container spacing={3} xs={12}>
                       <Grid item xs={12} sm={6}>
@@ -517,8 +578,12 @@ const PropertyForm = () => {
                         <FormSubTitle>Uploading</FormSubTitle>
                         {!!imageList && imageList.length > 0 && (
                           <SelectedFileCont>
-                            <div>{renderSelectedFileName(imageList, 'img')}</div>
-                            <SelectedFileImgCont>{renderSelectedFileImage(imageList)}</SelectedFileImgCont>
+                            <div>
+                              {renderSelectedFileName(imageList, 'img')}
+                            </div>
+                            <SelectedFileImgCont>
+                              {renderSelectedFileImage(imageList)}
+                            </SelectedFileImgCont>
                           </SelectedFileCont>
                         )}
                       </Grid>
@@ -533,7 +598,9 @@ const PropertyForm = () => {
                   </Grid>
                   <Grid item xs={11} container direction="column">
                     <FormTitleCont>
-                      <FormTitle className="form_title">Upload property documents</FormTitle>
+                      <FormTitle className="form_title">
+                        Upload property documents
+                      </FormTitle>
                     </FormTitleCont>
                     <Grid container spacing={3} xs={12}>
                       <Grid item xs={12} sm={6}>
@@ -551,8 +618,12 @@ const PropertyForm = () => {
                         <FormSubTitle>Uploading</FormSubTitle>
                         {!!documentList && documentList.length > 0 && (
                           <SelectedFileCont>
-                            <div>{renderSelectedFileName(documentList, 'doc')}</div>
-                            <SelectedFileImgCont>{renderSelectedFileImage(documentList)}</SelectedFileImgCont>
+                            <div>
+                              {renderSelectedFileName(documentList, 'doc')}
+                            </div>
+                            <SelectedFileImgCont>
+                              {renderSelectedFileImage(documentList)}
+                            </SelectedFileImgCont>
                           </SelectedFileCont>
                         )}
                       </Grid>
@@ -568,7 +639,9 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle className="form_title">Floor Wise Configuration</FormTitle>
+                        <FormTitle className="form_title">
+                          Floor Wise Configuration
+                        </FormTitle>
                       </FormTitleCont>
 
                       {trackArray.arr01.map((floor, idx) => (
@@ -581,38 +654,71 @@ const PropertyForm = () => {
                                 width: '400px',
                               }}
                             >
-                              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1c-content" id="panel1c-header">
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1c-content"
+                                id="panel1c-header"
+                              >
                                 <div className={classes01.column}>
-                                  <Typography className={classes01.heading}>Floor {floor}</Typography>
+                                  <Typography className={classes01.heading}>
+                                    Floor {floor}
+                                  </Typography>
                                 </div>
                               </AccordionSummary>
                               <AccordionDetails className={classes01.details}>
                                 <div style={{ width: '100%' }}>
                                   <FieldMsgBox>
-                                    <CustomTextField label="Square Foot" name="squareFoot" />
+                                    <CustomTextField
+                                      label="Square Foot"
+                                      name="squareFoot"
+                                    />
                                     <img src={chatIcon} alt="" />
                                   </FieldMsgBox>
-                                  <ErrorMessage component={err} name="squareFoot" />
+                                  <ErrorMessage
+                                    component={err}
+                                    name="squareFoot"
+                                  />
                                   <FieldMsgBox>
-                                    <CustomTextField label="Bedroom" name="bedRoom" />
+                                    <CustomTextField
+                                      label="Bedroom"
+                                      name="bedRoom"
+                                    />
                                     <img src={chatIcon} alt="" />
                                   </FieldMsgBox>
-                                  <ErrorMessage component={err} name="bedRoom" />
+                                  <ErrorMessage
+                                    component={err}
+                                    name="bedRoom"
+                                  />
                                   <FieldMsgBox>
-                                    <CustomTextField label="Family" name="family" />
+                                    <CustomTextField
+                                      label="Family"
+                                      name="family"
+                                    />
                                     <img src={chatIcon} alt="" />
                                   </FieldMsgBox>
                                   <ErrorMessage component={err} name="family" />
                                   <FieldMsgBox>
-                                    <CustomTextField label="Kitchen" name="kitchen" />
+                                    <CustomTextField
+                                      label="Kitchen"
+                                      name="kitchen"
+                                    />
                                     <img src={chatIcon} alt="" />
                                   </FieldMsgBox>
-                                  <ErrorMessage component={err} name="kitchen" />
+                                  <ErrorMessage
+                                    component={err}
+                                    name="kitchen"
+                                  />
                                   <FieldMsgBox>
-                                    <CustomTextField label="Laundry" name="laundry" />
+                                    <CustomTextField
+                                      label="Laundry"
+                                      name="laundry"
+                                    />
                                     <img src={chatIcon} alt="" />
                                   </FieldMsgBox>
-                                  <ErrorMessage component={err} name="laundry" />
+                                  <ErrorMessage
+                                    component={err}
+                                    name="laundry"
+                                  />
                                   <FieldMsgBox>
                                     <CustomTextField label="Bath" name="bath" />
                                     <img src={chatIcon} alt="" />
@@ -623,7 +729,10 @@ const PropertyForm = () => {
                             </Accordion>
                           </div>
                           {idx !== 0 && (
-                            <div className="Flex02_floor" onClick={() => handleRemoveFloor(idx)}>
+                            <div
+                              className="Flex02_floor"
+                              onClick={() => handleRemoveFloor(idx)}
+                            >
                               <DeleteIcon
                                 style={{
                                   margin: '30px 0px 0px 10px',
@@ -635,10 +744,17 @@ const PropertyForm = () => {
                           )}
                         </div>
                       ))}
-                      <div style={{ position: 'relative', cursor: 'pointer' }} onClick={handleAddFloor}>
+                      <div
+                        style={{ position: 'relative', cursor: 'pointer' }}
+                        onClick={handleAddFloor}
+                      >
                         {' '}
                         <AddIcon style={{ marginTop: '10px' }} />{' '}
-                        <span style={{ marginTop: '13px', position: 'absolute' }}>Add Another Floor</span>{' '}
+                        <span
+                          style={{ marginTop: '13px', position: 'absolute' }}
+                        >
+                          Add Another Floor
+                        </span>{' '}
                       </div>
                     </Grid>
 
@@ -676,7 +792,10 @@ const PropertyForm = () => {
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Floor" />
                       <FieldMsgBox>
-                        <CustomTextField label="Window Covering" name="WindowCovering" />
+                        <CustomTextField
+                          label="Window Covering"
+                          name="WindowCovering"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="WindowCovering" />
@@ -686,7 +805,10 @@ const PropertyForm = () => {
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Pool" />
                       <FieldMsgBox>
-                        <CustomTextField label="Pool Feature" name="PoolFeature" />
+                        <CustomTextField
+                          label="Pool Feature"
+                          name="PoolFeature"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="PoolFeature" />
@@ -702,7 +824,9 @@ const PropertyForm = () => {
                   <Grid item xs={11} container direction="column">
                     <Grid item className={classes.formGroup}>
                       <FormTitleCont>
-                        <FormTitle className="form_title">More Details</FormTitle>
+                        <FormTitle className="form_title">
+                          More Details
+                        </FormTitle>
                       </FormTitleCont>
                       <FieldMsgBox>
                         <CustomTextField label="Style" name="Style" />
@@ -730,7 +854,10 @@ const PropertyForm = () => {
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Carpot" />
                       <FieldMsgBox>
-                        <CustomTextField label="Parking Space" name="ParkingSpace" />
+                        <CustomTextField
+                          label="Parking Space"
+                          name="ParkingSpace"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="ParkingSpace" />
@@ -755,7 +882,10 @@ const PropertyForm = () => {
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="Water" />
                       <FieldMsgBox>
-                        <CustomTextField label="Water Shares" name="WaterShare" />
+                        <CustomTextField
+                          label="Water Shares"
+                          name="WaterShare"
+                        />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
                       <ErrorMessage component={err} name="WaterShare" />
@@ -812,13 +942,21 @@ const PropertyForm = () => {
           </Formik>
         </PropertyFormCont>
         <CustomModal show={showImgModal} toggleModal={setShowImgModal}>
-          <UploadImage imageList={imageList} setImageList={setImageList} setShowImgModal={setShowImgModal} />
+          <UploadImage
+            imageList={imageList}
+            setImageList={setImageList}
+            setShowImgModal={setShowImgModal}
+          />
         </CustomModal>
         <CustomModal show={showDocModal} toggleModal={setShowDocModal}>
-          <UploadDocument documentList={documentList} setDocumentList={setDocumentList} setShowDocModal={setShowDocModal} />
+          <UploadDocument
+            documentList={documentList}
+            setDocumentList={setDocumentList}
+            setShowDocModal={setShowDocModal}
+          />
         </CustomModal>
       </PropertyFormWrapper>
     </>
-  )
+  );
 }
 export default PropertyForm

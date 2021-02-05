@@ -7,9 +7,19 @@ import Pagination from '@material-ui/lab/Pagination'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { useStyles, PropertyHeader, HeaderTitle, ProgressText, PropertyTabCont, TabTitle, PropertySearchBox } from './style'
-import { Grid } from '@material-ui/core'
+import { Grid, withStyles } from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import './Property.css'
+
+
+const StyledLinearProgress = withStyles({
+  colorPrimary: {
+    backgroundColor: '#E5E5E5',
+  },
+  barColorPrimary: {
+    backgroundColor: '#1E3444',
+  },
+})(LinearProgress)
 
 const Property = () => {
   const classes = useStyles()
@@ -28,17 +38,19 @@ const Property = () => {
             <HeaderTitle className="headtitle">Properties</HeaderTitle>
           </Grid>
           <Grid item xs={3}>
-            <LinearProgress variant="determinate" value={progress} className={classes.progressStyle} />
+            <StyledLinearProgress variant="determinate" value={progress} className={classes.progressStyle} />
           </Grid>
           <Grid item xs={3}>
-            <ProgressText>643 new properties to onboard</ProgressText>
+            <ProgressText>
+              <span style={{ color: '#302E35', fontWeight: 'bold' }}>643</span> new properties to onboard
+            </ProgressText>
           </Grid>
         </Grid>
       </PropertyHeader>
 
       <Grid container spacing={2}>
-        <Grid item xs={7}>
-          <PropertyTabCont>
+        <Grid item xs={6}>
+          <PropertyTabCont className="Property_tabs">
             <TabTitle onClick={() => setActiveTab('new')} active={activeTab === 'new'}>
               New
             </TabTitle>
@@ -57,7 +69,7 @@ const Property = () => {
           </PropertyTabCont>
         </Grid>
         <Grid item xs={5}>
-          <PropertySearchBox>
+          <PropertySearchBox className="Property_search">
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />

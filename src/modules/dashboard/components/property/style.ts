@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginLeft: 0,
+    marginLeft: 12,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
@@ -38,7 +38,7 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: '17ch',
       '&:focus': {
-        width: '12ch',
+        width: '17ch',
       },
     },
   },
@@ -53,6 +53,8 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: colors.primary,
     fontSize: '12px',
     padding: '9px !important',
+    marginLeft: '250px',
+    position: 'absolute',
     '&:hover': {
       backgroundColor: colors.primary,
     },
@@ -64,7 +66,12 @@ export const PropertyHeader = styled.div`
 `
 export const HeaderTitle = styled.h3`
   margin: 0;
+  
 `
+
+// export const progressStyle = styled.p`
+// color: red;`
+
 export const ProgressText = styled.p`
   margin: 0;
   color: #302e35;

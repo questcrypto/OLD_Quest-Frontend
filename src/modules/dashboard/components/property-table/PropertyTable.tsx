@@ -4,10 +4,10 @@ import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
 import EditIcon from '@material-ui/icons/Edit'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
+import './PropertyTable.css'
 
 function CreateData(location: string, manager: string, type: string, status: string, owner: string, action: string) {
   return { location, manager, type, status, owner, action }
@@ -26,11 +26,11 @@ const PropertyTable = () => {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer className="Table_container">
       <Table aria-label="simple table">
         <CustomTableHead>
           <TableRow>
-            <CustomTableCell>LOCATION</CustomTableCell>
+            <CustomTableCell className="textcolor">LOCATION</CustomTableCell>
             <CustomTableCell>MANAGER</CustomTableCell>
             <CustomTableCell>TYPE</CustomTableCell>
             <CustomTableCell>STATUS</CustomTableCell>

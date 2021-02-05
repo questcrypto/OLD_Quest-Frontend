@@ -28,11 +28,12 @@
 }
 
 .headtitle{
-  font-family: Avenir LT Std;
-  font-style: normal;
   font-size: 20px;
+  font-style: normal;
   line-height: 29px;
+  font-weight: 590;
   color: #302E35;
+  position: absolute;
 }
 
 .Property_table {
@@ -55,22 +56,9 @@ form.Props_form input[type='text'] {
   display: flex;
   flex-direction: row;
 }
-.Props_input {
-  max-width: 300px;
-}
 
-.Props_search {
-  display: flex;
-  align-items: center;
-  margin-top: 110px;
-  margin-left: 650px;
-}
-
-.Props_searchicon {
-  color: white !important;
-  background-color: #1e3444 !important;
-  margin-top: 45px;
-  margin-left: 570px;
+.Property_search{
+  margin-left: 120px  !important;
 }
 
 .Props_button {
@@ -79,7 +67,7 @@ form.Props_form input[type='text'] {
   margin-bottom: 40px !important;
   color: white !important;
   background-color: #1e3444 !important;
-  width: 170px !important;
+  width: 100px !important;
   height: 25px;
   vertical-align: middle;
 
@@ -111,4 +99,9 @@ form.Props_form input[type='text'] {
   flex: 1;
   margin-right: 20px;
   /* background: blue */
+}
+
+.Property_tabs{
+  margin-left: -1px !important;
+  
 }

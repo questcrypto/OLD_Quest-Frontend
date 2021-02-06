@@ -11,7 +11,7 @@ import AssessmentIcon from '@material-ui/icons/Assessment'
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
 import EventIcon from '@material-ui/icons/Event'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
-import Logo from 'assets/images/QuestLogo.svg'
+import QuestLogo from 'assets/images/questFullLogo.svg'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 
@@ -25,7 +25,7 @@ const LeftPanel = (props: any) => {
   return (
     <LeftPanelCont>
       <QuestLogoCont>
-        <img src={Logo} alt="" />
+        <img src={QuestLogo} alt="" />
       </QuestLogoCont>
       <Divider className={classes.dividerStyle} />
       <List>

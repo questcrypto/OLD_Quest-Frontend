@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { logout } from 'logic/actions/user.actions'
-import { useStyles, LeftPanelCont, QuestLogoCont, ListItemText } from './style'
+import { useStyles, LeftPanelCont, QuestLogoCont, ListItemText, SignOutCont } from './style'
 import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -12,19 +12,24 @@ import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
 import EventIcon from '@material-ui/icons/Event'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import Logo from 'assets/images/QuestLogo.svg'
+import history from 'modules/app/components/history'
+import { Paths } from 'modules/app/components/routes/types'
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
   const { logout } = props
 
+  const handleProperty = () => {
+    history.push(Paths.dashboard)
+  }
   return (
     <LeftPanelCont>
       <QuestLogoCont>
         <img src={Logo} alt="" />
       </QuestLogoCont>
-      <Divider />
+      <Divider className={classes.dividerStyle} />
       <List>
-        <ListItem button className={classes.itemButtonStyle}>
+        <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
           <ApartmentIcon className={classes.iconStyle} />
           <ListItemText>Properties</ListItemText>
         </ListItem>
@@ -44,10 +49,13 @@ const LeftPanel = (props: any) => {
           <EventIcon className={classes.iconStyle} />
           <ListItemText>Logs</ListItemText>
         </ListItem>
-        <ListItem button className={classes.signOutStyle} onClick={() => logout()}>
-          <PowerSettingsNewIcon className={classes.iconStyle} />
-          <ListItemText>Sign Out</ListItemText>
-        </ListItem>
+        <SignOutCont>
+          <Divider className={classes.signOutDividerStyle} />
+          <ListItem button onClick={() => logout()}>
+            <PowerSettingsNewIcon className={classes.iconStyle} />
+            <ListItemText>Sign Out</ListItemText>
+          </ListItem>
+        </SignOutCont>
       </List>
     </LeftPanelCont>
   )

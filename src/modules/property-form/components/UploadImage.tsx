@@ -53,7 +53,7 @@ const UploadImage = (props: any) => {
                   root: classes.headerTitle,
                 }}
               >
-                Upload property documents
+                Upload property images
               </Typography>
               <CloseModalBtnCont>
                 <CloseIcon style={{ cursor: 'pointer' }} onClick={() => setShowImgModal(false)} />

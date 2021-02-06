@@ -15,7 +15,9 @@ export const useStyles = makeStyles({
 })
 
 export const TopPanelCont = styled.div`
-  padding: 24px 10px 0 0;
+  padding-right: 10px;
   display: flex;
   justify-content: flex-end;
+  height: 100px;
+  align-items: center;
 `

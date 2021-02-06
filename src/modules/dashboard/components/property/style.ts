@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
 import { fade, makeStyles } from '@material-ui/core/styles'
+import LinearProgress from '@material-ui/core/LinearProgress'
+import { withStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles((theme) => ({
   search: {
@@ -59,9 +61,18 @@ export const useStyles = makeStyles((theme) => ({
   },
 }))
 
+export const StyledLinearProgress = withStyles({
+  colorPrimary: {
+    backgroundColor: '#E5E5E5',
+  },
+  barColorPrimary: {
+    backgroundColor: '#1E3444',
+  },
+})(LinearProgress)
+
 export const PropertyContainer = styled.div``
 export const PropertyHeader = styled.div`
-  margin: 50px 0;
+  margin-bottom: 50px;
 `
 export const HeaderTitle = styled.h3`
   margin: 0;
@@ -93,4 +104,17 @@ export const PropertySearchBox = styled.div`
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr;
+`
+
+export const PaginationCont = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+`
+export const PaginationText = styled.p`
+  margin: 0;
+  font-size: 16px;
+  line-height: 19px;
+  color: ${colors.textPrimary};
 `

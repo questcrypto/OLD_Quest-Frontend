@@ -19,8 +19,14 @@ export const useStyles = makeStyles((theme: Theme) =>
       lineHeight: '19px',
       color: colors.textPrimary,
     },
-    signOutStyle: {
-      marginTop: '100px',
+
+    dividerStyle: {
+      width: '46px',
+      margin: '0 0 54px 30px',
+    },
+    signOutDividerStyle: {
+      width: '46px',
+      margin: '0 0 30px 30px',
     },
   })
 )
@@ -38,4 +44,7 @@ export const ListItemText = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: ${colors.textPrimary};
+`
+export const SignOutCont = styled.div`
+  margin-top: 80px;
 `

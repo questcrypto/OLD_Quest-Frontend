@@ -44,8 +44,8 @@ export const PropertyFormWrapper = styled.div`
   margin-top: 70px;
   background: #ffffff;
   max-width: 650px;
-  height: 6200px;
-  margin-bottom:70px;
+  height: 6370px;
+  margin-bottom: 70px;
 `
 export const PropertyFormCont = styled.div`
   box-sizing: border-box;

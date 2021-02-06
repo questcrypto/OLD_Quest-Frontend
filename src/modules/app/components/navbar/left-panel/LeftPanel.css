@@ -4,8 +4,9 @@
 
 .wrapper {
   width: 100% !important;
-  height: 100vh !important;
+  height: 80vh !important;
   display: flex !important;
+  /* background: yellow; */
 }
 .wrapper_left {
   position: absolute;
@@ -147,4 +148,9 @@ margin-bottom: 50px;
   margin-top: 20px !important;
   width: 70px !important;
   margin-left: 10px !important;
+}
+
+.main{
+  position: sticky;
+  top: 0px;
 }

@@ -61,6 +61,8 @@ const useStyle01 = makeStyles((theme) => ({
   },
   details: {
     alignItems: 'center',
+    height: "420px"
+
   },
   column: {
     flexBasis: '33.33%',
@@ -259,9 +261,11 @@ const PropertyForm = () => {
       return (
         <div
           key={k}
-          style={{ width: '70px',
-                    height: '70px', 
-                    boxSizing: 'border-box' }}
+          style={{
+            width: '70px',
+            height: '70px',
+            boxSizing: 'border-box'
+          }}
         >
           <img src={item.path} alt="" />
         </div>
@@ -302,7 +306,7 @@ const PropertyForm = () => {
                           Owner details
                         </FormTitle>
                       </FormTitleCont>
-                      <FieldMsgBox>
+                      <FieldMsgBox >
                         <CustomTextField label="First name" name="Fname" />
                         <img src={chatIcon} alt="" />
                       </FieldMsgBox>
@@ -644,106 +648,73 @@ const PropertyForm = () => {
                         </FormTitle>
                       </FormTitleCont>
 
-                      {trackArray.arr01.map((floor, idx) => (
-                        <div key={idx} className="displayFlex">
-                          <div className="Flex01_floor">
-                            <Accordion
-                              defaultExpanded
-                              style={{
-                                marginTop: '20px',
-                                width: '400px',
-                              }}
-                            >
-                              <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1c-content"
-                                id="panel1c-header"
-                              >
-                                <div className={classes01.column}>
-                                  <Typography className={classes01.heading}>
-                                    Floor {floor}
-                                  </Typography>
-                                </div>
-                              </AccordionSummary>
-                              <AccordionDetails className={classes01.details}>
-                                <div style={{ width: '100%' }}>
-                                  <FieldMsgBox>
-                                    <CustomTextField
-                                      label="Square Foot"
-                                      name="squareFoot"
-                                    />
-                                    <img src={chatIcon} alt="" />
-                                  </FieldMsgBox>
-                                  <ErrorMessage
-                                    component={err}
-                                    name="squareFoot"
-                                  />
-                                  <FieldMsgBox>
-                                    <CustomTextField
-                                      label="Bedroom"
-                                      name="bedRoom"
-                                    />
-                                    <img src={chatIcon} alt="" />
-                                  </FieldMsgBox>
-                                  <ErrorMessage
-                                    component={err}
-                                    name="bedRoom"
-                                  />
-                                  <FieldMsgBox>
-                                    <CustomTextField
-                                      label="Family"
-                                      name="family"
-                                    />
-                                    <img src={chatIcon} alt="" />
-                                  </FieldMsgBox>
-                                  <ErrorMessage component={err} name="family" />
-                                  <FieldMsgBox>
-                                    <CustomTextField
-                                      label="Kitchen"
-                                      name="kitchen"
-                                    />
-                                    <img src={chatIcon} alt="" />
-                                  </FieldMsgBox>
-                                  <ErrorMessage
-                                    component={err}
-                                    name="kitchen"
-                                  />
-                                  <FieldMsgBox>
-                                    <CustomTextField
-                                      label="Laundry"
-                                      name="laundry"
-                                    />
-                                    <img src={chatIcon} alt="" />
-                                  </FieldMsgBox>
-                                  <ErrorMessage
-                                    component={err}
-                                    name="laundry"
-                                  />
-                                  <FieldMsgBox>
-                                    <CustomTextField label="Bath" name="bath" />
-                                    <img src={chatIcon} alt="" />
-                                  </FieldMsgBox>
-                                  <ErrorMessage component={err} name="bath" />
-                                </div>
-                              </AccordionDetails>
-                            </Accordion>
-                          </div>
-                          {idx !== 0 && (
-                            <div
-                              className="Flex02_floor"
-                              onClick={() => handleRemoveFloor(idx)}
-                            >
-                              <DeleteIcon
-                                style={{
-                                  margin: '30px 0px 0px 10px',
-                                  color: 'red',
-                                  cursor: 'pointer',
-                                }}
-                              />
+                      {
+
+                        trackArray.arr01.map((floor, idx) => (
+                          <div key={idx} className="displayFlex">
+                            <div className="Flex01_floor">
+
+                              <Accordion defaultExpanded style={{ marginTop: "20px", width: "420px", position: "relative" }}>
+                                <AccordionSummary
+                                  expandIcon={<ExpandMoreIcon />}
+                                  aria-controls="panel1c-content"
+                                  id="panel1c-header"
+                                >
+                                  <div className={classes01.column}>
+                                    <Typography className={classes01.heading}>Floor {floor}</Typography>
+                                  </div>
+
+                                </AccordionSummary>
+                                <AccordionDetails className={classes01.details}>
+                                  <div style={{ width: "450px", position: "absolute", top: "60px" }} >
+
+                                    <FieldMsgBox>
+                                      <CustomTextField label="Square Foot" name="FloorDetails.squareFoot" />
+                                      <img src={chatIcon} alt="" />
+                                    </FieldMsgBox>
+                                    <ErrorMessage component={err} name="FloorDetails.squareFoot" />
+                                    <FieldMsgBox>
+                                      <CustomTextField label="Bedroom" name="FloorDetails.bedRoom" />
+                                      <img src={chatIcon} alt="" />
+                                    </FieldMsgBox>
+                                    <ErrorMessage component={err} name="FloorDetails.bedRoom" />
+                                    <FieldMsgBox>
+                                      <CustomTextField label="Family" name="FloorDetails.family" />
+                                      <img src={chatIcon} alt="" />
+                                    </FieldMsgBox>
+                                    <ErrorMessage component={err} name="FloorDetails.family" />
+                                    <FieldMsgBox>
+                                      <CustomTextField label="Kitchen" name="FloorDetails.kitchen" />
+                                      <img src={chatIcon} alt="" />
+                                    </FieldMsgBox>
+                                    <ErrorMessage component={err} name="FloorDetails.kitchen" />
+                                    <FieldMsgBox>
+                                      <CustomTextField label="Laundry" name="FloorDetails.laundry" />
+                                      <img src={chatIcon} alt="" />
+                                    </FieldMsgBox>
+                                    <ErrorMessage component={err} name="FloorDetails.laundry" />
+                                    <FieldMsgBox>
+                                      <CustomTextField label="Bath" name="FloorDetails.bath" />
+                                      <img src={chatIcon} alt="" />
+                                    </FieldMsgBox>
+                                    <ErrorMessage component={err} name="FloorDetails.bath" />
+                                  </div>
+
+
+                                </AccordionDetails>
+
+
+                              </Accordion>
                             </div>
-                          )}
-                        </div>
-                      ))}
+                            {
+                              idx !== 0 && <div className="Flex02_floor" onClick={() => handleRemoveFloor(idx)} >
+                                <DeleteIcon style={{ margin: "30px 0px 0px 10px", color: "red", cursor: "pointer" }} />
+                              </div>
+                            }
+
+                          </div>
+                        ))
+                      }
                       <div
                         style={{ position: 'relative', cursor: 'pointer' }}
                         onClick={handleAddFloor}
@@ -909,7 +880,7 @@ const PropertyForm = () => {
                   I take full responsibility of the above information
                 </div>
 
-                <div style={{ marginTop: '50px' }}>
+                <div style={{ margin: '50px 0px 200px 0px' }}>
                   <Button
                     type="submit"
                     variant="contained"
@@ -918,6 +889,7 @@ const PropertyForm = () => {
                     }}
                     style={{
                       marginLeft: '30px',
+                      marginBottom: '20px',
                       textTransform: 'none',
                       backgroundColor: '#E0E0E0',
                       color: 'black',
@@ -932,7 +904,7 @@ const PropertyForm = () => {
                     classes={{
                       root: classes.saveBtn,
                     }}
-                    style={{ marginLeft: '20px', textTransform: 'none' }}
+                    style={{ marginLeft: '20px', marginBottom: '20px', textTransform: 'none' }}
                   >
                     Save & Send for review
                   </Button>

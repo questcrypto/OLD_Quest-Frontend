@@ -78,7 +78,7 @@ const LeftPanel = () => {
                 <img src={Logo} alt="LOGO" height="45" />
               </p>
             </div>
-            <Divider className="divider_logo"/>
+            <Divider className="divider_logo" />
             <div className="wrapper_tabs">
               <Tabs
                 orientation="vertical"

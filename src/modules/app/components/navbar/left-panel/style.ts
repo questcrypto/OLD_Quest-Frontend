@@ -27,6 +27,8 @@ export const useStyles = makeStyles((theme: Theme) =>
 export const LeftPanelCont = styled.div`
   background: ${colors.white};
   height: 100vh;
+  position: sticky;
+  top: 0;
 `
 export const QuestLogoCont = styled.div`
   padding: 30px 12px;

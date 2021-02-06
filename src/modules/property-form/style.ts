@@ -14,7 +14,8 @@ export const useStyle = makeStyles({
     },
   },
   dividerStyle: {
-    margin: '50px 0 !important',
+    margin: '45px 0 !important',
+    width: '590px',
   },
   saveBtn: {
     color: colors.white,
@@ -37,10 +38,24 @@ export const useStyle = makeStyles({
   },
 })
 
-export const PropertyFormWrapper = styled.div`
-  margin: 15%;
-  padding: 10px 10px;
-  margin-top: 5px;
+export const PropertyFormWrapper = styled.div``
+export const FromHeader = styled.div`
+  margin-bottom: 50px;
+`
+export const HeaderPath = styled.div`
+  margin: 0 0 24px 0;
+  font-size: 16px;
+  line-height: 19px;
+  span {
+    opacity: 0.5;
+  }
+`
+
+export const HeaderTitle = styled.h2`
+  margin: 0;
+  font-size: 24px;
+  line-height: 29px;
+  color: ${colors.textPrimary};
 `
 export const PropertyFormCont = styled.div`
   box-sizing: border-box;
@@ -58,13 +73,16 @@ export const FormTitleNumber = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  margin-top: 25px;
 `
 export const FormTitleCont = styled.div`
   margin-bottom: 20px;
+  margin-top: 30px;
 `
 export const FormTitle = styled.h4`
   font-size: 20px;
   line-height: 24px;
+  margin-top: 25px;
   color: ${colors.textPrimary};
   margin: 0;
 `

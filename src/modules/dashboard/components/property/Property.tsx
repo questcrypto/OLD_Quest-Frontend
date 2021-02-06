@@ -8,6 +8,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import {
   useStyles,
+  StyledLinearProgress,
   PropertyContainer,
   PropertyHeader,
   HeaderTitle,
@@ -15,9 +16,10 @@ import {
   PropertyTabCont,
   TabTitle,
   PropertySearchBox,
+  PaginationCont,
+  PaginationText,
 } from './style'
 import { Grid } from '@material-ui/core'
-import LinearProgress from '@material-ui/core/LinearProgress'
 
 const Property = () => {
   const classes = useStyles()
@@ -36,7 +38,7 @@ const Property = () => {
             <HeaderTitle>Properties</HeaderTitle>
           </Grid>
           <Grid item xs={3}>
-            <LinearProgress variant="determinate" value={progress} className={classes.progressStyle} />
+            <StyledLinearProgress variant="determinate" value={progress} className={classes.progressStyle} />
           </Grid>
           <Grid item xs={3}>
             <ProgressText>643 new properties to onboard</ProgressText>
@@ -94,12 +96,11 @@ const Property = () => {
         {activeTab === 'postAuctions' && <p>Content can be added here</p>}
       </div>
 
-      <div className="FlexForFlexforpaginationpa">
-        <div className="Flexforpagination01">Showing 1 to 15 of 35 element</div>
-        <div className="Flexforpagination02">
-          <Pagination count={10} showFirstButton showLastButton />
-        </div>
-      </div>
+      <PaginationCont>
+        <PaginationText>Showing 1 to 15 of 35 element</PaginationText>
+
+        <Pagination count={10} showFirstButton showLastButton />
+      </PaginationCont>
     </PropertyContainer>
   )
 }

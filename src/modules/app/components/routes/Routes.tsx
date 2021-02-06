@@ -13,7 +13,6 @@ import PropertyDetails from 'modules/property-details'
 import { Login } from 'modules/auth'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
-import { Grid } from '@material-ui/core'
 
 const notFoundRoute: RouteDefinition = {
   path: '*',

@@ -6,7 +6,16 @@ import InputBase from '@material-ui/core/InputBase'
 import Pagination from '@material-ui/lab/Pagination'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
-import { useStyles, PropertyHeader, HeaderTitle, ProgressText, PropertyTabCont, TabTitle, PropertySearchBox } from './style'
+import {
+  useStyles,
+  PropertyContainer,
+  PropertyHeader,
+  HeaderTitle,
+  ProgressText,
+  PropertyTabCont,
+  TabTitle,
+  PropertySearchBox,
+} from './style'
 import { Grid } from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress'
 
@@ -20,7 +29,7 @@ const Property = () => {
   }
 
   return (
-    <div>
+    <PropertyContainer>
       <PropertyHeader>
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -91,7 +100,7 @@ const Property = () => {
           <Pagination count={10} showFirstButton showLastButton />
         </div>
       </div>
-    </div>
+    </PropertyContainer>
   )
 }
 

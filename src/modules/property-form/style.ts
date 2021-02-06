@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { FieldArray } from 'formik'
 import { colors } from 'shared/styles/theme'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -37,6 +38,29 @@ export const useStyle = makeStyles({
     borderRadius: '4px',
   },
 })
+export const useStyle01 = makeStyles((theme) => ({
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+  },
+  headerStyle: {
+    background: '#E0E0E0',
+    border: '1px solid #E0E0E0',
+    marginBottom: '0',
+  },
+  detailsCont: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '16px',
+  },
+  deleteBtnStyle: {
+    position: 'absolute',
+    color: '#EB5757',
+    cursor: 'pointer',
+    top: '14px',
+    left: '100%',
+    marginLeft: '28px',
+  },
+}))
 
 export const PropertyFormWrapper = styled.div``
 export const FromHeader = styled.div`
@@ -130,4 +154,36 @@ export const FieldMsgBox = styled.div`
     margin-left: 24px;
     margin-bottom: 20px;
   }
+`
+export const FloorDetailsArr = styled(FieldArray)`
+  display: flex;
+  flex-direction: column;
+`
+export const FloorDetailsCont = styled.div`
+  margin-bottom: 20px;
+  position: relative;
+`
+export const FloorFieldMsgBox = styled.div`
+  position: relative;
+  img {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 14px;
+    left: 100%;
+    margin-left: 40px;
+  }
+`
+export const AddAnotherCont = styled.div`
+  display: flex;
+  align-items: center;
+  width: 170px;
+  margin-top: 28px;
+  span {
+    margin-left: 10px;
+    font-size: 16px;
+    line-height: 19px;
+    color: ${colors.textPrimary};
+  }
+  cursor: pointer;
 `

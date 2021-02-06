@@ -4,6 +4,7 @@ import { Formik, Form, ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
 import {
   useStyle,
+  useStyle01,
   PropertyFormWrapper,
   FromHeader,
   HeaderPath,
@@ -17,6 +18,10 @@ import {
   SelectedFileImgCont,
   DocText,
   FieldMsgBox,
+  FloorDetailsArr,
+  FloorDetailsCont,
+  FloorFieldMsgBox,
+  AddAnotherCont,
 } from './style'
 import Button from '@material-ui/core/Button'
 import { Grid, Checkbox } from '@material-ui/core'
@@ -31,7 +36,6 @@ import ImageIcon from 'assets/icons/imgIcon.svg'
 import CrossIcon from 'assets/icons/crossIcon.svg'
 import FileIcon from 'assets/icons/fileIcon.svg'
 import chatIcon from 'assets/images/chatIcon.svg'
-import { makeStyles } from '@material-ui/core/styles'
 import Accordion from '@material-ui/core/Accordion'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
@@ -40,47 +44,12 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
 
-const useStyle01 = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
-  icon: {
-    verticalAlign: 'bottom',
-    height: 20,
-    width: 20,
-  },
-  details: {
-    alignItems: 'center',
-    height: '420px',
-  },
-  column: {
-    flexBasis: '33.33%',
-  },
-  helper: {
-    borderLeft: `2px solid ${theme.palette.divider}`,
-    padding: theme.spacing(1, 2),
-  },
-  link: {
-    color: theme.palette.primary.main,
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-  },
-}))
-
 const initialValues = {
   Fname: '',
   Lname: '',
   Email: '',
   PublicAddress: '',
+
   PropertyType: '',
   PropertyName: '',
   CurrentValue: '',
@@ -89,29 +58,44 @@ const initialValues = {
   Zoning: '',
   Landscaping: '',
   LotFacts: '',
+
   Address1: '',
   Address2: '',
   City: '',
   State: '',
   PostalCode: '',
+  Country: '',
   Subdivision: '',
   TaxId: '',
-  Zoning1: '',
+
   SchoolDistrict: '',
-  SchoolDistrict1: '',
   Elementary: '',
   JrHigh: '',
   HighSchool: '',
+
   Insurance: '',
   Maintenance: '',
   HOAFees: '',
-  Amenties: '',
+
+  FloorDetails: [
+    {
+      squareFoot: '',
+      bedRoom: '',
+      family: '',
+      kitchen: '',
+      laundry: '',
+      bath: '',
+    },
+  ],
+
+  Heating: '',
   AC: '',
   Roof: '',
   Floor: '',
   WindowCovering: '',
   Pool: '',
   PoolFeature: '',
+
   Style: '',
   Deck: '',
   Patio: '',
@@ -124,31 +108,22 @@ const initialValues = {
   Water: '',
   WaterShare: '',
   Spa: '',
-  FloorDetails: {
-    squareFoot: '',
-    bedRoom: '',
-    family: '',
-    kitchen: '',
-    laundry: '',
-    bath: '',
-  },
 }
 const propertyFormSchema = Yup.object().shape({
   Fname: Yup.string().required('First name is required'),
   Lname: Yup.string().required('Last name is required'),
-  Email: Yup.string().required('email is required'),
+  Email: Yup.string().required('Email is required'),
   PublicAddress: Yup.string().required('Wallet public key is required'),
+
+  PropertyType: Yup.string().required('This field is required'),
   PropertyName: Yup.string().required('This field is required'),
   CurrentValue: Yup.number().integer().required('This field is required'),
   Comments: Yup.string().required('This field is required'),
-  YearBuilt: Yup.date()
-    .default(function () {
-      return new Date()
-    })
-    .required('This field is required'),
+  YearBuilt: Yup.string().required('This field is required'),
   Zoning: Yup.string().required('This field is required'),
   Landscaping: Yup.string().required('This field is required'),
   LotFacts: Yup.number().integer().required('This field is required'),
+
   Address1: Yup.string().required('This field is required'),
   Address2: Yup.string().required('This field is required'),
   City: Yup.string().required('This field is required'),
@@ -156,17 +131,19 @@ const propertyFormSchema = Yup.object().shape({
   PostalCode: Yup.string()
     .matches(/^[0-9]{5}$/, 'Must be exactly 5 digits')
     .required('This field is required'),
+  Country: Yup.string().required('This field is required'),
   Subdivision: Yup.string().required('This field is required'),
   TaxId: Yup.string().required('This field is required'),
-  Zoning1: Yup.string().required('This field is required'),
+
   SchoolDistrict: Yup.string().required('This field is required'),
-  SchoolDistrict1: Yup.string().required('This field is required'),
   Elementary: Yup.string().required('This field is required'),
   JrHigh: Yup.string().required('This field is required'),
   HighSchool: Yup.string().required('This field is required'),
+
   Insurance: Yup.number().integer().required('This field is required'),
   Maintenance: Yup.number().integer().required('This field is required'),
   HOAFees: Yup.number().integer().required('This field is required'),
+
   FloorDetails: Yup.object().shape({
     squareFoot: Yup.string().required('This field is required'),
     bedRoom: Yup.string().required('This field is required'),
@@ -175,13 +152,15 @@ const propertyFormSchema = Yup.object().shape({
     laundry: Yup.string().required('This field is required'),
     bath: Yup.string().required('This field is required'),
   }),
-  Amenties: Yup.number().integer().required('This field is required'),
+
+  Heating: Yup.number().integer().required('This field is required'),
   AC: Yup.number().integer().required('This field is required'),
   Roof: Yup.number().integer().required('This field is required'),
   Floor: Yup.number().integer().required('This field is required'),
   WindowCovering: Yup.number().integer().required('This field is required'),
   Pool: Yup.number().integer().required('This field is required'),
   PoolFeature: Yup.number().integer().required('This field is required'),
+
   Style: Yup.number().integer().required('This field is required'),
   Deck: Yup.number().integer().required('This field is required'),
   Patio: Yup.number().integer().required('This field is required'),
@@ -196,13 +175,8 @@ const propertyFormSchema = Yup.object().shape({
   Spa: Yup.number().integer().required('This field is required'),
 })
 
-let arr01: number[] = [1]
-
 const PropertyForm = () => {
   const [showImgModal, setShowImgModal] = useState(false)
-  const [trackArray, settrackArray] = useState({
-    arr01,
-  })
   const [imageList, setImageList] = useState<any>([])
   const [showDocModal, setShowDocModal] = useState(false)
   const [documentList, setDocumentList] = useState<any>([])
@@ -212,21 +186,9 @@ const PropertyForm = () => {
   const handleSubmit = (values: any) => {
     console.log('Values-->', values)
   }
-  const handleAddFloor = () => {
-    // console.log("clicked")
-    // console.log("arr01.length ", trackArray.arr01.length)
-    // console.log("trackArray ", trackArray)
-    arr01.push(arr01.length + 1)
-    settrackArray({ arr01: arr01 })
+  const handleAddFloorDetails = (arrayHelpers: any) => {
+    arrayHelpers.push({ squareFoot: '', bedRoom: '', family: '', kitchen: '', laundry: '', bath: '' })
   }
-
-  const handleRemoveFloor = (idx: number) => {
-    let someArray = trackArray.arr01
-    someArray.splice(idx, 1)
-    settrackArray({ arr01: someArray })
-  }
-
-  useEffect(() => {}, [trackArray])
 
   const renderSelectedFileName = (fileList: any, type: string) => {
     return fileList.map((item: any, k: number) => {
@@ -278,9 +240,9 @@ const PropertyForm = () => {
             setSubmitting(false)
           }}
         >
-          {() => (
+          {({ values }: any) => (
             <Form>
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>1</FormTitleNumber>
                 </Grid>
@@ -306,7 +268,7 @@ const PropertyForm = () => {
                       <CustomTextField label="Email Address" type="email" name="Email" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
-                    <ErrorMessage component={err} name="email" />
+                    <ErrorMessage component={err} name="Email" />
 
                     <FieldMsgBox>
                       <CustomTextField label="Wallet public key" name="PublicAddress" />
@@ -318,7 +280,7 @@ const PropertyForm = () => {
                   <Divider classes={{ root: classes.dividerStyle }} />
                 </Grid>
               </Grid>
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>2</FormTitleNumber>
                 </Grid>
@@ -356,7 +318,7 @@ const PropertyForm = () => {
                       <CustomTextField label="Zoning" name="Zoning" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
-                    <ErrorMessage component={err} name="zoning" />
+                    <ErrorMessage component={err} name="Zoning" />
                     <FieldMsgBox>
                       <CustomTextField label="Landscaping" name="Landscaping" />
                       <img src={chatIcon} alt="" />
@@ -372,7 +334,7 @@ const PropertyForm = () => {
                 </Grid>
               </Grid>
 
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>3</FormTitleNumber>
                 </Grid>
@@ -396,7 +358,7 @@ const PropertyForm = () => {
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="City" />
-                    <Grid container spacing={1} xs={12}>
+                    <Grid container spacing={1}>
                       <Grid item xs={12} sm={6}>
                         <CustomTextField label="State" name="State" />
                         <ErrorMessage component={err} name="State" />
@@ -410,6 +372,11 @@ const PropertyForm = () => {
                       </Grid>
                     </Grid>
                     <FieldMsgBox>
+                      <CustomTextField label="Country" name="Country" />
+                      <img src={chatIcon} alt="" />
+                    </FieldMsgBox>
+                    <ErrorMessage component={err} name="Country" />
+                    <FieldMsgBox>
                       <CustomTextField label="Subdivision" name="Subdivision" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
@@ -419,22 +386,12 @@ const PropertyForm = () => {
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="TaxId" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Zoning" name="Zoning1" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Zoning1" />
-                    <FieldMsgBox>
-                      <CustomTextField label="School district" name="SchoolDistrict" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="SchoolDistrict" />
                   </Grid>
                   <Divider classes={{ root: classes.dividerStyle }} />
                 </Grid>
               </Grid>
 
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>4</FormTitleNumber>
                 </Grid>
@@ -444,10 +401,10 @@ const PropertyForm = () => {
                       <FormTitle className="form_title">Locality / Neighbourhood insight</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
-                      <CustomTextField label="School district" name="SchoolDistrict1" />
+                      <CustomTextField label="School district" name="SchoolDistrict" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
-                    <ErrorMessage component={err} name="SchoolDistrict1" />
+                    <ErrorMessage component={err} name="SchoolDistrict" />
                     <FieldMsgBox>
                       <CustomTextField label="Elementary" name="Elementary" />
                       <img src={chatIcon} alt="" />
@@ -468,7 +425,7 @@ const PropertyForm = () => {
                 </Grid>
               </Grid>
 
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>5</FormTitleNumber>
                 </Grid>
@@ -497,7 +454,7 @@ const PropertyForm = () => {
                 </Grid>
               </Grid>
 
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>6</FormTitleNumber>
                 </Grid>
@@ -505,7 +462,7 @@ const PropertyForm = () => {
                   <FormTitleCont>
                     <FormTitle className="form_title">Upload property images</FormTitle>
                   </FormTitleCont>
-                  <Grid container spacing={3} xs={12}>
+                  <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                       <Paper
                         elevation={1}
@@ -531,7 +488,7 @@ const PropertyForm = () => {
                 </Grid>
               </Grid>
 
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>7</FormTitleNumber>
                 </Grid>
@@ -539,7 +496,7 @@ const PropertyForm = () => {
                   <FormTitleCont>
                     <FormTitle className="form_title">Upload property documents</FormTitle>
                   </FormTitleCont>
-                  <Grid container spacing={3} xs={12}>
+                  <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                       <Paper
                         elevation={1}
@@ -565,7 +522,7 @@ const PropertyForm = () => {
                 </Grid>
               </Grid>
 
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>8</FormTitleNumber>
                 </Grid>
@@ -575,70 +532,68 @@ const PropertyForm = () => {
                       <FormTitle className="form_title">Floor Wise Configuration</FormTitle>
                     </FormTitleCont>
 
-                    {trackArray.arr01.map((floor, idx) => (
-                      <div key={idx} className="displayFlex">
-                        <div className="Flex01_floor">
-                          <Accordion defaultExpanded style={{ marginTop: '20px', width: '420px', position: 'relative' }}>
-                            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1c-content" id="panel1c-header">
-                              <div className={classes01.column}>
-                                <Typography className={classes01.heading}>Floor {floor}</Typography>
-                              </div>
-                            </AccordionSummary>
-                            <AccordionDetails className={classes01.details}>
-                              <div style={{ width: '450px', position: 'absolute', top: '60px' }}>
-                                <FieldMsgBox>
-                                  <CustomTextField label="Square Foot" name="FloorDetails.squareFoot" />
-                                  <img src={chatIcon} alt="" />
-                                </FieldMsgBox>
-                                <ErrorMessage component={err} name="FloorDetails.squareFoot" />
-                                <FieldMsgBox>
-                                  <CustomTextField label="Bedroom" name="FloorDetails.bedRoom" />
-                                  <img src={chatIcon} alt="" />
-                                </FieldMsgBox>
-                                <ErrorMessage component={err} name="FloorDetails.bedRoom" />
-                                <FieldMsgBox>
-                                  <CustomTextField label="Family" name="FloorDetails.family" />
-                                  <img src={chatIcon} alt="" />
-                                </FieldMsgBox>
-                                <ErrorMessage component={err} name="FloorDetails.family" />
-                                <FieldMsgBox>
-                                  <CustomTextField label="Kitchen" name="FloorDetails.kitchen" />
-                                  <img src={chatIcon} alt="" />
-                                </FieldMsgBox>
-                                <ErrorMessage component={err} name="FloorDetails.kitchen" />
-                                <FieldMsgBox>
-                                  <CustomTextField label="Laundry" name="FloorDetails.laundry" />
-                                  <img src={chatIcon} alt="" />
-                                </FieldMsgBox>
-                                <ErrorMessage component={err} name="FloorDetails.laundry" />
-                                <FieldMsgBox>
-                                  <CustomTextField label="Bath" name="FloorDetails.bath" />
-                                  <img src={chatIcon} alt="" />
-                                </FieldMsgBox>
-                                <ErrorMessage component={err} name="FloorDetails.bath" />
-                              </div>
-                            </AccordionDetails>
-                          </Accordion>
+                    <FloorDetailsArr
+                      name="FloorDetails"
+                      render={(arrayHelpers) => (
+                        <div>
+                          {values.FloorDetails.map((ref: any, index: number) => (
+                            <FloorDetailsCont key={index}>
+                              <Accordion defaultExpanded>
+                                <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes01.headerStyle}>
+                                  <Typography className={classes01.heading}>Floor {index + 1}</Typography>
+                                </AccordionSummary>
+                                <AccordionDetails className={classes01.detailsCont}>
+                                  <FloorFieldMsgBox>
+                                    <CustomTextField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
+                                    <img src={chatIcon} alt="" />
+                                  </FloorFieldMsgBox>
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
+                                  <FloorFieldMsgBox>
+                                    <CustomTextField label="Bedroom" name={`FloorDetails[${index}].BedRoom`} />
+                                    <img src={chatIcon} alt="" />
+                                  </FloorFieldMsgBox>
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].BedRoom`} />
+                                  <FloorFieldMsgBox>
+                                    <CustomTextField label="Family" name={`FloorDetails[${index}].Family`} />
+                                    <img src={chatIcon} alt="" />
+                                  </FloorFieldMsgBox>
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Family`} />
+                                  <FloorFieldMsgBox>
+                                    <CustomTextField label="Kitchen" name={`FloorDetails[${index}].Kitchen`} />
+                                    <img src={chatIcon} alt="" />
+                                  </FloorFieldMsgBox>
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Kitchen`} />
+                                  <FloorFieldMsgBox>
+                                    <CustomTextField label="Laundry" name={`FloorDetails[${index}].Laundry`} />
+                                    <img src={chatIcon} alt="" />
+                                  </FloorFieldMsgBox>
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Laundry`} />
+                                  <FloorFieldMsgBox>
+                                    <CustomTextField label="Bath" name={`FloorDetails[${index}].Bath`} />
+                                    <img src={chatIcon} alt="" />
+                                  </FloorFieldMsgBox>
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Bath`} />
+                                </AccordionDetails>
+                              </Accordion>
+                              {values.FloorDetails.length > 1 && (
+                                <DeleteIcon className={classes01.deleteBtnStyle} onClick={() => arrayHelpers.remove(index)} />
+                              )}
+                            </FloorDetailsCont>
+                          ))}
+                          <AddAnotherCont onClick={() => handleAddFloorDetails(arrayHelpers)}>
+                            <AddIcon />
+                            <span>Add Another Floor</span>
+                          </AddAnotherCont>
                         </div>
-                        {idx !== 0 && (
-                          <div className="Flex02_floor" onClick={() => handleRemoveFloor(idx)}>
-                            <DeleteIcon style={{ margin: '30px 0px 0px 10px', color: 'red', cursor: 'pointer' }} />
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                    <div style={{ position: 'relative', cursor: 'pointer' }} onClick={handleAddFloor}>
-                      {' '}
-                      <AddIcon style={{ marginTop: '10px' }} />{' '}
-                      <span style={{ marginTop: '13px', position: 'absolute' }}>Add Another Floor</span>{' '}
-                    </div>
+                      )}
+                    />
                   </Grid>
 
                   <Divider classes={{ root: classes.dividerStyle }} />
                 </Grid>
               </Grid>
 
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>9</FormTitleNumber>
                 </Grid>
@@ -648,10 +603,10 @@ const PropertyForm = () => {
                       <FormTitle className="form_title">Amenities</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
-                      <CustomTextField label="Heating" name="Amenties" />
+                      <CustomTextField label="Heating" name="Heating" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
-                    <ErrorMessage component={err} name="Amenties" />
+                    <ErrorMessage component={err} name="Heating" />
                     <FieldMsgBox>
                       <CustomTextField label="AC" name="AC" />
                       <img src={chatIcon} alt="" />
@@ -687,7 +642,7 @@ const PropertyForm = () => {
                 </Grid>
               </Grid>
 
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={1}>
                   <FormTitleNumber>10</FormTitleNumber>
                 </Grid>

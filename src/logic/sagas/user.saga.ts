@@ -1,12 +1,32 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { loginSuccess, loginFail } from '../actions/user.actions'
-import { LOGIN_START } from '../actions/action.config'
+import { authSuccess, authFail, loginSuccess, loginFail } from '../actions/user.actions'
+import { AUTH_START, LOGIN_START } from '../actions/action.config'
 import { setAuthToken } from '../helpers/set-auth-token'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 
+/* ============== USER AUTH SAGA =============== */
+
+export function* authWatcher() {
+  yield takeLatest(AUTH_START, authWorker)
+}
+
+export function* authWorker() {
+  try {
+    const token = localStorage.getItem('token')
+    if (token) {
+      setAuthToken(token)
+      const successData = { token }
+      yield put(authSuccess(successData))
+    } else {
+      yield put(authFail())
+    }
+  } catch (error) {
+    yield put(authFail())
+  }
+}
 /* ============== LOGIN SAGA =============== */
 
 export function* loginWatcher() {
@@ -32,12 +52,4 @@ function loginUser(data: any) {
 /*=======================getUserInfo  ============================*/
 async function getUserInfo(token: any) {
   setAuthToken(token)
-  try {
-    const res = await axios.get(`${apiBaseUrl}/user/info`)
-    if (res) {
-      return res.data
-    }
-  } catch (error) {
-    return []
-  }
 }

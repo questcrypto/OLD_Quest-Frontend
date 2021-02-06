@@ -59,6 +59,7 @@ export const useStyles = makeStyles((theme) => ({
   },
 }))
 
+export const PropertyContainer = styled.div``
 export const PropertyHeader = styled.div`
   margin: 50px 0;
 `

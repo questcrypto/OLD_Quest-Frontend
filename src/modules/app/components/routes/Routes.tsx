@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Switch } from 'react-router'
 import { Router, Route } from 'react-router-dom'
-import { StyledRoutesWrapper, StyledRoutesContainer, StyledRoutes } from './style'
+import { StyledRoutesWrapper, StyledRoutes, StyledRoutesContainer, LeftContainer, RightContainer } from './style'
 import Loader from 'shared/loader'
 import history from '../history'
 import { Paths } from './types'
@@ -32,21 +32,21 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.dashboard,
     component: Dashboard,
-    protected: false,
+    protected: true,
     redirect: Paths.root,
     title: '',
   },
   {
     path: Paths.addPropertyForm,
     component: PropertyForm,
-    protected: false,
+    protected: true,
     redirect: Paths.root,
     title: '',
   },
   {
     path: Paths.propertyDetails,
     component: PropertyDetails,
-    protected: false,
+    protected: true,
     redirect: Paths.root,
     title: '',
   },
@@ -65,42 +65,43 @@ interface RoutesProps {}
 interface StateProps {
   loggedIn: boolean
   isLoaded: boolean
+  authLoading: boolean
 }
 
 function getRouteRenderWithAuth(loggedIn: boolean, route: RouteDefinition, i: number) {
   if (loggedIn === route.protected) {
     return () => <route.component />
   } else if (loggedIn && !route.protected) {
-    return () => <Redirect to={`${Paths.root}`} />
+    return () => <Redirect to={`${Paths.dashboard}`} />
   } else {
     return () => <Redirect to={route.redirect!} />
   }
 }
 
-const Routes: React.FC<Props & RoutesProps & StateProps> = ({ isLoaded, loggedIn }) => {
+const Routes: React.FC<Props & RoutesProps & StateProps> = ({ isLoaded, loggedIn, authLoading }) => {
   return (
     <StyledRoutesWrapper>
       <Router history={history}>
-        <Grid container>
-          {loggedIn && (
-            <Grid item xs={2}>
-              <LeftPanel />
-            </Grid>
-          )}
+        <StyledRoutesContainer contStatus={loggedIn}>
+          <LeftContainer>{loggedIn && <LeftPanel />}</LeftContainer>
 
-          <Grid item xs={loggedIn ? 10 : 12}>
+          <RightContainer>
+            {loggedIn && <TopPanel />}
             <StyledRoutes>
-              {loggedIn && <TopPanel />}
               <Switch>
                 {routes.map((route, i) => {
-                  const render = getRouteRenderWithAuth(loggedIn, route, i)
-                  const rest = { render }
-                  return isLoaded ? <Route key={i} path={route.path} exact {...rest} /> : null
+                  if (authLoading) {
+                    return <Loader key={i} />
+                  } else {
+                    const render = getRouteRenderWithAuth(loggedIn, route, i)
+                    const rest = { render }
+                    return isLoaded ? <Route key={i} path={route.path} exact {...rest} /> : null
+                  }
                 })}
               </Switch>
             </StyledRoutes>
-          </Grid>
-        </Grid>
+          </RightContainer>
+        </StyledRoutesContainer>
       </Router>
     </StyledRoutesWrapper>
   )
@@ -109,6 +110,7 @@ const Routes: React.FC<Props & RoutesProps & StateProps> = ({ isLoaded, loggedIn
 const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   isLoaded: state.user.isLoaded,
+  authLoading: state.user.authLoading,
 })
 
 export default connect(mapStateToProps)(Routes)

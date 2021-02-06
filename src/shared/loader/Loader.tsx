@@ -1,6 +1,6 @@
 import React from 'react'
 import { LoaderContainer } from './style'
-import loading from 'assets/image/questLoader.svg'
+import loading from 'assets/images/questLoader.svg'
 
 const Loader = () => (
   <LoaderContainer>

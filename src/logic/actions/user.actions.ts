@@ -1,5 +1,26 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAIL } from './action.config'
+import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, LOGIN_START, LOGIN_SUCCESS, LOGIN_FAIL } from './action.config'
 
+export const authStart = () => {
+  return {
+    type: AUTH_START,
+  }
+}
+export const authSuccess = (data: any) => {
+  return {
+    type: AUTH_SUCCESS,
+    payload: data,
+  }
+}
+export const authFail = () => {
+  return {
+    type: AUTH_FAIL,
+  }
+}
+export const logout = () => {
+  return {
+    type: LOGOUT,
+  }
+}
 export const loginStart = (data: any) => {
   return {
     type: LOGIN_START,

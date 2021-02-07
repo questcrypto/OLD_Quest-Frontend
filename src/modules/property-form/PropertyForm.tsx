@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import * as Yup from 'yup'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
@@ -79,6 +79,7 @@ const initialValues = {
 
   FloorDetails: [
     {
+      id: Math.random(),
       squareFoot: '',
       bedRoom: '',
       family: '',
@@ -187,7 +188,7 @@ const PropertyForm = () => {
     console.log('Values-->', values)
   }
   const handleAddFloorDetails = (arrayHelpers: any) => {
-    arrayHelpers.push({ squareFoot: '', bedRoom: '', family: '', kitchen: '', laundry: '', bath: '' })
+    arrayHelpers.push({ id: Math.random(), squareFoot: '', bedRoom: '', family: '', kitchen: '', laundry: '', bath: '' })
   }
 
   const renderSelectedFileName = (fileList: any, type: string) => {
@@ -537,7 +538,7 @@ const PropertyForm = () => {
                       render={(arrayHelpers) => (
                         <div>
                           {values.FloorDetails.map((ref: any, index: number) => (
-                            <FloorDetailsCont key={index}>
+                            <FloorDetailsCont key={ref.id}>
                               <Accordion defaultExpanded>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes01.headerStyle}>
                                   <Typography className={classes01.heading}>Floor {index + 1}</Typography>

@@ -39,8 +39,8 @@ const PropertyTable = () => {
           </TableRow>
         </CustomTableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.location}>
+          {rows.map((row, k) => (
+            <TableRow key={k}>
               <CustomTableCell component="th" scope="row">
                 {row.location}
               </CustomTableCell>

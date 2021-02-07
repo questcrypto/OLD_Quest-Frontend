@@ -38,7 +38,7 @@ export const useStyle = makeStyles({
     borderRadius: '4px',
   },
   fileNameStyle: {
-    marginBottom: '20px',
+    marginBottom: '16px',
   },
 })
 export const useStyle01 = makeStyles((theme) => ({

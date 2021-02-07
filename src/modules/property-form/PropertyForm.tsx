@@ -123,12 +123,12 @@ const propertyFormSchema = Yup.object().shape({
 
   PropertyType: Yup.string().required('This field is required'),
   PropertyName: Yup.string().required('This field is required'),
-  CurrentValue: Yup.number().integer().required('This field is required'),
+  CurrentValue: Yup.string().required('This field is required'),
   Comments: Yup.string().required('This field is required'),
   YearBuilt: Yup.string().required('This field is required'),
   Zoning: Yup.string().required('This field is required'),
   Landscaping: Yup.string().required('This field is required'),
-  LotFacts: Yup.number().integer().required('This field is required'),
+  LotFacts: Yup.string().required('This field is required'),
 
   Address1: Yup.string().required('This field is required'),
   Address2: Yup.string().required('This field is required'),
@@ -146,11 +146,12 @@ const propertyFormSchema = Yup.object().shape({
   JrHigh: Yup.string().required('This field is required'),
   HighSchool: Yup.string().required('This field is required'),
 
-  Insurance: Yup.number().integer().required('This field is required'),
-  Maintenance: Yup.number().integer().required('This field is required'),
-  HOAFees: Yup.number().integer().required('This field is required'),
+  Insurance: Yup.string().required('This field is required'),
+  Maintenance: Yup.string().required('This field is required'),
+  HOAFees: Yup.string().required('This field is required'),
 
   FloorDetails: Yup.object().shape({
+    Floor: Yup.string().required('This field is required'),
     squareFoot: Yup.string().required('This field is required'),
     bedRoom: Yup.string().required('This field is required'),
     family: Yup.string().required('This field is required'),
@@ -159,26 +160,26 @@ const propertyFormSchema = Yup.object().shape({
     bath: Yup.string().required('This field is required'),
   }),
 
-  Heating: Yup.number().integer().required('This field is required'),
-  AC: Yup.number().integer().required('This field is required'),
-  Roof: Yup.number().integer().required('This field is required'),
-  Floor: Yup.number().integer().required('This field is required'),
-  WindowCovering: Yup.number().integer().required('This field is required'),
-  Pool: Yup.number().integer().required('This field is required'),
-  PoolFeature: Yup.number().integer().required('This field is required'),
+  Heating: Yup.string().required('This field is required'),
+  AC: Yup.string().required('This field is required'),
+  Roof: Yup.string().required('This field is required'),
+  Floor: Yup.string().required('This field is required'),
+  WindowCovering: Yup.string().required('This field is required'),
+  Pool: Yup.string().required('This field is required'),
+  PoolFeature: Yup.string().required('This field is required'),
 
-  Style: Yup.number().integer().required('This field is required'),
-  Deck: Yup.number().integer().required('This field is required'),
-  Patio: Yup.number().integer().required('This field is required'),
-  Garage: Yup.number().integer().required('This field is required'),
-  Carpot: Yup.number().integer().required('This field is required'),
-  ParkingSpace: Yup.number().integer().required('This field is required'),
-  FinBasmt: Yup.number().integer().required('This field is required'),
-  Basement: Yup.number().integer().required('This field is required'),
-  Driveway: Yup.number().integer().required('This field is required'),
-  Water: Yup.number().integer().required('This field is required'),
-  WaterShare: Yup.number().integer().required('This field is required'),
-  Spa: Yup.number().integer().required('This field is required'),
+  Style: Yup.string().required('This field is required'),
+  Deck: Yup.string().required('This field is required'),
+  Patio: Yup.string().required('This field is required'),
+  Garage: Yup.string().required('This field is required'),
+  Carpot: Yup.string().required('This field is required'),
+  ParkingSpace: Yup.string().required('This field is required'),
+  FinBasmt: Yup.string().required('This field is required'),
+  Basement: Yup.string().required('This field is required'),
+  Driveway: Yup.string().required('This field is required'),
+  Water: Yup.string().required('This field is required'),
+  WaterShare: Yup.string().required('This field is required'),
+  Spa: Yup.string().required('This field is required'),
 })
 
 const PropertyForm = () => {
@@ -232,7 +233,7 @@ const PropertyForm = () => {
     return fileList.map((item: any, k: number) => {
       return (
         <FileContainer key={k}>
-          <img src={fileList[k]} alt="" />
+          <img src={item.path} alt="" />
         </FileContainer>
       )
     })
@@ -489,12 +490,14 @@ const PropertyForm = () => {
                       </Paper>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                      <FormSubTitle>Uploading</FormSubTitle>
                       {!!imageList && imageList.length > 0 && (
-                        <SelectedFileCont>
-                          <div>{renderSelectedFileName(imageList, 'img')}</div>
-                          <SelectedFileImgCont>{renderSelectedFileImage(imageList)}</SelectedFileImgCont>
-                        </SelectedFileCont>
+                        <div>
+                          <FormSubTitle>Selected Images</FormSubTitle>
+                          <SelectedFileCont>
+                            <div>{renderSelectedFileName(imageList, 'img')}</div>
+                            <SelectedFileImgCont>{renderSelectedFileImage(imageList)}</SelectedFileImgCont>
+                          </SelectedFileCont>
+                        </div>
                       )}
                     </Grid>
                   </Grid>
@@ -523,12 +526,14 @@ const PropertyForm = () => {
                       </Paper>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                      <FormSubTitle>Uploading</FormSubTitle>
                       {!!documentList && documentList.length > 0 && (
-                        <SelectedFileCont>
-                          <div>{renderSelectedFileName(documentList, 'doc')}</div>
-                          <SelectedFileImgCont>{renderSelectedFileImage(documentList)}</SelectedFileImgCont>
-                        </SelectedFileCont>
+                        <div>
+                          <FormSubTitle>Selected Documents</FormSubTitle>
+                          <SelectedFileCont>
+                            <div>{renderSelectedFileName(documentList, 'doc')}</div>
+                            <SelectedFileImgCont>{renderSelectedFileImage(documentList)}</SelectedFileImgCont>
+                          </SelectedFileCont>
+                        </div>
                       )}
                     </Grid>
                   </Grid>

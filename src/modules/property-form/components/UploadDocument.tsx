@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { err } from 'shared/styles/styled'
+import { err, Error } from 'shared/styles/styled'
 import { useStyle, UploadDataWrapper, ModalHeader, CloseModalBtnCont, DocFormWrapper, UploadDocBtnGroup } from './style'
 import { Formik, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -21,23 +21,28 @@ const documentUploadSchema = Yup.object().shape({
 
 const UploadDocument = (props: any) => {
   const [files, setFiles] = useState<any>([])
+  const [showFileError, setShowFileError] = useState(false)
   const { documentList, setDocumentList, documentData, setDocumentData, setShowDocModal } = props
   const classes = useStyle()
 
   const handleSubmit = (values: any) => {
-    const docData = [...documentData]
-    const newDocData = {
-      Name: values.name,
-      Description: values.description,
-      OriginalName: files[0].file.name,
+    if (files.length > 0) {
+      const docData = [...documentData]
+      const newDocData = {
+        Name: values.name,
+        Description: values.description,
+        OriginalName: files[0].file.name,
+      }
+      docData.push(newDocData)
+      setDocumentData([...docData])
+      const newDocList = [...documentList]
+      newDocList.push(files[0].file)
+      setDocumentList([...newDocList])
+      setShowDocModal(false)
+      setFiles([])
+    } else {
+      setShowFileError(true)
     }
-    docData.push(newDocData)
-    setDocumentData([...docData])
-    const newDocList = [...documentList]
-    newDocList.push(files[0].file)
-    setDocumentList([...newDocList])
-    setShowDocModal(false)
-    setFiles([])
   }
   const handleAdd = (newFiles: any) => {
     newFiles = newFiles.filter((file: any) => !files.find((f: any) => f.data === file.data))
@@ -82,6 +87,7 @@ const UploadDocument = (props: any) => {
               onDelete={handleDelete}
               classes={{ root: classes.uploadDocStyle }}
             />
+            {showFileError && files.length === 0 && <Error>Document is required</Error>}
             <DocFormWrapper>
               <CustomTextField label="Name" name="name" />
               <ErrorMessage component={err} name="name" />

@@ -7,7 +7,6 @@ export const Container = styled.div`
 export const Error = styled.p`
   font-size: 14px;
   color: red;
-  font-family: NunitoRegular;
   text-transform: capitalize;
 `
 export const err = styled.p`
@@ -16,5 +15,4 @@ export const err = styled.p`
   margin: -10px 0 1rem 5px;
   font-family: Light;
   text-align: left;
-  font-family: NunitoRegular;
 `

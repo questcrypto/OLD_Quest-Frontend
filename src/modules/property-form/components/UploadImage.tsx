@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { err } from 'shared/styles/styled'
+import { err, Error } from 'shared/styles/styled'
 import { useStyle, UploadDataWrapper, ModalHeader, CloseModalBtnCont, DocFormWrapper, NameTagCont, UploadDocBtnGroup } from './style'
 import { Formik, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -22,24 +22,29 @@ const imageUploadSchema = Yup.object().shape({
 
 const UploadImage = (props: any) => {
   const [files, setFiles] = useState<any>([])
+  const [showFileError, setShowFileError] = useState(false)
   const { imageList, setImageList, imageData, setImageData, setShowImgModal } = props
   const classes = useStyle()
 
   const handleSubmit = (values: any) => {
-    const imgData = [...imageData]
-    const newImgData = {
-      Name: values.name,
-      Description: values.description,
-      OriginalName: files[0].file.name,
-      Tag: values.tag,
+    if (files.length > 0) {
+      const imgData = [...imageData]
+      const newImgData = {
+        Name: values.name,
+        Description: values.description,
+        OriginalName: files[0].file.name,
+        Tag: values.tag,
+      }
+      imgData.push(newImgData)
+      const newImgList = [...imageList]
+      newImgList.push(files[0].file)
+      setImageData([...imgData])
+      setImageList([...newImgList])
+      setShowImgModal(false)
+      setFiles([])
+    } else {
+      setShowFileError(true)
     }
-    imgData.push(newImgData)
-    const newImgList = [...imageList]
-    newImgList.push(files[0].file)
-    setImageData([...imgData])
-    setImageList([...newImgList])
-    setShowImgModal(false)
-    setFiles([])
   }
 
   const handleAdd = (newFiles: any) => {
@@ -50,7 +55,7 @@ const UploadImage = (props: any) => {
   const handleDelete = (deleted: any) => {
     setFiles(files.filter((f: any) => f !== deleted))
   }
-  console.log('files-->', files)
+
   return (
     <UploadDataWrapper>
       <Formik
@@ -86,7 +91,7 @@ const UploadImage = (props: any) => {
               onDelete={handleDelete}
               classes={{ root: classes.uploadDocStyle }}
             />
-
+            {showFileError && files.length === 0 && <Error>Image is required</Error>}
             <DocFormWrapper>
               <NameTagCont>
                 <div>

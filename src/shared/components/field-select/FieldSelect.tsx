@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const optionData = [
-  { label: 'First', value: 'first' },
-  { label: 'Second', value: 'second' },
-  { label: 'Third', value: 'third' },
-  { label: 'Fourth', value: 'fourth' },
+  { label: 'First', value: 1 },
+  { label: 'Second', value: 2 },
+  { label: 'Third', value: 3 },
+  { label: 'Fourth', value: 4 },
 ]
 
 const FieldSelect = (props: Props) => {

@@ -61,7 +61,7 @@ const UploadDocument = (props: any) => {
             <DropzoneArea
               filesLimit={1}
               showFileNames
-              acceptedFiles={['application/pdf', 'application/doc', '/csv']}
+              acceptedFiles={['application/pdf', 'application/doc', 'application/csv']}
               onChange={(file: any) => handleFileChange(file)}
               classes={{ root: classes.uploadDocStyle }}
             />

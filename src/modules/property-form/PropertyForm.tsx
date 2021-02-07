@@ -27,6 +27,8 @@ import Button from '@material-ui/core/Button'
 import { Grid, Checkbox } from '@material-ui/core'
 import Divider from '@material-ui/core/Divider'
 import CustomTextField from 'shared/components/custom-text-field'
+import FloatNumberField from 'shared/components/float-number-field'
+import IntegerNumberField from 'shared/components/Integer-number-field'
 import FieldSelect from 'shared/components/field-select'
 import CustomModal from 'shared/custom-modal'
 import UploadImage from './components/UploadImage'
@@ -80,6 +82,7 @@ const initialValues = {
   FloorDetails: [
     {
       id: Math.random(),
+      Floor: '',
       squareFoot: '',
       bedRoom: '',
       family: '',
@@ -188,7 +191,20 @@ const PropertyForm = () => {
     console.log('Values-->', values)
   }
   const handleAddFloorDetails = (arrayHelpers: any) => {
-    arrayHelpers.push({ id: Math.random(), squareFoot: '', bedRoom: '', family: '', kitchen: '', laundry: '', bath: '' })
+    arrayHelpers.push({ id: Math.random(), Floor: '', squareFoot: '', bedRoom: '', family: '', kitchen: '', laundry: '', bath: '' })
+  }
+
+  const handleDeleteFile = (type: string, index: number) => {
+    if (type === 'img') {
+      const newImgList: any = [...imageList]
+      newImgList.splice(index, 1)
+      setImageList([...newImgList])
+    }
+    if (type === 'doc') {
+      const newDocList: any = [...documentList]
+      newDocList.splice(index, 1)
+      setImageList([...newDocList])
+    }
   }
 
   const renderSelectedFileName = (fileList: any, type: string) => {
@@ -202,7 +218,7 @@ const PropertyForm = () => {
             <DocText>{item.name}</DocText>
           </Grid>
           <Grid item xs={1}>
-            <img src={CrossIcon} alt="" />
+            <img style={{ cursor: 'pointer' }} src={CrossIcon} alt="" onClick={() => handleDeleteFile(type, k)} />
           </Grid>
         </Grid>
       )
@@ -301,7 +317,7 @@ const PropertyForm = () => {
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="PropertyName" />
                     <FieldMsgBox>
-                      <CustomTextField label="Property current value" name="CurrentValue" />
+                      <FloatNumberField label="Property current value" name="CurrentValue" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="CurrentValue" />
@@ -326,7 +342,7 @@ const PropertyForm = () => {
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="Landscaping" />
                     <FieldMsgBox>
-                      <CustomTextField label="Lot facts" name="LotFacts" />
+                      <IntegerNumberField label="Lot facts" name="LotFacts" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="LotFacts" />
@@ -366,7 +382,7 @@ const PropertyForm = () => {
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <FieldMsgBox>
-                          <CustomTextField label="Postal code" name="PostalCode" />
+                          <IntegerNumberField label="Postal code" name="PostalCode" />
                           <img src={chatIcon} alt="" />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="PostalCode" />
@@ -436,17 +452,17 @@ const PropertyForm = () => {
                       <FormTitle className="form_title">T.I.M.E contract</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
-                      <CustomTextField label="Insurance" name="Insurance" />
+                      <IntegerNumberField label="Insurance" name="Insurance" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="Insurance" />
                     <FieldMsgBox>
-                      <CustomTextField label="Maintenance" name="Maintenance" />
+                      <IntegerNumberField label="Maintenance" name="Maintenance" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="Maintenance" />
                     <FieldMsgBox>
-                      <CustomTextField label="HOA fees" name="HOAFees" />
+                      <IntegerNumberField label="HOA fees" name="HOAFees" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="HOAFees" />
@@ -545,32 +561,37 @@ const PropertyForm = () => {
                                 </AccordionSummary>
                                 <AccordionDetails className={classes01.detailsCont}>
                                   <FloorFieldMsgBox>
-                                    <CustomTextField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
+                                    <CustomTextField label="Floor" name={`FloorDetails[${index}].Floor`} />
+                                    <img src={chatIcon} alt="" />
+                                  </FloorFieldMsgBox>
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Floor`} />
+                                  <FloorFieldMsgBox>
+                                    <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
                                   <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
                                   <FloorFieldMsgBox>
-                                    <CustomTextField label="Bedroom" name={`FloorDetails[${index}].BedRoom`} />
+                                    <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].BedRoom`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
                                   <ErrorMessage component={err} name={`FloorDetails[${index}].BedRoom`} />
                                   <FloorFieldMsgBox>
-                                    <CustomTextField label="Family" name={`FloorDetails[${index}].Family`} />
+                                    <IntegerNumberField label="Family" name={`FloorDetails[${index}].Family`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
                                   <ErrorMessage component={err} name={`FloorDetails[${index}].Family`} />
                                   <FloorFieldMsgBox>
-                                    <CustomTextField label="Kitchen" name={`FloorDetails[${index}].Kitchen`} />
+                                    <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].Kitchen`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
                                   <ErrorMessage component={err} name={`FloorDetails[${index}].Kitchen`} />
                                   <FloorFieldMsgBox>
-                                    <CustomTextField label="Laundry" name={`FloorDetails[${index}].Laundry`} />
+                                    <IntegerNumberField label="Laundry" name={`FloorDetails[${index}].Laundry`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
                                   <ErrorMessage component={err} name={`FloorDetails[${index}].Laundry`} />
                                   <FloorFieldMsgBox>
-                                    <CustomTextField label="Bath" name={`FloorDetails[${index}].Bath`} />
+                                    <IntegerNumberField label="Bath" name={`FloorDetails[${index}].Bath`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
                                   <ErrorMessage component={err} name={`FloorDetails[${index}].Bath`} />
@@ -678,12 +699,12 @@ const PropertyForm = () => {
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="Carpot" />
                     <FieldMsgBox>
-                      <CustomTextField label="Parking Space" name="ParkingSpace" />
+                      <IntegerNumberField label="Parking Space" name="ParkingSpace" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="ParkingSpace" />
                     <FieldMsgBox>
-                      <CustomTextField label="Fin Bsmt" name="FinBasmt" />
+                      <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="FinBasmt" />

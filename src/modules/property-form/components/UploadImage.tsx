@@ -28,7 +28,7 @@ const UploadImage = (props: any) => {
   const handleSubmit = (values: any) => {
     const newImgList = [...imageList]
     newImgList.push(file[0])
-    setImageList([...file])
+    setImageList([...newImgList])
   }
   const handleFileChange = (files: any) => {
     setFile([...files])
@@ -60,7 +60,7 @@ const UploadImage = (props: any) => {
               </CloseModalBtnCont>
             </ModalHeader>
             <DropzoneArea
-              filesLimit={10}
+              filesLimit={1}
               showFileNames
               acceptedFiles={['image/jpeg', 'image/png', 'image/jpg']}
               onChange={(file: any) => handleFileChange(file)}

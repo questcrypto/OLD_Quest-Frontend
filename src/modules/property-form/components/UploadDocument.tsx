@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import CloseIcon from '@material-ui/icons/Close'
-import { DropzoneArea } from 'material-ui-dropzone'
+import { DropzoneAreaBase } from 'material-ui-dropzone'
 import CustomTextField from 'shared/components/custom-text-field'
 
 const initialValues = {
@@ -20,17 +20,32 @@ const documentUploadSchema = Yup.object().shape({
 })
 
 const UploadDocument = (props: any) => {
-  const [file, setFile] = useState<any>([])
-  const { documentList, setDocumentList, setShowDocModal } = props
+  const [files, setFiles] = useState<any>([])
+  const { documentList, setDocumentList, documentData, setDocumentData, setShowDocModal } = props
   const classes = useStyle()
 
   const handleSubmit = (values: any) => {
+    const docData = [...documentData]
+    const newDocData = {
+      Name: values.name,
+      Description: values.description,
+      OriginalName: files[0].file.name,
+    }
+    docData.push(newDocData)
+    setDocumentData([...docData])
     const newDocList = [...documentList]
-    newDocList.push(file[0])
-    setDocumentList([...file])
+    newDocList.push(files[0].file)
+    setDocumentList([...newDocList])
+    setShowDocModal(false)
+    setFiles([])
   }
-  const handleFileChange = (files: any) => {
-    setFile([...files])
+  const handleAdd = (newFiles: any) => {
+    newFiles = newFiles.filter((file: any) => !files.find((f: any) => f.data === file.data))
+    setFiles([...files, ...newFiles])
+  }
+
+  const handleDelete = (deleted: any) => {
+    setFiles(files.filter((f: any) => f !== deleted))
   }
 
   return (
@@ -58,11 +73,13 @@ const UploadDocument = (props: any) => {
                 <CloseIcon style={{ cursor: 'pointer' }} onClick={() => setShowDocModal(false)} />
               </CloseModalBtnCont>
             </ModalHeader>
-            <DropzoneArea
+            <DropzoneAreaBase
               filesLimit={1}
+              acceptedFiles={['application/pdf']}
+              fileObjects={files}
               showFileNames
-              acceptedFiles={['application/pdf', 'application/doc', 'application/csv']}
-              onChange={(file: any) => handleFileChange(file)}
+              onAdd={handleAdd}
+              onDelete={handleDelete}
               classes={{ root: classes.uploadDocStyle }}
             />
             <DocFormWrapper>

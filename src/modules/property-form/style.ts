@@ -37,6 +37,9 @@ export const useStyle = makeStyles({
     backgroundColor: '#F3F3F3 !important',
     borderRadius: '4px',
   },
+  fileNameStyle: {
+    marginBottom: '20px',
+  },
 })
 export const useStyle01 = makeStyles((theme) => ({
   heading: {
@@ -128,8 +131,11 @@ export const SelectedFileImgCont = styled.div`
   grid-template-columns: repeat(3, 1fr);
   max-height: 300px;
   grid-gap: 10px;
+`
+export const FileContainer = styled.div`
+  box-sizing: border-box;
   img {
-    width: 70px;
+    width: 100%;
     height: 70px;
   }
 `
@@ -144,7 +150,6 @@ export const DocText = styled.p`
   text-align: center;
 `
 
-export const FileImageList = styled.div``
 export const FieldMsgBox = styled.div`
   display: flex;
   align-items: center;

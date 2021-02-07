@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import CloseIcon from '@material-ui/icons/Close'
-import { DropzoneArea } from 'material-ui-dropzone'
+import { DropzoneAreaBase } from 'material-ui-dropzone'
 import CustomTextField from 'shared/components/custom-text-field'
 
 const initialValues = {
@@ -21,19 +21,36 @@ const imageUploadSchema = Yup.object().shape({
 })
 
 const UploadImage = (props: any) => {
-  const [file, setFile] = useState<any>([])
-  const { imageList, setImageList, setShowImgModal } = props
+  const [files, setFiles] = useState<any>([])
+  const { imageList, setImageList, imageData, setImageData, setShowImgModal } = props
   const classes = useStyle()
 
   const handleSubmit = (values: any) => {
+    const imgData = [...imageData]
+    const newImgData = {
+      Name: values.name,
+      Description: values.description,
+      OriginalName: files[0].file.name,
+      Tag: values.tag,
+    }
+    imgData.push(newImgData)
     const newImgList = [...imageList]
-    newImgList.push(file[0])
+    newImgList.push(files[0].file)
+    setImageData([...imgData])
     setImageList([...newImgList])
-  }
-  const handleFileChange = (files: any) => {
-    setFile([...files])
+    setShowImgModal(false)
+    setFiles([])
   }
 
+  const handleAdd = (newFiles: any) => {
+    newFiles = newFiles.filter((file: any) => !files.find((f: any) => f.data === file.data))
+    setFiles([...files, ...newFiles])
+  }
+
+  const handleDelete = (deleted: any) => {
+    setFiles(files.filter((f: any) => f !== deleted))
+  }
+  console.log('files-->', files)
   return (
     <UploadDataWrapper>
       <Formik
@@ -59,11 +76,14 @@ const UploadImage = (props: any) => {
                 <CloseIcon style={{ cursor: 'pointer' }} onClick={() => setShowImgModal(false)} />
               </CloseModalBtnCont>
             </ModalHeader>
-            <DropzoneArea
+
+            <DropzoneAreaBase
               filesLimit={1}
-              showFileNames
               acceptedFiles={['image/jpeg', 'image/png', 'image/jpg']}
-              onChange={(file: any) => handleFileChange(file)}
+              fileObjects={files}
+              showFileNames
+              onAdd={handleAdd}
+              onDelete={handleDelete}
               classes={{ root: classes.uploadDocStyle }}
             />
 

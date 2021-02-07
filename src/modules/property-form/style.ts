@@ -18,13 +18,6 @@ export const useStyle = makeStyles({
     margin: '45px 0 !important',
     width: '590px',
   },
-  saveBtn: {
-    color: colors.white,
-    backgroundColor: colors.primary,
-    '&:hover': {
-      backgroundColor: colors.primary,
-    },
-  },
   uploadDataStyle: {
     minWidth: 200,
     maxHeight: 240,
@@ -39,6 +32,18 @@ export const useStyle = makeStyles({
   },
   fileNameStyle: {
     marginBottom: '16px',
+  },
+  saveAsDraftStyle: {
+    color: '#302E35',
+    marginRight: '20px',
+    backgroundColor: '#E0E0E0',
+  },
+  saveAndReviewStyle: {
+    color: colors.white,
+    backgroundColor: colors.primary,
+    '&:hover': {
+      backgroundColor: colors.primary,
+    },
   },
 })
 export const useStyle01 = makeStyles((theme) => ({
@@ -117,10 +122,9 @@ export const FormSubTitle = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: ${colors.textSecondary};
-  margin: 6px 0 0 0;
+  margin: 6px 0 20px 0;
 `
 export const SelectedFileCont = styled.div`
-  margin-top: 20px;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 1fr;
@@ -135,8 +139,8 @@ export const SelectedFileImgCont = styled.div`
 export const FileContainer = styled.div`
   box-sizing: border-box;
   img {
-    width: 100%;
-    height: 70px;
+    width: 80px;
+    height: 80px;
   }
 `
 
@@ -179,7 +183,7 @@ export const FloorFieldMsgBox = styled.div`
     margin-left: 40px;
   }
 `
-export const AddAnotherCont = styled.div`
+export const AddAnotherFloorCont = styled.div`
   display: flex;
   align-items: center;
   width: 170px;
@@ -191,4 +195,21 @@ export const AddAnotherCont = styled.div`
     color: ${colors.textPrimary};
   }
   cursor: pointer;
+`
+export const CheckBoxCont = styled.div`
+  display: flex;
+  align-items: center;
+`
+export const CheckBoxText = styled.p`
+  margin: 0;
+  font-size: 16px;
+  color: ${colors.primary};
+`
+export const FormButtonGroup = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+`
+export const SubmitContainer = styled.div`
+  margin-left: 60px;
 `

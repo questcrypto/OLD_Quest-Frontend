@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import * as Yup from 'yup'
 import { Formik, Form, ErrorMessage } from 'formik'
-import { err } from 'shared/styles/styled'
+import { err, Error } from 'shared/styles/styled'
 import {
   useStyle,
   useStyle01,
@@ -22,7 +22,11 @@ import {
   FloorDetailsArr,
   FloorDetailsCont,
   FloorFieldMsgBox,
-  AddAnotherCont,
+  AddAnotherFloorCont,
+  SubmitContainer,
+  CheckBoxCont,
+  CheckBoxText,
+  FormButtonGroup,
 } from './style'
 import Button from '@material-ui/core/Button'
 import { Grid, Checkbox } from '@material-ui/core'
@@ -46,7 +50,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
-import CardMedia from '@material-ui/core/CardMedia'
+import axios from 'axios'
+import { apiBaseUrl } from 'services/global-constant'
+import history from 'modules/app/components/history'
+import { Paths } from 'modules/app/components/routes/types'
 
 const initialValues = {
   Fname: '',
@@ -84,11 +91,11 @@ const initialValues = {
   FloorDetails: [
     {
       id: Math.random(),
-      Floor: '',
+      floor: '',
       SquareFoot: '',
       BedRoom: '',
-      Family: '',
-      Kitchen: '',
+      family: '',
+      kitchen: '',
       Laundry: '',
       Bath: '',
     },
@@ -152,11 +159,11 @@ const propertyFormSchema = Yup.object().shape({
 
   FloorDetails: Yup.array().of(
     Yup.object().shape({
-      Floor: Yup.string().required('This field is required'),
+      floor: Yup.string().required('This field is required'),
       SquareFoot: Yup.string().required('This field is required'),
       BedRoom: Yup.string().required('This field is required'),
-      Family: Yup.string().required('This field is required'),
-      Kitchen: Yup.string().required('This field is required'),
+      family: Yup.string().required('This field is required'),
+      kitchen: Yup.string().required('This field is required'),
       Laundry: Yup.string().required('This field is required'),
       Bath: Yup.string().required('This field is required'),
     })
@@ -191,14 +198,44 @@ const PropertyForm = () => {
   const [showDocModal, setShowDocModal] = useState(false)
   const [documentList, setDocumentList] = useState<any>([])
   const [documentData, setDocumentData] = useState<any>([])
+  const [showImgError, setShowImgError] = useState(false)
+  const [showDocError, setShowDocError] = useState(false)
+  const [permission, setPermission] = useState(false)
   const classes = useStyle()
   const classes01 = useStyle01()
 
-  const handleSubmit = (values: any) => {
-    console.log('Values-->', values)
+  const handleFileData = () => {
+    const data = new FormData()
+    for (const item of imageList) {
+      data.append('file', item)
+    }
+    for (const item of documentList) {
+      data.append('file', item)
+    }
+    return data
+  }
+
+  const handleSubmit = async (values: any) => {
+    if (imageList.length > 0 && documentList.length > 0) {
+      const fileData = handleFileData()
+      const data = { ...values, PropertyImages: [...imageData], PropertyDocuments: [...documentData], fileData }
+      try {
+        const res = await axios.post(`${apiBaseUrl}​/properties​/addProperty`, data)
+        console.log('res-->', res.data)
+      } catch (error) {
+        console.log('error==>', error)
+      }
+    } else {
+      if (imageList.length === 0) {
+        setShowImgError(true)
+      }
+      if (documentList.length === 0) {
+        setShowDocError(true)
+      }
+    }
   }
   const handleAddFloorDetails = (arrayHelpers: any) => {
-    arrayHelpers.push({ id: Math.random(), Floor: '', SquareFoot: '', BedRoom: '', Family: '', Kitchen: '', Laundry: '', Bath: '' })
+    arrayHelpers.push({ id: Math.random(), floor: '', SquareFoot: '', BedRoom: '', family: '', kitchen: '', Laundry: '', Bath: '' })
   }
 
   const handleDeleteFile = (type: string, index: number) => {
@@ -233,13 +270,15 @@ const PropertyForm = () => {
   }
   const renderSelectedFileImage = (fileList: any) => {
     return fileList.map((item: any, k: number) => {
+      const objectURL = URL.createObjectURL(item)
       return (
         <FileContainer key={k}>
-          <img src={item.path} alt="" />
+          <img src={objectURL} alt="" />
         </FileContainer>
       )
     })
   }
+
   return (
     <PropertyFormWrapper>
       <FromHeader>
@@ -267,7 +306,7 @@ const PropertyForm = () => {
                 <Grid item xs={11} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitleCont>
-                      <FormTitle className="form_title">Owner details</FormTitle>
+                      <FormTitle>Owner details</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
                       <CustomTextField label="First name" name="Fname" />
@@ -304,7 +343,7 @@ const PropertyForm = () => {
                 <Grid item xs={11} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitleCont>
-                      <FormTitle className="form_title">Property info</FormTitle>
+                      <FormTitle>Property info</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
                       <FieldSelect label="Type of property" name="PropertyType" />
@@ -358,7 +397,7 @@ const PropertyForm = () => {
                 <Grid item xs={11} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitleCont>
-                      <FormTitle className="form_title">Address</FormTitle>
+                      <FormTitle>Address</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
                       <CustomTextField label="Address 1" name="Address1" />
@@ -415,7 +454,7 @@ const PropertyForm = () => {
                 <Grid item xs={11} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitleCont>
-                      <FormTitle className="form_title">Locality / Neighbourhood insight</FormTitle>
+                      <FormTitle>Locality / Neighbourhood insight</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
                       <CustomTextField label="School district" name="SchoolDistrict" />
@@ -449,7 +488,7 @@ const PropertyForm = () => {
                 <Grid item xs={11} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitleCont>
-                      <FormTitle className="form_title">T.I.M.E contract</FormTitle>
+                      <FormTitle>T.I.M.E contract</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
                       <IntegerNumberField label="Insurance" name="Insurance" />
@@ -477,7 +516,7 @@ const PropertyForm = () => {
                 </Grid>
                 <Grid item xs={11} container direction="column">
                   <FormTitleCont>
-                    <FormTitle className="form_title">Upload property images</FormTitle>
+                    <FormTitle>Upload property images</FormTitle>
                   </FormTitleCont>
                   <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
@@ -490,6 +529,7 @@ const PropertyForm = () => {
                       >
                         Add property image
                       </Paper>
+                      {showImgError && imageList.length === 0 && <Error>At least one Image is required</Error>}
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       {!!imageList && imageList.length > 0 && (
@@ -513,7 +553,7 @@ const PropertyForm = () => {
                 </Grid>
                 <Grid item xs={11} container direction="column">
                   <FormTitleCont>
-                    <FormTitle className="form_title">Upload property documents</FormTitle>
+                    <FormTitle>Upload property documents</FormTitle>
                   </FormTitleCont>
                   <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
@@ -526,15 +566,13 @@ const PropertyForm = () => {
                       >
                         Add property document
                       </Paper>
+                      {showDocError && documentList.length === 0 && <Error>At least one Document is required</Error>}
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       {!!documentList && documentList.length > 0 && (
                         <div>
                           <FormSubTitle>Selected Documents</FormSubTitle>
-                          <SelectedFileCont>
-                            <div>{renderSelectedFileName(documentList, 'doc')}</div>
-                            <SelectedFileImgCont>{renderSelectedFileImage(documentList)}</SelectedFileImgCont>
-                          </SelectedFileCont>
+                          <div>{renderSelectedFileName(documentList, 'doc')}</div>
                         </div>
                       )}
                     </Grid>
@@ -550,7 +588,7 @@ const PropertyForm = () => {
                 <Grid item xs={11} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitleCont>
-                      <FormTitle className="form_title">Floor Wise Configuration</FormTitle>
+                      <FormTitle>Floor Wise Configuration</FormTitle>
                     </FormTitleCont>
 
                     <FloorDetailsArr
@@ -565,10 +603,10 @@ const PropertyForm = () => {
                                 </AccordionSummary>
                                 <AccordionDetails className={classes01.detailsCont}>
                                   <FloorFieldMsgBox>
-                                    <CustomTextField label="Floor" name={`FloorDetails[${index}].Floor`} />
+                                    <CustomTextField label="Floor" name={`FloorDetails[${index}].floor`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Floor`} />
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].floor`} />
                                   <FloorFieldMsgBox>
                                     <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
                                     <img src={chatIcon} alt="" />
@@ -580,15 +618,15 @@ const PropertyForm = () => {
                                   </FloorFieldMsgBox>
                                   <ErrorMessage component={err} name={`FloorDetails[${index}].BedRoom`} />
                                   <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Family" name={`FloorDetails[${index}].Family`} />
+                                    <IntegerNumberField label="Family" name={`FloorDetails[${index}].family`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Family`} />
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].family`} />
                                   <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].Kitchen`} />
+                                    <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].kitchen`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Kitchen`} />
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].kitchen`} />
                                   <FloorFieldMsgBox>
                                     <IntegerNumberField label="Laundry" name={`FloorDetails[${index}].Laundry`} />
                                     <img src={chatIcon} alt="" />
@@ -606,10 +644,10 @@ const PropertyForm = () => {
                               )}
                             </FloorDetailsCont>
                           ))}
-                          <AddAnotherCont onClick={() => handleAddFloorDetails(arrayHelpers)}>
+                          <AddAnotherFloorCont onClick={() => handleAddFloorDetails(arrayHelpers)}>
                             <AddIcon />
                             <span>Add Another Floor</span>
-                          </AddAnotherCont>
+                          </AddAnotherFloorCont>
                         </div>
                       )}
                     />
@@ -626,7 +664,7 @@ const PropertyForm = () => {
                 <Grid item xs={11} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitleCont>
-                      <FormTitle className="form_title">Amenities</FormTitle>
+                      <FormTitle>Amenities</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
                       <CustomTextField label="Heating" name="Heating" />
@@ -675,7 +713,7 @@ const PropertyForm = () => {
                 <Grid item xs={11} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitleCont>
-                      <FormTitle className="form_title">More Details</FormTitle>
+                      <FormTitle>More Details</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
                       <CustomTextField label="Style" name="Style" />
@@ -741,46 +779,39 @@ const PropertyForm = () => {
                   <Divider classes={{ root: classes.dividerStyle }} />
                 </Grid>
               </Grid>
+              <SubmitContainer>
+                <CheckBoxCont>
+                  <Checkbox
+                    color="default"
+                    inputProps={{ 'aria-label': 'checkbox with default color' }}
+                    style={{ color: '#1E3444' }}
+                    onChange={(e: any) => setPermission(e.target.checked)}
+                  />
+                  <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
+                </CheckBoxCont>
+                <FormButtonGroup>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    classes={{
+                      root: classes.saveAsDraftStyle,
+                    }}
+                  >
+                    SAVE AS DRAFT
+                  </Button>
 
-              <div>
-                <Checkbox
-                  defaultChecked
-                  color="default"
-                  inputProps={{ 'aria-label': 'checkbox with default color' }}
-                  style={{ color: '#1E3444' }}
-                />
-                I take full responsibility of the above information
-              </div>
-
-              <div style={{ margin: '50px 0px 200px 0px' }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  classes={{
-                    root: classes.saveBtn,
-                  }}
-                  style={{
-                    marginLeft: '30px',
-                    marginBottom: '20px',
-                    textTransform: 'none',
-                    backgroundColor: '#E0E0E0',
-                    color: 'black',
-                  }}
-                >
-                  SAVE AS DRAFT
-                </Button>
-
-                <Button
-                  type="submit"
-                  variant="contained"
-                  classes={{
-                    root: classes.saveBtn,
-                  }}
-                  style={{ marginLeft: '20px', marginBottom: '20px', textTransform: 'none' }}
-                >
-                  Save & Send for review
-                </Button>
-              </div>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    classes={{
+                      root: classes.saveAndReviewStyle,
+                    }}
+                    disabled={!permission}
+                  >
+                    Save & Send for review
+                  </Button>
+                </FormButtonGroup>
+              </SubmitContainer>
             </Form>
           )}
         </Formik>

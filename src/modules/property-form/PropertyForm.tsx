@@ -16,6 +16,7 @@ import {
   FormSubTitle,
   SelectedFileCont,
   SelectedFileImgCont,
+  FileContainer,
   DocText,
   FieldMsgBox,
   FloorDetailsArr,
@@ -45,6 +46,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
+import CardMedia from '@material-ui/core/CardMedia'
 
 const initialValues = {
   Fname: '',
@@ -182,8 +184,10 @@ const propertyFormSchema = Yup.object().shape({
 const PropertyForm = () => {
   const [showImgModal, setShowImgModal] = useState(false)
   const [imageList, setImageList] = useState<any>([])
+  const [imageData, setImageData] = useState<any>([])
   const [showDocModal, setShowDocModal] = useState(false)
   const [documentList, setDocumentList] = useState<any>([])
+  const [documentData, setDocumentData] = useState<any>([])
   const classes = useStyle()
   const classes01 = useStyle01()
 
@@ -203,14 +207,14 @@ const PropertyForm = () => {
     if (type === 'doc') {
       const newDocList: any = [...documentList]
       newDocList.splice(index, 1)
-      setImageList([...newDocList])
+      setDocumentList([...newDocList])
     }
   }
 
   const renderSelectedFileName = (fileList: any, type: string) => {
     return fileList.map((item: any, k: number) => {
       return (
-        <Grid xs={12} key={k} container spacing={1}>
+        <Grid key={k} container spacing={1} className={classes.fileNameStyle}>
           <Grid item xs={1}>
             <img src={type === 'img' ? ImageIcon : FileIcon} alt="" />
           </Grid>
@@ -227,16 +231,9 @@ const PropertyForm = () => {
   const renderSelectedFileImage = (fileList: any) => {
     return fileList.map((item: any, k: number) => {
       return (
-        <div
-          key={k}
-          style={{
-            width: '70px',
-            height: '70px',
-            boxSizing: 'border-box',
-          }}
-        >
-          <img src={item.path} alt="" />
-        </div>
+        <FileContainer key={k}>
+          <img src={fileList[k]} alt="" />
+        </FileContainer>
       )
     })
   }
@@ -782,10 +779,22 @@ const PropertyForm = () => {
         </Formik>
       </PropertyFormCont>
       <CustomModal show={showImgModal} toggleModal={setShowImgModal}>
-        <UploadImage imageList={imageList} setImageList={setImageList} setShowImgModal={setShowImgModal} />
+        <UploadImage
+          imageList={imageList}
+          setImageList={setImageList}
+          setShowImgModal={setShowImgModal}
+          imageData={imageData}
+          setImageData={setImageData}
+        />
       </CustomModal>
       <CustomModal show={showDocModal} toggleModal={setShowDocModal}>
-        <UploadDocument documentList={documentList} setDocumentList={setDocumentList} setShowDocModal={setShowDocModal} />
+        <UploadDocument
+          documentList={documentList}
+          setDocumentList={setDocumentList}
+          setShowDocModal={setShowDocModal}
+          documentData={documentData}
+          setDocumentData={setDocumentData}
+        />
       </CustomModal>
     </PropertyFormWrapper>
   )

@@ -85,12 +85,12 @@ const initialValues = {
     {
       id: Math.random(),
       Floor: '',
-      squareFoot: '',
-      bedRoom: '',
-      family: '',
-      kitchen: '',
-      laundry: '',
-      bath: '',
+      SquareFoot: '',
+      BedRoom: '',
+      Family: '',
+      Kitchen: '',
+      Laundry: '',
+      Bath: '',
     },
   ],
 
@@ -150,15 +150,17 @@ const propertyFormSchema = Yup.object().shape({
   Maintenance: Yup.string().required('This field is required'),
   HOAFees: Yup.string().required('This field is required'),
 
-  FloorDetails: Yup.object().shape({
-    Floor: Yup.string().required('This field is required'),
-    squareFoot: Yup.string().required('This field is required'),
-    bedRoom: Yup.string().required('This field is required'),
-    family: Yup.string().required('This field is required'),
-    kitchen: Yup.string().required('This field is required'),
-    laundry: Yup.string().required('This field is required'),
-    bath: Yup.string().required('This field is required'),
-  }),
+  FloorDetails: Yup.array().of(
+    Yup.object().shape({
+      Floor: Yup.string().required('This field is required'),
+      SquareFoot: Yup.string().required('This field is required'),
+      BedRoom: Yup.string().required('This field is required'),
+      Family: Yup.string().required('This field is required'),
+      Kitchen: Yup.string().required('This field is required'),
+      Laundry: Yup.string().required('This field is required'),
+      Bath: Yup.string().required('This field is required'),
+    })
+  ),
 
   Heating: Yup.string().required('This field is required'),
   AC: Yup.string().required('This field is required'),
@@ -196,7 +198,7 @@ const PropertyForm = () => {
     console.log('Values-->', values)
   }
   const handleAddFloorDetails = (arrayHelpers: any) => {
-    arrayHelpers.push({ id: Math.random(), Floor: '', squareFoot: '', bedRoom: '', family: '', kitchen: '', laundry: '', bath: '' })
+    arrayHelpers.push({ id: Math.random(), Floor: '', SquareFoot: '', BedRoom: '', Family: '', Kitchen: '', Laundry: '', Bath: '' })
   }
 
   const handleDeleteFile = (type: string, index: number) => {
@@ -359,7 +361,7 @@ const PropertyForm = () => {
                       <FormTitle className="form_title">Address</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
-                      <FieldSelect label="Address 1" name="Address1" />
+                      <CustomTextField label="Address 1" name="Address1" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="Address1" />

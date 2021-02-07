@@ -35,6 +35,11 @@ export const LeftPanelCont = styled.div`
   height: 100vh;
   position: sticky;
   top: 0;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
 `
 export const QuestLogoCont = styled.div`
   padding: 30px 12px;

@@ -27,10 +27,11 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: ' grey',
   },
   inputRoot: {
     color: 'inherit',
-    border: '1px solid grey',
+    border: '1px solid #E0E0E0',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -38,9 +39,9 @@ export const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: '12ch',
+      width: '17ch',
       '&:focus': {
-        width: '12ch',
+        width: '17ch',
       },
     },
   },
@@ -54,7 +55,7 @@ export const useStyles = makeStyles((theme) => ({
     color: colors.white,
     backgroundColor: colors.primary,
     fontSize: '14px',
-    padding: '10px !important',
+    padding: '6.1px !important',
     '&:hover': {
       backgroundColor: colors.primary,
     },

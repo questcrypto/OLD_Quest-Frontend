@@ -44,6 +44,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginbottom: '20px',
     },
     DocUploads: {
+      flex: '50%',
       alt: 'files',
       height: '50px',
       width: '50px',
@@ -53,6 +54,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: '#F5F5F5',
     },
     BtnDocUploads: {
+      flex: '50%',
       variant: 'outlined',
       color: '#302E35',
       marginLeft: '20px',

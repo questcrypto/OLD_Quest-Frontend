@@ -220,7 +220,7 @@ const PropertyDetails = () => {
                 <Button
                   variant="outlined"
                   style={{
-                    color: '#E0E0E0;',
+                    color: '#E0E0E0',
                     marginLeft: '10px',
                     backgroundColor: '#E0E0E0',
                   }}

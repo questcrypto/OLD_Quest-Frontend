@@ -152,6 +152,7 @@ const PropertyDetails = () => {
                 <Button className={classes.BtnDocUploads}>LIVE AUCTION</Button>
                 <Button className={classes.BtnDocUploads}>Button text</Button>
                 <Button
+
                   className={classes.BtnDocUploads}
                   style={{
                     backgroundColor: '#1E3444',

@@ -17,7 +17,7 @@ export function* authWorker() {
   try {
     const token = localStorage.getItem('token')
     if (token) {
-      setAuthToken(token)
+      /* setAuthToken(token) */
       const successData = { token }
       yield put(authSuccess(successData))
     } else {

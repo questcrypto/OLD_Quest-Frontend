@@ -110,8 +110,8 @@ const PropertyDetails = () => {
                 </Typography>
                 <Box m={3} />
                 <Typography variant="body2" color="textSecondary">
-                  <img src={plot} alt="" /> 190 m2
-                  <img src={coin} alt="" /> $ 23,500.00
+                  <img src={plot} alt="plot" /> 190 m2
+                  <img src={coin} alt="coin" /> $ 23,500.00
                 </Typography>
                 <Box m={3} />
                 <Typography variant="body2" color="textSecondary">
@@ -127,94 +127,35 @@ const PropertyDetails = () => {
                   <Grid container spacing={1}>
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
-                      <img
-                        src={files}
-                        alt="files"
-                        height="50px"
-                        width="50px"
-                        style={{
-                          color: '#1E3444',
-                          marginLeft: '25px',
-                          marginBottom: '25px',
-                        }}
-                      />
+                      <img src={files} className={classes.DocUploads} />
                     </Paper>
                     <Box m={1} />
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
-                      <img
-                        src={pdf}
-                        alt="pdf"
-                        height="50px"
-                        width="50px"
-                        style={{
-                          color: '#1E3444',
-                          marginLeft: '25px',
-                          marginBottom: '25px',
-                        }}
-                      />
+                      <img src={pdf} className={classes.DocUploads} />
                     </Paper>
                     <Box m={1} />
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
-                      <img
-                        src={files}
-                        alt="files"
-                        height="50px"
-                        width="50px"
-                        style={{
-                          color: '#1E3444',
-                          marginLeft: '25px',
-                          marginBottom: '25px',
-                        }}
-                      />
+                      <img src={files} className={classes.DocUploads} />
                     </Paper>
                     <Box m={1} />
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
-                      <img
-                        src={pdf}
-                        alt="pdf"
-                        height="50px"
-                        width="50px"
-                        style={{
-                          color: '#1E3444',
-                          marginLeft: '25px',
-                          marginBottom: '25px',
-                        }}
-                      />
+                      <img src={pdf} className={classes.DocUploads} />
                     </Paper>
                     Property <br />
                     verified
                   </Grid>
                 </Grid>
                 <Box m={12} />
+                <Button className={classes.BtnDocUploads}>LIVE AUCTION</Button>
+                <Button className={classes.BtnDocUploads}>Button text</Button>
                 <Button
-                  variant="outlined"
+                  className={classes.BtnDocUploads}
                   style={{
-                    color: '#E0E0E0;',
-                    marginLeft: '10px',
-                    backgroundColor: '#E0E0E0',
-                  }}
-                >
-                  LIVE AUCTION
-                </Button>
-                <Button
-                  variant="outlined"
-                  style={{
-                    color: '#E0E0E0;',
-                    marginLeft: '10px',
-                    backgroundColor: '#E0E0E0',
-                  }}
-                >
-                  Button text
-                </Button>
-                <Button
-                  variant="outlined"
-                  style={{
-                    color: '#F2F2F2',
-                    marginLeft: '10px',
                     backgroundColor: '#1E3444',
+                    color: '#F2F2F2',
                   }}
                 >
                   Button text
@@ -231,229 +172,215 @@ const PropertyDetails = () => {
       </Paper>
 
       <Paper className={classes.paper}>
-        <div  className={classes.features}>
-          <h4  className={classes.feature1}>Rental facts and features</h4>
+        <div className={classes.features}>
+          <h4 className={classes.feature1}>Rental facts and features</h4>
         </div>
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={roof} alt="" /> Roof
               </p>
-              <p  className={classes.feature2}>{roof1}</p>
+              <p className={classes.feature2}>{roof1}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={pool} alt="" /> Pool
               </p>
-              <p  className={classes.feature2}>{pool1}</p>
+              <p className={classes.feature2}>{pool1}</p>
             </div>
           </div>
         </div>
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={heating} alt="" /> Heating
               </p>
-              <p  className={classes.feature2}>{heating1}</p>
+              <p className={classes.feature2}>{heating1}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={pool} alt="" /> Pool Features
               </p>
-              <p  className={classes.feature2}>{pool2}</p>
+              <p className={classes.feature2}>{pool2}</p>
             </div>
           </div>
         </div>
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={air} alt="" /> Air Conditioning
               </p>
-              <p  className={classes.feature2}>{air1}</p>
+              <p className={classes.feature2}>{air1}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={exterior} alt="" /> Exterior
               </p>
-              <p  className={classes.feature2}>{exterior1}</p>
+              <p className={classes.feature2}>{exterior1}</p>
             </div>
           </div>
         </div>
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={floor} alt="" /> Floor
               </p>
-              <p  className={classes.feature2}>{floor1}</p>
+              <p className={classes.feature2}>{floor1}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={land} alt="" /> Landscaping
               </p>
-              <p  className={classes.feature2}>{land1}</p>
+              <p className={classes.feature2}>{land1}</p>
             </div>
           </div>
         </div>
 
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={window} alt="" /> Window Covering
               </p>
-              <p  className={classes.feature2}>{window1}</p>
+              <p className={classes.feature2}>{window1}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={land} alt="" /> Lot Facts
               </p>
-              <p  className={classes.feature2}>{lot}</p>
+              <p className={classes.feature2}>{lot}</p>
             </div>
           </div>
         </div>
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={exterior} alt="" /> Exterior Features
               </p>
-              <p  className={classes.feature2}>{exterior2}</p>
+              <p className={classes.feature2}>{exterior2}</p>
             </div>
-            <div  className={classes.features} style={{ marginLeft: '10px' }}/>
+            <div className={classes.features} style={{ marginLeft: '10px' }} />
           </div>
         </div>
 
-        <div  className={classes.features}>
-          <h4  className={classes.feature1}>Features</h4>
+        <div className={classes.features}>
+          <h4 className={classes.feature1}>Features</h4>
         </div>
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}> Type
-              </p>
-              <p  className={classes.feature2}>{type}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Type</p>
+              <p className={classes.feature2}>{type}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}> Parking Spaces
-              </p>
-              <p  className={classes.feature2}>{parking}</p>
-            </div>
-          </div>
-        </div>
-
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}> Style
-              </p>
-              <p  className={classes.feature2}>{style}</p>
-            </div>
-
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}> Fin Bsmt
-              </p>
-              <p  className={classes.feature2}>{fin}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Parking Spaces</p>
+              <p className={classes.feature2}>{parking}</p>
             </div>
           </div>
         </div>
 
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}> Year Built
-              </p>
-              <p  className={classes.feature2}>{year}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Style</p>
+              <p className={classes.feature2}>{style}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}> Basement
-              </p>
-              <p  className={classes.feature2}>{bsmt}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Fin Bsmt</p>
+              <p className={classes.feature2}>{fin}</p>
             </div>
           </div>
         </div>
 
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}> Acres
-              </p>
-              <p  className={classes.feature2}>{acres}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Year Built</p>
+              <p className={classes.feature2}>{year}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}> Driveway
-              </p>
-              <p  className={classes.feature2}>{driveway}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Basement</p>
+              <p className={classes.feature2}>{bsmt}</p>
             </div>
           </div>
         </div>
 
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}> Deck
-              </p>
-              <p  className={classes.feature2}>{deck}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Acres</p>
+              <p className={classes.feature2}>{acres}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}> Water
-              </p>
-              <p  className={classes.feature2}>{water}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Driveway</p>
+              <p className={classes.feature2}>{driveway}</p>
             </div>
           </div>
         </div>
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}> Patio
-              </p>
-              <p  className={classes.feature2}>{patio}</p>
+
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Deck</p>
+              <p className={classes.feature2}>{deck}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}> Water Shares
-              </p>
-              <p  className={classes.feature2}>{water1}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Water</p>
+              <p className={classes.feature2}>{water}</p>
             </div>
           </div>
         </div>
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}> Garage
-              </p>
-              <p  className={classes.feature2}>{garage}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Patio</p>
+              <p className={classes.feature2}>{patio}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}> Spa
-              </p>
-              <p  className={classes.feature2}>{spa}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Water Shares</p>
+              <p className={classes.feature2}>{water1}</p>
             </div>
           </div>
         </div>
-        <div  className={classes.features}>
-          <div  className={classes.features}>
-            <div  className={classes.features}>
-              <p  className={classes.feature1}> Carport</p>
-              <p  className={classes.feature2}>{carport}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Garage</p>
+              <p className={classes.feature2}>{garage}</p>
             </div>
 
-            <div  className={classes.features} style={{ marginLeft: '10px' }}>
-              <p  className={classes.feature1}> Zoning</p>
-              <p  className={classes.feature2}>{zoning}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Spa</p>
+              <p className={classes.feature2}>{spa}</p>
+            </div>
+          </div>
+        </div>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Carport</p>
+              <p className={classes.feature2}>{carport}</p>
+            </div>
+
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Zoning</p>
+              <p className={classes.feature2}>{zoning}</p>
             </div>
           </div>
         </div>

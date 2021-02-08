@@ -14,10 +14,11 @@ export const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 1010,
       marginTop: 100,
       height: 650,
+      backgroundColor: '#F5F5F5',
     },
 
     image: {
-      width: 511,
+      width: 450,
       height: 385,
     },
     img: {
@@ -39,9 +40,38 @@ export const useStyles = makeStyles((theme: Theme) =>
       flex: '1',
     },
     feature2: {
-     flex: '2',
+      flex: '2',
       marginbottom: '20px',
-    }
+    },
+    DocUploads: {
+      alt: 'files',
+      height: '50px',
+      width: '50px',
+      color: '#1E3444',
+      marginLeft: '25px',
+      marginBottom: '25px',
+      backgroundColor: '#F5F5F5',
+    },
+    BtnDocUploads: {
+      variant: 'outlined',
+      color: '#302E35',
+      marginLeft: '20px',
+      backgroundColor: '#E0E0E0',
+    },
   })
 )
+
+// export const Paper = styled.div`
+// display: flex,
+//   img {
+//     alt:"files",
+//     height:"50px",
+//     width:"50px",
+//     style{{
+//     color: '#1E3444',
+//     marginLeft: '25px',
+//      marginBottom: '25px',
+//     } }
+   
+// `
 

@@ -6,8 +6,9 @@ export const useStyle = makeStyles((theme) => ({
   loginBoxStyle: {
     padding: '20px',
     width: '400px',
-    height: '400px',
+    height: '450px',
     boxSizing: 'border-box',
+    backgroundColor: '#F5F5F5',
   },
   loginBtnStyle: {
     width: '100%',

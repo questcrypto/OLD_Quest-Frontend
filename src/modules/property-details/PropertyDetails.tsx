@@ -31,35 +31,7 @@ import land from 'assets/images/land.png'
 import window from 'assets/images/window.png'
 
 import { SpaceBarSharp } from '@material-ui/icons'
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      margin: 'auto',
-      maxWidth: 1010,
-      marginTop: 100,
-      height: 650,
-    },
-
-    image: {
-      width: 511,
-      height: 385,
-    },
-    img: {
-      margin: 'auto',
-      display: 'block',
-      maxWidth: '100%',
-      maxHeight: '100%',
-    },
-    table: {
-      minWidth: 650,
-    },
-  })
-)
+import { useStyles }  from './style'
 
 const PropertyDetails = () => {
   const classes = useStyles()
@@ -138,8 +110,8 @@ const PropertyDetails = () => {
                 </Typography>
                 <Box m={3} />
                 <Typography variant="body2" color="textSecondary">
-                  <img src={plot} alt="" /> 190 m2
-                  <img src={coin} alt="" /> $ 23,500.00
+                  <img src={plot} alt="plot" /> 190 m2
+                  <img src={coin} alt="coin" /> $ 23,500.00
                 </Typography>
                 <Box m={3} />
                 <Typography variant="body2" color="textSecondary">
@@ -155,94 +127,36 @@ const PropertyDetails = () => {
                   <Grid container spacing={1}>
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
-                      <img
-                        src={files}
-                        alt="files"
-                        height="50px"
-                        width="50px"
-                        style={{
-                          color: '#1E3444',
-                          marginLeft: '25px',
-                          marginBottom: '25px',
-                        }}
-                      />
+                      <img src={files} className={classes.DocUploads} />
                     </Paper>
                     <Box m={1} />
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
-                      <img
-                        src={pdf}
-                        alt="pdf"
-                        height="50px"
-                        width="50px"
-                        style={{
-                          color: '#1E3444',
-                          marginLeft: '25px',
-                          marginBottom: '25px',
-                        }}
-                      />
+                      <img src={pdf} className={classes.DocUploads} />
                     </Paper>
                     <Box m={1} />
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
-                      <img
-                        src={files}
-                        alt="files"
-                        height="50px"
-                        width="50px"
-                        style={{
-                          color: '#1E3444',
-                          marginLeft: '25px',
-                          marginBottom: '25px',
-                        }}
-                      />
+                      <img src={files} className={classes.DocUploads} />
                     </Paper>
                     <Box m={1} />
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
-                      <img
-                        src={pdf}
-                        alt="pdf"
-                        height="50px"
-                        width="50px"
-                        style={{
-                          color: '#1E3444',
-                          marginLeft: '25px',
-                          marginBottom: '25px',
-                        }}
-                      />
+                      <img src={pdf} className={classes.DocUploads} />
                     </Paper>
                     Property <br />
                     verified
                   </Grid>
                 </Grid>
                 <Box m={12} />
+                <Button className={classes.BtnDocUploads}>LIVE AUCTION</Button>
+                <Button className={classes.BtnDocUploads}>Button text</Button>
                 <Button
-                  variant="outlined"
+
+                  className={classes.BtnDocUploads}
                   style={{
-                    color: '#E0E0E0',
-                    marginLeft: '10px',
-                    backgroundColor: '#E0E0E0',
-                  }}
-                >
-                  LIVE AUCTION
-                </Button>
-                <Button
-                  variant="outlined"
-                  style={{
-                    color: '#E0E0E0;',
-                    marginLeft: '10px',
-                    backgroundColor: '#E0E0E0',
-                  }}
-                >
-                  Button text
-                </Button>
-                <Button
-                  variant="outlined"
-                  style={{
-                    color: '#F2F2F2',
-                    marginLeft: '10px',
                     backgroundColor: '#1E3444',
+                    color: '#F2F2F2',
                   }}
                 >
                   Button text
@@ -259,229 +173,215 @@ const PropertyDetails = () => {
       </Paper>
 
       <Paper className={classes.paper}>
-        <div className="displayFlex_pa01">
-          <h4 className="flex_ch_01">Rental facts and features</h4>
+        <div className={classes.features}>
+          <h4 className={classes.feature1}>Rental facts and features</h4>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={roof} alt="" /> Roof
               </p>
-              <p className="flex_ch_02">{roof1}</p>
+              <p className={classes.feature2}>{roof1}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={pool} alt="" /> Pool
               </p>
-              <p className="flex_ch_02">{pool1}</p>
+              <p className={classes.feature2}>{pool1}</p>
             </div>
           </div>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={heating} alt="" /> Heating
               </p>
-              <p className="flex_ch_02">{heating1}</p>
+              <p className={classes.feature2}>{heating1}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={pool} alt="" /> Pool Features
               </p>
-              <p className="flex_ch_02">{pool2}</p>
+              <p className={classes.feature2}>{pool2}</p>
             </div>
           </div>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={air} alt="" /> Air Conditioning
               </p>
-              <p className="flex_ch_02">{air1}</p>
+              <p className={classes.feature2}>{air1}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={exterior} alt="" /> Exterior
               </p>
-              <p className="flex_ch_02">{exterior1}</p>
+              <p className={classes.feature2}>{exterior1}</p>
             </div>
           </div>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={floor} alt="" /> Floor
               </p>
-              <p className="flex_ch_02">{floor1}</p>
+              <p className={classes.feature2}>{floor1}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={land} alt="" /> Landscaping
               </p>
-              <p className="flex_ch_02">{land1}</p>
+              <p className={classes.feature2}>{land1}</p>
             </div>
           </div>
         </div>
 
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={window} alt="" /> Window Covering
               </p>
-              <p className="flex_ch_02">{window1}</p>
+              <p className={classes.feature2}>{window1}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01">
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}>
                 <img src={land} alt="" /> Lot Facts
               </p>
-              <p className="flex_ch_02">{lot}</p>
+              <p className={classes.feature2}>{lot}</p>
             </div>
           </div>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01">
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}>
                 <img src={exterior} alt="" /> Exterior Features
               </p>
-              <p className="flex_ch_02">{exterior2}</p>
+              <p className={classes.feature2}>{exterior2}</p>
             </div>
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}/>
+            <div className={classes.features} style={{ marginLeft: '10px' }} />
           </div>
         </div>
 
-        <div className="displayFlex_pa01">
-          <h4 className="flex_ch_01">Features</h4>
+        <div className={classes.features}>
+          <h4 className={classes.feature1}>Features</h4>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Type
-              </p>
-              <p className="flex_ch_02">{type}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Type</p>
+              <p className={classes.feature2}>{type}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Parking Spaces
-              </p>
-              <p className="flex_ch_02">{parking}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Style
-              </p>
-              <p className="flex_ch_02">{style}</p>
-            </div>
-
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Fin Bsmt
-              </p>
-              <p className="flex_ch_02">{fin}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Parking Spaces</p>
+              <p className={classes.feature2}>{parking}</p>
             </div>
           </div>
         </div>
 
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Year Built
-              </p>
-              <p className="flex_ch_02">{year}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Style</p>
+              <p className={classes.feature2}>{style}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Basement
-              </p>
-              <p className="flex_ch_02">{bsmt}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Fin Bsmt</p>
+              <p className={classes.feature2}>{fin}</p>
             </div>
           </div>
         </div>
 
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Acres
-              </p>
-              <p className="flex_ch_02">{acres}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Year Built</p>
+              <p className={classes.feature2}>{year}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Driveway
-              </p>
-              <p className="flex_ch_02">{driveway}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Basement</p>
+              <p className={classes.feature2}>{bsmt}</p>
             </div>
           </div>
         </div>
 
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Deck
-              </p>
-              <p className="flex_ch_02">{deck}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Acres</p>
+              <p className={classes.feature2}>{acres}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Water
-              </p>
-              <p className="flex_ch_02">{water}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Driveway</p>
+              <p className={classes.feature2}>{driveway}</p>
             </div>
           </div>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Patio
-              </p>
-              <p className="flex_ch_02">{patio}</p>
+
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Deck</p>
+              <p className={classes.feature2}>{deck}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Water Shares
-              </p>
-              <p className="flex_ch_02">{water1}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Water</p>
+              <p className={classes.feature2}>{water}</p>
             </div>
           </div>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Garage
-              </p>
-              <p className="flex_ch_02">{garage}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Patio</p>
+              <p className={classes.feature2}>{patio}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Spa
-              </p>
-              <p className="flex_ch_02">{spa}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Water Shares</p>
+              <p className={classes.feature2}>{water1}</p>
             </div>
           </div>
         </div>
-        <div className="displayFlex_pa01">
-          <div className="displayFlex_pa01">
-            <div className="displayFlex_pa01">
-              <p className="flex_ch_01"> Carport</p>
-              <p className="flex_ch_02">{carport}</p>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Garage</p>
+              <p className={classes.feature2}>{garage}</p>
             </div>
 
-            <div className="displayFlex_pa01" style={{ marginLeft: '10px' }}>
-              <p className="flex_ch_01"> Zoning</p>
-              <p className="flex_ch_02">{zoning}</p>
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Spa</p>
+              <p className={classes.feature2}>{spa}</p>
+            </div>
+          </div>
+        </div>
+        <div className={classes.features}>
+          <div className={classes.features}>
+            <div className={classes.features}>
+              <p className={classes.feature1}> Carport</p>
+              <p className={classes.feature2}>{carport}</p>
+            </div>
+
+            <div className={classes.features} style={{ marginLeft: '10px' }}>
+              <p className={classes.feature1}> Zoning</p>
+              <p className={classes.feature2}>{zoning}</p>
             </div>
           </div>
         </div>

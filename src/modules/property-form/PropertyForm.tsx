@@ -35,6 +35,7 @@ import CustomTextField from 'shared/components/custom-text-field'
 import FloatNumberField from 'shared/components/float-number-field'
 import IntegerNumberField from 'shared/components/Integer-number-field'
 import FieldSelect from 'shared/components/field-select'
+import FormDatePicker from 'shared/components/form-date-picker'
 import CustomModal from 'shared/custom-modal'
 import UploadImage from './components/UploadImage'
 import UploadDocument from './components/UploadDocument'
@@ -50,6 +51,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
+import { propertyType } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
@@ -68,7 +70,7 @@ const initialValues = {
   YearBuilt: '',
   Zoning: '',
   Landscaping: '',
-  LotFacts: '',
+  Lotfacts: '',
 
   Address1: '',
   Address2: '',
@@ -93,10 +95,10 @@ const initialValues = {
       id: Math.random(),
       floor: '',
       SquareFoot: '',
-      BedRoom: '',
+      Bedroom: '',
       family: '',
       kitchen: '',
-      Laundry: '',
+      Laundary: '',
       Bath: '',
     },
   ],
@@ -135,7 +137,7 @@ const propertyFormSchema = Yup.object().shape({
   YearBuilt: Yup.string().required('This field is required'),
   Zoning: Yup.string().required('This field is required'),
   Landscaping: Yup.string().required('This field is required'),
-  LotFacts: Yup.string().required('This field is required'),
+  Lotfacts: Yup.string().required('This field is required'),
 
   Address1: Yup.string().required('This field is required'),
   Address2: Yup.string().required('This field is required'),
@@ -161,10 +163,10 @@ const propertyFormSchema = Yup.object().shape({
     Yup.object().shape({
       floor: Yup.string().required('This field is required'),
       SquareFoot: Yup.string().required('This field is required'),
-      BedRoom: Yup.string().required('This field is required'),
+      Bedroom: Yup.string().required('This field is required'),
       family: Yup.string().required('This field is required'),
       kitchen: Yup.string().required('This field is required'),
-      Laundry: Yup.string().required('This field is required'),
+      Laundary: Yup.string().required('This field is required'),
       Bath: Yup.string().required('This field is required'),
     })
   ),
@@ -204,24 +206,34 @@ const PropertyForm = () => {
   const classes = useStyle()
   const classes01 = useStyle01()
 
-  const handleFileData = () => {
-    const data = new FormData()
+  const getFileData = () => {
+    const filesArr: any = []
     for (const item of imageList) {
-      data.append('file', item)
+      filesArr.push(item)
     }
     for (const item of documentList) {
-      data.append('file', item)
+      filesArr.push(item)
     }
-    return data
+    return filesArr
   }
 
   const handleSubmit = async (values: any) => {
     if (imageList.length > 0 && documentList.length > 0) {
-      const fileData = handleFileData()
-      const data = { ...values, PropertyImages: [...imageData], PropertyDocuments: [...documentData], fileData }
+      const formData = new FormData()
+      const dataFiles = getFileData()
+      for (const item of dataFiles) {
+        formData.append('file', item)
+      }
+      const data = { ...values }
+      delete data.FloorDetails
+      Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
+      formData.append('Amenties', '')
+      formData.append('PropertyImages', JSON.stringify(imageData))
+      formData.append('PropertyDocs', JSON.stringify(documentData))
+      formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
       try {
-        const res = await axios.post(`${apiBaseUrl}​/properties​/addProperty`, data)
-        console.log('res-->', res.data)
+        await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
+        history.push(Paths.root)
       } catch (error) {
         console.log('error==>', error)
       }
@@ -235,7 +247,7 @@ const PropertyForm = () => {
     }
   }
   const handleAddFloorDetails = (arrayHelpers: any) => {
-    arrayHelpers.push({ id: Math.random(), floor: '', SquareFoot: '', BedRoom: '', family: '', kitchen: '', Laundry: '', Bath: '' })
+    arrayHelpers.push({ id: Math.random(), floor: '', SquareFoot: '', Bedroom: '', family: '', kitchen: '', Laundary: '', Bath: '' })
   }
 
   const handleDeleteFile = (type: string, index: number) => {
@@ -346,7 +358,7 @@ const PropertyForm = () => {
                       <FormTitle>Property info</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
-                      <FieldSelect label="Type of property" name="PropertyType" />
+                      <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="PropertyType" />
@@ -366,7 +378,7 @@ const PropertyForm = () => {
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="Comments" />
                     <FieldMsgBox>
-                      <CustomTextField label="Year built" name="YearBuilt" />
+                      <FormDatePicker label="Year built" name="YearBuilt" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="YearBuilt" />
@@ -381,10 +393,10 @@ const PropertyForm = () => {
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="Landscaping" />
                     <FieldMsgBox>
-                      <IntegerNumberField label="Lot facts" name="LotFacts" />
+                      <IntegerNumberField label="Lot Facts" name="Lotfacts" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
-                    <ErrorMessage component={err} name="LotFacts" />
+                    <ErrorMessage component={err} name="Lotfacts" />
                   </Grid>
                   <Divider classes={{ root: classes.dividerStyle }} />
                 </Grid>
@@ -613,10 +625,10 @@ const PropertyForm = () => {
                                   </FloorFieldMsgBox>
                                   <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
                                   <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].BedRoom`} />
+                                    <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].Bedroom`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].BedRoom`} />
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Bedroom`} />
                                   <FloorFieldMsgBox>
                                     <IntegerNumberField label="Family" name={`FloorDetails[${index}].family`} />
                                     <img src={chatIcon} alt="" />
@@ -628,10 +640,10 @@ const PropertyForm = () => {
                                   </FloorFieldMsgBox>
                                   <ErrorMessage component={err} name={`FloorDetails[${index}].kitchen`} />
                                   <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Laundry" name={`FloorDetails[${index}].Laundry`} />
+                                    <IntegerNumberField label="Laundary" name={`FloorDetails[${index}].Laundary`} />
                                     <img src={chatIcon} alt="" />
                                   </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Laundry`} />
+                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Laundary`} />
                                   <FloorFieldMsgBox>
                                     <IntegerNumberField label="Bath" name={`FloorDetails[${index}].Bath`} />
                                     <img src={chatIcon} alt="" />

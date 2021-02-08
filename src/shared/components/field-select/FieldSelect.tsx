@@ -8,6 +8,7 @@ import { colors } from 'shared/styles/theme'
 interface Props {
   name: string
   label?: string
+  options?: any
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -19,16 +20,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const optionData = [
-  { label: 'First', value: 1 },
-  { label: 'Second', value: 2 },
-  { label: 'Third', value: 3 },
-  { label: 'Fourth', value: 4 },
-]
-
 const FieldSelect = (props: Props) => {
   const classes = useStyles()
-  const { name, label } = props
+  const { name, label, options } = props
 
   return (
     <Field name={name}>
@@ -51,7 +45,7 @@ const FieldSelect = (props: Props) => {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            {optionData.map((item: any, k: any) => {
+            {options.map((item: any, k: any) => {
               return (
                 <MenuItem key={k} value={item.value}>
                   {item.label}

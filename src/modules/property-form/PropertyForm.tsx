@@ -203,6 +203,7 @@ const PropertyForm = () => {
   const [showImgError, setShowImgError] = useState(false)
   const [showDocError, setShowDocError] = useState(false)
   const [permission, setPermission] = useState(false)
+  const [loading, setLoading] = useState(false)
   const classes = useStyle()
   const classes01 = useStyle01()
 
@@ -232,10 +233,13 @@ const PropertyForm = () => {
       formData.append('PropertyDocs', JSON.stringify(documentData))
       formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
       try {
+        setLoading(true)
         await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
         history.push(Paths.root)
       } catch (error) {
         console.log('error==>', error)
+      } finally {
+        setLoading(false)
       }
     } else {
       if (imageList.length === 0) {
@@ -820,7 +824,7 @@ const PropertyForm = () => {
                     }}
                     disabled={!permission}
                   >
-                    Save & Send for review
+                    {loading ? 'Loading...' : 'Save & Send for review'}
                   </Button>
                 </FormButtonGroup>
               </SubmitContainer>

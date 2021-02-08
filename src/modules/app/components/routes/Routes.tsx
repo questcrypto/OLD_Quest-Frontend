@@ -43,7 +43,7 @@ export const routes: RouteDefinition[] = [
     title: '',
   },
   {
-    path: Paths.propertyDetails,
+    path: Paths.propertyDetails + '/:propertyId',
     component: PropertyDetails,
     protected: true,
     redirect: Paths.root,

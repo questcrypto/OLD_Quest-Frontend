@@ -1,6 +1,9 @@
 import styled from 'styled-components'
+import { colors } from 'shared/styles/theme'
 import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
+
+export const PropertyTableWarper = styled.div``
 
 export const CustomTableHead = styled(TableHead)`
   color: black;
@@ -14,4 +17,16 @@ export const CustomTableCell = styled(TableCell)`
   color: #302e35;
   width: 10px;
   align: right;
+`
+export const PaginationCont = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+`
+export const PaginationText = styled.p`
+  margin: 0;
+  font-size: 16px;
+  line-height: 19px;
+  color: ${colors.textPrimary};
 `

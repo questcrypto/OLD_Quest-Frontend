@@ -15,30 +15,39 @@ import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import { Grid } from '@material-ui/core'
+import ComponentLoader from 'shared/loader-components/component-loader'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
+import Web3 from 'web3'
 
 const Property = () => {
   const classes = useStyles()
-  const [progress, setProgress] = useState(60)
   const [activeTab, setActiveTab] = useState('new')
-  const [propertyInfo, setPropertyInfo] = useState<any>()
+  const [propertiesList, setPropertiesList] = useState<any>([])
   const [dataLoading, setDataLoading] = useState(false)
 
   useEffect(() => {
-    const getPropertyDetails = async () => {
+    const web3: Web3 = new Web3(window.ethereum)
+    const getPropertiesList = async () => {
       try {
-        setDataLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/0x8479F317d952998bB398e9C082e4f5145A182B6E`)
-        setPropertyInfo(res.data)
+        const coinbase = await web3.eth.getCoinbase()
+        if (!coinbase) {
+          window.alert('Please activate MetaMask first.')
+          return
+        } else {
+          const publicaddress = coinbase.toLowerCase()
+          setDataLoading(true)
+          const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${publicaddress}`)
+          setPropertiesList(res.data)
+        }
       } catch (error) {
       } finally {
         setDataLoading(false)
       }
     }
-    getPropertyDetails()
+    getPropertiesList()
   }, [])
 
   const handleAddProperty = () => {
@@ -53,7 +62,7 @@ const Property = () => {
             <HeaderTitle>Properties</HeaderTitle>
           </Grid>
           <Grid item xs={3}>
-            <StyledLinearProgress variant="determinate" value={progress} className={classes.progressStyle} />
+            <StyledLinearProgress variant="determinate" value={60} className={classes.progressStyle} />
           </Grid>
           <Grid item xs={3}>
             <ProgressText>643 new properties to onboard</ProgressText>
@@ -105,10 +114,10 @@ const Property = () => {
       </Grid>
       <div>
         {dataLoading ? (
-          <div>Loading</div>
+          <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'new' && <PropertyTable data={propertyInfo} />}
+            {activeTab === 'new' && <PropertyTable data={propertiesList} />}
             {activeTab === 'published' && <p>Content can be added here</p>}
             {activeTab === 'preAuctions' && <p>Content can be added here</p>}
             {activeTab === 'onAuctions' && <p>Content can be added here</p>}

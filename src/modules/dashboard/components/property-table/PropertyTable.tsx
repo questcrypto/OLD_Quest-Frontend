@@ -1,5 +1,5 @@
 import React from 'react'
-import { PropertyTableWarper, CustomTableHead, CustomTableCell, PaginationCont, PaginationText } from './style'
+import { PropertyTableWarper, CustomTableHead, CustomTableCell, PaginationCont, PaginationText, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -13,6 +13,7 @@ import history from 'modules/app/components/history'
 
 const PropertyTable = (props: any) => {
   const { data } = props
+  console.log('data==>', data)
 
   const handleAction = (id: any) => {
     history.push(`${Paths.propertyDetails}/${id}`)
@@ -46,7 +47,7 @@ const PropertyTable = (props: any) => {
               <CustomTableCell>ACTION</CustomTableCell>
             </TableRow>
           </CustomTableHead>
-          {!!data && Object.values(data).length > 0 ? (
+          {!!data && data.length > 0 && (
             <TableBody>
               {data.map((row: any, k: number) => (
                 <TableRow key={k}>
@@ -63,14 +64,15 @@ const PropertyTable = (props: any) => {
                 </TableRow>
               ))}
             </TableBody>
-          ) : (
-            <div style={{ margin: '50px auto' }}>
-              <p style={{ textAlign: 'center' }}>No data available</p>
-            </div>
           )}
         </Table>
+        {!!data && data.length === 0 && (
+          <NoDataContainer>
+            <p>No data available</p>
+          </NoDataContainer>
+        )}
       </TableContainer>
-      {!!data && !!data && Object.values(data).length > 0 && (
+      {!!data && data.length > 10 && (
         <PaginationCont>
           <PaginationText>Showing 1 to 15 of 35 element</PaginationText>
           <Pagination count={10} showFirstButton showLastButton />

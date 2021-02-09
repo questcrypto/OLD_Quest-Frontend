@@ -9,7 +9,7 @@ export const CustomTableHead = styled(TableHead)`
   color: black;
   width: 100%;
   height: 10px;
-  background: #ffffff;
+  background: ${colors.white};
   box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.14), 0px 1px 8px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
 `
@@ -29,4 +29,10 @@ export const PaginationText = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: ${colors.textPrimary};
+`
+export const NoDataContainer = styled.div`
+  margin: 50px 0;
+  p {
+    text-align: center;
+  }
 `

@@ -40,6 +40,7 @@ export const useStyle = makeStyles({
   },
   saveAndReviewStyle: {
     color: colors.white,
+    minWidth: '200px',
     backgroundColor: colors.primary,
     '&:hover': {
       backgroundColor: colors.primary,
@@ -71,7 +72,7 @@ export const useStyle01 = makeStyles((theme) => ({
 }))
 
 export const PropertyFormWrapper = styled.div``
-export const FromHeader = styled.div`
+export const FormHeader = styled.div`
   margin-bottom: 50px;
 `
 export const HeaderPath = styled.div`

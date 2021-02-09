@@ -1,11 +1,4 @@
-import React, { useState } from 'react'
-import PropertyTable from '../property-table/PropertyTable'
-import Button from '@material-ui/core/Button'
-import SearchIcon from '@material-ui/icons/Search'
-import InputBase from '@material-ui/core/InputBase'
-import Pagination from '@material-ui/lab/Pagination'
-import { Paths } from 'modules/app/components/routes/types'
-import history from 'modules/app/components/history'
+import React, { useState, useEffect } from 'react'
 import {
   useStyles,
   StyledLinearProgress,
@@ -16,15 +9,46 @@ import {
   PropertyTabCont,
   TabTitle,
   PropertySearchBox,
-  PaginationCont,
-  PaginationText,
 } from './style'
+import PropertyTable from '../property-table/PropertyTable'
+import Button from '@material-ui/core/Button'
+import SearchIcon from '@material-ui/icons/Search'
+import InputBase from '@material-ui/core/InputBase'
 import { Grid } from '@material-ui/core'
+import ComponentLoader from 'shared/loader-components/component-loader'
+import axios from 'axios'
+import { apiBaseUrl } from 'services/global-constant'
+import { Paths } from 'modules/app/components/routes/types'
+import history from 'modules/app/components/history'
+import Web3 from 'web3'
 
 const Property = () => {
   const classes = useStyles()
-  const [progress, setProgress] = useState(60)
   const [activeTab, setActiveTab] = useState('new')
+  const [propertiesList, setPropertiesList] = useState<any>([])
+  const [dataLoading, setDataLoading] = useState(false)
+
+  useEffect(() => {
+    const web3: Web3 = new Web3(window.ethereum)
+    const getPropertiesList = async () => {
+      try {
+        const coinbase = await web3.eth.getCoinbase()
+        if (!coinbase) {
+          window.alert('Please activate MetaMask first.')
+          return
+        } else {
+          const publicaddress = coinbase.toLowerCase()
+          setDataLoading(true)
+          const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${publicaddress}`)
+          setPropertiesList(res.data)
+        }
+      } catch (error) {
+      } finally {
+        setDataLoading(false)
+      }
+    }
+    getPropertiesList()
+  }, [])
 
   const handleAddProperty = () => {
     history.push(Paths.addPropertyForm)
@@ -38,7 +62,7 @@ const Property = () => {
             <HeaderTitle>Properties</HeaderTitle>
           </Grid>
           <Grid item xs={3}>
-            <StyledLinearProgress variant="determinate" value={progress} className={classes.progressStyle} />
+            <StyledLinearProgress variant="determinate" value={60} className={classes.progressStyle} />
           </Grid>
           <Grid item xs={3}>
             <ProgressText>643 new properties to onboard</ProgressText>
@@ -89,18 +113,18 @@ const Property = () => {
         </Grid>
       </Grid>
       <div>
-        {activeTab === 'new' && <PropertyTable />}
-        {activeTab === 'published' && <p>Content can be added here</p>}
-        {activeTab === 'preAuctions' && <p>Content can be added here</p>}
-        {activeTab === 'onAuctions' && <p>Content can be added here</p>}
-        {activeTab === 'postAuctions' && <p>Content can be added here</p>}
+        {dataLoading ? (
+          <ComponentLoader />
+        ) : (
+          <div>
+            {activeTab === 'new' && <PropertyTable data={propertiesList} />}
+            {activeTab === 'published' && <p>Content can be added here</p>}
+            {activeTab === 'preAuctions' && <p>Content can be added here</p>}
+            {activeTab === 'onAuctions' && <p>Content can be added here</p>}
+            {activeTab === 'postAuctions' && <p>Content can be added here</p>}
+          </div>
+        )}
       </div>
-
-      <PaginationCont>
-        <PaginationText>Showing 1 to 15 of 35 element</PaginationText>
-
-        <Pagination count={10} showFirstButton showLastButton />
-      </PaginationCont>
     </PropertyContainer>
   )
 }

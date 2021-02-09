@@ -6,7 +6,7 @@ import {
   useStyle,
   useStyle01,
   PropertyFormWrapper,
-  FromHeader,
+  FormHeader,
   HeaderPath,
   HeaderTitle,
   PropertyFormCont,
@@ -51,6 +51,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
+import Spinner from 'shared/loader-components/spinner'
 import { propertyType } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
@@ -103,6 +104,7 @@ const initialValues = {
     },
   ],
 
+  Amenties: '',
   Heating: '',
   AC: '',
   Roof: '',
@@ -171,6 +173,7 @@ const propertyFormSchema = Yup.object().shape({
     })
   ),
 
+  Amenties: Yup.string().required('This field is required'),
   Heating: Yup.string().required('This field is required'),
   AC: Yup.string().required('This field is required'),
   Roof: Yup.string().required('This field is required'),
@@ -203,6 +206,7 @@ const PropertyForm = () => {
   const [showImgError, setShowImgError] = useState(false)
   const [showDocError, setShowDocError] = useState(false)
   const [permission, setPermission] = useState(false)
+  const [loading, setLoading] = useState(false)
   const classes = useStyle()
   const classes01 = useStyle01()
 
@@ -227,15 +231,17 @@ const PropertyForm = () => {
       const data = { ...values }
       delete data.FloorDetails
       Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
-      formData.append('Amenties', '')
       formData.append('PropertyImages', JSON.stringify(imageData))
       formData.append('PropertyDocs', JSON.stringify(documentData))
       formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
       try {
+        setLoading(true)
         await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
         history.push(Paths.root)
       } catch (error) {
         console.log('error==>', error)
+      } finally {
+        setLoading(false)
       }
     } else {
       if (imageList.length === 0) {
@@ -293,12 +299,12 @@ const PropertyForm = () => {
 
   return (
     <PropertyFormWrapper>
-      <FromHeader>
+      <FormHeader>
         <HeaderPath>
           <span>Properties</span> / Add new property
         </HeaderPath>
         <HeaderTitle>Add new property</HeaderTitle>
-      </FromHeader>
+      </FormHeader>
       <PropertyFormCont>
         <Formik
           initialValues={initialValues}
@@ -679,6 +685,11 @@ const PropertyForm = () => {
                       <FormTitle>Amenities</FormTitle>
                     </FormTitleCont>
                     <FieldMsgBox>
+                      <CustomTextField label="Amenties" name="Amenties" />
+                      <img src={chatIcon} alt="" />
+                    </FieldMsgBox>
+                    <ErrorMessage component={err} name="Amenties" />
+                    <FieldMsgBox>
                       <CustomTextField label="Heating" name="Heating" />
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
@@ -820,7 +831,7 @@ const PropertyForm = () => {
                     }}
                     disabled={!permission}
                   >
-                    Save & Send for review
+                    {loading ? <Spinner /> : 'Save & Send for review'}
                   </Button>
                 </FormButtonGroup>
               </SubmitContainer>

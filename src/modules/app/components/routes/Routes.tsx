@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect, Switch } from 'react-router'
 import { Router, Route } from 'react-router-dom'
 import { StyledRoutesWrapper, StyledRoutes, StyledRoutesContainer, LeftContainer, RightContainer } from './style'
-import Loader from 'shared/loader'
+import Loader from 'shared/loader-components/loader'
 import history from '../history'
 import { Paths } from './types'
 import { NotFound } from './NotFound'
@@ -43,7 +43,7 @@ export const routes: RouteDefinition[] = [
     title: '',
   },
   {
-    path: Paths.propertyDetails,
+    path: Paths.propertyDetails + '/:propertyId',
     component: PropertyDetails,
     protected: true,
     redirect: Paths.root,

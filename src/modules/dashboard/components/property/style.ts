@@ -106,16 +106,3 @@ export const PropertySearchBox = styled.div`
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr;
 `
-
-export const PaginationCont = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 50px;
-`
-export const PaginationText = styled.p`
-  margin: 0;
-  font-size: 16px;
-  line-height: 19px;
-  color: ${colors.textPrimary};
-`

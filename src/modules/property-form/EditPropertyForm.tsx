@@ -301,9 +301,9 @@ const EditPropertyForm = () => {
     <PropertyFormWrapper>
       <FormHeader>
         <HeaderPath>
-          <span>Properties</span> / Add new property
+          <span>Properties</span> / Edit property from
         </HeaderPath>
-        <HeaderTitle>Add new property</HeaderTitle>
+        <HeaderTitle>Edit property</HeaderTitle>
       </FormHeader>
       <PropertyFormCont>
         <Formik

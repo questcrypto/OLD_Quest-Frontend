@@ -50,7 +50,7 @@ export const routes: RouteDefinition[] = [
     title: '',
   },
   {
-    path: Paths.editPropertyForm,
+    path: Paths.editPropertyForm + '/:propertyId',
     component: EditPropertyForm,
     protected: true,
     redirect: Paths.root,

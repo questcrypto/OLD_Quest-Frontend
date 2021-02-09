@@ -46,6 +46,10 @@ export const useStyle = makeStyles({
       backgroundColor: colors.primary,
     },
   },
+  accordionStyle: {
+    width: '100%',
+    maxWidth: '90%',
+  },
 })
 export const useStyle01 = makeStyles((theme) => ({
   heading: {
@@ -66,8 +70,7 @@ export const useStyle01 = makeStyles((theme) => ({
     color: '#EB5757',
     cursor: 'pointer',
     top: '14px',
-    left: '100%',
-    marginLeft: '28px',
+    left: '96%',
   },
 }))
 
@@ -146,13 +149,14 @@ export const FileContainer = styled.div`
 `
 
 export const DocText = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
   color: ${colors.textSecondary};
   margin: 0 10px;
   border-bottom: 1px solid ${colors.textSecondary};
   padding-bottom: 5px;
   text-align: center;
+  word-break: break-all;
 `
 
 export const FieldMsgBox = styled.div`
@@ -213,4 +217,24 @@ export const FormButtonGroup = styled.div`
 `
 export const SubmitContainer = styled.div`
   margin-left: 60px;
+`
+
+export const UpLoadedDocCont = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+  max-width: 400px;
+`
+export const UpLoadedDocImages = styled.div`
+  img {
+    width: 100px;
+    height: 100px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 19px;
+    color: ${colors.textSecondary};
+    margin: 5px 0 0 0;
+    text-align: center;
+  }
 `

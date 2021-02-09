@@ -13,7 +13,6 @@ import history from 'modules/app/components/history'
 
 const PropertyTable = (props: any) => {
   const { data } = props
-  console.log('data==>', data)
 
   const handleAction = (id: any) => {
     history.push(`${Paths.propertyDetails}/${id}`)

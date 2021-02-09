@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import * as Yup from 'yup'
+import React, { useState, useEffect } from 'react'
+import { withRouter } from 'react-router'
 import { Formik, Form, ErrorMessage } from 'formik'
-import { err, Error } from 'shared/styles/styled'
+import { err } from 'shared/styles/styled'
 import {
   useStyle,
   useStyle01,
@@ -13,11 +13,8 @@ import {
   FormTitleCont,
   FormTitle,
   FormTitleNumber,
-  FormSubTitle,
-  SelectedFileCont,
-  SelectedFileImgCont,
-  FileContainer,
-  DocText,
+  UpLoadedDocCont,
+  UpLoadedDocImages,
   FieldMsgBox,
   FloorDetailsArr,
   FloorDetailsCont,
@@ -28,6 +25,7 @@ import {
   CheckBoxText,
   FormButtonGroup,
 } from './style'
+import { initialValues, propertyFormSchema } from './formConstant'
 import Button from '@material-ui/core/Button'
 import { Grid, Checkbox } from '@material-ui/core'
 import Divider from '@material-ui/core/Divider'
@@ -39,9 +37,6 @@ import FormDatePicker from 'shared/components/form-date-picker'
 import CustomModal from 'shared/custom-modal'
 import UploadImage from './components/UploadImage'
 import UploadDocument from './components/UploadDocument'
-import Paper from '@material-ui/core/Paper'
-import ImageIcon from 'assets/icons/imgIcon.svg'
-import CrossIcon from 'assets/icons/crossIcon.svg'
 import FileIcon from 'assets/icons/fileIcon.svg'
 import chatIcon from 'assets/images/chatIcon.svg'
 import Accordion from '@material-ui/core/Accordion'
@@ -53,162 +48,55 @@ import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
 import Spinner from 'shared/loader-components/spinner'
 import { propertyType } from 'shared/helpers/dataConstant'
+import moment from 'moment'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 
-const initialValues = {
-  Fname: '',
-  Lname: '',
-  Email: '',
-  PublicAddress: '',
-
-  PropertyType: '',
-  PropertyName: '',
-  CurrentValue: '',
-  Comments: '',
-  YearBuilt: '',
-  Zoning: '',
-  Landscaping: '',
-  Lotfacts: '',
-
-  Address1: '',
-  Address2: '',
-  City: '',
-  State: '',
-  PostalCode: '',
-  Country: '',
-  Subdivision: '',
-  TaxId: '',
-
-  SchoolDistrict: '',
-  Elementary: '',
-  JrHigh: '',
-  HighSchool: '',
-
-  Insurance: '',
-  Maintenance: '',
-  HOAFees: '',
-
-  FloorDetails: [
-    {
-      id: Math.random(),
-      floor: '',
-      SquareFoot: '',
-      Bedroom: '',
-      family: '',
-      kitchen: '',
-      Laundary: '',
-      Bath: '',
-    },
-  ],
-
-  Amenties: '',
-  Heating: '',
-  AC: '',
-  Roof: '',
-  Floor: '',
-  WindowCovering: '',
-  Pool: '',
-  PoolFeature: '',
-
-  Style: '',
-  Deck: '',
-  Patio: '',
-  Garage: '',
-  Carpot: '',
-  ParkingSpace: '',
-  FinBasmt: '',
-  Basement: '',
-  Driveway: '',
-  Water: '',
-  WaterShare: '',
-  Spa: '',
-}
-const propertyFormSchema = Yup.object().shape({
-  Fname: Yup.string().required('First name is required'),
-  Lname: Yup.string().required('Last name is required'),
-  Email: Yup.string().required('Email is required'),
-  PublicAddress: Yup.string().required('Wallet public key is required'),
-
-  PropertyType: Yup.string().required('This field is required'),
-  PropertyName: Yup.string().required('This field is required'),
-  CurrentValue: Yup.string().required('This field is required'),
-  Comments: Yup.string().required('This field is required'),
-  YearBuilt: Yup.string().required('This field is required'),
-  Zoning: Yup.string().required('This field is required'),
-  Landscaping: Yup.string().required('This field is required'),
-  Lotfacts: Yup.string().required('This field is required'),
-
-  Address1: Yup.string().required('This field is required'),
-  Address2: Yup.string().required('This field is required'),
-  City: Yup.string().required('This field is required'),
-  State: Yup.string().required('This field is required'),
-  PostalCode: Yup.string()
-    .matches(/^[0-9]{5}$/, 'Must be exactly 5 digits')
-    .required('This field is required'),
-  Country: Yup.string().required('This field is required'),
-  Subdivision: Yup.string().required('This field is required'),
-  TaxId: Yup.string().required('This field is required'),
-
-  SchoolDistrict: Yup.string().required('This field is required'),
-  Elementary: Yup.string().required('This field is required'),
-  JrHigh: Yup.string().required('This field is required'),
-  HighSchool: Yup.string().required('This field is required'),
-
-  Insurance: Yup.string().required('This field is required'),
-  Maintenance: Yup.string().required('This field is required'),
-  HOAFees: Yup.string().required('This field is required'),
-
-  FloorDetails: Yup.array().of(
-    Yup.object().shape({
-      floor: Yup.string().required('This field is required'),
-      SquareFoot: Yup.string().required('This field is required'),
-      Bedroom: Yup.string().required('This field is required'),
-      family: Yup.string().required('This field is required'),
-      kitchen: Yup.string().required('This field is required'),
-      Laundary: Yup.string().required('This field is required'),
-      Bath: Yup.string().required('This field is required'),
-    })
-  ),
-
-  Amenties: Yup.string().required('This field is required'),
-  Heating: Yup.string().required('This field is required'),
-  AC: Yup.string().required('This field is required'),
-  Roof: Yup.string().required('This field is required'),
-  Floor: Yup.string().required('This field is required'),
-  WindowCovering: Yup.string().required('This field is required'),
-  Pool: Yup.string().required('This field is required'),
-  PoolFeature: Yup.string().required('This field is required'),
-
-  Style: Yup.string().required('This field is required'),
-  Deck: Yup.string().required('This field is required'),
-  Patio: Yup.string().required('This field is required'),
-  Garage: Yup.string().required('This field is required'),
-  Carpot: Yup.string().required('This field is required'),
-  ParkingSpace: Yup.string().required('This field is required'),
-  FinBasmt: Yup.string().required('This field is required'),
-  Basement: Yup.string().required('This field is required'),
-  Driveway: Yup.string().required('This field is required'),
-  Water: Yup.string().required('This field is required'),
-  WaterShare: Yup.string().required('This field is required'),
-  Spa: Yup.string().required('This field is required'),
-})
-
-const EditPropertyForm = () => {
+const EditPropertyForm = (props: any) => {
+  const [initialData, setInitialData] = useState(initialValues)
   const [showImgModal, setShowImgModal] = useState(false)
   const [imageList, setImageList] = useState<any>([])
   const [imageData, setImageData] = useState<any>([])
   const [showDocModal, setShowDocModal] = useState(false)
   const [documentList, setDocumentList] = useState<any>([])
   const [documentData, setDocumentData] = useState<any>([])
-  const [showImgError, setShowImgError] = useState(false)
-  const [showDocError, setShowDocError] = useState(false)
   const [permission, setPermission] = useState(false)
   const [loading, setLoading] = useState(false)
   const classes = useStyle()
   const classes01 = useStyle01()
+
+  useEffect(() => {
+    const propertyId = props.match.params.propertyId
+    const getPropertyDetails = async () => {
+      try {
+        const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
+        if (!!res && res.data) {
+          const images = []
+          const docs = []
+          for (const item of res.data.getDocs) {
+            if (item.type === 0) {
+              images.push(item)
+            }
+            if (item.type === 1) {
+              docs.push(item)
+            }
+          }
+
+          setImageList([...images])
+          setDocumentList([...docs])
+          const data = {
+            ...res.data.propertyDetails,
+            FloorDetails: [...res.data.floordetail],
+            YearBuilt: moment(res.data.propertyDetails.YearBuilt).format('YYYY'),
+          }
+          setInitialData({ ...data })
+        }
+      } catch (error) {}
+    }
+    getPropertyDetails()
+  }, [props.match.params.propertyId])
 
   const getFileData = () => {
     const filesArr: any = []
@@ -222,77 +110,38 @@ const EditPropertyForm = () => {
   }
 
   const handleSubmit = async (values: any) => {
-    if (imageList.length > 0 && documentList.length > 0) {
-      const formData = new FormData()
-      const dataFiles = getFileData()
-      for (const item of dataFiles) {
-        formData.append('file', item)
-      }
-      const data = { ...values }
-      delete data.FloorDetails
-      Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
-      formData.append('PropertyImages', JSON.stringify(imageData))
-      formData.append('PropertyDocs', JSON.stringify(documentData))
-      formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
-      try {
-        setLoading(true)
-        await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
-        history.push(Paths.root)
-      } catch (error) {
-        console.log('error==>', error)
-      } finally {
-        setLoading(false)
-      }
-    } else {
-      if (imageList.length === 0) {
-        setShowImgError(true)
-      }
-      if (documentList.length === 0) {
-        setShowDocError(true)
-      }
+    const formData = new FormData()
+    const dataFiles = getFileData()
+    for (const item of dataFiles) {
+      formData.append('file', item)
+    }
+    const data = { ...values }
+    delete data.FloorDetails
+    Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
+    formData.append('PropertyImages', JSON.stringify(imageData))
+    formData.append('PropertyDocs', JSON.stringify(documentData))
+    formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
+    try {
+      setLoading(true)
+      await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
+      history.push(Paths.root)
+    } catch (error) {
+      console.log('error==>', error)
+    } finally {
+      setLoading(false)
     }
   }
   const handleAddFloorDetails = (arrayHelpers: any) => {
     arrayHelpers.push({ id: Math.random(), floor: '', SquareFoot: '', Bedroom: '', family: '', kitchen: '', Laundary: '', Bath: '' })
   }
 
-  const handleDeleteFile = (type: string, index: number) => {
-    if (type === 'img') {
-      const newImgList: any = [...imageList]
-      newImgList.splice(index, 1)
-      setImageList([...newImgList])
-    }
-    if (type === 'doc') {
-      const newDocList: any = [...documentList]
-      newDocList.splice(index, 1)
-      setDocumentList([...newDocList])
-    }
-  }
-
-  const renderSelectedFileName = (fileList: any, type: string) => {
+  const renderUploadedImageDoc = (fileList: any) => {
     return fileList.map((item: any, k: number) => {
       return (
-        <Grid key={k} container spacing={1} className={classes.fileNameStyle}>
-          <Grid item xs={1}>
-            <img src={type === 'img' ? ImageIcon : FileIcon} alt="" />
-          </Grid>
-          <Grid item xs={10}>
-            <DocText>{item.name}</DocText>
-          </Grid>
-          <Grid item xs={1}>
-            <img style={{ cursor: 'pointer' }} src={CrossIcon} alt="" onClick={() => handleDeleteFile(type, k)} />
-          </Grid>
-        </Grid>
-      )
-    })
-  }
-  const renderSelectedFileImage = (fileList: any) => {
-    return fileList.map((item: any, k: number) => {
-      const objectURL = URL.createObjectURL(item)
-      return (
-        <FileContainer key={k}>
-          <img src={objectURL} alt="" />
-        </FileContainer>
+        <UpLoadedDocImages key={k}>
+          <img src={item.type === 0 ? `${apiBaseUrl}/${item.filename}` : FileIcon} alt="" />
+          <p>{item.Name}</p>
+        </UpLoadedDocImages>
       )
     })
   }
@@ -307,7 +156,8 @@ const EditPropertyForm = () => {
       </FormHeader>
       <PropertyFormCont>
         <Formik
-          initialValues={initialValues}
+          enableReinitialize
+          initialValues={initialData}
           validationSchema={propertyFormSchema}
           onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values)
@@ -455,11 +305,6 @@ const EditPropertyForm = () => {
                       <img src={chatIcon} alt="" />
                     </FieldMsgBox>
                     <ErrorMessage component={err} name="Subdivision" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Tax Id" name="TaxId" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="TaxId" />
                   </Grid>
                   <Divider classes={{ root: classes.dividerStyle }} />
                 </Grid>
@@ -534,33 +379,9 @@ const EditPropertyForm = () => {
                 </Grid>
                 <Grid item xs={11} container direction="column">
                   <FormTitleCont>
-                    <FormTitle>Upload property images</FormTitle>
+                    <FormTitle>Uploaded property images</FormTitle>
                   </FormTitleCont>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6}>
-                      <Paper
-                        elevation={1}
-                        onClick={() => setShowImgModal(true)}
-                        classes={{
-                          root: classes.uploadDataStyle,
-                        }}
-                      >
-                        Add property image
-                      </Paper>
-                      {showImgError && imageList.length === 0 && <Error>At least one Image is required</Error>}
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      {!!imageList && imageList.length > 0 && (
-                        <div>
-                          <FormSubTitle>Selected Images</FormSubTitle>
-                          <SelectedFileCont>
-                            <div>{renderSelectedFileName(imageList, 'img')}</div>
-                            <SelectedFileImgCont>{renderSelectedFileImage(imageList)}</SelectedFileImgCont>
-                          </SelectedFileCont>
-                        </div>
-                      )}
-                    </Grid>
-                  </Grid>
+                  <UpLoadedDocCont>{renderUploadedImageDoc(imageList)}</UpLoadedDocCont>
                   <Divider classes={{ root: classes.dividerStyle }} />
                 </Grid>
               </Grid>
@@ -571,30 +392,9 @@ const EditPropertyForm = () => {
                 </Grid>
                 <Grid item xs={11} container direction="column">
                   <FormTitleCont>
-                    <FormTitle>Upload property documents</FormTitle>
+                    <FormTitle>Uploaded property documents</FormTitle>
                   </FormTitleCont>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6}>
-                      <Paper
-                        elevation={1}
-                        onClick={() => setShowDocModal(true)}
-                        classes={{
-                          root: classes.uploadDataStyle,
-                        }}
-                      >
-                        Add property document
-                      </Paper>
-                      {showDocError && documentList.length === 0 && <Error>At least one Document is required</Error>}
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      {!!documentList && documentList.length > 0 && (
-                        <div>
-                          <FormSubTitle>Selected Documents</FormSubTitle>
-                          <div>{renderSelectedFileName(documentList, 'doc')}</div>
-                        </div>
-                      )}
-                    </Grid>
-                  </Grid>
+                  <UpLoadedDocCont>{renderUploadedImageDoc(documentList)}</UpLoadedDocCont>
                   <Divider classes={{ root: classes.dividerStyle }} />
                 </Grid>
               </Grid>
@@ -615,16 +415,11 @@ const EditPropertyForm = () => {
                         <div>
                           {values.FloorDetails.map((ref: any, index: number) => (
                             <FloorDetailsCont key={ref.id}>
-                              <Accordion defaultExpanded>
+                              <Accordion defaultExpanded className={classes.accordionStyle}>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes01.headerStyle}>
                                   <Typography className={classes01.heading}>Floor {index + 1}</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails className={classes01.detailsCont}>
-                                  <FloorFieldMsgBox>
-                                    <CustomTextField label="Floor" name={`FloorDetails[${index}].floor`} />
-                                    <img src={chatIcon} alt="" />
-                                  </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].floor`} />
                                   <FloorFieldMsgBox>
                                     <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
                                     <img src={chatIcon} alt="" />
@@ -684,11 +479,6 @@ const EditPropertyForm = () => {
                     <FormTitleCont>
                       <FormTitle>Amenities</FormTitle>
                     </FormTitleCont>
-                    <FieldMsgBox>
-                      <CustomTextField label="Amenties" name="Amenties" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Amenties" />
                     <FieldMsgBox>
                       <CustomTextField label="Heating" name="Heating" />
                       <img src={chatIcon} alt="" />
@@ -860,4 +650,4 @@ const EditPropertyForm = () => {
     </PropertyFormWrapper>
   )
 }
-export default EditPropertyForm
+export default withRouter(EditPropertyForm)

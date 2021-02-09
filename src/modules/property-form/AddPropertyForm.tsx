@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err, Error } from 'shared/styles/styled'
 import {
@@ -707,4 +708,8 @@ const AddPropertyForm = () => {
     </PropertyFormWrapper>
   )
 }
-export default AddPropertyForm
+
+const mapStateToProps = (state: any) => ({
+  userInfo: state.user.userInfo,
+})
+export default connect(mapStateToProps)(AddPropertyForm)

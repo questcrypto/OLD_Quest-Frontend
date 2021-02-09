@@ -138,21 +138,22 @@ const PropertyDetails = () => {
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
                       <img src={files} className={classes.DocUploads} />
-                    </Paper>
+                    </Paper><Typography align="center"> Property<br /> verified</Typography>
                     <Box m={1} />
                     <Paper>
                       <Box p={1} width="5rem" height="1rem" />
                       <img src={pdf} className={classes.DocUploads} />
                     </Paper>
-                    Property <br />
-                    verified
+                    <Typography align="center"> Property<br /> verified</Typography>
+                    <Typography align="left">Property <br />verified</Typography>
+                    <Typography align="right">Property <br /> verified</Typography>
+                    <Typography align="right">Property <br />verified</Typography>
                   </Grid>
                 </Grid>
                 <Box m={12} />
                 <Button className={classes.BtnDocUploads}>LIVE AUCTION</Button>
                 <Button className={classes.BtnDocUploads}>Button text</Button>
                 <Button
-
                   className={classes.BtnDocUploads}
                   style={{
                     backgroundColor: '#1E3444',

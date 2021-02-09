@@ -68,6 +68,26 @@ export const useStyle01 = makeStyles((theme) => ({
     left: '100%',
     marginLeft: '28px',
   },
+  paper: {
+    font: '30px solid black',
+    textAlign: 'center',
+    marginTop: '-80px',
+
+    // color: theme.palette.text.secondary,
+  },
+  center: {
+    textAlign: 'center',
+  },
+  left: {
+    marginLeft: '30px',
+    marginTop: '-20px',
+  },
+
+  dividerStyle: {
+    width: '80%',
+    margin: '10px 0px',
+    marginLeft: '10%',
+  },
 }))
 
 export const PropertyFormWrapper = styled.div``
@@ -89,10 +109,22 @@ export const HeaderTitle = styled.h2`
   line-height: 29px;
   color: ${colors.textPrimary};
 `
-export const PropertyFormCont = styled.div`
-  box-sizing: border-box;
-  width: 800px;
-  max-width: 800px;
+
+export const PropertyFormContParent = styled.div`
+  display: flex;
+`
+
+export const PropertyFormContLeft = styled.div`
+  flex: 2;
+  max-width: 780px;
+  background: white;
+  border-radius: 10px;
+`
+export const PropertyFormContRight = styled.div`
+  flex: 1;
+  margin-left: 10px;
+  background: white;
+  border-radius: 10px;
 `
 export const FormTitleNumber = styled.div`
   background: ${colors.primary};

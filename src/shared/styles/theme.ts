@@ -12,14 +12,16 @@ export interface Colors {
   primary: string
   textPrimary: string
   textSecondary: string
+  paperBackground: string
 }
 
 export const colors: Colors = {
-  themeBackground: '#FAFAFA',
-  white: '#ffffff',
+  themeBackground: '#E5E5E5',
+  white: '#FFFFFF',
   primary: '#1E3444',
   textPrimary: '#302E35',
   textSecondary: '#828282',
+  paperBackground: '#FBFBFB',
 }
 
 export interface ThemeStarter {
@@ -29,6 +31,7 @@ export interface ThemeStarter {
   primary: string
   textPrimary: string
   textSecondary: string
+  paperBackground: string
 }
 
 export const theme: ThemeStarter = {
@@ -37,6 +40,7 @@ export const theme: ThemeStarter = {
   primary: colors.primary,
   textPrimary: colors.textPrimary,
   textSecondary: colors.textSecondary,
+  paperBackground: colors.paperBackground,
 }
 
 export interface ScreenSizes {

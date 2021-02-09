@@ -10,7 +10,6 @@ import {
   HeaderPath,
   HeaderTitle,
   PropertyFormCont,
-  FormTitleCont,
   FormTitle,
   FormTitleNumber,
   UpLoadedDocCont,
@@ -132,481 +131,462 @@ const EditPropertyForm = (props: any) => {
         </HeaderPath>
         <HeaderTitle>Edit property</HeaderTitle>
       </FormHeader>
-      <PropertyFormCont>
-        <Formik
-          enableReinitialize
-          initialValues={initialData}
-          validationSchema={propertyFormSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            handleSubmit(values)
-            setSubmitting(false)
-          }}
-        >
-          {({ values }: any) => (
-            <Form>
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>1</FormTitleNumber>
-                </Grid>
+      <Grid container>
+        <Grid item xs={8}>
+          <PropertyFormCont>
+            <Formik
+              enableReinitialize
+              initialValues={initialData}
+              validationSchema={propertyFormSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                handleSubmit(values)
+                setSubmitting(false)
+              }}
+            >
+              {({ values }: any) => (
+                <Form>
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>1</FormTitleNumber>
+                    </Grid>
 
-                <Grid item xs={11} container direction="column">
-                  <Grid item className={classes.formGroup}>
-                    <FormTitleCont>
-                      <FormTitle>Owner details</FormTitle>
-                    </FormTitleCont>
-                    <FieldMsgBox>
-                      <CustomTextField label="First name" name="Fname" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Fname" />
-
-                    <FieldMsgBox>
-                      <CustomTextField label="Last name" name="Lname" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Lname" />
-
-                    <FieldMsgBox>
-                      <CustomTextField label="Email Address" type="email" name="Email" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Email" />
-
-                    <FieldMsgBox>
-                      <CustomTextField label="Wallet public key" name="PublicAddress" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-
-                    <ErrorMessage component={err} name="PublicAddress" />
-                  </Grid>
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>2</FormTitleNumber>
-                </Grid>
-                <Grid item xs={11} container direction="column">
-                  <Grid item className={classes.formGroup}>
-                    <FormTitleCont>
-                      <FormTitle>Property info</FormTitle>
-                    </FormTitleCont>
-                    <FieldMsgBox>
-                      <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="PropertyType" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Property name" name="PropertyName" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="PropertyName" />
-                    <FieldMsgBox>
-                      <FloatNumberField label="Property current value" name="CurrentValue" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="CurrentValue" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Comments" name="Comments" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Comments" />
-                    <FieldMsgBox>
-                      <FormDatePicker label="Year built" name="YearBuilt" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="YearBuilt" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Zoning" name="Zoning" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Zoning" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Landscaping" name="Landscaping" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Landscaping" />
-                    <FieldMsgBox>
-                      <IntegerNumberField label="Lot Facts" name="Lotfacts" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Lotfacts" />
-                  </Grid>
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
-
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>3</FormTitleNumber>
-                </Grid>
-                <Grid item xs={11} container direction="column">
-                  <Grid item className={classes.formGroup}>
-                    <FormTitleCont>
-                      <FormTitle>Address</FormTitle>
-                    </FormTitleCont>
-                    <FieldMsgBox>
-                      <CustomTextField label="Address 1" name="Address1" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Address1" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Address 2" name="Address2" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Address2" />
-                    <FieldMsgBox>
-                      <CustomTextField label="City" name="City" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="City" />
-                    <Grid container spacing={1}>
-                      <Grid item xs={12} sm={6}>
-                        <CustomTextField label="State" name="State" />
-                        <ErrorMessage component={err} name="State" />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
+                    <Grid item xs={10} container direction="column">
+                      <Grid item className={classes.editFormGroup}>
+                        <FormTitle>Owner details</FormTitle>
                         <FieldMsgBox>
-                          <IntegerNumberField label="Postal code" name="PostalCode" />
+                          <CustomTextField label="First name" name="Fname" />
                           <img src={chatIcon} alt="" />
                         </FieldMsgBox>
-                        <ErrorMessage component={err} name="PostalCode" />
+                        <ErrorMessage component={err} name="Fname" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Last name" name="Lname" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Lname" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Email Address" type="email" name="Email" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Email" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Wallet public key" name="PublicAddress" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="PublicAddress" />
                       </Grid>
+                      <Divider classes={{ root: classes.dividerStyle }} />
                     </Grid>
-                    <FieldMsgBox>
-                      <CustomTextField label="Country" name="Country" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Country" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Subdivision" name="Subdivision" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Subdivision" />
                   </Grid>
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
-
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>4</FormTitleNumber>
-                </Grid>
-                <Grid item xs={11} container direction="column">
-                  <Grid item className={classes.formGroup}>
-                    <FormTitleCont>
-                      <FormTitle>Locality / Neighbourhood insight</FormTitle>
-                    </FormTitleCont>
-                    <FieldMsgBox>
-                      <CustomTextField label="School district" name="SchoolDistrict" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="SchoolDistrict" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Elementary" name="Elementary" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Elementary" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Jr high" name="JrHigh" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="JrHigh" />
-                    <FieldMsgBox>
-                      <CustomTextField label="High school" name="HighSchool" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="HighSchool" />
-                  </Grid>
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
-
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>5</FormTitleNumber>
-                </Grid>
-                <Grid item xs={11} container direction="column">
-                  <Grid item className={classes.formGroup}>
-                    <FormTitleCont>
-                      <FormTitle>T.I.M.E contract</FormTitle>
-                    </FormTitleCont>
-                    <FieldMsgBox>
-                      <IntegerNumberField label="Insurance" name="Insurance" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Insurance" />
-                    <FieldMsgBox>
-                      <IntegerNumberField label="Maintenance" name="Maintenance" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Maintenance" />
-                    <FieldMsgBox>
-                      <IntegerNumberField label="HOA fees" name="HOAFees" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="HOAFees" />
-                  </Grid>
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
-
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>6</FormTitleNumber>
-                </Grid>
-                <Grid item xs={11} container direction="column">
-                  <FormTitleCont>
-                    <FormTitle>Uploaded property images</FormTitle>
-                  </FormTitleCont>
-                  <UpLoadedDocCont>{renderUploadedImageDoc(imageList)}</UpLoadedDocCont>
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
-
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>7</FormTitleNumber>
-                </Grid>
-                <Grid item xs={11} container direction="column">
-                  <FormTitleCont>
-                    <FormTitle>Uploaded property documents</FormTitle>
-                  </FormTitleCont>
-                  <UpLoadedDocCont>{renderUploadedImageDoc(documentList)}</UpLoadedDocCont>
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
-
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>8</FormTitleNumber>
-                </Grid>
-                <Grid item xs={11} container direction="column">
-                  <Grid item className={classes.formGroup}>
-                    <FormTitleCont>
-                      <FormTitle>Floor Wise Configuration</FormTitle>
-                    </FormTitleCont>
-
-                    <FloorDetailsArr
-                      name="FloorDetails"
-                      render={(arrayHelpers) => (
-                        <div>
-                          {values.FloorDetails.map((ref: any, index: number) => (
-                            <FloorDetailsCont key={ref.id}>
-                              <Accordion defaultExpanded className={classes.accordionStyle}>
-                                <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes01.headerStyle}>
-                                  <Typography className={classes01.heading}>Floor {index + 1}</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails className={classes01.detailsCont}>
-                                  <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
-                                    <img src={chatIcon} alt="" />
-                                  </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
-                                  <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].Bedroom`} />
-                                    <img src={chatIcon} alt="" />
-                                  </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Bedroom`} />
-                                  <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Family" name={`FloorDetails[${index}].family`} />
-                                    <img src={chatIcon} alt="" />
-                                  </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].family`} />
-                                  <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].kitchen`} />
-                                    <img src={chatIcon} alt="" />
-                                  </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].kitchen`} />
-                                  <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Laundary" name={`FloorDetails[${index}].Laundary`} />
-                                    <img src={chatIcon} alt="" />
-                                  </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Laundary`} />
-                                  <FloorFieldMsgBox>
-                                    <IntegerNumberField label="Bath" name={`FloorDetails[${index}].Bath`} />
-                                    <img src={chatIcon} alt="" />
-                                  </FloorFieldMsgBox>
-                                  <ErrorMessage component={err} name={`FloorDetails[${index}].Bath`} />
-                                </AccordionDetails>
-                              </Accordion>
-                              {values.FloorDetails.length > 1 && (
-                                <DeleteIcon className={classes01.deleteBtnStyle} onClick={() => arrayHelpers.remove(index)} />
-                              )}
-                            </FloorDetailsCont>
-                          ))}
-                          <AddAnotherFloorCont onClick={() => handleAddFloorDetails(arrayHelpers)}>
-                            <AddIcon />
-                            <span>Add Another Floor</span>
-                          </AddAnotherFloorCont>
-                        </div>
-                      )}
-                    />
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>2</FormTitleNumber>
+                    </Grid>
+                    <Grid item xs={10} container direction="column">
+                      <Grid item className={classes.editFormGroup}>
+                        <FormTitle>Property info</FormTitle>
+                        <FieldMsgBox>
+                          <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="PropertyType" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Property name" name="PropertyName" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="PropertyName" />
+                        <FieldMsgBox>
+                          <FloatNumberField label="Property current value" name="CurrentValue" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="CurrentValue" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Comments" name="Comments" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Comments" />
+                        <FieldMsgBox>
+                          <FormDatePicker label="Year built" name="YearBuilt" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="YearBuilt" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Zoning" name="Zoning" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Zoning" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Landscaping" name="Landscaping" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Landscaping" />
+                        <FieldMsgBox>
+                          <IntegerNumberField label="Lot Facts" name="Lotfacts" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Lotfacts" />
+                      </Grid>
+                      <Divider classes={{ root: classes.dividerStyle }} />
+                    </Grid>
                   </Grid>
 
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
-
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>9</FormTitleNumber>
-                </Grid>
-                <Grid item xs={11} container direction="column">
-                  <Grid item className={classes.formGroup}>
-                    <FormTitleCont>
-                      <FormTitle>Amenities</FormTitle>
-                    </FormTitleCont>
-                    <FieldMsgBox>
-                      <CustomTextField label="Heating" name="Heating" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Heating" />
-                    <FieldMsgBox>
-                      <CustomTextField label="AC" name="AC" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="AC" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Roof" name="Roof" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Roof" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Floor" name="Floor" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Floor" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Window Covering" name="WindowCovering" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="WindowCovering" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Pool" name="Pool" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Pool" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Pool Feature" name="PoolFeature" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="PoolFeature" />
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>3</FormTitleNumber>
+                    </Grid>
+                    <Grid item xs={10} container direction="column">
+                      <Grid item className={classes.editFormGroup}>
+                        <FormTitle>Address</FormTitle>
+                        <FieldMsgBox>
+                          <CustomTextField label="Address 1" name="Address1" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Address1" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Address 2" name="Address2" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Address2" />
+                        <FieldMsgBox>
+                          <CustomTextField label="City" name="City" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="City" />
+                        <Grid container spacing={1}>
+                          <Grid item xs={12} sm={6}>
+                            <CustomTextField label="State" name="State" />
+                            <ErrorMessage component={err} name="State" />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                            <FieldMsgBox>
+                              <IntegerNumberField label="Postal code" name="PostalCode" />
+                              <img src={chatIcon} alt="" />
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="PostalCode" />
+                          </Grid>
+                        </Grid>
+                        <FieldMsgBox>
+                          <CustomTextField label="Country" name="Country" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Country" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Subdivision" name="Subdivision" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Subdivision" />
+                      </Grid>
+                      <Divider classes={{ root: classes.dividerStyle }} />
+                    </Grid>
                   </Grid>
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
 
-              <Grid container>
-                <Grid item xs={1}>
-                  <FormTitleNumber>10</FormTitleNumber>
-                </Grid>
-                <Grid item xs={11} container direction="column">
-                  <Grid item className={classes.formGroup}>
-                    <FormTitleCont>
-                      <FormTitle>More Details</FormTitle>
-                    </FormTitleCont>
-                    <FieldMsgBox>
-                      <CustomTextField label="Style" name="Style" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Style" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Deck" name="Deck" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Deck" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Patio" name="Patio" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Patio" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Garage" name="Garage" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Garage" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Carport" name="Carpot" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Carpot" />
-                    <FieldMsgBox>
-                      <IntegerNumberField label="Parking Space" name="ParkingSpace" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="ParkingSpace" />
-                    <FieldMsgBox>
-                      <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="FinBasmt" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Basement" name="Basement" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Basement" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Driveway" name="Driveway" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Driveway" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Water" name="Water" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Water" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Water Shares" name="WaterShare" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="WaterShare" />
-                    <FieldMsgBox>
-                      <CustomTextField label="Spa" name="Spa" />
-                      <img src={chatIcon} alt="" />
-                    </FieldMsgBox>
-                    <ErrorMessage component={err} name="Spa" />
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>4</FormTitleNumber>
+                    </Grid>
+                    <Grid item xs={10} container direction="column">
+                      <Grid item className={classes.editFormGroup}>
+                        <FormTitle>Locality / Neighbourhood insight</FormTitle>
+                        <FieldMsgBox>
+                          <CustomTextField label="School district" name="SchoolDistrict" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="SchoolDistrict" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Elementary" name="Elementary" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Elementary" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Jr high" name="JrHigh" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="JrHigh" />
+                        <FieldMsgBox>
+                          <CustomTextField label="High school" name="HighSchool" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="HighSchool" />
+                      </Grid>
+                      <Divider classes={{ root: classes.dividerStyle }} />
+                    </Grid>
                   </Grid>
-                  <Divider classes={{ root: classes.dividerStyle }} />
-                </Grid>
-              </Grid>
-              <SubmitContainer>
-                <CheckBoxCont>
-                  <Checkbox
-                    color="default"
-                    inputProps={{ 'aria-label': 'checkbox with default color' }}
-                    style={{ color: '#1E3444' }}
-                    onChange={(e: any) => setPermission(e.target.checked)}
-                  />
-                  <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
-                </CheckBoxCont>
-                <FormButtonGroup>
-                  <Button
-                    type="button"
-                    variant="contained"
-                    classes={{
-                      root: classes.saveAsDraftStyle,
-                    }}
-                  >
-                    SAVE AS DRAFT
-                  </Button>
 
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    classes={{
-                      root: classes.saveAndReviewStyle,
-                    }}
-                    disabled={!permission}
-                  >
-                    {loading ? <Spinner /> : 'Save & Send for review'}
-                  </Button>
-                </FormButtonGroup>
-              </SubmitContainer>
-            </Form>
-          )}
-        </Formik>
-      </PropertyFormCont>
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>5</FormTitleNumber>
+                    </Grid>
+                    <Grid item xs={10} container direction="column">
+                      <Grid item className={classes.editFormGroup}>
+                        <FormTitle>T.I.M.E contract</FormTitle>
+                        <FieldMsgBox>
+                          <IntegerNumberField label="Insurance" name="Insurance" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Insurance" />
+                        <FieldMsgBox>
+                          <IntegerNumberField label="Maintenance" name="Maintenance" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Maintenance" />
+                        <FieldMsgBox>
+                          <IntegerNumberField label="HOA fees" name="HOAFees" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="HOAFees" />
+                      </Grid>
+                      <Divider classes={{ root: classes.dividerStyle }} />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>6</FormTitleNumber>
+                    </Grid>
+                    <Grid item xs={10} container direction="column">
+                      <FormTitle>Uploaded property images</FormTitle>
+                      <UpLoadedDocCont>{renderUploadedImageDoc(imageList)}</UpLoadedDocCont>
+                      <Divider classes={{ root: classes.dividerStyle }} />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>7</FormTitleNumber>
+                    </Grid>
+                    <Grid item xs={10} container direction="column">
+                      <FormTitle>Uploaded property documents</FormTitle>
+                      <UpLoadedDocCont>{renderUploadedImageDoc(documentList)}</UpLoadedDocCont>
+                      <Divider classes={{ root: classes.dividerStyle }} />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>8</FormTitleNumber>
+                    </Grid>
+                    <Grid item xs={10} container direction="column">
+                      <Grid item className={classes.editFormGroup}>
+                        <FormTitle>Floor Wise Configuration</FormTitle>
+                        <FloorDetailsArr
+                          name="FloorDetails"
+                          render={(arrayHelpers) => (
+                            <div>
+                              {values.FloorDetails.map((ref: any, index: number) => (
+                                <FloorDetailsCont key={ref.id}>
+                                  <Accordion defaultExpanded className={classes.accordionStyle}>
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes01.headerStyle}>
+                                      <Typography className={classes01.heading}>Floor {index + 1}</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails className={classes01.detailsCont}>
+                                      <FloorFieldMsgBox>
+                                        <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
+                                        <img src={chatIcon} alt="" />
+                                      </FloorFieldMsgBox>
+                                      <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
+                                      <FloorFieldMsgBox>
+                                        <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].Bedroom`} />
+                                        <img src={chatIcon} alt="" />
+                                      </FloorFieldMsgBox>
+                                      <ErrorMessage component={err} name={`FloorDetails[${index}].Bedroom`} />
+                                      <FloorFieldMsgBox>
+                                        <IntegerNumberField label="Family" name={`FloorDetails[${index}].family`} />
+                                        <img src={chatIcon} alt="" />
+                                      </FloorFieldMsgBox>
+                                      <ErrorMessage component={err} name={`FloorDetails[${index}].family`} />
+                                      <FloorFieldMsgBox>
+                                        <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].kitchen`} />
+                                        <img src={chatIcon} alt="" />
+                                      </FloorFieldMsgBox>
+                                      <ErrorMessage component={err} name={`FloorDetails[${index}].kitchen`} />
+                                      <FloorFieldMsgBox>
+                                        <IntegerNumberField label="Laundary" name={`FloorDetails[${index}].Laundary`} />
+                                        <img src={chatIcon} alt="" />
+                                      </FloorFieldMsgBox>
+                                      <ErrorMessage component={err} name={`FloorDetails[${index}].Laundary`} />
+                                      <FloorFieldMsgBox>
+                                        <IntegerNumberField label="Bath" name={`FloorDetails[${index}].Bath`} />
+                                        <img src={chatIcon} alt="" />
+                                      </FloorFieldMsgBox>
+                                      <ErrorMessage component={err} name={`FloorDetails[${index}].Bath`} />
+                                    </AccordionDetails>
+                                  </Accordion>
+                                  {values.FloorDetails.length > 1 && (
+                                    <DeleteIcon className={classes01.deleteBtnStyle} onClick={() => arrayHelpers.remove(index)} />
+                                  )}
+                                </FloorDetailsCont>
+                              ))}
+                              <AddAnotherFloorCont onClick={() => handleAddFloorDetails(arrayHelpers)}>
+                                <AddIcon />
+                                <span>Add Another Floor</span>
+                              </AddAnotherFloorCont>
+                            </div>
+                          )}
+                        />
+                      </Grid>
+
+                      <Divider classes={{ root: classes.dividerStyle }} />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>9</FormTitleNumber>
+                    </Grid>
+                    <Grid item xs={10} container direction="column">
+                      <Grid item className={classes.editFormGroup}>
+                        <FormTitle>Amenities</FormTitle>
+                        <FieldMsgBox>
+                          <CustomTextField label="Heating" name="Heating" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Heating" />
+                        <FieldMsgBox>
+                          <CustomTextField label="AC" name="AC" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="AC" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Roof" name="Roof" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Roof" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Floor" name="Floor" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Floor" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Window Covering" name="WindowCovering" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="WindowCovering" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Pool" name="Pool" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Pool" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Pool Feature" name="PoolFeature" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="PoolFeature" />
+                      </Grid>
+                      <Divider classes={{ root: classes.dividerStyle }} />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item xs={2} className={classes.titleNumberStyle}>
+                      <FormTitleNumber>10</FormTitleNumber>
+                    </Grid>
+                    <Grid item xs={10} container direction="column">
+                      <Grid item className={classes.editFormGroup}>
+                        <FormTitle>More Details</FormTitle>
+                        <FieldMsgBox>
+                          <CustomTextField label="Style" name="Style" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Style" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Deck" name="Deck" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Deck" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Patio" name="Patio" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Patio" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Garage" name="Garage" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Garage" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Carport" name="Carpot" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Carpot" />
+                        <FieldMsgBox>
+                          <IntegerNumberField label="Parking Space" name="ParkingSpace" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="ParkingSpace" />
+                        <FieldMsgBox>
+                          <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="FinBasmt" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Basement" name="Basement" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Basement" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Driveway" name="Driveway" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Driveway" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Water" name="Water" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Water" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Water Shares" name="WaterShare" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="WaterShare" />
+                        <FieldMsgBox>
+                          <CustomTextField label="Spa" name="Spa" />
+                          <img src={chatIcon} alt="" />
+                        </FieldMsgBox>
+                        <ErrorMessage component={err} name="Spa" />
+                      </Grid>
+                      <Divider classes={{ root: classes.dividerStyle }} />
+                    </Grid>
+                  </Grid>
+                  <SubmitContainer>
+                    <CheckBoxCont>
+                      <Checkbox
+                        color="default"
+                        inputProps={{ 'aria-label': 'checkbox with default color' }}
+                        style={{ color: '#1E3444' }}
+                        onChange={(e: any) => setPermission(e.target.checked)}
+                      />
+                      <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
+                    </CheckBoxCont>
+                    <FormButtonGroup>
+                      <Button
+                        type="button"
+                        variant="contained"
+                        classes={{
+                          root: classes.saveAsDraftStyle,
+                        }}
+                      >
+                        SAVE AS DRAFT
+                      </Button>
+
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        classes={{
+                          root: classes.saveAndReviewStyle,
+                        }}
+                        disabled={!permission}
+                      >
+                        {loading ? <Spinner /> : 'Save & Send for review'}
+                      </Button>
+                    </FormButtonGroup>
+                  </SubmitContainer>
+                </Form>
+              )}
+            </Formik>
+          </PropertyFormCont>
+        </Grid>
+        <Grid item xs={4}></Grid>
+      </Grid>
+
       <CustomModal show={showImgModal} toggleModal={setShowImgModal}>
         <UploadImage
           imageList={imageList}

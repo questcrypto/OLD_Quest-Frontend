@@ -18,6 +18,6 @@ export const TopPanelCont = styled.div`
   padding-right: 10px;
   display: flex;
   justify-content: flex-end;
-  height: 110px;
+  height: 80px;
   align-items: center;
 `

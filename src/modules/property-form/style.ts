@@ -7,16 +7,26 @@ export const useStyle = makeStyles({
   root: { background: 'white' },
   inputStyle: { margin: '50px', required: true },
   formGroup: {
+    marginTop: '5px',
     width: '100%',
     maxWidth: '96%',
     '@media (min-width: 600px)': {
-      width: '400px',
       maxWidth: '400px',
     },
   },
+  editFormGroup: {
+    marginTop: '5px',
+    width: '100%',
+    maxWidth: '96%',
+    '@media (min-width: 600px)': {
+      maxWidth: '450px',
+    },
+  },
+  titleNumberStyle: {
+    maxWidth: '70px',
+  },
   dividerStyle: {
-    margin: '45px 0 !important',
-    width: '590px',
+    margin: '45px -86px 45px 0',
   },
   uploadDataStyle: {
     minWidth: 200,
@@ -72,11 +82,19 @@ export const useStyle01 = makeStyles((theme) => ({
     top: '14px',
     left: '96%',
   },
+  deleteBtn2Style: {
+    position: 'absolute',
+    color: '#EB5757',
+    cursor: 'pointer',
+    top: '14px',
+    left: '100%',
+    marginLeft: '20px',
+  },
 }))
 
 export const PropertyFormWrapper = styled.div``
 export const FormHeader = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 `
 export const HeaderPath = styled.div`
   margin: 0 0 24px 0;
@@ -95,8 +113,11 @@ export const HeaderTitle = styled.h2`
 `
 export const PropertyFormCont = styled.div`
   box-sizing: border-box;
-  width: 800px;
-  max-width: 800px;
+  width: 736px;
+  max-width: ;
+  background: ${colors.paperBackground};
+  padding: 30px 50px;
+  border-radius: 4px;
 `
 export const FormTitleNumber = styled.div`
   background: ${colors.primary};
@@ -109,18 +130,12 @@ export const FormTitleNumber = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  margin-top: 25px;
-`
-export const FormTitleCont = styled.div`
-  margin-bottom: 20px;
-  margin-top: 30px;
 `
 export const FormTitle = styled.h4`
   font-size: 20px;
   line-height: 24px;
-  margin-top: 25px;
   color: ${colors.textPrimary};
-  margin: 0;
+  margin: 0 0 30px 0;
 `
 export const FormSubTitle = styled.p`
   font-size: 16px;

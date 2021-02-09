@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import {
   useStyles,
   StyledLinearProgress,
@@ -18,29 +19,31 @@ import { Grid } from '@material-ui/core'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import { getPublicAddress } from 'modules/auth/authFunction'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
-import Web3 from 'web3'
 
-const Property = () => {
+const Property = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('new')
   const [propertiesList, setPropertiesList] = useState<any>([])
   const [dataLoading, setDataLoading] = useState(false)
+  const { userInfo } = props
 
   useEffect(() => {
-    const web3: Web3 = new Web3(window.ethereum)
     const getPropertiesList = async () => {
       try {
-        const coinbase = await web3.eth.getCoinbase()
-        if (!coinbase) {
-          window.alert('Please activate MetaMask first.')
-          return
-        } else {
-          const publicaddress = coinbase.toLowerCase()
-          setDataLoading(true)
-          const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${publicaddress}`)
+        setDataLoading(true)
+        if (!!userInfo && userInfo.role === 1) {
+          const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
           setPropertiesList(res.data)
+        }
+        if (!!userInfo && userInfo.role === 2) {
+          const publicaddress = await getPublicAddress()
+          if (publicaddress) {
+            const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${publicaddress}`)
+            setPropertiesList(res.data)
+          }
         }
       } catch (error) {
       } finally {
@@ -48,7 +51,7 @@ const Property = () => {
       }
     }
     getPropertiesList()
-  }, [])
+  }, [userInfo])
 
   const handleAddProperty = () => {
     history.push(Paths.addPropertyForm)
@@ -106,9 +109,11 @@ const Property = () => {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>
-            <Button onClick={() => handleAddProperty()} className={classes.addPropertyBtnStyle}>
-              Add New Property
-            </Button>
+            {!!userInfo && userInfo.role === 1 && (
+              <Button onClick={() => handleAddProperty()} className={classes.addPropertyBtnStyle}>
+                Add New Property
+              </Button>
+            )}
           </PropertySearchBox>
         </Grid>
       </Grid>
@@ -129,4 +134,7 @@ const Property = () => {
   )
 }
 
-export default Property
+const mapStateToProps = (state: any) => ({
+  userInfo: state.user.userInfo,
+})
+export default connect(mapStateToProps)(Property)

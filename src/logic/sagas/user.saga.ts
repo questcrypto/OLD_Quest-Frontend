@@ -14,15 +14,14 @@ export function* authWatcher() {
 }
 
 export function* authWorker() {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token)
+  }
   try {
-    const token = localStorage.getItem('token')
-    if (token) {
-      /* setAuthToken(token) */
-      const successData = { token }
-      yield put(authSuccess(successData))
-    } else {
-      yield put(authFail())
-    }
+    const token = localStorage.token
+    const userInfo = yield call(getUserInfo, token)
+    const successData = { token, userInfo }
+    yield put(authSuccess(successData))
   } catch (error) {
     yield put(authFail())
   }
@@ -37,7 +36,8 @@ function* loginWorker(action: any) {
   try {
     const data = action.payload
     const res = yield call(loginUser, data)
-    const successData = { token: res.data.accessToken }
+    const userInfoRes = yield call(getUserInfo, res.data.accessToken)
+    const successData = { userInfo: userInfoRes, token: res.data.accessToken }
     yield put(loginSuccess(successData))
     history.push(`${Paths.dashboard}`)
   } catch (error) {
@@ -50,6 +50,13 @@ function loginUser(data: any) {
 }
 
 /*=======================getUserInfo  ============================*/
+
 async function getUserInfo(token: any) {
   setAuthToken(token)
+  try {
+    const res = await axios.get(`${apiBaseUrl}/auth/token/${token}`)
+    if (res) {
+      return res.data
+    }
+  } catch (error) {}
 }

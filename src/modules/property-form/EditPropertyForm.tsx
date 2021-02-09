@@ -98,32 +98,10 @@ const EditPropertyForm = (props: any) => {
     getPropertyDetails()
   }, [props.match.params.propertyId])
 
-  const getFileData = () => {
-    const filesArr: any = []
-    for (const item of imageList) {
-      filesArr.push(item)
-    }
-    for (const item of documentList) {
-      filesArr.push(item)
-    }
-    return filesArr
-  }
-
   const handleSubmit = async (values: any) => {
-    const formData = new FormData()
-    const dataFiles = getFileData()
-    for (const item of dataFiles) {
-      formData.append('file', item)
-    }
-    const data = { ...values }
-    delete data.FloorDetails
-    Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
-    formData.append('PropertyImages', JSON.stringify(imageData))
-    formData.append('PropertyDocs', JSON.stringify(documentData))
-    formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
     try {
       setLoading(true)
-      await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
+      await axios.post(`${apiBaseUrl}/properties/UpdateProperty`, values)
       history.push(Paths.root)
     } catch (error) {
       console.log('error==>', error)

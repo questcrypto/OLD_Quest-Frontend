@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
 import {
   useStyles,
   PropertyDetailsCont,
@@ -52,6 +53,7 @@ const PropertyDetails = (props: any) => {
   const [imageList, setImageList] = useState<any>([])
   const [docList, setDocList] = useState<any>([])
   const [selectImg, setSelectImg] = useState('')
+  const { userInfo } = props
 
   useEffect(() => {
     const propertyId = props.match.params.propertyId
@@ -141,10 +143,12 @@ const PropertyDetails = (props: any) => {
                         <h4>{propertyInfo.propertyDetails.Address1}</h4>
                         <p>{`${propertyInfo.propertyDetails.Address2}, ${propertyInfo.propertyDetails.State},${propertyInfo.propertyDetails.Country}`}</p>
                       </AddressInfo>
-                      <EditSection onClick={() => handleEditProperty()}>
-                        <span>EDIT</span>
-                        <CreateOutlinedIcon />
-                      </EditSection>
+                      {!!userInfo && userInfo.role === 1 && (
+                        <EditSection onClick={() => handleEditProperty()}>
+                          <span>EDIT</span>
+                          <CreateOutlinedIcon />
+                        </EditSection>
+                      )}
                     </AddressContainer>
                     <PriceContainer>
                       <PriceInfo>
@@ -251,7 +255,7 @@ const PropertyDetails = (props: any) => {
                         <img src={plot} alt="" />
                         <span>Lot Facts</span>
                       </FeatureName>
-                      <FeatureValue>{`${propertyInfo.propertyDetails.LotFacts} m2`}</FeatureValue>
+                      <FeatureValue>{`${propertyInfo.propertyDetails.Lotfacts} m2`}</FeatureValue>
                     </FeatureInfo>
                   </Grid>
                 </Grid>
@@ -365,4 +369,7 @@ const PropertyDetails = (props: any) => {
     </PropertyDetailsCont>
   )
 }
-export default withRouter(PropertyDetails)
+const mapStateToProps = (state: any) => ({
+  userInfo: state.user.userInfo,
+})
+export default withRouter(connect(mapStateToProps)(PropertyDetails))

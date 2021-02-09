@@ -30,6 +30,7 @@ export const userReducer = (state = initialState, action: any) => {
         loggedIn: true,
         isLoaded: true,
         authLoading: false,
+        userInfo: payload.userInfo,
       }
     case AUTH_FAIL:
     case LOGOUT:

@@ -17,7 +17,7 @@ import { Paths } from 'modules/app/components/routes/types'
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
-  const { logout } = props
+  const { userInfo, logout } = props
 
   const handleProperty = () => {
     history.push(Paths.dashboard)
@@ -33,22 +33,27 @@ const LeftPanel = (props: any) => {
           <ApartmentIcon className={classes.iconStyle} />
           <ListItemText>Properties</ListItemText>
         </ListItem>
-        <ListItem button className={classes.itemButtonStyle}>
-          <AccountBalanceIcon className={classes.iconStyle} />
-          <ListItemText>Treasury</ListItemText>
-        </ListItem>
-        <ListItem button className={classes.itemButtonStyle}>
-          <AssessmentIcon className={classes.iconStyle} />
-          <ListItemText>Auctions</ListItemText>
-        </ListItem>
-        <ListItem button className={classes.itemButtonStyle}>
-          <AccountBalanceWalletIcon className={classes.iconStyle} />
-          <ListItemText>Wallets</ListItemText>
-        </ListItem>
-        <ListItem button className={classes.itemButtonStyle}>
-          <EventIcon className={classes.iconStyle} />
-          <ListItemText>Logs</ListItemText>
-        </ListItem>
+        {!!userInfo && userInfo.role === 1 && (
+          <>
+            <ListItem button className={classes.itemButtonStyle}>
+              <AccountBalanceIcon className={classes.iconStyle} />
+              <ListItemText>Treasury</ListItemText>
+            </ListItem>
+            <ListItem button className={classes.itemButtonStyle}>
+              <AssessmentIcon className={classes.iconStyle} />
+              <ListItemText>Auctions</ListItemText>
+            </ListItem>
+            <ListItem button className={classes.itemButtonStyle}>
+              <AccountBalanceWalletIcon className={classes.iconStyle} />
+              <ListItemText>Wallets</ListItemText>
+            </ListItem>
+            <ListItem button className={classes.itemButtonStyle}>
+              <EventIcon className={classes.iconStyle} />
+              <ListItemText>Logs</ListItemText>
+            </ListItem>
+          </>
+        )}
+
         <SignOutCont>
           <Divider className={classes.signOutDividerStyle} />
           <ListItem button onClick={() => logout()}>
@@ -60,5 +65,8 @@ const LeftPanel = (props: any) => {
     </LeftPanelCont>
   )
 }
+const mapStateToProps = (state: any) => ({
+  userInfo: state.user.userInfo,
+})
 
-export default connect(null, { logout })(LeftPanel)
+export default connect(mapStateToProps, { logout })(LeftPanel)

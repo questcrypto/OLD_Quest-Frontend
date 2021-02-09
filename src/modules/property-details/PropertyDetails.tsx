@@ -59,8 +59,6 @@ const PropertyDetails = (props: any) => {
       try {
         setDataLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
-        console.log('res-->', res.data)
-
         if (!!res && res.data) {
           const images = []
           const docs = []
@@ -110,6 +108,9 @@ const PropertyDetails = (props: any) => {
       )
     })
   }
+  const handleEditProperty = () => {
+    history.push(Paths.editPropertyForm)
+  }
 
   return (
     <PropertyDetailsCont>
@@ -140,7 +141,7 @@ const PropertyDetails = (props: any) => {
                         <h4>{propertyInfo.propertyDetails.Address1}</h4>
                         <p>{`${propertyInfo.propertyDetails.Address2}, ${propertyInfo.propertyDetails.State},${propertyInfo.propertyDetails.Country}`}</p>
                       </AddressInfo>
-                      <EditSection>
+                      <EditSection onClick={() => handleEditProperty()}>
                         <span>EDIT</span>
                         <CreateOutlinedIcon />
                       </EditSection>

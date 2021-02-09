@@ -8,7 +8,7 @@ import history from '../history'
 import { Paths } from './types'
 import { NotFound } from './NotFound'
 import Dashboard from 'modules/dashboard'
-import PropertyForm from 'modules/property-form'
+import { AddPropertyForm, EditPropertyForm } from 'modules/property-form'
 import PropertyDetails from 'modules/property-details'
 import { Login } from 'modules/auth'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
@@ -37,7 +37,7 @@ export const routes: RouteDefinition[] = [
   },
   {
     path: Paths.addPropertyForm,
-    component: PropertyForm,
+    component: AddPropertyForm,
     protected: true,
     redirect: Paths.root,
     title: '',
@@ -45,6 +45,13 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.propertyDetails + '/:propertyId',
     component: PropertyDetails,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.editPropertyForm,
+    component: EditPropertyForm,
     protected: true,
     redirect: Paths.root,
     title: '',

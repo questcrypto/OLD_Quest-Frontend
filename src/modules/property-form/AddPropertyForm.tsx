@@ -196,7 +196,7 @@ const propertyFormSchema = Yup.object().shape({
   Spa: Yup.string().required('This field is required'),
 })
 
-const PropertyForm = () => {
+const AddPropertyForm = () => {
   const [showImgModal, setShowImgModal] = useState(false)
   const [imageList, setImageList] = useState<any>([])
   const [imageData, setImageData] = useState<any>([])
@@ -860,4 +860,4 @@ const PropertyForm = () => {
     </PropertyFormWrapper>
   )
 }
-export default PropertyForm
+export default AddPropertyForm

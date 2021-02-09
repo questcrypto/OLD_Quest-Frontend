@@ -109,7 +109,7 @@ const PropertyDetails = (props: any) => {
     })
   }
   const handleEditProperty = () => {
-    history.push(Paths.editPropertyForm)
+    history.push(`${Paths.editPropertyForm}/${props.match.params.propertyId}`)
   }
 
   return (

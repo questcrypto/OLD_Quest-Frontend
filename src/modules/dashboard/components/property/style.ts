@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px) !important`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -53,11 +53,11 @@ export const useStyles = makeStyles((theme) => ({
   },
   addPropertyBtnStyle: {
     color: colors.white,
-    backgroundColor: colors.primary,
+    backgroundColor: `${colors.primary} !important`,
     fontSize: '14px',
     padding: '6.1px !important',
     '&:hover': {
-      backgroundColor: colors.primary,
+      backgroundColor: `${colors.primary} !important`,
     },
   },
 }))

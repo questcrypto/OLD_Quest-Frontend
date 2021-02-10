@@ -72,7 +72,7 @@ const EditPropertyForm = (props: any) => {
   const [documentData, setDocumentData] = useState<any>([])
   const [permission, setPermission] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [showComments, setShowComments] = useState(true)
+  const [showComments, setShowComments] = useState(false)
   const [commentList, setCommentList] = useState([])
   const classes = useStyle()
   const classes01 = useStyle01()

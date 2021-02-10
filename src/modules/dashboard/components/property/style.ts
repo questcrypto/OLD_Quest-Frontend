@@ -52,7 +52,7 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: '8px',
   },
   addPropertyBtnStyle: {
-    color: colors.white,
+    color: `${colors.white} !important`,
     backgroundColor: `${colors.primary} !important`,
     fontSize: '14px',
     padding: '6.1px !important',

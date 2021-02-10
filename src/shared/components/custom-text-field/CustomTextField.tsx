@@ -17,10 +17,11 @@ interface Props {
   name: string
   label?: string
   type?: string
+  isDisabled?: boolean
 }
 
 const CustomTextField = (props: Props) => {
-  const { name, label, type } = props
+  const { name, label, type, isDisabled } = props
   const classes = textFieldStyle()
   return (
     <Field name={name}>
@@ -42,6 +43,7 @@ const CustomTextField = (props: Props) => {
             onChange={handleChange}
             type={!!type ? type : 'text'}
             className={classes.root}
+            disabled={isDisabled}
           />
         )
       }}

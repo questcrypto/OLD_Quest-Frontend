@@ -98,6 +98,13 @@ export const useStyle01 = makeStyles((theme) => ({
   },
 }))
 
+export const fieldSetStyle = {
+  border: 0,
+  padding: 0,
+  margin: 0,
+  minWidth: 0,
+}
+
 export const PropertyFormWrapper = styled.div``
 export const FormHeader = styled.div`
   margin-bottom: 20px;

@@ -4,7 +4,7 @@ import { colors } from 'shared/styles/theme'
 export const StyledRoutesWrapper = styled.div`
   max-width: 1600px;
   width: 100%;
-  margin: 0;
+  margin: 0 auto;
 `
 export const StyledRoutesContainer = styled.div<any>`
   display: grid;

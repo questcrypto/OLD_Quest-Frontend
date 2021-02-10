@@ -56,6 +56,13 @@ export const routes: RouteDefinition[] = [
     redirect: Paths.root,
     title: '',
   },
+  {
+    path: Paths.viewPropertyForm + '/:propertyId',
+    component: EditPropertyForm,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
 ].concat(notFoundRoute as any) // Ensure that notFound is the last route
 
 export interface RouteDefinition {

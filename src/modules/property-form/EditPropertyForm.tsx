@@ -73,6 +73,7 @@ const EditPropertyForm = (props: any) => {
   const [permission, setPermission] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showComments, setShowComments] = useState(true)
+  const [commentList, setCommentList] = useState([])
   const classes = useStyle()
   const classes01 = useStyle01()
 
@@ -141,14 +142,20 @@ const EditPropertyForm = (props: any) => {
         </CommentInfo>
         <CommentText>Please enter first name correctly, As this name already exist in our portal</CommentText>
         <Divider className={classes.commentDividerStyle} />
-        <CommentInfo>
-          <SenderName>Barrera Ramsey</SenderName>
-          <CommentText>11:26 AM - 23 Oct</CommentText>
-        </CommentInfo>
-        <CommentText>Please enter first name correctly, As this name already exist in our portal</CommentText>
-        <Divider className={classes.commentDividerStyle} />
       </div>
     )
+    // return commentList.map((item: any, k: number) => {
+    //   return (
+    //     <div key={k}>
+    //       <CommentInfo>
+    //         <SenderName>{item.name}</SenderName>
+    //         <CommentText>{item.time}</CommentText>
+    //       </CommentInfo>
+    //       <CommentText>{item.comment}</CommentText>
+    //       <Divider className={classes.commentDividerStyle} />
+    //     </div>
+    //   )
+    // })
   }
 
   return (

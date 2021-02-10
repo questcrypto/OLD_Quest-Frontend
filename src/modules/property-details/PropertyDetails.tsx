@@ -111,7 +111,11 @@ const PropertyDetails = (props: any) => {
     })
   }
   const handleEditProperty = () => {
-    history.push(`${Paths.editPropertyForm}/${props.match.params.propertyId}`)
+    if (!!userInfo && userInfo.role === 1) {
+      history.push(`${Paths.editPropertyForm}/${props.match.params.propertyId}`)
+    } else {
+      history.push(`${Paths.viewPropertyForm}/${props.match.params.propertyId}`)
+    }
   }
 
   return (
@@ -143,12 +147,10 @@ const PropertyDetails = (props: any) => {
                         <h4>{propertyInfo.propertyDetails.Address1}</h4>
                         <p>{`${propertyInfo.propertyDetails.Address2}, ${propertyInfo.propertyDetails.State},${propertyInfo.propertyDetails.Country}`}</p>
                       </AddressInfo>
-                      {!!userInfo && userInfo.role === 1 && (
-                        <EditSection onClick={() => handleEditProperty()}>
-                          <span>EDIT</span>
-                          <CreateOutlinedIcon />
-                        </EditSection>
-                      )}
+                      <EditSection onClick={() => handleEditProperty()}>
+                        <span>{!!userInfo && userInfo.role === 1 ? 'EDIT' : 'VIEW'}</span>
+                        <CreateOutlinedIcon />
+                      </EditSection>
                     </AddressContainer>
                     <PriceContainer>
                       <PriceInfo>

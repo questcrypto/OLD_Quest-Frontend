@@ -9,6 +9,7 @@ interface Props {
   name: string
   label?: string
   options?: any
+  isDisabled?: boolean
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const FieldSelect = (props: Props) => {
   const classes = useStyles()
-  const { name, label, options } = props
+  const { name, label, options, isDisabled } = props
 
   return (
     <Field name={name}>
@@ -41,6 +42,7 @@ const FieldSelect = (props: Props) => {
             fullWidth
             label={label}
             className={classes.root}
+            disabled={isDisabled}
           >
             <MenuItem value="">
               <em>None</em>

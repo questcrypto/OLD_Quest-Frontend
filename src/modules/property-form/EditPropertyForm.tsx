@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
 import {
   useStyle,
   useStyle01,
+  fieldSetStyle,
   PropertyFormWrapper,
   FormHeader,
   HeaderPath,
@@ -32,6 +34,7 @@ import {
   CommentText,
 } from './style'
 import { initialValues, propertyFormSchema } from './formConstant'
+import ComponentLoader from 'shared/loader-components/component-loader'
 import Button from '@material-ui/core/Button'
 import { Grid, Checkbox } from '@material-ui/core'
 import Divider from '@material-ui/core/Divider'
@@ -72,15 +75,19 @@ const EditPropertyForm = (props: any) => {
   const [documentData, setDocumentData] = useState<any>([])
   const [permission, setPermission] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [dataLoading, setDataLoading] = useState(false)
   const [showComments, setShowComments] = useState(false)
-  const [commentList, setCommentList] = useState([])
+  /* const [commentList, setCommentList] = useState([]) */
   const classes = useStyle()
   const classes01 = useStyle01()
+
+  const { userInfo } = props
 
   useEffect(() => {
     const propertyId = props.match.params.propertyId
     const getPropertyDetails = async () => {
       try {
+        setDataLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
         if (!!res && res.data) {
           const images = []
@@ -103,7 +110,10 @@ const EditPropertyForm = (props: any) => {
           }
           setInitialData({ ...data })
         }
-      } catch (error) {}
+      } catch (error) {
+      } finally {
+        setDataLoading(false)
+      }
     }
     getPropertyDetails()
   }, [props.match.params.propertyId])
@@ -162,562 +172,575 @@ const EditPropertyForm = (props: any) => {
     <PropertyFormWrapper>
       <FormHeader>
         <HeaderPath>
-          <span>Properties</span> / Edit property from
+          <span>Properties</span> {!!userInfo && userInfo.role === 1 ? '/ Edit property from' : '/ View property from'}
         </HeaderPath>
       </FormHeader>
       <Grid container spacing={4} alignItems="stretch">
         <Grid item xs={8}>
-          <EditFormTitle>Edit property</EditFormTitle>
+          <EditFormTitle>{!!userInfo && userInfo.role === 1 ? 'Edit property' : 'View property'}</EditFormTitle>
           <EditFormCont>
-            <Formik
-              enableReinitialize
-              initialValues={initialData}
-              validationSchema={propertyFormSchema}
-              onSubmit={(values, { setSubmitting }) => {
-                handleSubmit(values)
-                setSubmitting(false)
-              }}
-            >
-              {({ values }: any) => (
-                <Form>
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>1</FormTitleNumber>
-                    </Grid>
-
-                    <Grid item xs={10} container direction="column">
-                      <Grid item className={classes.editFormGroup}>
-                        <FormTitle>Owner details</FormTitle>
-                        <FieldMsgBox>
-                          <CustomTextField label="First name" name="Fname" />
-                          <Badge badgeContent={2} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Fname" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Last name" name="Lname" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Lname" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Email Address" type="email" name="Email" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Email" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Wallet public key" name="PublicAddress" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="PublicAddress" />
+            {dataLoading ? (
+              <ComponentLoader />
+            ) : (
+              <Formik
+                enableReinitialize
+                initialValues={initialData}
+                validationSchema={propertyFormSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                  handleSubmit(values)
+                  setSubmitting(false)
+                }}
+              >
+                {({ values }: any) => (
+                  <Form>
+                    <fieldset disabled={!!userInfo && userInfo.role !== 1} style={fieldSetStyle}>
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>1</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <Grid item className={classes.editFormGroup}>
+                            <FormTitle>Owner details</FormTitle>
+                            <FieldMsgBox>
+                              <CustomTextField label="First name" name="Fname" />
+                              <Badge badgeContent={2} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Fname" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Last name" name="Lname" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Lname" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Email Address" type="email" name="Email" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Email" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Wallet public key" name="PublicAddress" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="PublicAddress" />
+                          </Grid>
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
                       </Grid>
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>2</FormTitleNumber>
-                    </Grid>
-                    <Grid item xs={10} container direction="column">
-                      <Grid item className={classes.editFormGroup}>
-                        <FormTitle>Property info</FormTitle>
-                        <FieldMsgBox>
-                          <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="PropertyType" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Property name" name="PropertyName" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="PropertyName" />
-                        <FieldMsgBox>
-                          <FloatNumberField label="Property current value" name="CurrentValue" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="CurrentValue" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Comments" name="Comments" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Comments" />
-                        <FieldMsgBox>
-                          <FormDatePicker label="Year built" name="YearBuilt" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="YearBuilt" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Zoning" name="Zoning" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Zoning" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Landscaping" name="Landscaping" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Landscaping" />
-                        <FieldMsgBox>
-                          <IntegerNumberField label="Lot Facts" name="Lotfacts" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Lotfacts" />
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>2</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <Grid item className={classes.editFormGroup}>
+                            <FormTitle>Property info</FormTitle>
+                            <FieldMsgBox>
+                              <FieldSelect
+                                label="Type of property"
+                                name="PropertyType"
+                                options={propertyType}
+                                isDisabled={!!userInfo && userInfo.role !== 1}
+                              />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="PropertyType" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Property name" name="PropertyName" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="PropertyName" />
+                            <FieldMsgBox>
+                              <FloatNumberField label="Property current value" name="CurrentValue" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="CurrentValue" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Comments" name="Comments" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Comments" />
+                            <FieldMsgBox>
+                              <FormDatePicker label="Year built" name="YearBuilt" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="YearBuilt" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Zoning" name="Zoning" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Zoning" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Landscaping" name="Landscaping" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Landscaping" />
+                            <FieldMsgBox>
+                              <IntegerNumberField label="Lot Facts" name="Lotfacts" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Lotfacts" />
+                          </Grid>
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
                       </Grid>
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
 
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>3</FormTitleNumber>
-                    </Grid>
-                    <Grid item xs={10} container direction="column">
-                      <Grid item className={classes.editFormGroup}>
-                        <FormTitle>Address</FormTitle>
-                        <FieldMsgBox>
-                          <CustomTextField label="Address 1" name="Address1" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Address1" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Address 2" name="Address2" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Address2" />
-                        <FieldMsgBox>
-                          <CustomTextField label="City" name="City" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="City" />
-                        <FieldMsgBox>
-                          <CustomTextField label="State" name="State" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="State" />
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>3</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <Grid item className={classes.editFormGroup}>
+                            <FormTitle>Address</FormTitle>
+                            <FieldMsgBox>
+                              <CustomTextField label="Address 1" name="Address1" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Address1" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Address 2" name="Address2" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Address2" />
+                            <FieldMsgBox>
+                              <CustomTextField label="City" name="City" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="City" />
+                            <FieldMsgBox>
+                              <CustomTextField label="State" name="State" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="State" />
 
-                        <FieldMsgBox>
-                          <IntegerNumberField label="Postal code" name="PostalCode" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="PostalCode" />
+                            <FieldMsgBox>
+                              <IntegerNumberField label="Postal code" name="PostalCode" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="PostalCode" />
 
-                        <FieldMsgBox>
-                          <CustomTextField label="Country" name="Country" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Country" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Subdivision" name="Subdivision" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Subdivision" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Country" name="Country" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Country" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Subdivision" name="Subdivision" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Subdivision" />
+                          </Grid>
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
                       </Grid>
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
 
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>4</FormTitleNumber>
-                    </Grid>
-                    <Grid item xs={10} container direction="column">
-                      <Grid item className={classes.editFormGroup}>
-                        <FormTitle>Locality / Neighbourhood insight</FormTitle>
-                        <FieldMsgBox>
-                          <CustomTextField label="School district" name="SchoolDistrict" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="SchoolDistrict" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Elementary" name="Elementary" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Elementary" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Jr high" name="JrHigh" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="JrHigh" />
-                        <FieldMsgBox>
-                          <CustomTextField label="High school" name="HighSchool" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="HighSchool" />
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>4</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <Grid item className={classes.editFormGroup}>
+                            <FormTitle>Locality / Neighbourhood insight</FormTitle>
+                            <FieldMsgBox>
+                              <CustomTextField label="School district" name="SchoolDistrict" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="SchoolDistrict" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Elementary" name="Elementary" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Elementary" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Jr high" name="JrHigh" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="JrHigh" />
+                            <FieldMsgBox>
+                              <CustomTextField label="High school" name="HighSchool" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="HighSchool" />
+                          </Grid>
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
                       </Grid>
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
 
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>5</FormTitleNumber>
-                    </Grid>
-                    <Grid item xs={10} container direction="column">
-                      <Grid item className={classes.editFormGroup}>
-                        <FormTitle>T.I.M.E contract</FormTitle>
-                        <FieldMsgBox>
-                          <IntegerNumberField label="Insurance" name="Insurance" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Insurance" />
-                        <FieldMsgBox>
-                          <IntegerNumberField label="Maintenance" name="Maintenance" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Maintenance" />
-                        <FieldMsgBox>
-                          <IntegerNumberField label="HOA fees" name="HOAFees" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="HOAFees" />
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>5</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <Grid item className={classes.editFormGroup}>
+                            <FormTitle>T.I.M.E contract</FormTitle>
+                            <FieldMsgBox>
+                              <IntegerNumberField label="Insurance" name="Insurance" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Insurance" />
+                            <FieldMsgBox>
+                              <IntegerNumberField label="Maintenance" name="Maintenance" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Maintenance" />
+                            <FieldMsgBox>
+                              <IntegerNumberField label="HOA fees" name="HOAFees" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="HOAFees" />
+                          </Grid>
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
                       </Grid>
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
 
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>6</FormTitleNumber>
-                    </Grid>
-                    <Grid item xs={10} container direction="column">
-                      <FormTitle>Uploaded property images</FormTitle>
-                      <UpLoadedDocCont>{renderUploadedImageDoc(imageList)}</UpLoadedDocCont>
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>6</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <FormTitle>Uploaded property images</FormTitle>
+                          <UpLoadedDocCont>{renderUploadedImageDoc(imageList)}</UpLoadedDocCont>
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
+                      </Grid>
 
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>7</FormTitleNumber>
-                    </Grid>
-                    <Grid item xs={10} container direction="column">
-                      <FormTitle>Uploaded property documents</FormTitle>
-                      <UpLoadedDocCont>{renderUploadedImageDoc(documentList)}</UpLoadedDocCont>
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>7</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <FormTitle>Uploaded property documents</FormTitle>
+                          <UpLoadedDocCont>{renderUploadedImageDoc(documentList)}</UpLoadedDocCont>
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
+                      </Grid>
 
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>8</FormTitleNumber>
-                    </Grid>
-                    <Grid item xs={10} container direction="column">
-                      <Grid item className={classes.editFormGroup}>
-                        <FormTitle>Floor Wise Configuration</FormTitle>
-                        <FloorDetailsArr
-                          name="FloorDetails"
-                          render={(arrayHelpers) => (
-                            <div>
-                              {values.FloorDetails.map((ref: any, index: number) => (
-                                <FloorDetailsCont key={ref.id}>
-                                  <Accordion defaultExpanded className={classes.accordionStyle}>
-                                    <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes01.headerStyle}>
-                                      <Typography className={classes01.heading}>Floor {index + 1}</Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails className={classes01.detailsCont}>
-                                      <FloorFieldMsgBox>
-                                        <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
-                                        <Badge badgeContent={0} color="secondary">
-                                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                        </Badge>
-                                      </FloorFieldMsgBox>
-                                      <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
-                                      <FloorFieldMsgBox>
-                                        <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].Bedroom`} />
-                                        <Badge badgeContent={0} color="secondary">
-                                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                        </Badge>
-                                      </FloorFieldMsgBox>
-                                      <ErrorMessage component={err} name={`FloorDetails[${index}].Bedroom`} />
-                                      <FloorFieldMsgBox>
-                                        <IntegerNumberField label="Family" name={`FloorDetails[${index}].family`} />
-                                        <Badge badgeContent={0} color="secondary">
-                                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                        </Badge>
-                                      </FloorFieldMsgBox>
-                                      <ErrorMessage component={err} name={`FloorDetails[${index}].family`} />
-                                      <FloorFieldMsgBox>
-                                        <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].kitchen`} />
-                                        <Badge badgeContent={0} color="secondary">
-                                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                        </Badge>
-                                      </FloorFieldMsgBox>
-                                      <ErrorMessage component={err} name={`FloorDetails[${index}].kitchen`} />
-                                      <FloorFieldMsgBox>
-                                        <IntegerNumberField label="Laundary" name={`FloorDetails[${index}].Laundary`} />
-                                        <Badge badgeContent={0} color="secondary">
-                                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                        </Badge>
-                                      </FloorFieldMsgBox>
-                                      <ErrorMessage component={err} name={`FloorDetails[${index}].Laundary`} />
-                                      <FloorFieldMsgBox>
-                                        <IntegerNumberField label="Bath" name={`FloorDetails[${index}].Bath`} />
-                                        <Badge badgeContent={0} color="secondary">
-                                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                        </Badge>
-                                      </FloorFieldMsgBox>
-                                      <ErrorMessage component={err} name={`FloorDetails[${index}].Bath`} />
-                                    </AccordionDetails>
-                                  </Accordion>
-                                  {values.FloorDetails.length > 1 && (
-                                    <DeleteIcon className={classes01.deleteBtnStyle} onClick={() => arrayHelpers.remove(index)} />
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>8</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <Grid item className={classes.editFormGroup}>
+                            <FormTitle>Floor Wise Configuration</FormTitle>
+                            <FloorDetailsArr
+                              name="FloorDetails"
+                              render={(arrayHelpers) => (
+                                <div>
+                                  {values.FloorDetails.map((ref: any, index: number) => (
+                                    <FloorDetailsCont key={ref.id}>
+                                      <Accordion defaultExpanded className={classes.accordionStyle}>
+                                        <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes01.headerStyle}>
+                                          <Typography className={classes01.heading}>Floor {index + 1}</Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails className={classes01.detailsCont}>
+                                          <FloorFieldMsgBox>
+                                            <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
+                                            <Badge badgeContent={0} color="secondary">
+                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                            </Badge>
+                                          </FloorFieldMsgBox>
+                                          <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
+                                          <FloorFieldMsgBox>
+                                            <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].Bedroom`} />
+                                            <Badge badgeContent={0} color="secondary">
+                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                            </Badge>
+                                          </FloorFieldMsgBox>
+                                          <ErrorMessage component={err} name={`FloorDetails[${index}].Bedroom`} />
+                                          <FloorFieldMsgBox>
+                                            <IntegerNumberField label="Family" name={`FloorDetails[${index}].family`} />
+                                            <Badge badgeContent={0} color="secondary">
+                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                            </Badge>
+                                          </FloorFieldMsgBox>
+                                          <ErrorMessage component={err} name={`FloorDetails[${index}].family`} />
+                                          <FloorFieldMsgBox>
+                                            <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].kitchen`} />
+                                            <Badge badgeContent={0} color="secondary">
+                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                            </Badge>
+                                          </FloorFieldMsgBox>
+                                          <ErrorMessage component={err} name={`FloorDetails[${index}].kitchen`} />
+                                          <FloorFieldMsgBox>
+                                            <IntegerNumberField label="Laundary" name={`FloorDetails[${index}].Laundary`} />
+                                            <Badge badgeContent={0} color="secondary">
+                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                            </Badge>
+                                          </FloorFieldMsgBox>
+                                          <ErrorMessage component={err} name={`FloorDetails[${index}].Laundary`} />
+                                          <FloorFieldMsgBox>
+                                            <IntegerNumberField label="Bath" name={`FloorDetails[${index}].Bath`} />
+                                            <Badge badgeContent={0} color="secondary">
+                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                            </Badge>
+                                          </FloorFieldMsgBox>
+                                          <ErrorMessage component={err} name={`FloorDetails[${index}].Bath`} />
+                                        </AccordionDetails>
+                                      </Accordion>
+                                      {!!userInfo && userInfo.role === 1 && values.FloorDetails.length > 1 && (
+                                        <DeleteIcon className={classes01.deleteBtnStyle} onClick={() => arrayHelpers.remove(index)} />
+                                      )}
+                                    </FloorDetailsCont>
+                                  ))}
+                                  {!!userInfo && userInfo.role === 1 && (
+                                    <AddAnotherFloorCont onClick={() => handleAddFloorDetails(arrayHelpers)}>
+                                      <AddIcon />
+                                      <span>Add Another Floor</span>
+                                    </AddAnotherFloorCont>
                                   )}
-                                </FloorDetailsCont>
-                              ))}
-                              <AddAnotherFloorCont onClick={() => handleAddFloorDetails(arrayHelpers)}>
-                                <AddIcon />
-                                <span>Add Another Floor</span>
-                              </AddAnotherFloorCont>
-                            </div>
-                          )}
-                        />
+                                </div>
+                              )}
+                            />
+                          </Grid>
+
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
                       </Grid>
 
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>9</FormTitleNumber>
-                    </Grid>
-                    <Grid item xs={10} container direction="column">
-                      <Grid item className={classes.editFormGroup}>
-                        <FormTitle>Amenities</FormTitle>
-                        <FieldMsgBox>
-                          <CustomTextField label="Heating" name="Heating" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Heating" />
-                        <FieldMsgBox>
-                          <CustomTextField label="AC" name="AC" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="AC" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Roof" name="Roof" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Roof" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Floor" name="Floor" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Floor" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Window Covering" name="WindowCovering" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="WindowCovering" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Pool" name="Pool" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Pool" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Pool Feature" name="PoolFeature" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="PoolFeature" />
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>9</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <Grid item className={classes.editFormGroup}>
+                            <FormTitle>Amenities</FormTitle>
+                            <FieldMsgBox>
+                              <CustomTextField label="Heating" name="Heating" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Heating" />
+                            <FieldMsgBox>
+                              <CustomTextField label="AC" name="AC" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="AC" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Roof" name="Roof" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Roof" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Floor" name="Floor" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Floor" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Window Covering" name="WindowCovering" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="WindowCovering" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Pool" name="Pool" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Pool" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Pool Feature" name="PoolFeature" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="PoolFeature" />
+                          </Grid>
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
                       </Grid>
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
 
-                  <Grid container>
-                    <Grid item xs={2} className={classes.titleNumberStyle}>
-                      <FormTitleNumber>10</FormTitleNumber>
-                    </Grid>
-                    <Grid item xs={10} container direction="column">
-                      <Grid item className={classes.editFormGroup}>
-                        <FormTitle>More Details</FormTitle>
-                        <FieldMsgBox>
-                          <CustomTextField label="Style" name="Style" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Style" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Deck" name="Deck" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Deck" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Patio" name="Patio" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Patio" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Garage" name="Garage" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Garage" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Carport" name="Carpot" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Carpot" />
-                        <FieldMsgBox>
-                          <IntegerNumberField label="Parking Space" name="ParkingSpace" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="ParkingSpace" />
-                        <FieldMsgBox>
-                          <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="FinBasmt" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Basement" name="Basement" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Basement" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Driveway" name="Driveway" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Driveway" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Water" name="Water" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Water" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Water Shares" name="WaterShare" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="WaterShare" />
-                        <FieldMsgBox>
-                          <CustomTextField label="Spa" name="Spa" />
-                          <Badge badgeContent={0} color="secondary">
-                            <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                          </Badge>
-                        </FieldMsgBox>
-                        <ErrorMessage component={err} name="Spa" />
+                      <Grid container>
+                        <Grid item xs={2} className={classes.titleNumberStyle}>
+                          <FormTitleNumber>10</FormTitleNumber>
+                        </Grid>
+                        <Grid item xs={10} container direction="column">
+                          <Grid item className={classes.editFormGroup}>
+                            <FormTitle>More Details</FormTitle>
+                            <FieldMsgBox>
+                              <CustomTextField label="Style" name="Style" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Style" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Deck" name="Deck" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Deck" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Patio" name="Patio" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Patio" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Garage" name="Garage" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Garage" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Carport" name="Carpot" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Carpot" />
+                            <FieldMsgBox>
+                              <IntegerNumberField label="Parking Space" name="ParkingSpace" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="ParkingSpace" />
+                            <FieldMsgBox>
+                              <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="FinBasmt" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Basement" name="Basement" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Basement" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Driveway" name="Driveway" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Driveway" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Water" name="Water" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Water" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Water Shares" name="WaterShare" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="WaterShare" />
+                            <FieldMsgBox>
+                              <CustomTextField label="Spa" name="Spa" />
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                              </Badge>
+                            </FieldMsgBox>
+                            <ErrorMessage component={err} name="Spa" />
+                          </Grid>
+                          <Divider className={classes.editDividerStyle} />
+                        </Grid>
                       </Grid>
-                      <Divider className={classes.editDividerStyle} />
-                    </Grid>
-                  </Grid>
-                  <SubmitContainer>
-                    <CheckBoxCont>
-                      <Checkbox
-                        color="default"
-                        inputProps={{ 'aria-label': 'checkbox with default color' }}
-                        style={{ color: '#1E3444' }}
-                        onChange={(e: any) => setPermission(e.target.checked)}
-                      />
-                      <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
-                    </CheckBoxCont>
-                    <FormButtonGroup>
-                      <Button
-                        type="button"
-                        variant="contained"
-                        classes={{
-                          root: classes.saveAsDraftStyle,
-                        }}
-                      >
-                        SAVE AS DRAFT
-                      </Button>
+                      <SubmitContainer>
+                        <CheckBoxCont>
+                          <Checkbox
+                            color="default"
+                            inputProps={{ 'aria-label': 'checkbox with default color' }}
+                            style={{ color: '#1E3444' }}
+                            onChange={(e: any) => setPermission(e.target.checked)}
+                          />
+                          <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
+                        </CheckBoxCont>
+                        <FormButtonGroup>
+                          <Button
+                            type="button"
+                            variant="contained"
+                            classes={{
+                              root: classes.saveAsDraftStyle,
+                            }}
+                            disabled={!!userInfo && userInfo.role !== 1}
+                          >
+                            SAVE AS DRAFT
+                          </Button>
 
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        classes={{
-                          root: classes.saveAndReviewStyle,
-                        }}
-                        disabled={!permission}
-                      >
-                        {loading ? <Spinner /> : 'Save & Send for review'}
-                      </Button>
-                    </FormButtonGroup>
-                  </SubmitContainer>
-                </Form>
-              )}
-            </Formik>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            classes={{
+                              root: classes.saveAndReviewStyle,
+                            }}
+                            disabled={!permission}
+                          >
+                            {loading ? <Spinner /> : 'Save & Send for review'}
+                          </Button>
+                        </FormButtonGroup>
+                      </SubmitContainer>
+                    </fieldset>
+                  </Form>
+                )}
+              </Formik>
+            )}
           </EditFormCont>
         </Grid>
         <Grid item xs={4}>
@@ -754,4 +777,8 @@ const EditPropertyForm = (props: any) => {
     </PropertyFormWrapper>
   )
 }
-export default withRouter(EditPropertyForm)
+
+const mapStateToProps = (state: any) => ({
+  userInfo: state.user.userInfo,
+})
+export default withRouter(connect(mapStateToProps)(EditPropertyForm))

@@ -8,8 +8,8 @@ import {
   PropertyFormWrapper,
   FormHeader,
   HeaderPath,
-  HeaderTitle,
-  PropertyFormCont,
+  EditFormTitle,
+  EditFormCont,
   FormTitle,
   FormTitleNumber,
   UpLoadedDocCont,
@@ -23,6 +23,13 @@ import {
   CheckBoxCont,
   CheckBoxText,
   FormButtonGroup,
+  CommentWrapper,
+  CommentHeader,
+  CommentTitleCont,
+  CommentContainer,
+  CommentInfo,
+  SenderName,
+  CommentText,
 } from './style'
 import { initialValues, propertyFormSchema } from './formConstant'
 import Button from '@material-ui/core/Button'
@@ -38,6 +45,7 @@ import UploadImage from './components/UploadImage'
 import UploadDocument from './components/UploadDocument'
 import FileIcon from 'assets/icons/fileIcon.svg'
 import chatIcon from 'assets/images/chatIcon.svg'
+import CrossIcon from 'assets/icons/crossIcon.svg'
 import Accordion from '@material-ui/core/Accordion'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
@@ -63,6 +71,7 @@ const EditPropertyForm = (props: any) => {
   const [documentData, setDocumentData] = useState<any>([])
   const [permission, setPermission] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [showComments, setShowComments] = useState(true)
   const classes = useStyle()
   const classes01 = useStyle01()
 
@@ -122,6 +131,24 @@ const EditPropertyForm = (props: any) => {
       )
     })
   }
+  const renderComment = () => {
+    return (
+      <div>
+        <CommentInfo>
+          <SenderName>Barrera Ramsey</SenderName>
+          <CommentText>11:26 AM - 23 Oct</CommentText>
+        </CommentInfo>
+        <CommentText>Please enter first name correctly, As this name already exist in our portal</CommentText>
+        <Divider className={classes.commentDividerStyle} />
+        <CommentInfo>
+          <SenderName>Barrera Ramsey</SenderName>
+          <CommentText>11:26 AM - 23 Oct</CommentText>
+        </CommentInfo>
+        <CommentText>Please enter first name correctly, As this name already exist in our portal</CommentText>
+        <Divider className={classes.commentDividerStyle} />
+      </div>
+    )
+  }
 
   return (
     <PropertyFormWrapper>
@@ -129,11 +156,11 @@ const EditPropertyForm = (props: any) => {
         <HeaderPath>
           <span>Properties</span> / Edit property from
         </HeaderPath>
-        <HeaderTitle>Edit property</HeaderTitle>
       </FormHeader>
-      <Grid container>
+      <Grid container spacing={4} alignItems="stretch">
         <Grid item xs={8}>
-          <PropertyFormCont>
+          <EditFormTitle>Edit property</EditFormTitle>
+          <EditFormCont>
             <Formik
               enableReinitialize
               initialValues={initialData}
@@ -155,26 +182,26 @@ const EditPropertyForm = (props: any) => {
                         <FormTitle>Owner details</FormTitle>
                         <FieldMsgBox>
                           <CustomTextField label="First name" name="Fname" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Fname" />
                         <FieldMsgBox>
                           <CustomTextField label="Last name" name="Lname" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Lname" />
                         <FieldMsgBox>
                           <CustomTextField label="Email Address" type="email" name="Email" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Email" />
                         <FieldMsgBox>
                           <CustomTextField label="Wallet public key" name="PublicAddress" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="PublicAddress" />
                       </Grid>
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
                   <Grid container>
@@ -186,46 +213,46 @@ const EditPropertyForm = (props: any) => {
                         <FormTitle>Property info</FormTitle>
                         <FieldMsgBox>
                           <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="PropertyType" />
                         <FieldMsgBox>
                           <CustomTextField label="Property name" name="PropertyName" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="PropertyName" />
                         <FieldMsgBox>
                           <FloatNumberField label="Property current value" name="CurrentValue" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="CurrentValue" />
                         <FieldMsgBox>
                           <CustomTextField label="Comments" name="Comments" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Comments" />
                         <FieldMsgBox>
                           <FormDatePicker label="Year built" name="YearBuilt" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="YearBuilt" />
                         <FieldMsgBox>
                           <CustomTextField label="Zoning" name="Zoning" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Zoning" />
                         <FieldMsgBox>
                           <CustomTextField label="Landscaping" name="Landscaping" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Landscaping" />
                         <FieldMsgBox>
                           <IntegerNumberField label="Lot Facts" name="Lotfacts" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Lotfacts" />
                       </Grid>
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
 
@@ -238,17 +265,17 @@ const EditPropertyForm = (props: any) => {
                         <FormTitle>Address</FormTitle>
                         <FieldMsgBox>
                           <CustomTextField label="Address 1" name="Address1" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Address1" />
                         <FieldMsgBox>
                           <CustomTextField label="Address 2" name="Address2" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Address2" />
                         <FieldMsgBox>
                           <CustomTextField label="City" name="City" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="City" />
                         <Grid container spacing={1}>
@@ -259,23 +286,23 @@ const EditPropertyForm = (props: any) => {
                           <Grid item xs={12} sm={6}>
                             <FieldMsgBox>
                               <IntegerNumberField label="Postal code" name="PostalCode" />
-                              <img src={chatIcon} alt="" />
+                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="PostalCode" />
                           </Grid>
                         </Grid>
                         <FieldMsgBox>
                           <CustomTextField label="Country" name="Country" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Country" />
                         <FieldMsgBox>
                           <CustomTextField label="Subdivision" name="Subdivision" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Subdivision" />
                       </Grid>
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
 
@@ -288,26 +315,26 @@ const EditPropertyForm = (props: any) => {
                         <FormTitle>Locality / Neighbourhood insight</FormTitle>
                         <FieldMsgBox>
                           <CustomTextField label="School district" name="SchoolDistrict" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="SchoolDistrict" />
                         <FieldMsgBox>
                           <CustomTextField label="Elementary" name="Elementary" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Elementary" />
                         <FieldMsgBox>
                           <CustomTextField label="Jr high" name="JrHigh" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="JrHigh" />
                         <FieldMsgBox>
                           <CustomTextField label="High school" name="HighSchool" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="HighSchool" />
                       </Grid>
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
 
@@ -320,21 +347,21 @@ const EditPropertyForm = (props: any) => {
                         <FormTitle>T.I.M.E contract</FormTitle>
                         <FieldMsgBox>
                           <IntegerNumberField label="Insurance" name="Insurance" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Insurance" />
                         <FieldMsgBox>
                           <IntegerNumberField label="Maintenance" name="Maintenance" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Maintenance" />
                         <FieldMsgBox>
                           <IntegerNumberField label="HOA fees" name="HOAFees" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="HOAFees" />
                       </Grid>
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
 
@@ -345,7 +372,7 @@ const EditPropertyForm = (props: any) => {
                     <Grid item xs={10} container direction="column">
                       <FormTitle>Uploaded property images</FormTitle>
                       <UpLoadedDocCont>{renderUploadedImageDoc(imageList)}</UpLoadedDocCont>
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
 
@@ -356,7 +383,7 @@ const EditPropertyForm = (props: any) => {
                     <Grid item xs={10} container direction="column">
                       <FormTitle>Uploaded property documents</FormTitle>
                       <UpLoadedDocCont>{renderUploadedImageDoc(documentList)}</UpLoadedDocCont>
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
 
@@ -380,32 +407,32 @@ const EditPropertyForm = (props: any) => {
                                     <AccordionDetails className={classes01.detailsCont}>
                                       <FloorFieldMsgBox>
                                         <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
-                                        <img src={chatIcon} alt="" />
+                                        <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                                       </FloorFieldMsgBox>
                                       <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
                                       <FloorFieldMsgBox>
                                         <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].Bedroom`} />
-                                        <img src={chatIcon} alt="" />
+                                        <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                                       </FloorFieldMsgBox>
                                       <ErrorMessage component={err} name={`FloorDetails[${index}].Bedroom`} />
                                       <FloorFieldMsgBox>
                                         <IntegerNumberField label="Family" name={`FloorDetails[${index}].family`} />
-                                        <img src={chatIcon} alt="" />
+                                        <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                                       </FloorFieldMsgBox>
                                       <ErrorMessage component={err} name={`FloorDetails[${index}].family`} />
                                       <FloorFieldMsgBox>
                                         <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].kitchen`} />
-                                        <img src={chatIcon} alt="" />
+                                        <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                                       </FloorFieldMsgBox>
                                       <ErrorMessage component={err} name={`FloorDetails[${index}].kitchen`} />
                                       <FloorFieldMsgBox>
                                         <IntegerNumberField label="Laundary" name={`FloorDetails[${index}].Laundary`} />
-                                        <img src={chatIcon} alt="" />
+                                        <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                                       </FloorFieldMsgBox>
                                       <ErrorMessage component={err} name={`FloorDetails[${index}].Laundary`} />
                                       <FloorFieldMsgBox>
                                         <IntegerNumberField label="Bath" name={`FloorDetails[${index}].Bath`} />
-                                        <img src={chatIcon} alt="" />
+                                        <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                                       </FloorFieldMsgBox>
                                       <ErrorMessage component={err} name={`FloorDetails[${index}].Bath`} />
                                     </AccordionDetails>
@@ -424,7 +451,7 @@ const EditPropertyForm = (props: any) => {
                         />
                       </Grid>
 
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
 
@@ -437,41 +464,41 @@ const EditPropertyForm = (props: any) => {
                         <FormTitle>Amenities</FormTitle>
                         <FieldMsgBox>
                           <CustomTextField label="Heating" name="Heating" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Heating" />
                         <FieldMsgBox>
                           <CustomTextField label="AC" name="AC" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="AC" />
                         <FieldMsgBox>
                           <CustomTextField label="Roof" name="Roof" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Roof" />
                         <FieldMsgBox>
                           <CustomTextField label="Floor" name="Floor" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Floor" />
                         <FieldMsgBox>
                           <CustomTextField label="Window Covering" name="WindowCovering" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="WindowCovering" />
                         <FieldMsgBox>
                           <CustomTextField label="Pool" name="Pool" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Pool" />
                         <FieldMsgBox>
                           <CustomTextField label="Pool Feature" name="PoolFeature" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="PoolFeature" />
                       </Grid>
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
 
@@ -484,66 +511,66 @@ const EditPropertyForm = (props: any) => {
                         <FormTitle>More Details</FormTitle>
                         <FieldMsgBox>
                           <CustomTextField label="Style" name="Style" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Style" />
                         <FieldMsgBox>
                           <CustomTextField label="Deck" name="Deck" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Deck" />
                         <FieldMsgBox>
                           <CustomTextField label="Patio" name="Patio" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Patio" />
                         <FieldMsgBox>
                           <CustomTextField label="Garage" name="Garage" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Garage" />
                         <FieldMsgBox>
                           <CustomTextField label="Carport" name="Carpot" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Carpot" />
                         <FieldMsgBox>
                           <IntegerNumberField label="Parking Space" name="ParkingSpace" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="ParkingSpace" />
                         <FieldMsgBox>
                           <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="FinBasmt" />
                         <FieldMsgBox>
                           <CustomTextField label="Basement" name="Basement" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Basement" />
                         <FieldMsgBox>
                           <CustomTextField label="Driveway" name="Driveway" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Driveway" />
                         <FieldMsgBox>
                           <CustomTextField label="Water" name="Water" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Water" />
                         <FieldMsgBox>
                           <CustomTextField label="Water Shares" name="WaterShare" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="WaterShare" />
                         <FieldMsgBox>
                           <CustomTextField label="Spa" name="Spa" />
-                          <img src={chatIcon} alt="" />
+                          <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
                         </FieldMsgBox>
                         <ErrorMessage component={err} name="Spa" />
                       </Grid>
-                      <Divider classes={{ root: classes.dividerStyle }} />
+                      <Divider className={classes.editDividerStyle} />
                     </Grid>
                   </Grid>
                   <SubmitContainer>
@@ -582,9 +609,19 @@ const EditPropertyForm = (props: any) => {
                 </Form>
               )}
             </Formik>
-          </PropertyFormCont>
+          </EditFormCont>
         </Grid>
-        <Grid item xs={4}></Grid>
+        <Grid item xs={4}>
+          <CommentWrapper showComments={showComments}>
+            <CommentHeader>
+              <CommentTitleCont>
+                <EditFormTitle>Comments</EditFormTitle>
+                <img src={CrossIcon} alt="" onClick={() => setShowComments(false)} />
+              </CommentTitleCont>
+            </CommentHeader>
+            <CommentContainer>{renderComment()}</CommentContainer>
+          </CommentWrapper>
+        </Grid>
       </Grid>
 
       <CustomModal show={showImgModal} toggleModal={setShowImgModal}>

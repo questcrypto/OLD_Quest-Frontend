@@ -60,6 +60,12 @@ export const useStyle = makeStyles({
     width: '100%',
     maxWidth: '90%',
   },
+  commentDividerStyle: {
+    margin: '40px 0 25px 0',
+  },
+  editDividerStyle: {
+    margin: ' 45px 0',
+  },
 })
 export const useStyle01 = makeStyles((theme) => ({
   heading: {
@@ -113,8 +119,8 @@ export const HeaderTitle = styled.h2`
 `
 export const PropertyFormCont = styled.div`
   box-sizing: border-box;
-  width: 736px;
-  max-width: ;
+  width: 100%;
+  max-width: 736px;
   background: ${colors.paperBackground};
   padding: 30px 50px;
   border-radius: 4px;
@@ -182,6 +188,7 @@ export const FieldMsgBox = styled.div`
     height: 35px;
     margin-left: 24px;
     margin-bottom: 20px;
+    cursor: pointer;
   }
 `
 export const FloorDetailsArr = styled(FieldArray)`
@@ -252,4 +259,57 @@ export const UpLoadedDocImages = styled.div`
     margin: 5px 0 0 0;
     text-align: center;
   }
+`
+export const EditFormCont = styled.div`
+  box-sizing: border-box;
+  background: ${colors.paperBackground};
+  padding: 30px 50px;
+  border-radius: 4px;
+`
+export const EditFormTitle = styled.p`
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  color: ${colors.textPrimary};
+  font-weight: 600;
+`
+export const CommentWrapper = styled.div<any>`
+  display: ${(props: any) => (props.showComments ? 'block' : 'none')};
+  background: ${colors.paperBackground};
+  height: 100%;
+`
+export const CommentHeader = styled.div`
+  padding: 0 30px;
+  background: ${colors.themeBackground};
+`
+export const CommentTitleCont = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #bdbdbd;
+  img {
+    margin-bottom: 12px;
+    cursor: pointer;
+  }
+`
+export const CommentContainer = styled.div`
+  box-sizing: border-box;
+  padding: 30px;
+  border-radius: 4px;
+`
+export const CommentInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`
+export const SenderName = styled.p`
+  margin: 0;
+  font-size: 16px;
+  color: ${colors.textPrimary};
+`
+
+export const CommentText = styled.p`
+  color: #4f4f4f;
+  font-size: 14px;
+  margin: 0;
 `

@@ -22,6 +22,11 @@ const LeftPanel = (props: any) => {
   const handleProperty = () => {
     history.push(Paths.dashboard)
   }
+
+  const handleTreasury = () => {
+    history.push(Paths.treasury)
+  }
+  
   return (
     <LeftPanelCont>
       <QuestLogoCont>
@@ -33,9 +38,9 @@ const LeftPanel = (props: any) => {
           <ApartmentIcon className={classes.iconStyle} />
           <ListItemText>Properties</ListItemText>
         </ListItem>
-        {!!userInfo && userInfo.role === 1 && (
+        {/* {!!userInfo && userInfo.role === 1 && ( */}
           <>
-            <ListItem button className={classes.itemButtonStyle}>
+            <ListItem button className={classes.itemButtonStyle} onClick={() => handleTreasury()}>
               <AccountBalanceIcon className={classes.iconStyle} />
               <ListItemText>Treasury</ListItemText>
             </ListItem>
@@ -52,7 +57,7 @@ const LeftPanel = (props: any) => {
               <ListItemText>Logs</ListItemText>
             </ListItem>
           </>
-        )}
+        {/* )} */}
 
         <SignOutCont>
           <Divider className={classes.signOutDividerStyle} />

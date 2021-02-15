@@ -1,10 +1,13 @@
 import React from 'react'
-import { PropertyTableWarper, CustomTableHead, CustomTableCell, PaginationCont, PaginationText, NoDataContainer } from './style'
+import { useStyles, PaginationText, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
+import Grid from '@material-ui/core/Grid'
 import TableContainer from '@material-ui/core/TableContainer'
+import Table from '@material-ui/core/Table'
 import TableRow from '@material-ui/core/TableRow'
+import TableHead from '@material-ui/core/TableHead'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
 import Paper from '@material-ui/core/Paper'
 import EditIcon from '@material-ui/icons/Edit'
 import Pagination from '@material-ui/lab/Pagination'
@@ -12,6 +15,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 
 const PropertyTable = (props: any) => {
+  const classes = useStyles()
   const { data } = props
 
   const handleAction = (id: any) => {
@@ -33,33 +37,33 @@ const PropertyTable = (props: any) => {
   }
 
   return (
-    <PropertyTableWarper>
+    <Grid>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
-          <CustomTableHead>
+          <TableHead>
             <TableRow>
-              <CustomTableCell>LOCATION</CustomTableCell>
-              <CustomTableCell>MANAGER</CustomTableCell>
-              <CustomTableCell>TYPE</CustomTableCell>
-              <CustomTableCell>STATUS</CustomTableCell>
-              <CustomTableCell>VALUE</CustomTableCell>
-              <CustomTableCell>ACTION</CustomTableCell>
+              <TableCell>LOCATION</TableCell>
+              <TableCell>MANAGER</TableCell>
+              <TableCell>TYPE</TableCell>
+              <TableCell>STATUS</TableCell>
+              <TableCell>VALUE</TableCell>
+              <TableCell>ACTION</TableCell>
             </TableRow>
-          </CustomTableHead>
+          </TableHead>
           {!!data && data.length > 0 && (
-            <TableBody>
+            <TableBody className={classes.tableHeadStyle}>
               {data.map((row: any, k: number) => (
                 <TableRow key={k}>
-                  <CustomTableCell component="th" scope="row">
+                  <TableCell component="th" scope="row">
                     {`${row.Address1},${row.State},${row.Country}`}
-                  </CustomTableCell>
-                  <CustomTableCell>{getName(row.Fname, row.Lname)}</CustomTableCell>
-                  <CustomTableCell>{getPropertyType(row.PropertyType)}</CustomTableCell>
-                  <CustomTableCell>New</CustomTableCell>
-                  <CustomTableCell>${parseFloat(row.CurrentValue).toFixed(2)}</CustomTableCell>
-                  <CustomTableCell>
+                  </TableCell>
+                  <TableCell>{getName(row.Fname, row.Lname)}</TableCell>
+                  <TableCell>{getPropertyType(row.PropertyType)}</TableCell>
+                  <TableCell>New</TableCell>
+                  <TableCell>${parseFloat(row.CurrentValue).toFixed(2)}</TableCell>
+                  <TableCell>
                     <EditIcon style={{ cursor: 'pointer' }} onClick={() => handleAction(row.id)} />
-                  </CustomTableCell>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -72,12 +76,12 @@ const PropertyTable = (props: any) => {
         )}
       </TableContainer>
       {!!data && data.length > 10 && (
-        <PaginationCont>
+        <Grid container className={classes.paginationCont} justify="space-between">
           <PaginationText>Showing 1 to 15 of 35 element</PaginationText>
           <Pagination count={10} showFirstButton showLastButton />
-        </PaginationCont>
+        </Grid>
       )}
-    </PropertyTableWarper>
+    </Grid>
   )
 }
 export default PropertyTable

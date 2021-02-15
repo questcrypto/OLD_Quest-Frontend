@@ -14,7 +14,7 @@ export const StyledRoutesContainer = styled.div<any>`
 `
 export const LeftContainer = styled.div`
   max-width: 180px;
-  background: ${colors.white};
+  box-sizing: border-box;
 `
 export const RightContainer = styled.div`
   display: flex;

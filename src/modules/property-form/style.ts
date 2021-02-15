@@ -66,6 +66,24 @@ export const useStyle = makeStyles({
   editDividerStyle: {
     margin: ' 45px 0',
   },
+  commentAreaStyle: {
+    minHeight: '100px',
+    width: '100%',
+    maxWidth: '100%',
+    minWidth: '100%',
+    padding: '10px',
+    boxSizing: 'border-box',
+    outline: 'none',
+  },
+  commentBtnStyle: {
+    marginTop: '20px',
+    width: '100%',
+    color: colors.white,
+    backgroundColor: colors.primary,
+    '&:hover': {
+      backgroundColor: colors.primary,
+    },
+  },
 })
 export const useStyle01 = makeStyles((theme) => ({
   heading: {
@@ -320,3 +338,4 @@ export const CommentText = styled.p`
   font-size: 14px;
   margin: 0;
 `
+export const CommentBoxCont = styled.div``

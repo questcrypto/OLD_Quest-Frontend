@@ -64,6 +64,7 @@ import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 
 const EditPropertyForm = (props: any) => {
   const [initialData, setInitialData] = useState(initialValues)
@@ -77,7 +78,8 @@ const EditPropertyForm = (props: any) => {
   const [loading, setLoading] = useState(false)
   const [dataLoading, setDataLoading] = useState(false)
   const [showComments, setShowComments] = useState(false)
-  /* const [commentList, setCommentList] = useState([]) */
+  const [commentMsg, setCommentMsg] = useState<string>('')
+  const [commentList, setCommentMsgList] = useState<any>([])
   const classes = useStyle()
   const classes01 = useStyle01()
 
@@ -144,28 +146,39 @@ const EditPropertyForm = (props: any) => {
     })
   }
   const renderComment = () => {
-    return (
-      <div>
-        <CommentInfo>
-          <SenderName>Barrera Ramsey</SenderName>
-          <CommentText>11:26 AM - 23 Oct</CommentText>
-        </CommentInfo>
-        <CommentText>Please enter first name correctly, As this name already exist in our portal</CommentText>
-        <Divider className={classes.commentDividerStyle} />
-      </div>
-    )
-    // return commentList.map((item: any, k: number) => {
-    //   return (
-    //     <div key={k}>
-    //       <CommentInfo>
-    //         <SenderName>{item.name}</SenderName>
-    //         <CommentText>{item.time}</CommentText>
-    //       </CommentInfo>
-    //       <CommentText>{item.comment}</CommentText>
-    //       <Divider className={classes.commentDividerStyle} />
-    //     </div>
-    //   )
-    // })
+    return commentList.map((item: any, k: number) => {
+      return (
+        <div key={k}>
+          <CommentInfo>
+            <SenderName>{item.name}</SenderName>
+            <CommentText>{moment(item.time).format('LT, MMM Do YY')}</CommentText>
+          </CommentInfo>
+          <CommentText>{item.comment}</CommentText>
+          <Divider className={classes.commentDividerStyle} />
+        </div>
+      )
+    })
+  }
+  const handleCommentOnChange = (e: any) => {
+    const { value } = e.target
+    if (value) {
+      setCommentMsg(value)
+    } else {
+      setCommentMsg('')
+    }
+  }
+  const handleCommentSubmit = () => {
+    if (commentMsg) {
+      const data = {
+        name: 'Barrera Ramsey',
+        time: new Date(),
+        comment: commentMsg,
+      }
+      const newCommentList = [...commentList]
+      newCommentList.push(data)
+      setCommentMsgList([...newCommentList])
+      setCommentMsg('')
+    }
   }
 
   return (
@@ -751,7 +764,30 @@ const EditPropertyForm = (props: any) => {
                 <img src={CrossIcon} alt="" onClick={() => setShowComments(false)} />
               </CommentTitleCont>
             </CommentHeader>
-            <CommentContainer>{renderComment()}</CommentContainer>
+
+            <CommentContainer>
+              <TextareaAutosize
+                className={classes.commentAreaStyle}
+                aria-label="empty textarea"
+                placeholder="write comments.."
+                onChange={handleCommentOnChange}
+                value={commentMsg}
+              />
+              <Button
+                variant="contained"
+                classes={{
+                  root: classes.commentBtnStyle,
+                }}
+                onClick={() => {
+                  handleCommentSubmit()
+                }}
+                disabled={commentMsg.length === 0}
+              >
+                Comment
+              </Button>
+              <Divider className={classes.commentDividerStyle} />
+              <div>{renderComment()}</div>
+            </CommentContainer>
           </CommentWrapper>
         </Grid>
       </Grid>

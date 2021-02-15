@@ -3,13 +3,22 @@ import { colors } from 'shared/styles/theme'
 import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(() => ({
+  drawer: {
+    width: '180px',
+  },
+  drawerPaper: {
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+    background: '#FBFBFB',
+  },
   root: {
     position: 'sticky',
-    background: colors.white,
     overflowY: 'scroll',
     '&::-webkit-scrollbar': {
       display: 'none',
     },
+    top: 0,
     scrollbarWidth: 'none',
     height: '100vh',
     minHeight: '600px',
@@ -36,8 +45,8 @@ export const useStyles = makeStyles(() => ({
     margin: '0 0 54px 30px',
   },
   signOutStyle: {
-    /* position: 'absolute',
-    bottom: '20px', */
+    position: 'absolute',
+    bottom: '20px',
   },
   signOutDividerStyle: {
     width: '46px',

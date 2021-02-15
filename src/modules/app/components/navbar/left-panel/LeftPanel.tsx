@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { logout } from 'logic/actions/user.actions'
-import { useStyles, LeftPanelCont, QuestLogoCont, ListItemText, SignOutCont } from './style'
+import { useStyles, QuestLogoCont, ListItemText } from './style'
+import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -23,7 +24,7 @@ const LeftPanel = (props: any) => {
     history.push(Paths.dashboard)
   }
   return (
-    <LeftPanelCont>
+    <Grid className={classes.root}>
       <QuestLogoCont>
         <img src={QuestLogo} alt="" />
       </QuestLogoCont>
@@ -53,16 +54,15 @@ const LeftPanel = (props: any) => {
             </ListItem>
           </>
         )}
-
-        <SignOutCont>
-          <Divider className={classes.signOutDividerStyle} />
-          <ListItem button onClick={() => logout()}>
-            <PowerSettingsNewIcon className={classes.iconStyle} />
-            <ListItemText>Sign Out</ListItemText>
-          </ListItem>
-        </SignOutCont>
       </List>
-    </LeftPanelCont>
+      <Grid className={classes.signOutStyle}>
+        <Divider className={classes.signOutDividerStyle} />
+        <ListItem button onClick={() => logout()}>
+          <PowerSettingsNewIcon className={classes.iconStyle} />
+          <ListItemText>Sign Out</ListItemText>
+        </ListItem>
+      </Grid>
+    </Grid>
   )
 }
 const mapStateToProps = (state: any) => ({

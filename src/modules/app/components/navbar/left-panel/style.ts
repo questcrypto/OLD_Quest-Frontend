@@ -1,46 +1,50 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-export const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    itemButtonStyle: {
-      display: 'flex',
-      marginBottom: '30px',
-      alignItems: 'center',
+export const useStyles = makeStyles(() => ({
+  root: {
+    position: 'sticky',
+    background: colors.white,
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': {
+      display: 'none',
     },
-    iconStyle: {
-      marginRight: '15px',
-      width: '20px',
-      height: '20px',
-    },
-    textStyle: {
-      fontSize: '16px',
-      lineHeight: '19px',
-      color: colors.textPrimary,
-    },
+    scrollbarWidth: 'none',
+    height: '100vh',
+    minHeight: '600px',
+  },
 
-    dividerStyle: {
-      width: '46px',
-      margin: '0 0 54px 30px',
-    },
-    signOutDividerStyle: {
-      width: '46px',
-      margin: '0 0 30px 30px',
-    },
-  })
-)
-export const LeftPanelCont = styled.div`
-  background: ${colors.white};
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  scrollbar-width: none;
-`
+  itemButtonStyle: {
+    display: 'flex',
+    marginBottom: '30px',
+    alignItems: 'center',
+  },
+  iconStyle: {
+    marginRight: '15px',
+    width: '20px',
+    height: '20px',
+  },
+  textStyle: {
+    fontSize: '16px',
+    lineHeight: '19px',
+    color: colors.textPrimary,
+  },
+
+  dividerStyle: {
+    width: '46px',
+    margin: '0 0 54px 30px',
+  },
+  signOutStyle: {
+    /* position: 'absolute',
+    bottom: '20px', */
+  },
+  signOutDividerStyle: {
+    width: '46px',
+    margin: '0 0 30px 30px',
+  },
+}))
+
 export const QuestLogoCont = styled.div`
   padding: 30px 12px;
 `
@@ -49,7 +53,4 @@ export const ListItemText = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: ${colors.textPrimary};
-`
-export const SignOutCont = styled.div`
-  margin-top: 80px;
 `

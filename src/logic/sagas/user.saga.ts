@@ -18,14 +18,15 @@ export function* authWorker() {
     setAuthToken(localStorage.token)
   }
   try {
-    const token = localStorage.token
-    const userInfo = yield call(getUserInfo, token)
-    const successData = { token, userInfo }
+    const res = yield call(authenticateToken)
+    const userInfo = yield call(getUserInfo, res.data.token)
+    const successData = { token: res.data.token, userInfo }
     yield put(authSuccess(successData))
   } catch (error) {
     yield put(authFail())
   }
 }
+const authenticateToken = async () => await axios.get(`${apiBaseUrl}/auth/auth`)
 /* ============== LOGIN SAGA =============== */
 
 export function* loginWatcher() {

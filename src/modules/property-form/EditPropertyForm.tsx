@@ -17,6 +17,7 @@ import {
   UpLoadedDocCont,
   UpLoadedDocImages,
   FieldMsgBox,
+  TitleMsgBox,
   FloorDetailsArr,
   FloorDetailsCont,
   FloorFieldMsgBox,
@@ -80,6 +81,9 @@ const EditPropertyForm = (props: any) => {
   const [showComments, setShowComments] = useState(false)
   const [commentMsg, setCommentMsg] = useState<string>('')
   const [commentList, setCommentMsgList] = useState<any>([])
+  const [selectedCommentId, setSelectedCommentId] = useState(0)
+  const [commentLoading, setCommentLoading] = useState(true)
+
   const classes = useStyle()
   const classes01 = useStyle01()
 
@@ -115,10 +119,31 @@ const EditPropertyForm = (props: any) => {
       } catch (error) {
       } finally {
         setDataLoading(false)
+        window.scrollTo(0, 0)
       }
     }
     getPropertyDetails()
   }, [props.match.params.propertyId])
+
+  useEffect(() => {
+    const getCommentsList = async () => {
+      const propertyId = props.match.params.propertyId
+      const data = { id: propertyId, Field: selectedCommentId }
+      try {
+        setCommentLoading(true)
+        const res = await axios.post(`${apiBaseUrl}/properties/getCommentById`, data)
+        console.log('res->', res.data)
+      } catch (err) {
+        setCommentMsgList([])
+      } finally {
+        setCommentLoading(false)
+      }
+    }
+    if (selectedCommentId > 0) {
+      getCommentsList()
+      window.scrollTo(0, 0)
+    }
+  }, [props.match.params.propertyId, selectedCommentId])
 
   const handleSubmit = async (values: any) => {
     try {
@@ -159,6 +184,11 @@ const EditPropertyForm = (props: any) => {
       )
     })
   }
+  const getComments = (commentId: number) => {
+    setSelectedCommentId(commentId)
+    setShowComments(true)
+    setCommentMsg('')
+  }
   const handleCommentOnChange = (e: any) => {
     const { value } = e.target
     if (value) {
@@ -167,7 +197,8 @@ const EditPropertyForm = (props: any) => {
       setCommentMsg('')
     }
   }
-  const handleCommentSubmit = () => {
+  const handleCommentSubmit = async () => {
+    const propertyId = props.match.params.propertyId
     if (commentMsg) {
       const data = {
         name: 'Barrera Ramsey',
@@ -178,6 +209,15 @@ const EditPropertyForm = (props: any) => {
       newCommentList.push(data)
       setCommentMsgList([...newCommentList])
       setCommentMsg('')
+      try {
+        const commentData = {
+          propid: propertyId,
+          Field: selectedCommentId,
+          Remark: commentMsg,
+          CommentedBy: userInfo.publicaddress,
+        }
+        await axios.post(`${apiBaseUrl}/properties/AddComment`, commentData)
+      } catch (err) {}
     }
   }
 
@@ -217,28 +257,28 @@ const EditPropertyForm = (props: any) => {
                             <FieldMsgBox>
                               <CustomTextField label="First name" name="Fname" />
                               <Badge badgeContent={2} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(1)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Fname" />
                             <FieldMsgBox>
                               <CustomTextField label="Last name" name="Lname" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(2)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Lname" />
                             <FieldMsgBox>
                               <CustomTextField label="Email Address" type="email" name="Email" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(3)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Email" />
                             <FieldMsgBox>
                               <CustomTextField label="Wallet public key" name="PublicAddress" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(4)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="PublicAddress" />
@@ -261,56 +301,56 @@ const EditPropertyForm = (props: any) => {
                                 isDisabled={!!userInfo && userInfo.role !== 1}
                               />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(5)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="PropertyType" />
                             <FieldMsgBox>
                               <CustomTextField label="Property name" name="PropertyName" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(6)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="PropertyName" />
                             <FieldMsgBox>
                               <FloatNumberField label="Property current value" name="CurrentValue" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(7)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="CurrentValue" />
                             <FieldMsgBox>
                               <CustomTextField label="Comments" name="Comments" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Comments" />
                             <FieldMsgBox>
                               <FormDatePicker label="Year built" name="YearBuilt" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(8)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="YearBuilt" />
                             <FieldMsgBox>
                               <CustomTextField label="Zoning" name="Zoning" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(9)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Zoning" />
                             <FieldMsgBox>
                               <CustomTextField label="Landscaping" name="Landscaping" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(10)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Landscaping" />
                             <FieldMsgBox>
                               <IntegerNumberField label="Lot Facts" name="Lotfacts" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(11)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Lotfacts" />
@@ -329,28 +369,28 @@ const EditPropertyForm = (props: any) => {
                             <FieldMsgBox>
                               <CustomTextField label="Address 1" name="Address1" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(12)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Address1" />
                             <FieldMsgBox>
                               <CustomTextField label="Address 2" name="Address2" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(13)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Address2" />
                             <FieldMsgBox>
                               <CustomTextField label="City" name="City" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(14)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="City" />
                             <FieldMsgBox>
                               <CustomTextField label="State" name="State" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(17)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="State" />
@@ -358,7 +398,7 @@ const EditPropertyForm = (props: any) => {
                             <FieldMsgBox>
                               <IntegerNumberField label="Postal code" name="PostalCode" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(18)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="PostalCode" />
@@ -366,14 +406,14 @@ const EditPropertyForm = (props: any) => {
                             <FieldMsgBox>
                               <CustomTextField label="Country" name="Country" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(16)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Country" />
                             <FieldMsgBox>
                               <CustomTextField label="Subdivision" name="Subdivision" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(15)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Subdivision" />
@@ -392,28 +432,28 @@ const EditPropertyForm = (props: any) => {
                             <FieldMsgBox>
                               <CustomTextField label="School district" name="SchoolDistrict" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(19)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="SchoolDistrict" />
                             <FieldMsgBox>
                               <CustomTextField label="Elementary" name="Elementary" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(20)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Elementary" />
                             <FieldMsgBox>
                               <CustomTextField label="Jr high" name="JrHigh" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(21)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="JrHigh" />
                             <FieldMsgBox>
                               <CustomTextField label="High school" name="HighSchool" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(22)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="HighSchool" />
@@ -432,21 +472,21 @@ const EditPropertyForm = (props: any) => {
                             <FieldMsgBox>
                               <IntegerNumberField label="Insurance" name="Insurance" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(23)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Insurance" />
                             <FieldMsgBox>
                               <IntegerNumberField label="Maintenance" name="Maintenance" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(24)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Maintenance" />
                             <FieldMsgBox>
                               <IntegerNumberField label="HOA fees" name="HOAFees" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(25)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="HOAFees" />
@@ -460,8 +500,15 @@ const EditPropertyForm = (props: any) => {
                           <FormTitleNumber>6</FormTitleNumber>
                         </Grid>
                         <Grid item xs={10} container direction="column">
-                          <FormTitle>Uploaded property images</FormTitle>
-                          <UpLoadedDocCont>{renderUploadedImageDoc(imageList)}</UpLoadedDocCont>
+                          <Grid item className={classes.editFormGroup}>
+                            <TitleMsgBox>
+                              <FormTitle>Uploaded property images</FormTitle>
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => getComments(46)} />
+                              </Badge>
+                            </TitleMsgBox>
+                            <UpLoadedDocCont>{renderUploadedImageDoc(imageList)}</UpLoadedDocCont>
+                          </Grid>
                           <Divider className={classes.editDividerStyle} />
                         </Grid>
                       </Grid>
@@ -471,8 +518,15 @@ const EditPropertyForm = (props: any) => {
                           <FormTitleNumber>7</FormTitleNumber>
                         </Grid>
                         <Grid item xs={10} container direction="column">
-                          <FormTitle>Uploaded property documents</FormTitle>
-                          <UpLoadedDocCont>{renderUploadedImageDoc(documentList)}</UpLoadedDocCont>
+                          <Grid item className={classes.editFormGroup}>
+                            <TitleMsgBox>
+                              <FormTitle>Uploaded property documents</FormTitle>
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => getComments(47)} />
+                              </Badge>
+                            </TitleMsgBox>
+                            <UpLoadedDocCont>{renderUploadedImageDoc(documentList)}</UpLoadedDocCont>
+                          </Grid>
                           <Divider className={classes.editDividerStyle} />
                         </Grid>
                       </Grid>
@@ -483,7 +537,12 @@ const EditPropertyForm = (props: any) => {
                         </Grid>
                         <Grid item xs={10} container direction="column">
                           <Grid item className={classes.editFormGroup}>
-                            <FormTitle>Floor Wise Configuration</FormTitle>
+                            <TitleMsgBox>
+                              <FormTitle>Floor Wise Configuration</FormTitle>
+                              <Badge badgeContent={0} color="secondary">
+                                <img src={chatIcon} alt="" onClick={() => getComments(35)} />
+                              </Badge>
+                            </TitleMsgBox>
                             <FloorDetailsArr
                               name="FloorDetails"
                               render={(arrayHelpers) => (
@@ -497,44 +556,26 @@ const EditPropertyForm = (props: any) => {
                                         <AccordionDetails className={classes01.detailsCont}>
                                           <FloorFieldMsgBox>
                                             <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
-                                            <Badge badgeContent={0} color="secondary">
-                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                            </Badge>
                                           </FloorFieldMsgBox>
                                           <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
                                           <FloorFieldMsgBox>
                                             <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].Bedroom`} />
-                                            <Badge badgeContent={0} color="secondary">
-                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                            </Badge>
                                           </FloorFieldMsgBox>
                                           <ErrorMessage component={err} name={`FloorDetails[${index}].Bedroom`} />
                                           <FloorFieldMsgBox>
                                             <IntegerNumberField label="Family" name={`FloorDetails[${index}].family`} />
-                                            <Badge badgeContent={0} color="secondary">
-                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                            </Badge>
                                           </FloorFieldMsgBox>
                                           <ErrorMessage component={err} name={`FloorDetails[${index}].family`} />
                                           <FloorFieldMsgBox>
                                             <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].kitchen`} />
-                                            <Badge badgeContent={0} color="secondary">
-                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                            </Badge>
                                           </FloorFieldMsgBox>
                                           <ErrorMessage component={err} name={`FloorDetails[${index}].kitchen`} />
                                           <FloorFieldMsgBox>
                                             <IntegerNumberField label="Laundary" name={`FloorDetails[${index}].Laundary`} />
-                                            <Badge badgeContent={0} color="secondary">
-                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                            </Badge>
                                           </FloorFieldMsgBox>
                                           <ErrorMessage component={err} name={`FloorDetails[${index}].Laundary`} />
                                           <FloorFieldMsgBox>
                                             <IntegerNumberField label="Bath" name={`FloorDetails[${index}].Bath`} />
-                                            <Badge badgeContent={0} color="secondary">
-                                              <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
-                                            </Badge>
                                           </FloorFieldMsgBox>
                                           <ErrorMessage component={err} name={`FloorDetails[${index}].Bath`} />
                                         </AccordionDetails>
@@ -569,49 +610,49 @@ const EditPropertyForm = (props: any) => {
                             <FieldMsgBox>
                               <CustomTextField label="Heating" name="Heating" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(27)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Heating" />
                             <FieldMsgBox>
                               <CustomTextField label="AC" name="AC" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(26)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="AC" />
                             <FieldMsgBox>
                               <CustomTextField label="Roof" name="Roof" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(28)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Roof" />
                             <FieldMsgBox>
                               <CustomTextField label="Floor" name="Floor" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(29)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Floor" />
                             <FieldMsgBox>
                               <CustomTextField label="Window Covering" name="WindowCovering" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(30)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="WindowCovering" />
                             <FieldMsgBox>
                               <CustomTextField label="Pool" name="Pool" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(31)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Pool" />
                             <FieldMsgBox>
                               <CustomTextField label="Pool Feature" name="PoolFeature" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(32)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="PoolFeature" />
@@ -630,84 +671,84 @@ const EditPropertyForm = (props: any) => {
                             <FieldMsgBox>
                               <CustomTextField label="Style" name="Style" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(33)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Style" />
                             <FieldMsgBox>
                               <CustomTextField label="Deck" name="Deck" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(34)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Deck" />
                             <FieldMsgBox>
                               <CustomTextField label="Patio" name="Patio" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(36)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Patio" />
                             <FieldMsgBox>
                               <CustomTextField label="Garage" name="Garage" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(37)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Garage" />
                             <FieldMsgBox>
                               <CustomTextField label="Carport" name="Carpot" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(38)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Carpot" />
                             <FieldMsgBox>
                               <IntegerNumberField label="Parking Space" name="ParkingSpace" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(39)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="ParkingSpace" />
                             <FieldMsgBox>
                               <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(40)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="FinBasmt" />
                             <FieldMsgBox>
                               <CustomTextField label="Basement" name="Basement" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(41)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Basement" />
                             <FieldMsgBox>
                               <CustomTextField label="Driveway" name="Driveway" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(42)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Driveway" />
                             <FieldMsgBox>
                               <CustomTextField label="Water" name="Water" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(43)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Water" />
                             <FieldMsgBox>
                               <CustomTextField label="Water Shares" name="WaterShare" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(44)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="WaterShare" />
                             <FieldMsgBox>
                               <CustomTextField label="Spa" name="Spa" />
                               <Badge badgeContent={0} color="secondary">
-                                <img src={chatIcon} alt="" onClick={() => setShowComments(true)} />
+                                <img src={chatIcon} alt="" onClick={() => getComments(45)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Spa" />
@@ -786,7 +827,7 @@ const EditPropertyForm = (props: any) => {
                 Comment
               </Button>
               <Divider className={classes.commentDividerStyle} />
-              <div>{renderComment()}</div>
+              <div>{commentLoading ? <ComponentLoader /> : renderComment()}</div>
             </CommentContainer>
           </CommentWrapper>
         </Grid>

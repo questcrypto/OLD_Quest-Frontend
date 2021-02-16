@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(() => ({
   drawer: {
-    width: '180px',
+    width: '240px',
   },
   drawerPaper: {
     '&::-webkit-scrollbar': {

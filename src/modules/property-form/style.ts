@@ -84,6 +84,9 @@ export const useStyle = makeStyles({
       backgroundColor: colors.primary,
     },
   },
+  docImgStyle: {
+    marginRight: '24px',
+  },
 })
 export const useStyle01 = makeStyles((theme) => ({
   heading: {
@@ -166,7 +169,7 @@ export const FormTitle = styled.h4`
   font-size: 20px;
   line-height: 24px;
   color: ${colors.textPrimary};
-  margin: 0 0 30px 0;
+  margin: 0 20px 30px 0;
 `
 export const FormSubTitle = styled.p`
   font-size: 16px;
@@ -214,6 +217,19 @@ export const FieldMsgBox = styled.div`
     margin-left: 24px;
     margin-bottom: 20px;
     cursor: pointer;
+  }
+`
+export const TitleMsgBox = styled.div`
+  position: relative;
+  img {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+  }
+  span {
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 `
 export const FloorDetailsArr = styled(FieldArray)`

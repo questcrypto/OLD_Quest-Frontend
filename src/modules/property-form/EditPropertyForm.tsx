@@ -83,6 +83,7 @@ const EditPropertyForm = (props: any) => {
   const [commentList, setCommentMsgList] = useState<any>([])
   const [selectedCommentId, setSelectedCommentId] = useState(0)
   const [commentLoading, setCommentLoading] = useState(true)
+  const [unReadComments, setUnReadComments] = useState<any>({})
 
   const classes = useStyle()
   const classes01 = useStyle01()
@@ -122,28 +123,57 @@ const EditPropertyForm = (props: any) => {
         window.scrollTo(0, 0)
       }
     }
+    const getUnreadComments = async () => {
+      const data = {
+        id: propertyId,
+        publicAddress: !!userInfo && userInfo.publicaddress,
+      }
+      try {
+        const result: any = await axios.post(`${apiBaseUrl}/properties/getUnreadComment`, data)
+        if (result.data) {
+          setUnReadComments(result.data)
+        }
+      } catch (err) {
+        setUnReadComments([])
+      }
+    }
     getPropertyDetails()
-  }, [props.match.params.propertyId])
+    getUnreadComments()
+  }, [props.match.params.propertyId, userInfo])
 
   useEffect(() => {
+    const propertyId = props.match.params.propertyId
     const getCommentsList = async () => {
-      const propertyId = props.match.params.propertyId
       const data = { id: propertyId, Field: selectedCommentId }
       try {
         setCommentLoading(true)
         const res = await axios.post(`${apiBaseUrl}/properties/getCommentById`, data)
-        console.log('res->', res.data)
+        setCommentMsgList(res.data)
       } catch (err) {
-        setCommentMsgList([])
       } finally {
         setCommentLoading(false)
+      }
+    }
+    const getUnreadComments = async () => {
+      const data = {
+        id: propertyId,
+        publicAddress: !!userInfo && userInfo.publicaddress,
+      }
+      try {
+        const result: any = await axios.post(`${apiBaseUrl}/properties/getUnreadComment`, data)
+        if (result.data) {
+          setUnReadComments(result.data)
+        }
+      } catch (err) {
+        setUnReadComments([])
       }
     }
     if (selectedCommentId > 0) {
       getCommentsList()
       window.scrollTo(0, 0)
+      getUnreadComments()
     }
-  }, [props.match.params.propertyId, selectedCommentId])
+  }, [props.match.params.propertyId, selectedCommentId, userInfo])
 
   const handleSubmit = async (values: any) => {
     try {
@@ -175,10 +205,10 @@ const EditPropertyForm = (props: any) => {
       return (
         <div key={k}>
           <CommentInfo>
-            <SenderName>{item.name}</SenderName>
-            <CommentText>{moment(item.time).format('LT, MMM Do YY')}</CommentText>
+            <SenderName>{item.CommentedBy}</SenderName>
+            <CommentText>{moment(item.CreatedAt).format('LT, MMM Do YY')}</CommentText>
           </CommentInfo>
-          <CommentText>{item.comment}</CommentText>
+          <CommentText>{item.Remark}</CommentText>
           <Divider className={classes.commentDividerStyle} />
         </div>
       )
@@ -201,9 +231,9 @@ const EditPropertyForm = (props: any) => {
     const propertyId = props.match.params.propertyId
     if (commentMsg) {
       const data = {
-        name: 'Barrera Ramsey',
-        time: new Date(),
-        comment: commentMsg,
+        CreatedAt: new Date(),
+        Remark: commentMsg,
+        CommentedBy: userInfo.publicaddress,
       }
       const newCommentList = [...commentList]
       newCommentList.push(data)
@@ -256,14 +286,14 @@ const EditPropertyForm = (props: any) => {
                             <FormTitle>Owner details</FormTitle>
                             <FieldMsgBox>
                               <CustomTextField label="First name" name="Fname" />
-                              <Badge badgeContent={2} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[1]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(1)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Fname" />
                             <FieldMsgBox>
                               <CustomTextField label="Last name" name="Lname" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[2]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(2)} />
                               </Badge>
                             </FieldMsgBox>

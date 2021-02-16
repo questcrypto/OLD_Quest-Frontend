@@ -2,13 +2,19 @@ import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
 import { makeStyles } from '@material-ui/core/styles'
 
-export const useStyle = makeStyles((theme) => ({
+export const useStyle = makeStyles(() => ({
+  root: {
+    height: '90vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 'auto',
+  },
   loginBoxStyle: {
-    padding: '20px',
+    backgroundColor: colors.paperBackground,
     width: '400px',
-    height: '450px',
-    boxSizing: 'border-box',
-    backgroundColor: '#F5F5F5',
+    maxWidth: '400px',
+    padding: '20px',
   },
   loginBtnStyle: {
     width: '100%',
@@ -21,13 +27,7 @@ export const useStyle = makeStyles((theme) => ({
     },
   },
 }))
-export const LoginContainer = styled.div`
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-`
+
 export const LoginText = styled.p`
   font-size: 18x;
   text-align: center;

@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { loginStart } from 'logic/actions/user.actions'
-import { useStyle, LoginContainer, LoginImgCont, LoginText } from './style'
+import { useStyle, LoginImgCont, LoginText } from './style'
+import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
 import Web3 from 'web3'
 import { Formik, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -85,12 +87,11 @@ const Login = (props: any) => {
   }
 
   return (
-    <LoginContainer>
+    <Box className={classes.root}>
       <Paper className={classes.loginBoxStyle}>
         <LoginImgCont>
           <img src={QuestLogo} alt="" />
         </LoginImgCont>
-
         <LoginText>Login into quest</LoginText>
         <Formik
           initialValues={initialValues}
@@ -117,7 +118,7 @@ const Login = (props: any) => {
           )}
         </Formik>
       </Paper>
-    </LoginContainer>
+    </Box>
   )
 }
 

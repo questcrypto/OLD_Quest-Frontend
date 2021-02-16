@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Switch } from 'react-router'
 import { Router, Route } from 'react-router-dom'
-import { StyledRoutesWrapper, StyledRoutes, StyledRoutesContainer, LeftContainer, RightContainer } from './style'
+import { useStyles } from './style'
+import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
 import Loader from 'shared/loader-components/loader'
 import history from '../history'
 import { Paths } from './types'
@@ -92,31 +94,31 @@ function getRouteRenderWithAuth(loggedIn: boolean, route: RouteDefinition, i: nu
 }
 
 const Routes: React.FC<Props & RoutesProps & StateProps> = ({ isLoaded, loggedIn, authLoading }) => {
+  const classes = useStyles()
   return (
-    <StyledRoutesWrapper>
-      <Router history={history}>
-        <StyledRoutesContainer contStatus={loggedIn}>
-          <LeftContainer>{loggedIn && <LeftPanel />}</LeftContainer>
-
-          <RightContainer>
+    <Router history={history}>
+      <Box className={classes.root}>
+        <Grid container>
+          <Grid item xs={2}>
+            {loggedIn && <LeftPanel />}
+          </Grid>
+          <Grid item xs={loggedIn ? 10 : 12} className={classes.rightPanelStyle}>
             {loggedIn && <TopPanel />}
-            <StyledRoutes>
-              <Switch>
-                {routes.map((route, i) => {
-                  if (authLoading) {
-                    return <Loader key={i} />
-                  } else {
-                    const render = getRouteRenderWithAuth(loggedIn, route, i)
-                    const rest = { render }
-                    return isLoaded ? <Route key={i} path={route.path} exact {...rest} /> : null
-                  }
-                })}
-              </Switch>
-            </StyledRoutes>
-          </RightContainer>
-        </StyledRoutesContainer>
-      </Router>
-    </StyledRoutesWrapper>
+            <Switch>
+              {routes.map((route, i) => {
+                if (authLoading) {
+                  return <Loader key={i} />
+                } else {
+                  const render = getRouteRenderWithAuth(loggedIn, route, i)
+                  const rest = { render }
+                  return isLoaded ? <Route key={i} path={route.path} exact {...rest} /> : null
+                }
+              })}
+            </Switch>
+          </Grid>
+        </Grid>
+      </Box>
+    </Router>
   )
 }
 

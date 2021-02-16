@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err, Error } from 'shared/styles/styled'
@@ -69,6 +69,10 @@ const AddPropertyForm = () => {
   const [loading, setLoading] = useState(false)
   const classes = useStyle()
   const classes01 = useStyle01()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const getFileData = () => {
     const filesArr: any = []

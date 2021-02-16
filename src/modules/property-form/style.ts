@@ -339,14 +339,14 @@ export const CommentContainer = styled.div`
 `
 export const CommentInfo = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   margin-bottom: 20px;
 `
 export const SenderName = styled.p`
-  margin: 0;
+  margin: 0 0 10px 0;
   font-size: 16px;
   color: ${colors.textPrimary};
+  word-break: break-all;
 `
 
 export const CommentText = styled.p`
@@ -354,4 +354,3 @@ export const CommentText = styled.p`
   font-size: 14px;
   margin: 0;
 `
-export const CommentBoxCont = styled.div``

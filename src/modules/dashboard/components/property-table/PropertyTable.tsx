@@ -15,7 +15,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 
 const PropertyTable = (props: any) => {
-  console.log(props.searchquery)
+  // console.log(props.searchquery)
   const classes = useStyles()
   const { data } = props
 
@@ -55,21 +55,8 @@ const PropertyTable = (props: any) => {
           </TableHead>
           {!!data && data.length > 0 && (
             <TableBody className={classes.tableHeadStyle}>
-              {console.log("data => ", data)}
-              {data.map((row: any, k: number) => (
-                  <TableRow key={k}>
-                    <TableCell component="th" scope="row">
-                      {`${row.Address1},${row.State},${row.Country}`}
-                    </TableCell>
-                    <TableCell>{getName(row.Fname, row.Lname)}</TableCell>
-                    <TableCell>{getPropertyType(row.PropertyType)}</TableCell>
-                    <TableCell>New</TableCell>
-                    <TableCell>${parseFloat(row.CurrentValue).toFixed(2)}</TableCell>
-                    <TableCell>
-                      <EditIcon style={{ cursor: 'pointer' }} onClick={() => handleAction(row.id)} />
-                    </TableCell>
-                  </TableRow>
-                )).filter(
+              {/* {console.log("data => ", data)} */}
+              {data.filter(
                   (value: {
                     Address1: string
                     State: string
@@ -93,7 +80,21 @@ const PropertyTable = (props: any) => {
                       return value
                     }
                   }
-                )}
+                )
+                .map((row: any, k: number) => (
+                  <TableRow key={k}>
+                    <TableCell component="th" scope="row">
+                      {`${row.Address1},${row.State},${row.Country}`}
+                    </TableCell>
+                    <TableCell>{getName(row.Fname, row.Lname)}</TableCell>
+                    <TableCell>{getPropertyType(row.PropertyType)}</TableCell>
+                    <TableCell>New</TableCell>
+                    <TableCell>${parseFloat(row.CurrentValue).toFixed(2)}</TableCell>
+                    <TableCell>
+                      <EditIcon style={{ cursor: 'pointer' }} onClick={() => handleAction(row.id)} />
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           )}
         </Table>

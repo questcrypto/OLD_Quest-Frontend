@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText, TabTitle } from './style'
-import PublishedTable from './components/PublishedTable'
+import PublishedProperty from './components/PublishedProperty'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
@@ -14,6 +14,7 @@ const TreasuryDashboard = (props: any) => {
   const [activeTab, setActiveTab] = useState('published')
   const [dataLoading, setDataLoading] = useState(false)
   const [publishedProperties, setPublishedProperties] = useState<any>([])
+  const { userInfo } = props
 
   useEffect(() => {
     const getPublishedProperties = async () => {
@@ -90,7 +91,7 @@ const TreasuryDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'published' && <PublishedTable data={publishedProperties} />}
+            {activeTab === 'published' && <PublishedProperty data={publishedProperties} userInfo={userInfo} />}
             {activeTab === 'preAuctions' && <p>Content can be added here</p>}
             {activeTab === 'onAuctions' && <p>Content can be added here</p>}
             {activeTab === 'postAuctions' && <p>Content can be added here</p>}

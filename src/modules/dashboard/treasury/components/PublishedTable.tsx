@@ -10,6 +10,8 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import Paper from '@material-ui/core/Paper'
 import Pagination from '@material-ui/lab/Pagination'
+import { Paths } from 'modules/app/components/routes/types'
+import history from 'modules/app/components/history'
 
 const PublishedTable = (props: any) => {
   const classes = useStyles()
@@ -29,6 +31,10 @@ const PublishedTable = (props: any) => {
     return fullName
   }
 
+  const handleDetails = (id: any) => {
+    history.push(`${Paths.treasuryPropertyDetails}/${id}`)
+  }
+
   return (
     <Grid>
       <TableContainer component={Paper}>
@@ -40,6 +46,7 @@ const PublishedTable = (props: any) => {
               <TableCell>TYPE</TableCell>
               <TableCell>STATUS</TableCell>
               <TableCell>VALUE</TableCell>
+              <TableCell>Details</TableCell>
             </TableRow>
           </TableHead>
           {!!data && data.length > 0 && (
@@ -53,6 +60,11 @@ const PublishedTable = (props: any) => {
                   <TableCell>{getPropertyType(row.PropertyType)}</TableCell>
                   <TableCell>Approved</TableCell>
                   <TableCell>${parseFloat(row.CurrentValue).toFixed(2)}</TableCell>
+                  <TableCell>
+                    <span style={{ cursor: 'pointer' }} onClick={() => handleDetails(row.id)}>
+                      View Details
+                    </span>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

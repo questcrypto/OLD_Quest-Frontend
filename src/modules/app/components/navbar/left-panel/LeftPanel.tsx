@@ -42,7 +42,7 @@ const LeftPanel = (props: any) => {
             <ApartmentIcon className={classes.iconStyle} />
             <ListItemText>Properties</ListItemText>
           </ListItem>
-          {!!userInfo && userInfo.role === 1 && (
+          {!!userInfo && userInfo.role !== 2 && (
             <>
               <ListItem button className={classes.itemButtonStyle}>
                 <AccountBalanceIcon className={classes.iconStyle} />

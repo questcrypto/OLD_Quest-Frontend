@@ -198,3 +198,7 @@ export const FeatureHeading = styled.h4`
   color: ${colors.textPrimary};
   text-align: left;
 `
+export const HeaderBtnCont = styled.div`
+  display: flex;
+  justify-content: space-between;
+`

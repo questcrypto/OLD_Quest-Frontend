@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText, TabTitle } from './style'
-import PropertyTable from '../property-table/PropertyTable'
-import ApprovedProperty from '../property-table/ApprovedProperty'
-import PublishedProperty from '../property-table/PublishedProperty'
+import PropertyTable from './components/PropertyTable'
+import ApprovedProperty from './components/ApprovedProperty'
+import PublishedProperty from './components/PublishedProperty'
 import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
@@ -11,11 +11,10 @@ import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { getPublicAddress } from 'modules/auth/authFunction'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 
-const Property = (props: any) => {
+const AdminDashboard = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('new')
   const [propertiesList, setPropertiesList] = useState<any>([])
@@ -30,17 +29,8 @@ const Property = (props: any) => {
     const getPropertiesList = async () => {
       try {
         setDataLoading(true)
-        if (!!userInfo && userInfo.role === 1) {
-          const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
-          setPropertiesList(res.data)
-        }
-        if (!!userInfo && userInfo.role === 2) {
-          const publicaddress = await getPublicAddress()
-          if (publicaddress) {
-            const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${publicaddress}`)
-            setPropertiesList(res.data)
-          }
-        }
+        const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
+        setPropertiesList(res.data)
       } catch (error) {
       } finally {
         setDataLoading(false)
@@ -49,17 +39,8 @@ const Property = (props: any) => {
     const getApproveProperties = async () => {
       try {
         setApprovedLoading(true)
-        if (!!userInfo && userInfo.role === 1) {
-          const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyHOA`)
-          setApprovedProperties(res.data)
-        }
-        if (!!userInfo && userInfo.role === 2) {
-          const publicaddress = await getPublicAddress()
-          if (publicaddress) {
-            const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyOwner/${publicaddress}`)
-            setApprovedProperties(res.data)
-          }
-        }
+        const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyHOA`)
+        setApprovedProperties(res.data)
       } catch (error) {
       } finally {
         setApprovedLoading(false)
@@ -68,18 +49,8 @@ const Property = (props: any) => {
     const getPublishedProperties = async () => {
       try {
         setPublishedLoading(true)
-        if (!!userInfo && userInfo.role === 1) {
-          const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedProperty`)
-          console.log('res->', res.data)
-          setPublishedProperties(res.data)
-        }
-        if (!!userInfo && userInfo.role === 2) {
-          const publicaddress = await getPublicAddress()
-          if (publicaddress) {
-            const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${publicaddress}`)
-            setPublishedProperties(res.data)
-          }
-        }
+        const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedProperty`)
+        setPublishedProperties(res.data)
       } catch (error) {
       } finally {
         setPublishedLoading(false)
@@ -88,7 +59,7 @@ const Property = (props: any) => {
     getPropertiesList()
     getApproveProperties()
     getPublishedProperties()
-  }, [userInfo])
+  }, [])
 
   const handleAddProperty = () => {
     history.push(Paths.addPropertyForm)
@@ -177,11 +148,9 @@ const Property = (props: any) => {
           </div>
         </Grid>
         <Grid item xs={2}>
-          {!!userInfo && userInfo.role === 1 && (
-            <Button onClick={() => handleAddProperty()} className={classes.addPropertyBtnStyle}>
-              Add New Property
-            </Button>
-          )}
+          <Button onClick={() => handleAddProperty()} className={classes.addPropertyBtnStyle}>
+            Add New Property
+          </Button>
         </Grid>
       </Grid>
       <div>
@@ -213,4 +182,4 @@ const Property = (props: any) => {
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
 })
-export default connect(mapStateToProps)(Property)
+export default connect(mapStateToProps)(AdminDashboard)

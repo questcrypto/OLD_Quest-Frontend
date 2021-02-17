@@ -125,16 +125,18 @@ const EditPropertyForm = (props: any) => {
     }
     const getUnreadComments = async () => {
       const data = {
-        id: propertyId,
+        id: props.match.params.propertyId,
         publicAddress: !!userInfo && userInfo.publicaddress,
       }
       try {
         const result: any = await axios.post(`${apiBaseUrl}/properties/getUnreadComment`, data)
         if (result.data) {
           setUnReadComments(result.data)
+        } else {
+          setUnReadComments({})
         }
       } catch (err) {
-        setUnReadComments([])
+        setUnReadComments({})
       }
     }
     getPropertyDetails()
@@ -143,35 +145,39 @@ const EditPropertyForm = (props: any) => {
 
   useEffect(() => {
     const propertyId = props.match.params.propertyId
-    const getCommentsList = async () => {
-      const data = { id: propertyId, Field: selectedCommentId }
-      try {
-        setCommentLoading(true)
-        const res = await axios.post(`${apiBaseUrl}/properties/getCommentById`, data)
-        setCommentMsgList(res.data)
-      } catch (err) {
-      } finally {
-        setCommentLoading(false)
-      }
-    }
     const getUnreadComments = async () => {
       const data = {
-        id: propertyId,
+        id: props.match.params.propertyId,
         publicAddress: !!userInfo && userInfo.publicaddress,
       }
       try {
         const result: any = await axios.post(`${apiBaseUrl}/properties/getUnreadComment`, data)
         if (result.data) {
           setUnReadComments(result.data)
+        } else {
+          setUnReadComments({})
         }
       } catch (err) {
-        setUnReadComments([])
+        setUnReadComments({})
+      }
+    }
+    const getCommentsList = async () => {
+      const data = { id: propertyId, Field: selectedCommentId, publicAddress: userInfo.publicaddress }
+      try {
+        setCommentLoading(true)
+        const res = await axios.post(`${apiBaseUrl}/properties/getCommentById`, data)
+        if (res.data) {
+          setCommentMsgList(res.data)
+          getUnreadComments()
+        }
+      } catch (err) {
+      } finally {
+        setCommentLoading(false)
       }
     }
     if (selectedCommentId > 0) {
       getCommentsList()
       window.scrollTo(0, 0)
-      getUnreadComments()
     }
   }, [props.match.params.propertyId, selectedCommentId, userInfo])
 
@@ -201,18 +207,20 @@ const EditPropertyForm = (props: any) => {
     })
   }
   const renderComment = () => {
-    return commentList.map((item: any, k: number) => {
-      return (
-        <div key={k}>
-          <CommentInfo>
-            <SenderName>{item.CommentedBy}</SenderName>
-            <CommentText>{moment(item.CreatedAt).format('LT, MMM Do YY')}</CommentText>
-          </CommentInfo>
-          <CommentText>{item.Remark}</CommentText>
-          <Divider className={classes.commentDividerStyle} />
-        </div>
-      )
-    })
+    if (commentList.length > 0) {
+      return commentList.map((item: any, k: number) => {
+        return (
+          <div key={k}>
+            <CommentInfo>
+              <SenderName>{item.CommentedBy}</SenderName>
+              <CommentText>{moment(item.CreatedAt).format('LT, MMM Do YY')}</CommentText>
+            </CommentInfo>
+            <CommentText>{item.Remark}</CommentText>
+            <Divider className={classes.commentDividerStyle} />
+          </div>
+        )
+      })
+    }
   }
   const getComments = (commentId: number) => {
     setSelectedCommentId(commentId)
@@ -300,14 +308,14 @@ const EditPropertyForm = (props: any) => {
                             <ErrorMessage component={err} name="Lname" />
                             <FieldMsgBox>
                               <CustomTextField label="Email Address" type="email" name="Email" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[3]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(3)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Email" />
                             <FieldMsgBox>
                               <CustomTextField label="Wallet public key" name="PublicAddress" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[4]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(4)} />
                               </Badge>
                             </FieldMsgBox>
@@ -330,21 +338,21 @@ const EditPropertyForm = (props: any) => {
                                 options={propertyType}
                                 isDisabled={!!userInfo && userInfo.role !== 1}
                               />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[5]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(5)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="PropertyType" />
                             <FieldMsgBox>
                               <CustomTextField label="Property name" name="PropertyName" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[6]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(6)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="PropertyName" />
                             <FieldMsgBox>
                               <FloatNumberField label="Property current value" name="CurrentValue" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[7]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(7)} />
                               </Badge>
                             </FieldMsgBox>
@@ -358,28 +366,28 @@ const EditPropertyForm = (props: any) => {
                             <ErrorMessage component={err} name="Comments" />
                             <FieldMsgBox>
                               <FormDatePicker label="Year built" name="YearBuilt" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[8]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(8)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="YearBuilt" />
                             <FieldMsgBox>
                               <CustomTextField label="Zoning" name="Zoning" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[9]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(9)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Zoning" />
                             <FieldMsgBox>
                               <CustomTextField label="Landscaping" name="Landscaping" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[10]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(10)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Landscaping" />
                             <FieldMsgBox>
                               <IntegerNumberField label="Lot Facts" name="Lotfacts" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[11]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(11)} />
                               </Badge>
                             </FieldMsgBox>
@@ -398,28 +406,28 @@ const EditPropertyForm = (props: any) => {
                             <FormTitle>Address</FormTitle>
                             <FieldMsgBox>
                               <CustomTextField label="Address 1" name="Address1" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[12]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(12)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Address1" />
                             <FieldMsgBox>
                               <CustomTextField label="Address 2" name="Address2" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[13]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(13)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Address2" />
                             <FieldMsgBox>
                               <CustomTextField label="City" name="City" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[14]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(14)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="City" />
                             <FieldMsgBox>
                               <CustomTextField label="State" name="State" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[7]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(17)} />
                               </Badge>
                             </FieldMsgBox>
@@ -427,7 +435,7 @@ const EditPropertyForm = (props: any) => {
 
                             <FieldMsgBox>
                               <IntegerNumberField label="Postal code" name="PostalCode" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[18]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(18)} />
                               </Badge>
                             </FieldMsgBox>
@@ -435,14 +443,14 @@ const EditPropertyForm = (props: any) => {
 
                             <FieldMsgBox>
                               <CustomTextField label="Country" name="Country" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[16]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(16)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Country" />
                             <FieldMsgBox>
                               <CustomTextField label="Subdivision" name="Subdivision" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[15]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(15)} />
                               </Badge>
                             </FieldMsgBox>
@@ -461,28 +469,28 @@ const EditPropertyForm = (props: any) => {
                             <FormTitle>Locality / Neighbourhood insight</FormTitle>
                             <FieldMsgBox>
                               <CustomTextField label="School district" name="SchoolDistrict" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[19]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(19)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="SchoolDistrict" />
                             <FieldMsgBox>
                               <CustomTextField label="Elementary" name="Elementary" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[20]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(20)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Elementary" />
                             <FieldMsgBox>
                               <CustomTextField label="Jr high" name="JrHigh" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[21]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(21)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="JrHigh" />
                             <FieldMsgBox>
                               <CustomTextField label="High school" name="HighSchool" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[22]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(22)} />
                               </Badge>
                             </FieldMsgBox>
@@ -501,21 +509,21 @@ const EditPropertyForm = (props: any) => {
                             <FormTitle>T.I.M.E contract</FormTitle>
                             <FieldMsgBox>
                               <IntegerNumberField label="Insurance" name="Insurance" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[23]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(23)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Insurance" />
                             <FieldMsgBox>
                               <IntegerNumberField label="Maintenance" name="Maintenance" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[24]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(24)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Maintenance" />
                             <FieldMsgBox>
                               <IntegerNumberField label="HOA fees" name="HOAFees" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[25]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(25)} />
                               </Badge>
                             </FieldMsgBox>
@@ -533,7 +541,7 @@ const EditPropertyForm = (props: any) => {
                           <Grid item className={classes.editFormGroup}>
                             <TitleMsgBox>
                               <FormTitle>Uploaded property images</FormTitle>
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[46]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(46)} />
                               </Badge>
                             </TitleMsgBox>
@@ -551,7 +559,7 @@ const EditPropertyForm = (props: any) => {
                           <Grid item className={classes.editFormGroup}>
                             <TitleMsgBox>
                               <FormTitle>Uploaded property documents</FormTitle>
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[47]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(47)} />
                               </Badge>
                             </TitleMsgBox>
@@ -569,7 +577,7 @@ const EditPropertyForm = (props: any) => {
                           <Grid item className={classes.editFormGroup}>
                             <TitleMsgBox>
                               <FormTitle>Floor Wise Configuration</FormTitle>
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[35]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(35)} />
                               </Badge>
                             </TitleMsgBox>
@@ -639,49 +647,49 @@ const EditPropertyForm = (props: any) => {
                             <FormTitle>Amenities</FormTitle>
                             <FieldMsgBox>
                               <CustomTextField label="Heating" name="Heating" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[27]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(27)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Heating" />
                             <FieldMsgBox>
                               <CustomTextField label="AC" name="AC" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[26]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(26)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="AC" />
                             <FieldMsgBox>
                               <CustomTextField label="Roof" name="Roof" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[28]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(28)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Roof" />
                             <FieldMsgBox>
                               <CustomTextField label="Floor" name="Floor" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[29]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(29)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Floor" />
                             <FieldMsgBox>
                               <CustomTextField label="Window Covering" name="WindowCovering" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[30]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(30)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="WindowCovering" />
                             <FieldMsgBox>
                               <CustomTextField label="Pool" name="Pool" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[31]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(31)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Pool" />
                             <FieldMsgBox>
                               <CustomTextField label="Pool Feature" name="PoolFeature" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[32]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(32)} />
                               </Badge>
                             </FieldMsgBox>
@@ -700,84 +708,84 @@ const EditPropertyForm = (props: any) => {
                             <FormTitle>More Details</FormTitle>
                             <FieldMsgBox>
                               <CustomTextField label="Style" name="Style" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[33]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(33)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Style" />
                             <FieldMsgBox>
                               <CustomTextField label="Deck" name="Deck" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[34]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(34)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Deck" />
                             <FieldMsgBox>
                               <CustomTextField label="Patio" name="Patio" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[36]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(36)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Patio" />
                             <FieldMsgBox>
                               <CustomTextField label="Garage" name="Garage" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[37]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(37)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Garage" />
                             <FieldMsgBox>
                               <CustomTextField label="Carport" name="Carpot" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[38]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(38)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Carpot" />
                             <FieldMsgBox>
                               <IntegerNumberField label="Parking Space" name="ParkingSpace" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[39]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(39)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="ParkingSpace" />
                             <FieldMsgBox>
                               <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[40]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(40)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="FinBasmt" />
                             <FieldMsgBox>
                               <CustomTextField label="Basement" name="Basement" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[41]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(41)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Basement" />
                             <FieldMsgBox>
                               <CustomTextField label="Driveway" name="Driveway" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[42]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(42)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Driveway" />
                             <FieldMsgBox>
                               <CustomTextField label="Water" name="Water" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[43]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(43)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Water" />
                             <FieldMsgBox>
                               <CustomTextField label="Water Shares" name="WaterShare" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[44]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(44)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="WaterShare" />
                             <FieldMsgBox>
                               <CustomTextField label="Spa" name="Spa" />
-                              <Badge badgeContent={0} color="secondary">
+                              <Badge badgeContent={!!unReadComments && unReadComments[45]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(45)} />
                               </Badge>
                             </FieldMsgBox>

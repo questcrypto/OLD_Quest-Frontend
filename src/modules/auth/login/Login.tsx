@@ -65,10 +65,12 @@ const Login = (props: any) => {
       return
     }
     const publicaddress = coinbase.toLowerCase()
+    console.log('publicaddress=>', publicaddress)
     try {
       setDataLoading(true)
       let signatureData: any = ''
       const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
+      console.log('result->', result.data)
       if (!!result && result.data && result.data.length === 0) {
         const data: any = { email: values.email, publicaddress }
         const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)

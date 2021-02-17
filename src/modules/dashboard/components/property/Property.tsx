@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText, TabTitle } from './style'
 import PropertyTable from '../property-table/PropertyTable'
+import ApprovedProperty from '../property-table/ApprovedProperty'
+import PublishedProperty from '../property-table/PublishedProperty'
 import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
@@ -18,6 +20,10 @@ const Property = (props: any) => {
   const [activeTab, setActiveTab] = useState('new')
   const [propertiesList, setPropertiesList] = useState<any>([])
   const [dataLoading, setDataLoading] = useState(false)
+  const [approvedProperties, setApprovedProperties] = useState<any>([])
+  const [approvedLoading, setApprovedLoading] = useState(false)
+  const [publishedProperties, setPublishedProperties] = useState<any>([])
+  const [publishedLoading, setPublishedLoading] = useState(false)
   const { userInfo } = props
 
   useEffect(() => {
@@ -40,11 +46,70 @@ const Property = (props: any) => {
         setDataLoading(false)
       }
     }
+    const getApproveProperties = async () => {
+      try {
+        setApprovedLoading(true)
+        if (!!userInfo && userInfo.role === 1) {
+          const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyHOA`)
+          setApprovedProperties(res.data)
+        }
+        if (!!userInfo && userInfo.role === 2) {
+          const publicaddress = await getPublicAddress()
+          if (publicaddress) {
+            const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyOwner/${publicaddress}`)
+            setApprovedProperties(res.data)
+          }
+        }
+      } catch (error) {
+      } finally {
+        setApprovedLoading(false)
+      }
+    }
+    const getPublishedProperties = async () => {
+      try {
+        setPublishedLoading(true)
+        if (!!userInfo && userInfo.role === 1) {
+          const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedProperty`)
+          console.log('res->', res.data)
+          setPublishedProperties(res.data)
+        }
+        if (!!userInfo && userInfo.role === 2) {
+          const publicaddress = await getPublicAddress()
+          if (publicaddress) {
+            const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${publicaddress}`)
+            setPublishedProperties(res.data)
+          }
+        }
+      } catch (error) {
+      } finally {
+        setPublishedLoading(false)
+      }
+    }
     getPropertiesList()
+    getApproveProperties()
+    getPublishedProperties()
   }, [userInfo])
 
   const handleAddProperty = () => {
     history.push(Paths.addPropertyForm)
+  }
+
+  const updateApprovedProperty = async () => {
+    try {
+      const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyHOA`)
+      setApprovedProperties(res.data)
+    } catch (error) {}
+  }
+  const updatePublishedProperty = async () => {
+    try {
+      const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedProperty`)
+      setPublishedProperties(res.data)
+    } catch (error) {}
+  }
+
+  const updateApprove = () => {
+    updateApprovedProperty()
+    updatePublishedProperty()
   }
 
   return (
@@ -62,11 +127,16 @@ const Property = (props: any) => {
       </Grid>
 
       <Grid container spacing={3} className={classes.tabStyle}>
-        <Grid item xs={6}>
+        <Grid item xs={7}>
           <Grid container spacing={3}>
             <Grid item>
               <TabTitle onClick={() => setActiveTab('new')} active={activeTab === 'new'}>
                 New
+              </TabTitle>
+            </Grid>
+            <Grid item>
+              <TabTitle onClick={() => setActiveTab('approved')} active={activeTab === 'approved'}>
+                Approved
               </TabTitle>
             </Grid>
             <Grid item>
@@ -106,7 +176,7 @@ const Property = (props: any) => {
             />
           </div>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           {!!userInfo && userInfo.role === 1 && (
             <Button onClick={() => handleAddProperty()} className={classes.addPropertyBtnStyle}>
               Add New Property
@@ -120,7 +190,16 @@ const Property = (props: any) => {
         ) : (
           <div>
             {activeTab === 'new' && <PropertyTable data={propertiesList} />}
-            {activeTab === 'published' && <p>Content can be added here</p>}
+            {activeTab === 'approved' && (
+              <ApprovedProperty
+                data={approvedProperties}
+                approvedLoading={approvedLoading}
+                userInfo={userInfo}
+                setActiveTab={setActiveTab}
+                updateApprove={updateApprove}
+              />
+            )}
+            {activeTab === 'published' && <PublishedProperty data={publishedProperties} publishedLoading={publishedLoading} />}
             {activeTab === 'preAuctions' && <p>Content can be added here</p>}
             {activeTab === 'onAuctions' && <p>Content can be added here</p>}
             {activeTab === 'postAuctions' && <p>Content can be added here</p>}

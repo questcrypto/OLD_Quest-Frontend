@@ -10,6 +10,7 @@ import history from '../history'
 import { Paths } from './types'
 import { NotFound } from './NotFound'
 import Dashboard from 'modules/dashboard'
+import Treasury from 'modules/dashboard/treasury'
 import { AddPropertyForm, EditPropertyForm } from 'modules/property-form'
 import PropertyDetails from 'modules/property-details'
 import { Login } from 'modules/auth'
@@ -33,6 +34,13 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.dashboard,
     component: Dashboard,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.treasury,
+    component: Treasury,
     protected: true,
     redirect: Paths.root,
     title: '',

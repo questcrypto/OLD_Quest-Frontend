@@ -20,6 +20,8 @@ const Property = (props: any) => {
   const [dataLoading, setDataLoading] = useState(false)
   const { userInfo } = props
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     const getPropertiesList = async () => {
       try {
@@ -103,6 +105,10 @@ const Property = (props: any) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(event) => {
+                // console.log(event.target.value)
+                setSearchTerm(event.target.value)
+              }}
             />
           </div>
         </Grid>
@@ -119,7 +125,7 @@ const Property = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'new' && <PropertyTable data={propertiesList} />}
+            {activeTab === 'new' && <PropertyTable searchquery={searchTerm} data={propertiesList} />}
             {activeTab === 'published' && <p>Content can be added here</p>}
             {activeTab === 'preAuctions' && <p>Content can be added here</p>}
             {activeTab === 'onAuctions' && <p>Content can be added here</p>}

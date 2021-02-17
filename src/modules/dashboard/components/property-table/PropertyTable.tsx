@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useStyles, PaginationText, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
 import Grid from '@material-ui/core/Grid'
@@ -15,6 +15,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 
 const PropertyTable = (props: any) => {
+  console.log(props.searchquery)
   const classes = useStyles()
   const { data } = props
 
@@ -36,6 +37,8 @@ const PropertyTable = (props: any) => {
     return fullName
   }
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <Grid>
       <TableContainer component={Paper}>
@@ -52,20 +55,45 @@ const PropertyTable = (props: any) => {
           </TableHead>
           {!!data && data.length > 0 && (
             <TableBody className={classes.tableHeadStyle}>
+              {console.log("data => ", data)}
               {data.map((row: any, k: number) => (
-                <TableRow key={k}>
-                  <TableCell component="th" scope="row">
-                    {`${row.Address1},${row.State},${row.Country}`}
-                  </TableCell>
-                  <TableCell>{getName(row.Fname, row.Lname)}</TableCell>
-                  <TableCell>{getPropertyType(row.PropertyType)}</TableCell>
-                  <TableCell>New</TableCell>
-                  <TableCell>${parseFloat(row.CurrentValue).toFixed(2)}</TableCell>
-                  <TableCell>
-                    <EditIcon style={{ cursor: 'pointer' }} onClick={() => handleAction(row.id)} />
-                  </TableCell>
-                </TableRow>
-              ))}
+                  <TableRow key={k}>
+                    <TableCell component="th" scope="row">
+                      {`${row.Address1},${row.State},${row.Country}`}
+                    </TableCell>
+                    <TableCell>{getName(row.Fname, row.Lname)}</TableCell>
+                    <TableCell>{getPropertyType(row.PropertyType)}</TableCell>
+                    <TableCell>New</TableCell>
+                    <TableCell>${parseFloat(row.CurrentValue).toFixed(2)}</TableCell>
+                    <TableCell>
+                      <EditIcon style={{ cursor: 'pointer' }} onClick={() => handleAction(row.id)} />
+                    </TableCell>
+                  </TableRow>
+                )).filter(
+                  (value: {
+                    Address1: string
+                    State: string
+                    Country: string
+                    Fname: string
+                    Lname: string
+                    PropertyType: string
+                    CurrentValue: string
+                  }) => {
+                    if (searchTerm == '') {
+                      return value
+                    } else if (
+                      value.Address1.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      value.State.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      value.Country.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      value.Fname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      value.Fname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      value.PropertyType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      value.CurrentValue.toLowerCase().includes(searchTerm.toLowerCase())
+                    ) {
+                      return value
+                    }
+                  }
+                )}
             </TableBody>
           )}
         </Table>

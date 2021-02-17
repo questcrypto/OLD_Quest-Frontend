@@ -40,12 +40,7 @@ function* loginWorker(action: any) {
     const userInfoRes = yield call(getUserInfo, res.data.accessToken)
     const successData = { userInfo: userInfoRes, token: res.data.accessToken }
     yield put(loginSuccess(successData))
-    console.log('userInfoRes->', userInfoRes)
-    if (!!userInfoRes && userInfoRes.role === 3) {
-      history.push(`${Paths.treasury}`)
-    } else {
-      history.push(`${Paths.dashboard}`)
-    }
+    history.push(`${Paths.dashboard}`)
   } catch (error) {
     yield put(loginFail())
   }

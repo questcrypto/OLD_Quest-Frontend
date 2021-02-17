@@ -1,12 +1,21 @@
 import React from 'react'
-import Property from './components/property/Property'
+import { connect } from 'react-redux'
+import AdminDashboard from './AdminDashboard'
+import OwnerDashboard from './OwnerDashboard'
+import TreasuryDashboard from './TreasuryDashboard'
 
-const Dashboard = () => {
+const Dashboard = (props: any) => {
+  const { userInfo } = props
   return (
     <div>
-      <Property />
+      {!!userInfo && userInfo.role === 1 && <AdminDashboard />}
+      {!!userInfo && userInfo.role === 2 && <OwnerDashboard />}
+      {!!userInfo && userInfo.role === 3 && <TreasuryDashboard />}
     </div>
   )
 }
 
-export default Dashboard
+const mapStateToProps = (state: any) => ({
+  userInfo: state.user.userInfo,
+})
+export default connect(mapStateToProps)(Dashboard)

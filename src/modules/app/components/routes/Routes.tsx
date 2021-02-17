@@ -10,10 +10,8 @@ import history from '../history'
 import { Paths } from './types'
 import { NotFound } from './NotFound'
 import Dashboard from 'modules/dashboard'
-import Treasury from 'modules/dashboard/treasury'
 import { AddPropertyForm, EditPropertyForm } from 'modules/property-form'
-import PropertyDetails from 'modules/property-details'
-import TreasuryPropertyDetails from 'modules/treasury-property-details'
+import { PropertyDetails, TreasuryPropertyDetails } from 'modules/property-details'
 import { Login } from 'modules/auth'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
@@ -39,13 +37,7 @@ export const routes: RouteDefinition[] = [
     redirect: Paths.root,
     title: '',
   },
-  {
-    path: Paths.treasury,
-    component: Treasury,
-    protected: true,
-    redirect: Paths.root,
-    title: '',
-  },
+
   {
     path: Paths.addPropertyForm,
     component: AddPropertyForm,

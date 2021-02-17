@@ -192,6 +192,18 @@ const EditPropertyForm = (props: any) => {
       setLoading(false)
     }
   }
+  const handlePropertyApprove = async () => {
+    const data = { id: props.match.params.propertyId }
+    try {
+      setLoading(true)
+      await axios.post(`${apiBaseUrl}/properties/ApproveByPropertyOwner`, data)
+      history.push(Paths.root)
+    } catch (error) {
+      console.log('error==>', error)
+    } finally {
+      setLoading(false)
+    }
+  }
   const handleAddFloorDetails = (arrayHelpers: any) => {
     arrayHelpers.push({ id: Math.random(), floor: '', SquareFoot: '', Bedroom: '', family: '', kitchen: '', Laundary: '', Bath: '' })
   }
@@ -794,16 +806,18 @@ const EditPropertyForm = (props: any) => {
                           <Divider className={classes.editDividerStyle} />
                         </Grid>
                       </Grid>
-                      <SubmitContainer>
-                        <CheckBoxCont>
-                          <Checkbox
-                            color="default"
-                            inputProps={{ 'aria-label': 'checkbox with default color' }}
-                            style={{ color: '#1E3444' }}
-                            onChange={(e: any) => setPermission(e.target.checked)}
-                          />
-                          <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
-                        </CheckBoxCont>
+                    </fieldset>
+                    <SubmitContainer>
+                      <CheckBoxCont>
+                        <Checkbox
+                          color="default"
+                          inputProps={{ 'aria-label': 'checkbox with default color' }}
+                          style={{ color: '#1E3444' }}
+                          onChange={(e: any) => setPermission(e.target.checked)}
+                        />
+                        <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
+                      </CheckBoxCont>
+                      {!!userInfo && userInfo.role === 1 ? (
                         <FormButtonGroup>
                           <Button
                             type="button"
@@ -827,8 +841,22 @@ const EditPropertyForm = (props: any) => {
                             {loading ? <Spinner /> : 'Save & Send for review'}
                           </Button>
                         </FormButtonGroup>
-                      </SubmitContainer>
-                    </fieldset>
+                      ) : (
+                        <FormButtonGroup>
+                          <Button
+                            type="button"
+                            variant="contained"
+                            classes={{
+                              root: classes.saveAndReviewStyle,
+                            }}
+                            disabled={!permission}
+                            onClick={() => handlePropertyApprove()}
+                          >
+                            {loading ? <Spinner /> : 'Approve'}
+                          </Button>
+                        </FormButtonGroup>
+                      )}
+                    </SubmitContainer>
                   </Form>
                 )}
               </Formik>

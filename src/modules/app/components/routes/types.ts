@@ -5,4 +5,6 @@ export enum Paths {
   editPropertyForm = '/edit-property-form',
   viewPropertyForm = '/view-property-form',
   dashboard = '/dashboard',
+  treasury = '/treasury',
+  // treasury = "treasury"
 }

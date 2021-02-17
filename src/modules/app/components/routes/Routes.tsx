@@ -13,6 +13,7 @@ import PropertyDetails from 'modules/property-details'
 import { Login } from 'modules/auth'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
+import TreasuryDashBoard from 'modules/treasury-dashboard'
 
 const notFoundRoute: RouteDefinition = {
   path: '*',
@@ -59,6 +60,13 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.viewPropertyForm + '/:propertyId',
     component: EditPropertyForm,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.treasury,
+    component: TreasuryDashBoard,
     protected: true,
     redirect: Paths.root,
     title: '',

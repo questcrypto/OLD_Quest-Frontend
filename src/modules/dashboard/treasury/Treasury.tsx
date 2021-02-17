@@ -8,9 +8,6 @@ import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { getPublicAddress } from 'modules/auth/authFunction'
-import { Paths } from 'modules/app/components/routes/types'
-import history from 'modules/app/components/history'
 
 const Treasury = (props: any) => {
   const classes = useStyles()
@@ -18,7 +15,6 @@ const Treasury = (props: any) => {
   const [dataLoading, setDataLoading] = useState(false)
   const [publishedProperties, setPublishedProperties] = useState<any>([])
   const { userInfo } = props
-  console.log('userInfo->', userInfo)
 
   useEffect(() => {
     const getPublishedProperties = async () => {

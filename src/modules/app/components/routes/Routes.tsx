@@ -13,6 +13,7 @@ import Dashboard from 'modules/dashboard'
 import Treasury from 'modules/dashboard/treasury'
 import { AddPropertyForm, EditPropertyForm } from 'modules/property-form'
 import PropertyDetails from 'modules/property-details'
+import TreasuryPropertyDetails from 'modules/treasury-property-details'
 import { Login } from 'modules/auth'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
@@ -69,6 +70,13 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.viewPropertyForm + '/:propertyId',
     component: EditPropertyForm,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.treasuryPropertyDetails + '/:propertyId',
+    component: TreasuryPropertyDetails,
     protected: true,
     redirect: Paths.root,
     title: '',

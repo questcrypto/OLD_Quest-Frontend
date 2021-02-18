@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { loginStart } from 'logic/actions/user.actions'
 import { useStyle, LoginImgCont, LoginText } from './style'
 import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import Web3 from 'web3'
 import { Formik, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -65,12 +64,10 @@ const Login = (props: any) => {
       return
     }
     const publicaddress = coinbase.toLowerCase()
-    console.log('publicaddress=>', publicaddress)
     try {
       setDataLoading(true)
       let signatureData: any = ''
       const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
-      console.log('result->', result.data)
       if (!!result && result.data && result.data.length === 0) {
         const data: any = { email: values.email, publicaddress }
         const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)

@@ -22,6 +22,8 @@ const Property = (props: any) => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
+  const [currentData, setCurrentData] = useState<any>([])
+
   useEffect(() => {
     const getPropertiesList = async () => {
       try {
@@ -29,11 +31,12 @@ const Property = (props: any) => {
         if (!!userInfo && userInfo.role === 1) {
           const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
           setPropertiesList(res.data)
+          setCurrentData(res.data)
         }
         if (!!userInfo && userInfo.role === 2) {
           const publicaddress = await getPublicAddress()
           if (publicaddress) {
-            const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${publicaddress}`)
+            const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${publicaddress}`) 
             setPropertiesList(res.data)
           }
         }
@@ -49,6 +52,46 @@ const Property = (props: any) => {
     history.push(Paths.addPropertyForm)
   }
 
+const handleChange = (e:any) =>{
+const {value} = e.target
+
+if(!value){
+  setCurrentData([...propertiesList])
+}
+else{
+
+filterData(value)
+}
+
+
+
+}
+const filterData = (dataVal:any) => {
+const  FilteredValue = propertiesList.filter(
+      (value: {
+        Address1: string
+        State: string
+        Country: string
+        Fname: string
+        Lname: string
+        PropertyType: string
+        CurrentValue: string
+      }) => {
+        return (
+          value.Address1.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.State.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.Country.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.Fname.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.Lname.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.PropertyType.toString().toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.CurrentValue.toString().toLowerCase().includes(dataVal.toLowerCase())
+        )
+      }
+    )
+
+    setCurrentData([...FilteredValue])
+  }
+
   return (
     <Grid>
       <Grid container spacing={2} className={classes.headerStyle}>
@@ -62,7 +105,6 @@ const Property = (props: any) => {
           <ProgressText>643 new properties to onboard</ProgressText>
         </Grid>
       </Grid>
-
       <Grid container spacing={3} className={classes.tabStyle}>
         <Grid item xs={6}>
           <Grid container spacing={3}>
@@ -105,10 +147,7 @@ const Property = (props: any) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-              onChange={(event) => {
-                // console.log(event.target.value)
-                setSearchTerm(event.target.value)
-              }}
+              onChange={handleChange}
             />
           </div>
         </Grid>
@@ -125,7 +164,7 @@ const Property = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'new' && <PropertyTable searchquery={searchTerm} data={propertiesList} />}
+            {activeTab === 'new' && <PropertyTable searchquery={searchTerm} data={currentData} />}
             {activeTab === 'published' && <p>Content can be added here</p>}
             {activeTab === 'preAuctions' && <p>Content can be added here</p>}
             {activeTab === 'onAuctions' && <p>Content can be added here</p>}

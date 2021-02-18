@@ -17,7 +17,6 @@ import history from 'modules/app/components/history'
 const PropertyTable = (props: any) => {
   const { data } = props
 
-  const [propData, setpropData] = useState(data)
 
   let FilteredValue: any
 
@@ -27,53 +26,6 @@ const PropertyTable = (props: any) => {
   const handleAction = (id: any) => {
     history.push(`${Paths.propertyDetails}/${id}`)
   }
-
-  const filterData = () => {
-    const inputValue = props.searchquery
-    FilteredValue = data.filter(
-      (value: {
-        Address1: string
-        State: string
-        Country: string
-        Fname: string
-        Lname: string
-        PropertyType: string
-        CurrentValue: string
-      }) => {
-        //  console.log('------------------------- a ', value)
-        return (
-          value.Address1.toLowerCase().includes(inputValue.toLowerCase()) ||
-          value.State.toLowerCase().includes(inputValue.toLowerCase()) ||
-          value.Country.toLowerCase().includes(inputValue.toLowerCase()) ||
-          value.Fname.toLowerCase().includes(inputValue.toLowerCase()) ||
-          value.Lname.toLowerCase().includes(inputValue.toLowerCase()) ||
-          value.PropertyType.toString().toLowerCase().includes(inputValue.toLowerCase()) ||
-          value.CurrentValue.toString().toLowerCase().includes(inputValue.toLowerCase())
-        )
-      }
-    )
-
-    //  setpropData(FilteredValue)
-
-    //console.log("filteredvalue== > ",FilteredValue)
-  }
-
-  filterData()
-
-  useEffect(() => {
-    return () => {
-      if (!FilteredValue) {
-        console.log('filteredvalue 001 == > ', FilteredValue)
-
-        setpropData(data)
-      } else {
-        console.log('filteredvalue 002 == > ', FilteredValue)
-
-        setpropData(FilteredValue)
-      }
-    }
-  }, [])
-
   const getName = (firstName: string, lastName: string) => {
     let fName = ''
     let lName = ''
@@ -88,7 +40,6 @@ const PropertyTable = (props: any) => {
     return fullName
   }
 
-  // const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <Grid>
@@ -104,10 +55,10 @@ const PropertyTable = (props: any) => {
               <TableCell>ACTION</TableCell>
             </TableRow>
           </TableHead>
-          {!!propData && propData.length > 0 && (
+          {!!data && data.length > 0 && (
             <TableBody className={classes.tableHeadStyle}>
               {/* {console.log("data => ", data)} */}
-              {propData.map((row: any, k: number) => (
+              {data.map((row: any, k: number) => (
                 <TableRow key={k}>
                   <TableCell component="th" scope="row">
                     {`${row.Address1},${row.State},${row.Country}`}
@@ -124,13 +75,13 @@ const PropertyTable = (props: any) => {
             </TableBody>
           )}
         </Table>
-        {!!propData && propData.length === 0 && (
+        {!!data && data.length === 0 && (
           <NoDataContainer>
             <p>No data available</p>
           </NoDataContainer>
         )}
       </TableContainer>
-      {!!propData && propData.length > 10 && (
+      {!!data && data.length > 10 && (
         <Grid container className={classes.paginationCont} justify="space-between">
           <PaginationText>Showing 1 to 15 of 35 element</PaginationText>
           <Pagination count={10} showFirstButton showLastButton />

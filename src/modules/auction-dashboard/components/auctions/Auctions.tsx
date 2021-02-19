@@ -6,59 +6,94 @@ import {
   AuctionsContainer,
   PropertyHeader,
   HeaderTitle,
-  ProgressText,
-  PropertyTabCont,
   TabTitle,
-  PropertySearchBox,
   StyledGrid,
   BidContainer,
   BidInfo,
 } from './style'
-// import PropertyTable from '../property-table/PropertyTable'
+
 import { Box, Button } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core'
-import ComponentLoader from 'shared/loader-components/component-loader'
-import axios from 'axios'
-import { apiBaseUrl } from 'services/global-constant'
-import { getPublicAddress } from 'modules/auth/authFunction'
-import { Paths } from 'modules/app/components/routes/types'
-import history from 'modules/app/components/history'
-import { PriceContainer, PriceInfo } from 'modules/property-details/style'
+import { Card, CardActions, CardContent, Grid, Typography } from '@material-ui/core'
+
+const AuctionsData = [
+  {
+    ImgUrl: `https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F37%2F2019%2F06%2F12170406%2Fmodern-home-exterior-gray-scheme-792ab713.jpg`,
+    Title: '1024 Somma Way',
+    SubTitle: 'QUEST24567',
+    PropertyPrice: '$98.22',
+    DayRemaining: '3 Days remaining',
+    Price: '$18.22',
+  },
+]
 
 const Auctions = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('new')
-  const [propertiesList, setPropertiesList] = useState<any>([])
-  const [dataLoading, setDataLoading] = useState(false)
-  const { userInfo } = props
 
-  useEffect(() => {
-    const getPropertiesList = async () => {
-      try {
-        setDataLoading(true)
-        if (!!userInfo && userInfo.role === 1) {
-          const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
-          setPropertiesList(res.data)
-        }
-        if (!!userInfo && userInfo.role === 2) {
-          const publicaddress = await getPublicAddress()
-          if (publicaddress) {
-            const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${publicaddress}`)
-            setPropertiesList(res.data)
-          }
-        }
-      } catch (error) {
-      } finally {
-        setDataLoading(false)
-      }
-    }
-    getPropertiesList()
-  }, [userInfo])
+  const PropertyCard = (props: {
+    ImgUrl: string | undefined
+    Title: string | undefined
+    SubTitle: string | undefined
+    PropertyPrice: string | undefined
+    DayRemaining: string | undefined
+    Price: string | undefined
+  }) => {
+    return (
+      <Grid item xs={12} sm={6} lg={4}>
+        <Card>
+          <img alt="complex" src={props.ImgUrl} style={{ height: '250px', width: '100%' }} />
+          <CardContent>
+            <Typography variant="button" display="block" gutterBottom>
+              {props.Title}
+            </Typography>
+            <Typography variant="caption" display="block" gutterBottom>
+              {props.SubTitle}
+            </Typography>
 
-  const handleAddProperty = () => {
-    history.push(Paths.addPropertyForm)
+            <Grid container>
+              <Grid item xs={6} sm={6} lg={6}>
+                <p>Average Bid</p>
+                <p> {props.PropertyPrice} </p>
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6}>
+                <p className={classes.Remaining}> {props.DayRemaining} </p>
+                <StyledLinearProgress variant="determinate" value={70} className={classes.progressStyle} />
+              </Grid>
+            </Grid>
+
+            <Grid container>
+              <Grid item xs={6} sm={6} lg={6}>
+                <p>Your Bid</p>
+                <p>
+                  {' '}
+                  {props.Price} <span className={classes.BelowAverage}> ▼ Below Average</span>{' '}
+                </p>
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6}>
+                <p className={classes.Remaining}>
+                  {' '}
+                  <p>
+                    <b>
+                      <a href="default.asp" target="_blank">
+                        Upgrade your bid
+                      </a>
+                    </b>
+                  </p>
+                </p>
+              </Grid>
+            </Grid>
+          </CardContent>
+          <CardActions>
+            <Box className={classes.btnGroup}>
+              <Button className={classes.btn1Style}>live auction</Button>
+              <Button className={classes.btn2Style}>property details</Button>
+            </Box>
+          </CardActions>
+        </Card>
+      </Grid>
+    )
   }
 
   return (
@@ -111,131 +146,36 @@ const Auctions = (props: any) => {
           </Grid>
         </Grid>
       </PropertyHeader>
-      <StyledGrid container style={{ height: '200px', width: '1100px' }}>
+      <StyledGrid container style={{ height: 'auto', width: '100%' }}>
         <StyledGrid container spacing={2}>
-          <Grid item xs={12} sm={12} lg={4}>
-            <Card>
-              <CardActionArea>
-                <img
-                  alt="complex"
-                  src={`https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F37%2F2019%2F06%2F12170406%2Fmodern-home-exterior-gray-scheme-792ab713.jpg`}
-                  style={{ height: '250px', width: '430px' }}
-                />
-                <CardContent>
-                  <Typography variant="button" display="block" gutterBottom>
-                    1024 Somma Way
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    QUEST24567
-                  </Typography>
-                  <Grid item xs={6}>
-                    <BidContainer>
-                      <Grid>
-                        <p>Average Bid</p>
-                        <p> $98.22</p>
-                      </Grid>
-                      <BidInfo>
-                        3 Days remaining
-                        <StyledLinearProgress variant="determinate" value={70} className={classes.progressStyle} />
-                      </BidInfo>
-                    </BidContainer>
-                    <BidContainer>
-                      <Typography variant="caption" display="block" gutterBottom>
-                        Your Bid
-                      </Typography>
-                      <p> $98.22</p>
-                      <BidInfo>Upgrade your bid</BidInfo>
-                    </BidContainer>
-                  </Grid>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Box className={classes.btnGroup}>
-                  <Button className={classes.btn1Style}>live auction</Button>
-                  <Button className={classes.btn2Style}>property details</Button>
-                </Box>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={12} lg={4}>
-            <Card>
-              <CardActionArea>
-                <img
-                  alt="complex"
-                  src={`https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F37%2F2019%2F06%2F12170406%2Fmodern-home-exterior-gray-scheme-792ab713.jpg`}
-                  style={{ height: '250px', width: '430px' }}
-                />
-                <CardContent>
-                  <Typography variant="button" display="block" gutterBottom>
-                    1024 Somma Way
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    QUEST24567
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Average Bid
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    $ 98.22
-                  </Typography>
-                  <BidInfo>
-                    <p style={{ alignItems: 'right' }}>3 Days remaining</p>
-                    <StyledLinearProgress variant="determinate" value={70} className={classes.progressStyle} />
-                  </BidInfo>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    Your Bid
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    $ 95.12
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Box className={classes.btnGroup}>
-                  <Button className={classes.btn1Style}>live auction</Button>
-                  <Button className={classes.btn2Style}>property details</Button>
-                </Box>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={12} lg={4}>
-            <Card>
-              <CardActionArea>
-                <img
-                  alt="complex"
-                  src={`https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F37%2F2019%2F06%2F12170406%2Fmodern-home-exterior-gray-scheme-792ab713.jpg`}
-                  style={{ height: '250px', width: '430px' }}
-                />
-                <CardContent>
-                  <Typography variant="button" display="block" gutterBottom>
-                    1024 Somma Way
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    QUEST24567
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Average Bid
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    $ 98.22
-                  </Typography>
-                  <BidInfo>
-                    <p style={{ alignItems: 'right' }}>3 Days remaining</p>
-                    <StyledLinearProgress variant="determinate" value={70} className={classes.progressStyle} />
-                  </BidInfo>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    $ 95.12
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Box className={classes.btnGroup}>
-                  <Button className={classes.btn1Style}>live auction</Button>
-                  <Button className={classes.btn2Style}>property details</Button>
-                </Box>
-              </CardActions>
-            </Card>
-          </Grid>
+          {AuctionsData.map((FData) => {
+            console.log('FData ', FData)
+          })}
+
+          <PropertyCard
+            ImgUrl={AuctionsData[0].ImgUrl}
+            Title={AuctionsData[0].Title}
+            SubTitle={AuctionsData[0].SubTitle}
+            PropertyPrice={AuctionsData[0].PropertyPrice}
+            DayRemaining={AuctionsData[0].DayRemaining}
+            Price={AuctionsData[0].Price}
+          />
+          <PropertyCard
+            ImgUrl={AuctionsData[0].ImgUrl}
+            Title={AuctionsData[0].Title}
+            SubTitle={AuctionsData[0].SubTitle}
+            PropertyPrice={AuctionsData[0].PropertyPrice}
+            DayRemaining={AuctionsData[0].DayRemaining}
+            Price={AuctionsData[0].Price}
+          />
+          <PropertyCard
+            ImgUrl={AuctionsData[0].ImgUrl}
+            Title={AuctionsData[0].Title}
+            SubTitle={AuctionsData[0].SubTitle}
+            PropertyPrice={AuctionsData[0].PropertyPrice}
+            DayRemaining={AuctionsData[0].DayRemaining}
+            Price={AuctionsData[0].Price}
+          />
         </StyledGrid>
       </StyledGrid>
     </AuctionsContainer>

@@ -77,7 +77,7 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.auctions,
     component: AuctionDashBoard,
-    protected: false,
+    protected: true,
     redirect: Paths.root,
     title: '',
   },

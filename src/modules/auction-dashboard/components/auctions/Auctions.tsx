@@ -11,6 +11,8 @@ import {
   TabTitle,
   PropertySearchBox,
   StyledGrid,
+  BidContainer,
+  BidInfo,
 } from './style'
 // import PropertyTable from '../property-table/PropertyTable'
 import { Box, Button } from '@material-ui/core'
@@ -23,6 +25,7 @@ import { apiBaseUrl } from 'services/global-constant'
 import { getPublicAddress } from 'modules/auth/authFunction'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
+import { PriceContainer, PriceInfo } from 'modules/property-details/style'
 
 const Auctions = (props: any) => {
   const classes = useStyles()
@@ -81,6 +84,32 @@ const Auctions = (props: any) => {
             </div>
           </Grid>
         </Grid>
+        <Grid container spacing={3} className={classes.tabStyle}>
+          <Grid item xs={8}>
+            <Grid container spacing={3}>
+              <Grid item>
+                <TabTitle onClick={() => setActiveTab('Participating')} active={activeTab === 'Participating'}>
+                  Participating
+                </TabTitle>
+              </Grid>
+              <Grid item>
+                <TabTitle onClick={() => setActiveTab('Ongoing')} active={activeTab === 'Ongoing'}>
+                  Ongoing
+                </TabTitle>
+              </Grid>
+              <Grid item>
+                <TabTitle onClick={() => setActiveTab('Upcoming')} active={activeTab === 'Upcoming'}>
+                  Upcoming
+                </TabTitle>
+              </Grid>
+              <Grid item>
+                <TabTitle onClick={() => setActiveTab('Passed')} active={activeTab === 'Passed'}>
+                  Passed
+                </TabTitle>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
       </PropertyHeader>
       <StyledGrid container style={{ height: '200px', width: '1100px' }}>
         <StyledGrid container spacing={2}>
@@ -99,18 +128,60 @@ const Auctions = (props: any) => {
                   <Typography variant="caption" display="block" gutterBottom>
                     QUEST24567
                   </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Average Bid
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    $ 98.22
-                  </Typography>
-                  <Grid item xs={3}>
-                    <Grid item xs={3}>
-                      <ProgressText>3 Days remaining</ProgressText>
-                    </Grid>
-                    <StyledLinearProgress variant="determinate" value={60} className={classes.progressStyle} />
+                  <Grid item xs={6}>
+                    <BidContainer>
+                      <Grid>
+                        <p>Average Bid</p>
+                        <p> $98.22</p>
+                      </Grid>
+                      <BidInfo>
+                        3 Days remaining
+                        <StyledLinearProgress variant="determinate" value={70} className={classes.progressStyle} />
+                      </BidInfo>
+                    </BidContainer>
+                    <BidContainer>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Your Bid
+                      </Typography>
+                      <p> $98.22</p>
+                      <BidInfo>Upgrade your bid</BidInfo>
+                    </BidContainer>
                   </Grid>
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                <Box className={classes.btnGroup}>
+                  <Button className={classes.btn1Style}>live auction</Button>
+                  <Button className={classes.btn2Style}>property details</Button>
+                </Box>
+              </CardActions>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={12} lg={4}>
+            <Card>
+              <CardActionArea>
+                <img
+                  alt="complex"
+                  src={`https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F37%2F2019%2F06%2F12170406%2Fmodern-home-exterior-gray-scheme-792ab713.jpg`}
+                  style={{ height: '250px', width: '430px' }}
+                />
+                <CardContent>
+                  <Typography variant="button" display="block" gutterBottom>
+                    1024 Somma Way
+                  </Typography>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    QUEST24567
+                  </Typography>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Average Bid
+                  </Typography>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    $ 98.22
+                  </Typography>
+                  <BidInfo>
+                    <p style={{ alignItems: 'right' }}>3 Days remaining</p>
+                    <StyledLinearProgress variant="determinate" value={70} className={classes.progressStyle} />
+                  </BidInfo>
                   <Typography variant="body2" color="textSecondary" component="p">
                     Your Bid
                   </Typography>
@@ -148,46 +219,10 @@ const Auctions = (props: any) => {
                   <Typography variant="caption" display="block" gutterBottom>
                     $ 98.22
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    Your Bid
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    $ 95.12
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Box className={classes.btnGroup}>
-                  <Button className={classes.btn1Style}>live auction</Button>
-                  <Button className={classes.btn2Style}>property details</Button>
-                </Box>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={12} lg={4}>
-            <Card>
-              <CardActionArea>
-                <img
-                  alt="complex"
-                  src={`https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F37%2F2019%2F06%2F12170406%2Fmodern-home-exterior-gray-scheme-792ab713.jpg`}
-                  style={{ height: '250px', width: '430px' }}
-                />
-                <CardContent>
-                  <Typography variant="button" display="block" gutterBottom>
-                    1024 Somma Way
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    QUEST24567
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Average Bid
-                  </Typography>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    $ 98.22
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    Your Bid
-                  </Typography>
+                  <BidInfo>
+                    <p style={{ alignItems: 'right' }}>3 Days remaining</p>
+                    <StyledLinearProgress variant="determinate" value={70} className={classes.progressStyle} />
+                  </BidInfo>
                   <Typography variant="caption" display="block" gutterBottom>
                     $ 95.12
                   </Typography>

@@ -47,9 +47,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   progressStyle: {
     display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-    marginTop: '8px',
+    alignItems: 'right',
+    width: '300px',
+    marginTop: '40px',
+    marginRight:'20px',
   },
   confirmationsBtnStyle: {
     color: `${colors.white} !important`,
@@ -80,6 +81,9 @@ export const useStyles = makeStyles((theme) => ({
     width: '150px',
     maxWidth: '150px',
     marginLeft: '20px',
+  },
+  tabStyle: {
+    marginBottom: '20px',
   },
 }))
 
@@ -137,4 +141,17 @@ export const PropertySearchBox = styled.div`
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr;
+`
+
+export const BidContainer = styled.div`
+  display: flex;
+  marginleft: '20px';
+`
+export const BidInfo = styled.div`
+  display: flex;
+  align-items: center;
+  marginLeft: '50px';
+  alignItems: 'right',
+    marginTop: '40px',
+    marginRight:'20px',
 `

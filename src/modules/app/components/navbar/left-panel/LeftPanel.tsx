@@ -61,7 +61,7 @@ const LeftPanel = (props: any) => {
               <ListItem button className={classes.itemButtonStyle}>
                 <AccountBalanceWalletIcon className={classes.iconStyle} />
                 <ListItemText>Wallets</ListItemText>
-              </ListItem>
+              </ListItem> 
               <ListItem button className={classes.itemButtonStyle}>
                 <EventIcon className={classes.iconStyle} />
                 <ListItemText>Logs</ListItemText>

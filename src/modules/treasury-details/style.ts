@@ -61,9 +61,70 @@ export const useStyles = makeStyles((theme: Theme) =>
     dividerStyle: {
       margin: '50px 0',
     },
+    treasuryPaper: {
+      padding: '30px',
+      backgroundColor: colors.paperBackground2,
+      marginBottom: '50px',
+    },
+
+    infoAccordionStyle: {
+      boxShadow: 'none',
+      border: 0,
+      background: colors.paperBackground2,
+      WebkitBoxShadow: 'none',
+    },
+    accordionStyle: {
+      boxShadow: 'none',
+      border: 0,
+      background: colors.white,
+      WebkitBoxShadow: 'none',
+    },
+    expandIconStyle: {
+      background: '#E0E0E0',
+    },
+    treasuryDividerStyle: {
+      margin: '30px 0',
+    },
+    infoContStyle: {
+      alignItems: 'center',
+      '& img': {
+        width: '93px',
+        height: '74px',
+        marginRight: '20px',
+      },
+    },
+    verticalDividerStyle: {
+      height: '29px',
+      margin: '0 30px',
+    },
+    treasuryOwnersContStyle: {
+      marginTop: '30px',
+      paddingLeft: '16px',
+    },
+    treasuryOwnersPaper: {
+      padding: '10px',
+      width: '100%',
+      minWidth: '285px',
+      backgroundColor: colors.paperBackground3,
+      border: '1px solid #F2F2F2',
+      boxSizing: 'border-box',
+    },
+    mintBtnStyle: {
+      color: colors.white,
+      backgroundColor: colors.primary,
+      fontSize: '14px',
+      '&:hover': {
+        backgroundColor: colors.primary,
+      },
+      marginRight: '20px',
+    },
+    configureBtnStyle: {
+      color: colors.textPrimary,
+      fontSize: '14px',
+      backgroundColor: '#E0E0E0',
+    },
   })
 )
-export const PropertyDetailsCont = styled.div``
 export const NoDetailsAvailable = styled.div`
   margin-bottom: 30px;
   p {
@@ -171,7 +232,38 @@ export const FeatureHeading = styled.h4`
   color: ${colors.textPrimary};
   text-align: left;
 `
-export const HeaderBtnCont = styled.div`
+export const InfoBoldTxt = styled.h2`
+  font-size: 16px;
+  line-height: 22px;
+  color: ${colors.textPrimary};
+  margin: 0;
+`
+export const InfoLightTxt = styled.p`
+  font-size: 14px;
+  line-height: 16px;
+  color: ${colors.textPrimary};
+  opacity: 0.87;
+  margin: 0;
+`
+export const TreasuryOwnerCont = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+`
+export const TabTitle = styled.p<any>`
+  margin: 0;
+  font-size: 16px;
+  opacity: ${(props: any) => (props.active ? 1 : 0.87)};
+  color: ${(props: any) => (props.active ? colors.primary : colors.textPrimary)};
+  cursor: pointer;
+  text-align: center;
+  border-bottom: ${(props: any) => (props.active ? `1px solid ${colors.primary}` : 'none')};
+  padding-bottom: 20px;
+  &:hover {
+    color: ${colors.primary};
+  }
+`
+export const HeaderBtnGroup = styled.div`
+  display: flex;
+  align-items: center;
 `

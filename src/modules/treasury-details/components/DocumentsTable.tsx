@@ -10,8 +10,6 @@ import TableCell from '@material-ui/core/TableCell'
 import Paper from '@material-ui/core/Paper'
 import Pagination from '@material-ui/lab/Pagination'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import { Paths } from 'modules/app/components/routes/types'
-import history from 'modules/app/components/history'
 import Select from '@material-ui/core/Select'
 
 const dataVal = [

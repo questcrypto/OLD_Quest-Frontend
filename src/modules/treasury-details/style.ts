@@ -109,20 +109,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       border: '1px solid #F2F2F2',
       boxSizing: 'border-box',
     },
-    mintBtnStyle: {
-      color: colors.white,
-      backgroundColor: colors.primary,
-      fontSize: '14px',
-      '&:hover': {
-        backgroundColor: colors.primary,
-      },
-      marginRight: '20px',
-    },
-    configureBtnStyle: {
-      color: colors.textPrimary,
-      fontSize: '14px',
-      backgroundColor: '#E0E0E0',
-    },
   })
 )
 export const NoDetailsAvailable = styled.div`

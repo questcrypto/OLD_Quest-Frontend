@@ -15,11 +15,12 @@ import {
   TabTitle,
 } from './style'
 import ComponentLoader from 'shared/loader-components/component-loader'
+import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import MailIcon from '@material-ui/icons/Mail'
-import { Button, Divider } from '@material-ui/core'
+import Divider from '@material-ui/core/Divider'
 import Accordion from '@material-ui/core/Accordion'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
@@ -27,6 +28,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Features from 'modules/property-features/Features'
 import RentalFacts from 'modules/property-features/RentalFacts'
 import DocumentsTable from './components/DocumentsTable'
+import AuctionConfiguration from './components/AuctionConfiguration'
+import CustomModal from 'shared/custom-modal'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import { SLFContractAddress, selfAbi } from 'modules/chain/abi'
@@ -43,6 +46,7 @@ const TreasuryPropertyDetails = (props: any) => {
   const [contractSLF, setContractSLF] = useState<any>('')
   const [activeTab, setActiveTab] = useState('documents')
   const [docData /* setDocData */] = useState<any>([])
+  const [showAuctionModal, setShowAuctionModal] = useState(false)
 
   useEffect(() => {
     let web3: Web3
@@ -125,26 +129,12 @@ const TreasuryPropertyDetails = (props: any) => {
           </Grid>
           <Grid item>
             <HeaderBtnGroup>
-              <Button
-                type="button"
-                variant="contained"
-                classes={{
-                  root: classes.mintBtnStyle,
-                }}
-                onClick={() => handleApproveByAdmin()}
-              >
+              <PrimaryButton variant="contained" onClick={() => handleApproveByAdmin()} style={{ marginRight: '20px' }}>
                 MINT NFT
-              </Button>
-              <Button
-                type="button"
-                variant="contained"
-                classes={{
-                  root: classes.configureBtnStyle,
-                }}
-                /* onClick={() => handleApproveByAdmin()} */
-              >
+              </PrimaryButton>
+              <SecondaryButton variant="contained" onClick={() => setShowAuctionModal(true)}>
                 CONFIGURE AUCTION
-              </Button>
+              </SecondaryButton>
             </HeaderBtnGroup>
           </Grid>
         </Grid>
@@ -280,6 +270,9 @@ const TreasuryPropertyDetails = (props: any) => {
           )}
         </div>
       )}
+      <CustomModal show={showAuctionModal} toggleModal={setShowAuctionModal}>
+        <AuctionConfiguration setShowAuctionModal={setShowAuctionModal} />
+      </CustomModal>
     </Box>
   )
 }

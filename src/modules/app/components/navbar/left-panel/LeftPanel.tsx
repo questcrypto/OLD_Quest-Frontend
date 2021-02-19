@@ -24,6 +24,12 @@ const LeftPanel = (props: any) => {
   const handleProperty = () => {
     history.push(Paths.dashboard)
   }
+  
+   const handleAuctions = () => {
+     history.push(Paths.auctions)
+   }
+
+
   return (
     <Drawer
       className={classes.drawer}
@@ -48,7 +54,7 @@ const LeftPanel = (props: any) => {
                 <AccountBalanceIcon className={classes.iconStyle} />
                 <ListItemText>Treasury</ListItemText>
               </ListItem>
-              <ListItem button className={classes.itemButtonStyle}>
+              <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuctions()}> 
                 <AssessmentIcon className={classes.iconStyle} />
                 <ListItemText>Auctions</ListItemText>
               </ListItem>

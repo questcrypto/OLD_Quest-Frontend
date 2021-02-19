@@ -148,16 +148,3 @@ export const PropertySearchBox = styled.div`
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr;
 `
-
-export const BidContainer = styled.div`
-  display: flex;
-  marginleft: '20px';
-`
-export const BidInfo = styled.div`
-  display: flex;
-  align-items: center;
-  marginLeft: '50px';
-  alignItems: 'right',
-    marginTop: '40px',
-    marginRight:'20px',
-`

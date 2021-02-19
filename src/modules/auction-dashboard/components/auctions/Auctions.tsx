@@ -8,8 +8,6 @@ import {
   HeaderTitle,
   TabTitle,
   StyledGrid,
-  BidContainer,
-  BidInfo,
 } from './style'
 
 import { Box, Button } from '@material-ui/core'

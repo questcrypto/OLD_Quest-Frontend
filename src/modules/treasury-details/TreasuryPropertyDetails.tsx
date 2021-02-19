@@ -4,14 +4,15 @@ import { connect } from 'react-redux'
 import {
   useStyles,
   HeaderContainer,
+  HeaderBtnGroup,
   NoDetailsAvailable,
   HeaderPath,
   HeaderTitle,
   FeatureHeading,
-  HeaderBtnCont,
   InfoBoldTxt,
   InfoLightTxt,
   TreasuryOwnerCont,
+  TabTitle,
 } from './style'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import Box from '@material-ui/core/Box'
@@ -19,18 +20,19 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import MailIcon from '@material-ui/icons/Mail'
 import { Button, Divider } from '@material-ui/core'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Features from 'modules/property-features/Features'
+import RentalFacts from 'modules/property-features/RentalFacts'
+import DocumentsTable from './components/DocumentsTable'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import { SLFContractAddress, selfAbi } from 'modules/chain/abi'
 // import { SLCContractAddress, SLFContractAddress, selfAbi, slcAbi } from 'modules/chain/abi'
 import { handlePropertyDetailsSubmit } from 'modules/chain/chain'
 import Web3 from 'web3'
-import Accordion from '@material-ui/core/Accordion'
-import AccordionDetails from '@material-ui/core/AccordionDetails'
-import AccordionSummary from '@material-ui/core/AccordionSummary'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import Features from './components/Features'
-import RentalFacts from './components/RentalFacts'
 
 const TreasuryPropertyDetails = (props: any) => {
   const classes = useStyles()
@@ -39,6 +41,8 @@ const TreasuryPropertyDetails = (props: any) => {
   const [imageList, setImageList] = useState<any>([])
   const [account, setAccount] = useState('')
   const [contractSLF, setContractSLF] = useState<any>('')
+  const [activeTab, setActiveTab] = useState('documents')
+  const [docData /* setDocData */] = useState<any>([])
 
   useEffect(() => {
     let web3: Web3
@@ -115,19 +119,35 @@ const TreasuryPropertyDetails = (props: any) => {
         <HeaderPath>
           <span>Treasury / Properties tokenized /</span> {props.match.params.propertyId}
         </HeaderPath>
-        <HeaderBtnCont>
-          <HeaderTitle>Property Details</HeaderTitle>
-          <Button
-            type="button"
-            variant="contained"
-            classes={{
-              root: classes.btn2Style,
-            }}
-            onClick={() => handleApproveByAdmin()}
-          >
-            MINT
-          </Button>
-        </HeaderBtnCont>
+        <Grid container justify="space-between" spacing={2}>
+          <Grid item>
+            <HeaderTitle>Property Details</HeaderTitle>
+          </Grid>
+          <Grid item>
+            <HeaderBtnGroup>
+              <Button
+                type="button"
+                variant="contained"
+                classes={{
+                  root: classes.mintBtnStyle,
+                }}
+                onClick={() => handleApproveByAdmin()}
+              >
+                MINT NFT
+              </Button>
+              <Button
+                type="button"
+                variant="contained"
+                classes={{
+                  root: classes.configureBtnStyle,
+                }}
+                /* onClick={() => handleApproveByAdmin()} */
+              >
+                CONFIGURE AUCTION
+              </Button>
+            </HeaderBtnGroup>
+          </Grid>
+        </Grid>
       </HeaderContainer>
       {dataLoading ? (
         <ComponentLoader />
@@ -198,8 +218,8 @@ const TreasuryPropertyDetails = (props: any) => {
                   </AccordionDetails>
                 </Accordion>
 
-                <Grid container spacing={1} className={classes.treasuryOwnersContStyle}>
-                  <Grid item xs={12} md={4} sm={6}>
+                <Grid container spacing={2} className={classes.treasuryOwnersContStyle}>
+                  <Grid item>
                     <Paper className={classes.treasuryOwnersPaper} elevation={0}>
                       <TreasuryOwnerCont>
                         <div>
@@ -210,7 +230,7 @@ const TreasuryPropertyDetails = (props: any) => {
                       </TreasuryOwnerCont>
                     </Paper>
                   </Grid>
-                  <Grid item xs={12} md={4} sm={6}>
+                  <Grid item>
                     <Paper className={classes.treasuryOwnersPaper} elevation={0}>
                       <TreasuryOwnerCont>
                         <div>
@@ -221,7 +241,7 @@ const TreasuryPropertyDetails = (props: any) => {
                       </TreasuryOwnerCont>
                     </Paper>
                   </Grid>
-                  <Grid item xs={12} md={4} sm={6}>
+                  <Grid item>
                     <Paper className={classes.treasuryOwnersPaper} elevation={0}>
                       <TreasuryOwnerCont>
                         <div>
@@ -234,6 +254,24 @@ const TreasuryPropertyDetails = (props: any) => {
                   </Grid>
                 </Grid>
               </Paper>
+              <Grid container spacing={3}>
+                <Grid item>
+                  <TabTitle onClick={() => setActiveTab('documents')} active={activeTab === 'documents'}>
+                    Documents
+                  </TabTitle>
+                </Grid>
+                <Grid item>
+                  <TabTitle onClick={() => setActiveTab('tokenHolders')} active={activeTab === 'tokenHolders'}>
+                    Token holders
+                  </TabTitle>
+                </Grid>
+                <Grid item>
+                  <TabTitle onClick={() => setActiveTab('transactions')} active={activeTab === 'transactions'}>
+                    Transactions
+                  </TabTitle>
+                </Grid>
+              </Grid>
+              <DocumentsTable data={docData} />
             </div>
           ) : (
             <NoDetailsAvailable>

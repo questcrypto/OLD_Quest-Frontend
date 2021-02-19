@@ -1,30 +1,50 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
+import { makeStyles } from '@material-ui/core/styles'
 
-export const FeatureInfo = styled.div`
-  display: flex;
-  align-item: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
-`
-export const FeatureName = styled.div`
-  display: flex;
-  width: 40%;
-  align-items: center;
-  span {
-    font-size: 15px;
-    color: ${colors.textPrimary};
-    opacity: 0.6;
-  }
-  img {
-    margin-right: 10px;
-    opacity: 1 !important;
-  }
-`
-export const FeatureValue = styled.p`
+export const useStyles = makeStyles(() => ({
+  root: {
+    background: colors.paperBackground,
+    marginTop: '20px',
+  },
+  paginationCont: {
+    marginTop: '50px',
+  },
+  tableHeadStyle: {
+    boxShadow: '0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.14), 0px 1px 8px rgba(0, 0, 0, 0.12);',
+  },
+  tableCellStyle: {
+    color: colors.textPrimary,
+  },
+  addPropertyBtn: {
+    width: '100% !important',
+    height: '36px',
+    color: `${colors.white} !important`,
+    backgroundColor: `${colors.primary} !important`,
+    fontSize: '12px',
+    padding: '10px 5px',
+    '&:hover': {
+      backgroundColor: `${colors.primary} !important`,
+    },
+  },
+  authorizationStyle: {
+    background: colors.paperBackground,
+    paddingRight: '24px',
+    '&:before': {
+      borderBottom: 'none',
+    },
+  },
+}))
+
+export const PaginationText = styled.p`
   margin: 0;
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 19px;
   color: ${colors.textPrimary};
-  width: 40%;
-  text-align: left;
+`
+export const NoDataContainer = styled.div`
+  margin: 50px 0;
+  p {
+    text-align: center;
+  }
 `

@@ -18,9 +18,6 @@ import {
   DocContainer,
   DocName,
   FeatureHeading,
-  FeatureInfo,
-  FeatureName,
-  FeatureValue,
 } from './style'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import Grid from '@material-ui/core/Grid'
@@ -30,17 +27,9 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import { Box, Button } from '@material-ui/core'
 import plot from 'assets/images/plot.png'
 import coin from 'assets/images/coin.png'
-import roof from 'assets/images/roof.svg'
-import pool from 'assets/images/pool.png'
-import heating from 'assets/images/heating.png'
-import air from 'assets/images/air.png'
-import exterior from 'assets/images/exterior.png'
-import floor from 'assets/images/floor.png'
-import land from 'assets/images/land.png'
 import FileIcon from 'assets/icons/fileIcon.svg'
-import window from 'assets/images/window.png'
-import { getPropertyType } from 'shared/helpers/globalFunction'
-import moment from 'moment'
+import Features from 'modules/property-features/Features'
+import RentalFacts from 'modules/property-features/RentalFacts'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import { Paths } from 'modules/app/components/routes/types'
@@ -178,187 +167,10 @@ const PropertyDetails = (props: any) => {
 
               <Paper className={classes.rentalPaper}>
                 <FeatureHeading>Rental facts and features</FeatureHeading>
-                <Grid container spacing={6}>
-                  <Grid item xs={6}>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={roof} alt="" />
-                        <span>Roof</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Roof}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={heating} alt="" />
-                        <span>Heating</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Heating}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={air} alt="" />
-                        <span>Air Conditioning</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.AC}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={floor} alt="" />
-                        <span>Floor</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Floor}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={window} alt="" />
-                        <span>Window Covering</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.WindowCovering}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={exterior} alt="" />
-                        <span>Exterior Features</span>
-                      </FeatureName>
-                      <FeatureValue>Brick</FeatureValue>
-                    </FeatureInfo>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={pool} alt="" />
-                        <span>Pool</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Pool}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={pool} alt="" />
-                        <span>Pool Features</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.PoolFeature}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={exterior} alt="" />
-                        <span>Exterior</span>
-                      </FeatureName>
-                      <FeatureValue>Brick 70%</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={land} alt="" />
-                        <span>Landscaping</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Landscaping}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <img src={plot} alt="" />
-                        <span>Lot Facts</span>
-                      </FeatureName>
-                      <FeatureValue>{`${propertyInfo.propertyDetails.Lotfacts} m2`}</FeatureValue>
-                    </FeatureInfo>
-                  </Grid>
-                </Grid>
+                <RentalFacts data={propertyInfo.propertyDetails} />
                 <Divider className={classes.dividerStyle} />
                 <FeatureHeading>Features</FeatureHeading>
-                <Grid container spacing={6}>
-                  <Grid item xs={6}>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Type</span>
-                      </FeatureName>
-                      <FeatureValue>{getPropertyType(propertyInfo.propertyDetails.PropertyType)}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Style</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Style}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Year Built</span>
-                      </FeatureName>
-                      <FeatureValue>{moment(propertyInfo.propertyDetails.YearBuilt).format('YYYY')}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Acres</span>
-                      </FeatureName>
-                      <FeatureValue>{`${propertyInfo.propertyDetails.Lotfacts} m2`}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Deck</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Deck}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Patio</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Patio}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Garage</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Garage}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Carport</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Carpot}</FeatureValue>
-                    </FeatureInfo>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Parking Space</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.ParkingSpace}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Fin Bsmt</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.FinBasmt}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Basement</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Basement}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Driveway</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Driveway}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Water</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Water}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Water Shares</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.WaterShare}</FeatureValue>
-                    </FeatureInfo>
-                    <FeatureInfo>
-                      <FeatureName>
-                        <span>Spa</span>
-                      </FeatureName>
-                      <FeatureValue>{propertyInfo.propertyDetails.Spa}</FeatureValue>
-                    </FeatureInfo>
-                  </Grid>
-                </Grid>
+                <Features data={propertyInfo.propertyDetails} />
               </Paper>
             </div>
           ) : (

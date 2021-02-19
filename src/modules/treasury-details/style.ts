@@ -64,6 +64,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     treasuryPaper: {
       padding: '30px',
       backgroundColor: colors.paperBackground2,
+      marginBottom: '50px',
     },
 
     infoAccordionStyle: {
@@ -97,17 +98,30 @@ export const useStyles = makeStyles((theme: Theme) =>
       margin: '0 30px',
     },
     treasuryOwnersContStyle: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
       marginTop: '30px',
+      paddingLeft: '16px',
     },
     treasuryOwnersPaper: {
       padding: '10px',
       width: '100%',
-      maxWidth: '285px',
+      minWidth: '285px',
       backgroundColor: colors.paperBackground3,
       border: '1px solid #F2F2F2',
+      boxSizing: 'border-box',
+    },
+    mintBtnStyle: {
+      color: colors.white,
+      backgroundColor: colors.primary,
+      fontSize: '14px',
+      '&:hover': {
+        backgroundColor: colors.primary,
+      },
+      marginRight: '20px',
+    },
+    configureBtnStyle: {
+      color: colors.textPrimary,
+      fontSize: '14px',
+      backgroundColor: '#E0E0E0',
     },
   })
 )
@@ -218,10 +232,6 @@ export const FeatureHeading = styled.h4`
   color: ${colors.textPrimary};
   text-align: left;
 `
-export const HeaderBtnCont = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
 export const InfoBoldTxt = styled.h2`
   font-size: 16px;
   line-height: 22px;
@@ -238,5 +248,22 @@ export const InfoLightTxt = styled.p`
 export const TreasuryOwnerCont = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+`
+export const TabTitle = styled.p<any>`
+  margin: 0;
+  font-size: 16px;
+  opacity: ${(props: any) => (props.active ? 1 : 0.87)};
+  color: ${(props: any) => (props.active ? colors.primary : colors.textPrimary)};
+  cursor: pointer;
+  text-align: center;
+  border-bottom: ${(props: any) => (props.active ? `1px solid ${colors.primary}` : 'none')};
+  padding-bottom: 20px;
+  &:hover {
+    color: ${colors.primary};
+  }
+`
+export const HeaderBtnGroup = styled.div`
+  display: flex;
   align-items: center;
 `

@@ -16,6 +16,7 @@ export interface Colors {
   paperBackground2: string
   paperBackground3: string
   lightGray: string
+  yellow: string
 }
 
 export const colors: Colors = {
@@ -28,6 +29,7 @@ export const colors: Colors = {
   paperBackground2: '#F5F5F5',
   paperBackground3: '#FAFAFA',
   lightGray: '#E0E0E0',
+  yellow: '#F2C94C',
 }
 
 export interface ThemeStarter {
@@ -41,6 +43,7 @@ export interface ThemeStarter {
   paperBackground2: string
   paperBackground3: string
   lightGray: string
+  yellow: string
 }
 
 export const theme: ThemeStarter = {
@@ -53,6 +56,7 @@ export const theme: ThemeStarter = {
   paperBackground2: colors.paperBackground2,
   paperBackground3: colors.paperBackground3,
   lightGray: colors.lightGray,
+  yellow: colors.yellow,
 }
 
 export interface ScreenSizes {

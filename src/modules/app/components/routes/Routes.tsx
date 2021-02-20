@@ -16,6 +16,7 @@ import TreasuryPropertyDetails from 'modules/treasury-details'
 import { Login } from 'modules/auth'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
+import AuctionDetails from 'modules/auction-details'
 
 const notFoundRoute: RouteDefinition = {
   path: '*',
@@ -70,6 +71,13 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.treasuryPropertyDetails + '/:propertyId',
     component: TreasuryPropertyDetails,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.auctionDetails + '/:propertyId',
+    component: AuctionDetails,
     protected: true,
     redirect: Paths.root,
     title: '',

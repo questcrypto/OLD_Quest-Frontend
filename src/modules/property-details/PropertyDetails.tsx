@@ -3,7 +3,6 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import {
   useStyles,
-  PropertyDetailsCont,
   HeaderContainer,
   NoDetailsAvailable,
   HeaderPath,
@@ -26,7 +25,7 @@ import Divider from '@material-ui/core/Divider'
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import { Box, Button } from '@material-ui/core'
 import plot from 'assets/images/plot.png'
-import coin from 'assets/images/coin.png'
+import coin from 'assets/images/coin.svg'
 import FileIcon from 'assets/icons/fileIcon.svg'
 import Features from 'modules/property-features/Features'
 import RentalFacts from 'modules/property-features/RentalFacts'
@@ -108,7 +107,7 @@ const PropertyDetails = (props: any) => {
   }
 
   return (
-    <PropertyDetailsCont>
+    <Box>
       <HeaderContainer>
         <HeaderPath>
           <span>Properties / New</span> / {props.match.params.propertyId}
@@ -180,7 +179,7 @@ const PropertyDetails = (props: any) => {
           )}
         </div>
       )}
-    </PropertyDetailsCont>
+    </Box>
   )
 }
 const mapStateToProps = (state: any) => ({

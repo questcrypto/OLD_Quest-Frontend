@@ -6,10 +6,16 @@ import CardActions from '@material-ui/core/CardActions'
 import PhotoImg from 'assets/images/photo.png'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import { Grid } from '@material-ui/core'
+import { Paths } from 'modules/app/components/routes/types'
+import history from 'modules/app/components/history'
 
 const PropertyCard = (props: any) => {
   const { data } = props
   const classes = cardStyle()
+
+  const handlePropertyDetails = () => {
+    history.push(Paths.auctionDetails)
+  }
 
   return (
     <Card className={classes.root}>
@@ -51,7 +57,7 @@ const PropertyCard = (props: any) => {
             </PrimaryButton>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <SecondaryButton fullWidth className={classes.btnStyle}>
+            <SecondaryButton fullWidth className={classes.btnStyle} onClick={() => handlePropertyDetails()}>
               PROPERTY DETAILS
             </SecondaryButton>
           </Grid>

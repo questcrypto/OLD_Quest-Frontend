@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 import QuestLogo from 'assets/images/questLogo.svg'
+import { PrimaryButton } from 'shared/components/buttons'
 
 let web3: Web3 // Will hold the web3 instance
 
@@ -104,15 +105,9 @@ const Login = (props: any) => {
             <Form>
               <CustomTextField name="email" label="email" />
               <ErrorMessage component={err} name="email" />
-              <Button
-                type="submit"
-                variant="contained"
-                classes={{
-                  root: classes.loginBtnStyle,
-                }}
-              >
+              <PrimaryButton fullWidth type="submit" className={classes.loginBtnStyle}>
                 {loading || dataLoading ? 'Loading...' : 'Login with MetaMask'}
-              </Button>
+              </PrimaryButton>
             </Form>
           )}
         </Formik>

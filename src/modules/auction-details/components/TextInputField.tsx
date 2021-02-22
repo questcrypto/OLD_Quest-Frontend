@@ -1,17 +1,19 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { colors } from 'shared/styles/theme'
 
-const textFieldStyle = makeStyles({
-  root: {
-    color: colors.textPrimary,
-    background: colors.paperBackground2,
-    '& input': {
-      padding: '10px 14px',
+export const textFieldStyle = makeStyles(() =>
+  createStyles({
+    root: {
+      color: colors.textPrimary,
+      background: colors.paperBackground2,
+      '& input': {
+        padding: '10px 14px',
+      },
     },
-  },
-})
+  })
+)
 
 interface Props {
   name: string

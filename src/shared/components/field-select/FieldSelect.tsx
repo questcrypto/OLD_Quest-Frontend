@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { Field } from 'formik'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
@@ -12,14 +12,16 @@ interface Props {
   isDisabled?: boolean
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: '20px',
-    lineHeight: '26px',
-    color: '#828282',
-    backgroundColor: colors.white,
-  },
-}))
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      marginBottom: '20px',
+      lineHeight: '26px',
+      color: '#828282',
+      backgroundColor: colors.white,
+    },
+  })
+)
 
 const FieldSelect = (props: Props) => {
   const classes = useStyles()

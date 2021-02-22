@@ -1,123 +1,128 @@
 import styled from 'styled-components'
 import { FieldArray } from 'formik'
 import { colors } from 'shared/styles/theme'
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 
-export const useStyle = makeStyles({
-  root: { background: 'white' },
-  inputStyle: { margin: '50px', required: true },
-  formGroup: {
-    marginTop: '5px',
-    width: '100%',
-    maxWidth: '96%',
-    '@media (min-width: 600px)': {
-      maxWidth: '400px',
+export const useStyle = makeStyles(() =>
+  createStyles({
+    root: { background: 'white' },
+    inputStyle: { margin: '50px', required: true },
+    formGroup: {
+      marginTop: '5px',
+      width: '100%',
+      maxWidth: '96%',
+      '@media (min-width: 600px)': {
+        maxWidth: '400px',
+      },
     },
-  },
-  editFormGroup: {
-    marginTop: '5px',
-    width: '100%',
-    maxWidth: '96%',
-    '@media (min-width: 600px)': {
-      maxWidth: '450px',
+    editFormGroup: {
+      marginTop: '5px',
+      width: '100%',
+      maxWidth: '96%',
+      '@media (min-width: 600px)': {
+        maxWidth: '450px',
+      },
     },
-  },
-  titleNumberStyle: {
-    maxWidth: '70px',
-  },
-  dividerStyle: {
-    margin: '45px -86px 45px 0',
-  },
-  uploadDataStyle: {
-    minWidth: 200,
-    maxHeight: 240,
-    minHeight: 240,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    border: '1px dashed #BDBDBD',
-    backgroundColor: '#F3F3F3 !important',
-    borderRadius: '4px',
-  },
-  fileNameStyle: {
-    marginBottom: '16px',
-  },
-  saveAsDraftStyle: {
-    color: '#302E35',
-    marginRight: '20px',
-    backgroundColor: '#E0E0E0',
-  },
-  saveAndReviewStyle: {
-    color: colors.white,
-    minWidth: '200px',
-    backgroundColor: colors.primary,
-    '&:hover': {
+    titleNumberStyle: {
+      maxWidth: '70px',
+    },
+    dividerStyle: {
+      margin: '45px -86px 45px 0',
+    },
+    uploadDataStyle: {
+      minWidth: 200,
+      maxHeight: 240,
+      minHeight: 240,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      border: '1px dashed #BDBDBD',
+      backgroundColor: '#F3F3F3 !important',
+      borderRadius: '4px',
+    },
+    fileNameStyle: {
+      marginBottom: '16px',
+    },
+    saveAsDraftStyle: {
+      color: '#302E35',
+      marginRight: '20px',
+      backgroundColor: '#E0E0E0',
+    },
+    saveAndReviewStyle: {
+      color: colors.white,
+      minWidth: '200px',
       backgroundColor: colors.primary,
+      '&:hover': {
+        backgroundColor: colors.primary,
+      },
     },
-  },
-  accordionStyle: {
-    width: '100%',
-    maxWidth: '90%',
-  },
-  commentDividerStyle: {
-    margin: '40px 0 25px 0',
-  },
-  editDividerStyle: {
-    margin: ' 45px 0',
-  },
-  commentAreaStyle: {
-    minHeight: '100px',
-    width: '100%',
-    maxWidth: '100%',
-    minWidth: '100%',
-    padding: '10px',
-    boxSizing: 'border-box',
-    outline: 'none',
-  },
-  commentBtnStyle: {
-    marginTop: '20px',
-    width: '100%',
-    color: colors.white,
-    backgroundColor: colors.primary,
-    '&:hover': {
+    accordionStyle: {
+      width: '100%',
+      maxWidth: '90%',
+    },
+    commentDividerStyle: {
+      margin: '40px 0 25px 0',
+    },
+    editDividerStyle: {
+      margin: ' 45px 0',
+    },
+    commentAreaStyle: {
+      minHeight: '100px',
+      width: '100%',
+      maxWidth: '100%',
+      minWidth: '100%',
+      padding: '10px',
+      boxSizing: 'border-box',
+      outline: 'none',
+    },
+    commentBtnStyle: {
+      marginTop: '20px',
+      width: '100%',
+      color: colors.white,
       backgroundColor: colors.primary,
+      '&:hover': {
+        backgroundColor: colors.primary,
+      },
     },
-  },
-  docImgStyle: {
-    marginRight: '24px',
-  },
-})
-export const useStyle01 = makeStyles((theme) => ({
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-  },
-  headerStyle: {
-    background: '#E0E0E0',
-    border: '1px solid #E0E0E0',
-    marginBottom: '0',
-  },
-  detailsCont: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: '16px',
-  },
-  deleteBtnStyle: {
-    position: 'absolute',
-    color: '#EB5757',
-    cursor: 'pointer',
-    top: '14px',
-    left: '96%',
-  },
-  deleteBtn2Style: {
-    position: 'absolute',
-    color: '#EB5757',
-    cursor: 'pointer',
-    top: '14px',
-    left: '100%',
-    marginLeft: '20px',
-  },
-}))
+    docImgStyle: {
+      marginRight: '24px',
+    },
+  })
+)
+
+export const useStyle01 = makeStyles((theme) =>
+  createStyles({
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+    },
+    headerStyle: {
+      background: '#E0E0E0',
+      border: '1px solid #E0E0E0',
+      marginBottom: '0',
+    },
+    detailsCont: {
+      display: 'flex',
+      flexDirection: 'column',
+      marginTop: '16px',
+    },
+    deleteBtnStyle: {
+      position: 'absolute',
+      color: '#EB5757',
+      cursor: 'pointer',
+      top: '14px',
+      left: '96%',
+    },
+    deleteBtn2Style: {
+      position: 'absolute',
+      color: '#EB5757',
+      cursor: 'pointer',
+      top: '14px',
+      left: '100%',
+      marginLeft: '20px',
+    },
+  })
+)
 
 export const fieldSetStyle = {
   border: 0,

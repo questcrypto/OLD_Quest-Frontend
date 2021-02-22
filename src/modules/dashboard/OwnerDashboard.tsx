@@ -21,8 +21,6 @@ const OwnerDashboard = (props: any) => {
   const [publishedProperties, setPublishedProperties] = useState<any>([])
   const [publishedLoading, setPublishedLoading] = useState(false)
   const { userInfo } = props
-  const [searchTerm, setSearchTerm] = useState('')
-  const [currentData, setCurrentData] = useState<any>([])
 
   useEffect(() => {
     const getPropertiesList = async () => {
@@ -59,41 +57,6 @@ const OwnerDashboard = (props: any) => {
     getApproveProperties()
     getPublishedProperties()
   }, [userInfo])
-
-  const handleChange = (e: any) => {
-    const { value } = e.target
-
-    if (!value) {
-      setCurrentData([...propertiesList])
-    } else {
-      filterData(value)
-    }
-  }
-  const filterData = (dataVal: any) => {
-    const FilteredValue = propertiesList.filter(
-      (value: {
-        Address1: string
-        State: string
-        Country: string
-        Fname: string
-        Lname: string
-        PropertyType: string
-        CurrentValue: string
-      }) => {
-        return (
-          value.Address1.toLowerCase().includes(dataVal.toLowerCase()) ||
-          value.State.toLowerCase().includes(dataVal.toLowerCase()) ||
-          value.Country.toLowerCase().includes(dataVal.toLowerCase()) ||
-          value.Fname.toLowerCase().includes(dataVal.toLowerCase()) ||
-          value.Lname.toLowerCase().includes(dataVal.toLowerCase()) ||
-          value.PropertyType.toString().toLowerCase().includes(dataVal.toLowerCase()) ||
-          value.CurrentValue.toString().toLowerCase().includes(dataVal.toLowerCase())
-        )
-      }
-    )
-
-    setCurrentData([...FilteredValue])
-  }
 
   return (
     <Grid>
@@ -156,7 +119,6 @@ const OwnerDashboard = (props: any) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-              onChange={handleChange}
             />
           </div>
         </Grid>
@@ -166,7 +128,7 @@ const OwnerDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'new' && <PropertyTable searchquery={searchTerm} data={propertiesList} />}
+            {activeTab === 'new' && <PropertyTable data={propertiesList} />}
             {activeTab === 'approved' && (
               <ApprovedProperty data={approvedProperties} approvedLoading={approvedLoading} userInfo={userInfo} />
             )}

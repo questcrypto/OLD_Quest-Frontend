@@ -9,11 +9,13 @@ import Loader from 'shared/loader-components/loader'
 import history from '../history'
 import { Paths } from './types'
 import { NotFound } from './NotFound'
+import { Login } from 'modules/auth'
 import Dashboard from 'modules/dashboard'
 import { AddPropertyForm, EditPropertyForm } from 'modules/property-form'
 import PropertyDetails from 'modules/property-details'
 import TreasuryPropertyDetails from 'modules/treasury-details'
-import { Login } from 'modules/auth'
+import Auction from 'modules/auction'
+import AuctionDetails from 'modules/auction-details'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
 
@@ -70,6 +72,20 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.treasuryPropertyDetails + '/:propertyId',
     component: TreasuryPropertyDetails,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.auction,
+    component: Auction,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.auctionDetails,
+    component: AuctionDetails,
     protected: true,
     redirect: Paths.root,
     title: '',

@@ -5,3 +5,21 @@ export const propertyType = [
   { label: 'Commercial', value: 4 },
   { label: 'RawLand', value: 5 },
 ]
+export const auctionTabList = [
+  {
+    label: 'Participating',
+    value: 'participating',
+  },
+  {
+    label: 'Ongoing',
+    value: 'ongoing',
+  },
+  {
+    label: 'Upcoming',
+    value: 'upcoming',
+  },
+  {
+    label: 'Passed',
+    value: 'passed',
+  },
+]

@@ -63,7 +63,6 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
   })
 )
-export const PropertyDetailsCont = styled.div``
 export const NoDetailsAvailable = styled.div`
   margin-bottom: 30px;
   p {

@@ -17,14 +17,8 @@ export const useStyle = makeStyles(() => ({
     padding: '20px',
   },
   loginBtnStyle: {
-    width: '100%',
     height: '50px',
     marginTop: '20px',
-    color: colors.white,
-    backgroundColor: colors.primary,
-    '&:hover': {
-      backgroundColor: colors.primary,
-    },
   },
 }))
 

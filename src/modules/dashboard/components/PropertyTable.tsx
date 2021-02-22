@@ -25,7 +25,7 @@ const PropertyTable = (props: any) => {
   const handleAction = (id: any) => {
     history.push(`${Paths.propertyDetails}/${id}`)
   }
-  const getName = (firstName: string, lastName: string) => {
+  const getName = (firstName: string, lastName: string) => {    
     let fName = ''
     let lName = ''
     if (firstName) {

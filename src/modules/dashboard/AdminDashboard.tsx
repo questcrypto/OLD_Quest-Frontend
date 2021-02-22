@@ -87,17 +87,18 @@ const AdminDashboard = (props: any) => {
     updatePublishedProperty()
   }
 
-  const handleChange = (e: any) => { 
-    const { value } = e.target
-
-    if (!value) {
-      setCurrentData([...publishedProperties])
-    } else {
-      filterData(value)
+  const data = () => {
+    if (activeTab === 'new') {
+      return filterData(propertiesList, searchTerm)
+    } else if (activeTab === 'approved') {
+      return filterData(approvedProperties, searchTerm)
+    } else if (activeTab === 'published') {
+      return filterData(publishedProperties, searchTerm)
     }
   }
-  const filterData = (dataVal: any) => {
-    const FilteredValue = publishedProperties.filter(
+
+  const filterData = (properties: any, dataVal: any) => {
+    const FilteredValue = properties?.filter(
       (value: {
         Address1: string
         State: string
@@ -118,8 +119,7 @@ const AdminDashboard = (props: any) => {
         )
       }
     )
-
-    setCurrentData([...FilteredValue])
+    return FilteredValue
   }
 
   return (
@@ -183,7 +183,7 @@ const AdminDashboard = (props: any) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-              onChange={handleChange}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </Grid>
@@ -198,20 +198,18 @@ const AdminDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'new' && <PropertyTable searchquery={searchTerm} data={propertiesList} />}
+            {activeTab === 'new' && <PropertyTable searchquery={searchTerm} data={data()} />}
             {activeTab === 'approved' && (
               <ApprovedProperty
                 searchquery={searchTerm}
-                data={approvedProperties}
+                data={data()}
                 approvedLoading={approvedLoading}
                 userInfo={userInfo}
                 setActiveTab={setActiveTab}
                 updateApprove={updateApprove}
               />
             )}
-            {activeTab === 'published' && (
-              <PublishedProperty searchquery={searchTerm} data={publishedProperties} publishedLoading={publishedLoading} />
-            )}
+            {activeTab === 'published' && <PublishedProperty searchquery={searchTerm} data={data()} publishedLoading={publishedLoading} />}
             {activeTab === 'preAuctions' && <p>Content can be added here</p>}
             {activeTab === 'onAuctions' && <p>Content can be added here</p>}
             {activeTab === 'postAuctions' && <p>Content can be added here</p>}

@@ -27,7 +27,7 @@ export const useStyle = makeStyles(() =>
       maxWidth: '70px',
     },
     dividerStyle: {
-      margin: '45px -86px 45px 0',
+      margin: '45px -86px 45px 0 !important',
     },
     uploadDataStyle: {
       minWidth: 200,
@@ -62,10 +62,10 @@ export const useStyle = makeStyles(() =>
       maxWidth: '90%',
     },
     commentDividerStyle: {
-      margin: '40px 0 25px 0',
+      margin: '40px 0 25px 0 !important',
     },
     editDividerStyle: {
-      margin: ' 45px 0',
+      margin: ' 45px 0 !important',
     },
     commentAreaStyle: {
       minHeight: '100px',

@@ -59,7 +59,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       boxShadow: '0px 8px 8px rgba(0, 0, 0, 0.06)',
     },
     dividerStyle: {
-      margin: '50px 0',
+      margin: '50px 0 !important',
     },
     treasuryPaper: {
       padding: '30px',
@@ -83,7 +83,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       background: '#E0E0E0',
     },
     treasuryDividerStyle: {
-      margin: '30px 0',
+      margin: '30px 0 !important',
     },
     infoContStyle: {
       alignItems: 'center',
@@ -95,7 +95,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     verticalDividerStyle: {
       height: '29px',
-      margin: '0 30px',
+      margin: '0 30px !important',
     },
     treasuryOwnersContStyle: {
       marginTop: '30px',

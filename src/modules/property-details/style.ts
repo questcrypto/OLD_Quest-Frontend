@@ -59,7 +59,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       boxShadow: '0px 8px 8px rgba(0, 0, 0, 0.06)',
     },
     dividerStyle: {
-      margin: '50px 0',
+      margin: '50px 0 !important',
     },
   })
 )

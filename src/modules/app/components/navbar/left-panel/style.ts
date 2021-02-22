@@ -43,7 +43,7 @@ export const useStyles = makeStyles(() =>
 
     dividerStyle: {
       width: '46px',
-      margin: '0 0 54px 30px',
+      margin: '0 0 54px 30px !important',
     },
     signOutStyle: {
       position: 'absolute',
@@ -51,7 +51,7 @@ export const useStyles = makeStyles(() =>
     },
     signOutDividerStyle: {
       width: '46px',
-      margin: '0 0 30px 30px',
+      margin: '0 0 30px 30px !important',
     },
   })
 )

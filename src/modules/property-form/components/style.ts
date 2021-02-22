@@ -1,34 +1,37 @@
 import styled from 'styled-components'
 import { colors, screenSizes } from 'shared/styles/theme'
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 
-export const useStyle = makeStyles({
-  headerTitle: {
-    fontWeight: 500,
-    fontSize: '20px',
-    lineHeight: '20px',
-    color: '#302E35',
-  },
-  uploadDocStyle: {
-    backgroundColor: '#F3F3F3 !important',
-    borderRadius: '4px',
-    padding: '20px 30px',
-    dropzoneClass: {
-      background: 'red',
+export const useStyle = makeStyles(() =>
+  createStyles({
+    headerTitle: {
+      fontWeight: 500,
+      fontSize: '20px',
+      lineHeight: '20px',
+      color: '#302E35',
     },
-  },
+    uploadDocStyle: {
+      backgroundColor: '#F3F3F3 !important',
+      borderRadius: '4px',
+      padding: '20px 30px',
+      dropzoneClass: {
+        background: 'red',
+      },
+    },
 
-  cancelFileBtnStyle: {
-    marginRight: '20px',
-  },
-  insertFileBtnStyle: {
-    color: colors.white,
-    backgroundColor: colors.primary,
-    '&:hover': {
+    cancelFileBtnStyle: {
+      marginRight: '20px',
+    },
+    insertFileBtnStyle: {
+      color: colors.white,
       backgroundColor: colors.primary,
+      '&:hover': {
+        backgroundColor: colors.primary,
+      },
     },
-  },
-})
+  })
+)
+
 export const UploadDataWrapper = styled.div`
   padding: 30px 50px;
   background: ${colors.white};

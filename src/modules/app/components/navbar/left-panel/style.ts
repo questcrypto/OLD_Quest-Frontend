@@ -1,58 +1,60 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 
-export const useStyles = makeStyles(() => ({
-  drawer: {
-    width: '240px',
-  },
-  drawerPaper: {
-    '&::-webkit-scrollbar': {
-      display: 'none',
+export const useStyles = makeStyles(() =>
+  createStyles({
+    drawer: {
+      width: '240px',
     },
-    background: '#FBFBFB',
-  },
-  root: {
-    position: 'sticky',
-    overflowY: 'scroll',
-    '&::-webkit-scrollbar': {
-      display: 'none',
+    drawerPaper: {
+      '&::-webkit-scrollbar': {
+        display: 'none',
+      },
+      background: '#FBFBFB',
     },
-    top: 0,
-    scrollbarWidth: 'none',
-    height: '100vh',
-    minHeight: '600px',
-  },
+    root: {
+      position: 'sticky',
+      overflowY: 'scroll',
+      '&::-webkit-scrollbar': {
+        display: 'none',
+      },
+      top: 0,
+      scrollbarWidth: 'none',
+      height: '100vh',
+      minHeight: '600px',
+    },
 
-  itemButtonStyle: {
-    display: 'flex',
-    marginBottom: '30px',
-    alignItems: 'center',
-  },
-  iconStyle: {
-    marginRight: '15px',
-    width: '20px',
-    height: '20px',
-  },
-  textStyle: {
-    fontSize: '16px',
-    lineHeight: '19px',
-    color: colors.textPrimary,
-  },
+    itemButtonStyle: {
+      display: 'flex',
+      marginBottom: '30px',
+      alignItems: 'center',
+    },
+    iconStyle: {
+      marginRight: '15px',
+      width: '20px',
+      height: '20px',
+    },
+    textStyle: {
+      fontSize: '16px',
+      lineHeight: '19px',
+      color: colors.textPrimary,
+    },
 
-  dividerStyle: {
-    width: '46px',
-    margin: '0 0 54px 30px',
-  },
-  signOutStyle: {
-    position: 'absolute',
-    bottom: '20px',
-  },
-  signOutDividerStyle: {
-    width: '46px',
-    margin: '0 0 30px 30px',
-  },
-}))
+    dividerStyle: {
+      width: '46px',
+      margin: '0 0 54px 30px',
+    },
+    signOutStyle: {
+      position: 'absolute',
+      bottom: '20px',
+    },
+    signOutDividerStyle: {
+      width: '46px',
+      margin: '0 0 30px 30px',
+    },
+  })
+)
 
 export const QuestLogoCont = styled.div`
   padding: 30px 12px;

@@ -1,15 +1,17 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-  colorPrimary: {
-    color: '#1E3444',
-  },
-})
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    colorPrimary: {
+      color: '#1E3444',
+    },
+  })
+)
 const ProgressBar = () => {
   const classes = useStyles()
   const [progress, setProgress] = React.useState(0)

@@ -2,68 +2,70 @@ import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import { withStyles } from '@material-ui/core'
+import { createStyles, withStyles } from '@material-ui/core'
 
-export const useStyles = makeStyles((theme) => ({
-  headerStyle: {
-    marginBottom: '50px',
-  },
-  tabStyle: {
-    marginBottom: '20px',
-  },
-  search: {
-    position: 'relative',
-    borderRadius: '2px',
-    backgroundColor: '#F5F5F5',
-    '&:hover': {
-      backgroundColor: fade(colors.white, 0.75),
+export const useStyles = makeStyles((theme) =>
+  createStyles({
+    headerStyle: {
+      marginBottom: '50px',
     },
-    margin: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 'auto',
+    tabStyle: {
+      marginBottom: '20px',
     },
-    border: '1px solid #E0E0E0',
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: colors.textPrimary,
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+    search: {
+      position: 'relative',
+      borderRadius: '2px',
+      backgroundColor: '#F5F5F5',
+      '&:hover': {
+        backgroundColor: fade(colors.white, 0.75),
+      },
+      margin: 0,
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: 'auto',
+      },
+      border: '1px solid #E0E0E0',
     },
-  },
-  progressStyle: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-    marginTop: '8px',
-  },
-  addPropertyBtnStyle: {
-    width: '100% !important',
-    height: '36px',
-    color: `${colors.white} !important`,
-    backgroundColor: `${colors.primary} !important`,
-    fontSize: '12px',
-    padding: '10px 5px',
-    '&:hover': {
+    searchIcon: {
+      padding: theme.spacing(0, 2),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    inputRoot: {
+      color: colors.textPrimary,
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 0),
+      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
+      },
+    },
+    progressStyle: {
+      display: 'flex',
+      alignItems: 'center',
+      width: '100%',
+      marginTop: '8px',
+    },
+    addPropertyBtnStyle: {
+      width: '100% !important',
+      height: '36px',
+      color: `${colors.white} !important`,
       backgroundColor: `${colors.primary} !important`,
+      fontSize: '12px',
+      padding: '10px 5px',
+      '&:hover': {
+        backgroundColor: `${colors.primary} !important`,
+      },
     },
-  },
-}))
+  })
+)
 
 export const StyledLinearProgress = withStyles({
   colorPrimary: {

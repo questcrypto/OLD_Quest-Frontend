@@ -2,17 +2,19 @@ import React from 'react'
 import { Field } from 'formik'
 import { floatNumRegex } from 'shared/helpers/regexConstants'
 import TextField from '@material-ui/core/TextField'
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { colors } from 'shared/styles/theme'
 
-const textFieldStyle = makeStyles({
-  root: {
-    marginBottom: '20px',
-    lineHeight: '26px',
-    color: '#1E3444',
-    backgroundColor: colors.white,
-  },
-})
+const textFieldStyle = makeStyles(() =>
+  createStyles({
+    root: {
+      marginBottom: '20px',
+      lineHeight: '26px',
+      color: '#1E3444',
+      backgroundColor: colors.white,
+    },
+  })
+)
 
 interface Props {
   name: string

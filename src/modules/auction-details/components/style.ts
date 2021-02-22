@@ -1,0 +1,270 @@
+import styled from 'styled-components'
+import { colors } from 'shared/styles/theme'
+import { createStyles, makeStyles, withStyles } from '@material-ui/core/styles'
+import { LinearProgress, Slider } from '@material-ui/core'
+
+export const imagesStyle = makeStyles(() =>
+  createStyles({
+    imgStyle: {
+      height: 250,
+      width: '100%',
+    },
+    smallImgCont: {
+      margin: '20px 0 12px 0',
+      boxSizing: 'border-box',
+    },
+    imgOnHoverStyle: {
+      '&:hover': {
+        transform: 'scale(1.3)',
+        transition: 'transform .2s',
+      },
+    },
+    smallImgStyle: {
+      height: 57,
+      width: 72,
+      cursor: 'pointer',
+      borderRadius: '5px',
+    },
+  })
+)
+export const auctionBidStyle = makeStyles(() =>
+  createStyles({
+    bidContStyle: {
+      background: colors.paperBackground2,
+      border: `1px solid ${colors.lightGray}`,
+    },
+    actionBidContStyle: {
+      padding: '12px 30px 27px 20px',
+    },
+    tokenStyle: {
+      width: 100,
+      maxWidth: 100,
+    },
+    makeBidStyle: {
+      width: 232,
+      maxWidth: 232,
+    },
+    totalBidContStyle: {
+      padding: '20px',
+      background: colors.paperBackground4,
+    },
+    totalBid: {
+      width: 273,
+      maxWidth: 273,
+    },
+    linkContStyle: {
+      marginTop: '16px',
+    },
+  })
+)
+export const auctionStatsStyle = makeStyles(() =>
+  createStyles({
+    priorityIconStyle: {
+      color: colors.white,
+      background: 'black',
+      padding: '5px',
+      fontSize: '20px',
+    },
+    helpIconStyle: {
+      padding: '5px',
+      fontSize: '16px',
+    },
+  })
+)
+
+export const bidStyle = makeStyles(() =>
+  createStyles({
+    root: {
+      background: colors.paperBackground,
+      borderRadius: '10px',
+      width: '100%',
+      maxWidth: 500,
+      boxSizing: 'border-box',
+    },
+    bidInfoCont: {
+      padding: '30px 40px 20px 40px',
+    },
+    titleCont: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: '12px',
+    },
+    closeIconStyle: {
+      cursor: 'pointer',
+    },
+    bidInfo: {
+      margin: '25px 0',
+      width: '100%',
+    },
+    bidCommunicationCont: {
+      padding: '35px 40px 20px 40px',
+    },
+    submitCont: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+    },
+  })
+)
+
+export const BoldText = styled.h4`
+  font-size: 16px;
+  line-height: 20px;
+  color: ${colors.textPrimary};
+  margin: 0;
+`
+export const LightText = styled.p`
+  font-size: 14px;
+  line-height: 26px;
+  color: ${colors.textPrimary};
+  opacity: 0.87;
+  margin: 0;
+`
+export const AboutPropertyTxt = styled(LightText)`
+  opacity: 0.6;
+`
+export const Title = styled.p`
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+  color: ${colors.textPrimary};
+  font-weight: bold;
+  span {
+    font-size: 15px;
+    line-height: 18px;
+    opacity: 0.87;
+    font-weight: normal;
+    margin-left: 15px;
+  }
+`
+export const CurrentBidInfo = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin: 10px 0 12px 0;
+  img {
+    margin: 8px 10px 0 0;
+  }
+`
+export const SliderWrap = styled.div`
+  background: rgba(245, 245, 245, 0.15);
+  border: 1px solid rgba(48, 46, 53, 0.15);
+  padding: 5px 12px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 24px 0;
+  box-sizing: border-box;
+`
+export const StyledSlider = withStyles({
+  root: {
+    color: colors.primary,
+    height: 2,
+    width: '98%',
+  },
+  thumb: {
+    height: 20,
+    width: 20,
+    top: '35%',
+    backgroundColor: '#1E3444',
+    border: '2px solid currentColor',
+    '&:focus,&:hover,&$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-50% + 1px)',
+    background: 'transparent',
+    '& *': {
+      background: 'transparent',
+      color: colors.primary,
+      fontSize: '16px',
+      lineHeight: '26px',
+    },
+    ':after': {
+      content: '%',
+    },
+  },
+  track: {
+    height: 4,
+    borderRadius: 2,
+  },
+  rail: {
+    height: 4,
+    borderRadius: 2,
+  },
+})(Slider)
+
+export const ShareLinkCont = styled.div`
+  display: flex;
+  svg {
+    margin-right: 8px;
+    color: ${colors.primary};
+    background: ${colors.paperBackground4};
+    padding: 5px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+`
+export const StatsInfoCont = styled.div`
+  background: #f7f7f7;
+  padding: 18px;
+`
+export const StatsInfo = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+`
+export const StatsTimeInfo = styled.div`
+  display: flex;
+  margin: 12px 0 30px 0;
+  svg {
+    margin-right: 8px;
+    color: #c4c4c4;
+  }
+`
+export const StatText = styled.p`
+  font-size: 12px;
+  line-height: 26px;
+  color: ${colors.textPrimary};
+  opacity: 0.87;
+  margin: 0;
+`
+export const StatTitle = styled.h2`
+  font-size: 18px;
+  line-height: 22px;
+  color: ${colors.textPrimary};
+  margin: 0 0 30px 0;
+`
+export const StatCircle = styled.div`
+  width: 40px;
+  height: 40px;
+  background: #c4c4c4;
+  border-radius: 50%;
+  margin-right: 16px;
+`
+export const StatTimeText = styled(StatText)`
+  line-height: 18px;
+`
+export const TokenSoldInfo = styled.div`
+  padding: 17px 0;
+  background: #c4c4c4;
+  text-align: center;
+`
+export const ConfirmationInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-item: center;
+  padding: 10px;
+  background: ${colors.lightYellow};
+  svg {
+    cursor: pointer;
+    border-radius: 50%;
+  }
+`
+export const StyledLinearProgress = withStyles({
+  colorPrimary: {
+    backgroundColor: '#949DA4',
+  },
+  barColorPrimary: {
+    backgroundColor: '#EB5757',
+  },
+})(LinearProgress)

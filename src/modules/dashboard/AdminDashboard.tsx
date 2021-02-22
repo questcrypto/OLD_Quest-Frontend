@@ -25,6 +25,10 @@ const AdminDashboard = (props: any) => {
   const [publishedLoading, setPublishedLoading] = useState(false)
   const { userInfo } = props
 
+  const [searchTerm, setSearchTerm] = useState('')
+  console.log(searchTerm)
+  const [currentData, setCurrentData] = useState<any>([])
+  console.log(currentData)
   useEffect(() => {
     const getPropertiesList = async () => {
       try {
@@ -81,6 +85,41 @@ const AdminDashboard = (props: any) => {
   const updateApprove = () => {
     updateApprovedProperty()
     updatePublishedProperty()
+  }
+
+  const handleChange = (e: any) => { 
+    const { value } = e.target
+
+    if (!value) {
+      setCurrentData([...publishedProperties])
+    } else {
+      filterData(value)
+    }
+  }
+  const filterData = (dataVal: any) => {
+    const FilteredValue = publishedProperties.filter(
+      (value: {
+        Address1: string
+        State: string
+        Country: string
+        Fname: string
+        Lname: string
+        PropertyType: string
+        CurrentValue: string
+      }) => {
+        return (
+          value.Address1.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.State.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.Country.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.Fname.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.Lname.toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.PropertyType.toString().toLowerCase().includes(dataVal.toLowerCase()) ||
+          value.CurrentValue.toString().toLowerCase().includes(dataVal.toLowerCase())
+        )
+      }
+    )
+
+    setCurrentData([...FilteredValue])
   }
 
   return (
@@ -144,6 +183,7 @@ const AdminDashboard = (props: any) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleChange}
             />
           </div>
         </Grid>
@@ -158,9 +198,10 @@ const AdminDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'new' && <PropertyTable data={propertiesList} />}
+            {activeTab === 'new' && <PropertyTable searchquery={searchTerm} data={propertiesList} />}
             {activeTab === 'approved' && (
               <ApprovedProperty
+                searchquery={searchTerm}
                 data={approvedProperties}
                 approvedLoading={approvedLoading}
                 userInfo={userInfo}
@@ -168,7 +209,9 @@ const AdminDashboard = (props: any) => {
                 updateApprove={updateApprove}
               />
             )}
-            {activeTab === 'published' && <PublishedProperty data={publishedProperties} publishedLoading={publishedLoading} />}
+            {activeTab === 'published' && (
+              <PublishedProperty searchquery={searchTerm} data={publishedProperties} publishedLoading={publishedLoading} />
+            )}
             {activeTab === 'preAuctions' && <p>Content can be added here</p>}
             {activeTab === 'onAuctions' && <p>Content can be added here</p>}
             {activeTab === 'postAuctions' && <p>Content can be added here</p>}

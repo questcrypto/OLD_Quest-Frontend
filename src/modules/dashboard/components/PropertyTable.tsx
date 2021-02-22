@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useStyles, PaginationText, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
 import Grid from '@material-ui/core/Grid'
@@ -15,13 +15,16 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 
 const PropertyTable = (props: any) => {
-  const classes = useStyles()
   const { data } = props
+
+  let FilteredValue: any
+
+  console.log('this is prop data => ', props.searchquery)
+  const classes = useStyles()
 
   const handleAction = (id: any) => {
     history.push(`${Paths.propertyDetails}/${id}`)
   }
-
   const getName = (firstName: string, lastName: string) => {
     let fName = ''
     let lName = ''
@@ -52,6 +55,7 @@ const PropertyTable = (props: any) => {
           </TableHead>
           {!!data && data.length > 0 && (
             <TableBody className={classes.tableHeadStyle}>
+              {/* {console.log("data => ", data)} */}
               {data.map((row: any, k: number) => (
                 <TableRow key={k}>
                   <TableCell component="th" scope="row">

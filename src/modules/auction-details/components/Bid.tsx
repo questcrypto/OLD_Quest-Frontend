@@ -18,7 +18,7 @@ const Bid = (props: any) => {
     console.log('values')
   }
   return (
-    <Paper className={classes.root} elevation={0}>
+    <Box className={classes.root}>
       <Box className={classes.bidInfoCont}>
         <Box className={classes.titleCont}>
           <Title>Make Bid</Title>
@@ -60,7 +60,7 @@ const Bid = (props: any) => {
           )}
         </Formik>
       </Box>
-    </Paper>
+    </Box>
   )
 }
 

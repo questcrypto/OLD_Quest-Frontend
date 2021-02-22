@@ -76,7 +76,6 @@ export const bidStyle = makeStyles(() =>
   createStyles({
     root: {
       background: colors.paperBackground,
-      borderRadius: '10px',
       width: '100%',
       maxWidth: 500,
       boxSizing: 'border-box',

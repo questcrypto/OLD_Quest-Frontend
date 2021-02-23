@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,17 +81,19 @@ export const useStyles = makeStyles((theme: Theme) =>
       WebkitBoxShadow: 'none',
     },
     expandIconStyle: {
-      background: '#E0E0E0',
+      background: colors.lightGray,
+      cursor: 'pointer',
     },
     treasuryDividerStyle: {
       margin: '30px 0 !important',
     },
     infoContStyle: {
+      position: 'relative',
       alignItems: 'center',
+      marginBottom: '20px',
       '& img': {
         width: '93px',
         height: '74px',
-        marginRight: '20px',
       },
     },
     verticalDividerStyle: {
@@ -99,7 +102,6 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     treasuryOwnersContStyle: {
       marginTop: '30px',
-      paddingLeft: '16px',
     },
     treasuryOwnersPaper: {
       padding: '10px',
@@ -239,4 +241,14 @@ export const TreasuryOwnerCont = styled.div`
 export const HeaderBtnGroup = styled.div`
   display: flex;
   align-items: center;
+`
+export const ExpandIconButton = styled(IconButton)<any>`
+  position: absolute;
+  top: 16px;
+  right: 0;
+  svg {
+    transform: ${(props: any) => (props.expandStatus ? 'rotate(180deg)' : 'rotate(0deg)')};
+    transition: 0.2s;
+    background: ${colors.lightGray};
+  }
 `

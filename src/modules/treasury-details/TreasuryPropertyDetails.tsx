@@ -8,6 +8,7 @@ import {
   NoDetailsAvailable,
   HeaderPath,
   HeaderTitle,
+  ExpandIconButton,
   FeatureHeading,
   InfoBoldTxt,
   InfoLightTxt,
@@ -20,6 +21,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import MailIcon from '@material-ui/icons/Mail'
 import Divider from '@material-ui/core/Divider'
+import Collapse from '@material-ui/core/Collapse'
 import Accordion from '@material-ui/core/Accordion'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
@@ -48,6 +50,7 @@ const TreasuryPropertyDetails = (props: any) => {
   const [activeTab, setActiveTab] = useState('documents')
   const [docData /* setDocData */] = useState<any>([])
   const [showAuctionModal, setShowAuctionModal] = useState(false)
+  const [expanded, setExpanded] = useState(false)
 
   useEffect(() => {
     let web3: Web3
@@ -147,67 +150,69 @@ const TreasuryPropertyDetails = (props: any) => {
           {!!propertyInfo && Object.values(propertyInfo).length > 0 ? (
             <div>
               <Paper className={classes.treasuryPaper} elevation={1}>
-                <Accordion className={classes.infoAccordionStyle}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
-                    aria-controls="panel2a-content"
-                    id="info-header"
-                  >
-                    <Grid container className={classes.infoContStyle}>
-                      <Grid item>
-                        <img src={`${apiBaseUrl}/${imageList[0].filename}`} alt="" />
-                      </Grid>
-                      <Grid item>
-                        <InfoBoldTxt>1901 Thornridge Cir.</InfoBoldTxt>
-                        <InfoLightTxt>1228,Los Angeles D4.1, NY, USA</InfoLightTxt>
-                      </Grid>
-                      <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                      <Grid item>
-                        <InfoLightTxt>Onboarding date</InfoLightTxt>
-                        <InfoBoldTxt>29 Jan 2021</InfoBoldTxt>
-                      </Grid>
-                      <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                      <Grid item>
-                        <InfoLightTxt>Status</InfoLightTxt>
-                        <InfoBoldTxt>Published</InfoBoldTxt>
-                      </Grid>
-                      <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                      <Grid item>
-                        <InfoLightTxt>Estimated value</InfoLightTxt>
-                        <InfoBoldTxt>$ 1,254,328.00</InfoBoldTxt>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Grid container direction="column">
-                      <Accordion className={classes.accordionStyle}>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
-                          aria-controls="panel2a-content"
-                          id="feature-header"
-                        >
-                          <FeatureHeading>Features</FeatureHeading>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          <Features data={propertyInfo.propertyDetails} />
-                        </AccordionDetails>
-                      </Accordion>
+                <Grid container className={classes.infoContStyle} spacing={2}>
+                  <Grid item>
+                    <img src={`${apiBaseUrl}/${imageList[0].filename}`} alt="" />
+                  </Grid>
+                  <Grid item>
+                    <InfoBoldTxt>1901 Thorn ridge Cir.</InfoBoldTxt>
+                    <InfoLightTxt>1228,Los Angeles D4.1, NY, USA</InfoLightTxt>
+                  </Grid>
+                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                  <Grid item>
+                    <InfoLightTxt>Onboarding date</InfoLightTxt>
+                    <InfoBoldTxt>29 Jan 2021</InfoBoldTxt>
+                  </Grid>
+                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                  <Grid item>
+                    <InfoLightTxt>Status</InfoLightTxt>
+                    <InfoBoldTxt>Published</InfoBoldTxt>
+                  </Grid>
+                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                  <Grid item>
+                    <InfoLightTxt>Estimated value</InfoLightTxt>
+                    <InfoBoldTxt>$ 1,254,328.00</InfoBoldTxt>
+                  </Grid>
+                  <Grid item>
+                    <ExpandIconButton
+                      expandStatus={expanded}
+                      onClick={() => {
+                        setExpanded(!expanded)
+                      }}
+                    >
+                      <ExpandMoreIcon />
+                    </ExpandIconButton>
+                  </Grid>
+                </Grid>
+                <Collapse in={expanded} timeout="auto">
+                  <Grid container direction="column">
+                    <Accordion className={classes.accordionStyle}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
+                        aria-controls="panel2a-content"
+                        id="feature-header"
+                      >
+                        <FeatureHeading>Features</FeatureHeading>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Features data={propertyInfo.propertyDetails} />
+                      </AccordionDetails>
+                    </Accordion>
 
-                      <Accordion className={classes.accordionStyle}>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
-                          aria-controls="panel1a-content"
-                          id="rental-fact-header"
-                        >
-                          <FeatureHeading style={{ marginTop: '18px' }}>Rental facts and features</FeatureHeading>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          <RentalFacts data={propertyInfo.propertyDetails} />
-                        </AccordionDetails>
-                      </Accordion>
-                    </Grid>
-                  </AccordionDetails>
-                </Accordion>
+                    <Accordion className={classes.accordionStyle}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
+                        aria-controls="panel1a-content"
+                        id="rental-fact-header"
+                      >
+                        <FeatureHeading style={{ marginTop: '18px' }}>Rental facts and features</FeatureHeading>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <RentalFacts data={propertyInfo.propertyDetails} />
+                      </AccordionDetails>
+                    </Accordion>
+                  </Grid>
+                </Collapse>
 
                 <Grid container spacing={2} className={classes.treasuryOwnersContStyle}>
                   <Grid item>

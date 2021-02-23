@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText, TabTitle } from './style'
+import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from './style'
 import PublishedProperty from './components/PublishedProperty'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
+import TabComponent from 'shared/tab-component'
+import Transactions from 'modules/transactions'
+import { treasuryTabList } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
@@ -47,28 +50,7 @@ const TreasuryDashboard = (props: any) => {
 
       <Grid container spacing={3} className={classes.tabStyle}>
         <Grid item xs={8}>
-          <Grid container spacing={3}>
-            <Grid item>
-              <TabTitle onClick={() => setActiveTab('published')} active={activeTab === 'published'}>
-                Published
-              </TabTitle>
-            </Grid>
-            <Grid item>
-              <TabTitle onClick={() => setActiveTab('preAuctions')} active={activeTab === 'preAuctions'}>
-                Pre-Auction
-              </TabTitle>
-            </Grid>
-            <Grid item>
-              <TabTitle onClick={() => setActiveTab('onAuctions')} active={activeTab === 'onAuctions'}>
-                On-Auction
-              </TabTitle>
-            </Grid>
-            <Grid item>
-              <TabTitle onClick={() => setActiveTab('postAuctions')} active={activeTab === 'postAuctions'}>
-                Post-Auction
-              </TabTitle>
-            </Grid>
-          </Grid>
+          <TabComponent tabOptions={treasuryTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
         </Grid>
         <Grid item xs={4}>
           <div className={classes.search}>
@@ -92,9 +74,10 @@ const TreasuryDashboard = (props: any) => {
         ) : (
           <div>
             {activeTab === 'published' && <PublishedProperty data={publishedProperties} userInfo={userInfo} />}
-            {activeTab === 'preAuctions' && <p>Content can be added here</p>}
-            {activeTab === 'onAuctions' && <p>Content can be added here</p>}
-            {activeTab === 'postAuctions' && <p>Content can be added here</p>}
+            {activeTab === 'preAuction' && <p>Content can be added here</p>}
+            {activeTab === 'onAuction' && <p>Content can be added here</p>}
+            {activeTab === 'postAuction' && <p>Content can be added here</p>}
+            {activeTab === 'transaction' && <Transactions />}
           </div>
         )}
       </div>

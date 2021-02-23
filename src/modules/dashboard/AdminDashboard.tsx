@@ -210,8 +210,8 @@ const AdminDashboard = (props: any) => {
               />
             )}
             {activeTab === 'published' && <PublishedProperty searchquery={searchTerm} data={data()} publishedLoading={publishedLoading} />}
-            {activeTab === 'preAuctions' && <p>Content can be added here</p>}
-            {activeTab === 'onAuctions' && <p>Content can be added here</p>}
+            {activeTab === 'preAuctions' && <PropertyTable searchquery={searchTerm} data={data()} />}
+            {activeTab === 'onAuctions' && <PropertyTable searchquery={searchTerm} data={data()} />}
             {activeTab === 'postAuctions' && <p>Content can be added here</p>}
           </div>
         )}

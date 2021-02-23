@@ -23,3 +23,77 @@ export const auctionTabList = [
     value: 'passed',
   },
 ]
+export const treasuryTabList = [
+  {
+    label: 'Published',
+    value: 'published',
+  },
+  {
+    label: 'Pre-Auction',
+    value: 'preAuction',
+  },
+  {
+    label: 'On-Auction',
+    value: 'onAuction',
+  },
+  {
+    label: 'Post-Auction',
+    value: 'postAuction',
+  },
+  {
+    label: 'Transaction',
+    value: 'transaction',
+  },
+]
+export const transactionTabList = [
+  {
+    label: 'Token To Mint',
+    value: 'tokenToMint',
+  },
+
+  {
+    label: 'Pending For MultiSig',
+    value: 'pendingForMultiSig',
+  },
+]
+export const propertyTabList = [
+  {
+    label: 'New',
+    value: 'new',
+  },
+  {
+    label: 'Approved',
+    value: 'approved',
+  },
+  {
+    label: 'Published',
+    value: 'published',
+  },
+  {
+    label: 'Pre-Auction',
+    value: 'preAuction',
+  },
+  {
+    label: 'On-Auction',
+    value: 'onAuction',
+  },
+  {
+    label: 'Post-Auction',
+    value: 'postAuction',
+  },
+]
+
+export const treasuryDetailsTabList = [
+  {
+    label: 'Documents',
+    value: 'documents',
+  },
+  {
+    label: 'Token holders',
+    value: 'tokenHolders',
+  },
+  {
+    label: 'Transactions',
+    value: 'transactions',
+  },
+]

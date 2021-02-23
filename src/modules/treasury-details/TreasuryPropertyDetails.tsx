@@ -12,7 +12,6 @@ import {
   InfoBoldTxt,
   InfoLightTxt,
   TreasuryOwnerCont,
-  TabTitle,
 } from './style'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
@@ -30,6 +29,8 @@ import RentalFacts from 'modules/property-features/RentalFacts'
 import DocumentsTable from './components/DocumentsTable'
 import AuctionConfiguration from './components/AuctionConfiguration'
 import CustomModal from 'shared/custom-modal'
+import TabComponent from 'shared/tab-component'
+import { treasuryDetailsTabList } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import { SLFContractAddress, selfAbi } from 'modules/chain/abi'
@@ -244,23 +245,7 @@ const TreasuryPropertyDetails = (props: any) => {
                   </Grid>
                 </Grid>
               </Paper>
-              <Grid container spacing={3}>
-                <Grid item>
-                  <TabTitle onClick={() => setActiveTab('documents')} active={activeTab === 'documents'}>
-                    Documents
-                  </TabTitle>
-                </Grid>
-                <Grid item>
-                  <TabTitle onClick={() => setActiveTab('tokenHolders')} active={activeTab === 'tokenHolders'}>
-                    Token holders
-                  </TabTitle>
-                </Grid>
-                <Grid item>
-                  <TabTitle onClick={() => setActiveTab('transactions')} active={activeTab === 'transactions'}>
-                    Transactions
-                  </TabTitle>
-                </Grid>
-              </Grid>
+              <TabComponent tabOptions={treasuryDetailsTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
               <DocumentsTable data={docData} />
             </div>
           ) : (

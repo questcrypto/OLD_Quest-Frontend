@@ -236,19 +236,6 @@ export const TreasuryOwnerCont = styled.div`
   justify-content: space-between;
   align-items: center;
 `
-export const TabTitle = styled.p<any>`
-  margin: 0;
-  font-size: 16px;
-  opacity: ${(props: any) => (props.active ? 1 : 0.87)};
-  color: ${(props: any) => (props.active ? colors.primary : colors.textPrimary)};
-  cursor: pointer;
-  text-align: center;
-  border-bottom: ${(props: any) => (props.active ? `1px solid ${colors.primary}` : 'none')};
-  padding-bottom: 20px;
-  &:hover {
-    color: ${colors.primary};
-  }
-`
 export const HeaderBtnGroup = styled.div`
   display: flex;
   align-items: center;

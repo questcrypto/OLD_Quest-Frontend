@@ -9,7 +9,7 @@ export const TabTitle = styled.p<any>`
   cursor: pointer;
   text-align: center;
   border-bottom: ${(props: any) => (props.active ? `1px solid ${colors.primary}` : 'none')};
-  padding: 0 5px 20px 5px;
+  padding: 0 1px 20px 1px;
   &:hover {
     color: ${colors.primary};
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import AdminDashboard from './AdminDashboard'
 import OwnerDashboard from './OwnerDashboard'
-import TreasuryDashboard from './TreasuryDashboard'
+import TreasuryDashboard from 'modules/treasury/dashboard'
 
 const Dashboard = (props: any) => {
   const { userInfo } = props

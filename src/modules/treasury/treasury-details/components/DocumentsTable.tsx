@@ -1,5 +1,6 @@
 import React from 'react'
-import { useStyles, PaginationText, NoDataContainer } from './style'
+import { docTableStyle, PaginationText, NoDataContainer } from './style'
+import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import TableContainer from '@material-ui/core/TableContainer'
 import Table from '@material-ui/core/Table'
@@ -19,14 +20,24 @@ const dataVal = [
     uploadedBy: 'White Castaneda',
     authorization: 'Public',
   },
+  {
+    name: 'Test',
+    upLoadedOn: '29 Jan 2021',
+    uploadedBy: 'White Castaneda',
+    authorization: 'Public',
+  },
+  {
+    name: 'Test',
+    upLoadedOn: '29 Jan 2021',
+    uploadedBy: 'White Castaneda',
+    authorization: 'Public',
+  },
 ]
 
 const DocumentsTable = (props: any) => {
-  const classes = useStyles()
-  const { data } = props
-
+  const classes = docTableStyle()
   return (
-    <Grid>
+    <Box>
       <TableContainer component={Paper} className={classes.root}>
         <Table aria-label="simple table">
           <TableHead>
@@ -39,9 +50,9 @@ const DocumentsTable = (props: any) => {
             </TableRow>
           </TableHead>
           {!!dataVal && dataVal.length > 0 && (
-            <TableBody className={classes.tableHeadStyle}>
+            <TableBody>
               {dataVal.map((row: any, k: number) => (
-                <TableRow key={k}>
+                <TableRow key={k} className={classes.tableRowStyle}>
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell>
@@ -80,7 +91,7 @@ const DocumentsTable = (props: any) => {
           <Pagination count={10} showFirstButton showLastButton />
         </Grid>
       )}
-    </Grid>
+    </Box>
   )
 }
 export default DocumentsTable

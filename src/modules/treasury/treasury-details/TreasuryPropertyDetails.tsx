@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import {
   useStyles,
   HeaderContainer,
-  HeaderBtnGroup,
   NoDetailsAvailable,
   HeaderPath,
   HeaderTitle,
@@ -22,10 +21,12 @@ import Paper from '@material-ui/core/Paper'
 import MailIcon from '@material-ui/icons/Mail'
 import Divider from '@material-ui/core/Divider'
 import Collapse from '@material-ui/core/Collapse'
+import IconButton from '@material-ui/core/IconButton'
 import Accordion from '@material-ui/core/Accordion'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Spinner from 'shared/loader-components/spinner'
 import Features from 'modules/property-features/Features'
 import RentalFacts from 'modules/property-features/RentalFacts'
 import DocumentsTable from './components/DocumentsTable'
@@ -33,12 +34,12 @@ import AuctionConfiguration from './components/AuctionConfiguration'
 import CustomModal from 'shared/custom-modal'
 import TabComponent from 'shared/tab-component'
 import { treasuryDetailsTabList } from 'shared/helpers/dataConstant'
+// import {getWeb3Val} from 'modules/block-chain'
+import { SLFContractAddress, selfAbi } from 'modules/block-chain/abi'
+// import { SLCContractAddress, SLFContractAddress, selfAbi, slcAbi } from 'modules/chain/abi'
+import { getWeb3Val, handlePropertyDetailsSubmit } from 'modules/block-chain/BlockChainMethods'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { SLFContractAddress, selfAbi } from 'modules/chain/abi'
-// import { SLCContractAddress, SLFContractAddress, selfAbi, slcAbi } from 'modules/chain/abi'
-import { handlePropertyDetailsSubmit } from 'modules/chain/chain'
-import Web3 from 'web3'
 
 const TreasuryPropertyDetails = (props: any) => {
   const classes = useStyles()
@@ -51,35 +52,24 @@ const TreasuryPropertyDetails = (props: any) => {
   const [docData /* setDocData */] = useState<any>([])
   const [showAuctionModal, setShowAuctionModal] = useState(false)
   const [expanded, setExpanded] = useState(false)
+  const [mintLoading, setMintLoading] = useState(false)
+  const { userInfo } = props
 
   useEffect(() => {
-    let web3: Web3
-
     const getChainDetails = async () => {
-      if (!window.ethereum) {
-        window.alert('Please install MetaMask first.')
-        return
-      }
-
-      if (!web3) {
-        try {
-          await window.ethereum.enable()
-          web3 = new Web3(window.ethereum)
-        } catch (error) {
-          window.alert('You need to allow MetaMask.')
-          return
-        }
-      }
       try {
-        const accounts = await web3.eth.getAccounts()
-        setAccount(accounts[0])
-        const SLFInstance = new web3.eth.Contract(selfAbi, SLFContractAddress)
-        // const SLCInstance = new web3.eth.Contract(slcAbi, SLCContractAddress)
-        window.ethereum.on('accountsChanged', (accounts: any) => {
+        const web3 = await getWeb3Val()
+        if (web3) {
+          const accounts = await web3.eth.getAccounts()
           setAccount(accounts[0])
-        })
-        setContractSLF(SLFInstance)
-        // setContractSLC(SLCInstance)
+          const SLFInstance = new web3.eth.Contract(selfAbi, SLFContractAddress)
+          // const SLCInstance = new web3.eth.Contract(slcAbi, SLCContractAddress)
+          window.ethereum.on('accountsChanged', (accounts: any) => {
+            setAccount(accounts[0])
+          })
+          setContractSLF(SLFInstance)
+          // setContractSLC(SLCInstance)
+        }
       } catch (err) {
         alert(`Failed to load web3, accounts, or contract. Check console for details.`)
         console.log('err->', err)
@@ -94,6 +84,7 @@ const TreasuryPropertyDetails = (props: any) => {
       try {
         setDataLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
+        console.log('res.data=>', res.data)
         if (!!res && res.data) {
           const images = []
           const docs = []
@@ -116,9 +107,15 @@ const TreasuryPropertyDetails = (props: any) => {
     getPropertyDetails()
   }, [props.match.params.propertyId])
 
-  const handleApproveByAdmin = () => {
-    const propertyId = props.match.params.propertyId
-    handlePropertyDetailsSubmit(contractSLF, account, 1000, 1613575905, propertyId)
+  const handleApproveByAdmin = async () => {
+    try {
+      setMintLoading(true)
+      const propertyId = props.match.params.propertyId
+      handlePropertyDetailsSubmit(contractSLF, account, 1000, 1613575905, propertyId)
+    } catch (error) {
+    } finally {
+      setMintLoading(false)
+    }
   }
 
   return (
@@ -132,14 +129,19 @@ const TreasuryPropertyDetails = (props: any) => {
             <HeaderTitle>Property Details</HeaderTitle>
           </Grid>
           <Grid item>
-            <HeaderBtnGroup>
-              <PrimaryButton variant="contained" onClick={() => handleApproveByAdmin()} style={{ marginRight: '20px' }}>
-                MINT NFT
-              </PrimaryButton>
-              <SecondaryButton variant="contained" onClick={() => setShowAuctionModal(true)}>
-                CONFIGURE AUCTION
-              </SecondaryButton>
-            </HeaderBtnGroup>
+            {!!propertyInfo && propertyInfo.propertyDetails && (
+              <div>
+                {propertyInfo.propertyDetails.Isactive ? (
+                  <SecondaryButton variant="contained" onClick={() => setShowAuctionModal(true)}>
+                    CONFIGURE AUCTION
+                  </SecondaryButton>
+                ) : (
+                  <PrimaryButton variant="contained" onClick={() => handleApproveByAdmin()}>
+                    {mintLoading ? <Spinner /> : ' MINT NFT'}
+                  </PrimaryButton>
+                )}
+              </div>
+            )}
           </Grid>
         </Grid>
       </HeaderContainer>
@@ -180,7 +182,9 @@ const TreasuryPropertyDetails = (props: any) => {
                         setExpanded(!expanded)
                       }}
                     >
-                      <ExpandMoreIcon />
+                      <IconButton>
+                        <ExpandMoreIcon />
+                      </IconButton>
                     </ExpandIconButton>
                   </Grid>
                 </Grid>
@@ -261,7 +265,11 @@ const TreasuryPropertyDetails = (props: any) => {
         </div>
       )}
       <CustomModal show={showAuctionModal} toggleModal={setShowAuctionModal}>
-        <AuctionConfiguration setShowAuctionModal={setShowAuctionModal} />
+        <AuctionConfiguration
+          propId={props.match.params.propertyId}
+          publicAddress={userInfo.publicaddress}
+          setShowAuctionModal={setShowAuctionModal}
+        />
       </CustomModal>
     </Box>
   )

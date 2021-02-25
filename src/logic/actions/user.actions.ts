@@ -1,10 +1,18 @@
-import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, LOGIN_START, LOGIN_SUCCESS, LOGIN_FAIL } from './action.config'
+import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, LOGIN_START, LOGIN_SUCCESS, LOGIN_FAIL, SET_SOCKET_CONNECTION } from './action.config'
 
 export const authStart = () => {
   return {
     type: AUTH_START,
   }
 }
+
+export const setSocketConnection = (data: any) => {
+  return {
+    type: SET_SOCKET_CONNECTION,
+    payload: data,
+  }
+}
+
 export const authSuccess = (data: any) => {
   return {
     type: AUTH_SUCCESS,

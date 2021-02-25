@@ -42,8 +42,9 @@ const FormDatePicker = (props: Props) => {
             autoComplete={name}
             autoFocus
             onChange={handleChange}
-            type={!!type ? type : 'text'}
+            type={!!type ? type : 'date'} 
             className={classes.root}
+            InputLabelProps={{ shrink: true }}
           />
         )
       }}

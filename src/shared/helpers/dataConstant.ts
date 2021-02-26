@@ -41,21 +41,11 @@ export const treasuryTabList = [
     value: 'postAuction',
   },
   {
-    label: 'Transaction',
-    value: 'transaction',
-  },
-]
-export const transactionTabList = [
-  {
     label: 'Token To Mint',
     value: 'tokenToMint',
   },
-
-  {
-    label: 'Pending For MultiSig',
-    value: 'pendingForMultiSig',
-  },
 ]
+
 export const propertyTabList = [
   {
     label: 'New',

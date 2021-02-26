@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from './style'
-import PublishedProperty from './components/PublishedProperty'
+import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from 'shared/styles/dashboardStyle'
+import DashboardTable from './components/DashboardTable'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import TabComponent from 'shared/tab-component'
-import Transactions from 'modules/transactions'
+import TokenToMintTable from './components/TokenToMintTable'
 import { treasuryTabList } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
@@ -17,6 +17,8 @@ const TreasuryDashboard = (props: any) => {
   const [activeTab, setActiveTab] = useState('published')
   const [dataLoading, setDataLoading] = useState(false)
   const [publishedProperties, setPublishedProperties] = useState<any>([])
+  const [tokenToMintData, setTokenToMintData] = useState<any>([])
+  const [transactionLoading, setTransactionLoading] = useState(false)
   const { userInfo } = props
 
   useEffect(() => {
@@ -30,9 +32,23 @@ const TreasuryDashboard = (props: any) => {
         setDataLoading(false)
       }
     }
+    const getTokenToMintData = async () => {
+      try {
+        setTransactionLoading(true)
+        const data = {
+          publicaddress: !!userInfo && userInfo.publicaddress,
+        }
+        const res = await axios.post(`${apiBaseUrl}/properties/getAllPendingTransaction`, data)
+        setTokenToMintData(res.data)
+      } catch (error) {
+      } finally {
+        setTransactionLoading(false)
+      }
+    }
 
     getPublishedProperties()
-  }, [])
+    getTokenToMintData()
+  }, [userInfo])
 
   return (
     <Grid>
@@ -73,11 +89,11 @@ const TreasuryDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'published' && <PublishedProperty data={publishedProperties} userInfo={userInfo} />}
+            {activeTab === 'published' && <DashboardTable data={publishedProperties} />}
             {activeTab === 'preAuction' && <p>Content can be added here</p>}
             {activeTab === 'onAuction' && <p>Content can be added here</p>}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
-            {activeTab === 'transaction' && <Transactions />}
+            {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />}
           </div>
         )}
       </div>

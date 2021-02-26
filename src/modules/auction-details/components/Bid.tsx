@@ -1,7 +1,6 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import { bidStyle, Title, BoldText, LightText } from './style'
-import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import CloseIcon from '@material-ui/icons/Close'

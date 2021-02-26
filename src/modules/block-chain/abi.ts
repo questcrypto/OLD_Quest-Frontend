@@ -1,5 +1,5 @@
-export const SLCContractAddress = '0x4187bF335B665Afa3B84849901480DF1ff34a2f9'
-export const SLFContractAddress = '0x4Ee2E543651EFE2d13C60DA8C1a7D24C5D4c0B12'
+export const SLCContractAddress = '0x4f54acbE20F61Ab83B7235b1EdC1E0DfcFB98967'
+export const SLFContractAddress = '0xfC105f097Be85EC698D11e9ab2B9744F2A991749'
 
 export const selfAbi: any = [
   { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
@@ -214,6 +214,13 @@ export const slcAbi: any = [
     inputs: [{ internalType: 'address', name: '', type: 'address' }],
     name: '_owners',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: '_pendingTransactions',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },

@@ -36,7 +36,7 @@ import {
 } from './style'
 import { initialValues, propertyFormSchema } from './formConstant'
 import ComponentLoader from 'shared/loader-components/component-loader'
-import Button from '@material-ui/core/Button'
+import { PrimaryButton } from 'shared/components/buttons'
 import { Grid, Checkbox } from '@material-ui/core'
 import Divider from '@material-ui/core/Divider'
 import CustomTextField from 'shared/components/custom-text-field'
@@ -819,18 +819,7 @@ const EditPropertyForm = (props: any) => {
                       </CheckBoxCont>
                       {!!userInfo && userInfo.role === 1 ? (
                         <FormButtonGroup>
-                          <Button
-                            type="button"
-                            variant="contained"
-                            classes={{
-                              root: classes.saveAsDraftStyle,
-                            }}
-                            disabled={!!userInfo && userInfo.role !== 1}
-                          >
-                            SAVE AS DRAFT
-                          </Button>
-
-                          <Button
+                          <PrimaryButton
                             type="submit"
                             variant="contained"
                             classes={{
@@ -839,11 +828,11 @@ const EditPropertyForm = (props: any) => {
                             disabled={!permission}
                           >
                             {loading ? <Spinner /> : 'Save & Send for review'}
-                          </Button>
+                          </PrimaryButton>
                         </FormButtonGroup>
                       ) : (
                         <FormButtonGroup>
-                          <Button
+                          <PrimaryButton
                             type="button"
                             variant="contained"
                             classes={{
@@ -853,7 +842,7 @@ const EditPropertyForm = (props: any) => {
                             onClick={() => handlePropertyApprove()}
                           >
                             {loading ? <Spinner /> : 'Approve'}
-                          </Button>
+                          </PrimaryButton>
                         </FormButtonGroup>
                       )}
                     </SubmitContainer>
@@ -880,18 +869,17 @@ const EditPropertyForm = (props: any) => {
                 onChange={handleCommentOnChange}
                 value={commentMsg}
               />
-              <Button
+              <PrimaryButton
+                fullWidth
                 variant="contained"
-                classes={{
-                  root: classes.commentBtnStyle,
-                }}
+                classes={{ root: classes.commentBtnStyle }}
                 onClick={() => {
                   handleCommentSubmit()
                 }}
                 disabled={commentMsg.length === 0}
               >
                 Comment
-              </Button>
+              </PrimaryButton>
               <Divider className={classes.commentDividerStyle} />
               <div>{commentLoading ? <ComponentLoader /> : renderComment()}</div>
             </CommentContainer>

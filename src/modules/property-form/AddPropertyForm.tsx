@@ -27,8 +27,8 @@ import {
   FormButtonGroup,
 } from './style'
 import { initialValues, propertyFormSchema } from './formConstant'
-import Button from '@material-ui/core/Button'
 import { Grid, Checkbox } from '@material-ui/core'
+import { PrimaryButton } from 'shared/components/buttons'
 import Divider from '@material-ui/core/Divider'
 import CustomTextField from 'shared/components/custom-text-field'
 import FloatNumberField from 'shared/components/float-number-field'
@@ -498,17 +498,7 @@ const AddPropertyForm = () => {
                   <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
                 </CheckBoxCont>
                 <FormButtonGroup>
-                  <Button
-                    type="button"
-                    variant="contained"
-                    classes={{
-                      root: classes.saveAsDraftStyle,
-                    }}
-                  >
-                    SAVE AS DRAFT
-                  </Button>
-
-                  <Button
+                  <PrimaryButton
                     type="submit"
                     variant="contained"
                     classes={{
@@ -517,7 +507,7 @@ const AddPropertyForm = () => {
                     disabled={!permission}
                   >
                     {loading ? <Spinner /> : 'Save & Send for review'}
-                  </Button>
+                  </PrimaryButton>
                 </FormButtonGroup>
               </SubmitContainer>
             </Form>

@@ -50,12 +50,7 @@ export const useStyle = makeStyles(() =>
       backgroundColor: '#E0E0E0',
     },
     saveAndReviewStyle: {
-      color: colors.white,
       minWidth: '200px',
-      backgroundColor: colors.primary,
-      '&:hover': {
-        backgroundColor: colors.primary,
-      },
     },
     accordionStyle: {
       width: '100%',
@@ -78,12 +73,6 @@ export const useStyle = makeStyles(() =>
     },
     commentBtnStyle: {
       marginTop: '20px',
-      width: '100%',
-      color: colors.white,
-      backgroundColor: colors.primary,
-      '&:hover': {
-        backgroundColor: colors.primary,
-      },
     },
     docImgStyle: {
       marginRight: '24px',

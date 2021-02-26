@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from './style'
+import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from 'shared/styles/dashboardStyle'
 import PropertyTable from './components/PropertyTable'
 import ApprovedProperty from './components/ApprovedProperty'
 import PublishedProperty from './components/PublishedProperty'

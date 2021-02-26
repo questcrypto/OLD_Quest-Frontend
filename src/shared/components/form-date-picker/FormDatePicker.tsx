@@ -22,7 +22,7 @@ interface Props {
 }
 
 const FormDatePicker = (props: Props) => {
-  const { name, label, type } = props
+  const { name, label } = props
   const classes = textFieldStyle()
   return (
     <Field name={name}>
@@ -42,8 +42,9 @@ const FormDatePicker = (props: Props) => {
             autoComplete={name}
             autoFocus
             onChange={handleChange}
-            type={!!type ? type : 'text'}
+            type="date"
             className={classes.root}
+            InputLabelProps={{ shrink: true }}
           />
         )
       }}

@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import IconButton from '@material-ui/core/IconButton'
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -238,11 +237,7 @@ export const TreasuryOwnerCont = styled.div`
   justify-content: space-between;
   align-items: center;
 `
-export const HeaderBtnGroup = styled.div`
-  display: flex;
-  align-items: center;
-`
-export const ExpandIconButton = styled(IconButton)<any>`
+export const ExpandIconButton = styled.div<any>`
   position: absolute;
   top: 16px;
   right: 0;

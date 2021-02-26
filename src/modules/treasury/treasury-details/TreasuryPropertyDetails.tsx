@@ -53,6 +53,7 @@ const TreasuryPropertyDetails = (props: any) => {
   const [showAuctionModal, setShowAuctionModal] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const [mintLoading, setMintLoading] = useState(false)
+  const [mintStatus, setMintStatus] = useState(false)
   const { userInfo } = props
 
   useEffect(() => {
@@ -84,11 +85,13 @@ const TreasuryPropertyDetails = (props: any) => {
       try {
         setDataLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
-        console.log('res.data=>', res.data)
         if (!!res && res.data) {
           const images = []
           const docs = []
           setPropertyInfo(res.data)
+          /*  if (res.data.propertyDetails) {
+            setMintStatus(res.data.propertyDetails.Isactive)
+          } */
           for (const item of res.data.getDocs) {
             if (item.type === 0) {
               images.push(item)
@@ -108,14 +111,26 @@ const TreasuryPropertyDetails = (props: any) => {
   }, [props.match.params.propertyId])
 
   const handleApproveByAdmin = async () => {
-    try {
-      setMintLoading(true)
-      const propertyId = props.match.params.propertyId
-      handlePropertyDetailsSubmit(contractSLF, account, 1000, 1613575905, propertyId)
-    } catch (error) {
-    } finally {
-      setMintLoading(false)
-    }
+    setMintLoading(true)
+    const propertyId = props.match.params.propertyId
+    handlePropertyDetailsSubmit(contractSLF, account, 1000, 1613575905, propertyId)
+      .on('confirmation', async function (confirmationNumber: any, receipt: any) {
+        if (confirmationNumber === 1) {
+          try {
+            const data = { id: propertyId }
+            await axios.post(`${apiBaseUrl}/properties/updatePropertyStatus`, data)
+            setMintStatus(true)
+          } catch (error) {
+          } finally {
+            setMintLoading(false)
+          }
+          return
+        }
+      })
+      .on('error', function (error: any) {
+        setMintLoading(false)
+        return
+      })
   }
 
   return (
@@ -128,21 +143,19 @@ const TreasuryPropertyDetails = (props: any) => {
           <Grid item>
             <HeaderTitle>Property Details</HeaderTitle>
           </Grid>
-          <Grid item>
-            {!!propertyInfo && propertyInfo.propertyDetails && (
-              <div>
-                {propertyInfo.propertyDetails.Isactive ? (
-                  <SecondaryButton variant="contained" onClick={() => setShowAuctionModal(true)}>
-                    CONFIGURE AUCTION
-                  </SecondaryButton>
-                ) : (
-                  <PrimaryButton variant="contained" onClick={() => handleApproveByAdmin()}>
-                    {mintLoading ? <Spinner /> : ' MINT NFT'}
-                  </PrimaryButton>
-                )}
-              </div>
-            )}
-          </Grid>
+          {!dataLoading && (
+            <Grid item>
+              {mintStatus ? (
+                <SecondaryButton variant="contained" onClick={() => setShowAuctionModal(true)}>
+                  CONFIGURE AUCTION
+                </SecondaryButton>
+              ) : (
+                <PrimaryButton variant="contained" onClick={() => handleApproveByAdmin()} disabled={mintLoading}>
+                  {mintLoading ? <Spinner /> : 'MINT NFT'}
+                </PrimaryButton>
+              )}
+            </Grid>
+          )}
         </Grid>
       </HeaderContainer>
       {dataLoading ? (

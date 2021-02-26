@@ -7,7 +7,7 @@ import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import TabComponent from 'shared/tab-component'
-import Transactions from './transactions'
+import TokenToMintTable from './components/TokenToMintTable'
 import { treasuryTabList } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
@@ -17,7 +17,7 @@ const TreasuryDashboard = (props: any) => {
   const [activeTab, setActiveTab] = useState('published')
   const [dataLoading, setDataLoading] = useState(false)
   const [publishedProperties, setPublishedProperties] = useState<any>([])
-  const [pendingTransactions, setPendingTransaction] = useState<any>([])
+  const [tokenToMintData, setTokenToMintData] = useState<any>([])
   const [transactionLoading, setTransactionLoading] = useState(false)
   const { userInfo } = props
 
@@ -32,14 +32,14 @@ const TreasuryDashboard = (props: any) => {
         setDataLoading(false)
       }
     }
-    const getPendingTransactions = async () => {
+    const getTokenToMintData = async () => {
       try {
         setTransactionLoading(true)
         const data = {
           publicaddress: !!userInfo && userInfo.publicaddress,
         }
         const res = await axios.post(`${apiBaseUrl}/properties/getAllPendingTransaction`, data)
-        setPendingTransaction(res.data)
+        setTokenToMintData(res.data)
       } catch (error) {
       } finally {
         setTransactionLoading(false)
@@ -47,7 +47,7 @@ const TreasuryDashboard = (props: any) => {
     }
 
     getPublishedProperties()
-    getPendingTransactions()
+    getTokenToMintData()
   }, [userInfo])
 
   return (
@@ -93,7 +93,7 @@ const TreasuryDashboard = (props: any) => {
             {activeTab === 'preAuction' && <p>Content can be added here</p>}
             {activeTab === 'onAuction' && <p>Content can be added here</p>}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
-            {activeTab === 'transaction' && <Transactions pendingTransactions={pendingTransactions} dataLoading={transactionLoading} />}
+            {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />}
           </div>
         )}
       </div>

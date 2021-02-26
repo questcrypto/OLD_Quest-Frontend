@@ -16,7 +16,7 @@ import Spinner from 'shared/loader-components/spinner'
 import { SLCContractAddress, slcAbi } from 'modules/block-chain/abi'
 import { getWeb3Val, handleSignPendingTransactionSubmit } from 'modules/block-chain/BlockChainMethods'
 
-const TransactionTable = (props: any) => {
+const TokenToMintTable = (props: any) => {
   const classes = useStyles()
   const [account, setAccount] = useState('')
   const [contractSLC, setContractSLC] = useState<any>('')
@@ -119,4 +119,4 @@ const TransactionTable = (props: any) => {
     </Grid>
   )
 }
-export default TransactionTable
+export default TokenToMintTable

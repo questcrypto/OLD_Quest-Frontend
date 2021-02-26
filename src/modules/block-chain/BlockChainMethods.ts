@@ -39,7 +39,7 @@ export const getPublicAddress = async () => {
 }
 
 export const handlePropertyDetailsSubmit = (contractSLF: any, account: string, propertyValue: number, date: number, propertyId: string) => {
-  contractSLF.methods
+  return contractSLF.methods
     .ListProperty_details(propertyValue, propertyValue, propertyValue, 100, 0, 1, 100, date, propertyId, propertyId)
     .send({ from: account })
 }

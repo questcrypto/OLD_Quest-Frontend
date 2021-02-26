@@ -89,9 +89,9 @@ const TreasuryPropertyDetails = (props: any) => {
           const images = []
           const docs = []
           setPropertyInfo(res.data)
-          /*  if (res.data.propertyDetails) {
+          if (res.data.propertyDetails) {
             setMintStatus(res.data.propertyDetails.Isactive)
-          } */
+          }
           for (const item of res.data.getDocs) {
             if (item.type === 0) {
               images.push(item)

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from 'shared/styles/dashboardStyle'
-import { NewPropertyTable, ApprovePropertyTable, PublishedPropertyTable } from 'modules/Tables'
+import { NewPropertyTable, ApprovePropertyTable, PublishedPropertyTable, PreAuctionTable, OnAuctionTable } from 'modules/Tables'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import TabComponent from 'shared/tab-component'
 import { propertyTabList } from 'shared/helpers/dataConstant'
-import { PreAuctionTable } from 'modules/Tables'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
@@ -23,6 +22,8 @@ const OwnerDashboard = (props: any) => {
   const [publishedLoading, setPublishedLoading] = useState(false)
   const [preAuctionProperties, setPreAuctionProperties] = useState<any>([])
   const [preAuctionLoading, setPreAuctionLoading] = useState(false)
+  const [onAuctionProperties, setOnAuctionProperties] = useState<any>([])
+  const [onAuctionLoading, setOnAuctionLoading] = useState(false)
 
   const { userInfo } = props
 
@@ -67,10 +68,21 @@ const OwnerDashboard = (props: any) => {
         setPreAuctionLoading(false)
       }
     }
+    const getOnAuctionProperties = async () => {
+      try {
+        setOnAuctionLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/myListOfActiveAuction/${userInfo.publicaddress}`)
+        setOnAuctionProperties(res.data)
+      } catch (error) {
+      } finally {
+        setOnAuctionLoading(false)
+      }
+    }
     getPropertiesList()
     getApproveProperties()
     getPublishedProperties()
     getPreAuctionProperties()
+    getOnAuctionProperties()
   }, [userInfo])
 
   const updatePreAuction = async () => {
@@ -130,7 +142,7 @@ const OwnerDashboard = (props: any) => {
                 updatePreAuction={updatePreAuction}
               />
             )}
-            {activeTab === 'onAuction' && <p>Content can be added here</p>}
+            {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
           </div>
         )}

@@ -51,10 +51,6 @@ const LeftPanel = (props: any) => {
                 <AccountBalanceIcon className={classes.iconStyle} />
                 <ListItemText>Treasury</ListItemText>
               </ListItem>
-              <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
-                <AssessmentIcon className={classes.iconStyle} />
-                <ListItemText>Auctions</ListItemText>
-              </ListItem>
               <ListItem button className={classes.itemButtonStyle}>
                 <AccountBalanceWalletIcon className={classes.iconStyle} />
                 <ListItemText>Wallets</ListItemText>
@@ -65,6 +61,10 @@ const LeftPanel = (props: any) => {
               </ListItem>
             </>
           )}
+          <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
+            <AssessmentIcon className={classes.iconStyle} />
+            <ListItemText>Auctions</ListItemText>
+          </ListItem>
         </List>
         <Grid className={classes.signOutStyle}>
           <Divider className={classes.signOutDividerStyle} />

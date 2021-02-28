@@ -6,6 +6,7 @@ import { makeStyles, createStyles, withStyles } from '@material-ui/core/styles'
 export const cardStyle = makeStyles(() =>
   createStyles({
     root: {
+      width: 320,
       maxWidth: 320,
     },
     media: {
@@ -66,4 +67,10 @@ export const UpgradeBidTxt = styled.p`
   margin: 0;
   border-bottom: 1px solid ${colors.textPrimary};
   cursor: pointer;
+`
+export const NoDataContainer = styled.div`
+  margin-top: 100px;
+  p {
+    text-align: center;
+  }
 `

@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import CloseIcon from '@material-ui/icons/Close'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
+import { getDaysValue } from 'shared/helpers/globalFunction'
 import TextField from '@material-ui/core/TextField'
 import Spinner from 'shared/loader-components/spinner'
 import moment from 'moment'
@@ -20,12 +21,6 @@ const ReviewAuctionModal = (props: any) => {
   const [changeNoteError, setChangeNoteError] = useState(false)
   const { data, setShowModal, updatePreAuction } = props
 
-  const calculateDuration = (startData: any, endDate: any) => {
-    const a = moment(startData)
-    const b = moment(endDate)
-    const duration = `${b.diff(a, 'days')} Days`
-    return duration
-  }
   const calculateTotalReserve = (minReserve: any, slReserve: any) => {
     const total = parseFloat(minReserve) + parseFloat(slReserve)
     return `$ ${total.toFixed(2)}`
@@ -73,7 +68,7 @@ const ReviewAuctionModal = (props: any) => {
           </Grid>
           <Grid item xs={4}>
             <LightText>Duration</LightText>
-            <BoldText>{calculateDuration(data.startDate, data.endDate)}</BoldText>
+            <BoldText>{`${getDaysValue(data.startDate, data.endDate)} Days`}</BoldText>
           </Grid>
         </Grid>
         <Grid container spacing={2} className={classes.infoDataStyle}>

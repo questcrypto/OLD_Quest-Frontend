@@ -9,10 +9,10 @@ import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import TabComponent from 'shared/tab-component'
 import { propertyTabList } from 'shared/helpers/dataConstant'
-import axios from 'axios'
-import { apiBaseUrl } from 'services/global-constant'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
+import axios from 'axios'
+import { apiBaseUrl } from 'services/global-constant'
 
 const AdminDashboard = (props: any) => {
   const classes = useStyles()

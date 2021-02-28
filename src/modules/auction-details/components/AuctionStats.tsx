@@ -3,7 +3,6 @@ import {
   auctionStatsStyle,
   StatTitle,
   StatTimeText,
-  StatCircle,
   BoldText,
   LightText,
   StatsInfoCont,
@@ -18,38 +17,52 @@ import Box from '@material-ui/core/Box'
 import AlarmIcon from '@material-ui/icons/Alarm'
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh'
 import HelpIcon from '@material-ui/icons/Help'
+import TotalBiddersIcon from 'assets/icons/total-bidders.svg'
+import EligibleBidIcon from 'assets/icons/eligible-bids.svg'
+import TotalBidsIcon from 'assets/icons/total-bids.svg'
+import { getDaysValue } from 'shared/helpers/globalFunction'
+import moment from 'moment'
 
 const AuctionStats = (props: any) => {
   const classes = auctionStatsStyle()
+  const { bidStats, auctionDetails } = props
+
+  const getProgressValue = (startDate: Date, endDate: Date) => {
+    const daysRemaining = getDaysValue(new Date(), endDate)
+    const totalDays = getDaysValue(startDate, endDate)
+    const daysDIff = totalDays - daysRemaining
+    const progressVal = (daysDIff / totalDays) * 100
+    return progressVal
+  }
 
   return (
     <Box>
       <StatsInfoCont>
         <StatTitle>Auction stats</StatTitle>
-        <StyledLinearProgress variant="determinate" value={60} />
+        <StyledLinearProgress variant="determinate" value={getProgressValue(auctionDetails[0].startDate, auctionDetails[0].endDate)} />
         <StatsTimeInfo>
           <AlarmIcon />
-          <StatTimeText>Auction ends 29 Jan 2021 at 01:30:08 GMT</StatTimeText>
+          <StatTimeText>{`Auction ends ${moment(auctionDetails[0].endDate).utc().format('MMM Do YYYY HH:mm:ss')}`}</StatTimeText>
         </StatsTimeInfo>
         <StatsInfo>
-          <StatCircle />
+          <img src={TotalBiddersIcon} alt="" />
           <div>
             <StatText>Total Bidders</StatText>
-            <BoldText>563</BoldText>
+            <BoldText>{parseInt(bidStats.totalBidders).toLocaleString()}</BoldText>
           </div>
         </StatsInfo>
         <StatsInfo>
-          <StatCircle />
+          <img src={EligibleBidIcon} alt="" />
           <div>
             <StatText>Eligible Bids</StatText>
-            <BoldText>1,103</BoldText>
+            <BoldText>{parseInt(bidStats.eligibleBids).toLocaleString()}</BoldText>
           </div>
         </StatsInfo>
         <StatsInfo>
-          <StatCircle />
+          <img src={TotalBidsIcon} alt="" />
           <div>
             <StatText>Total Bids</StatText>
-            <BoldText>2,251</BoldText>
+            <BoldText>{bidStats.totalBids ? parseInt(bidStats.totalBids).toLocaleString() : 0}</BoldText>
           </div>
         </StatsInfo>
       </StatsInfoCont>

@@ -2,25 +2,35 @@ import React from 'react'
 import { imagesStyle, AboutPropertyTxt } from './style'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
-import PhotoImg from 'assets/images/photo.png'
-
-const imageList = [{ image: PhotoImg }, { image: PhotoImg }, { image: PhotoImg }, { image: PhotoImg }]
+import { apiBaseUrl } from 'services/global-constant'
 
 const PropertyImages = (props: any) => {
   const classes = imagesStyle()
+  const { imageList, selectedImg, setSelectedImg } = props
+
+  const handleImage = (imgData: any) => {
+    setSelectedImg(imgData)
+  }
 
   const renderSmallImages = () => {
     return imageList.map((item: any, k: any) => {
       return (
         <Grid item key={k} className={classes.imgOnHoverStyle}>
-          <img className={classes.smallImgStyle} src={item.image} alt="" />
+          <img
+            className={classes.smallImgStyle}
+            src={`${apiBaseUrl}/${item.filename}`}
+            alt=""
+            onClick={() => {
+              handleImage(item)
+            }}
+          />
         </Grid>
       )
     })
   }
   return (
     <Box>
-      <img className={classes.imgStyle} src={PhotoImg} alt="" />
+      <img className={classes.imgStyle} src={`${apiBaseUrl}/${selectedImg.filename}`} alt="" />
       <Grid container spacing={1} className={classes.smallImgCont}>
         {renderSmallImages()}
       </Grid>

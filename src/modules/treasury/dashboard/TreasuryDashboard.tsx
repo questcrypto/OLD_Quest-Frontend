@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from 'shared/styles/dashboardStyle'
-import { PublishedPropertyTable, PreAuctionTable, TokenToMintTable } from 'modules/Tables'
+import { PublishedPropertyTable, PreAuctionTable, TokenToMintTable, OnAuctionTable } from 'modules/Tables'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
@@ -20,6 +20,8 @@ const TreasuryDashboard = (props: any) => {
   const [transactionLoading, setTransactionLoading] = useState(false)
   const [preAuctionProperties, setPreAuctionProperties] = useState<any>([])
   const [preAuctionLoading, setPreAuctionLoading] = useState(false)
+  const [onAuctionProperties, setOnAuctionProperties] = useState<any>([])
+  const [onAuctionLoading, setOnAuctionLoading] = useState(false)
   const { userInfo } = props
 
   useEffect(() => {
@@ -56,10 +58,21 @@ const TreasuryDashboard = (props: any) => {
         setPreAuctionLoading(false)
       }
     }
+    const getOnAuctionProperties = async () => {
+      try {
+        setOnAuctionLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/listOfAllActiveAuction`)
+        setOnAuctionProperties(res.data)
+      } catch (error) {
+      } finally {
+        setOnAuctionLoading(false)
+      }
+    }
 
     getPublishedProperties()
-    getPreAuctionProperties()
     getTokenToMintData()
+    getPreAuctionProperties()
+    getOnAuctionProperties()
   }, [userInfo])
 
   const updatePreAuction = async () => {
@@ -119,7 +132,7 @@ const TreasuryDashboard = (props: any) => {
                 refreshPreAuction={updatePreAuction}
               />
             )}
-            {activeTab === 'onAuction' && <p>Content can be added here</p>}
+            {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
             {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />}
           </div>

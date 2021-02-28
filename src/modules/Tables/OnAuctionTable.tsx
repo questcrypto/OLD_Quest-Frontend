@@ -9,14 +9,28 @@ import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import Paper from '@material-ui/core/Paper'
+import ComponentLoader from 'shared/loader-components/component-loader'
 import Pagination from '@material-ui/lab/Pagination'
 import { getFullName } from 'shared/helpers/globalFunction'
-import ComponentLoader from 'shared/loader-components/component-loader'
 
 const OnAuctionTable = (props: any) => {
   const classes = useStyles()
   const { data, dataLoading } = props
 
+  const renderTableRows = (rowData: any, index: number) => {
+    const { PropertyDetails } = rowData
+    return (
+      <TableRow key={index} className={classes.tableRowStyle}>
+        <TableCell component="th" scope="row">
+          {`${PropertyDetails.Address1},${PropertyDetails.State},${PropertyDetails.Country}`}
+        </TableCell>
+        <TableCell>{getFullName(PropertyDetails.Fname, PropertyDetails.Lname)}</TableCell>
+        <TableCell>{getPropertyType(PropertyDetails.PropertyType)}</TableCell>
+        <TableCell>New</TableCell>
+        <TableCell>${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
+      </TableRow>
+    )
+  }
   return (
     <Grid>
       {dataLoading ? (
@@ -34,21 +48,7 @@ const OnAuctionTable = (props: any) => {
                   <TableCell>VALUE</TableCell>
                 </TableRow>
               </TableHead>
-              {!!data && data.length > 0 && (
-                <TableBody>
-                  {data.map((row: any, k: number) => (
-                    <TableRow key={k} className={classes.tableRowStyle}>
-                      <TableCell component="th" scope="row">
-                        {`${row.Address1},${row.State},${row.Country}`}
-                      </TableCell>
-                      <TableCell>{getFullName(row.Fname, row.Lname)}</TableCell>
-                      <TableCell>{getPropertyType(row.PropertyType)}</TableCell>
-                      <TableCell>New</TableCell>
-                      <TableCell>${parseFloat(row.CurrentValue).toFixed(2)}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              )}
+              {!!data && data.length > 0 && <TableBody>{data.map((row: any, k: number) => renderTableRows(row, k))}</TableBody>}
             </Table>
             {!!data && data.length === 0 && (
               <NoDataContainer>

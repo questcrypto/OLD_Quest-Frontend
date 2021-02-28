@@ -11,10 +11,11 @@ import TableCell from '@material-ui/core/TableCell'
 import Paper from '@material-ui/core/Paper'
 import EditIcon from '@material-ui/icons/Edit'
 import Pagination from '@material-ui/lab/Pagination'
+import { getFullName } from 'shared/helpers/globalFunction'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 
-const PropertyTable = (props: any) => {
+const NewPropertyTable = (props: any) => {
   const classes = useStyles()
   const { data } = props
 
@@ -22,25 +23,11 @@ const PropertyTable = (props: any) => {
     history.push(`${Paths.propertyDetails}/${id}`)
   }
 
-  const getName = (firstName: string, lastName: string) => {
-    let fName = ''
-    let lName = ''
-    if (firstName) {
-      fName = firstName.charAt(0).toUpperCase() + firstName.slice(1)
-    }
-    if (lastName) {
-      lName = lastName.charAt(0).toUpperCase() + lastName.slice(1)
-    }
-    const fullName = `${fName} ${lName}`
-
-    return fullName
-  }
-
   return (
     <Grid>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
-          <TableHead>
+          <TableHead className={classes.tableHeadStyle}>
             <TableRow>
               <TableCell>LOCATION</TableCell>
               <TableCell>MANAGER</TableCell>
@@ -51,13 +38,13 @@ const PropertyTable = (props: any) => {
             </TableRow>
           </TableHead>
           {!!data && data.length > 0 && (
-            <TableBody className={classes.tableHeadStyle}>
+            <TableBody>
               {data.map((row: any, k: number) => (
-                <TableRow key={k}>
+                <TableRow key={k} className={classes.tableRowStyle}>
                   <TableCell component="th" scope="row">
                     {`${row.Address1},${row.State},${row.Country}`}
                   </TableCell>
-                  <TableCell>{getName(row.Fname, row.Lname)}</TableCell>
+                  <TableCell>{getFullName(row.Fname, row.Lname)}</TableCell>
                   <TableCell>{getPropertyType(row.PropertyType)}</TableCell>
                   <TableCell>New</TableCell>
                   <TableCell>${parseFloat(row.CurrentValue).toFixed(2)}</TableCell>
@@ -84,4 +71,4 @@ const PropertyTable = (props: any) => {
     </Grid>
   )
 }
-export default PropertyTable
+export default NewPropertyTable

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from 'shared/styles/dashboardStyle'
-import PropertyTable from './components/PropertyTable'
-import ApprovedProperty from './components/ApprovedProperty'
-import PublishedProperty from './components/PublishedProperty'
+import { NewPropertyTable, ApprovePropertyTable, PublishedPropertyTable } from 'modules/Tables'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import TabComponent from 'shared/tab-component'
 import { propertyTabList } from 'shared/helpers/dataConstant'
+import { PreAuctionTable } from 'modules/Tables'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
@@ -22,6 +21,9 @@ const OwnerDashboard = (props: any) => {
   const [approvedLoading, setApprovedLoading] = useState(false)
   const [publishedProperties, setPublishedProperties] = useState<any>([])
   const [publishedLoading, setPublishedLoading] = useState(false)
+  const [preAuctionProperties, setPreAuctionProperties] = useState<any>([])
+  const [preAuctionLoading, setPreAuctionLoading] = useState(false)
+
   const { userInfo } = props
 
   useEffect(() => {
@@ -55,9 +57,21 @@ const OwnerDashboard = (props: any) => {
         setPublishedLoading(false)
       }
     }
+    const getPreAuctionProperties = async () => {
+      try {
+        setPreAuctionLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/ListofNewAuction/${userInfo.publicaddress}`)
+        console.log('res->', res.data)
+        setPreAuctionProperties(res.data)
+      } catch (error) {
+      } finally {
+        setPreAuctionLoading(false)
+      }
+    }
     getPropertiesList()
     getApproveProperties()
     getPublishedProperties()
+    getPreAuctionProperties()
   }, [userInfo])
 
   return (
@@ -99,12 +113,10 @@ const OwnerDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'new' && <PropertyTable data={propertiesList} />}
-            {activeTab === 'approved' && (
-              <ApprovedProperty data={approvedProperties} approvedLoading={approvedLoading} userInfo={userInfo} />
-            )}
-            {activeTab === 'published' && <PublishedProperty data={publishedProperties} publishedLoading={publishedLoading} />}
-            {activeTab === 'preAuction' && <p>Content can be added here</p>}
+            {activeTab === 'new' && <NewPropertyTable data={propertiesList} />}
+            {activeTab === 'approved' && <ApprovePropertyTable data={approvedProperties} dataLoading={approvedLoading} />}
+            {activeTab === 'published' && <PublishedPropertyTable data={publishedProperties} dataLoading={publishedLoading} />}
+            {activeTab === 'preAuction' && <PreAuctionTable data={preAuctionProperties} type="owner" dataLoading={preAuctionLoading} />}
             {activeTab === 'onAuction' && <p>Content can be added here</p>}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
           </div>

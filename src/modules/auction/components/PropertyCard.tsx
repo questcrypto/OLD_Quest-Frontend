@@ -52,12 +52,12 @@ const PropertyCard = (props: any) => {
       <CardActions disableSpacing>
         <Grid container spacing={2} className={classes.btnContStyle}>
           <Grid item xs={12} sm={6}>
-            <PrimaryButton fullWidth className={classes.btnStyle}>
+            <PrimaryButton fullWidth className={classes.btnStyle} onClick={() => handlePropertyDetails()}>
               LIVE AUCTION
             </PrimaryButton>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <SecondaryButton fullWidth className={classes.btnStyle} onClick={() => handlePropertyDetails()}>
+            <SecondaryButton fullWidth className={classes.btnStyle}>
               PROPERTY DETAILS
             </SecondaryButton>
           </Grid>

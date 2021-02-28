@@ -1,3 +1,4 @@
+import moment from 'moment'
 export const getPropertyType = (type: number) => {
   switch (type) {
     case 1:
@@ -26,4 +27,10 @@ export const getFullName = (firstName: string, lastName: string) => {
   const fullName = `${fName} ${lName}`
 
   return fullName
+}
+export const getDaysValue = (startData: any, endDate: any) => {
+  const a = moment(startData)
+  const b = moment(endDate)
+  const duration = b.diff(a, 'days')
+  return duration
 }

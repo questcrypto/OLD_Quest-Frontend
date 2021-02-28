@@ -9,7 +9,7 @@ export const textFieldStyle = makeStyles(() =>
       color: colors.textPrimary,
       background: colors.paperBackground2,
       '& input': {
-        padding: '10px 14px',
+        padding: '12px 14px',
       },
     },
   })

@@ -43,6 +43,9 @@ export const auctionBidStyle = makeStyles(() =>
     makeBidStyle: {
       width: 232,
       maxWidth: 232,
+      '& input': {
+        padding: '16px 16px 16px 22px !important',
+      },
     },
     totalBidContStyle: {
       padding: '20px',
@@ -57,6 +60,15 @@ export const auctionBidStyle = makeStyles(() =>
     },
   })
 )
+export const MakeBidCont = styled.div`
+  position: relative;
+  p {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    margin: 0;
+  }
+`
 export const auctionStatsStyle = makeStyles(() =>
   createStyles({
     priorityIconStyle: {
@@ -210,10 +222,17 @@ export const StatsInfoCont = styled.div`
 `
 export const StatsInfo = styled.div`
   display: flex;
+  align-items: center;
   margin-bottom: 20px;
+  img {
+    margin-right: 16px;
+    width: 32px;
+    height: 32px;
+  }
 `
 export const StatsTimeInfo = styled.div`
   display: flex;
+  align-items: flex-start;
   margin: 12px 0 30px 0;
   svg {
     margin-right: 8px;
@@ -232,13 +251,6 @@ export const StatTitle = styled.h2`
   line-height: 22px;
   color: ${colors.textPrimary};
   margin: 0 0 30px 0;
-`
-export const StatCircle = styled.div`
-  width: 40px;
-  height: 40px;
-  background: #c4c4c4;
-  border-radius: 50%;
-  margin-right: 16px;
 `
 export const StatTimeText = styled(StatText)`
   line-height: 18px;

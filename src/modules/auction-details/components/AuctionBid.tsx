@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { auctionBidStyle, LightText, BoldText, Title, CurrentBidInfo, StyledSlider, SliderWrap, ShareLinkCont } from './style'
+import { Error } from 'shared/styles/styled'
+import { auctionBidStyle, LightText, BoldText, Title, CurrentBidInfo, StyledSlider, SliderWrap, ShareLinkCont, MakeBidCont } from './style'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
@@ -13,14 +14,43 @@ import TwitterIcon from '@material-ui/icons/Twitter'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import CustomModal from 'shared/custom-modal'
 import Bid from './Bid'
+import { integerNumberRegex, floatNumRegex } from 'shared/helpers/regexConstants'
 
 const AuctionBid = (props: any) => {
   const classes = auctionBidStyle()
+  const [token, setToken] = useState(0)
+  const [bidValue, setBidValue] = useState('0.00')
+  const [bidError, setBidError] = useState(false)
+  const [equityValue, setEquityValue] = useState(50)
   const [showBidModal, setShowBidModal] = useState(false)
+  const { auctionData } = props
 
   const valuetext = (value: number) => {
     return `${value}%`
   }
+
+  const handleTokenChange = (event: any) => {
+    const { value } = event.target
+    if (integerNumberRegex.test(value.toString())) {
+      setToken(parseInt(value))
+    }
+    if (!value) {
+      setToken(0)
+    }
+  }
+  const handleBidValueChange = (event: any) => {
+    const { value } = event.target
+    if (value) {
+      if (floatNumRegex.test(value.toString())) {
+        setBidValue(value)
+        setBidError(false)
+      }
+    } else {
+      setBidValue('')
+      setBidError(true)
+    }
+  }
+
   return (
     <Box>
       <Title>
@@ -40,13 +70,13 @@ const AuctionBid = (props: any) => {
               <LightText>Equity %</LightText>
             </Grid>
             <Grid item className={classes.tokenStyle}>
-              <TextInputField name="token" label="Token" value={26} />
+              <TextInputField name="token" label="Token" value={token} handleChange={handleTokenChange} />
             </Grid>
           </Grid>
           <SliderWrap>
             <StyledSlider
-              defaultValue={50}
-              getAriaValueText={valuetext}
+              value={equityValue}
+              onChange={(e: any, val: any) => setEquityValue(val)}
               valueLabelFormat={valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="on"
@@ -57,12 +87,16 @@ const AuctionBid = (props: any) => {
           </SliderWrap>
           <Grid container spacing={2}>
             <Grid item className={classes.makeBidStyle}>
-              <TextInputField name="makeBid" label="Make a Bid" value={26} />
+              <MakeBidCont>
+                <TextInputField name="makeBid" label="Make a Bid" value={bidValue} handleChange={handleBidValueChange} />
+                {bidValue && <p>$</p>}
+              </MakeBidCont>
             </Grid>
             <Grid item>
               <LightText>Per property token</LightText>
             </Grid>
           </Grid>
+          {bidError && <Error>This field is required</Error>}
         </Box>
         <Box className={classes.totalBidContStyle}>
           <Grid container spacing={2}>

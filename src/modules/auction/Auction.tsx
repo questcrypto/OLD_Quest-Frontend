@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { useStyles, HeaderTitle } from './style'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -6,7 +7,9 @@ import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import { auctionTabList } from 'shared/helpers/dataConstant'
 import TabComponent from 'shared/tab-component'
-import PropertyCard from './components/PropertyCard'
+import OnGoingProperties from './components/OnGoingProperties'
+import axios from 'axios'
+import { apiBaseUrl } from 'services/global-constant'
 
 const data = [
   {
@@ -53,9 +56,26 @@ const data = [
   },
 ]
 
-const Auction = () => {
+const Auction = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('participating')
+  const [onGoingProperties, setOnGoingProperties] = useState<any>([])
+  const [onGoingLoading, setOnGoingLoading] = useState(false)
+  const { userInfo } = props
+
+  useEffect(() => {
+    const getOnGoingProperties = async () => {
+      try {
+        setOnGoingLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/NonParticipatedAuctions/${userInfo.publicaddress}`)
+        setOnGoingProperties(res.data)
+      } catch (error) {
+      } finally {
+        setOnGoingLoading(false)
+      }
+    }
+    getOnGoingProperties()
+  }, [userInfo])
   return (
     <Box className={classes.root}>
       <Grid container spacing={2} className={classes.headerStyle} alignItems="center">
@@ -79,15 +99,12 @@ const Auction = () => {
         </Grid>
       </Grid>
       <TabComponent tabOptions={auctionTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
-      <Grid container spacing={3}>
-        {data.map((item: any, k: number) => (
-          <Grid item key={k}>
-            <PropertyCard data={item} />
-          </Grid>
-        ))}
-      </Grid>
+      {activeTab === 'ongoing' && <OnGoingProperties data={onGoingProperties} dataLoading={onGoingLoading} />}
     </Box>
   )
 }
 
-export default Auction
+const mapStateToProps = (state: any) => ({
+  userInfo: state.user.userInfo,
+})
+export default connect(mapStateToProps)(Auction)

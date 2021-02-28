@@ -41,7 +41,7 @@ const AuctionConfiguration = (props: any) => {
       memo: values.memo,
       isIssuedBy: publicAddress,
     }
-    console.log('data=>', data)
+
     try {
       setLoading(true)
       await axios.post(`${apiBaseUrl}/auction/ConfigureAuction`, data)

@@ -29,6 +29,9 @@ export const useStyle = makeStyles(() =>
         minWidth: 100,
       },
     },
+    agreeButtonStyle: {
+      minWidth: '120px',
+    },
     infoTextStyle: {
       padding: '10px 40px 10px 20px',
       background: colors.lightGray,
@@ -37,6 +40,16 @@ export const useStyle = makeStyles(() =>
   })
 )
 
+export const textFieldStyle = makeStyles(() =>
+  createStyles({
+    root: {
+      margin: '20px 0 20px 0',
+      lineHeight: '26px',
+      color: '#1E3444',
+      backgroundColor: colors.white,
+    },
+  })
+)
 export const BoldText = styled.h4`
   font-size: 16px;
   line-height: 20px;

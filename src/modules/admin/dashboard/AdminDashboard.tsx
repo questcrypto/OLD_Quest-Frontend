@@ -62,7 +62,6 @@ const AdminDashboard = (props: any) => {
       try {
         setPreAuctionLoading(true)
         const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
-        console.log('res->', res.data)
         setPreAuctionProperties(res.data)
       } catch (error) {
       } finally {

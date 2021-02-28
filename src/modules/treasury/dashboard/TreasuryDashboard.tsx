@@ -50,7 +50,6 @@ const TreasuryDashboard = (props: any) => {
       try {
         setPreAuctionLoading(true)
         const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
-        console.log('res->', res.data)
         setPreAuctionProperties(res.data)
       } catch (error) {
       } finally {
@@ -62,6 +61,13 @@ const TreasuryDashboard = (props: any) => {
     getPreAuctionProperties()
     getTokenToMintData()
   }, [userInfo])
+
+  const updatePreAuction = async () => {
+    try {
+      const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
+      setPreAuctionProperties(res.data)
+    } catch (error) {}
+  }
 
   return (
     <Grid>
@@ -105,7 +111,14 @@ const TreasuryDashboard = (props: any) => {
             {activeTab === 'published' && (
               <PublishedPropertyTable type="treasuryAdmin" data={publishedProperties} dataLoading={dataLoading} />
             )}
-            {activeTab === 'preAuction' && <PreAuctionTable data={preAuctionProperties} dataLoading={preAuctionLoading} />}
+            {activeTab === 'preAuction' && (
+              <PreAuctionTable
+                data={preAuctionProperties}
+                dataLoading={preAuctionLoading}
+                type="treasuryAdmin"
+                refreshPreAuction={updatePreAuction}
+              />
+            )}
             {activeTab === 'onAuction' && <p>Content can be added here</p>}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
             {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />}

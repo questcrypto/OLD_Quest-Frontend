@@ -10,25 +10,83 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import Paper from '@material-ui/core/Paper'
 import ComponentLoader from 'shared/loader-components/component-loader'
-// import Spinner from 'shared/loader-components/spinner'
-import { PrimaryButton } from 'shared/components/buttons'
+import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import CustomModal from 'shared/custom-modal'
 import { ReviewAuctionModal } from 'modules/modals'
 import Pagination from '@material-ui/lab/Pagination'
 import { getFullName } from 'shared/helpers/globalFunction'
-import { Paths } from 'modules/app/components/routes/types'
-import history from 'modules/app/components/history'
+import Spinner from 'shared/loader-components/spinner'
+import axios from 'axios'
+import { apiBaseUrl } from 'services/global-constant'
 
 const PreAuctionTable = (props: any) => {
   const classes = useStyles()
   const [showModal, setShowModal] = useState(false)
-  const [modalData, setModalData] = useState<any>()
-  const { data, dataLoading, type } = props
+  const [modalData, setModalData] = useState<any>({})
+  const [loading, setLoading] = useState(false)
+  const [selectedAuctionId, setSelectedAuctionId] = useState('')
+  const { data, dataLoading, type, updatePreAuction, refreshPreAuction } = props
 
-  const handleReviewAuction = () => {
+  const handleReviewAuction = (auctionDataVal: any, propertyValue: any) => {
+    const dataVal = { ...auctionDataVal, propertyValue }
+    setModalData(dataVal)
     setShowModal(true)
   }
+  const handleTreasuryAdminAction = async (auctionId: any) => {
+    setSelectedAuctionId(auctionId)
+    try {
+      setLoading(true)
+      const data = {
+        id: auctionId,
+      }
+      await axios.post(`${apiBaseUrl}/auction/activateAuction`, data)
+      refreshPreAuction()
+    } catch (error) {
+    } finally {
+      setLoading(false)
+    }
+  }
 
+  const renderTableRows = (rowData: any, index: number) => {
+    const { PropertyDetails, AuctionDetail } = rowData
+    return (
+      <TableRow key={index} className={classes.tableRowStyle}>
+        <TableCell component="th" scope="row">
+          {`${PropertyDetails.Address1},${PropertyDetails.State},${PropertyDetails.Country}`}
+        </TableCell>
+        <TableCell>{getFullName(PropertyDetails.Fname, PropertyDetails.Lname)}</TableCell>
+        <TableCell>{getPropertyType(PropertyDetails.PropertyType)}</TableCell>
+        <TableCell>New</TableCell>
+        <TableCell>${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
+        {!!type && type === 'owner' && (
+          <TableCell>
+            {AuctionDetail[0].isApprovedByOwner ? (
+              <SecondaryButton variant="contained" disabled>
+                In review
+              </SecondaryButton>
+            ) : (
+              <PrimaryButton variant="contained" onClick={() => handleReviewAuction(AuctionDetail[0], PropertyDetails.CurrentValue)}>
+                Review Auction
+              </PrimaryButton>
+            )}
+          </TableCell>
+        )}
+        {!!type && type === 'treasuryAdmin' && (
+          <TableCell>
+            {AuctionDetail[0].isApprovedByOwner ? (
+              <PrimaryButton variant="contained" onClick={() => handleTreasuryAdminAction(AuctionDetail[0].id)} disabled={loading}>
+                {selectedAuctionId === AuctionDetail[0].id && loading ? <Spinner /> : 'Approve'}
+              </PrimaryButton>
+            ) : (
+              <SecondaryButton variant="contained" disabled>
+                Pending
+              </SecondaryButton>
+            )}
+          </TableCell>
+        )}
+      </TableRow>
+    )
+  }
   return (
     <Grid>
       {dataLoading ? (
@@ -45,28 +103,10 @@ const PreAuctionTable = (props: any) => {
                   <TableCell>STATUS</TableCell>
                   <TableCell>VALUE</TableCell>
                   {!!type && type === 'owner' && <TableCell>ACTION</TableCell>}
+                  {!!type && type === 'treasuryAdmin' && <TableCell>ACTION</TableCell>}
                 </TableRow>
               </TableHead>
-              {!!data && data.length > 0 && (
-                <TableBody>
-                  {data.map((row: any, k: number) => (
-                    <TableRow key={k} className={classes.tableRowStyle}>
-                      <TableCell component="th" scope="row">
-                        {`${row.Address1},${row.State},${row.Country}`}
-                      </TableCell>
-                      <TableCell>{getFullName(row.Fname, row.Lname)}</TableCell>
-                      <TableCell>{getPropertyType(row.PropertyType)}</TableCell>
-                      <TableCell>New</TableCell>
-                      <TableCell>${parseFloat(row.CurrentValue).toFixed(2)}</TableCell>
-                      {!!type && type === 'owner' && (
-                        <TableCell>
-                          <PrimaryButton onClick={() => handleReviewAuction()}>Review Auction</PrimaryButton>
-                        </TableCell>
-                      )}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              )}
+              {!!data && data.length > 0 && <TableBody>{data.map((row: any, k: number) => renderTableRows(row, k))}</TableBody>}
             </Table>
             {!!data && data.length === 0 && (
               <NoDataContainer>
@@ -81,7 +121,7 @@ const PreAuctionTable = (props: any) => {
             </Grid>
           )}
           <CustomModal show={showModal} toggleModal={setShowModal}>
-            <ReviewAuctionModal setShowModal={setShowModal} />
+            <ReviewAuctionModal data={modalData} setShowModal={setShowModal} updatePreAuction={updatePreAuction} />
           </CustomModal>
         </div>
       )}

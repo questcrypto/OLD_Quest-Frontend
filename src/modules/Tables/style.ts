@@ -13,15 +13,13 @@ export const useStyles = makeStyles(() =>
     tableCellStyle: {
       color: colors.textPrimary,
     },
-    addPropertyBtn: {
-      width: '100% !important',
-      height: '36px',
-      color: `${colors.white} !important`,
-      backgroundColor: `${colors.primary} !important`,
-      fontSize: '12px',
-      padding: '10px 5px',
-      '&:hover': {
-        backgroundColor: `${colors.primary} !important`,
+    tableRowStyle: {
+      '&:nth-child(even)': {
+        background: '#F8F3ED',
+      },
+      '&:th': {
+        color: colors.textPrimary,
+        fontSize: '20px !important',
       },
     },
   })

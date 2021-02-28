@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from 'shared/styles/dashboardStyle'
-import DashboardTable from './components/DashboardTable'
+import { PublishedPropertyTable, PreAuctionTable, TokenToMintTable } from 'modules/Tables'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import TabComponent from 'shared/tab-component'
-import TokenToMintTable from './components/TokenToMintTable'
 import { treasuryTabList } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
@@ -19,6 +18,8 @@ const TreasuryDashboard = (props: any) => {
   const [publishedProperties, setPublishedProperties] = useState<any>([])
   const [tokenToMintData, setTokenToMintData] = useState<any>([])
   const [transactionLoading, setTransactionLoading] = useState(false)
+  const [preAuctionProperties, setPreAuctionProperties] = useState<any>([])
+  const [preAuctionLoading, setPreAuctionLoading] = useState(false)
   const { userInfo } = props
 
   useEffect(() => {
@@ -45,8 +46,20 @@ const TreasuryDashboard = (props: any) => {
         setTransactionLoading(false)
       }
     }
+    const getPreAuctionProperties = async () => {
+      try {
+        setPreAuctionLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
+        console.log('res->', res.data)
+        setPreAuctionProperties(res.data)
+      } catch (error) {
+      } finally {
+        setPreAuctionLoading(false)
+      }
+    }
 
     getPublishedProperties()
+    getPreAuctionProperties()
     getTokenToMintData()
   }, [userInfo])
 
@@ -89,8 +102,10 @@ const TreasuryDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'published' && <DashboardTable data={publishedProperties} />}
-            {activeTab === 'preAuction' && <p>Content can be added here</p>}
+            {activeTab === 'published' && (
+              <PublishedPropertyTable type="treasuryAdmin" data={publishedProperties} dataLoading={dataLoading} />
+            )}
+            {activeTab === 'preAuction' && <PreAuctionTable data={preAuctionProperties} dataLoading={preAuctionLoading} />}
             {activeTab === 'onAuction' && <p>Content can be added here</p>}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
             {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />}

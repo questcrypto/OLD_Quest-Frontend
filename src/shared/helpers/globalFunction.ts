@@ -14,3 +14,16 @@ export const getPropertyType = (type: number) => {
       return ''
   }
 }
+export const getFullName = (firstName: string, lastName: string) => {
+  let fName = ''
+  let lName = ''
+  if (firstName) {
+    fName = firstName.charAt(0).toUpperCase() + firstName.slice(1)
+  }
+  if (lastName) {
+    lName = lastName.charAt(0).toUpperCase() + lastName.slice(1)
+  }
+  const fullName = `${fName} ${lName}`
+
+  return fullName
+}

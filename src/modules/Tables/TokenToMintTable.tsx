@@ -12,6 +12,7 @@ import TableCell from '@material-ui/core/TableCell'
 import Paper from '@material-ui/core/Paper'
 import { PrimaryButton } from 'shared/components/buttons'
 import Pagination from '@material-ui/lab/Pagination'
+import { getFullName } from 'shared/helpers/globalFunction'
 import Spinner from 'shared/loader-components/spinner'
 import { SLCContractAddress, slcAbi } from 'modules/block-chain/abi'
 import { getWeb3Val, handleSignPendingTransactionSubmit } from 'modules/block-chain/BlockChainMethods'
@@ -44,20 +45,6 @@ const TokenToMintTable = (props: any) => {
     getChainDetails()
   }, [])
 
-  const getName = (firstName: string, lastName: string) => {
-    let fName = ''
-    let lName = ''
-    if (firstName) {
-      fName = firstName.charAt(0).toUpperCase() + firstName.slice(1)
-    }
-    if (lastName) {
-      lName = lastName.charAt(0).toUpperCase() + lastName.slice(1)
-    }
-    const fullName = `${fName} ${lName}`
-
-    return fullName
-  }
-
   const handleSign = async (id: any) => {
     try {
       handleSignPendingTransactionSubmit(contractSLC, account, parseInt(id))
@@ -85,11 +72,11 @@ const TokenToMintTable = (props: any) => {
             {!!data && data.length > 0 && (
               <TableBody>
                 {data.map((row: any, k: number) => (
-                  <TableRow key={k}>
+                  <TableRow key={k} className={classes.tableRowStyle}>
                     <TableCell component="th" scope="row">
                       {row.PropertyDetails && `${row.PropertyDetails.Address1},${row.PropertyDetails.State},${row.PropertyDetails.Country}`}
                     </TableCell>
-                    <TableCell>{row.PropertyDetails && getName(row.PropertyDetails.Fname, row.PropertyDetails.Lname)}</TableCell>
+                    <TableCell>{row.PropertyDetails && getFullName(row.PropertyDetails.Fname, row.PropertyDetails.Lname)}</TableCell>
                     <TableCell>{row.PropertyDetails && getPropertyType(row.PropertyDetails.PropertyType)}</TableCell>
                     <TableCell>Approved</TableCell>
                     <TableCell>{row.PropertyDetails && `$${parseFloat(row.PropertyDetails.CurrentValue).toFixed(2)}`}</TableCell>

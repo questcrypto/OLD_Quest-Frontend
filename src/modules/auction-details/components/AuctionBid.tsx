@@ -7,11 +7,23 @@ import Grid from '@material-ui/core/Grid'
 import coin from 'assets/images/coin.svg'
 import TextInputField from './TextInputField'
 import { PrimaryButton } from 'shared/components/buttons'
-import TelegramIcon from '@material-ui/icons/Telegram'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import TwitterIcon from '@material-ui/icons/Twitter'
+// import TelegramIcon from '@material-ui/icons/Telegram'
+// import FacebookIcon from '@material-ui/icons/Facebook'
+// import TwitterIcon from '@material-ui/icons/Twitter'
 import NotificationsIcon from '@material-ui/icons/Notifications'
+
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+} from 'react-share'
+import useClippy from 'use-clippy'
 import CustomModal from 'shared/custom-modal'
 import Bid from './Bid'
 import { integerNumberRegex, floatNumRegex } from 'shared/helpers/regexConstants'
@@ -24,6 +36,7 @@ const AuctionBid = (props: any) => {
   const [equityValue, setEquityValue] = useState(50)
   const [showBidModal, setShowBidModal] = useState(false)
   const { auctionData } = props
+  const [clipboard, setClipboard] = useClippy()
 
   const valuetext = (value: number) => {
     return `${value}%`
@@ -114,10 +127,22 @@ const AuctionBid = (props: any) => {
         <Grid item>
           <LightText>Share Links</LightText>
           <ShareLinkCont>
-            <FileCopyIcon />
-            <FacebookIcon />
-            <TwitterIcon />
-            <TelegramIcon />
+            <FileCopyIcon
+              style={{ width: 35 , height: 32 }}
+              onClick={() => {
+                alert(`Your clipboard contains: ${'https://peing.net/ja/'}`)
+              }}
+            />
+
+            <FacebookShareButton title={'test'} url={'https://peing.net/ja/'}>
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+            <TwitterShareButton title={'test'} url={'https://peing.net/ja/'} hashtags={['hashtag1', 'hashtag2']}>
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+            <TelegramShareButton title={'test'} url={'https://peing.net/ja/'}>
+              <TelegramIcon size={32} round />
+            </TelegramShareButton>
           </ShareLinkCont>
         </Grid>
         <Grid item>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
 import { bidStyle, Title, BoldText, LightText } from './style'
 import Box from '@material-ui/core/Box'
@@ -8,13 +8,39 @@ import Divider from '@material-ui/core/Divider'
 import { PrimaryButton } from 'shared/components/buttons'
 import CustomTextField from 'shared/components/custom-text-field'
 import IntegerNumberField from 'shared/components/Integer-number-field'
+import Spinner from 'shared/loader-components/spinner'
+import { Paths } from 'modules/app/components/routes/types'
+import history from 'modules/app/components/history'
+import axios from 'axios'
+import { apiBaseUrl } from 'services/global-constant'
 
 const Bid = (props: any) => {
   const classes = bidStyle()
-  const { setShowBidModal } = props
+  const [loading, setLoading] = useState(false)
+  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal } = props
 
-  const handleSubmit = (values: any) => {
-    console.log('values')
+  const handleSubmit = async (values: any) => {
+    const totalAmount = token * parseFloat(bidValue)
+    const dataVal = {
+      auctionID,
+      biddersID,
+      bidPrice: parseFloat(bidValue),
+      totalAmount: parseFloat(totalAmount.toFixed(2)),
+      propertyID,
+      initialAllotedTokens: token,
+    }
+    try {
+      setLoading(true)
+      await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
+      history.push(Paths.auction)
+    } catch (error) {
+    } finally {
+      setLoading(false)
+    }
+  }
+  const getTotalCost = () => {
+    const totalCost = token * parseFloat(bidValue)
+    return totalCost.toFixed(2)
   }
   return (
     <Box className={classes.root}>
@@ -27,11 +53,11 @@ const Bid = (props: any) => {
         <Grid container spacing={2} justify="space-between" className={classes.bidInfo}>
           <Grid item>
             <LightText>Total Tokens</LightText>
-            <BoldText>26 (42%)</BoldText>
+            <BoldText>{`${token} (${equityValue}%)`}</BoldText>
           </Grid>
           <Grid item>
             <LightText>Total Cost</LightText>
-            <BoldText>2577.88 USD</BoldText>
+            <BoldText>{getTotalCost()} USD</BoldText>
           </Grid>
         </Grid>
         <LightText>~1 Token = .92 USD</LightText>
@@ -53,7 +79,7 @@ const Bid = (props: any) => {
               <CustomTextField label="Email Address" type="email" name="email" />
               <IntegerNumberField label="Phone number" name="phoneNumber" />
               <Box className={classes.submitCont}>
-                <PrimaryButton>CONFIRM</PrimaryButton>
+                <PrimaryButton type="submit">{loading ? <Spinner /> : 'CONFIRM'}</PrimaryButton>
               </Box>
             </Form>
           )}

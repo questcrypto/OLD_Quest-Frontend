@@ -16,6 +16,7 @@ import {
 import Box from '@material-ui/core/Box'
 import AlarmIcon from '@material-ui/icons/Alarm'
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh'
+import CheckIcon from '@material-ui/icons/Check'
 import HelpIcon from '@material-ui/icons/Help'
 import TotalBiddersIcon from 'assets/icons/total-bidders.svg'
 import EligibleBidIcon from 'assets/icons/eligible-bids.svg'
@@ -25,7 +26,7 @@ import moment from 'moment'
 
 const AuctionStats = (props: any) => {
   const classes = auctionStatsStyle()
-  const { bidStats, auctionDetails } = props
+  const { bidStats, auctionDetails, reservePriceMet, totalToken } = props
 
   const getProgressValue = (startDate: Date, endDate: Date) => {
     const daysRemaining = getDaysValue(new Date(), endDate)
@@ -35,14 +36,18 @@ const AuctionStats = (props: any) => {
     return progressVal
   }
 
+  const getTotalTokenSold = () => {
+    const soldToken = (bidStats.totalTokensSold / totalToken) * 100
+    return `${soldToken.toFixed(0)}%`
+  }
   return (
     <Box>
       <StatsInfoCont>
         <StatTitle>Auction stats</StatTitle>
-        <StyledLinearProgress variant="determinate" value={getProgressValue(auctionDetails[0].startDate, auctionDetails[0].endDate)} />
+        <StyledLinearProgress variant="determinate" value={getProgressValue(auctionDetails.startDate, auctionDetails.endDate)} />
         <StatsTimeInfo>
           <AlarmIcon />
-          <StatTimeText>{`Auction ends ${moment(auctionDetails[0].endDate).utc().format('MMM Do YYYY HH:mm:ss')}`}</StatTimeText>
+          <StatTimeText>{`Auction ends ${moment(auctionDetails.endDate).utc().format('MMM Do YYYY HH:mm:ss')}`}</StatTimeText>
         </StatsTimeInfo>
         <StatsInfo>
           <img src={TotalBiddersIcon} alt="" />
@@ -62,17 +67,17 @@ const AuctionStats = (props: any) => {
           <img src={TotalBidsIcon} alt="" />
           <div>
             <StatText>Total Bids</StatText>
-            <BoldText>{bidStats.totalBids ? parseInt(bidStats.totalBids).toLocaleString() : 0}</BoldText>
+            <BoldText>{parseInt(bidStats.totalBidders).toLocaleString()}</BoldText>
           </div>
         </StatsInfo>
       </StatsInfoCont>
       <TokenSoldInfo>
         <StatText>Total property tokens sold </StatText>
-        <BoldText>86%</BoldText>
+        <BoldText>{getTotalTokenSold()}</BoldText>
       </TokenSoldInfo>
-      <ConfirmationInfo>
-        <PriorityHighIcon className={classes.priorityIconStyle} />
-        <LightText>Reserve price not met.</LightText>
+      <ConfirmationInfo confirmStatus={reservePriceMet}>
+        {reservePriceMet ? <CheckIcon className={classes.checkIconStyle} /> : <PriorityHighIcon className={classes.priorityIconStyle} />}
+        <LightText>{reservePriceMet ? 'Reserve price  met.' : 'Reserve price not met.'}</LightText>
         <HelpIcon className={classes.helpIconStyle} />
       </ConfirmationInfo>
     </Box>

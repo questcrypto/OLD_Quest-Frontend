@@ -8,59 +8,17 @@ import InputBase from '@material-ui/core/InputBase'
 import { auctionTabList } from 'shared/helpers/dataConstant'
 import TabComponent from 'shared/tab-component'
 import OnGoingProperties from './components/OnGoingProperties'
+import ParticipateProperties from './components/ParticipateProperties'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-
-const data = [
-  {
-    name: '1024 Somma Way',
-    id: 'QUEST24567',
-    averageBid: '$ 98.22',
-    dayRemaining: 4,
-    selfBid: '$ 95.12',
-  },
-  {
-    name: '1024 Somma Way',
-    id: 'QUEST24567',
-    averageBid: '$ 98.22',
-    dayRemaining: 4,
-    selfBid: '$ 95.12',
-  },
-  {
-    name: '1024 Somma Way',
-    id: 'QUEST24567',
-    averageBid: '$ 98.22',
-    dayRemaining: 4,
-    selfBid: '$ 95.12',
-  },
-  {
-    name: '1024 Somma Way',
-    id: 'QUEST24567',
-    averageBid: '$ 98.22',
-    dayRemaining: 4,
-    selfBid: '$ 95.12',
-  },
-  {
-    name: '1024 Somma Way',
-    id: 'QUEST24567',
-    averageBid: '$ 98.22',
-    dayRemaining: 4,
-    selfBid: '$ 95.12',
-  },
-  {
-    name: '1024 Somma Way',
-    id: 'QUEST24567',
-    averageBid: '$ 98.22',
-    dayRemaining: 4,
-    selfBid: '$ 95.12',
-  },
-]
 
 const Auction = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('participating')
   const [onGoingProperties, setOnGoingProperties] = useState<any>([])
   const [onGoingLoading, setOnGoingLoading] = useState(false)
+  const [participateProperties, setParticipateProperties] = useState<any>([])
+  const [participateLoading, setParticipateLoading] = useState(false)
   const { userInfo } = props
 
   useEffect(() => {
@@ -74,7 +32,18 @@ const Auction = (props: any) => {
         setOnGoingLoading(false)
       }
     }
+    const getParticipateProperties = async () => {
+      try {
+        setParticipateLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/getListOfParticipatedAuctions/${userInfo.publicaddress}`)
+        setParticipateProperties(res.data)
+      } catch (error) {
+      } finally {
+        setParticipateLoading(false)
+      }
+    }
     getOnGoingProperties()
+    getParticipateProperties()
   }, [userInfo])
   return (
     <Box className={classes.root}>
@@ -100,6 +69,9 @@ const Auction = (props: any) => {
       </Grid>
       <TabComponent tabOptions={auctionTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === 'ongoing' && <OnGoingProperties data={onGoingProperties} dataLoading={onGoingLoading} />}
+      {activeTab === 'participating' && <ParticipateProperties data={participateProperties} dataLoading={participateLoading} />}
+      {activeTab === 'upcoming' && <p>Content need to added here</p>}
+      {activeTab === 'passed' && <p>Content need to added here</p>}
     </Box>
   )
 }

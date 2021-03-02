@@ -8,4 +8,5 @@ export enum Paths {
   treasuryPropertyDetails = '/treasury-property-details',
   auction = '/auction',
   auctionDetails = '/auction-details',
+  upgradeBid = '/auction-upgrade-bid',
 }

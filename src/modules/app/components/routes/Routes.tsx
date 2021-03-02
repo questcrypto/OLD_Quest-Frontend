@@ -16,6 +16,7 @@ import PropertyDetails from 'modules/property-details'
 import TreasuryPropertyDetails from 'modules/treasury/treasury-details'
 import Auction from 'modules/auction'
 import AuctionDetails from 'modules/auction-details'
+import UpgradeBidDetails from 'modules/auction-details/UpgradeBidDetails'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
 
@@ -86,6 +87,13 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.auctionDetails + '/:auctionId',
     component: AuctionDetails,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.upgradeBid + '/:auctionId',
+    component: UpgradeBidDetails,
     protected: true,
     redirect: Paths.root,
     title: '',

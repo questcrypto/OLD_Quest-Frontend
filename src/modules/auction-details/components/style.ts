@@ -37,8 +37,8 @@ export const auctionBidStyle = makeStyles(() =>
       padding: '12px 30px 27px 20px',
     },
     tokenStyle: {
-      width: 100,
-      maxWidth: 100,
+      width: 135,
+      maxWidth: 135,
     },
     makeBidStyle: {
       width: 232,
@@ -54,9 +54,18 @@ export const auctionBidStyle = makeStyles(() =>
     totalBid: {
       width: 273,
       maxWidth: 273,
+      '& input': {
+        color: 'black !important',
+      },
     },
     linkContStyle: {
       marginTop: '16px',
+    },
+    upgradeBidInfoStyle: {
+      padding: '8px 30px 30px 30px',
+    },
+    upgradeDividerStyle: {
+      margin: '10px 0 !important',
     },
   })
 )
@@ -74,6 +83,12 @@ export const auctionStatsStyle = makeStyles(() =>
     priorityIconStyle: {
       color: colors.white,
       background: 'black',
+      padding: '5px',
+      fontSize: '20px',
+    },
+    checkIconStyle: {
+      color: 'black',
+      background: 'transparent',
       padding: '5px',
       fontSize: '20px',
     },
@@ -130,6 +145,12 @@ export const LightText = styled.p`
   color: ${colors.textPrimary};
   opacity: 0.87;
   margin: 0;
+`
+export const UpgradeInfoText = styled.p`
+  font-size: 12px;
+  line-height: 16px;
+  color: ${colors.textPrimary};
+  margin: 0 0 8px 0;
 `
 export const AboutPropertyTxt = styled(LightText)`
   opacity: 0.6;
@@ -260,12 +281,12 @@ export const TokenSoldInfo = styled.div`
   background: #c4c4c4;
   text-align: center;
 `
-export const ConfirmationInfo = styled.div`
+export const ConfirmationInfo = styled.div<any>`
   display: flex;
   justify-content: space-between;
   align-item: center;
   padding: 10px;
-  background: ${colors.lightYellow};
+  background: ${(props: any) => (props.confirmStatus ? colors.greenColor : colors.lightYellow)};
   svg {
     cursor: pointer;
     border-radius: 50%;

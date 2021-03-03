@@ -50,7 +50,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
 import Spinner from 'shared/loader-components/spinner'
-import { propertyType } from 'shared/helpers/dataConstant'
+import { propertyType, Landscaping } from 'shared/helpers/dataConstant' 
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
@@ -178,7 +178,7 @@ const AddPropertyForm = () => {
             setSubmitting(false)
           }}
         >
-          {({ values }: any) => (
+          {({ values, handleBlur }: any) => (
             <Form>
               <Grid container>
                 <Grid item xs={2} className={classes.titleNumberStyle}>
@@ -187,11 +187,11 @@ const AddPropertyForm = () => {
                 <Grid item xs={10} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitle>Owner details</FormTitle>
-                    <CustomTextField label="First name" name="Fname" />
+                    <CustomTextField label="First name" name="Fname" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Fname" />
-                    <CustomTextField label="Last name" name="Lname" />
+                    <CustomTextField label="Last name" name="Lname" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Lname" />
-                    <CustomTextField label="Email Address" type="email" name="Email" />
+                    <CustomTextField label="Email Address" type="email" name="Email" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Email" />
                     <CustomTextField label="Wallet public key" name="PublicAddress" />
                     <ErrorMessage component={err} name="PublicAddress" />
@@ -208,17 +208,17 @@ const AddPropertyForm = () => {
                     <FormTitle>Property info</FormTitle>
                     <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
                     <ErrorMessage component={err} name="PropertyType" />
-                    <CustomTextField label="Property name" name="PropertyName" />
+                    <CustomTextField label="Property name" name="PropertyName" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="PropertyName" />
-                    <FloatNumberField label="Property current value" name="CurrentValue" />
+                    <FloatNumberField label="Property current value" name="CurrentValue" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="CurrentValue" />
                     <CustomTextField label="Comments" name="Comments" />
                     <ErrorMessage component={err} name="Comments" />
                     <FormDatePicker label="Year built" name="YearBuilt" />
                     <ErrorMessage component={err} name="YearBuilt" />
-                    <CustomTextField label="Zoning" name="Zoning" />
+                    <CustomTextField label="Zoning" name="Zoning" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Zoning" />
-                    <CustomTextField label="Landscaping" name="Landscaping" />
+                    <FieldSelect label="Landscaping" name="Landscaping" options={Landscaping} />
                     <ErrorMessage component={err} name="Landscaping" />
                     <IntegerNumberField label="Lot Facts" name="Lotfacts" />
                     <ErrorMessage component={err} name="Lotfacts" />
@@ -234,26 +234,26 @@ const AddPropertyForm = () => {
                 <Grid item xs={10} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitle>Address</FormTitle>
-                    <CustomTextField label="Address 1" name="Address1" />
+                    <CustomTextField label="Address 1" name="Address1" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Address1" />
                     <CustomTextField label="Address 2" name="Address2" />
                     <ErrorMessage component={err} name="Address2" />
-                    <CustomTextField label="City" name="City" />
+                    <CustomTextField label="City" name="City" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="City" />
                     <Grid container spacing={1}>
                       <Grid item xs={12} sm={6}>
-                        <CustomTextField label="State" name="State" />
+                        <CustomTextField label="State" name="State" handleBlur={handleBlur} />
                         <ErrorMessage component={err} name="State" />
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <IntegerNumberField label="Postal code" name="PostalCode" />
+                        <IntegerNumberField label="Postal code" name="PostalCode" handleBlur={handleBlur} />
                         <ErrorMessage component={err} name="PostalCode" />
                       </Grid>
                     </Grid>
 
-                    <CustomTextField label="Country" name="Country" />
+                    <CustomTextField label="Country" name="Country" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Country" />
-                    <CustomTextField label="Subdivision" name="Subdivision" />
+                    <CustomTextField label="Subdivision" name="Subdivision" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Subdivision" />
                   </Grid>
                   <Divider className={classes.dividerStyle} />
@@ -267,13 +267,13 @@ const AddPropertyForm = () => {
                 <Grid item xs={10} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitle>Locality / Neighbourhood insight</FormTitle>
-                    <CustomTextField label="School district" name="SchoolDistrict" />
+                    <CustomTextField label="School district" name="SchoolDistrict" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="SchoolDistrict" />
-                    <CustomTextField label="Elementary" name="Elementary" />
+                    <CustomTextField label="Elementary" name="Elementary" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Elementary" />
-                    <CustomTextField label="Jr high" name="JrHigh" />
+                    <CustomTextField label="Jr high" name="JrHigh" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="JrHigh" />
-                    <CustomTextField label="High school" name="HighSchool" />
+                    <CustomTextField label="High school" name="HighSchool" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="HighSchool" />
                   </Grid>
                   <Divider className={classes.dividerStyle} />
@@ -433,17 +433,17 @@ const AddPropertyForm = () => {
                 <Grid item xs={10} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitle>Amenities</FormTitle>
-                    <CustomTextField label="Heating" name="Heating" />
+                    <CustomTextField label="Heating" name="Heating" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Heating" />
-                    <CustomTextField label="AC" name="AC" />
+                    <CustomTextField label="AC" name="AC" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="AC" />
-                    <CustomTextField label="Roof" name="Roof" />
+                    <CustomTextField label="Roof" name="Roof" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Roof" />
-                    <CustomTextField label="Floor" name="Floor" />
+                    <CustomTextField label="Floor" name="Floor" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Floor" />
-                    <CustomTextField label="Window Covering" name="WindowCovering" />
+                    <CustomTextField label="Window Covering" name="WindowCovering" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="WindowCovering" />
-                    <CustomTextField label="Pool" name="Pool" />
+                    <FieldSelect label="Pool" name="Pool" options={Landscaping} />
                     <ErrorMessage component={err} name="Pool" />
                     <CustomTextField label="Pool Feature" name="PoolFeature" />
                     <ErrorMessage component={err} name="PoolFeature" />
@@ -461,25 +461,25 @@ const AddPropertyForm = () => {
                     <FormTitle>More Details</FormTitle>
                     <CustomTextField label="Style" name="Style" />
                     <ErrorMessage component={err} name="Style" />
-                    <CustomTextField label="Deck" name="Deck" />
+                    <FieldSelect label="Deck" name="Deck" options={Landscaping} />
                     <ErrorMessage component={err} name="Deck" />
-                    <CustomTextField label="Patio" name="Patio" />
+                    <FieldSelect label="Patio" name="Patio" options={Landscaping} />
                     <ErrorMessage component={err} name="Patio" />
                     <CustomTextField label="Garage" name="Garage" />
                     <ErrorMessage component={err} name="Garage" />
-                    <CustomTextField label="Carport" name="Carpot" />
+                    <FieldSelect label="Carpot" name="Carpot" options={Landscaping} />
                     <ErrorMessage component={err} name="Carpot" />
                     <IntegerNumberField label="Parking Space" name="ParkingSpace" />
                     <ErrorMessage component={err} name="ParkingSpace" />
                     <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
                     <ErrorMessage component={err} name="FinBasmt" />
-                    <CustomTextField label="Basement" name="Basement" />
+                    <FieldSelect label="Basement" name="Basement" options={Landscaping} />
                     <ErrorMessage component={err} name="Basement" />
-                    <CustomTextField label="Driveway" name="Driveway" />
+                    <FieldSelect label="Driveway" name="Driveway" options={Landscaping} />
                     <ErrorMessage component={err} name="Driveway" />
-                    <CustomTextField label="Water" name="Water" />
+                    <CustomTextField label="Water" name="Water" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="Water" />
-                    <CustomTextField label="Water Shares" name="WaterShare" />
+                    <CustomTextField label="Water Shares" name="WaterShare" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="WaterShare" />
                     <CustomTextField label="Spa" name="Spa" />
                     <ErrorMessage component={err} name="Spa" />

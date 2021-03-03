@@ -19,11 +19,12 @@ interface Props {
   name: string
   label?: string
   maxLength?: number
+  handleBlur?: any
 }
 
 const IntegerNumberField = (props: Props) => {
   const classes = textFieldStyle()
-  const { name, label, maxLength } = props
+  const { name, label, maxLength, handleBlur } = props
 
   const handleNumberInput = (e: any, form: any, field: any) => {
     const { value } = e.target
@@ -57,6 +58,7 @@ const IntegerNumberField = (props: Props) => {
             onChange={(e: any) => {
               handleNumberInput(e, form, field)
             }}
+            onBlur={handleBlur} 
             type="text"
             className={classes.root}
           />

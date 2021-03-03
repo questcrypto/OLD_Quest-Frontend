@@ -5,6 +5,12 @@ export const propertyType = [
   { label: 'Commercial', value: 4 },
   { label: 'RawLand', value: 5 },
 ]
+
+export const Landscaping = [
+  { label: 'Yes', value: 1 },
+  { label: 'No', value: 2 },
+]
+
 export const auctionTabList = [
   {
     label: 'Participating',

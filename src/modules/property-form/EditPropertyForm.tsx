@@ -67,6 +67,7 @@ import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 
+
 const EditPropertyForm = (props: any) => {
   const [initialData, setInitialData] = useState(initialValues)
   const [showImgModal, setShowImgModal] = useState(false)
@@ -377,7 +378,7 @@ const EditPropertyForm = (props: any) => {
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Comments" />
                             <FieldMsgBox>
-                              <FormDatePicker label="Year built" name="YearBuilt" />
+                              <FormDatePicker label="Year built" name="YearBuilt" maxDate={moment(new Date()).format('YYYY-MM-DD')} />
                               <Badge badgeContent={!!unReadComments && unReadComments[8]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(8)} />
                               </Badge>

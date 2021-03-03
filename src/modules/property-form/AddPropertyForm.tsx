@@ -55,7 +55,7 @@ import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
-
+import moment from 'moment'
 const AddPropertyForm = () => {
   const [showImgModal, setShowImgModal] = useState(false)
   const [imageList, setImageList] = useState<any>([])
@@ -208,13 +208,13 @@ const AddPropertyForm = () => {
                     <FormTitle>Property info</FormTitle>
                     <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
                     <ErrorMessage component={err} name="PropertyType" />
-                    <CustomTextField label="Property name" name="PropertyName" handleBlur={handleBlur} />
+                    <CustomTextField label="Property name" name="PropertyName" handleBlur={handleBlur} /> 
                     <ErrorMessage component={err} name="PropertyName" />
                     <FloatNumberField label="Property current value" name="CurrentValue" />
                     <ErrorMessage component={err} name="CurrentValue" />
                     <CustomTextField label="Comments" name="Comments" />
                     <ErrorMessage component={err} name="Comments" />
-                    <FormDatePicker label="Year built" name="YearBuilt" />
+                    <FormDatePicker label="Year built" name="YearBuilt" maxDate={moment(new Date()).format('YYYY-MM-DD')} />
                     <ErrorMessage component={err} name="YearBuilt" />
                     <CustomTextField label="Zoning" name="Zoning" />
                     <ErrorMessage component={err} name="Zoning" />

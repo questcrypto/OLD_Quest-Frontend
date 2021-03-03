@@ -1,4 +1,6 @@
+import { max } from 'moment'
 import * as Yup from 'yup'
+import { ref } from 'yup'
 
 export const initialValues = {
   Fname: '',
@@ -85,7 +87,7 @@ export const propertyFormSchema = Yup.object().shape({
   PropertyName: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet'),
   CurrentValue: Yup.number().integer().required('This field is required'),
   Comments: Yup.string().required('This field is required'),
-  YearBuilt: Yup.date().required('Date is required'),
+  YearBuilt: Yup.date().max(new Date(Date.now()), 'date must be equal or less than current date ').required('Date is required'),
   Zoning: Yup.string().required('This field is required'),
   Lotfacts: Yup.number().integer().required('This field is required'),
 

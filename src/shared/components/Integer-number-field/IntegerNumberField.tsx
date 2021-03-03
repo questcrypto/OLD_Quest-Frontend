@@ -58,7 +58,7 @@ const IntegerNumberField = (props: Props) => {
             onChange={(e: any) => {
               handleNumberInput(e, form, field)
             }}
-            onBlur={handleBlur} 
+            onBlur={handleBlur}
             type="text"
             className={classes.root}
           />

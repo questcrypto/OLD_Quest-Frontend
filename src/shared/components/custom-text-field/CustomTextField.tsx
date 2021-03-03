@@ -25,17 +25,16 @@ interface Props {
 
 const CustomTextField = (props: Props) => {
   const { name, label, type, isDisabled, handleBlur } = props
-  console.log("-----",handleBlur)
+  // console.log("-----",handleBlur)
   const classes = textFieldStyle()
   return (
     <Field name={name}>
       {({ field, form }: any) => {
-        const  handleChange  = (event: any) => {
+        const handleChange = (event: any) => {
           const fieldVal: any = event.target.value
           form.setFieldValue(field.name, fieldVal)
         }
 
-         
         return (
           <TextField
             variant="outlined"

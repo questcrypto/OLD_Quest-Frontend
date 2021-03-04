@@ -27,7 +27,7 @@ const AuctionDetails = (props: any) => {
     const getAuctionData = async () => {
       try {
         setDataLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/getAuctionDetail/${auctionId}`)
+        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedAccountBy`, {params: { id: auctionId, publicaddress:userInfo?.publicaddress }})
         if (!!res && res.data) {
           const imgList = []
           for (const item of res.data.propertyDetail.getDocs) {
@@ -55,6 +55,9 @@ const AuctionDetails = (props: any) => {
     getAuctionData()
   }, [match])
 
+  console.log('days: ', auctionData);
+
+
   return (
     <Box className={classes.root}>
       <HeaderContainer>
@@ -70,7 +73,12 @@ const AuctionDetails = (props: any) => {
           {!!auctionData && Object.values(auctionData).length > 0 && (
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6} md={4} container>
-                <PropertyImages imageList={imageList} selectedImg={selectedImg} setSelectedImg={setSelectedImg} />
+                <PropertyImages
+                  imageList={imageList}
+                  selectedImg={selectedImg}
+                  setSelectedImg={setSelectedImg}
+                  propertyText={auctionData?.propertyDetail?.propertyDetails?.Comments!}
+                />
               </Grid>
               <Grid item xs={12} sm={6} md={5} container>
                 <AuctionBid
@@ -80,6 +88,7 @@ const AuctionDetails = (props: any) => {
                   biddersID={!!userInfo && userInfo.publicaddress}
                   propertyID={auctionData.auctionDetails[0].propidId}
                   propertyName={auctionData.propertyDetail.propertyDetails.PropertyName}
+                  myBidDetails={auctionData?.myBidDetails!}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3} container>

@@ -11,7 +11,7 @@ import { getDaysValue } from 'shared/helpers/globalFunction'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
-
+ 
 const ParticipateProperties = (props: any) => {
   const { data, dataLoading } = props
   const classes = cardStyle()
@@ -20,8 +20,9 @@ const ParticipateProperties = (props: any) => {
     history.push(`${Paths.auctionDetails}/${id}`)
   }
   const handleUpgradeBidDetails = (id: string) => {
-    history.push(`${Paths.upgradeBid}/${id}`)
+    history.push(`${Paths.auctionDetails}/${id}`) 
   }
+
   const getRemainingDays = (endDate: Date) => {
     const daysRemaining = getDaysValue(new Date(), endDate)
     return (
@@ -49,7 +50,7 @@ const ParticipateProperties = (props: any) => {
   }
 
   const renderParticipatedCard = (item: any) => {
-    const { bidDetails, PropertyDetails } = item
+    const { bidDetails, PropertyDetails, auctionDetail } = item
     return (
       <Card className={classes.root}>
         <img className={classes.media} src={getImg(PropertyDetails.getDocs)} alt="" />
@@ -63,19 +64,22 @@ const ParticipateProperties = (props: any) => {
           <Grid container justify="space-between" alignItems="center" spacing={2}>
             <Grid item>
               <CardLightText>Average Bid</CardLightText>
-              <CardBoldText>{bidDetails[0].bidPrice}</CardBoldText>
+              <CardBoldText>${bidDetails[1].averageBid}</CardBoldText>
             </Grid>
             <Grid item>
               <CardLightText style={{ textAlign: 'right' }}>
-                <span>3</span> Days remaining
+                <span>{getRemainingDays(auctionDetail[0]?.endDate!)}</span>
               </CardLightText>
-              <StyledLinearProgress variant="determinate" value={70} />
+              <StyledLinearProgress
+                variant="determinate"
+                value={getProgressValue(auctionDetail[0]?.startDate!, auctionDetail[0]?.endDate!)}
+              />
             </Grid>
           </Grid>
           <Grid container justify="space-between" alignItems="center" spacing={2}>
             <Grid item>
               <CardLightText>Your Bid</CardLightText>
-              <CardBoldText>$10.00</CardBoldText>
+              <CardBoldText>${bidDetails[0].bidPrice}</CardBoldText>
             </Grid>
             <Grid item>
               <UpgradeBidTxt onClick={() => handleUpgradeBidDetails(bidDetails[0].auctionID)}>Upgrade your bid</UpgradeBidTxt>

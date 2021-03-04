@@ -5,13 +5,13 @@ import { useStyles, HeaderContainer, HeaderPath, HeaderTitle } from './style'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import PropertyImages from './components/PropertyImages'
-import AuctionBid from './components/AuctionBid'
+import UpgradeBid from './components/UpgradeBid'
 import AuctionStats from './components/AuctionStats'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
-const AuctionDetails = (props: any) => {
+const UpgradeBidDetails = (props: any) => {
   const classes = useStyles()
   const [dataLoading, setDataLoading] = useState(false)
   const [auctionData, setAuctionData] = useState<any>({})
@@ -24,10 +24,11 @@ const AuctionDetails = (props: any) => {
 
   useEffect(() => {
     const auctionId = match.params.auctionId
+    const data = { id: auctionId, publicaddress: userInfo.publicaddress }
     const getAuctionData = async () => {
       try {
         setDataLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/getAuctionDetail/${auctionId}`)
+        const res = await axios.post(`${apiBaseUrl}/auction/getListOfParticipatedAuctions`, data)
         if (!!res && res.data) {
           const imgList = []
           for (const item of res.data.propertyDetail.getDocs) {
@@ -53,7 +54,7 @@ const AuctionDetails = (props: any) => {
       }
     }
     getAuctionData()
-  }, [match])
+  }, [userInfo, match])
 
   return (
     <Box className={classes.root}>
@@ -73,7 +74,7 @@ const AuctionDetails = (props: any) => {
                 <PropertyImages imageList={imageList} selectedImg={selectedImg} setSelectedImg={setSelectedImg} />
               </Grid>
               <Grid item xs={12} sm={6} md={5} container>
-                <AuctionBid
+                <UpgradeBid
                   currentBid={currentBid}
                   totalToken={totalToken}
                   auctionID={match.params.auctionId}
@@ -101,4 +102,4 @@ const AuctionDetails = (props: any) => {
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
 })
-export default withRouter(connect(mapStateToProps)(AuctionDetails))
+export default withRouter(connect(mapStateToProps)(UpgradeBidDetails))

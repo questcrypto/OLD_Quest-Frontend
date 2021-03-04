@@ -1,29 +1,29 @@
 import React, { useState } from 'react'
 import { Error } from 'shared/styles/styled'
-import { auctionBidStyle, LightText, BoldText, Title, CurrentBidInfo, StyledSlider, SliderWrap, ShareLinkCont, MakeBidCont } from './style'
+import {
+  auctionBidStyle,
+  LightText,
+  UpgradeInfoText,
+  BoldText,
+  Title,
+  CurrentBidInfo,
+  StyledSlider,
+  SliderWrap,
+  ShareLinkCont,
+  MakeBidCont,
+} from './style'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
+import Divider from '@material-ui/core/Divider'
 import coin from 'assets/images/coin.svg'
 import TextInputField from './TextInputField'
 import { PrimaryButton } from 'shared/components/buttons'
+import TelegramIcon from '@material-ui/icons/Telegram'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
-// import TelegramIcon from '@material-ui/icons/Telegram'
-// import FacebookIcon from '@material-ui/icons/Facebook'
-// import TwitterIcon from '@material-ui/icons/Twitter'
+import FacebookIcon from '@material-ui/icons/Facebook'
+import TwitterIcon from '@material-ui/icons/Twitter'
 import NotificationsIcon from '@material-ui/icons/Notifications'
-
-import {
-  FacebookIcon,
-  FacebookShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
-  TelegramIcon,
-  TelegramShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-} from 'react-share'
-import useClippy from 'use-clippy'
 import CustomModal from 'shared/custom-modal'
 import Spinner from 'shared/loader-components/spinner'
 import Bid from './Bid'
@@ -35,7 +35,7 @@ const valuetext = (value: number) => {
   return `${value}%`
 }
 
-const AuctionBid = (props: any) => {
+const UpgradeBid = (props: any) => {
   const classes = auctionBidStyle()
   const [token, setToken] = useState(0)
   const [bidValue, setBidValue] = useState('0.00')
@@ -45,6 +45,7 @@ const AuctionBid = (props: any) => {
   const [equityValue, setEquityValue] = useState(0)
   const [showBidModal, setShowBidModal] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [showBidDetails, setShowBidDetails] = useState(false)
   const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken } = props
 
   const handleTokenChange = (event: any) => {
@@ -122,73 +123,83 @@ const AuctionBid = (props: any) => {
         </div>
       </CurrentBidInfo>
       <Paper className={classes.bidContStyle} elevation={0}>
-        <Box className={classes.actionBidContStyle}>
-          <Grid container justify="space-between" spacing={2}>
-            <Grid item>
-              <LightText>Equity %</LightText>
+        {showBidDetails ? (
+          <div>
+            <Box className={classes.actionBidContStyle}>
+              <Grid container justify="space-between" spacing={2}>
+                <Grid item>
+                  <LightText>Equity %</LightText>
+                </Grid>
+                <Grid item className={classes.tokenStyle}>
+                  <TextInputField name="token" label="Token" value={token} handleChange={handleTokenChange} />
+                </Grid>
+              </Grid>
+              <SliderWrap>
+                <StyledSlider
+                  value={equityValue}
+                  onChange={(e: any, val: any) => handleEquityValue(e, val)}
+                  valueLabelFormat={valuetext}
+                  aria-labelledby="discrete-slider"
+                  valueLabelDisplay="on"
+                  step={1}
+                  min={0}
+                  max={100}
+                />
+              </SliderWrap>
+              <Grid container spacing={2}>
+                <Grid item className={classes.makeBidStyle}>
+                  <MakeBidCont>
+                    <TextInputField name="upgradeBid" label="Upgrade Bid" value={bidValue} handleChange={handleBidValueChange} />
+                    {bidValue && <p>$</p>}
+                  </MakeBidCont>
+                </Grid>
+                <Grid item>
+                  <LightText>Per property token</LightText>
+                </Grid>
+              </Grid>
+              {bidError && <Error>This field is required</Error>}
+              {minBidError && <Error>{`Minimum required bid $${minBid}`}</Error>}
+            </Box>
+            <Box className={classes.totalBidContStyle}>
+              <Grid container spacing={2} alignItems="center">
+                <Grid item className={classes.totalBid} style={{ width: '250px' }}>
+                  <TextInputField name="total" label="Total" value={getTotalValue()} isDisabled />
+                </Grid>
+                <Grid item>
+                  <PrimaryButton onClick={() => handleMakeBid()}>{loading ? <Spinner /> : 'UPGRADE BID'}</PrimaryButton>
+                </Grid>
+              </Grid>
+              <LightText style={{ marginTop: '10px' }}>Total wallet balance = 2597.88 USDC</LightText>
+            </Box>
+          </div>
+        ) : (
+          <Box className={classes.upgradeBidInfoStyle}>
+            <UpgradeInfoText>
+              If your bid is below current bid you will be kicked out. To stay in the auction upgrade you bid.
+            </UpgradeInfoText>
+            <Divider className={classes.upgradeDividerStyle} />
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={6}>
+                <LightText>Your Bid</LightText>
+                <BoldText>$ 68.22</BoldText>
+              </Grid>
+              <Grid item xs={6}>
+                <PrimaryButton fullWidth onClick={() => setShowBidDetails(true)}>
+                  Upgrade your bid
+                </PrimaryButton>
+              </Grid>
             </Grid>
-            <Grid item className={classes.tokenStyle}>
-              <TextInputField name="token" label="Token" value={token} handleChange={handleTokenChange} />
-            </Grid>
-          </Grid>
-          <SliderWrap>
-            <StyledSlider
-              value={equityValue}
-              onChange={(e: any, val: any) => handleEquityValue(e, val)}
-              valueLabelFormat={valuetext}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="on"
-              step={1}
-              min={0}
-              max={100}
-            />
-          </SliderWrap>
-          <Grid container spacing={2}>
-            <Grid item className={classes.makeBidStyle}>
-              <MakeBidCont>
-                <TextInputField name="makeBid" label="Make a Bid" value={bidValue} handleChange={handleBidValueChange} />
-                {bidValue && <p>$</p>}
-              </MakeBidCont>
-            </Grid>
-            <Grid item>
-              <LightText>Per property token</LightText>
-            </Grid>
-          </Grid>
-          {bidError && <Error>This field is required</Error>}
-          {minBidError && <Error>{`Minimum required bid $${minBid}`}</Error>}
-        </Box>
-        <Box className={classes.totalBidContStyle}>
-          <Grid container spacing={2}>
-            <Grid item className={classes.totalBid}>
-              <TextInputField name="total" label="Total" value={getTotalValue()} isDisabled />
-            </Grid>
-            <Grid item>
-              <PrimaryButton onClick={() => handleMakeBid()}>{loading ? <Spinner /> : 'MAKE BID'}</PrimaryButton>
-            </Grid>
-          </Grid>
-          <LightText style={{ marginTop: '10px' }}>Total wallet balance = 2597.88 USDC</LightText>
-        </Box>
+          </Box>
+        )}
       </Paper>
       <Grid container spacing={3} justify="space-between" className={classes.linkContStyle}>
         <Grid item>
           <LightText>Share Links</LightText>
           <ShareLinkCont>
-            <FileCopyIcon
-              style={{ width: 35 , height: 32 }}
-              onClick={() => {
-                alert(`Your clipboard contains: ${'https://peing.net/ja/'}`)
-              }}
-            />
-
-            <FacebookShareButton title={'test'} url={'https://peing.net/ja/'}>
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
-            <TwitterShareButton title={'test'} url={'https://peing.net/ja/'} hashtags={['hashtag1', 'hashtag2']}>
-              <TwitterIcon size={32} round />
-            </TwitterShareButton>
-            <TelegramShareButton title={'test'} url={'https://peing.net/ja/'}>
-              <TelegramIcon size={32} round />
-            </TelegramShareButton>
+            <FileCopyIcon />
+            <FacebookIcon />
+            <TwitterIcon />
+            <TelegramIcon />
           </ShareLinkCont>
         </Grid>
         <Grid item>
@@ -212,4 +223,4 @@ const AuctionBid = (props: any) => {
     </Box>
   )
 }
-export default AuctionBid
+export default UpgradeBid

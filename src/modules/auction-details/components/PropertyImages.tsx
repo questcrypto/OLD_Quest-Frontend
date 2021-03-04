@@ -36,8 +36,11 @@ const PropertyImages = (props: any) => {
       </Grid>
       <AboutPropertyTxt>
         {propertyText ? propertyText
-          : `Central Valley Home In Taylor with a large backyard pool. Completely remodeled in 2016 everything up to date. 6 Bedrooms and 2 Full
-        bathrooms. Living Room and Downstairs family room laundry room etc… and a true 2 car garage.`}
+          :
+          `Central Valley Home In Taylor with a large backyard pool. Completely remodeled in 2016 everything up to date. 6 Bedrooms and 2 Full
+        bathrooms. Living Room and Downstairs family room laundry room etc… and a true 2 car garage.`
+        }
+
       </AboutPropertyTxt>
     </Box>
   )

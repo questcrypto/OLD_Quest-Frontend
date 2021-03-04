@@ -20,7 +20,7 @@ const ParticipateProperties = (props: any) => {
     history.push(`${Paths.auctionDetails}/${id}`)
   }
   const handleUpgradeBidDetails = (id: string) => {
-    history.push(`${Paths.auctionDetails}/${id}`) 
+    history.push(`${Paths.upgradeBid}/${id}`) 
   }
 
   const getRemainingDays = (endDate: Date) => {

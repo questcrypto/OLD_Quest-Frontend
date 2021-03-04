@@ -67,6 +67,7 @@ import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 
+
 const EditPropertyForm = (props: any) => {
   const [initialData, setInitialData] = useState(initialValues)
   const [showImgModal, setShowImgModal] = useState(false)
@@ -294,7 +295,7 @@ const EditPropertyForm = (props: any) => {
                   setSubmitting(false)
                 }}
               >
-                {({ values }: any) => (
+                {({ values, handleBlur }: any) => (
                   <Form>
                     <fieldset disabled={!!userInfo && userInfo.role !== 1} style={fieldSetStyle}>
                       <Grid container>
@@ -305,21 +306,21 @@ const EditPropertyForm = (props: any) => {
                           <Grid item className={classes.editFormGroup}>
                             <FormTitle>Owner details</FormTitle>
                             <FieldMsgBox>
-                              <CustomTextField label="First name" name="Fname" />
+                              <CustomTextField label="First name" name="Fname" handleBlur={handleBlur} />
                               <Badge badgeContent={!!unReadComments && unReadComments[1]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(1)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Fname" />
                             <FieldMsgBox>
-                              <CustomTextField label="Last name" name="Lname" />
+                              <CustomTextField label="Last name" name="Lname" handleBlur={handleBlur} />
                               <Badge badgeContent={!!unReadComments && unReadComments[2]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(2)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Lname" />
                             <FieldMsgBox>
-                              <CustomTextField label="Email Address" type="email" name="Email" />
+                              <CustomTextField label="Email Address" type="email" name="Email" handleBlur={handleBlur} />
                               <Badge badgeContent={!!unReadComments && unReadComments[3]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(3)} />
                               </Badge>
@@ -356,7 +357,7 @@ const EditPropertyForm = (props: any) => {
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="PropertyType" />
                             <FieldMsgBox>
-                              <CustomTextField label="Property name" name="PropertyName" />
+                              <CustomTextField label="Property name" name="PropertyName" handleBlur={handleBlur} />
                               <Badge badgeContent={!!unReadComments && unReadComments[6]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(6)} />
                               </Badge>
@@ -377,7 +378,7 @@ const EditPropertyForm = (props: any) => {
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Comments" />
                             <FieldMsgBox>
-                              <FormDatePicker label="Year built" name="YearBuilt" />
+                              <FormDatePicker label="Year built" name="YearBuilt" maxDate={moment(new Date()).format('YYYY-MM-DD')} />
                               <Badge badgeContent={!!unReadComments && unReadComments[8]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(8)} />
                               </Badge>
@@ -658,35 +659,35 @@ const EditPropertyForm = (props: any) => {
                           <Grid item className={classes.editFormGroup}>
                             <FormTitle>Amenities</FormTitle>
                             <FieldMsgBox>
-                              <CustomTextField label="Heating" name="Heating" />
+                              <CustomTextField label="Heating" name="Heating" handleBlur={handleBlur} />
                               <Badge badgeContent={!!unReadComments && unReadComments[27]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(27)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Heating" />
                             <FieldMsgBox>
-                              <CustomTextField label="AC" name="AC" />
+                              <CustomTextField label="AC" name="AC" handleBlur={handleBlur} />
                               <Badge badgeContent={!!unReadComments && unReadComments[26]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(26)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="AC" />
                             <FieldMsgBox>
-                              <CustomTextField label="Roof" name="Roof" />
+                              <CustomTextField label="Roof" name="Roof" handleBlur={handleBlur} />
                               <Badge badgeContent={!!unReadComments && unReadComments[28]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(28)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Roof" />
                             <FieldMsgBox>
-                              <CustomTextField label="Floor" name="Floor" />
+                              <CustomTextField label="Floor" name="Floor" handleBlur={handleBlur} />
                               <Badge badgeContent={!!unReadComments && unReadComments[29]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(29)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Floor" />
                             <FieldMsgBox>
-                              <CustomTextField label="Window Covering" name="WindowCovering" />
+                              <CustomTextField label="Window Covering" name="WindowCovering" handleBlur={handleBlur} />
                               <Badge badgeContent={!!unReadComments && unReadComments[30]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(30)} />
                               </Badge>

@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { colors } from 'shared/styles/theme'
 
+
 const textFieldStyle = makeStyles(() =>
   createStyles({
     root: {
@@ -19,14 +20,15 @@ interface Props {
   name: string
   label?: string
   type?: string
+  maxDate?: any
 }
 
 const FormDatePicker = (props: Props) => {
-  const { name, label } = props
+  const { name, label, maxDate } = props
   const classes = textFieldStyle()
   return (
     <Field name={name}>
-      {({ field, form }: any) => {
+      {({ field, form, max }: any) => {
         const handleChange = (event: any) => {
           const fieldVal: any = event.target.value
           form.setFieldValue(field.name, fieldVal)
@@ -45,6 +47,9 @@ const FormDatePicker = (props: Props) => {
             type="date"
             className={classes.root}
             InputLabelProps={{ shrink: true }}
+            inputProps={{
+              max: !!maxDate && maxDate
+            }}
           />
         )
       }}
@@ -52,3 +57,5 @@ const FormDatePicker = (props: Props) => {
   )
 }
 export default FormDatePicker
+
+// moment(new Date()).format('YYYY-MM-DD')

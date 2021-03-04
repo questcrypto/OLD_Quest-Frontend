@@ -45,4 +45,4 @@ const PropertyImages = (props: any) => {
     </Box>
   )
 }
-export default PropertyImages
+export default PropertyImages 

@@ -12,6 +12,23 @@ import {
   ShareLinkCont,
   MakeBidCont,
 } from './style'
+import FileCopyIcon from '@material-ui/icons/FileCopy'
+// import TelegramIcon from '@material-ui/icons/Telegram'
+// import FacebookIcon from '@material-ui/icons/Facebook'
+// import TwitterIcon from '@material-ui/icons/Twitter'
+import NotificationsIcon from '@material-ui/icons/Notifications'
+
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+} from 'react-share'
+import useClippy from 'use-clippy'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
@@ -19,11 +36,6 @@ import Divider from '@material-ui/core/Divider'
 import coin from 'assets/images/coin.svg'
 import TextInputField from './TextInputField'
 import { PrimaryButton } from 'shared/components/buttons'
-import TelegramIcon from '@material-ui/icons/Telegram'
-import FileCopyIcon from '@material-ui/icons/FileCopy'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import TwitterIcon from '@material-ui/icons/Twitter'
-import NotificationsIcon from '@material-ui/icons/Notifications'
 import CustomModal from 'shared/custom-modal'
 import Spinner from 'shared/loader-components/spinner'
 import Bid from './Bid'
@@ -40,7 +52,6 @@ const UpgradeBid = (props: any) => {
   const [tokenError, setTokenError] = useState(false)
   const [bidError, setBidError] = useState(false)
   const [minBidError, setMinBidError] = useState(false)
-  const [minBid, setMinBid] = useState(0)
   const [showBidModal, setShowBidModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showBidDetails, setShowBidDetails] = useState(false)
@@ -50,6 +61,7 @@ const UpgradeBid = (props: any) => {
   const [token, setToken] = useState(bidDetails[0]?.currentAllotment! || 0)
   const [equityValue, setEquityValue] = useState(sliderDefaultValue! || 0)
   const [bidValue, setBidValue] = useState(bidDetails[0]?.bidPrice! || '0.00')
+   const [minBid, setMinBid] = useState(bidDetails[0]?.bidPrice! || 0)
 
 
   const handleTokenChange = (event: any) => {
@@ -61,7 +73,7 @@ const UpgradeBid = (props: any) => {
         const equityVal: any = (tokenVal / totalToken) * 100
         setEquityValue(parseInt(equityVal))
       }
-      if (tokenVal < bidDetails[0]?.currentAllotment!) {
+      if (tokenVal < bidDetails[0]?.currentAllotment!) { 
         setTokenError(true)
       }
       else setTokenError(false)
@@ -84,6 +96,8 @@ const UpgradeBid = (props: any) => {
         setBidValue(value)
         setBidError(false)
       }
+      if (value < bidDetails[0]?.bidPrice!) setMinBidError(true)
+      else setMinBidError(false)
     } else {
       setBidValue('')
       setBidError(true)
@@ -182,33 +196,45 @@ const UpgradeBid = (props: any) => {
             </Box>
           </div>
         ) : (
-            <Box className={classes.upgradeBidInfoStyle}>
-              <UpgradeInfoText>
-                If your bid is below current bid you will be kicked out. To stay in the auction upgrade you bid.
+          <Box className={classes.upgradeBidInfoStyle}>
+            <UpgradeInfoText>
+              If your bid is below current bid you will be kicked out. To stay in the auction upgrade you bid.
             </UpgradeInfoText>
-              <Divider className={classes.upgradeDividerStyle} />
-              <Grid container spacing={2} alignItems="center">
-                <Grid item xs={6}>
-                  <LightText>Your Bid</LightText>
-                  <BoldText>$ 68.22</BoldText>
-                </Grid>
-                <Grid item xs={6}>
-                  <PrimaryButton fullWidth onClick={() => setShowBidDetails(true)}>
-                    Upgrade your bid
-                </PrimaryButton>
-                </Grid>
+            <Divider className={classes.upgradeDividerStyle} />
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={6}>
+                <LightText>Your Bid</LightText>
+                <BoldText>$ 68.22</BoldText>
               </Grid>
-            </Box>
-          )}
+              <Grid item xs={6}>
+                <PrimaryButton fullWidth onClick={() => setShowBidDetails(true)}>
+                  Upgrade your bid
+                </PrimaryButton>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
       </Paper>
       <Grid container spacing={3} justify="space-between" className={classes.linkContStyle}>
         <Grid item>
           <LightText>Share Links</LightText>
           <ShareLinkCont>
-            <FileCopyIcon />
-            <FacebookIcon />
-            <TwitterIcon />
-            <TelegramIcon />
+            <FileCopyIcon
+              style={{ width: 35, height: 32 }}
+              onClick={() => {
+                alert(`Your clipboard contains: ${'https://peing.net/ja/'}`)
+              }}
+            />
+
+            <FacebookShareButton title={'test'} url={'https://peing.net/ja/'}>
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+            <TwitterShareButton title={'test'} url={'https://peing.net/ja/'} hashtags={['hashtag1', 'hashtag2']}>
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+            <TelegramShareButton title={'test'} url={'https://peing.net/ja/'}>
+              <TelegramIcon size={32} round />
+            </TelegramShareButton>
           </ShareLinkCont>
         </Grid>
         <Grid item>

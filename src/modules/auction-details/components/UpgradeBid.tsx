@@ -37,16 +37,20 @@ const valuetext = (value: number) => {
 
 const UpgradeBid = (props: any) => {
   const classes = auctionBidStyle()
-  const [token, setToken] = useState(0)
-  const [bidValue, setBidValue] = useState('0.00')
+  const [tokenError, setTokenError] = useState(false)
   const [bidError, setBidError] = useState(false)
   const [minBidError, setMinBidError] = useState(false)
   const [minBid, setMinBid] = useState(0)
-  const [equityValue, setEquityValue] = useState(0)
   const [showBidModal, setShowBidModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showBidDetails, setShowBidDetails] = useState(false)
-  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken } = props
+  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, userEmail, bidDetails } = props
+
+  const sliderDefaultValue = bidDetails[0]?.currentAllotment! / totalToken! * 100
+  const [token, setToken] = useState(bidDetails[0]?.currentAllotment! || 0)
+  const [equityValue, setEquityValue] = useState(sliderDefaultValue! || 0)
+  const [bidValue, setBidValue] = useState(bidDetails[0]?.bidPrice! || '0.00')
+
 
   const handleTokenChange = (event: any) => {
     const { value } = event.target
@@ -57,6 +61,10 @@ const UpgradeBid = (props: any) => {
         const equityVal: any = (tokenVal / totalToken) * 100
         setEquityValue(parseInt(equityVal))
       }
+      if (tokenVal < bidDetails[0]?.currentAllotment!) {
+        setTokenError(true)
+      }
+      else setTokenError(false)
     }
     if (!value) {
       setToken(0)
@@ -89,13 +97,13 @@ const UpgradeBid = (props: any) => {
       return `0.00 USDC`
     }
   }
-  const handleMakeBid = async () => {
+  const handleUpgradeBid = async () => {
     if (parseFloat(bidValue) > 0 && token > 0) {
       try {
         setLoading(true)
         const data = {
           bidPrice: parseFloat(bidValue),
-          totalQuantity: token,
+          totalQuantity: totalToken,
           id: auctionID,
         }
         const res = await axios.post(`${apiBaseUrl}/auction/getEligibilty`, data)
@@ -132,6 +140,7 @@ const UpgradeBid = (props: any) => {
                 </Grid>
                 <Grid item className={classes.tokenStyle}>
                   <TextInputField name="token" label="Token" value={token} handleChange={handleTokenChange} />
+                  {tokenError && <Error>Token value cannot be less than {bidDetails[0]?.currentAllotment!}</Error>}
                 </Grid>
               </Grid>
               <SliderWrap>
@@ -141,8 +150,8 @@ const UpgradeBid = (props: any) => {
                   valueLabelFormat={valuetext}
                   aria-labelledby="discrete-slider"
                   valueLabelDisplay="on"
-                  step={1}
-                  min={0}
+                  step={0.1}
+                  min={sliderDefaultValue! || 0}
                   max={100}
                 />
               </SliderWrap>
@@ -166,31 +175,31 @@ const UpgradeBid = (props: any) => {
                   <TextInputField name="total" label="Total" value={getTotalValue()} isDisabled />
                 </Grid>
                 <Grid item>
-                  <PrimaryButton onClick={() => handleMakeBid()}>{loading ? <Spinner /> : 'UPGRADE BID'}</PrimaryButton>
+                  <PrimaryButton onClick={() => handleUpgradeBid()}>{loading ? <Spinner /> : 'UPGRADE BID'}</PrimaryButton>
                 </Grid>
               </Grid>
               <LightText style={{ marginTop: '10px' }}>Total wallet balance = 2597.88 USDC</LightText>
             </Box>
           </div>
         ) : (
-          <Box className={classes.upgradeBidInfoStyle}>
-            <UpgradeInfoText>
-              If your bid is below current bid you will be kicked out. To stay in the auction upgrade you bid.
+            <Box className={classes.upgradeBidInfoStyle}>
+              <UpgradeInfoText>
+                If your bid is below current bid you will be kicked out. To stay in the auction upgrade you bid.
             </UpgradeInfoText>
-            <Divider className={classes.upgradeDividerStyle} />
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={6}>
-                <LightText>Your Bid</LightText>
-                <BoldText>$ 68.22</BoldText>
-              </Grid>
-              <Grid item xs={6}>
-                <PrimaryButton fullWidth onClick={() => setShowBidDetails(true)}>
-                  Upgrade your bid
+              <Divider className={classes.upgradeDividerStyle} />
+              <Grid container spacing={2} alignItems="center">
+                <Grid item xs={6}>
+                  <LightText>Your Bid</LightText>
+                  <BoldText>$ 68.22</BoldText>
+                </Grid>
+                <Grid item xs={6}>
+                  <PrimaryButton fullWidth onClick={() => setShowBidDetails(true)}>
+                    Upgrade your bid
                 </PrimaryButton>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
-        )}
+            </Box>
+          )}
       </Paper>
       <Grid container spacing={3} justify="space-between" className={classes.linkContStyle}>
         <Grid item>
@@ -218,6 +227,8 @@ const UpgradeBid = (props: any) => {
           auctionID={auctionID}
           biddersID={biddersID}
           propertyID={propertyID}
+          upgrade={true}
+          email={userEmail}
         />
       </CustomModal>
     </Box>

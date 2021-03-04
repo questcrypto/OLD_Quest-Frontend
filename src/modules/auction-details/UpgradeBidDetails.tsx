@@ -67,34 +67,40 @@ const UpgradeBidDetails = (props: any) => {
       {dataLoading ? (
         <ComponentLoader />
       ) : (
-        <div>
-          {!!auctionData && Object.values(auctionData).length > 0 && (
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6} md={4} container>
-                <PropertyImages imageList={imageList} selectedImg={selectedImg} setSelectedImg={setSelectedImg} />
+          <div>
+            {!!auctionData && Object.values(auctionData).length > 0 && (
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={4} container>
+                  <PropertyImages
+                    imageList={imageList}
+                    selectedImg={selectedImg}
+                    setSelectedImg={setSelectedImg}
+                    propertyText={auctionData.propertyDetail.propertyDetails.Comments} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={5} container>
+                  <UpgradeBid
+                    currentBid={currentBid}
+                    totalToken={totalToken}
+                    auctionID={match.params.auctionId}
+                    biddersID={!!userInfo && userInfo.publicaddress}
+                    propertyID={auctionData.auctionDetails[0].propidId}
+                    propertyName={auctionData.propertyDetail.propertyDetails.PropertyName}
+                    userEmail={userInfo?.email!}
+                    bidDetails={auctionData?.myBidDetails!}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3} container>
+                  <AuctionStats
+                    bidStats={auctionData.bidStats}
+                    auctionDetails={auctionData.auctionDetails[0]}
+                    reservePriceMet={reservePriceMet}
+                    totalToken={totalToken}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6} md={5} container>
-                <UpgradeBid
-                  currentBid={currentBid}
-                  totalToken={totalToken}
-                  auctionID={match.params.auctionId}
-                  biddersID={!!userInfo && userInfo.publicaddress}
-                  propertyID={auctionData.auctionDetails[0].propidId}
-                  propertyName={auctionData.propertyDetail.propertyDetails.PropertyName}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} md={3} container>
-                <AuctionStats
-                  bidStats={auctionData.bidStats}
-                  auctionDetails={auctionData.auctionDetails[0]}
-                  reservePriceMet={reservePriceMet}
-                  totalToken={totalToken}
-                />
-              </Grid>
-            </Grid>
-          )}
-        </div>
-      )}
+            )}
+          </div>
+        )}
     </Box>
   )
 }

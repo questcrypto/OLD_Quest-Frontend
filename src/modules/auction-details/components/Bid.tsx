@@ -17,7 +17,7 @@ import { apiBaseUrl } from 'services/global-constant'
 const Bid = (props: any) => {
   const classes = bidStyle()
   const [loading, setLoading] = useState(false)
-  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal } = props
+  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, upgrade, email } = props
 
   const handleSubmit = async (values: any) => {
     const totalAmount = token * parseFloat(bidValue)
@@ -31,7 +31,10 @@ const Bid = (props: any) => {
     }
     try {
       setLoading(true)
-      await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
+      if (upgrade){
+        await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
+      }
+      else await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
       history.push(Paths.auction)
     } catch (error) {
     } finally {
@@ -68,7 +71,7 @@ const Bid = (props: any) => {
           We would like to keep you updated on this auction please update you communication preference.
         </LightText>
         <Formik
-          initialValues={{ email: '', phoneNumber: '' }}
+          initialValues={{ email, phoneNumber: '' }}
           onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values)
             setSubmitting(false)

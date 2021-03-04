@@ -75,7 +75,7 @@ const UpgradeBidDetails = (props: any) => {
                     imageList={imageList}
                     selectedImg={selectedImg}
                     setSelectedImg={setSelectedImg}
-                    propertyText={auctionData.propertyDetail.propertyDetails.Comments} />
+                    propertyText={auctionData?.propertyDetail?.propertyDetails?.Comments!} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={5} container>
                   <UpgradeBid

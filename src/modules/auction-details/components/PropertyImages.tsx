@@ -6,7 +6,7 @@ import { apiBaseUrl } from 'services/global-constant'
 
 const PropertyImages = (props: any) => {
   const classes = imagesStyle()
-  const { imageList, selectedImg, setSelectedImg } = props
+  const { imageList, selectedImg, setSelectedImg, propertyText } = props
 
   const handleImage = (imgData: any) => {
     setSelectedImg(imgData)
@@ -35,8 +35,12 @@ const PropertyImages = (props: any) => {
         {renderSmallImages()}
       </Grid>
       <AboutPropertyTxt>
-        Central Valley Home In Taylor with a large backyard pool. Completely remodeled in 2016 everything up to date. 6 Bedrooms and 2 Full
-        bathrooms. Living Room and Downstairs family room laundry room etc… and a true 2 car garage.
+        {propertyText ? propertyText
+          :
+          `Central Valley Home In Taylor with a large backyard pool. Completely remodeled in 2016 everything up to date. 6 Bedrooms and 2 Full
+        bathrooms. Living Room and Downstairs family room laundry room etc… and a true 2 car garage.`
+        }
+
       </AboutPropertyTxt>
     </Box>
   )

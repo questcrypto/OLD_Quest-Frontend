@@ -37,15 +37,22 @@ const valuetext = (value: number) => {
 
 const AuctionBid = (props: any) => {
   const classes = auctionBidStyle()
-  const [token, setToken] = useState(0)
-  const [bidValue, setBidValue] = useState('0.00')
   const [bidError, setBidError] = useState(false)
+  const [tokenError, setTokenError] = useState(false)
   const [minBidError, setMinBidError] = useState(false)
-  const [minBid, setMinBid] = useState(0)
-  const [equityValue, setEquityValue] = useState(0)
+
   const [showBidModal, setShowBidModal] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken } = props
+  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails } = props
+
+
+  const sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100    
+
+  
+  const [token, setToken] = useState(myBidDetails[0]?.currentAllotment! || 0)
+  const [equityValue, setEquityValue] = useState(sliderDefaultValue! || 0)
+  const [bidValue, setBidValue] = useState(myBidDetails[0]?.bidPrice! || '0.00')
+  const [minBid, setMinBid] = useState(myBidDetails[0]?.bidPrice! || 0)
 
   const handleTokenChange = (event: any) => {
     const { value } = event.target
@@ -56,6 +63,9 @@ const AuctionBid = (props: any) => {
         const equityVal: any = (tokenVal / totalToken) * 100
         setEquityValue(parseInt(equityVal))
       }
+      if (tokenVal < myBidDetails[0]?.currentAllotment ) {
+        setTokenError(true)
+      } else setTokenError(false)
     }
     if (!value) {
       setToken(0)
@@ -75,6 +85,8 @@ const AuctionBid = (props: any) => {
         setBidValue(value)
         setBidError(false)
       }
+      if (value < myBidDetails[0]?.bidPrice!) setMinBidError(true)  
+      else setMinBidError(false)
     } else {
       setBidValue('')
       setBidError(true)
@@ -111,6 +123,7 @@ const AuctionBid = (props: any) => {
       }
     }
   }
+
   return (
     <Box>
       <Title>{propertyName}</Title>
@@ -129,6 +142,7 @@ const AuctionBid = (props: any) => {
             </Grid>
             <Grid item className={classes.tokenStyle}>
               <TextInputField name="token" label="Token" value={token} handleChange={handleTokenChange} />
+              {tokenError && <Error>Token value cannot be less than {myBidDetails[0]?.currentAllotment!}</Error>}
             </Grid>
           </Grid>
           <SliderWrap>
@@ -138,8 +152,8 @@ const AuctionBid = (props: any) => {
               valueLabelFormat={valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="on"
-              step={1}
-              min={0}
+              step={0.1}
+              min={sliderDefaultValue! || 0}
               max={100}
             />
           </SliderWrap>
@@ -155,7 +169,7 @@ const AuctionBid = (props: any) => {
             </Grid>
           </Grid>
           {bidError && <Error>This field is required</Error>}
-          {minBidError && <Error>{`Minimum required bid $${minBid}`}</Error>}
+          {minBidError && <Error>{`Minimum required bid $${minBid}`}</Error>} 
         </Box>
         <Box className={classes.totalBidContStyle}>
           <Grid container spacing={2}>
@@ -163,7 +177,9 @@ const AuctionBid = (props: any) => {
               <TextInputField name="total" label="Total" value={getTotalValue()} isDisabled />
             </Grid>
             <Grid item>
-              <PrimaryButton onClick={() => handleMakeBid()}>{loading ? <Spinner /> : 'MAKE BID'}</PrimaryButton>
+              <PrimaryButton disabled={tokenError} onClick={() => handleMakeBid()}>
+                {loading ? <Spinner /> : 'MAKE BID'}
+              </PrimaryButton>
             </Grid>
           </Grid>
           <LightText style={{ marginTop: '10px' }}>Total wallet balance = 2597.88 USDC</LightText>
@@ -174,7 +190,7 @@ const AuctionBid = (props: any) => {
           <LightText>Share Links</LightText>
           <ShareLinkCont>
             <FileCopyIcon
-              style={{ width: 35 , height: 32 }}
+              style={{ width: 35, height: 32 }}
               onClick={() => {
                 alert(`Your clipboard contains: ${'https://peing.net/ja/'}`)
               }}

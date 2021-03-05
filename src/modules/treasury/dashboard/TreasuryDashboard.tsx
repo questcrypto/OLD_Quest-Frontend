@@ -10,6 +10,7 @@ import TabComponent from 'shared/tab-component'
 import { treasuryTabList } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
 
 const TreasuryDashboard = (props: any) => {
   const classes = useStyles()
@@ -88,12 +89,7 @@ const TreasuryDashboard = (props: any) => {
         <Grid item xs={6}>
           <HeaderTitle>Properties</HeaderTitle>
         </Grid>
-        <Grid item xs={3}>
-          <StyledLinearProgress variant="determinate" value={60} className={classes.progressStyle} />
-        </Grid>
-        <Grid item xs={3}>
-          <ProgressText>643 new properties to onboard</ProgressText>
-        </Grid>
+        <PropertiesOnboard />
       </Grid>
 
       <Grid container spacing={3} className={classes.tabStyle}>

@@ -13,6 +13,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
 
 const AdminDashboard = (props: any) => {
   const classes = useStyles()
@@ -114,12 +115,7 @@ const AdminDashboard = (props: any) => {
         <Grid item xs={6}>
           <HeaderTitle>Properties</HeaderTitle>
         </Grid>
-        <Grid item xs={3}>
-          <StyledLinearProgress variant="determinate" value={60} className={classes.progressStyle} />
-        </Grid>
-        <Grid item xs={3}>
-          <ProgressText>643 new properties to onboard</ProgressText>
-        </Grid>
+        <PropertiesOnboard />
       </Grid>
 
       <Grid container spacing={3} className={classes.tabStyle}>

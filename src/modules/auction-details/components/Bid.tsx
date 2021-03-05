@@ -13,10 +13,12 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import { Email } from '@material-ui/icons'
 
 const Bid = (props: any) => {
   const classes = bidStyle()
   const [loading, setLoading] = useState(false)
+
   const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, upgrade, email } = props
 
   const handleSubmit = async (values: any) => {
@@ -31,7 +33,7 @@ const Bid = (props: any) => {
     }
     try {
       setLoading(true)
-      if (upgrade){
+      if (upgrade) {
         await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
       }
       else await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
@@ -45,6 +47,8 @@ const Bid = (props: any) => {
     const totalCost = token * parseFloat(bidValue)
     return totalCost.toFixed(2)
   }
+
+
   return (
     <Box className={classes.root}>
       <Box className={classes.bidInfoCont}>
@@ -63,7 +67,7 @@ const Bid = (props: any) => {
             <BoldText>{getTotalCost()} USD</BoldText>
           </Grid>
         </Grid>
-        <LightText>~1 Token = .92 USD</LightText>
+        <LightText>~0 Token = 0 USD</LightText>
       </Box>
       <Divider />
       <Box className={classes.bidCommunicationCont}>
@@ -71,7 +75,8 @@ const Bid = (props: any) => {
           We would like to keep you updated on this auction please update you communication preference.
         </LightText>
         <Formik
-          initialValues={{ email, phoneNumber: '' }}
+          enableReinitialize
+          initialValues={{ Email: email, phoneNumber: '' }}
           onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values)
             setSubmitting(false)
@@ -79,7 +84,7 @@ const Bid = (props: any) => {
         >
           {() => (
             <Form>
-              <CustomTextField label="Email Address" type="email" name="email" />
+              <CustomTextField label="Email Address" type="email" name="Email" isDisabled />
               <IntegerNumberField label="Phone number" name="phoneNumber" />
               <Box className={classes.submitCont}>
                 <PrimaryButton type="submit">{loading ? <Spinner /> : 'CONFIRM'}</PrimaryButton>

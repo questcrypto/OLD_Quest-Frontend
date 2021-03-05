@@ -8,9 +8,6 @@ import coin from 'assets/images/coin.svg'
 import TextInputField from './TextInputField'
 import { PrimaryButton } from 'shared/components/buttons'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
-// import TelegramIcon from '@material-ui/icons/Telegram'
-// import FacebookIcon from '@material-ui/icons/Facebook'
-// import TwitterIcon from '@material-ui/icons/Twitter'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 
 import {
@@ -43,7 +40,7 @@ const AuctionBid = (props: any) => {
 
   const [showBidModal, setShowBidModal] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails } = props
+  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails, email } = props
 
 
   const sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100    
@@ -169,7 +166,7 @@ const AuctionBid = (props: any) => {
             </Grid>
           </Grid>
           {bidError && <Error>This field is required</Error>}
-          {minBidError && <Error>{`Minimum required bid $${minBid}`}</Error>} 
+          {minBidError && <Error>{`Minimum required bid $${minBid}`}</Error>}
         </Box>
         <Box className={classes.totalBidContStyle}>
           <Grid container spacing={2}>
@@ -223,6 +220,7 @@ const AuctionBid = (props: any) => {
           auctionID={auctionID}
           biddersID={biddersID}
           propertyID={propertyID}
+          email={email}
         />
       </CustomModal>
     </Box>

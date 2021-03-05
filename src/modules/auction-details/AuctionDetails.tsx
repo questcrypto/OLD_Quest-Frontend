@@ -20,6 +20,7 @@ const AuctionDetails = (props: any) => {
   const [totalToken, setTotalToken] = useState(0)
   const [reservePriceMet, setReservePriceMet] = useState(false)
   const [currentBid, setCurrentBid] = useState(0)
+  const [email, setEmail] = useState('')
   const { userInfo, match } = props
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const AuctionDetails = (props: any) => {
     const getAuctionData = async () => {
       try {
         setDataLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedAccountBy`, {params: { id: auctionId, publicaddress:userInfo?.publicaddress }})
+        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedAccountBy`, { params: { id: auctionId, publicaddress: userInfo?.publicaddress } })
         if (!!res && res.data) {
           const imgList = []
           for (const item of res.data.propertyDetail.getDocs) {
@@ -35,12 +36,13 @@ const AuctionDetails = (props: any) => {
               imgList.push(item)
             }
           }
+          setEmail(res.data.propertyDetail.propertyDetails.Email)
           const totalTokenVal = parseInt(res.data.propertyDetail.propertyDetails.CurrentValue)
           const reserveVal = res.data.auctionDetails[0].minReserve + res.data.auctionDetails[0].slReserve
           if (res.data.bidStats.amountRaised > reserveVal) {
             setReservePriceMet(true)
           }
-          const currentBidVal = res.data.auctionDetails[0].suggestedLowestBid
+          const currentBidVal = res.data.auctionDetails[0].suggestedLowestBid 
           setCurrentBid(currentBidVal)
           setTotalToken(totalTokenVal)
           setSelectedImg(imgList[0])
@@ -86,6 +88,7 @@ const AuctionDetails = (props: any) => {
                   totalToken={totalToken}
                   auctionID={match.params.auctionId}
                   biddersID={!!userInfo && userInfo.publicaddress}
+                  email={email}
                   propertyID={auctionData.auctionDetails[0].propidId}
                   propertyName={auctionData.propertyDetail.propertyDetails.PropertyName}
                   myBidDetails={auctionData?.myBidDetails!}

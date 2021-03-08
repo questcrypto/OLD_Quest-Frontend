@@ -11,6 +11,7 @@ import { propertyTabList } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
+import PropertyCards from 'shared/components/property-cards'
 
 const OwnerDashboard = (props: any) => {
   const classes = useStyles()
@@ -127,7 +128,7 @@ const OwnerDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'new' && <NewPropertyTable data={propertiesList} />}
+            {activeTab === 'new' && <PropertyCards list={propertiesList} />}
             {activeTab === 'approved' && <ApprovePropertyTable data={approvedProperties} dataLoading={approvedLoading} />}
             {activeTab === 'published' && <PublishedPropertyTable data={publishedProperties} dataLoading={publishedLoading} />}
             {activeTab === 'preAuction' && (

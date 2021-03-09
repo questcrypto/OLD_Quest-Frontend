@@ -1,9 +1,10 @@
 import React from 'react'
 import { Button, Card, CardActions, CardContent, Grid } from '@material-ui/core'
-import { useStyles } from './style';
+import { ImageWrap, useStyles } from './style';
 import { Paths } from 'modules/app/components/routes/types';
 import history from 'modules/app/components/history';
 import { getFullName } from 'shared/helpers/globalFunction';
+import { apiBaseUrl } from 'services/global-constant';
 
 interface Props {
     list: any[]
@@ -16,17 +17,38 @@ const PropertyCards = (props: Props) => {
     const handleDetails = (id: any) => {
         history.push(`${Paths.propertyDetails}/${id}`)
     }
-    console.log('l: ', list);
+
+    const getImg = (imgData: any) => {
+        const imgArr: any = []
+        for (const item of imgData) {
+            if (item.type === 0) {
+                imgArr.push(item)
+            }
+        }
+        const imgUrl = `${apiBaseUrl}/${imgArr[0].filename}`
+        return imgUrl
+    }
 
     return (
         <div className={classes.wrapper}>
             {list?.map(p => {
+                let docs = p.getDoc!
+                let name = getFullName(p.Fname, p.Lname)
+                let id = p.id
+                if (p.PropertyDetails) {
+                    const details = p.PropertyDetails
+                    docs = details.getDoc
+                    name = getFullName(details.Fname, details.Lname)
+                    id = details.id
+                }
                 return <Card className={classes.root}>
                     <CardContent className={classes.content}>
-                        <img src={'p.photo'} alt="photo" />
+                        <ImageWrap>
+                            <img src={getImg(docs)} alt="photo" />
+                        </ImageWrap>
                         <div className={classes.infoWrap}>
-                            <span className={classes.title}>{getFullName(p.Fname, p.Lname)}</span>
-                            <span className={classes.info}>{'p.info'}</span>
+                            <span className={classes.title}>{name}</span>
+                            <span className={classes.info}>{id}</span>
                         </div>
                     </CardContent>
                     <CardActions className={classes.actions}>

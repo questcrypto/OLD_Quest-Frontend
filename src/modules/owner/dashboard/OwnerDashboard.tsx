@@ -29,6 +29,8 @@ const OwnerDashboard = (props: any) => {
 
   const { userInfo } = props
 
+  console.log('owner')
+
   useEffect(() => {
     const getPropertiesList = async () => {
       try {
@@ -91,7 +93,7 @@ const OwnerDashboard = (props: any) => {
     try {
       const res = await axios.get(`${apiBaseUrl}/auction/ListofNewAuction/${userInfo.publicaddress}`)
       setPreAuctionProperties(res.data)
-    } catch (error) {}
+    } catch (error) { }
   }
 
   return (
@@ -129,17 +131,10 @@ const OwnerDashboard = (props: any) => {
         ) : (
           <div>
             {activeTab === 'new' && <PropertyCards list={propertiesList} />}
-            {activeTab === 'approved' && <ApprovePropertyTable data={approvedProperties} dataLoading={approvedLoading} />}
-            {activeTab === 'published' && <PublishedPropertyTable data={publishedProperties} dataLoading={publishedLoading} />}
-            {activeTab === 'preAuction' && (
-              <PreAuctionTable
-                data={preAuctionProperties}
-                type="owner"
-                dataLoading={preAuctionLoading}
-                updatePreAuction={updatePreAuction}
-              />
-            )}
-            {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
+            {activeTab === 'approved' && <PropertyCards list={approvedProperties} />}
+            {activeTab === 'published' && <PropertyCards list={publishedProperties} />}
+            {activeTab === 'preAuction' && (<PropertyCards list={preAuctionProperties} />)}
+            {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} />}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
           </div>
         )}

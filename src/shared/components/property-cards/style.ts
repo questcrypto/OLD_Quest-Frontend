@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { colors } from "shared/styles/theme";
+import styled from "styled-components";
 
 export const useStyles = makeStyles({
     root: {
@@ -62,4 +63,16 @@ export const useStyles = makeStyles({
             backgroundColor: `${colors.primary} !important`,
         },
     },
-});
+    photoWrap: {
+
+    }
+})
+
+export const ImageWrap = styled.div<any>`
+    max-width: 342px;
+    height: 250px;
+    img {
+        width: 100%;
+        height: 100%;
+    }
+`

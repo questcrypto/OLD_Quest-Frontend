@@ -7,17 +7,50 @@ export const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
     },
-    propertyPaper: {
-      padding: theme.spacing(3, 4, 8, 2),
-      backgroundColor: '#F5F5F5',
+    treasuryPaper: {
+      padding: '30px',
+      backgroundColor: colors.paperBackground2,
       marginBottom: '50px',
-      boxShadow: '0px 8px 8px rgba(0, 0, 0, 0.06)',
     },
     img: {
       width: '100%',
       maxWidth: '500px',
       height: '100%',
       maxHeight: '385px',
+    },
+    infoContStyle: {
+      position: 'relative',
+      alignItems: 'center',
+      marginBottom: '20px',
+      '& img': {
+        width: '93px',
+        height: '74px',
+      },
+    },
+    verticalDividerStyle: {
+      height: '29px',
+      margin: '0 30px !important',
+    },
+    accordionStyle: {
+      boxShadow: 'none',
+      border: 0,
+      background: colors.white,
+      WebkitBoxShadow: 'none',
+    },
+    expandIconStyle: {
+      background: colors.lightGray,
+      cursor: 'pointer',
+    },
+    treasuryOwnersContStyle: {
+      marginTop: '30px',
+    },
+    treasuryOwnersPaper: {
+      padding: '10px',
+      width: '100%',
+      minWidth: '285px',
+      backgroundColor: colors.paperBackground3,
+      border: '1px solid #F2F2F2',
+      boxSizing: 'border-box',
     },
     docBox: {
       display: 'flex',
@@ -63,6 +96,38 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
   })
 )
+
+export const InfoBoldTxt = styled.h2`
+  font-size: 16px;
+  line-height: 22px;
+  color: ${colors.textPrimary};
+  margin: 0;
+`
+export const InfoLightTxt = styled.p`
+  font-size: 14px;
+  line-height: 16px;
+  color: ${colors.textPrimary};
+  opacity: 0.87;
+  margin: 0;
+`
+
+export const ExpandIconButton = styled.div<any>`
+  position: absolute;
+  top: 16px;
+  right: 0;
+  svg {
+    transform: ${(props: any) => (props.expandStatus ? 'rotate(180deg)' : 'rotate(0deg)')};
+    transition: 0.2s;
+    background: ${colors.lightGray};
+  }
+`
+
+export const TreasuryOwnerCont = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
 export const NoDetailsAvailable = styled.div`
   margin-bottom: 30px;
   p {
@@ -169,8 +234,4 @@ export const FeatureHeading = styled.h4`
   font-size: 15px;
   color: ${colors.textPrimary};
   text-align: left;
-`
-export const HeaderBtnCont = styled.div`
-  display: flex;
-  justify-content: space-between;
 `

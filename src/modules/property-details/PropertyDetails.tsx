@@ -17,6 +17,10 @@ import {
   DocContainer,
   DocName,
   FeatureHeading,
+  InfoBoldTxt,
+  InfoLightTxt,
+  ExpandIconButton,
+  TreasuryOwnerCont,
 } from './style'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import Grid from '@material-ui/core/Grid'
@@ -35,10 +39,22 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { PrimaryButton } from 'shared/components/buttons'
 import { getFullName } from 'shared/helpers/globalFunction'
+import Collapse from '@material-ui/core/Collapse'
+import IconButton from '@material-ui/core/IconButton'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import MailIcon from '@material-ui/icons/Mail'
+import TabComponent from 'shared/tab-component'
+import DocumentsTable from 'modules/treasury/treasury-details/components/DocumentsTable'
+import { treasuryDetailsTabList } from 'shared/helpers/dataConstant'
 
 const PropertyDetails = (props: any) => {
   const classes = useStyles()
   const [dataLoading, setDataLoading] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const [activeTab, setActiveTab] = useState('documents')
   const [propertyInfo, setPropertyInfo] = useState<any>({})
   const [imageList, setImageList] = useState<any>([])
   const [docList, setDocList] = useState<any>([])
@@ -109,7 +125,7 @@ const PropertyDetails = (props: any) => {
   }
 
   return (<>
-    {/* <Box>
+    <Box>
       <HeaderContainer>
         <HeaderPath>
           <span>Properties / Details</span> / {props.match.params.propertyId}
@@ -130,196 +146,122 @@ const PropertyDetails = (props: any) => {
       {dataLoading ? (
         <ComponentLoader />
       ) : (
-        <div>
-          {!!propertyInfo && Object.values(propertyInfo).length > 0 ? (
-            <div>
-              <Paper className={classes.treasuryPaper} elevation={1}>
-                <Grid container className={classes.infoContStyle} spacing={2}>
-                  <Grid item>
-                    <img src={`${apiBaseUrl}/${imageList[0].filename}`} alt="" />
-                  </Grid>
-                  <Grid item>
-                    <InfoBoldTxt>1901 Thorn ridge Cir.</InfoBoldTxt>
-                    <InfoLightTxt>1228,Los Angeles D4.1, NY, USA</InfoLightTxt>
-                  </Grid>
-                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                  <Grid item>
-                    <InfoLightTxt>Onboarding date</InfoLightTxt>
-                    <InfoBoldTxt>29 Jan 2021</InfoBoldTxt>
-                  </Grid>
-                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                  <Grid item>
-                    <InfoLightTxt>Status</InfoLightTxt>
-                    <InfoBoldTxt>Published</InfoBoldTxt>
-                  </Grid>
-                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                  <Grid item>
-                    <InfoLightTxt>Estimated value</InfoLightTxt>
-                    <InfoBoldTxt>$ 1,254,328.00</InfoBoldTxt>
-                  </Grid>
-                  <Grid item>
-                    <ExpandIconButton
-                      expandStatus={expanded}
-                      onClick={() => {
-                        setExpanded(!expanded)
-                      }}
-                    >
-                      <IconButton>
-                        <ExpandMoreIcon />
-                      </IconButton>
-                    </ExpandIconButton>
-                  </Grid>
-                </Grid>
-                <Collapse in={expanded} timeout="auto">
-                  <Grid container direction="column">
-                    <Accordion className={classes.accordionStyle}>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
-                        aria-controls="panel2a-content"
-                        id="feature-header"
+          <div>
+            {!!propertyInfo && Object.values(propertyInfo).length > 0 ? (
+              <div>
+                <Paper className={classes.treasuryPaper} elevation={1}>
+                  <Grid container className={classes.infoContStyle} spacing={2}>
+                    <Grid item>
+                      <img src={`${apiBaseUrl}/${imageList[0].filename}`} alt="" />
+                    </Grid>
+                    <Grid item>
+                      <InfoBoldTxt>1901 Thorn ridge Cir.</InfoBoldTxt>
+                      <InfoLightTxt>1228,Los Angeles D4.1, NY, USA</InfoLightTxt>
+                    </Grid>
+                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                    <Grid item>
+                      <InfoLightTxt>Onboarding date</InfoLightTxt>
+                      <InfoBoldTxt>29 Jan 2021</InfoBoldTxt>
+                    </Grid>
+                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                    <Grid item>
+                      <InfoLightTxt>Status</InfoLightTxt>
+                      <InfoBoldTxt>Published</InfoBoldTxt>
+                    </Grid>
+                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                    <Grid item>
+                      <InfoLightTxt>Estimated value</InfoLightTxt>
+                      <InfoBoldTxt>$ 1,254,328.00</InfoBoldTxt>
+                    </Grid>
+                    <Grid item>
+                      <ExpandIconButton
+                        expandStatus={expanded}
+                        onClick={() => {
+                          setExpanded(!expanded)
+                        }}
                       >
-                        <FeatureHeading>Features</FeatureHeading>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Features data={propertyInfo.propertyDetails} />
-                      </AccordionDetails>
-                    </Accordion>
+                        <IconButton>
+                          <ExpandMoreIcon />
+                        </IconButton>
+                      </ExpandIconButton>
+                    </Grid>
+                  </Grid>
+                  <Collapse in={expanded} timeout="auto">
+                    <Grid container direction="column">
+                      <Accordion className={classes.accordionStyle}>
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
+                          aria-controls="panel2a-content"
+                          id="feature-header"
+                        >
+                          <FeatureHeading>Features</FeatureHeading>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Features data={propertyInfo.propertyDetails} />
+                        </AccordionDetails>
+                      </Accordion>
 
-                    <Accordion className={classes.accordionStyle}>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
-                        aria-controls="panel1a-content"
-                        id="rental-fact-header"
-                      >
-                        <FeatureHeading style={{ marginTop: '18px' }}>Rental facts and features</FeatureHeading>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <RentalFacts data={propertyInfo.propertyDetails} />
-                      </AccordionDetails>
-                    </Accordion>
-                  </Grid>
-                </Collapse>
+                      <Accordion className={classes.accordionStyle}>
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
+                          aria-controls="panel1a-content"
+                          id="rental-fact-header"
+                        >
+                          <FeatureHeading style={{ marginTop: '18px' }}>Rental facts and features</FeatureHeading>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <RentalFacts data={propertyInfo.propertyDetails} />
+                        </AccordionDetails>
+                      </Accordion>
+                    </Grid>
+                  </Collapse>
 
-                <Grid container spacing={2} className={classes.treasuryOwnersContStyle}>
-                  <Grid item>
-                    <Paper className={classes.treasuryOwnersPaper} elevation={0}>
-                      <TreasuryOwnerCont>
-                        <div>
-                          <InfoLightTxt>Owner</InfoLightTxt>
-                          <InfoBoldTxt>Meredith Hendrick</InfoBoldTxt>
-                        </div>
-                        <MailIcon />
-                      </TreasuryOwnerCont>
-                    </Paper>
+                  <Grid container spacing={2} className={classes.treasuryOwnersContStyle}>
+                    <Grid item>
+                      <Paper className={classes.treasuryOwnersPaper} elevation={0}>
+                        <TreasuryOwnerCont>
+                          <div>
+                            <InfoLightTxt>Owner</InfoLightTxt>
+                            <InfoBoldTxt>Meredith Hendrick</InfoBoldTxt>
+                          </div>
+                          <MailIcon />
+                        </TreasuryOwnerCont>
+                      </Paper>
+                    </Grid>
+                    <Grid item>
+                      <Paper className={classes.treasuryOwnersPaper} elevation={0}>
+                        <TreasuryOwnerCont>
+                          <div>
+                            <InfoLightTxt>HOA Admin</InfoLightTxt>
+                            <InfoBoldTxt>Holman Valencia</InfoBoldTxt>
+                          </div>
+                          <MailIcon />
+                        </TreasuryOwnerCont>
+                      </Paper>
+                    </Grid>
+                    <Grid item>
+                      <Paper className={classes.treasuryOwnersPaper} elevation={0}>
+                        <TreasuryOwnerCont>
+                          <div>
+                            <InfoLightTxt>Lawyer</InfoLightTxt>
+                            <InfoBoldTxt>Dejesus Norris</InfoBoldTxt>
+                          </div>
+                          <MailIcon />
+                        </TreasuryOwnerCont>
+                      </Paper>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Paper className={classes.treasuryOwnersPaper} elevation={0}>
-                      <TreasuryOwnerCont>
-                        <div>
-                          <InfoLightTxt>HOA Admin</InfoLightTxt>
-                          <InfoBoldTxt>Holman Valencia</InfoBoldTxt>
-                        </div>
-                        <MailIcon />
-                      </TreasuryOwnerCont>
-                    </Paper>
-                  </Grid>
-                  <Grid item>
-                    <Paper className={classes.treasuryOwnersPaper} elevation={0}>
-                      <TreasuryOwnerCont>
-                        <div>
-                          <InfoLightTxt>Lawyer</InfoLightTxt>
-                          <InfoBoldTxt>Dejesus Norris</InfoBoldTxt>
-                        </div>
-                        <MailIcon />
-                      </TreasuryOwnerCont>
-                    </Paper>
-                  </Grid>
-                </Grid>
-              </Paper>
-              <TabComponent tabOptions={treasuryDetailsTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
-              <DocumentsTable data={docData} />
-            </div>
-          ) : (
-            <NoDetailsAvailable>
-              <p>No details available</p>
-            </NoDetailsAvailable>
-          )}
-        </div>
-      )}
-    </Box> */}
-
-    <Box>
-      <HeaderContainer>
-        <HeaderPath>
-          <span>Properties / New</span> / {props.match.params.propertyId}
-        </HeaderPath>
-        <HeaderTitle>Property Details</HeaderTitle>
-      </HeaderContainer>
-      {dataLoading ? (
-        <ComponentLoader />
-      ) : (
-        <div>
-          {!!propertyInfo && Object.values(propertyInfo).length > 0 ? (
-            <div>
-              <Paper className={classes.propertyPaper}>
-                <Grid container spacing={4}>
-                  <Grid item xs={12} md={6}>
-                    <img className={classes.img} alt="complex" src={`${apiBaseUrl}/${selectImg}`} />
-                    <DocWrapper>
-                      <p>More Images</p>
-                      <DocContainer>{renderImages()}</DocContainer>
-                    </DocWrapper>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <AddressContainer>
-                      <AddressInfo>
-                        <h4>{propertyInfo.propertyDetails.Address1}</h4>
-                        <p>{`${propertyInfo.propertyDetails.Address2}, ${propertyInfo.propertyDetails.State},${propertyInfo.propertyDetails.Country}`}</p>
-                      </AddressInfo>
-                      <EditSection onClick={() => handleEditProperty()}>
-                        <span>{!!userInfo && userInfo.role === 1 ? 'EDIT' : 'VIEW'}</span>
-                        <CreateOutlinedIcon />
-                      </EditSection>
-                    </AddressContainer>
-                    <PriceContainer>
-                      <PriceInfo>
-                        <img src={plot} alt="plot" style={{ margin: '0 10px' }} />
-                        <p> {`${propertyInfo.propertyDetails.Lotfacts} m2`}</p>
-                      </PriceInfo>
-                      <PriceInfo>
-                        <img src={coin} alt="coin" style={{ margin: '0 10px' }} />
-                        {`$${parseFloat(propertyInfo.propertyDetails.CurrentValue).toFixed(2)}`}
-                      </PriceInfo>
-                    </PriceContainer>
-                    <AboutProperty>{propertyInfo.propertyDetails.Comments}</AboutProperty>
-                    <DocWrapper>
-                      <p>Documents uploads</p>
-                      <DocContainer className={classes.docBox}>{renderDocs()}</DocContainer>
-                    </DocWrapper>
-                    <Box className={classes.btnGroup}>
-                      <Button className={classes.btn1Style}>Live auction</Button>
-                      <Button className={classes.btn1Style}>Button text</Button>
-                      <Button className={classes.btn2Style}>Button text</Button>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Paper>
-
-              <Paper className={classes.rentalPaper}>
-                <FeatureHeading>Rental facts and features</FeatureHeading>
-                <RentalFacts data={propertyInfo.propertyDetails} />
-                <Divider className={classes.dividerStyle} />
-                <FeatureHeading>Features</FeatureHeading>
-                <Features data={propertyInfo.propertyDetails} />
-              </Paper>
-            </div>
-          ) : (
-            <NoDetailsAvailable>
-              <p>No details available</p>
-            </NoDetailsAvailable>
-          )}
-        </div>
-      )}
+                </Paper>
+                <TabComponent tabOptions={treasuryDetailsTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
+                <DocumentsTable data={docList} />
+              </div>
+            ) : (
+                <NoDetailsAvailable>
+                  <p>No details available</p>
+                </NoDetailsAvailable>
+              )}
+          </div>
+        )}
     </Box>
   </>
   )

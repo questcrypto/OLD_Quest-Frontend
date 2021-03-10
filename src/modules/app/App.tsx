@@ -13,11 +13,11 @@ const App = (props: any) => {
   }, [authStart])
 
     // Event handler to handle metamask account change
-    if(window.ethereum ){
-      window.ethereum.on("accountsChanged", function () {
-        props.logout();
-       });
-    }
+  if(window.ethereum ){
+    window.ethereum.on("accountsChanged", function () {
+      props.logout();
+     });
+  }
 
   return (
     <ThemeProvider theme={theme}>

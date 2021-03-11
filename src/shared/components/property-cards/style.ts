@@ -1,18 +1,20 @@
-import { makeStyles } from "@material-ui/core";
+import { Card, makeStyles } from "@material-ui/core";
 import { colors } from "shared/styles/theme";
 import styled from "styled-components";
 
 export const useStyles = makeStyles({
-    root: {
-        maxWidth: 342,
-    },
     wrapper: {
         display: 'grid',
         gridTemplateColumns: '1fr',
         gridTemplateRows: 'auto',
         gridRowGap: '30px',
-        '@media (min-width: 600px)': {
-            gridTemplateColumns: '1fr 1fr 1fr',
+        '@media (min-width: 1280px)': {
+            gridTemplateColumns: '1fr 1fr 1fr !important',
+            gridColumnGap: '30px',
+        },
+        '@media (min-width: 800px)': {
+            gridTemplateColumns: '1fr 1fr',
+            gridColumnGap: '30px',
         },
     },
     content: {
@@ -67,6 +69,13 @@ export const useStyles = makeStyles({
 
     }
 })
+
+export const StyledCard = styled<any>(Card)`
+    max-width: 342px;
+    width: 100%;
+    // margin-right: ${props => !props.isLast ? '30px' : ''};
+
+`
 
 export const ImageWrap = styled.div<any>`
     max-width: 342px;

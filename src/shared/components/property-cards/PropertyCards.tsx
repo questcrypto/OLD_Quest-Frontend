@@ -1,10 +1,11 @@
 import React from 'react'
 import { Button, Card, CardActions, CardContent, Grid } from '@material-ui/core'
-import { ImageWrap, useStyles } from './style';
+import { ImageWrap, useStyles, StyledCard } from './style';
 import { Paths } from 'modules/app/components/routes/types';
 import history from 'modules/app/components/history';
 import { getFullName } from 'shared/helpers/globalFunction';
 import { apiBaseUrl } from 'services/global-constant';
+import { NoDataContainer } from 'modules/Tables/style';
 
 interface Props {
     list: any[]
@@ -15,7 +16,7 @@ const PropertyCards = (props: Props) => {
     const { list } = props
 
     const handleDetails = (id: any) => {
-        history.push(`${Paths.propertyDetails}/${id}`)
+        history.push(`${Paths.ownerPropertyDetails}/${id}`)
     }
 
     const getImg = (imgData: any) => {
@@ -31,17 +32,18 @@ const PropertyCards = (props: Props) => {
 
     return (
         <div className={classes.wrapper}>
-            {list?.map(p => {
+            {!!list && list.length > 0 ? list.map((p, i: number) => {
                 let docs = p.getDoc!
-                let name = getFullName(p.Fname, p.Lname)
+                let name = p.PropertyName
                 let id = p.id
+                const isLast = i === list.length - 1 ? true : false
                 if (p.PropertyDetails) {
                     const details = p.PropertyDetails
                     docs = details.getDoc
-                    name = getFullName(details.Fname, details.Lname)
+                    name = details.PropertyName
                     id = details.id
                 }
-                return <Card className={classes.root}>
+                return <StyledCard isLast={isLast}>
                     <CardContent className={classes.content}>
                         <ImageWrap>
                             <img src={getImg(docs)} alt="photo" />
@@ -52,12 +54,17 @@ const PropertyCards = (props: Props) => {
                         </div>
                     </CardContent>
                     <CardActions className={classes.actions}>
-                        <Button onClick={() => handleDetails(p.id)} className={classes.addPropertyBtnStyle}>
+                        <Button onClick={() => handleDetails(id)} className={classes.addPropertyBtnStyle}>
                             Property Details
                         </Button>
                     </CardActions>
-                </Card>
-            })}
+                </StyledCard>
+            })
+                :
+                <NoDataContainer>
+                    <p>No data available</p>
+                </NoDataContainer>
+            }
         </div>
     )
 }

@@ -133,7 +133,7 @@ const OwnerDashboard = (props: any) => {
             {activeTab === 'new' && <PropertyCards list={propertiesList} />}
             {activeTab === 'approved' && <PropertyCards list={approvedProperties} />}
             {activeTab === 'published' && <PropertyCards list={publishedProperties} />}
-            {activeTab === 'preAuction' && (<PropertyCards list={preAuctionProperties} />)}
+            {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} />}
             {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} />}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
           </div>

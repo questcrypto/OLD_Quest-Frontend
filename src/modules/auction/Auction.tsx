@@ -15,6 +15,7 @@ import { apiBaseUrl } from 'services/global-constant'
 const Auction = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('participating')
+  const [onGoingGlobal, setOnGoingGlobal] = useState<any>([])
   const [onGoingProperties, setOnGoingProperties] = useState<any>([])
   const [onGoingLoading, setOnGoingLoading] = useState(false)
   const [participateProperties, setParticipateProperties] = useState<any>([])
@@ -26,6 +27,7 @@ const Auction = (props: any) => {
       try {
         setOnGoingLoading(true)
         const res = await axios.get(`${apiBaseUrl}/auction/NonParticipatedAuctions/${userInfo.publicaddress}`)
+        setOnGoingGlobal(res.data)
         setOnGoingProperties(res.data)
       } catch (error) {
       } finally {
@@ -45,6 +47,27 @@ const Auction = (props: any) => {
     getOnGoingProperties()
     getParticipateProperties()
   }, [userInfo])
+
+  const handleOnChange = (e: any) => {
+    const value = e.target.value
+
+    if (!!value) {
+      setOnGoingProperties(
+        onGoingGlobal.filter(
+          (v: any) =>
+            v.PropertyDetails.propertyDetails.PropertyName.toLowerCase().includes(value.toLowerCase()) ||
+            v.PropertyDetails.propertyDetails.id.toLowerCase().includes(value.toLowerCase()) ||
+            v.PropertyDetails.propertyDetails.PostalCode.toString().includes(value) ||
+            v.PropertyDetails.propertyDetails.Address1.toLowerCase().includes(value.toLowerCase()) ||
+            v.PropertyDetails.propertyDetails.City.toLowerCase().includes(value.toLowerCase()) ||
+            v.PropertyDetails.propertyDetails.State.toLowerCase().includes(value.toLowerCase())
+        )
+      )
+    } else {
+      setOnGoingProperties(onGoingGlobal)
+    }
+  }
+
   return (
     <Box className={classes.root}>
       <Grid container spacing={2} className={classes.headerStyle} alignItems="center">
@@ -63,6 +86,7 @@ const Auction = (props: any) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleOnChange}
             />
           </div>
         </Grid>

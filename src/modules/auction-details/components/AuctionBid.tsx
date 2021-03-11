@@ -43,12 +43,10 @@ const AuctionBid = (props: any) => {
 
   const [showBidModal, setShowBidModal] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails } = props
+  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails, email } = props
 
+  const sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100
 
-  const sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100    
-
-  
   const [token, setToken] = useState(myBidDetails[0]?.currentAllotment! || 0)
   const [equityValue, setEquityValue] = useState(sliderDefaultValue! || 0)
   const [bidValue, setBidValue] = useState(myBidDetails[0]?.bidPrice! || '0.00')
@@ -63,7 +61,7 @@ const AuctionBid = (props: any) => {
         const equityVal: any = (tokenVal / totalToken) * 100
         setEquityValue(parseInt(equityVal))
       }
-      if (tokenVal < myBidDetails[0]?.currentAllotment ) {
+      if (tokenVal < myBidDetails[0]?.currentAllotment) {
         setTokenError(true)
       } else setTokenError(false)
     }
@@ -85,7 +83,7 @@ const AuctionBid = (props: any) => {
         setBidValue(value)
         setBidError(false)
       }
-      if (value < myBidDetails[0]?.bidPrice!) setMinBidError(true)  
+      if (value < myBidDetails[0]?.bidPrice!) setMinBidError(true)
       else setMinBidError(false)
     } else {
       setBidValue('')
@@ -169,7 +167,7 @@ const AuctionBid = (props: any) => {
             </Grid>
           </Grid>
           {bidError && <Error>This field is required</Error>}
-          {minBidError && <Error>{`Minimum required bid $${minBid}`}</Error>} 
+          {minBidError && <Error>{`Minimum required bid $${minBid}`}</Error>}
         </Box>
         <Box className={classes.totalBidContStyle}>
           <Grid container spacing={2}>
@@ -223,6 +221,7 @@ const AuctionBid = (props: any) => {
           auctionID={auctionID}
           biddersID={biddersID}
           propertyID={propertyID}
+          email={email}
         />
       </CustomModal>
     </Box>

@@ -31,10 +31,9 @@ const Bid = (props: any) => {
     }
     try {
       setLoading(true)
-      if (upgrade){
+      if (upgrade) {
         await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
-      }
-      else await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
+      } else await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
       history.push(Paths.auction)
     } catch (error) {
     } finally {

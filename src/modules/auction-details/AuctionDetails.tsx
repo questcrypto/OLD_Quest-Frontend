@@ -20,14 +20,19 @@ const AuctionDetails = (props: any) => {
   const [totalToken, setTotalToken] = useState(0)
   const [reservePriceMet, setReservePriceMet] = useState(false)
   const [currentBid, setCurrentBid] = useState(0)
+  const [propertyId, setPropertyId] = useState('')
   const { userInfo, match } = props
+
+  console.log(userInfo)
 
   useEffect(() => {
     const auctionId = match.params.auctionId
     const getAuctionData = async () => {
       try {
         setDataLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedAccountBy`, {params: { id: auctionId, publicaddress:userInfo?.publicaddress }})
+        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedAccountBy`, {
+          params: { id: auctionId, publicaddress: userInfo?.publicaddress },
+        })
         if (!!res && res.data) {
           const imgList = []
           for (const item of res.data.propertyDetail.getDocs) {
@@ -35,6 +40,8 @@ const AuctionDetails = (props: any) => {
               imgList.push(item)
             }
           }
+          setPropertyId(res.data.propertyDetail.propertyDetails.id)
+
           const totalTokenVal = parseInt(res.data.propertyDetail.propertyDetails.CurrentValue)
           const reserveVal = res.data.auctionDetails[0].minReserve + res.data.auctionDetails[0].slReserve
           if (res.data.bidStats.amountRaised > reserveVal) {
@@ -55,14 +62,17 @@ const AuctionDetails = (props: any) => {
     getAuctionData()
   }, [match])
 
-  console.log('days: ', auctionData);
-
+  console.log('days: ', auctionData)
 
   return (
     <Box className={classes.root}>
       <HeaderContainer>
         <HeaderPath>
-          <span>Properties / New / ID522011</span> / Auction
+          {!dataLoading && (
+            <>
+              <span>Properties / New / {propertyId}</span> / Auction
+            </>
+          )}
         </HeaderPath>
         <HeaderTitle>Property </HeaderTitle>
       </HeaderContainer>
@@ -89,6 +99,7 @@ const AuctionDetails = (props: any) => {
                   propertyID={auctionData.auctionDetails[0].propidId}
                   propertyName={auctionData.propertyDetail.propertyDetails.PropertyName}
                   myBidDetails={auctionData?.myBidDetails!}
+                  email={userInfo?.email}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3} container>

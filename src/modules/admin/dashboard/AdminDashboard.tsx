@@ -112,17 +112,17 @@ const AdminDashboard = (props: any) => {
   return (
     <Grid>
       <Grid container spacing={2} className={classes.headerStyle}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <HeaderTitle>Properties</HeaderTitle>
         </Grid>
         <PropertiesOnboard />
       </Grid>
 
       <Grid container spacing={3} className={classes.tabStyle}>
-        <Grid item xs={7}>
+        <Grid item xs={12} md={7}>
           <TabComponent tabOptions={propertyTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} md={3}>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -137,7 +137,7 @@ const AdminDashboard = (props: any) => {
             />
           </div>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={6} md={2}>
           <Button onClick={() => handleAddProperty()} className={classes.addPropertyBtnStyle}>
             Add New Property
           </Button>

@@ -10,6 +10,9 @@ import AuctionStats from './components/AuctionStats'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import history from 'modules/app/components/history'
+import { getDaysValue } from 'shared/helpers/globalFunction'
+import { Paths } from 'modules/app/components/routes/types'
 
 const AuctionDetails = (props: any) => {
   const classes = useStyles()
@@ -22,8 +25,6 @@ const AuctionDetails = (props: any) => {
   const [currentBid, setCurrentBid] = useState(0)
   const [propertyId, setPropertyId] = useState('')
   const { userInfo, match } = props
-
-  console.log(userInfo)
 
   useEffect(() => {
     const auctionId = match.params.auctionId
@@ -52,6 +53,15 @@ const AuctionDetails = (props: any) => {
           setTotalToken(totalTokenVal)
           setSelectedImg(imgList[0])
           setImageList(imgList)
+
+          const { auctionDetails } = res.data
+
+          const daysRemaining = getDaysValue(new Date(), auctionDetails[0].endDate)
+
+          if (daysRemaining < 1) {
+            history.goBack()
+          }
+
           setAuctionData(res.data)
         }
       } catch (error) {
@@ -61,8 +71,6 @@ const AuctionDetails = (props: any) => {
     }
     getAuctionData()
   }, [match])
-
-  console.log('days: ', auctionData)
 
   return (
     <Box className={classes.root}>

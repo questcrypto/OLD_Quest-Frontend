@@ -40,10 +40,11 @@ const AuctionBid = (props: any) => {
   const [bidError, setBidError] = useState(false)
   const [tokenError, setTokenError] = useState(false)
   const [minBidError, setMinBidError] = useState(false)
+  const [suggMinBidError, setSuggMinBidError] = useState(false)
 
   const [showBidModal, setShowBidModal] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails, email } = props
+  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails, email, suggestedLowestBid } = props
 
   const sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100
 
@@ -78,6 +79,9 @@ const AuctionBid = (props: any) => {
   const handleBidValueChange = (event: any) => {
     setMinBidError(false)
     const { value } = event.target
+
+    console.log("value ", value)
+
     if (value) {
       if (floatNumRegex.test(value.toString())) {
         setBidValue(value)
@@ -85,6 +89,11 @@ const AuctionBid = (props: any) => {
       }
       if (value < myBidDetails[0]?.bidPrice!) setMinBidError(true)
       else setMinBidError(false)
+      if(parseFloat(value) < suggestedLowestBid) {
+        setSuggMinBidError(true)
+      } else{
+        setSuggMinBidError(false)
+      }
     } else {
       setBidValue('')
       setBidError(true)
@@ -121,6 +130,9 @@ const AuctionBid = (props: any) => {
       }
     }
   }
+
+  console.log("suggestedLowestBid ", suggestedLowestBid)
+  console.log("myBidDetails ", myBidDetails)
 
   return (
     <Box>
@@ -168,6 +180,7 @@ const AuctionBid = (props: any) => {
           </Grid>
           {bidError && <Error>This field is required</Error>}
           {minBidError && <Error>{`Minimum required bid $${minBid}`}</Error>}
+          {suggMinBidError && <Error>{`Minimum suggested bid ${suggestedLowestBid}`}</Error>}
         </Box>
         <Box className={classes.totalBidContStyle}>
           <Grid container spacing={2}>
@@ -175,7 +188,7 @@ const AuctionBid = (props: any) => {
               <TextInputField name="total" label="Total" value={getTotalValue()} isDisabled />
             </Grid>
             <Grid item>
-              <PrimaryButton disabled={tokenError} onClick={() => handleMakeBid()}>
+              <PrimaryButton disabled={tokenError || suggMinBidError} onClick={() => handleMakeBid()}>
                 {loading ? <Spinner /> : 'MAKE BID'}
               </PrimaryButton>
             </Grid>

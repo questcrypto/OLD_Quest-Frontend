@@ -13,7 +13,7 @@ export const imagesStyle = makeStyles(() =>
     },
     smallImgCont: {
       margin: '20px 0 12px 0',
-      padding: '15px 0',
+      padding: '15px 12px',
       boxSizing: 'border-box',
       flexWrap: 'nowrap',
     },

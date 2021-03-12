@@ -16,16 +16,18 @@ const PropertyImages = (props: any) => {
   const renderSmallImages = () => {
     return imageList.map((item: any, k: any) => {
       return (
-        <GridListTile key={k} className={classes.imgOnHoverStyle}>
-          <img
-            className={classes.smallImgStyle}
-            src={`${apiBaseUrl}/${item.filename}`}
-            alt=""
-            onClick={() => {
-              handleImage(item)
-            }}
-          />
-        </GridListTile>
+        <>
+          <GridListTile key={k} className={classes.imgOnHoverStyle}>
+            <img
+              className={classes.smallImgStyle}
+              src={`${apiBaseUrl}/${item.filename}`}
+              alt=""
+              onClick={() => {
+                handleImage(item)
+              }}
+            />
+          </GridListTile>
+        </>
       )
     })
   }

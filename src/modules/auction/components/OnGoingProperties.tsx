@@ -82,7 +82,7 @@ const OnGoingProperties = (props: any) => {
                 fullWidth
                 className={classes.btnStyle}
                 onClick={() => handleAuctionDetails(AuctionDetail.id)}
-                disabled={getDaysValue(new Date(), AuctionDetail.endDate) <= 1}
+                disabled={getDaysValue(new Date(), AuctionDetail.endDate) < 1}
               >
                 LIVE AUCTION
               </PrimaryButton>

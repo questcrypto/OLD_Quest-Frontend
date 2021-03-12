@@ -1,6 +1,21 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
+import { Translate } from '@material-ui/icons'
+
+export const DrawerWrapper = styled.div`
+  position: absolute;
+  overflow-Y: scroll;
+  &::-webkit-scrollbar {
+        display: none;
+  };
+  top: 0%;
+  scrollbar-width: none;
+  height: 100vh;
+  min-height: 600px;
+  transform: ${(props:any) => props.open? 'none' : 'translateX(-240px)'};
+  transition: all 0.2s;
+`;
 
 export const useStyles = makeStyles(() =>
   createStyles({
@@ -14,17 +29,15 @@ export const useStyles = makeStyles(() =>
       background: '#FBFBFB',
     },
     root: {
-      position: 'sticky',
-      overflowY: 'scroll',
-      '&::-webkit-scrollbar': {
-        display: 'none',
-      },
-      top: 0,
-      scrollbarWidth: 'none',
       height: '100vh',
       minHeight: '600px',
     },
 
+    closeDrawerBtn:{
+      ['@media (min-width:990px)'] : {
+        display: 'none'
+      }
+    },
     itemButtonStyle: {
       display: 'flex',
       marginBottom: '30px',

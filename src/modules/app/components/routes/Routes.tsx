@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Switch } from 'react-router'
 import { Router, Route } from 'react-router-dom'
@@ -20,6 +20,9 @@ import UpgradeBidDetails from 'modules/auction-details/UpgradeBidDetails'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
 import OwnerPropertyDetails from 'modules/owner/owner-property-details'
+import { handleDrawerOpen, handleDrawerClose } from 'logic/actions/drawer.open'
+import { IconButton } from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu'
 
 const notFoundRoute: RouteDefinition = {
   path: '*',
@@ -124,6 +127,10 @@ interface StateProps {
   authLoading: boolean
 }
 
+interface DrawerProps {
+  openDrawer: boolean
+}
+
 function getRouteRenderWithAuth(loggedIn: boolean, route: RouteDefinition, i: number) {
   if (loggedIn === route.protected) {
     return () => <route.component />
@@ -134,16 +141,41 @@ function getRouteRenderWithAuth(loggedIn: boolean, route: RouteDefinition, i: nu
   }
 }
 
-const Routes: React.FC<Props & RoutesProps & StateProps> = ({ isLoaded, loggedIn, authLoading }) => {
+const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (props) => {
+  const { isLoaded, loggedIn, authLoading, openDrawer } = props
+
+  const [width, setWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    if (width < 990) {
+      props.handleDrawerClose()
+    }
+    return () => {}
+  }, [])
+
   const classes = useStyles()
   return (
     <Router history={history}>
       <Box className={classes.root}>
+        {loggedIn && (
+          <>
+            <IconButton style={{ position: 'absolute' }} onClick={() => props.handleDrawerOpen()}>
+              <MenuIcon />
+            </IconButton>
+            <LeftPanel />
+          </>
+        )}
         <Grid container>
-          <Grid item xs={2}>
-            {loggedIn && <LeftPanel />}
-          </Grid>
-          <Grid item xs={loggedIn ? 10 : 12} className={classes.rightPanelStyle}>
+          {width > 990 && (
+            <Grid item xs={2}>
+              {loggedIn && (
+                <>
+                  <LeftPanel />
+                </>
+              )}
+            </Grid>
+          )}
+          <Grid item xs={loggedIn ? (width > 990 ? 10 : 11) : 12} className={classes.rightPanelStyle}>
             {loggedIn && <TopPanel />}
             <Switch>
               {routes.map((route, i) => {
@@ -167,6 +199,7 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   isLoaded: state.user.isLoaded,
   authLoading: state.user.authLoading,
+  openDrawer: state.drawer.openDrawer,
 })
 
-export default connect(mapStateToProps)(Routes)
+export default connect(mapStateToProps, { handleDrawerOpen, handleDrawerClose })(Routes)

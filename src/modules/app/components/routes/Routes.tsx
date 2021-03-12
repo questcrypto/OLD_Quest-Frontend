@@ -19,6 +19,7 @@ import AuctionDetails from 'modules/auction-details'
 import UpgradeBidDetails from 'modules/auction-details/UpgradeBidDetails'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
+import OwnerPropertyDetails from 'modules/owner/owner-property-details'
 
 const notFoundRoute: RouteDefinition = {
   path: '*',
@@ -52,6 +53,13 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.propertyDetails + '/:propertyId',
     component: PropertyDetails,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.ownerPropertyDetails + '/:propertyId',
+    component: OwnerPropertyDetails,
     protected: true,
     redirect: Paths.root,
     title: '',

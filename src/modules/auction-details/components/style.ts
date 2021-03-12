@@ -7,11 +7,15 @@ export const imagesStyle = makeStyles(() =>
   createStyles({
     imgStyle: {
       height: 250,
-      width: '100%',
+      // width: '100%',
+      objectFit: 'contain',
+      width: '225px'
     },
     smallImgCont: {
       margin: '20px 0 12px 0',
+      padding: '15px 12px',
       boxSizing: 'border-box',
+      flexWrap: 'nowrap',
     },
     imgOnHoverStyle: {
       '&:hover': {
@@ -24,6 +28,7 @@ export const imagesStyle = makeStyles(() =>
       width: 72,
       cursor: 'pointer',
       borderRadius: '5px',
+      objectFit: 'contain',
     },
   })
 )
@@ -284,7 +289,7 @@ export const TokenSoldInfo = styled.div`
 export const ConfirmationInfo = styled.div<any>`
   display: flex;
   justify-content: space-between;
-  align-item: center;
+  align-items: center;
   padding: 10px;
   background: ${(props: any) => (props.confirmStatus ? colors.greenColor : colors.lightYellow)};
   svg {

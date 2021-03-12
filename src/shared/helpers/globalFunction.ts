@@ -1,4 +1,6 @@
 import moment from 'moment'
+import dateFormat from 'dateformat'
+
 export const getPropertyType = (type: number) => {
   switch (type) {
     case 1:
@@ -33,4 +35,43 @@ export const getDaysValue = (startData: any, endDate: any) => {
   const b = moment(endDate)
   const duration = b.diff(a, 'days')
   return duration
+}
+
+export function formatDateString(date: Date | string): string {
+  let dateValue: string = ''
+  if (typeof date === 'string') {
+    dateValue = dateFormat(date.split('T')[0].replace(/\-/g, '/'), 'mm/dd/yyyy')
+  } else {
+    dateValue = dateFormat(date, 'mm/dd/yyyy')
+  }
+  return dateValue
+}
+
+export function formatExtendedDateString(date: Date | string): string {
+  let dateValue: string = ''
+  if (typeof date === 'string') {
+    dateValue = dateFormat(date.split('T')[0].replace(/\-/g, '/'), 'dd mmm yyyy')
+  } else {
+    dateValue = dateFormat(date, 'dd mmm yyyy')
+  }
+  return dateValue
+}
+
+export const toCommaNumber = (value: number | string) => {
+  const parts = value.toString().split('.')
+  const first = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  return [first].concat(parts.slice(1)).join('.')
+}
+
+export function usdFormatString(value: number, decimalPlaces: number = 4): string {
+  const isNegative = value < 0
+  const negativePrefix = isNegative ? '- ' : ''
+  const result = negativePrefix + '$ ' + toCommaNumber(Math.abs(value).toFixed(decimalPlaces))
+  return decimalPlaces === 2 ? result : result.replace(/\.?0?0?$/, '')
+}
+
+export function currencyString(value?: number, decimalPlaces?: number): string | undefined {
+  return typeof value == 'number'
+    ? usdFormatString(value, decimalPlaces)
+    : undefined
 }

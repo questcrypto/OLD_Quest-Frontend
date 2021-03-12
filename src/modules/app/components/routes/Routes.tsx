@@ -175,7 +175,7 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
               )}
             </Grid>
           )}
-          <Grid item xs={loggedIn ? (width > 990 ? 10 : 11) : 12} className={classes.rightPanelStyle}>
+          <Grid item xs={loggedIn ? (width > 990 ? 10 : 12) : 12} className={classes.rightPanelStyle}>
             {loggedIn && <TopPanel />}
             <Switch>
               {routes.map((route, i) => {

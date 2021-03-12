@@ -12,7 +12,6 @@ import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
 import { getDaysValue } from 'shared/helpers/globalFunction'
-import { Paths } from 'modules/app/components/routes/types'
 
 const AuctionDetails = (props: any) => {
   const classes = useStyles()
@@ -108,6 +107,7 @@ const AuctionDetails = (props: any) => {
                   propertyName={auctionData.propertyDetail.propertyDetails.PropertyName}
                   myBidDetails={auctionData?.myBidDetails!}
                   email={userInfo?.email}
+                  suggestedLowestBid={auctionData.auctionDetails[0].suggestedLowestBid}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3} container>

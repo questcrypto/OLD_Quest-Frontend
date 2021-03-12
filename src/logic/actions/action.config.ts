@@ -10,3 +10,7 @@ export const LOGOUT = 'LOGOUT'
 export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAIL = 'LOGIN_FAIL'
+
+/* =================================== DRAWER Actions ========================== */
+export const OPEN_DRAWER = "OPEN_DRAWER"
+export const CLOSE_DRAWER = "CLOSE_DRAWER"

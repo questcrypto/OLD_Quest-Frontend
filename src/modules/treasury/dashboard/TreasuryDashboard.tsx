@@ -86,17 +86,17 @@ const TreasuryDashboard = (props: any) => {
   return (
     <Grid>
       <Grid container spacing={2} className={classes.headerStyle}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <HeaderTitle>Properties</HeaderTitle>
         </Grid>
         <PropertiesOnboard />
       </Grid>
 
       <Grid container spacing={3} className={classes.tabStyle}>
-        <Grid item xs={8}>
+        <Grid item xs={12} md={8}>
           <TabComponent tabOptions={treasuryTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

@@ -67,7 +67,6 @@ import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 
-
 const EditPropertyForm = (props: any) => {
   const [initialData, setInitialData] = useState(initialValues)
   const [showImgModal, setShowImgModal] = useState(false)
@@ -85,6 +84,7 @@ const EditPropertyForm = (props: any) => {
   const [selectedCommentId, setSelectedCommentId] = useState(0)
   const [commentLoading, setCommentLoading] = useState(true)
   const [unReadComments, setUnReadComments] = useState<any>({})
+  const [approved, setApproved] = useState(false)
 
   const classes = useStyle()
   const classes01 = useStyle01()
@@ -92,12 +92,22 @@ const EditPropertyForm = (props: any) => {
   const { userInfo } = props
 
   useEffect(() => {
+    if (approved) {
+      setPermission(true)
+    } else {
+      setPermission(false)
+    }
+  }, [approved])
+
+  useEffect(() => {
     const propertyId = props.match.params.propertyId
     const getPropertyDetails = async () => {
       try {
         setDataLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
+
         if (!!res && res.data) {
+          setApproved(res.data.propertyDetails.ApprovedByOwner)
           const images = []
           const docs = []
           for (const item of res.data.getDocs) {
@@ -809,15 +819,18 @@ const EditPropertyForm = (props: any) => {
                       </Grid>
                     </fieldset>
                     <SubmitContainer>
-                      <CheckBoxCont>
-                        <Checkbox
-                          color="default"
-                          inputProps={{ 'aria-label': 'checkbox with default color' }}
-                          style={{ color: '#1E3444' }}
-                          onChange={(e: any) => setPermission(e.target.checked)}
-                        />
-                        <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
-                      </CheckBoxCont>
+                      {!approved && (
+                        <CheckBoxCont>
+                          <Checkbox
+                            color="default"
+                            inputProps={{ 'aria-label': 'checkbox with default color' }}
+                            style={{ color: '#1E3444' }}
+                            onChange={(e: any) => setPermission(e.target.checked)}
+                          />
+                          <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
+                        </CheckBoxCont>
+                      )}
+
                       {!!userInfo && userInfo.role === 1 ? (
                         <FormButtonGroup>
                           <PrimaryButton
@@ -877,7 +890,7 @@ const EditPropertyForm = (props: any) => {
                 onClick={() => {
                   handleCommentSubmit()
                 }}
-                disabled={commentMsg.length === 0}
+                disabled={commentMsg.length === 0 || approved}
               >
                 Comment
               </PrimaryButton>

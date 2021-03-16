@@ -155,11 +155,11 @@ const PropertyDetails = (props: any) => {
                       <p>Documents uploads</p>
                       <DocContainer className={classes.docBox}>{renderDocs()}</DocContainer>
                     </DocWrapper>
-                    <Box className={classes.btnGroup}>
+                    {/* <Box className={classes.btnGroup}>
                       <Button className={classes.btn1Style}>Live auction</Button>
                       <Button className={classes.btn1Style}>Button text</Button>
                       <Button className={classes.btn2Style}>Button text</Button>
-                    </Box>
+                    </Box> */}
                   </Grid>
                 </Grid>
               </Paper>

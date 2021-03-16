@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Formik, Form } from 'formik'
+import { Formik, Form, ErrorMessage } from 'formik'
 import { bidStyle, Title, BoldText, LightText } from './style'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -15,6 +15,13 @@ import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import { auctionContractAddress, auctionAbi, DAIContractAddress, daiAbi } from '../../block-chain/abi'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
+import { err } from 'shared/styles/styled'
+import * as Yup from 'yup'
+
+export const bidFormSchema = Yup.object().shape({
+  phoneNumber: Yup.string().required('This field is required'),
+  email: Yup.string().required('This field is required'),
+})
 
 const Bid = (props: any) => {
   const classes = bidStyle()
@@ -22,6 +29,8 @@ const Bid = (props: any) => {
   const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email } = props
 
   const handleSubmit = async (values: any) => {
+    console.log(values)
+
     const totalAmount = token * parseFloat(bidValue)
     const dataVal = {
       auctionID,
@@ -105,6 +114,7 @@ const Bid = (props: any) => {
         </LightText>
         <Formik
           initialValues={{ email, phoneNumber: '' }}
+          validationSchema={bidFormSchema}
           onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values)
             setSubmitting(false)
@@ -113,7 +123,9 @@ const Bid = (props: any) => {
           {() => (
             <Form>
               <CustomTextField label="Email Address" type="email" name="email" />
+              <ErrorMessage component={err} name="email" />
               <IntegerNumberField label="Phone number" name="phoneNumber" />
+              <ErrorMessage component={err} name="phoneNumber" />
               <Box className={classes.submitCont}>
                 <PrimaryButton type="submit">{loading ? <Spinner /> : 'CONFIRM'}</PrimaryButton>
               </Box>

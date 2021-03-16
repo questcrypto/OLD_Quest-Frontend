@@ -69,6 +69,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 
 const EditPropertyForm = (props: any) => {
   const [initialData, setInitialData] = useState(initialValues)
+  const [name, setName] = useState('')
   const [showImgModal, setShowImgModal] = useState(false)
   const [imageList, setImageList] = useState<any>([])
   const [imageData, setImageData] = useState<any>([])
@@ -92,6 +93,7 @@ const EditPropertyForm = (props: any) => {
   const { userInfo } = props
 
   useEffect(() => {
+    console.log(userInfo)
     if (approved) {
       setPermission(true)
     } else {
@@ -105,6 +107,8 @@ const EditPropertyForm = (props: any) => {
       try {
         setDataLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
+
+        console.log(res)
 
         if (!!res && res.data) {
           setApproved(res.data.propertyDetails.ApprovedByOwner)
@@ -127,6 +131,7 @@ const EditPropertyForm = (props: any) => {
             YearBuilt: moment(res.data.propertyDetails.YearBuilt).format('YYYY'),
           }
           setInitialData({ ...data })
+          setName(res.data.propertyDetails.Fname + ' ' + res.data.propertyDetails.Lname)
         }
       } catch (error) {
       } finally {
@@ -264,7 +269,7 @@ const EditPropertyForm = (props: any) => {
       const data = {
         CreatedAt: new Date(),
         Remark: commentMsg,
-        CommentedBy: userInfo.publicaddress,
+        CommentedBy: userInfo?.role === 1 ? 'Admin' : name,
       }
       const newCommentList = [...commentList]
       newCommentList.push(data)
@@ -275,8 +280,11 @@ const EditPropertyForm = (props: any) => {
           propid: propertyId,
           Field: selectedCommentId,
           Remark: commentMsg,
-          CommentedBy: userInfo.publicaddress,
+          CommentedBy: userInfo?.role === 1 ? 'Admin' : name,
         }
+
+        console.log(commentData)
+
         await axios.post(`${apiBaseUrl}/properties/AddComment`, commentData)
       } catch (err) {}
     }

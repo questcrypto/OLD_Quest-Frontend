@@ -50,12 +50,13 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
 import Spinner from 'shared/loader-components/spinner'
-import { propertyType, Landscaping } from 'shared/helpers/dataConstant' 
+import { propertyType, Landscaping } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import moment from 'moment'
+import MoneyInputField from 'shared/components/money-input-field'
 const AddPropertyForm = () => {
   const [showImgModal, setShowImgModal] = useState(false)
   const [imageList, setImageList] = useState<any>([])
@@ -208,7 +209,7 @@ const AddPropertyForm = () => {
                     <FormTitle>Property info</FormTitle>
                     <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
                     <ErrorMessage component={err} name="PropertyType" />
-                    <CustomTextField label="Property name" name="PropertyName" handleBlur={handleBlur} /> 
+                    <CustomTextField label="Property name" name="PropertyName" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="PropertyName" />
                     <FloatNumberField label="Property current value" name="CurrentValue" />
                     <ErrorMessage component={err} name="CurrentValue" />
@@ -287,11 +288,11 @@ const AddPropertyForm = () => {
                 <Grid item xs={10} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitle>T.I.M.E contract</FormTitle>
-                    <IntegerNumberField label="Insurance" name="Insurance" />
+                    <MoneyInputField label="Insurance" name="Insurance" />
                     <ErrorMessage component={err} name="Insurance" />
-                    <IntegerNumberField label="Maintenance" name="Maintenance" />
+                    <MoneyInputField label="Maintenance" name="Maintenance" />
                     <ErrorMessage component={err} name="Maintenance" />
-                    <IntegerNumberField label="HOA fees" name="HOAFees" />
+                    <MoneyInputField label="HOA fees" name="HOAFees" />
                     <ErrorMessage component={err} name="HOAFees" />
                   </Grid>
                   <Divider className={classes.dividerStyle} />

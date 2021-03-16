@@ -33,6 +33,7 @@ export const PaginationText = styled.p`
 `
 export const NoDataContainer = styled.div`
   margin: 50px 0;
+  width: 100%;
   p {
     text-align: center;
   }

@@ -14,6 +14,7 @@ import Pagination from '@material-ui/lab/Pagination'
 import { getFullName } from 'shared/helpers/globalFunction'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
+import EmptyPage from 'shared/empty-page'
 
 const NewPropertyTable = (props: any) => {
   const classes = useStyles()
@@ -58,7 +59,7 @@ const NewPropertyTable = (props: any) => {
         </Table>
         {!!data && data.length === 0 && (
           <NoDataContainer>
-            <p>No data available</p>
+            <EmptyPage name="here" />
           </NoDataContainer>
         )}
       </TableContainer>

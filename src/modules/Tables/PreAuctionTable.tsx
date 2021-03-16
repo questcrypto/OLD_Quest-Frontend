@@ -18,6 +18,7 @@ import { getFullName } from 'shared/helpers/globalFunction'
 import Spinner from 'shared/loader-components/spinner'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import EmptyPage from 'shared/empty-page'
 
 const PreAuctionTable = (props: any) => {
   const classes = useStyles()
@@ -110,7 +111,7 @@ const PreAuctionTable = (props: any) => {
             </Table>
             {!!data && data.length === 0 && (
               <NoDataContainer>
-                <p>No data available</p>
+                <EmptyPage name="for pre-auction" />
               </NoDataContainer>
             )}
           </TableContainer>

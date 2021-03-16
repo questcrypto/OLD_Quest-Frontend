@@ -16,6 +16,7 @@ import { getFullName } from 'shared/helpers/globalFunction'
 import Spinner from 'shared/loader-components/spinner'
 import { SLCContractAddress, slcAbi } from 'modules/block-chain/abi'
 import { getWeb3Val, handleSignPendingTransactionSubmit } from 'modules/block-chain/BlockChainMethods'
+import EmptyPage from 'shared/empty-page'
 
 const TokenToMintTable = (props: any) => {
   const classes = useStyles()
@@ -91,7 +92,7 @@ const TokenToMintTable = (props: any) => {
           </Table>
           {!!data && data.length === 0 && (
             <NoDataContainer>
-              <p>No data available</p>
+              <EmptyPage name="here" />
             </NoDataContainer>
           )}
         </TableContainer>

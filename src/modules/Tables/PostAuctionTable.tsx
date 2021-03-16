@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import Pagination from '@material-ui/lab/Pagination'
 import { getFullName } from 'shared/helpers/globalFunction'
 import ComponentLoader from 'shared/loader-components/component-loader'
+import EmptyPage from 'shared/empty-page'
 
 const PostAuctionTable = (props: any) => {
   const classes = useStyles()
@@ -52,7 +53,7 @@ const PostAuctionTable = (props: any) => {
             </Table>
             {!!data && data.length === 0 && (
               <NoDataContainer>
-                <p>No data available</p>
+                <EmptyPage name="here" />
               </NoDataContainer>
             )}
           </TableContainer>

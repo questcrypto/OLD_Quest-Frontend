@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import Pagination from '@material-ui/lab/Pagination'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import Select from '@material-ui/core/Select'
+import EmptyPage from 'shared/empty-page'
 
 const dataVal = [
   {
@@ -81,7 +82,7 @@ const DocumentsTable = (props: any) => {
         </Table>
         {!!dataVal && dataVal.length === 0 && (
           <NoDataContainer>
-            <p>No data available</p>
+            <EmptyPage name="here" />
           </NoDataContainer>
         )}
       </TableContainer>

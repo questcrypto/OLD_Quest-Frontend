@@ -44,6 +44,11 @@ const Bid = (props: any) => {
         const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
         const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
 
+        let auctionBidRes = await auctionContract.methods.getAuctionBidders(auctionID).call()
+        console.log(auctionBidRes, accounts[0])
+        console.log(auctionBidRes.includes(accounts[0]))
+        upgrade = auctionBidRes.includes(accounts[0])
+
         const totalTokens = web3.utils.toWei((dataVal.bidPrice * dataVal.totalAmount).toString(), 'ether')
 
         let approvalRes = await daiContract.methods.approve(auctionContractAddress, totalTokens).send({ from: accounts[0] })
@@ -53,11 +58,6 @@ const Bid = (props: any) => {
         let res = await auctionContract.methods.saveBid(auctionID, totalTokens).send({ from: accounts[0] })
 
         console.log(res)
-
-        let auctionBidRes = await auctionContract.methods.getAuctionBidders(auctionID).call()
-        console.log(auctionBidRes, accounts[0])
-        console.log(auctionBidRes.includes(accounts[0]))
-        upgrade = auctionBidRes.includes(accounts[0])
       }
 
       if (upgrade) {

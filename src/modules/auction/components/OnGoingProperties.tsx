@@ -19,6 +19,11 @@ const OnGoingProperties = (props: any) => {
   const handleAuctionDetails = (id: string) => {
     history.push(`${Paths.auctionDetails}/${id}`)
   }
+
+  const handlePropertyDetails = (id: string) => {
+    history.push(`${Paths.ownerPropertyDetails}/${id}`)
+  }
+
   const getRemainingDays = (endDate: Date) => {
     const daysRemaining = getDaysValue(new Date(), endDate)
     if (daysRemaining >= 1) {
@@ -53,8 +58,12 @@ const OnGoingProperties = (props: any) => {
     return imgUrl
   }
 
+
   const renderOnGoingCard = (item: any) => {
     const { AuctionDetail, PropertyDetails } = item
+
+    
+
     return (
       <Card className={classes.root}>
         <img className={classes.media} src={getImg(PropertyDetails.getDocs)} alt="" />
@@ -83,13 +92,17 @@ const OnGoingProperties = (props: any) => {
                 fullWidth
                 className={classes.btnStyle}
                 onClick={() => handleAuctionDetails(AuctionDetail.id)}
-                disabled={getDaysValue(new Date(), AuctionDetail.endDate) <= 1}
+                disabled={getDaysValue(new Date(), AuctionDetail.endDate) < 1}
               >
                 LIVE AUCTION
               </PrimaryButton>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <SecondaryButton fullWidth className={classes.btnStyle}>
+              <SecondaryButton
+                fullWidth
+                className={classes.btnStyle}
+                onClick={() => handlePropertyDetails(PropertyDetails.propertyDetails.id)}
+              >
                 PROPERTY DETAILS
               </SecondaryButton>
             </Grid>

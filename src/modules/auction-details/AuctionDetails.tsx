@@ -10,6 +10,8 @@ import AuctionStats from './components/AuctionStats'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import history from 'modules/app/components/history'
+import { getDaysValue } from 'shared/helpers/globalFunction'
 
 const AuctionDetails = (props: any) => {
   const classes = useStyles()
@@ -50,6 +52,15 @@ const AuctionDetails = (props: any) => {
           setTotalToken(totalTokenVal)
           setSelectedImg(imgList[0])
           setImageList(imgList)
+
+          const { auctionDetails } = res.data
+
+          const daysRemaining = getDaysValue(new Date(), auctionDetails[0].endDate)
+
+          if (daysRemaining < 1) {
+            history.goBack()
+          }
+
           setAuctionData(res.data)
         }
       } catch (error) {
@@ -59,8 +70,6 @@ const AuctionDetails = (props: any) => {
     }
     getAuctionData()
   }, [match])
-
-  console.log('days: ', auctionData)
 
   return (
     <Box className={classes.root}>
@@ -98,6 +107,7 @@ const AuctionDetails = (props: any) => {
                   propertyName={auctionData.propertyDetail.propertyDetails.PropertyName}
                   myBidDetails={auctionData?.myBidDetails!}
                   email={userInfo?.email}
+                  suggestedLowestBid={auctionData.auctionDetails[0].suggestedLowestBid}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3} container>

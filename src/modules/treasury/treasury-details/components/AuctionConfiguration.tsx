@@ -13,6 +13,9 @@ import CloseIcon from '@material-ui/icons/Close'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
+import { slcAbi, SLCContractAddress } from '../../../block-chain/abi'
+import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
+
 const initialValues = {
   startDate: '',
   duration: '',
@@ -28,8 +31,14 @@ const AuctionConfiguration = (props: any) => {
   const { propId, publicAddress, setShowAuctionModal } = props
 
   const handleSubmit = async (values: any) => {
+    console.log('called')
+
+    console.log('values', values)
+
     const endDate = new Date(values.startDate)
     endDate.setDate(endDate.getDate() + parseInt(values.duration))
+
+    console.log(endDate)
 
     const data = {
       propid: propId,
@@ -42,10 +51,36 @@ const AuctionConfiguration = (props: any) => {
       isIssuedBy: publicAddress,
     }
 
+    console.log('data', data)
+
     try {
       setLoading(true)
-      await axios.post(`${apiBaseUrl}/auction/ConfigureAuction`, data)
+      let res = await axios.post(`${apiBaseUrl}/auction/ConfigureAuction`, data)
+      const auctionId = res.data.identifiers[0].id
+      console.log('configure auction', auctionId)
       setShowAuctionModal(false)
+
+      const web3 = await getWeb3Val()
+      console.log(web3)
+      if (web3) {
+        const accounts = await web3.eth.getAccounts()
+        const SLCInstance = new web3.eth.Contract(slcAbi, SLCContractAddress)
+
+        const newStartDate = new Date(data.startDate).getTime() / 1000
+        const newEndDate = new Date(data.endDate).getTime() / 1000
+
+        console.log(SLCInstance)
+        try {
+          let res = await SLCInstance.methods
+            .EnlistAuction(auctionId, newStartDate, newEndDate, data.minReserve, data.slReserve, data.suggestedLowestBid, propId)
+            .send({ from: accounts[0] })
+
+          console.log(res)
+        } catch (err) {
+          console.log(err)
+          setLoading(false)
+        }
+      }
     } catch (error) {
     } finally {
       setLoading(false)

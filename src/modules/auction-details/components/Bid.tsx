@@ -13,11 +13,13 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import { auctionContractAddress, auctionAbi, DAIContractAddress, daiAbi } from '../../block-chain/abi'
+import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
 
 const Bid = (props: any) => {
   const classes = bidStyle()
   const [loading, setLoading] = useState(false)
-  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, upgrade, email } = props
+  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email } = props
 
   const handleSubmit = async (values: any) => {
     const totalAmount = token * parseFloat(bidValue)
@@ -31,11 +33,43 @@ const Bid = (props: any) => {
     }
     try {
       setLoading(true)
+
+      const web3 = await getWeb3Val()
+      console.log(web3)
+
+      let upgrade = null
+
+      if (web3) {
+        const accounts = await web3.eth.getAccounts()
+        const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
+        const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
+
+        const totalTokens = web3.utils.toWei((dataVal.bidPrice * dataVal.totalAmount).toString(), 'ether')
+
+        let approvalRes = await daiContract.methods.approve(auctionContractAddress, totalTokens).send({ from: accounts[0] })
+
+        console.log(approvalRes)
+
+        let res = await auctionContract.methods.saveBid(auctionID, totalTokens).send({ from: accounts[0] })
+
+        console.log(res)
+
+        let auctionBidRes = await auctionContract.methods.getAuctionBidders(auctionID).call()
+        console.log(auctionBidRes, accounts[0])
+        console.log(auctionBidRes.includes(accounts[0]))
+        upgrade = auctionBidRes.includes(accounts[0])
+      }
+
       if (upgrade) {
-        await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
-      } else await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
+        console.log('upgrade', upgrade)
+        let upgradeRes = await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
+        console.log(upgradeRes)
+      } else {
+        await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
+      }
       history.push(Paths.auction)
     } catch (error) {
+      console.log(error)
     } finally {
       setLoading(false)
     }

@@ -11,7 +11,8 @@ import { getDaysValue } from 'shared/helpers/globalFunction'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
- 
+import EmptyPage from 'shared/empty-page'
+
 const ParticipateProperties = (props: any) => {
   const { data, dataLoading } = props
   const classes = cardStyle()
@@ -20,7 +21,7 @@ const ParticipateProperties = (props: any) => {
     history.push(`${Paths.auctionDetails}/${id}`)
   }
   const handleUpgradeBidDetails = (id: string) => {
-    history.push(`${Paths.upgradeBid}/${id}`) 
+    history.push(`${Paths.upgradeBid}/${id}`)
   }
 
   const getRemainingDays = (endDate: Date) => {
@@ -120,7 +121,7 @@ const ParticipateProperties = (props: any) => {
             </Grid>
           ) : (
             <NoDataContainer>
-              <p>No data available</p>
+              <EmptyPage name="here" />
             </NoDataContainer>
           )}
         </div>

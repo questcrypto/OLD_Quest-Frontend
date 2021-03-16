@@ -10,6 +10,7 @@ import { getDaysValue } from 'shared/helpers/globalFunction'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
+import EmptyPage from 'shared/empty-page'
 
 const OnGoingProperties = (props: any) => {
   const { dataLoading, data } = props
@@ -113,7 +114,7 @@ const OnGoingProperties = (props: any) => {
             </Grid>
           ) : (
             <NoDataContainer>
-              <p>No data available</p>
+              <EmptyPage name="for ongoing auction" />
             </NoDataContainer>
           )}
         </div>

@@ -23,8 +23,6 @@ const AuctionDetails = (props: any) => {
   const [propertyId, setPropertyId] = useState('')
   const { userInfo, match } = props
 
-  console.log(userInfo)
-
   useEffect(() => {
     const auctionId = match.params.auctionId
     const getAuctionData = async () => {

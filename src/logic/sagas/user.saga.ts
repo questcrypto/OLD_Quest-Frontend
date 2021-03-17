@@ -13,7 +13,7 @@ export function* authWatcher() {
   yield takeLatest(AUTH_START, authWorker)
 }
 
-export function* authWorker() {
+export function* authWorker(): any {
   if (localStorage.token) {
     setAuthToken(localStorage.token)
   }
@@ -33,7 +33,7 @@ export function* loginWatcher() {
   yield takeLatest(LOGIN_START, loginWorker)
 }
 
-function* loginWorker(action: any) {
+function* loginWorker(action: any): any {
   try {
     const data = action.payload
     const res = yield call(loginUser, data)

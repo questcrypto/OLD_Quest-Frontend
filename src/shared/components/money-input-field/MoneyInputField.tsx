@@ -1,10 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Field } from 'formik'
-import { integerNumberRegex } from 'shared/helpers/regexConstants'
 import TextField from '@material-ui/core/TextField'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { colors } from 'shared/styles/theme'
-import { InputAdornment } from '@material-ui/core'
 import NumberFormat from 'react-number-format'
 
 const textFieldStyle = makeStyles(() =>
@@ -28,8 +26,10 @@ const IntegerNumberField = (props: Props) => {
   const classes = textFieldStyle()
   const { name, label, maxLength, handleBlur } = props
 
-  const handleNumberInput = (e: any, form: any, field: any) => {
-    const { value } = e.target
+  const [money, setMoney] = useState('')
+
+  const handleNumberInput = (value: any, form: any, field: any) => {
+    // const { value } = e.target
 
     if (!!maxLength && maxLength > 0) {
       if (value.length <= maxLength) {
@@ -42,52 +42,32 @@ const IntegerNumberField = (props: Props) => {
     if (!value) {
       form.setFieldValue(field.name, '')
     }
-  }
 
-  function NumberFormatCustom(props: any) {
-    const { inputRef, onChange, ...other } = props
-
-    return (
-      <NumberFormat
-        {...other}
-        getInputRef={inputRef}
-        onValueChange={(values: any) => {
-          onChange({
-            target: {
-              //   name: props.name,
-              value: values.value,
-            },
-          })
-        }}
-        thousandSeparator
-        // isNumericString
-        decimalScale={2}
-        prefix="$ "
-      />
-    )
+    console.log(form.values)
   }
 
   return (
     <Field name={name}>
       {({ field, form }: any) => {
         return (
-          <TextField
+          <NumberFormat
+            thousandSeparator={true}
+            customInput={TextField}
+            prefix={'$ '}
+            decimalScale={2}
+            inputmode="numeric"
             variant="outlined"
             fullWidth
             id={name}
             label={label}
             name={name}
-            value={field.value}
             autoComplete={name}
-            // autoFocus
-            onChange={(e: any) => {
-              handleNumberInput(e, form, field)
-            }}
+            autoFocus
             onBlur={handleBlur}
-            type="text"
             className={classes.root}
-            InputProps={{
-              inputComponent: NumberFormatCustom,
+            value={field.value}
+            onValueChange={(values: any) => {
+              handleNumberInput(values.value, form, field)
             }}
           />
         )

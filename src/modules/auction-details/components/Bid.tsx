@@ -29,8 +29,6 @@ const Bid = (props: any) => {
   const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email } = props
 
   const handleSubmit = async (values: any) => {
-    console.log(values)
-
     const totalAmount = token * parseFloat(bidValue)
     const dataVal = {
       auctionID,
@@ -44,7 +42,6 @@ const Bid = (props: any) => {
       setLoading(true)
 
       const web3 = await getWeb3Val()
-      console.log(web3)
 
       let upgrade = null
 
@@ -54,31 +51,24 @@ const Bid = (props: any) => {
         const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
 
         let auctionBidRes = await auctionContract.methods.getAuctionBidders(auctionID).call()
-        console.log(auctionBidRes, accounts[0])
-        console.log(auctionBidRes.includes(accounts[0]))
+
         upgrade = auctionBidRes.includes(accounts[0])
 
         const totalTokens = web3.utils.toWei((dataVal.bidPrice * dataVal.totalAmount).toString(), 'ether')
 
         let approvalRes = await daiContract.methods.approve(auctionContractAddress, totalTokens).send({ from: accounts[0] })
 
-        console.log(approvalRes)
-
         let res = await auctionContract.methods.saveBid(auctionID, totalTokens).send({ from: accounts[0] })
-
-        console.log(res)
       }
 
       if (upgrade) {
-        console.log('upgrade', upgrade)
         let upgradeRes = await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
-        console.log(upgradeRes)
       } else {
         await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
       }
       history.push(Paths.auction)
     } catch (error) {
-      console.log(error)
+      console.log('Error ==>', error)
     } finally {
       setLoading(false)
     }

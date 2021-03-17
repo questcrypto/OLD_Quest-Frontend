@@ -33,7 +33,6 @@ const Login = (props: any) => {
       const web3 = await getWeb3Val()
       if (web3) {
         const coinbase = await web3.eth.getCoinbase()
-        console.log(coinbase)
         if (!coinbase) {
           window.alert('Please activate MetaMask first.')
           return

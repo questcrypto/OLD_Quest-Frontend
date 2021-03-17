@@ -93,7 +93,6 @@ const EditPropertyForm = (props: any) => {
   const { userInfo } = props
 
   useEffect(() => {
-    console.log(userInfo)
     if (approved) {
       setPermission(true)
     } else {
@@ -107,8 +106,6 @@ const EditPropertyForm = (props: any) => {
       try {
         setDataLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
-
-        console.log(res)
 
         if (!!res && res.data) {
           setApproved(res.data.propertyDetails.ApprovedByOwner)
@@ -269,7 +266,7 @@ const EditPropertyForm = (props: any) => {
       const data = {
         CreatedAt: new Date(),
         Remark: commentMsg,
-        CommentedBy: userInfo?.role === 1 ? 'Admin' : name,
+        CommentedBy: userInfo?.role === 1 ? userInfo.name : name,
       }
       const newCommentList = [...commentList]
       newCommentList.push(data)
@@ -280,13 +277,13 @@ const EditPropertyForm = (props: any) => {
           propid: propertyId,
           Field: selectedCommentId,
           Remark: commentMsg,
-          CommentedBy: userInfo?.role === 1 ? 'Admin' : name,
+          CommentedBy: userInfo?.role === 1 ? userInfo.name : name,
         }
 
-        console.log(commentData)
-
         await axios.post(`${apiBaseUrl}/properties/AddComment`, commentData)
-      } catch (err) {}
+      } catch (err) {
+        console.log('Error==>', err)
+      }
     }
   }
 

@@ -29,8 +29,6 @@ const OwnerDashboard = (props: any) => {
 
   const { userInfo } = props
 
-  console.log('owner')
-
   useEffect(() => {
     const getPropertiesList = async () => {
       try {

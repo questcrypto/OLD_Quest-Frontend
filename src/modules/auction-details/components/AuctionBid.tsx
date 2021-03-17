@@ -80,8 +80,6 @@ const AuctionBid = (props: any) => {
     setMinBidError(false)
     const { value } = event.target
 
-    console.log("value ", value)
-
     if (value) {
       if (floatNumRegex.test(value.toString())) {
         setBidValue(value)
@@ -89,9 +87,9 @@ const AuctionBid = (props: any) => {
       }
       if (value < myBidDetails[0]?.bidPrice!) setMinBidError(true)
       else setMinBidError(false)
-      if(parseFloat(value) < suggestedLowestBid) {
+      if (parseFloat(value) < suggestedLowestBid) {
         setSuggMinBidError(true)
-      } else{
+      } else {
         setSuggMinBidError(false)
       }
     } else {
@@ -130,9 +128,6 @@ const AuctionBid = (props: any) => {
       }
     }
   }
-
-  console.log("suggestedLowestBid ", suggestedLowestBid)
-  console.log("myBidDetails ", myBidDetails)
 
   return (
     <Box>

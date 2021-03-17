@@ -42,8 +42,6 @@ const IntegerNumberField = (props: Props) => {
     if (!value) {
       form.setFieldValue(field.name, '')
     }
-
-    console.log(form.values)
   }
 
   function NumberFormatCustom(props: any) {

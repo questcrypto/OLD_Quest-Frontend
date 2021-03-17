@@ -46,14 +46,12 @@ export const handlePropertyDetailsSubmit = (contractSLF: any, account: string, p
 
 export const getPendingTransaction = async (contractSLC: any, account: string) => {
   try {
-    const pendingTransaction = await contractSLC.methods.getPendingTransactions().call({ from: account }) 
+    const pendingTransaction = await contractSLC.methods.getPendingTransactions().call({ from: account })
     if (pendingTransaction.length > 0) {
       const trans = await contractSLC.methods._transactions(pendingTransaction[0]).call({ from: account })
       return trans
     }
-  } catch (err) {
-    console.log('err->', err)
-  }
+  } catch (err) {}
 }
 export const handleSignPendingTransactionSubmit = (contractSLC: any, account: string, transactionNumber: number) => {
   contractSLC.methods.signTransaction(transactionNumber).send({ from: account })

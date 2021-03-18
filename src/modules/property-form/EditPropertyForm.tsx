@@ -66,6 +66,7 @@ import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import MoneyInputField from 'shared/components/money-input-field'
 
 const EditPropertyForm = (props: any) => {
   const [initialData, setInitialData] = useState(initialValues)
@@ -414,7 +415,7 @@ const EditPropertyForm = (props: any) => {
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Landscaping" />
                             <FieldMsgBox>
-                              <IntegerNumberField label="Lot Facts" name="Lotfacts" />
+                              <MoneyInputField label="Lot Facts" name="Lotfacts" acceptDecimals={true} />
                               <Badge badgeContent={!!unReadComments && unReadComments[11]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(11)} />
                               </Badge>
@@ -536,21 +537,21 @@ const EditPropertyForm = (props: any) => {
                           <Grid item className={classes.editFormGroup}>
                             <FormTitle>T.I.M.E contract</FormTitle>
                             <FieldMsgBox>
-                              <IntegerNumberField label="Insurance" name="Insurance" />
+                              <MoneyInputField label="Insurance" name="Insurance" dollarPrefix={true} acceptDecimals={true} />
                               <Badge badgeContent={!!unReadComments && unReadComments[23]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(23)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Insurance" />
                             <FieldMsgBox>
-                              <IntegerNumberField label="Maintenance" name="Maintenance" />
+                              <MoneyInputField label="Maintenance" name="Maintenance" dollarPrefix={true} acceptDecimals={true} />
                               <Badge badgeContent={!!unReadComments && unReadComments[24]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(24)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Maintenance" />
                             <FieldMsgBox>
-                              <IntegerNumberField label="HOA fees" name="HOAFees" />
+                              <MoneyInputField label="HOA fees" name="HOAFees" dollarPrefix={true} acceptDecimals={true} />
                               <Badge badgeContent={!!unReadComments && unReadComments[25]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(25)} />
                               </Badge>

@@ -15,6 +15,7 @@ import { apiBaseUrl } from 'services/global-constant'
 
 import { slcAbi, SLCContractAddress } from '../../../block-chain/abi'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
+import MoneyInputField from 'shared/components/money-input-field'
 
 const initialValues = {
   startDate: '',
@@ -91,20 +92,20 @@ const AuctionConfiguration = (props: any) => {
               <Box>
                 <FormDatePicker label="Start Date" name="startDate" />
                 <ErrorMessage component={err} name="startDate" />
-                <IntegerNumberField label="Duration" name="duration" />
+                <IntegerNumberField label="Duration (in days)" name="duration" />
                 <ErrorMessage component={err} name="duration" />
                 <Grid container spacing={1}>
                   <Grid item xs={12} sm={6}>
-                    <IntegerNumberField label="Min - Reserve" name="minReserve" />
+                    <MoneyInputField label="Min - Reserve" name="minReserve" dollarPrefix={true} />
                     <ErrorMessage component={err} name="minReserve" />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <IntegerNumberField label="SL - Reserve" name="slReserve" />
+                    <MoneyInputField label="SL - Reserve" name="slReserve" dollarPrefix={true} />
                     <ErrorMessage component={err} name="slReserve" />
                   </Grid>
                 </Grid>
 
-                <IntegerNumberField label="Suggested lowest bid" name="suggestedLowestBid" />
+                <MoneyInputField label="Suggested lowest bid" name="suggestedLowestBid" dollarPrefix={true} acceptDecimals />
                 <ErrorMessage component={err} name="suggestedLowestBid" />
                 <CustomTextField label="Memo" name="memo" />
                 <ErrorMessage component={err} name="memo" />

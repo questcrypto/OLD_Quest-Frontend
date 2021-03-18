@@ -20,13 +20,13 @@ interface Props {
   label?: string
   maxLength?: number
   handleBlur?: any
+  acceptDecimals?: boolean
+  dollarPrefix?: boolean
 }
 
 const IntegerNumberField = (props: Props) => {
   const classes = textFieldStyle()
-  const { name, label, maxLength, handleBlur } = props
-
-  const [money, setMoney] = useState('')
+  const { name, label, maxLength, handleBlur, acceptDecimals, dollarPrefix } = props
 
   const handleNumberInput = (value: any, form: any, field: any) => {
     // const { value } = e.target
@@ -42,8 +42,6 @@ const IntegerNumberField = (props: Props) => {
     if (!value) {
       form.setFieldValue(field.name, '')
     }
-
-    console.log(form.values)
   }
 
   return (
@@ -53,8 +51,8 @@ const IntegerNumberField = (props: Props) => {
           <NumberFormat
             thousandSeparator={true}
             customInput={TextField}
-            prefix={'$ '}
-            decimalScale={2}
+            prefix={dollarPrefix ? '$ ' : ''}
+            decimalScale={acceptDecimals ? 2 : 0}
             inputmode="numeric"
             variant="outlined"
             fullWidth

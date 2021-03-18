@@ -157,7 +157,7 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
   return (
     <Router history={history}>
       <Box className={classes.root}>
-        {loggedIn && (
+        {loggedIn && width <= 990 && (
           <>
             <IconButton style={{ position: 'absolute' }} onClick={() => props.handleDrawerOpen()}>
               <MenuIcon />

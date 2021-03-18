@@ -221,7 +221,7 @@ const AddPropertyForm = () => {
                     <ErrorMessage component={err} name="Zoning" />
                     <FieldSelect label="Landscaping" name="Landscaping" options={Landscaping} />
                     <ErrorMessage component={err} name="Landscaping" />
-                    <IntegerNumberField label="Lot Facts" name="Lotfacts" />
+                    <MoneyInputField label="Lot Facts" name="Lotfacts" acceptDecimals={true} />
                     <ErrorMessage component={err} name="Lotfacts" />
                   </Grid>
                   <Divider className={classes.dividerStyle} />
@@ -288,11 +288,11 @@ const AddPropertyForm = () => {
                 <Grid item xs={10} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitle>T.I.M.E contract</FormTitle>
-                    <MoneyInputField label="Insurance" name="Insurance" />
+                    <MoneyInputField label="Insurance" name="Insurance" dollarPrefix={true} acceptDecimals={true} />
                     <ErrorMessage component={err} name="Insurance" />
-                    <MoneyInputField label="Maintenance" name="Maintenance" />
+                    <MoneyInputField label="Maintenance" name="Maintenance" dollarPrefix={true} acceptDecimals={true} />
                     <ErrorMessage component={err} name="Maintenance" />
-                    <MoneyInputField label="HOA fees" name="HOAFees" />
+                    <MoneyInputField label="HOA fees" name="HOAFees" dollarPrefix={true} acceptDecimals={true} />
                     <ErrorMessage component={err} name="HOAFees" />
                   </Grid>
                   <Divider className={classes.dividerStyle} />

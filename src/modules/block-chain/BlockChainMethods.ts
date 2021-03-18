@@ -39,8 +39,12 @@ export const getPublicAddress = async () => {
 }
 
 export const handlePropertyDetailsSubmit = (contractSLF: any, account: string, propertyValue: number, date: number, propertyId: string) => {
+  console.log('blockchain methods', account, propertyId)
+
+  const propertyAmount = web3.utils.toWei(propertyValue.toString(), 'ether')
+
   return contractSLF.methods
-    .ListProperty_details(propertyValue, propertyValue, propertyValue, 100, 0, 1, 100, date, propertyId, propertyId)
+    .ListProperty_details(propertyAmount, propertyAmount, propertyAmount, 100, 0, 1, 100, date, propertyId, propertyId)
     .send({ from: account })
 }
 

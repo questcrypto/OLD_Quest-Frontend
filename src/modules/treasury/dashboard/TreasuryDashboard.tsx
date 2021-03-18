@@ -36,19 +36,19 @@ const TreasuryDashboard = (props: any) => {
         setDataLoading(false)
       }
     }
-    const getTokenToMintData = async () => {
-      try {
-        setTransactionLoading(true)
-        const data = {
-          publicaddress: !!userInfo && userInfo.publicaddress,
-        }
-        const res = await axios.post(`${apiBaseUrl}/properties/getAllPendingTransaction`, data)
-        setTokenToMintData(res.data)
-      } catch (error) {
-      } finally {
-        setTransactionLoading(false)
-      }
-    }
+    // const getTokenToMintData = async () => {
+    //   try {
+    //     setTransactionLoading(true)
+    //     const data = {
+    //       publicaddress: !!userInfo && userInfo.publicaddress,
+    //     }
+    //     const res = await axios.post(`${apiBaseUrl}/properties/getAllPendingTransaction`, data)
+    //     setTokenToMintData(res.data)
+    //   } catch (error) {
+    //   } finally {
+    //     setTransactionLoading(false)
+    //   }
+    // }
     const getPreAuctionProperties = async () => {
       try {
         setPreAuctionLoading(true)
@@ -71,7 +71,7 @@ const TreasuryDashboard = (props: any) => {
     }
 
     getPublishedProperties()
-    getTokenToMintData()
+    // getTokenToMintData()
     getPreAuctionProperties()
     getOnAuctionProperties()
   }, [userInfo])
@@ -130,7 +130,7 @@ const TreasuryDashboard = (props: any) => {
             )}
             {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
-            {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />}
+            {/* {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />} */}
           </div>
         )}
       </div>

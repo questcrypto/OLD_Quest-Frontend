@@ -115,6 +115,8 @@ const TreasuryPropertyDetails = (props: any) => {
     const propertyId = props.match.params.propertyId
     handlePropertyDetailsSubmit(contractSLF, account, 1000, 1613575905, propertyId)
       .on('confirmation', async function (confirmationNumber: any, receipt: any) {
+        console.log(confirmationNumber, receipt)
+
         if (confirmationNumber === 1) {
           try {
             const data = { id: propertyId }
@@ -124,6 +126,7 @@ const TreasuryPropertyDetails = (props: any) => {
           } finally {
             setMintLoading(false)
           }
+
           return
         }
       })

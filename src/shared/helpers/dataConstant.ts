@@ -34,10 +34,10 @@ export const treasuryTabList = [
     label: 'Published',
     value: 'published',
   },
-  {
-    label: 'Token To Mint',
-    value: 'tokenToMint',
-  },
+  // {
+  //   label: 'Token To Mint',
+  //   value: 'tokenToMint',
+  // },
   {
     label: 'Pre-Auction',
     value: 'preAuction',

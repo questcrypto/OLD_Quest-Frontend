@@ -110,6 +110,7 @@ const EditPropertyForm = (props: any) => {
 
         if (!!res && res.data) {
           setApproved(res.data.propertyDetails.ApprovedByOwner)
+          console.log(res.data.propertyDetails.ApprovedByOwner)
           const images = []
           const docs = []
           for (const item of res.data.getDocs) {

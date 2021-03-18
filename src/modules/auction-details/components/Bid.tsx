@@ -13,10 +13,11 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { auctionContractAddress, auctionAbi, DAIContractAddress, daiAbi } from '../../block-chain/abi'
+import { auctionContractAddress, auctionAbi, DAIContractAddress, daiAbi, slcAbi, SLCContractAddress } from '../../block-chain/abi'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
 import { err } from 'shared/styles/styled'
 import * as Yup from 'yup'
+import { Button } from '@material-ui/core'
 
 export const bidFormSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('This field is required'),
@@ -54,17 +55,21 @@ const Bid = (props: any) => {
 
         upgrade = auctionBidRes.includes(accounts[0])
 
-        const totalTokens = web3.utils.toWei((dataVal.bidPrice * dataVal.totalAmount).toString(), 'ether')
-
-        let approvalRes = await daiContract.methods.approve(auctionContractAddress, totalTokens).send({ from: accounts[0] })
-
-        let res = await auctionContract.methods.saveBid(auctionID, totalTokens).send({ from: accounts[0] })
+        // const totalTokens = web3.utils.toWei((dataVal.bidPrice * dataVal.totalAmount).toString(), 'ether')
+        console.log(parseFloat(bidValue), token)
+        console.log('totalTokens', dataVal.totalAmount)
+        let approvalRes = await daiContract.methods.approve(auctionContractAddress, dataVal.totalAmount).send({ from: accounts[0] })
+        console.log(approvalRes)
+        let res = await auctionContract.methods.saveBid(auctionID, dataVal.totalAmount).send({ from: accounts[0] })
+        console.log(res)
       }
 
       if (upgrade) {
         let upgradeRes = await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
+        console.log('upgrade', upgradeRes)
       } else {
-        await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
+        let makeBidRes = await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
+        console.log('makeBid', makeBidRes)
       }
       history.push(Paths.auction)
     } catch (error) {
@@ -77,6 +82,7 @@ const Bid = (props: any) => {
     const totalCost = token * parseFloat(bidValue)
     return totalCost.toFixed(2)
   }
+
   return (
     <Box className={classes.root}>
       <Box className={classes.bidInfoCont}>

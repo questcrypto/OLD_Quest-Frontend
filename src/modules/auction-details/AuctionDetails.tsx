@@ -12,6 +12,9 @@ import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
 import { getDaysValue } from 'shared/helpers/globalFunction'
+import { Button } from '@material-ui/core'
+import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
+import { slcAbi, SLCContractAddress } from 'modules/block-chain/abi'
 
 const AuctionDetails = (props: any) => {
   const classes = useStyles()
@@ -71,6 +74,24 @@ const AuctionDetails = (props: any) => {
     getAuctionData()
   }, [match])
 
+  const endAuction = async (e: any) => {
+    e.preventDefault()
+
+    const web3 = await getWeb3Val()
+    if (web3) {
+      const accounts = await web3.eth.getAccounts()
+      const slcContract = new web3.eth.Contract(slcAbi, SLCContractAddress)
+      console.log(slcContract)
+
+      try {
+        let res = await slcContract.methods.EndAuction('48788bf8-176c-49b6-ba60-876c410083a2').send({ from: accounts[0] })
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+
   return (
     <Box className={classes.root}>
       <HeaderContainer>
@@ -109,6 +130,9 @@ const AuctionDetails = (props: any) => {
                   email={userInfo?.email}
                   suggestedLowestBid={auctionData.auctionDetails[0].suggestedLowestBid}
                 />
+                <Button color="primary" variant="contained" onClick={endAuction}>
+                  End Auction
+                </Button>
               </Grid>
               <Grid item xs={12} sm={6} md={3} container>
                 <AuctionStats

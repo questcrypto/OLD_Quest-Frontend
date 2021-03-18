@@ -827,44 +827,46 @@ const EditPropertyForm = (props: any) => {
                     </fieldset>
                     <SubmitContainer>
                       {!approved && (
-                        <CheckBoxCont>
-                          <Checkbox
-                            color="default"
-                            inputProps={{ 'aria-label': 'checkbox with default color' }}
-                            style={{ color: '#1E3444' }}
-                            onChange={(e: any) => setPermission(e.target.checked)}
-                          />
-                          <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
-                        </CheckBoxCont>
-                      )}
+                        <>
+                          <CheckBoxCont>
+                            <Checkbox
+                              color="default"
+                              inputProps={{ 'aria-label': 'checkbox with default color' }}
+                              style={{ color: '#1E3444' }}
+                              onChange={(e: any) => setPermission(e.target.checked)}
+                            />
+                            <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
+                          </CheckBoxCont>
 
-                      {!!userInfo && userInfo.role === 1 ? (
-                        <FormButtonGroup>
-                          <PrimaryButton
-                            type="submit"
-                            variant="contained"
-                            classes={{
-                              root: classes.saveAndReviewStyle,
-                            }}
-                            disabled={!permission}
-                          >
-                            {loading ? <Spinner /> : 'Save & Send for review'}
-                          </PrimaryButton>
-                        </FormButtonGroup>
-                      ) : (
-                        <FormButtonGroup>
-                          <PrimaryButton
-                            type="button"
-                            variant="contained"
-                            classes={{
-                              root: classes.saveAndReviewStyle,
-                            }}
-                            disabled={!permission}
-                            onClick={() => handlePropertyApprove()}
-                          >
-                            {loading ? <Spinner /> : 'Approve'}
-                          </PrimaryButton>
-                        </FormButtonGroup>
+                          {!!userInfo && userInfo.role === 1 ? (
+                            <FormButtonGroup>
+                              <PrimaryButton
+                                type="submit"
+                                variant="contained"
+                                classes={{
+                                  root: classes.saveAndReviewStyle,
+                                }}
+                                disabled={!permission}
+                              >
+                                {loading ? <Spinner /> : 'Save & Send for review'}
+                              </PrimaryButton>
+                            </FormButtonGroup>
+                          ) : (
+                            <FormButtonGroup>
+                              <PrimaryButton
+                                type="button"
+                                variant="contained"
+                                classes={{
+                                  root: classes.saveAndReviewStyle,
+                                }}
+                                disabled={!permission}
+                                onClick={() => handlePropertyApprove()}
+                              >
+                                {loading ? <Spinner /> : 'Approve'}
+                              </PrimaryButton>
+                            </FormButtonGroup>
+                          )}
+                        </>
                       )}
                     </SubmitContainer>
                   </Form>

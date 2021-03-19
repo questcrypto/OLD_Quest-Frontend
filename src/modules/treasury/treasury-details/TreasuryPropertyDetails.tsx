@@ -40,6 +40,7 @@ import { SLFContractAddress, selfAbi } from 'modules/block-chain/abi'
 import { getWeb3Val, handlePropertyDetailsSubmit } from 'modules/block-chain/BlockChainMethods'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import { formatExtendedDateString } from 'shared/helpers/globalFunction'
 
 const TreasuryPropertyDetails = (props: any) => {
   const classes = useStyles()
@@ -89,6 +90,7 @@ const TreasuryPropertyDetails = (props: any) => {
           const images = []
           const docs = []
           setPropertyInfo(res.data)
+          console.log(res.data)
           if (res.data.propertyDetails) {
             setMintStatus(res.data.propertyDetails.Isactive)
           }
@@ -113,7 +115,7 @@ const TreasuryPropertyDetails = (props: any) => {
   const handleApproveByAdmin = async () => {
     setMintLoading(true)
     const propertyId = props.match.params.propertyId
-    handlePropertyDetailsSubmit(contractSLF, account, 1000, 1613575905, propertyId)
+    handlePropertyDetailsSubmit(contractSLF, account, propertyInfo.propertyDetails.CurrentValue, 1613575905, propertyId)
       .on('confirmation', async function (confirmationNumber: any, receipt: any) {
         console.log(confirmationNumber, receipt)
 
@@ -173,23 +175,29 @@ const TreasuryPropertyDetails = (props: any) => {
                     <img src={`${apiBaseUrl}/${imageList[0].filename}`} alt="" />
                   </Grid>
                   <Grid item>
-                    <InfoBoldTxt>1901 Thorn ridge Cir.</InfoBoldTxt>
-                    <InfoLightTxt>1228,Los Angeles D4.1, NY, USA</InfoLightTxt>
+                    <InfoBoldTxt>{propertyInfo.propertyDetails.Address1}</InfoBoldTxt>
+                    <InfoLightTxt>{`${propertyInfo.propertyDetails.Address2}, ${propertyInfo.propertyDetails.State},${propertyInfo.propertyDetails.Country}`}</InfoLightTxt>
                   </Grid>
                   <Divider orientation="vertical" className={classes.verticalDividerStyle} />
                   <Grid item>
                     <InfoLightTxt>Onboarding date</InfoLightTxt>
-                    <InfoBoldTxt>29 Jan 2021</InfoBoldTxt>
+                    <InfoBoldTxt>{formatExtendedDateString(propertyInfo.propertyDetails.CreatedAt)}</InfoBoldTxt>
                   </Grid>
                   <Divider orientation="vertical" className={classes.verticalDividerStyle} />
                   <Grid item>
                     <InfoLightTxt>Status</InfoLightTxt>
-                    <InfoBoldTxt>Published</InfoBoldTxt>
+                    <InfoBoldTxt>
+                      {propertyInfo.propertyDetails.ApprovedByHOA
+                        ? 'Published'
+                        : propertyInfo.propertyDetails.ApprovedByOwner
+                        ? 'Approved'
+                        : 'Not Approved'}
+                    </InfoBoldTxt>
                   </Grid>
                   <Divider orientation="vertical" className={classes.verticalDividerStyle} />
                   <Grid item>
                     <InfoLightTxt>Estimated value</InfoLightTxt>
-                    <InfoBoldTxt>$ 1,254,328.00</InfoBoldTxt>
+                    <InfoBoldTxt>$ {propertyInfo.propertyDetails.CurrentValue}</InfoBoldTxt>
                   </Grid>
                   <Grid item>
                     <ExpandIconButton
@@ -240,7 +248,7 @@ const TreasuryPropertyDetails = (props: any) => {
                       <TreasuryOwnerCont>
                         <div>
                           <InfoLightTxt>Owner</InfoLightTxt>
-                          <InfoBoldTxt>Meredith Hendrick</InfoBoldTxt>
+                          <InfoBoldTxt>{`${propertyInfo.propertyDetails.Fname} ${propertyInfo.propertyDetails.Lname}`}</InfoBoldTxt>
                         </div>
                         <MailIcon />
                       </TreasuryOwnerCont>
@@ -251,13 +259,13 @@ const TreasuryPropertyDetails = (props: any) => {
                       <TreasuryOwnerCont>
                         <div>
                           <InfoLightTxt>HOA Admin</InfoLightTxt>
-                          <InfoBoldTxt>Holman Valencia</InfoBoldTxt>
+                          <InfoBoldTxt>HOA Admin</InfoBoldTxt>
                         </div>
                         <MailIcon />
                       </TreasuryOwnerCont>
                     </Paper>
                   </Grid>
-                  <Grid item>
+                  {/* <Grid item>
                     <Paper className={classes.treasuryOwnersPaper} elevation={0}>
                       <TreasuryOwnerCont>
                         <div>
@@ -267,7 +275,7 @@ const TreasuryPropertyDetails = (props: any) => {
                         <MailIcon />
                       </TreasuryOwnerCont>
                     </Paper>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Paper>
               <TabComponent tabOptions={treasuryDetailsTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -282,6 +290,7 @@ const TreasuryPropertyDetails = (props: any) => {
       )}
       <CustomModal show={showAuctionModal} toggleModal={setShowAuctionModal}>
         <AuctionConfiguration
+          history={props.history}
           propId={props.match.params.propertyId}
           publicAddress={userInfo.publicaddress}
           setShowAuctionModal={setShowAuctionModal}

@@ -130,7 +130,7 @@ export const propertyFormSchema = Yup.object().shape({
   Style: Yup.string().required('This field is required'),
   Garage: Yup.string().required('This field is required'),
   ParkingSpace: Yup.number().integer().required('This field is required'),
-  Basement: Yup.boolean().oneOf([true], 'Field must be checked').required('This field is required'),
+  Basement: Yup.string().required('This field is required'),
   Water: Yup.string().required('This field is required'),
   WaterShare: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet'),
   Spa: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet'),

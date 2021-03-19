@@ -333,12 +333,14 @@ export const CommentContainer = styled.div`
 `
 export const CommentInfo = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   margin-bottom: 20px;
+  justify-content: space-between;
 `
 export const SenderName = styled.p`
   margin: 0 0 10px 0;
   font-size: 16px;
+  font-weight: bold;
   color: ${colors.textPrimary};
   word-break: break-all;
 `

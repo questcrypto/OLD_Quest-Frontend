@@ -101,6 +101,7 @@ const AddPropertyForm = () => {
       formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
       try {
         setLoading(true)
+        console.log(formData)
         await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
         history.push(Paths.root)
       } catch (error) {
@@ -474,7 +475,7 @@ const AddPropertyForm = () => {
                     <ErrorMessage component={err} name="ParkingSpace" />
                     <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
                     <ErrorMessage component={err} name="FinBasmt" />
-                    <FieldSelect label="Basement" name="Basement" options={Landscaping} />
+                    <CustomTextField label="Basement" name="Basement" />
                     <ErrorMessage component={err} name="Basement" />
                     <FieldSelect label="Driveway" name="Driveway" options={Landscaping} />
                     <ErrorMessage component={err} name="Driveway" />

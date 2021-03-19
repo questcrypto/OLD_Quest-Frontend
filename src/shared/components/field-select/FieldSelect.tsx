@@ -33,6 +33,8 @@ const FieldSelect = (props: Props) => {
         const handleChange = (event: any) => {
           const fieldVal: any = event.target.value
           form.setFieldValue(field.name, fieldVal)
+          console.log(form.values)
+          console.log(fieldVal)
         }
         return (
           <TextField

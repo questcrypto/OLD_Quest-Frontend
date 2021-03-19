@@ -29,7 +29,7 @@ const initialValues = {
 const AuctionConfiguration = (props: any) => {
   const classes = auctionConfigStyle()
   const [loading, setLoading] = useState(false)
-  const { propId, publicAddress, setShowAuctionModal } = props
+  const { propId, publicAddress, setShowAuctionModal, history } = props
 
   const handleSubmit = async (values: any) => {
     const endDate = new Date(values.startDate)
@@ -66,6 +66,8 @@ const AuctionConfiguration = (props: any) => {
 
         console.log(res)
       }
+
+      history.push('/dashboard')
     } catch (error) {
       console.log(error)
     } finally {

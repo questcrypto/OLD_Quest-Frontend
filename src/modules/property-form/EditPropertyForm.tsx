@@ -130,6 +130,7 @@ const EditPropertyForm = (props: any) => {
             YearBuilt: moment(res.data.propertyDetails.YearBuilt).format('YYYY'),
           }
           setInitialData({ ...data })
+          console.log({ ...data })
           setName(res.data.propertyDetails.Fname + ' ' + res.data.propertyDetails.Lname)
         }
       } catch (error) {
@@ -240,7 +241,7 @@ const EditPropertyForm = (props: any) => {
           <div key={k}>
             <CommentInfo>
               <SenderName>{item.CommentedBy}</SenderName>
-              <CommentText>{moment(item.CreatedAt).format('LT, MMM Do YY')}</CommentText>
+              <CommentText> {moment(item.CreatedAt).format('LT, MMM Do YY')}</CommentText>
             </CommentInfo>
             <CommentText>{item.Remark}</CommentText>
             <Divider className={classes.commentDividerStyle} />

@@ -131,6 +131,7 @@ const TreasuryDashboard = (props: any) => {
             {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
             {/* {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />} */}
+            {activeTab === 'endAuction' && <p>End Auction Table</p>}
           </div>
         )}
       </div>

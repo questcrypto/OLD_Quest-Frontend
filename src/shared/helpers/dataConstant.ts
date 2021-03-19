@@ -50,6 +50,10 @@ export const treasuryTabList = [
     label: 'Post-Auction',
     value: 'postAuction',
   },
+  {
+    label: 'End Auction',
+    value: 'endAuction',
+  },
 ]
 
 export const propertyTabList = [

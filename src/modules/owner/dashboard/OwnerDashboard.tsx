@@ -55,6 +55,8 @@ const OwnerDashboard = (props: any) => {
         setPublishedLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
         setPublishedProperties(res.data)
+        console.log(res.data)
+        console.log(res.data)
       } catch (error) {
       } finally {
         setPublishedLoading(false)

@@ -36,7 +36,7 @@ const AuctionReview = (props: any) => {
           <TitleText>Auction Details</TitleText>
           <CloseIcon onClick={() => setShowAuctionModal(false)} />
         </HeaderCont>
-        <Box marginBottom="20px">
+        <Box>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
               <b>Start Date</b>
@@ -63,6 +63,7 @@ const AuctionReview = (props: any) => {
               <p> $ {projectedValue}</p>
             </Grid>
           </Grid>
+
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Formik
@@ -76,7 +77,7 @@ const AuctionReview = (props: any) => {
                 {() => (
                   <Form>
                     <Box>
-                      <CustomTextField label="Change NNote" name="changeNote" />
+                      <CustomTextField label="Change Note" name="changeNote" />
                       <ErrorMessage component={err} name="changeNote" />
                     </Box>
                     <Box className={classes.btnGroupStyle}>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Card, CardActions, CardContent, Grid } from '@material-ui/core'
 import { ImageWrap, useStyles, StyledCard } from './style'
 import { Paths } from 'modules/app/components/routes/types'
@@ -7,14 +7,25 @@ import { getFullName } from 'shared/helpers/globalFunction'
 import { apiBaseUrl } from 'services/global-constant'
 import { NoDataContainer } from 'modules/Tables/style'
 import EmptyPage from 'shared/empty-page'
+import CustomModal from 'shared/custom-modal'
+import AuctionReview from 'modules/owner/owner-property-details/components/AuctionReview'
+import AuctionDetails from 'modules/auction-details'
+import { withRouter } from 'react-router'
 
 interface Props {
   list: any[]
+  published?: boolean
+  history?: boolean
 }
 
 const PropertyCards = (props: Props) => {
   const classes = useStyles()
-  const { list } = props
+  const { list, published } = props
+
+  console.log(published, list)
+
+  const [showAuctionModal, setShowAuctionModal] = useState(false)
+  const [modalAuctionDetails, setModalAuctionDetails] = useState({ auctionDetails: {}, currentValue: 0 })
 
   const handleDetails = (id: any) => {
     history.push(`${Paths.ownerPropertyDetails}/${id}`)
@@ -31,6 +42,11 @@ const PropertyCards = (props: Props) => {
     return imgUrl
   }
 
+  const handleOpenModal = (auctionDetails: any, currentValue: any) => {
+    setModalAuctionDetails({ auctionDetails, currentValue })
+    setShowAuctionModal(true)
+  }
+
   return (
     <div className={!!list && list.length ? classes.wrapper : ''}>
       {!!list && list.length > 0 ? (
@@ -38,6 +54,10 @@ const PropertyCards = (props: Props) => {
           let docs = p.getDoc!
           let name = p.PropertyName
           let id = p.id
+          let auctionDetails = p.auctionDetails
+          let currentValue = p.CurrentValue
+          console.log(currentValue)
+
           const isLast = i === list.length - 1 ? true : false
           if (p.PropertyDetails) {
             const details = p.PropertyDetails
@@ -57,9 +77,15 @@ const PropertyCards = (props: Props) => {
                 </div>
               </CardContent>
               <CardActions className={classes.actions}>
-                <Button onClick={() => handleDetails(id)} className={classes.addPropertyBtnStyle}>
-                  Property Details
-                </Button>
+                {!auctionDetails ? (
+                  <Button onClick={() => handleDetails(id)} className={classes.addPropertyBtnStyle}>
+                    Property Details
+                  </Button>
+                ) : (
+                  <Button onClick={() => handleOpenModal(auctionDetails, currentValue)} className={classes.addPropertyBtnStyle}>
+                    Review Auction
+                  </Button>
+                )}
               </CardActions>
             </StyledCard>
           )
@@ -69,6 +95,15 @@ const PropertyCards = (props: Props) => {
           <EmptyPage name="" />
         </NoDataContainer>
       )}
+
+      <CustomModal show={showAuctionModal} toggleModal={setShowAuctionModal}>
+        <AuctionReview
+          history={props.history}
+          projectedValue={modalAuctionDetails.currentValue}
+          auctionDetails={modalAuctionDetails.auctionDetails}
+          setShowAuctionModal={setShowAuctionModal}
+        />
+      </CustomModal>
     </div>
   )
 }

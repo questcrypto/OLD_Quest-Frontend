@@ -56,7 +56,6 @@ const OwnerDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
         setPublishedProperties(res.data)
         console.log(res.data)
-        console.log(res.data)
       } catch (error) {
       } finally {
         setPublishedLoading(false)
@@ -132,7 +131,7 @@ const OwnerDashboard = (props: any) => {
           <div>
             {activeTab === 'new' && <PropertyCards list={propertiesList} />}
             {activeTab === 'approved' && <PropertyCards list={approvedProperties} />}
-            {activeTab === 'published' && <PropertyCards list={publishedProperties} />}
+            {activeTab === 'published' && <PropertyCards published history={props.history} list={publishedProperties} />}
             {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} />}
             {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} />}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}

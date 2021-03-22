@@ -60,3 +60,9 @@ export const getPendingTransaction = async (contractSLC: any, account: string) =
 export const handleSignPendingTransactionSubmit = (contractSLC: any, account: string, transactionNumber: number) => {
   contractSLC.methods.signTransaction(transactionNumber).send({ from: account })
 }
+
+export const handleEndAuction = async (contractSLC: any, account: string, auctionID: string) => {
+  let res = await contractSLC.methods.EndAuction(auctionID).send({ from: account })
+  console.log(res)
+  return res
+}

@@ -49,23 +49,23 @@ const AuctionConfiguration = (props: any) => {
     try {
       setLoading(true)
       let res = await axios.post(`${apiBaseUrl}/auction/ConfigureAuction`, data)
-      const auctionId = res.data.identifiers[0].id
+      // const auctionId = res.data.identifiers[0].id
 
-      const web3 = await getWeb3Val()
-      console.log(web3)
-      if (web3) {
-        const accounts = await web3.eth.getAccounts()
-        const SLCInstance = new web3.eth.Contract(slcAbi, SLCContractAddress)
+      // const web3 = await getWeb3Val()
+      // console.log(web3)
+      // if (web3) {
+      //   const accounts = await web3.eth.getAccounts()
+      //   const SLCInstance = new web3.eth.Contract(slcAbi, SLCContractAddress)
 
-        const newStartDate = new Date(data.startDate).getTime() / 1000
-        const newEndDate = new Date(data.endDate).getTime() / 1000
+      //   const newStartDate = new Date(data.startDate).getTime() / 1000
+      //   const newEndDate = new Date(data.endDate).getTime() / 1000
 
-        let res = await SLCInstance.methods
-          .EnlistAuction(auctionId, newStartDate, newEndDate, data.minReserve, data.slReserve, data.suggestedLowestBid, propId)
-          .send({ from: accounts[0] })
+      //   let res = await SLCInstance.methods
+      //     .EnlistAuction(auctionId, newStartDate, newEndDate, data.minReserve, data.slReserve, data.suggestedLowestBid, propId)
+      //     .send({ from: accounts[0] })
 
-        console.log(res)
-      }
+      //   console.log(res)
+      // }
 
       history.push('/dashboard')
     } catch (error) {

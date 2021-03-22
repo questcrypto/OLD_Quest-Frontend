@@ -99,6 +99,7 @@ const PropertyCards = (props: Props) => {
       <CustomModal show={showAuctionModal} toggleModal={setShowAuctionModal}>
         <AuctionReview
           history={props.history}
+          // setModalAuctionDetails={setModalAuctionDetails}
           projectedValue={modalAuctionDetails.currentValue}
           auctionDetails={modalAuctionDetails.auctionDetails}
           setShowAuctionModal={setShowAuctionModal}

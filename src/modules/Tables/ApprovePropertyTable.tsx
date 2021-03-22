@@ -71,7 +71,7 @@ const ApprovePropertyTable = (props: any) => {
                       {!!type && type === 'admin' && (
                         <TableCell>
                           <PrimaryButton onClick={() => handleApproveByAdmin(row.id)}>
-                            {selectedId === row.id && loading ? <Spinner /> : 'Approved'}
+                            {selectedId === row.id && loading ? <Spinner /> : 'Approve'}
                           </PrimaryButton>
                         </TableCell>
                       )}

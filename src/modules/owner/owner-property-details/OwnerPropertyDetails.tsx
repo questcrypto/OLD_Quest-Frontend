@@ -215,7 +215,7 @@ const OwnerPropertyDetails = (props: any) => {
                         <TreasuryOwnerCont>
                           <div>
                             <InfoLightTxt>HOA Admin</InfoLightTxt>
-                            <InfoBoldTxt>{propertyInfo.propertyDetails.PublicAddress}</InfoBoldTxt>
+                            <InfoBoldTxt>{'HOA Admin'}</InfoBoldTxt>
                           </div>
                           <MailIcon />
                         </TreasuryOwnerCont>

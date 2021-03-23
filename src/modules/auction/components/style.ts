@@ -74,3 +74,8 @@ export const NoDataContainer = styled.div`
     text-align: center;
   }
 `
+export const PassedPropertyCont = styled.div`
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+`

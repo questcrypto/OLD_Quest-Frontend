@@ -16,17 +16,13 @@ export const err = styled.p`
   margin: -10px 0 1rem 5px;
   text-align: left;
 `
-export const CardWrapper = styled.div`
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-`
 export const WinLossButton = styled.button<any>`
   border: 2px solid ${colors.white};
   width: 200px;
   height: 45px;
   font-size: 18px;
   font-weight: bold;
+  text-transform: uppercase;
   color: ${colors.white};
   background: ${(props: any) => (props.winStatus ? colors.greenColor : colors.darkRed)};
   position: absolute;

@@ -33,13 +33,13 @@ const EndAuctionTable = (props: Props) => {
 
   const endAuction = async (auctionID: string) => {
     setSelectedId(auctionID)
-    setLoading(true)
-    const web3 = await getWeb3Val()
-    if (web3) {
-      const accounts = await web3.eth.getAccounts()
-      const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
-      const slcContract = new web3.eth.Contract(slcAbi, SLCContractAddress)
-      try {
+    try {
+      setLoading(true)
+      const web3 = await getWeb3Val()
+      if (web3) {
+        const accounts = await web3.eth.getAccounts()
+        const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
+        const slcContract = new web3.eth.Contract(slcAbi, SLCContractAddress)
         const res: any = await handleEndAuction(slcContract, accounts[0], auctionID)
         const eventRes = await auctionContract.getPastEvents('AuctionSuccess', { fromBlock: res.blockNumber, toBlock: res.blockNumber })
         const auctionStatus: boolean = eventRes[0].returnValues[1]
@@ -69,12 +69,10 @@ const EndAuctionTable = (props: Props) => {
             res.data.Claimers_Amount_Array
           )
         }
-      } catch (err) {
-        console.log(err)
-      } finally {
-        setLoading(false)
       }
-    } else {
+    } catch (err) {
+      console.log(err)
+    } finally {
       setLoading(false)
     }
   }

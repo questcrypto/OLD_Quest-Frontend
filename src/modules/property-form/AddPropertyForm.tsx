@@ -212,7 +212,7 @@ const AddPropertyForm = () => {
                     <ErrorMessage component={err} name="PropertyType" />
                     <CustomTextField label="Property name" name="PropertyName" handleBlur={handleBlur} />
                     <ErrorMessage component={err} name="PropertyName" />
-                    <FloatNumberField label="Property current value" name="CurrentValue" />
+                    <MoneyInputField label="Property current value" name="CurrentValue" acceptDecimals dollarPrefix />
                     <ErrorMessage component={err} name="CurrentValue" />
                     <CustomTextField label="Comments" name="Comments" />
                     <ErrorMessage component={err} name="Comments" />

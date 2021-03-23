@@ -76,6 +76,13 @@ const TreasuryDashboard = (props: any) => {
     getOnAuctionProperties()
   }, [userInfo])
 
+  const updateOnAuction = async () => {
+    try {
+      const res = await axios.get(`${apiBaseUrl}/auction/listOfAllActiveAuction`)
+      setOnAuctionProperties(res.data)
+    } catch (error) {}
+  }
+
   const updatePreAuction = async () => {
     try {
       const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
@@ -126,6 +133,7 @@ const TreasuryDashboard = (props: any) => {
                 dataLoading={preAuctionLoading}
                 type="treasuryAdmin"
                 refreshPreAuction={updatePreAuction}
+                refreshOnAuction={updateOnAuction}
               />
             )}
             {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}

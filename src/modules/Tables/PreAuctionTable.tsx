@@ -19,30 +19,41 @@ import Spinner from 'shared/loader-components/spinner'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import EmptyPage from 'shared/empty-page'
+import { configureBlockchainAuction } from 'modules/block-chain/BlockChainMethods'
 
 const PreAuctionTable = (props: any) => {
+  console.log(props)
+
   const classes = useStyles()
   const [showModal, setShowModal] = useState(false)
   const [modalData, setModalData] = useState<any>({})
   const [loading, setLoading] = useState(false)
   const [selectedAuctionId, setSelectedAuctionId] = useState('')
-  const { data, dataLoading, type, updatePreAuction, refreshPreAuction } = props
+  const { data, dataLoading, type, updatePreAuction, refreshPreAuction, refreshOnAuction } = props
 
   const handleReviewAuction = (auctionDataVal: any, propertyValue: any) => {
     const dataVal = { ...auctionDataVal, propertyValue }
     setModalData(dataVal)
     setShowModal(true)
   }
-  const handleTreasuryAdminAction = async (auctionId: any) => {
-    setSelectedAuctionId(auctionId)
+  const handleTreasuryAdminAction = async (auctionDetails: any) => {
+    console.log(auctionDetails)
+    setSelectedAuctionId(auctionDetails.id)
     try {
       setLoading(true)
       const data = {
-        id: auctionId,
+        id: auctionDetails.id,
       }
+
+      const { startDate, endDate, id, minReserve, slReserve, suggestedLowestBid, propidId } = auctionDetails
+
+      const res = await configureBlockchainAuction(startDate, endDate, id, minReserve, slReserve, suggestedLowestBid, propidId)
+      console.log(res)
       await axios.post(`${apiBaseUrl}/auction/activateAuction`, data)
       refreshPreAuction()
+      refreshOnAuction()
     } catch (error) {
+      console.log('error => ', error)
     } finally {
       setLoading(false)
     }
@@ -75,13 +86,21 @@ const PreAuctionTable = (props: any) => {
         {!!type && type === 'treasuryAdmin' && (
           <TableCell>
             {AuctionDetail[0].isApprovedByOwner ? (
-              <PrimaryButton variant="contained" onClick={() => handleTreasuryAdminAction(AuctionDetail[0].id)} disabled={loading}>
+              <PrimaryButton variant="contained" onClick={() => handleTreasuryAdminAction(AuctionDetail[0])} disabled={loading}>
                 {selectedAuctionId === AuctionDetail[0].id && loading ? <Spinner /> : 'Approve'}
               </PrimaryButton>
             ) : (
-              <SecondaryButton variant="contained" disabled>
-                Pending
-              </SecondaryButton>
+              <>
+                {AuctionDetail[0].status === 5 ? (
+                  <SecondaryButton variant="contained" disabled>
+                    Rejected
+                  </SecondaryButton>
+                ) : (
+                  <SecondaryButton variant="contained" disabled>
+                    Pending
+                  </SecondaryButton>
+                )}
+              </>
             )}
           </TableCell>
         )}

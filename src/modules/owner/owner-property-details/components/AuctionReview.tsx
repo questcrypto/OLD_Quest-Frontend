@@ -47,7 +47,6 @@ const AuctionReview = (props: any) => {
       let res = await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
       console.log(res)
       setShowAuctionModal(false)
-      setModalAuctionDetails({ currentValue: projectedValue, auctionDetails: { ...auctionDetails, isApprovedByOwner: false } })
     } catch (err) {
       console.log('error ==>', err)
     } finally {

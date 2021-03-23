@@ -1,4 +1,5 @@
 import Web3 from 'web3'
+import { slcAbi, SLCContractAddress } from './abi'
 let web3: Web3
 
 export const getWeb3Val = async () => {
@@ -65,4 +66,29 @@ export const handleEndAuction = async (contractSLC: any, account: string, auctio
   let res = await contractSLC.methods.EndAuction(auctionID).send({ from: account })
   console.log(res)
   return res
+}
+
+export const configureBlockchainAuction = async (
+  startDate: any,
+  endDate: any,
+  auctionId: any,
+  minReserve: any,
+  slReserve: any,
+  suggestedLowestBid: any,
+  propId: any
+) => {
+  const web3 = await getWeb3Val()
+  console.log(web3)
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const SLCInstance = new web3.eth.Contract(slcAbi, SLCContractAddress)
+
+    const newStartDate = new Date(startDate).getTime() / 1000
+    const newEndDate = new Date(endDate).getTime() / 1000
+
+    let res = await SLCInstance.methods
+      .EnlistAuction(auctionId, newStartDate, newEndDate, minReserve, slReserve, suggestedLowestBid, propId)
+      .send({ from: accounts[0] })
+    return res
+  }
 }

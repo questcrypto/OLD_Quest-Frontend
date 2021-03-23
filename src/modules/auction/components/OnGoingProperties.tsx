@@ -58,11 +58,8 @@ const OnGoingProperties = (props: any) => {
     return imgUrl
   }
 
-
   const renderOnGoingCard = (item: any) => {
     const { AuctionDetail, PropertyDetails } = item
-
-    
 
     return (
       <Card className={classes.root}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from 'shared/styles/dashboardStyle'
-import { PublishedPropertyTable, PreAuctionTable, TokenToMintTable, OnAuctionTable } from 'modules/Tables'
+import { PublishedPropertyTable, PreAuctionTable, TokenToMintTable, OnAuctionTable, EndAuctionTable } from 'modules/Tables'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
@@ -23,6 +23,8 @@ const TreasuryDashboard = (props: any) => {
   const [preAuctionLoading, setPreAuctionLoading] = useState(false)
   const [onAuctionProperties, setOnAuctionProperties] = useState<any>([])
   const [onAuctionLoading, setOnAuctionLoading] = useState(false)
+  const [endAuctionProperties, setEndAuctionProperties] = useState<any>([])
+  const [endAuctionLoading, setEndAuctionLoading] = useState(false)
   const { userInfo } = props
 
   useEffect(() => {
@@ -70,10 +72,23 @@ const TreasuryDashboard = (props: any) => {
       }
     }
 
+    const getEndAuctionProperties = async () => {
+      try {
+        setEndAuctionLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/getlistofendauction`)
+        console.log('res-->', res.data)
+        setEndAuctionProperties(res.data)
+      } catch (error) {
+      } finally {
+        setEndAuctionLoading(false)
+      }
+    }
+
     getPublishedProperties()
     // getTokenToMintData()
     getPreAuctionProperties()
     getOnAuctionProperties()
+    getEndAuctionProperties()
   }, [userInfo])
 
   const updateOnAuction = async () => {
@@ -139,7 +154,7 @@ const TreasuryDashboard = (props: any) => {
             {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
             {activeTab === 'postAuction' && <p>Content can be added here</p>}
             {/* {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />} */}
-            {activeTab === 'endAuction' && <p>End Auction Table</p>}
+            {activeTab === 'endAuction' && <EndAuctionTable data={endAuctionProperties} dataLoading={endAuctionLoading} />}
           </div>
         )}
       </div>

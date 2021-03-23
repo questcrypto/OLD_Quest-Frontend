@@ -40,10 +40,7 @@ export const getPublicAddress = async () => {
 }
 
 export const handlePropertyDetailsSubmit = (contractSLF: any, account: string, propertyValue: number, date: number, propertyId: string) => {
-  console.log('blockchain methods', account, propertyId)
-
   const propertyAmount = web3.utils.toWei(propertyValue.toString(), 'ether')
-
   return contractSLF.methods
     .ListProperty_details(propertyAmount, propertyAmount, propertyAmount, 100, 0, 1, 100, date, propertyId, propertyId)
     .send({ from: account })
@@ -63,8 +60,7 @@ export const handleSignPendingTransactionSubmit = (contractSLC: any, account: st
 }
 
 export const handleEndAuction = async (contractSLC: any, account: string, auctionID: string) => {
-  let res = await contractSLC.methods.EndAuction(auctionID).send({ from: account })
-  console.log(res)
+  const res = await contractSLC.methods.EndAuction(auctionID).send({ from: account })
   return res
 }
 
@@ -78,7 +74,7 @@ export const configureBlockchainAuction = async (
   propId: any
 ) => {
   const web3 = await getWeb3Val()
-  console.log(web3)
+
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const SLCInstance = new web3.eth.Contract(slcAbi, SLCContractAddress)
@@ -86,9 +82,30 @@ export const configureBlockchainAuction = async (
     const newStartDate = new Date(startDate).getTime() / 1000
     const newEndDate = new Date(endDate).getTime() / 1000
 
-    let res = await SLCInstance.methods
+    const res: any = await SLCInstance.methods
       .EnlistAuction(auctionId, newStartDate, newEndDate, minReserve, slReserve, suggestedLowestBid, propId)
       .send({ from: accounts[0] })
     return res
   }
+}
+
+export const handleStoreDaiClaimAmount = async (
+  contractAuction: any,
+  account: string,
+  auctionID: string,
+  DaiClaimersArray: any,
+  DaiClaimAmount: any
+) => {
+  const res = await contractAuction.methods.StoreDaiClaimAmount(auctionID, DaiClaimersArray, DaiClaimAmount).send({ from: account })
+  return res
+}
+export const handleStoreWinTokenAmount = async (
+  contractSLC: any,
+  account: string,
+  auctionID: string,
+  BiddersArray: any,
+  BidAmount: any
+) => {
+  const res = await contractSLC.methods.STORE_AUCTION_TOKENS_TO_BE_GIVEN(auctionID, BiddersArray, BidAmount).send({ from: account })
+  return res
 }

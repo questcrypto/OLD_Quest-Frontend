@@ -14,6 +14,9 @@ export const PrimaryButton = withStyles({
     outline: 'none',
     border: 0,
     borderRadius: '4px',
+    '&:disabled': {
+      color: colors.white,
+    },
   },
 })(Button)
 

@@ -1,5 +1,6 @@
 import React from 'react'
-import { cardStyle, StyledLinearProgress, Title, CardBoldText, CardLightText, NoDataContainer } from './style'
+import { WinLossButton } from 'shared/styles/styled'
+import { PassedPropertyCont, cardStyle, StyledLinearProgress, Title, CardBoldText, CardLightText, NoDataContainer } from './style'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -12,7 +13,7 @@ import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
 import EmptyPage from 'shared/empty-page'
 
-const OnGoingProperties = (props: any) => {
+const PassedProperties = (props: any) => {
   const { dataLoading, data } = props
   const classes = cardStyle()
 
@@ -62,50 +63,53 @@ const OnGoingProperties = (props: any) => {
     const { AuctionDetail, PropertyDetails } = item
 
     return (
-      <Card className={classes.root}>
-        <img className={classes.media} src={getImg(PropertyDetails.getDocs)} alt="" />
-        <CardContent>
-          <Grid container className={classes.btnContStyle}>
-            <Grid item>
-              <Title>{PropertyDetails.propertyDetails.PropertyName}</Title>
-              <CardLightText>{AuctionDetail.propidId}</CardLightText>
+      <PassedPropertyCont>
+        <WinLossButton>Lost</WinLossButton>
+        <Card className={classes.root}>
+          <img className={classes.media} src={getImg(PropertyDetails.getDocs)} alt="" />
+          <CardContent>
+            <Grid container className={classes.btnContStyle}>
+              <Grid item>
+                <Title>{PropertyDetails.propertyDetails.PropertyName}</Title>
+                <CardLightText>{AuctionDetail.propidId}</CardLightText>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid container justify="space-between" alignItems="center" spacing={2}>
-            <Grid item>
-              <CardLightText>Current Bid</CardLightText>
-              <CardBoldText>{`$ ${parseFloat(PropertyDetails.propertyDetails.CurrentValue).toFixed(2)}`}</CardBoldText>
+            <Grid container justify="space-between" alignItems="center" spacing={2}>
+              <Grid item>
+                <CardLightText>Current Bid</CardLightText>
+                <CardBoldText>{`$ ${parseFloat(PropertyDetails.propertyDetails.CurrentValue).toFixed(2)}`}</CardBoldText>
+              </Grid>
+              <Grid item>
+                {getRemainingDays(AuctionDetail.endDate)}
+                <StyledLinearProgress variant="determinate" value={getProgressValue(AuctionDetail.startDate, AuctionDetail.endDate)} />
+              </Grid>
             </Grid>
-            <Grid item>
-              {getRemainingDays(AuctionDetail.endDate)}
-              <StyledLinearProgress variant="determinate" value={getProgressValue(AuctionDetail.startDate, AuctionDetail.endDate)} />
+          </CardContent>
+          <CardActions disableSpacing>
+            <Grid container spacing={2} className={classes.btnContStyle}>
+              <Grid item xs={12} sm={6}>
+                <PrimaryButton
+                  fullWidth
+                  className={classes.btnStyle}
+                  onClick={() => handleAuctionDetails(AuctionDetail.id)}
+                  disabled={getDaysValue(new Date(), AuctionDetail.endDate) < 1}
+                >
+                  LIVE AUCTION
+                </PrimaryButton>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <SecondaryButton
+                  fullWidth
+                  className={classes.btnStyle}
+                  onClick={() => handlePropertyDetails(PropertyDetails.propertyDetails.id)}
+                >
+                  PROPERTY DETAILS
+                </SecondaryButton>
+              </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-        <CardActions disableSpacing>
-          <Grid container spacing={2} className={classes.btnContStyle}>
-            <Grid item xs={12} sm={6}>
-              <PrimaryButton
-                fullWidth
-                className={classes.btnStyle}
-                onClick={() => handleAuctionDetails(AuctionDetail.id)}
-                disabled={getDaysValue(new Date(), AuctionDetail.endDate) < 1}
-              >
-                LIVE AUCTION
-              </PrimaryButton>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <SecondaryButton
-                fullWidth
-                className={classes.btnStyle}
-                onClick={() => handlePropertyDetails(PropertyDetails.propertyDetails.id)}
-              >
-                PROPERTY DETAILS
-              </SecondaryButton>
-            </Grid>
-          </Grid>
-        </CardActions>
-      </Card>
+          </CardActions>
+        </Card>
+      </PassedPropertyCont>
     )
   }
   return (
@@ -132,4 +136,4 @@ const OnGoingProperties = (props: any) => {
     </div>
   )
 }
-export default OnGoingProperties
+export default PassedProperties

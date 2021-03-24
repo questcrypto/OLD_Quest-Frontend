@@ -19,6 +19,7 @@ export interface Colors {
   lightGray: string
   lightYellow: string
   greenColor: string
+  darkRed: string
 }
 
 export const colors: Colors = {
@@ -34,6 +35,7 @@ export const colors: Colors = {
   lightGray: '#E0E0E0',
   lightYellow: '#F2C94C',
   greenColor: '#219653',
+  darkRed: '#bf4834',
 }
 
 export interface ThemeStarter {
@@ -50,6 +52,7 @@ export interface ThemeStarter {
   lightGray: string
   lightYellow: string
   greenColor: string
+  darkRed: string
 }
 
 export const theme: ThemeStarter = {
@@ -65,6 +68,7 @@ export const theme: ThemeStarter = {
   lightGray: colors.lightGray,
   lightYellow: colors.lightYellow,
   greenColor: colors.greenColor,
+  darkRed: colors.darkRed,
 }
 
 export interface ScreenSizes {

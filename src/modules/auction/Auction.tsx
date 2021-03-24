@@ -9,6 +9,7 @@ import { auctionTabList } from 'shared/helpers/dataConstant'
 import TabComponent from 'shared/tab-component'
 import OnGoingProperties from './components/OnGoingProperties'
 import ParticipateProperties from './components/ParticipateProperties'
+import PassedProperties from './components/PassedProperties'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
@@ -20,6 +21,8 @@ const Auction = (props: any) => {
   const [onGoingLoading, setOnGoingLoading] = useState(false)
   const [participateProperties, setParticipateProperties] = useState<any>([])
   const [participateLoading, setParticipateLoading] = useState(false)
+  const [passedProperties, setPassedProperties] = useState<any>([])
+  const [passedLoading, setPassedLoading] = useState(false)
   const { userInfo } = props
 
   useEffect(() => {
@@ -30,6 +33,7 @@ const Auction = (props: any) => {
         setOnGoingGlobal(res.data)
         setOnGoingProperties(res.data)
       } catch (error) {
+        setOnGoingProperties([])
       } finally {
         setOnGoingLoading(false)
       }
@@ -40,12 +44,25 @@ const Auction = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/auction/getListOfParticipatedAuctions/${userInfo.publicaddress}`)
         setParticipateProperties(res.data)
       } catch (error) {
+        setParticipateProperties([])
       } finally {
         setParticipateLoading(false)
       }
     }
+    const getPassedProperties = async () => {
+      try {
+        setPassedLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction`)
+        setPassedProperties(res.data)
+      } catch (error) {
+        setPassedProperties([])
+      } finally {
+        setPassedLoading(false)
+      }
+    }
     getOnGoingProperties()
     getParticipateProperties()
+    getPassedProperties()
   }, [userInfo])
 
   const handleOnChange = (e: any) => {
@@ -95,7 +112,7 @@ const Auction = (props: any) => {
       {activeTab === 'ongoing' && <OnGoingProperties data={onGoingProperties} dataLoading={onGoingLoading} />}
       {activeTab === 'participating' && <ParticipateProperties data={participateProperties} dataLoading={participateLoading} />}
       {activeTab === 'upcoming' && <p>Content need to added here</p>}
-      {activeTab === 'passed' && <p>Content need to added here</p>}
+      {activeTab === 'passed' && <PassedProperties data={passedProperties} dataLoading={passedLoading} />}
     </Box>
   )
 }

@@ -71,7 +71,5 @@ export function usdFormatString(value: number, decimalPlaces: number = 4): strin
 }
 
 export function currencyString(value?: number, decimalPlaces?: number): string | undefined {
-  return typeof value == 'number'
-    ? usdFormatString(value, decimalPlaces)
-    : undefined
+  return typeof value == 'number' ? usdFormatString(value, decimalPlaces) : undefined
 }

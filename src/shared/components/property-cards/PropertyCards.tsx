@@ -60,7 +60,7 @@ const PropertyCards = (props: Props) => {
             id = details.id
           }
           return (
-            <StyledCard isLast={isLast}>
+            <StyledCard isLast={isLast} key={i}>
               <CardContent className={classes.content}>
                 <ImageWrap>
                   <img src={getImg(docs)} alt="property img" />

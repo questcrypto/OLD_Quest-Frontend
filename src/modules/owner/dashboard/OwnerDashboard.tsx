@@ -25,6 +25,8 @@ const OwnerDashboard = (props: any) => {
   const [preAuctionLoading, setPreAuctionLoading] = useState(false)
   const [onAuctionProperties, setOnAuctionProperties] = useState<any>([])
   const [onAuctionLoading, setOnAuctionLoading] = useState(false)
+  const [postAuctionProperties, setPostAuctionProperties] = useState<any>([])
+  const [postAuctionLoading, setPostAuctionLoading] = useState(false)
 
   const { userInfo } = props
 
@@ -132,7 +134,7 @@ const OwnerDashboard = (props: any) => {
             {activeTab === 'published' && <PropertyCards published history={props.history} list={publishedProperties} />}
             {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} />}
             {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} />}
-            {activeTab === 'postAuction' && <p>Content can be added here</p>}
+            {activeTab === 'postAuction' && <PropertyCards list={postAuctionProperties} />}
           </div>
         )}
       </div>

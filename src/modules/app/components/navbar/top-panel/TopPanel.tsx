@@ -45,7 +45,7 @@ const TopPanel = (props: any) => {
 
   useEffect(() => {
     checkWalletAccount()
-  }, [])
+  })
 
   // Event handler to handle metamask account change
   if (window.ethereum) {

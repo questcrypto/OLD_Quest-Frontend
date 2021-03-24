@@ -7,15 +7,6 @@ import {
   NoDetailsAvailable,
   HeaderPath,
   HeaderTitle,
-  AddressContainer,
-  AddressInfo,
-  EditSection,
-  PriceContainer,
-  PriceInfo,
-  AboutProperty,
-  DocWrapper,
-  DocContainer,
-  DocName,
   FeatureHeading,
   InfoBoldTxt,
   InfoLightTxt,
@@ -26,11 +17,7 @@ import ComponentLoader from 'shared/loader-components/component-loader'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Divider from '@material-ui/core/Divider'
-import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
-import { Box, Button } from '@material-ui/core'
-import plot from 'assets/images/plot.png'
-import coin from 'assets/images/coin.svg'
-import FileIcon from 'assets/icons/fileIcon.svg'
+import { Box } from '@material-ui/core'
 import Features from 'modules/property-features/Features'
 import RentalFacts from 'modules/property-features/RentalFacts'
 import axios from 'axios'
@@ -71,7 +58,6 @@ const OwnerPropertyDetails = (props: any) => {
           const images = []
           const docs = []
           setPropertyInfo(res.data)
-          console.log(res.data)
           for (const item of res.data.getDocs) {
             if (item.type === 0) {
               images.push(item)

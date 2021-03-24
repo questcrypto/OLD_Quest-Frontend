@@ -90,7 +90,6 @@ const TreasuryPropertyDetails = (props: any) => {
           const images = []
           const docs = []
           setPropertyInfo(res.data)
-          console.log(res.data)
           if (res.data.propertyDetails) {
             setMintStatus(res.data.propertyDetails.Isactive)
           }
@@ -117,8 +116,6 @@ const TreasuryPropertyDetails = (props: any) => {
     const propertyId = props.match.params.propertyId
     handlePropertyDetailsSubmit(contractSLF, account, propertyInfo.propertyDetails.CurrentValue, 1613575905, propertyId)
       .on('confirmation', async function (confirmationNumber: any, receipt: any) {
-        console.log(confirmationNumber, receipt)
-
         if (confirmationNumber === 1) {
           try {
             const data = { id: propertyId }

@@ -3,7 +3,6 @@ import { cardStyle, StyledLinearProgress, Title, CardBoldText, CardLightText, Up
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
-import PhotoImg from 'assets/images/photo.png'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import { Grid } from '@material-ui/core'
@@ -17,7 +16,10 @@ const ParticipateProperties = (props: any) => {
   const { data, dataLoading } = props
   const classes = cardStyle()
 
+  console.log(props)
+
   const handleAuctionDetails = (id: string) => {
+    console.log(id)
     history.push(`${Paths.auctionDetails}/${id}`)
   }
   const handleUpgradeBidDetails = (id: string) => {
@@ -25,7 +27,7 @@ const ParticipateProperties = (props: any) => {
   }
 
   const getRemainingDays = (endDate: Date) => {
-    const daysRemaining = getDaysValue(new Date(), endDate)
+    const daysRemaining = getDaysValue(new Date(), endDate) + 1
     return (
       <CardLightText style={{ textAlign: 'right' }}>
         <span>{daysRemaining}</span> {daysRemaining === 1 ? 'Day remaining' : 'Days remaining'}

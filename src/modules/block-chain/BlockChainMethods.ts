@@ -104,15 +104,12 @@ export const currentBidValue = async (auctionId: any) => {
 export const saveBlockchainBid = async (auctionId: string, totalAmount: any, address: string) => {
   const web3 = await getWeb3Val()
 
-  console.log(auctionId, totalAmount)
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
     const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
 
-    console.log(web3, daiContract, accounts[0])
     let approvalRes = await daiContract.methods.approve(auctionContractAddress, totalAmount).send({ from: accounts[0] })
-    console.log(approvalRes)
 
     let res = await auctionContract.methods.saveBid(auctionId, totalAmount, address).send({ from: accounts[0] })
     return res

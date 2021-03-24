@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from 'shared/styles/dashboardStyle'
+import { useStyles, HeaderTitle } from 'shared/styles/dashboardStyle'
 import { NewPropertyTable, ApprovePropertyTable, PublishedPropertyTable, PreAuctionTable, OnAuctionTable } from 'modules/Tables'
 import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'

@@ -1,6 +1,4 @@
-import { max } from 'moment'
 import * as Yup from 'yup'
-import { ref } from 'yup'
 
 export const initialValues = {
   Fname: '',

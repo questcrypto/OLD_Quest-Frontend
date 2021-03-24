@@ -142,16 +142,16 @@ function getRouteRenderWithAuth(loggedIn: boolean, route: RouteDefinition, i: nu
 }
 
 const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (props) => {
-  const { isLoaded, loggedIn, authLoading, openDrawer } = props
+  const { isLoaded, loggedIn, authLoading } = props
 
-  const [width, setWidth] = useState(window.innerWidth)
+  const [width] = useState(window.innerWidth)
 
   useEffect(() => {
     if (width < 990) {
       props.handleDrawerClose()
     }
     return () => {}
-  }, [])
+  })
 
   const classes = useStyles()
   return (

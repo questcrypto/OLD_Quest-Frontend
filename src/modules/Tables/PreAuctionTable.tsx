@@ -22,8 +22,6 @@ import EmptyPage from 'shared/empty-page'
 import { configureBlockchainAuction } from 'modules/block-chain/BlockChainMethods'
 
 const PreAuctionTable = (props: any) => {
-  console.log(props)
-
   const classes = useStyles()
   const [showModal, setShowModal] = useState(false)
   const [modalData, setModalData] = useState<any>({})
@@ -37,7 +35,6 @@ const PreAuctionTable = (props: any) => {
     setShowModal(true)
   }
   const handleTreasuryAdminAction = async (auctionDetails: any) => {
-    console.log(auctionDetails)
     setSelectedAuctionId(auctionDetails.id)
     try {
       setLoading(true)

@@ -13,17 +13,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy'
 // import TwitterIcon from '@material-ui/icons/Twitter'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 
-import {
-  FacebookIcon,
-  FacebookShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
-  TelegramIcon,
-  TelegramShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-} from 'react-share'
-import useClippy from 'use-clippy'
+import { FacebookIcon, FacebookShareButton, TelegramIcon, TelegramShareButton, TwitterIcon, TwitterShareButton } from 'react-share'
 import CustomModal from 'shared/custom-modal'
 import Spinner from 'shared/loader-components/spinner'
 import Bid from './Bid'
@@ -46,9 +36,8 @@ const AuctionBid = (props: any) => {
   const [loading, setLoading] = useState(false)
   const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails, email, suggestedLowestBid } = props
 
-  console.log(props)
-
-  const sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100
+  let sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100
+  sliderDefaultValue = parseFloat(sliderDefaultValue.toFixed(2))
 
   const [token, setToken] = useState(myBidDetails[0]?.currentAllotment! || 0)
   const [equityValue, setEquityValue] = useState(sliderDefaultValue! || 0)
@@ -62,7 +51,7 @@ const AuctionBid = (props: any) => {
       if (tokenVal <= totalToken) {
         setToken(parseInt(value))
         const equityVal: any = (tokenVal / totalToken) * 100
-        setEquityValue(parseInt(equityVal))
+        setEquityValue(equityVal.toFixed(2))
       }
       if (tokenVal < myBidDetails[0]?.currentAllotment) {
         setTokenError(true)
@@ -159,7 +148,7 @@ const AuctionBid = (props: any) => {
               valueLabelFormat={valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="on"
-              step={0.1}
+              step={0.01}
               min={sliderDefaultValue! || 0}
               max={100}
             />

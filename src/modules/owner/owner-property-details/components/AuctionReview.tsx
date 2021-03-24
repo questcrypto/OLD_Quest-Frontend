@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import { auctionConfigStyle, HeaderCont, TitleText } from './style'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
-import IntegerNumberField from 'shared/components/Integer-number-field'
 import CustomTextField from 'shared/components/custom-text-field'
-import FormDatePicker from 'shared/components/form-date-picker'
 import { PrimaryButton } from 'shared/components/buttons'
 import Spinner from 'shared/loader-components/spinner'
 import Box from '@material-ui/core/Box'
@@ -13,12 +11,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
-import { slcAbi, SLCContractAddress } from '../../../block-chain/abi'
-import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
-import MoneyInputField from 'shared/components/money-input-field'
 import { formatDateString } from 'shared/helpers/globalFunction'
 import * as Yup from 'yup'
-import { Button } from '@material-ui/core'
 import { withRouter } from 'react-router'
 
 const auctionReviewSchema = Yup.object().shape({
@@ -29,13 +23,10 @@ const AuctionReview = (props: any) => {
   const classes = auctionConfigStyle()
   const [agreeLoading, setAgreeLoading] = useState(false)
   const [disagreeLoading, setDisagreeLoading] = useState(false)
-  const { setShowAuctionModal, history, auctionDetails, projectedValue, setModalAuctionDetails } = props
-
-  console.log(auctionDetails)
+  const { setShowAuctionModal, history, auctionDetails, projectedValue } = props
 
   const handleAuctionRejection = async (e: any, { changeNote }: any) => {
     e.preventDefault()
-    console.log(changeNote)
 
     try {
       setDisagreeLoading(true)
@@ -44,8 +35,7 @@ const AuctionReview = (props: any) => {
         Comment: changeNote,
         isApprovedByOwner: false,
       }
-      let res = await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
-      console.log(res)
+      await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
       setShowAuctionModal(false)
     } catch (err) {
       console.log('error ==>', err)
@@ -56,7 +46,6 @@ const AuctionReview = (props: any) => {
 
   const handleAuctionApproval = async (e: any, { changeNote }: any) => {
     e.preventDefault()
-    console.log(changeNote)
     try {
       setAgreeLoading(true)
       const data = {
@@ -64,9 +53,8 @@ const AuctionReview = (props: any) => {
         Comment: changeNote,
         isApprovedByOwner: true,
       }
-      let res = await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
+      await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
 
-      console.log(res)
       history.push('/')
       //   setModalAuctionDetails({ currentValue: projectedValue, auctionDetails: { ...auctionDetails, isApprovedByOwner: true } })
       //   setShowAuctionModal(false)
@@ -140,7 +128,6 @@ const AuctionReview = (props: any) => {
                     validationSchema={auctionReviewSchema}
                     onSubmit={(values, { setSubmitting }) => {
                       // handleSubmit(values)
-                      console.log(values)
                       setSubmitting(false)
                     }}
                   >

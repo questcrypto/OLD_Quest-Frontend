@@ -1,16 +1,13 @@
 import React, { useState } from 'react'
-import { Button, Card, CardActions, CardContent, Grid } from '@material-ui/core'
+import { Button, CardActions, CardContent } from '@material-ui/core'
 import { ImageWrap, useStyles, StyledCard } from './style'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
-import { getFullName } from 'shared/helpers/globalFunction'
 import { apiBaseUrl } from 'services/global-constant'
 import { NoDataContainer } from 'modules/Tables/style'
 import EmptyPage from 'shared/empty-page'
 import CustomModal from 'shared/custom-modal'
 import AuctionReview from 'modules/owner/owner-property-details/components/AuctionReview'
-import AuctionDetails from 'modules/auction-details'
-import { withRouter } from 'react-router'
 
 interface Props {
   list: any[]
@@ -21,8 +18,6 @@ interface Props {
 const PropertyCards = (props: Props) => {
   const classes = useStyles()
   const { list, published } = props
-
-  console.log(published, list)
 
   const [showAuctionModal, setShowAuctionModal] = useState(false)
   const [modalAuctionDetails, setModalAuctionDetails] = useState({ auctionDetails: {}, currentValue: 0 })
@@ -56,7 +51,6 @@ const PropertyCards = (props: Props) => {
           let id = p.id
           let auctionDetails = p.auctionDetails
           let currentValue = p.CurrentValue
-          console.log(currentValue)
 
           const isLast = i === list.length - 1 ? true : false
           if (p.PropertyDetails) {
@@ -69,7 +63,7 @@ const PropertyCards = (props: Props) => {
             <StyledCard isLast={isLast}>
               <CardContent className={classes.content}>
                 <ImageWrap>
-                  <img src={getImg(docs)} alt="photo" />
+                  <img src={getImg(docs)} alt="property img" />
                 </ImageWrap>
                 <div className={classes.infoWrap}>
                   <span className={classes.title}>{name}</span>

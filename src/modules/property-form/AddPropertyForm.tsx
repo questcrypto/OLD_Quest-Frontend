@@ -31,7 +31,6 @@ import { Grid, Checkbox } from '@material-ui/core'
 import { PrimaryButton } from 'shared/components/buttons'
 import Divider from '@material-ui/core/Divider'
 import CustomTextField from 'shared/components/custom-text-field'
-import FloatNumberField from 'shared/components/float-number-field'
 import IntegerNumberField from 'shared/components/Integer-number-field'
 import FieldSelect from 'shared/components/field-select'
 import FormDatePicker from 'shared/components/form-date-picker'
@@ -101,7 +100,6 @@ const AddPropertyForm = () => {
       formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
       try {
         setLoading(true)
-        console.log(formData)
         await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
         history.push(Paths.root)
       } catch (error) {

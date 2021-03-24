@@ -132,7 +132,7 @@ const Auction = (props: any) => {
       </Grid>
       <TabComponent tabOptions={auctionTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === 'ongoing' && <OnGoingProperties data={onGoingProperties} dataLoading={onGoingLoading} />}
-      {/* {activeTab === 'participating' && <ParticipateProperties data={participateProperties} dataLoading={participateLoading} />} */}
+      {activeTab === 'participating' && <ParticipateProperties data={participateProperties} dataLoading={participateLoading} />}
       {activeTab === 'upcoming' && <UpcomingProperties data={upcomingProperties} dataLoading={upcomingLoading} />}
       {activeTab === 'passed' && (
         <PassedProperties

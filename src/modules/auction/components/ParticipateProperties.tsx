@@ -3,7 +3,6 @@ import { cardStyle, StyledLinearProgress, Title, CardBoldText, CardLightText, Up
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
-import PhotoImg from 'assets/images/photo.png'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import { Grid } from '@material-ui/core'
@@ -25,7 +24,7 @@ const ParticipateProperties = (props: any) => {
   }
 
   const getRemainingDays = (endDate: Date) => {
-    const daysRemaining = getDaysValue(new Date(), endDate)
+    const daysRemaining = getDaysValue(new Date(), endDate) + 1
     return (
       <CardLightText style={{ textAlign: 'right' }}>
         <span>{daysRemaining}</span> {daysRemaining === 1 ? 'Day remaining' : 'Days remaining'}
@@ -90,7 +89,7 @@ const ParticipateProperties = (props: any) => {
         <CardActions disableSpacing>
           <Grid container spacing={2} className={classes.btnContStyle}>
             <Grid item xs={12} sm={6}>
-              <PrimaryButton fullWidth className={classes.btnStyle} onClick={() => handleAuctionDetails(bidDetails[0].auctionID)}>
+              <PrimaryButton fullWidth className={classes.btnStyle} onClick={() => handleAuctionDetails(bidDetails[0].auctionIDId)}>
                 LIVE AUCTION
               </PrimaryButton>
             </Grid>

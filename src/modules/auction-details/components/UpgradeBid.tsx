@@ -18,17 +18,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy'
 // import TwitterIcon from '@material-ui/icons/Twitter'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 
-import {
-  FacebookIcon,
-  FacebookShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
-  TelegramIcon,
-  TelegramShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-} from 'react-share'
-import useClippy from 'use-clippy'
+import { FacebookIcon, FacebookShareButton, TelegramIcon, TelegramShareButton, TwitterIcon, TwitterShareButton } from 'react-share'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'

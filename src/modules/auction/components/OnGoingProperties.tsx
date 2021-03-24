@@ -26,10 +26,10 @@ const OnGoingProperties = (props: any) => {
 
   const getRemainingDays = (endDate: Date) => {
     const daysRemaining = getDaysValue(new Date(), endDate)
-    if (daysRemaining >= 1) {
+    if (daysRemaining >= 0) {
       return (
         <CardLightText style={{ textAlign: 'right' }}>
-          <span>{daysRemaining}</span> {daysRemaining === 1 ? 'Day remaining' : 'Days remaining'}
+          <span>{daysRemaining + 1}</span> {daysRemaining === 1 ? 'Day remaining' : 'Days remaining'}
         </CardLightText>
       )
     }
@@ -89,7 +89,7 @@ const OnGoingProperties = (props: any) => {
                 fullWidth
                 className={classes.btnStyle}
                 onClick={() => handleAuctionDetails(AuctionDetail.id)}
-                disabled={getDaysValue(new Date(), AuctionDetail.endDate) < 1}
+                disabled={getDaysValue(new Date(), AuctionDetail.endDate) < 0}
               >
                 LIVE AUCTION
               </PrimaryButton>

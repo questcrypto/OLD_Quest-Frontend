@@ -91,7 +91,7 @@ const EndAuctionTable = (props: Props) => {
         }
       }
     } catch (err) {
-      console.log(err)
+      console.log('Error===>', err)
     } finally {
       setLoading(false)
     }

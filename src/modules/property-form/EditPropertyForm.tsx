@@ -110,7 +110,6 @@ const EditPropertyForm = (props: any) => {
 
         if (!!res && res.data) {
           setApproved(res.data.propertyDetails.ApprovedByOwner)
-          console.log(res.data.propertyDetails.ApprovedByOwner)
           const images = []
           const docs = []
           for (const item of res.data.getDocs) {
@@ -130,7 +129,6 @@ const EditPropertyForm = (props: any) => {
             YearBuilt: moment(res.data.propertyDetails.YearBuilt).format('YYYY'),
           }
           setInitialData({ ...data })
-          console.log({ ...data })
           setName(res.data.propertyDetails.Fname + ' ' + res.data.propertyDetails.Lname)
         }
       } catch (error) {

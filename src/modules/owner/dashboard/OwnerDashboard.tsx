@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useStyles, StyledLinearProgress, HeaderTitle, ProgressText } from 'shared/styles/dashboardStyle'
-import { NewPropertyTable, ApprovePropertyTable, PublishedPropertyTable, PreAuctionTable, OnAuctionTable } from 'modules/Tables'
+import { useStyles, HeaderTitle } from 'shared/styles/dashboardStyle'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
@@ -55,7 +54,6 @@ const OwnerDashboard = (props: any) => {
         setPublishedLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
         setPublishedProperties(res.data)
-        console.log(res.data)
       } catch (error) {
       } finally {
         setPublishedLoading(false)

@@ -13,6 +13,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import { treasuryAddress } from 'modules/block-chain/abi'
 import { currentBidValue, saveBlockchainBid } from 'modules/block-chain/BlockChainMethods'
 import { err } from 'shared/styles/styled'
 import * as Yup from 'yup'
@@ -46,7 +47,7 @@ const Bid = (props: any) => {
       let currentValue = await currentBidValue(dataVal.auctionID)
       console.log(currentValue)
 
-      let res = await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount, '0x7Ed5f25aec6Ce0dD1A7232D98cF9a1dbF7e51523')
+      let res = await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount, treasuryAddress)
       console.log(res)
 
       if (equityValue > 0) {

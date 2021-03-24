@@ -3,6 +3,7 @@ export const SLCContractAddress = '0xbC83d3996bDC072E4Afd37BBF79A902C601bEBa6'
 export const SLFContractAddress = '0x334D9eDf9F5A3321789FAe0d128e576F50FfB59F'
 export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
 export const auctionContractAddress = '0x063d9F46BBf932c38ea32F5e199DFFEddCE6f71E'
+export const treasuryAddress = '0xF51632261987F4578425Ca91a48117E11516a4CF'
 
 export const slcAbi: any = [
   { inputs: [{ internalType: 'uint256', name: '_initialSupply', type: 'uint256' }], stateMutability: 'nonpayable', type: 'constructor' },

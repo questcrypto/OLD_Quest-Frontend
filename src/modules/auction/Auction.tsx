@@ -9,6 +9,7 @@ import { auctionTabList } from 'shared/helpers/dataConstant'
 import TabComponent from 'shared/tab-component'
 import OnGoingProperties from './components/OnGoingProperties'
 import ParticipateProperties from './components/ParticipateProperties'
+import UpcomingProperties from './components/UpcomingProperties'
 import PassedProperties from './components/PassedProperties'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
@@ -21,6 +22,8 @@ const Auction = (props: any) => {
   const [onGoingLoading, setOnGoingLoading] = useState(false)
   const [participateProperties, setParticipateProperties] = useState<any>([])
   const [participateLoading, setParticipateLoading] = useState(false)
+  const [upcomingProperties, setUpcomingProperties] = useState<any>([])
+  const [upcomingLoading, setUpcomingLoading] = useState(false)
   const [passedProperties, setPassedProperties] = useState<any>([])
   const [passedLoading, setPassedLoading] = useState(false)
   const { userInfo } = props
@@ -49,10 +52,21 @@ const Auction = (props: any) => {
         setParticipateLoading(false)
       }
     }
+    const getUpcomingProperties = async () => {
+      try {
+        setUpcomingLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/getupcomingauction`)
+        setUpcomingProperties(res.data)
+      } catch (error) {
+        setUpcomingProperties([])
+      } finally {
+        setUpcomingLoading(false)
+      }
+    }
     const getPassedProperties = async () => {
       try {
         setPassedLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction`)
+        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction/${userInfo.publicaddress}`)
         setPassedProperties(res.data)
       } catch (error) {
         setPassedProperties([])
@@ -62,6 +76,7 @@ const Auction = (props: any) => {
     }
     getOnGoingProperties()
     getParticipateProperties()
+    getUpcomingProperties()
     getPassedProperties()
   }, [userInfo])
 
@@ -83,6 +98,13 @@ const Auction = (props: any) => {
     } else {
       setOnGoingProperties(onGoingGlobal)
     }
+  }
+
+  const updatePassedProp = async () => {
+    try {
+      const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction/${userInfo.publicaddress}`)
+      setPassedProperties(res.data)
+    } catch (error) {}
   }
 
   return (
@@ -110,9 +132,16 @@ const Auction = (props: any) => {
       </Grid>
       <TabComponent tabOptions={auctionTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === 'ongoing' && <OnGoingProperties data={onGoingProperties} dataLoading={onGoingLoading} />}
-      {activeTab === 'participating' && <ParticipateProperties data={participateProperties} dataLoading={participateLoading} />}
-      {activeTab === 'upcoming' && <p>Content need to added here</p>}
-      {activeTab === 'passed' && <PassedProperties data={passedProperties} dataLoading={passedLoading} />}
+      {/* {activeTab === 'participating' && <ParticipateProperties data={participateProperties} dataLoading={participateLoading} />} */}
+      {activeTab === 'upcoming' && <UpcomingProperties data={upcomingProperties} dataLoading={upcomingLoading} />}
+      {activeTab === 'passed' && (
+        <PassedProperties
+          data={passedProperties}
+          dataLoading={passedLoading}
+          setActiveTab={setActiveTab}
+          updatePassedProp={updatePassedProp}
+        />
+      )}
     </Box>
   )
 }

@@ -57,12 +57,11 @@ const UpgradeBid = (props: any) => {
   const [showBidDetails, setShowBidDetails] = useState(false)
   const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, userEmail, bidDetails } = props
 
-  const sliderDefaultValue = bidDetails[0]?.currentAllotment! / totalToken! * 100
+  const sliderDefaultValue = (bidDetails[0]?.currentAllotment! / totalToken!) * 100
   const [token, setToken] = useState(bidDetails[0]?.currentAllotment! || 0)
   const [equityValue, setEquityValue] = useState(sliderDefaultValue! || 0)
   const [bidValue, setBidValue] = useState(bidDetails[0]?.bidPrice! || '0.00')
-   const [minBid, setMinBid] = useState(bidDetails[0]?.bidPrice! || 0)
-
+  const [minBid, setMinBid] = useState(bidDetails[0]?.bidPrice! || 0)
 
   const handleTokenChange = (event: any) => {
     const { value } = event.target
@@ -73,10 +72,9 @@ const UpgradeBid = (props: any) => {
         const equityVal: any = (tokenVal / totalToken) * 100
         setEquityValue(parseInt(equityVal))
       }
-      if (tokenVal < bidDetails[0]?.currentAllotment!) { 
+      if (tokenVal < bidDetails[0]?.currentAllotment!) {
         setTokenError(true)
-      }
-      else setTokenError(false)
+      } else setTokenError(false)
     }
     if (!value) {
       setToken(0)

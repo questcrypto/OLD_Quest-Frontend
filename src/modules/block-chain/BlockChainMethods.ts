@@ -96,7 +96,7 @@ export const currentBidValue = async (auctionId: any) => {
     const accounts = await web3.eth.getAccounts()
     const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
 
-    let res = await auctionContract.methods.DAITransferred(auctionId, accounts[0]).call({ from: accounts[0] })
+    const res = await auctionContract.methods.DAITransferred(auctionId, accounts[0]).call({ from: accounts[0] })
     return res
   }
 }
@@ -104,17 +104,12 @@ export const currentBidValue = async (auctionId: any) => {
 export const saveBlockchainBid = async (auctionId: string, totalAmount: any, address: string) => {
   const web3 = await getWeb3Val()
 
-  console.log(auctionId, totalAmount)
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
     const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
-
-    console.log(web3, daiContract, accounts[0])
-    let approvalRes = await daiContract.methods.approve(auctionContractAddress, totalAmount).send({ from: accounts[0] })
-    console.log(approvalRes)
-
-    let res = await auctionContract.methods.saveBid(auctionId, totalAmount, address).send({ from: accounts[0] })
+    await daiContract.methods.approve(auctionContractAddress, totalAmount).send({ from: accounts[0] })
+    const res = await auctionContract.methods.saveBid(auctionId, totalAmount, address).send({ from: accounts[0] })
     return res
   }
 }
@@ -137,5 +132,20 @@ export const handleStoreWinTokenAmount = async (
   BidAmount: any
 ) => {
   const res = await contractSLC.methods.STORE_AUCTION_TOKENS_TO_BE_GIVEN(auctionID, BiddersArray, BidAmount).send({ from: account })
+  return res
+}
+
+export const handleDAIapproval = async (contractDai: any, account: string, user: any, ApproveAmount: any) => {
+  const res = await contractDai.methods.approve(user, ApproveAmount).send({ from: account })
+  return res
+}
+
+export const handleAuctionWinTokenClaim = async (contractSLC: any, account: string, auctionID: any, TreasuryAddress: any) => {
+  const res = await contractSLC.methods.GET_AUCTION_WIN_SLC(auctionID, TreasuryAddress).send({ from: account })
+  return res
+}
+
+export const handleDAITokenClaim = async (contractAuction: any, account: string, auctionID: any, TreasuryAddress: any) => {
+  const res = await contractAuction.methods.claimDAIback(auctionID, TreasuryAddress).send({ from: account })
   return res
 }

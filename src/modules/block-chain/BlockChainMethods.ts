@@ -1,5 +1,5 @@
 import Web3 from 'web3'
-import { slcAbi, SLCContractAddress } from './abi'
+import { auctionAbi, auctionContractAddress, daiAbi, DAIContractAddress, slcAbi, SLCContractAddress } from './abi'
 let web3: Web3
 
 export const getWeb3Val = async () => {
@@ -89,6 +89,36 @@ export const configureBlockchainAuction = async (
     let res = await SLCInstance.methods
       .EnlistAuction(auctionId, newStartDate, newEndDate, minReserve, slReserve, suggestedLowestBid, propId)
       .send({ from: accounts[0] })
+    return res
+  }
+}
+
+export const currentBidValue = async (auctionId: any) => {
+  const web3 = await getWeb3Val()
+
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
+
+    let res = await auctionContract.methods.DAITransferred(auctionId, accounts[0]).call({ from: accounts[0] })
+    return res
+  }
+}
+
+export const saveBlockchainBid = async (auctionId: string, totalAmount: any, address: string) => {
+  const web3 = await getWeb3Val()
+
+  console.log(auctionId, totalAmount)
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
+    const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
+
+    console.log(web3, daiContract, accounts[0])
+    let approvalRes = await daiContract.methods.approve(auctionContractAddress, totalAmount).send({ from: accounts[0] })
+    console.log(approvalRes)
+
+    let res = await auctionContract.methods.saveBid(auctionId, totalAmount, address).send({ from: accounts[0] })
     return res
   }
 }

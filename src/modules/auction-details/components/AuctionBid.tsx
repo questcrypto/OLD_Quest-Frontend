@@ -46,6 +46,8 @@ const AuctionBid = (props: any) => {
   const [loading, setLoading] = useState(false)
   const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails, email, suggestedLowestBid } = props
 
+  console.log(props)
+
   const sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100
 
   const [token, setToken] = useState(myBidDetails[0]?.currentAllotment! || 0)
@@ -222,6 +224,7 @@ const AuctionBid = (props: any) => {
       </Grid>
       <CustomModal show={showBidModal} toggleModal={setShowBidModal}>
         <Bid
+          myBidDetails={myBidDetails}
           setShowBidModal={setShowBidModal}
           equityValue={equityValue}
           token={token}

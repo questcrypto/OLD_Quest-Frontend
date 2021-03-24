@@ -13,8 +13,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { auctionContractAddress, auctionAbi, DAIContractAddress, daiAbi, slcAbi, SLCContractAddress } from '../../block-chain/abi'
-import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
+import { currentBidValue, saveBlockchainBid } from 'modules/block-chain/BlockChainMethods'
 import { err } from 'shared/styles/styled'
 import * as Yup from 'yup'
 import { Button } from '@material-ui/core'
@@ -27,7 +26,9 @@ export const bidFormSchema = Yup.object().shape({
 const Bid = (props: any) => {
   const classes = bidStyle()
   const [loading, setLoading] = useState(false)
-  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email } = props
+  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email, myBidDetails } = props
+
+  console.log(props)
 
   const handleSubmit = async (values: any) => {
     const totalAmount = token * parseFloat(bidValue)
@@ -42,29 +43,13 @@ const Bid = (props: any) => {
     try {
       setLoading(true)
 
-      const web3 = await getWeb3Val()
+      let currentValue = await currentBidValue(dataVal.auctionID)
+      console.log(currentValue)
 
-      let upgrade = null
+      let res = await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount, '0x7Ed5f25aec6Ce0dD1A7232D98cF9a1dbF7e51523')
+      console.log(res)
 
-      if (web3) {
-        const accounts = await web3.eth.getAccounts()
-        const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
-        const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
-
-        let auctionBidRes = await auctionContract.methods.getAuctionBidders(auctionID).call()
-
-        upgrade = auctionBidRes.includes(accounts[0])
-
-        // const totalTokens = web3.utils.toWei((dataVal.bidPrice * dataVal.totalAmount).toString(), 'ether')
-        console.log(parseFloat(bidValue), token)
-        console.log('totalTokens', dataVal.totalAmount)
-        let approvalRes = await daiContract.methods.approve(auctionContractAddress, dataVal.totalAmount).send({ from: accounts[0] })
-        console.log(approvalRes)
-        let res = await auctionContract.methods.saveBid(auctionID, dataVal.totalAmount).send({ from: accounts[0] })
-        console.log(res)
-      }
-
-      if (upgrade) {
+      if (equityValue > 0) {
         let upgradeRes = await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
         console.log('upgrade', upgradeRes)
       } else {

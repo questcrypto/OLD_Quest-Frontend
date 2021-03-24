@@ -22,7 +22,7 @@ import { Button } from '@material-ui/core'
 import { withRouter } from 'react-router'
 
 const auctionReviewSchema = Yup.object().shape({
-  changenote: Yup.string().required('This field is required'),
+  changeNote: Yup.string().required('This field is required'),
 })
 
 const AuctionReview = (props: any) => {

@@ -130,9 +130,6 @@ const AuctionDetails = (props: any) => {
                   email={userInfo?.email}
                   suggestedLowestBid={auctionData.auctionDetails[0].suggestedLowestBid}
                 />
-                <Button color="primary" variant="contained" onClick={endAuction}>
-                  End Auction
-                </Button>
               </Grid>
               <Grid item xs={12} sm={6} md={3} container>
                 <AuctionStats

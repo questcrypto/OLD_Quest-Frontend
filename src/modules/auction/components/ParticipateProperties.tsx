@@ -16,10 +16,7 @@ const ParticipateProperties = (props: any) => {
   const { data, dataLoading } = props
   const classes = cardStyle()
 
-  console.log(props)
-
   const handleAuctionDetails = (id: string) => {
-    console.log(id)
     history.push(`${Paths.auctionDetails}/${id}`)
   }
   const handleUpgradeBidDetails = (id: string) => {
@@ -92,7 +89,7 @@ const ParticipateProperties = (props: any) => {
         <CardActions disableSpacing>
           <Grid container spacing={2} className={classes.btnContStyle}>
             <Grid item xs={12} sm={6}>
-              <PrimaryButton fullWidth className={classes.btnStyle} onClick={() => handleAuctionDetails(bidDetails[0].auctionID)}>
+              <PrimaryButton fullWidth className={classes.btnStyle} onClick={() => handleAuctionDetails(bidDetails[0].auctionIDId)}>
                 LIVE AUCTION
               </PrimaryButton>
             </Grid>

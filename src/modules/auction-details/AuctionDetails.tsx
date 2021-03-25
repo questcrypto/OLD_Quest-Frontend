@@ -12,8 +12,6 @@ import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
 import { getDaysValue } from 'shared/helpers/globalFunction'
-import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
-import { slcAbi, SLCContractAddress } from 'modules/block-chain/abi'
 
 const AuctionDetails = (props: any) => {
   const classes = useStyles()
@@ -71,6 +69,7 @@ const AuctionDetails = (props: any) => {
       }
     }
     getAuctionData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match])
 
   return (

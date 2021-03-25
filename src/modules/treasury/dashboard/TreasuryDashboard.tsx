@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, HeaderTitle } from 'shared/styles/dashboardStyle'
-import { PublishedPropertyTable, PreAuctionTable, OnAuctionTable, EndAuctionTable } from 'modules/Tables'
+import { PublishedPropertyTable, PreAuctionTable, OnAuctionTable, PostAuctionTable, EndAuctionTable } from 'modules/Tables'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
-import ComponentLoader from 'shared/loader-components/component-loader'
 import TabComponent from 'shared/tab-component'
 import { treasuryTabList } from 'shared/helpers/dataConstant'
 import axios from 'axios'
@@ -15,14 +14,16 @@ import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
 const TreasuryDashboard = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('published')
-  const [dataLoading, setDataLoading] = useState(false)
   const [publishedProperties, setPublishedProperties] = useState<any>([])
+  const [publishedLoading, setPublishedLoading] = useState(false)
   // const [tokenToMintData, setTokenToMintData] = useState<any>([])
   // const [transactionLoading, setTransactionLoading] = useState(false)
   const [preAuctionProperties, setPreAuctionProperties] = useState<any>([])
   const [preAuctionLoading, setPreAuctionLoading] = useState(false)
   const [onAuctionProperties, setOnAuctionProperties] = useState<any>([])
   const [onAuctionLoading, setOnAuctionLoading] = useState(false)
+  const [postAuctionProperties, setPostAuctionProperties] = useState<any>([])
+  const [postAuctionLoading, setPostAuctionLoading] = useState(false)
   const [endAuctionProperties, setEndAuctionProperties] = useState<any>([])
   const [endAuctionLoading, setEndAuctionLoading] = useState(false)
   const { userInfo } = props
@@ -30,12 +31,13 @@ const TreasuryDashboard = (props: any) => {
   useEffect(() => {
     const getPublishedProperties = async () => {
       try {
-        setDataLoading(true)
+        setPublishedLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedProperty`)
         setPublishedProperties(res.data)
       } catch (error) {
+        setPublishedProperties([])
       } finally {
-        setDataLoading(false)
+        setPublishedLoading(false)
       }
     }
     // const getTokenToMintData = async () => {
@@ -57,6 +59,7 @@ const TreasuryDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
         setPreAuctionProperties(res.data)
       } catch (error) {
+        setPreAuctionProperties([])
       } finally {
         setPreAuctionLoading(false)
       }
@@ -76,9 +79,9 @@ const TreasuryDashboard = (props: any) => {
       try {
         setEndAuctionLoading(true)
         const res = await axios.get(`${apiBaseUrl}/auction/getlistofendauction`)
-        console.log('res-->', res.data)
         setEndAuctionProperties(res.data)
       } catch (error) {
+        setEndAuctionProperties([])
       } finally {
         setEndAuctionLoading(false)
       }
@@ -135,28 +138,22 @@ const TreasuryDashboard = (props: any) => {
         </Grid>
       </Grid>
       <div>
-        {dataLoading ? (
-          <ComponentLoader />
-        ) : (
-          <div>
-            {activeTab === 'published' && (
-              <PublishedPropertyTable type="treasuryAdmin" data={publishedProperties} dataLoading={dataLoading} />
-            )}
-            {activeTab === 'preAuction' && (
-              <PreAuctionTable
-                data={preAuctionProperties}
-                dataLoading={preAuctionLoading}
-                type="treasuryAdmin"
-                refreshPreAuction={updatePreAuction}
-                refreshOnAuction={updateOnAuction}
-              />
-            )}
-            {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
-            {activeTab === 'postAuction' && <p>Content can be added here</p>}
-            {/* {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />} */}
-            {activeTab === 'endAuction' && <EndAuctionTable data={endAuctionProperties} dataLoading={endAuctionLoading} />}
-          </div>
+        {activeTab === 'published' && (
+          <PublishedPropertyTable type="treasuryAdmin" data={publishedProperties} dataLoading={publishedLoading} />
         )}
+        {activeTab === 'preAuction' && (
+          <PreAuctionTable
+            data={preAuctionProperties}
+            dataLoading={preAuctionLoading}
+            type="treasuryAdmin"
+            refreshPreAuction={updatePreAuction}
+            refreshOnAuction={updateOnAuction}
+          />
+        )}
+        {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
+        {activeTab === 'postAuction' && <PostAuctionTable data={postAuctionProperties} dataLoading={postAuctionLoading} />}
+        {/* {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />} */}
+        {activeTab === 'endAuction' && <EndAuctionTable data={endAuctionProperties} dataLoading={endAuctionLoading} />}
       </div>
     </Grid>
   )

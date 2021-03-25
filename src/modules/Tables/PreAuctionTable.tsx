@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useStyles, PaginationText, NoDataContainer } from './style'
+import { useStyles, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
 import Grid from '@material-ui/core/Grid'
 import TableContainer from '@material-ui/core/TableContainer'
@@ -8,12 +8,13 @@ import TableRow from '@material-ui/core/TableRow'
 import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
+import TableFooter from '@material-ui/core/TableFooter'
+import CustomPagination from './CustomPagination'
 import Paper from '@material-ui/core/Paper'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import CustomModal from 'shared/custom-modal'
 import { ReviewAuctionModal } from 'modules/modals'
-import Pagination from '@material-ui/lab/Pagination'
 import { getFullName } from 'shared/helpers/globalFunction'
 import Spinner from 'shared/loader-components/spinner'
 import axios from 'axios'
@@ -23,6 +24,8 @@ import { configureBlockchainAuction } from 'modules/block-chain/BlockChainMethod
 
 const PreAuctionTable = (props: any) => {
   const classes = useStyles()
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   const [showModal, setShowModal] = useState(false)
   const [modalData, setModalData] = useState<any>({})
   const [loading, setLoading] = useState(false)
@@ -41,11 +44,8 @@ const PreAuctionTable = (props: any) => {
       const data = {
         id: auctionDetails.id,
       }
-
       const { startDate, endDate, id, minReserve, slReserve, suggestedLowestBid, propidId } = auctionDetails
-
-      const res = await configureBlockchainAuction(startDate, endDate, id, minReserve, slReserve, suggestedLowestBid, propidId)
-      console.log(res)
+      await configureBlockchainAuction(startDate, endDate, id, minReserve, slReserve, suggestedLowestBid, propidId)
       await axios.post(`${apiBaseUrl}/auction/activateAuction`, data)
       refreshPreAuction()
       refreshOnAuction()
@@ -109,39 +109,44 @@ const PreAuctionTable = (props: any) => {
       {dataLoading ? (
         <ComponentLoader />
       ) : (
-        <div>
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead className={classes.tableHeadStyle}>
-                <TableRow>
-                  <TableCell>LOCATION</TableCell>
-                  <TableCell>MANAGER</TableCell>
-                  <TableCell>TYPE</TableCell>
-                  <TableCell>STATUS</TableCell>
-                  <TableCell>VALUE</TableCell>
-                  {!!type && type === 'owner' && <TableCell>ACTION</TableCell>}
-                  {!!type && type === 'treasuryAdmin' && <TableCell>ACTION</TableCell>}
-                </TableRow>
-              </TableHead>
-              {!!data && data.length > 0 && <TableBody>{data.map((row: any, k: number) => renderTableRows(row, k))}</TableBody>}
-            </Table>
-            {!!data && data.length === 0 && (
-              <NoDataContainer>
-                <EmptyPage name="for pre-auction" />
-              </NoDataContainer>
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <TableHead className={classes.tableHeadStyle}>
+              <TableRow>
+                <TableCell>LOCATION</TableCell>
+                <TableCell>MANAGER</TableCell>
+                <TableCell>TYPE</TableCell>
+                <TableCell>STATUS</TableCell>
+                <TableCell>VALUE</TableCell>
+                {!!type && type === 'owner' && <TableCell>ACTION</TableCell>}
+                {!!type && type === 'treasuryAdmin' && <TableCell>ACTION</TableCell>}
+              </TableRow>
+            </TableHead>
+            {!!data && data.length > 0 && (
+              <TableBody>
+                {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((row: any, k: number) =>
+                  renderTableRows(row, k)
+                )}
+              </TableBody>
             )}
-          </TableContainer>
-          {!!data && data.length > 10 && (
-            <Grid container className={classes.paginationCont} justify="space-between">
-              <PaginationText>Showing 1 to 15 of 35 element</PaginationText>
-              <Pagination count={10} showFirstButton showLastButton />
-            </Grid>
+            {!!data && data.length > 10 && (
+              <TableFooter>
+                <TableRow>
+                  <CustomPagination rows={data} rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} page={page} setPage={setPage} />
+                </TableRow>
+              </TableFooter>
+            )}
+          </Table>
+          {!!data && data.length === 0 && (
+            <NoDataContainer>
+              <EmptyPage name="for pre-auction" />
+            </NoDataContainer>
           )}
-          <CustomModal show={showModal} toggleModal={setShowModal}>
-            <ReviewAuctionModal data={modalData} setShowModal={setShowModal} updatePreAuction={updatePreAuction} />
-          </CustomModal>
-        </div>
+        </TableContainer>
       )}
+      <CustomModal show={showModal} toggleModal={setShowModal}>
+        <ReviewAuctionModal data={modalData} setShowModal={setShowModal} updatePreAuction={updatePreAuction} />
+      </CustomModal>
     </Grid>
   )
 }

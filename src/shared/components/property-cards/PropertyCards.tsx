@@ -45,12 +45,12 @@ const PropertyCards = (props: Props) => {
   return (
     <div className={!!list && list.length ? classes.wrapper : ''}>
       {!!list && list.length > 0 ? (
-        list.map((p, i: number) => {
+        list.map((p: any, i: number) => {
           let docs = p.getDoc!
           let name = p.PropertyName
           let id = p.id
-          let auctionDetails = p.auctionDetails
-          let currentValue = p.CurrentValue
+          const auctionDetails = p.auctionDetails
+          const currentValue = p.CurrentValue
 
           const isLast = i === list.length - 1 ? true : false
           if (p.PropertyDetails) {

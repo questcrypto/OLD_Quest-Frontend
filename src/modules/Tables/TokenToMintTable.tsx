@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useStyles, PaginationText, NoDataContainer } from './style'
+import { useStyles, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import Grid from '@material-ui/core/Grid'
@@ -9,9 +9,10 @@ import TableRow from '@material-ui/core/TableRow'
 import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
+import TableFooter from '@material-ui/core/TableFooter'
+import CustomPagination from './CustomPagination'
 import Paper from '@material-ui/core/Paper'
 import { PrimaryButton } from 'shared/components/buttons'
-import Pagination from '@material-ui/lab/Pagination'
 import { getFullName } from 'shared/helpers/globalFunction'
 import Spinner from 'shared/loader-components/spinner'
 import { SLCContractAddress, slcAbi } from 'modules/block-chain/abi'
@@ -20,6 +21,8 @@ import EmptyPage from 'shared/empty-page'
 
 const TokenToMintTable = (props: any) => {
   const classes = useStyles()
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   const [account, setAccount] = useState('')
   const [contractSLC, setContractSLC] = useState<any>('')
   const [loading /* setLoading */] = useState(false)
@@ -52,6 +55,25 @@ const TokenToMintTable = (props: any) => {
     } catch (error) {}
   }
 
+  const renderTableRows = (rowData: any, index: number) => {
+    const { PropertyDetails, TransactionID } = rowData
+    return (
+      <TableRow key={index} className={classes.tableRowStyle}>
+        <TableCell component="th" scope="row">
+          {PropertyDetails && `${PropertyDetails.Address1},${PropertyDetails.State},${PropertyDetails.Country}`}
+        </TableCell>
+        <TableCell>{PropertyDetails && getFullName(PropertyDetails.Fname, PropertyDetails.Lname)}</TableCell>
+        <TableCell>{PropertyDetails && getPropertyType(PropertyDetails.PropertyType)}</TableCell>
+        <TableCell>Approved</TableCell>
+        <TableCell>{PropertyDetails && `$${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}`}</TableCell>
+        <TableCell style={{ textAlign: 'center' }}>{TransactionID}</TableCell>
+        <TableCell>
+          <PrimaryButton onClick={() => handleSign(TransactionID)}>{loading ? <Spinner /> : 'Sign'}</PrimaryButton>
+        </TableCell>
+      </TableRow>
+    )
+  }
+
   return (
     <Grid>
       {dataLoading ? (
@@ -72,37 +94,25 @@ const TokenToMintTable = (props: any) => {
             </TableHead>
             {!!data && data.length > 0 && (
               <TableBody>
-                {data.map((row: any, k: number) => (
-                  <TableRow key={k} className={classes.tableRowStyle}>
-                    <TableCell component="th" scope="row">
-                      {row.PropertyDetails && `${row.PropertyDetails.Address1},${row.PropertyDetails.State},${row.PropertyDetails.Country}`}
-                    </TableCell>
-                    <TableCell>{row.PropertyDetails && getFullName(row.PropertyDetails.Fname, row.PropertyDetails.Lname)}</TableCell>
-                    <TableCell>{row.PropertyDetails && getPropertyType(row.PropertyDetails.PropertyType)}</TableCell>
-                    <TableCell>Approved</TableCell>
-                    <TableCell>{row.PropertyDetails && `$${parseFloat(row.PropertyDetails.CurrentValue).toFixed(2)}`}</TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>{row.TransactionID}</TableCell>
-                    <TableCell>
-                      <PrimaryButton onClick={() => handleSign(row.TransactionID)}>{loading ? <Spinner /> : 'Sign'}</PrimaryButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((row: any, k: number) =>
+                  renderTableRows(row, k)
+                )}
               </TableBody>
+            )}
+            {!!data && data.length > 10 && (
+              <TableFooter>
+                <TableRow>
+                  <CustomPagination rows={data} rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} page={page} setPage={setPage} />
+                </TableRow>
+              </TableFooter>
             )}
           </Table>
           {!!data && data.length === 0 && (
             <NoDataContainer>
-              <EmptyPage name="here" />
+              <EmptyPage name="here for mint" />
             </NoDataContainer>
           )}
         </TableContainer>
-      )}
-
-      {!!data && data.length > 10 && (
-        <Grid container className={classes.paginationCont} justify="space-between">
-          <PaginationText>Showing 1 to 15 of 35 element</PaginationText>
-          <Pagination count={10} showFirstButton showLastButton />
-        </Grid>
       )}
     </Grid>
   )

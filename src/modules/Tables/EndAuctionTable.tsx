@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useStyles, PaginationText, NoDataContainer } from './style'
+import { useStyles, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import Grid from '@material-ui/core/Grid'
@@ -9,8 +9,9 @@ import TableRow from '@material-ui/core/TableRow'
 import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
+import TableFooter from '@material-ui/core/TableFooter'
+import CustomPagination from './CustomPagination'
 import Paper from '@material-ui/core/Paper'
-import Pagination from '@material-ui/lab/Pagination'
 import { getFullName } from 'shared/helpers/globalFunction'
 import { PrimaryButton } from 'shared/components/buttons'
 import Spinner from 'shared/loader-components/spinner'
@@ -32,11 +33,12 @@ interface Props {
 }
 
 const EndAuctionTable = (props: Props) => {
+  const classes = useStyles()
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   const [loading, setLoading] = useState(false)
   const [selectedId, setSelectedId] = useState('')
-  const classes = useStyles()
   const { data, dataLoading } = props
-  console.log('data==>', data)
 
   const endAuction = async (auctionID: string) => {
     setSelectedId(auctionID)
@@ -97,62 +99,65 @@ const EndAuctionTable = (props: Props) => {
     }
   }
 
+  const renderTableRows = (rowData: any, index: number) => {
+    const { PropertyDetails, AuctionDetail } = rowData
+    return (
+      <TableRow key={index} className={classes.tableRowStyle}>
+        <TableCell
+          component="th"
+          scope="row"
+        >{`${PropertyDetails.Address1},${PropertyDetails.State},${PropertyDetails.Country}`}</TableCell>
+        <TableCell>{getFullName(PropertyDetails.Fname, PropertyDetails.Lname)}</TableCell>
+        <TableCell>{getPropertyType(PropertyDetails.PropertyType)}</TableCell>
+        <TableCell>Approved</TableCell>
+        <TableCell>${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
+        <TableCell>
+          <PrimaryButton onClick={() => endAuction(AuctionDetail[0].id)} disabled={AuctionDetail[0].status !== 2 || loading}>
+            {selectedId === AuctionDetail[0].id && loading ? <Spinner /> : 'End Auction'}
+          </PrimaryButton>
+        </TableCell>
+      </TableRow>
+    )
+  }
+
   return (
     <Grid>
       {dataLoading ? (
         <ComponentLoader />
       ) : (
-        <div>
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead className={classes.tableHeadStyle}>
-                <TableRow>
-                  <TableCell>LOCATION</TableCell>
-                  <TableCell>MANAGER</TableCell>
-                  <TableCell>TYPE</TableCell>
-                  <TableCell>STATUS</TableCell>
-                  <TableCell>VALUE</TableCell>
-                  <TableCell>ACTION</TableCell>
-                </TableRow>
-              </TableHead>
-              {!!data && data.length > 0 && (
-                <TableBody>
-                  {data.map((row: any, k: number) => (
-                    <TableRow key={k} className={classes.tableRowStyle}>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                      >{`${row.PropertyDetails.Address1},${row.PropertyDetails.State},${row.PropertyDetails.Country}`}</TableCell>
-                      <TableCell>{getFullName(row.PropertyDetails.Fname, row.PropertyDetails.Lname)}</TableCell>
-                      <TableCell>{getPropertyType(row.PropertyDetails.PropertyType)}</TableCell>
-                      <TableCell>Approved</TableCell>
-                      <TableCell>${parseFloat(row.PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
-                      <TableCell>
-                        <PrimaryButton
-                          onClick={() => endAuction(row.AuctionDetail[0].id)}
-                          disabled={row.AuctionDetail[0].status !== 2 || loading}
-                        >
-                          {selectedId === row.AuctionDetail[0].id && loading ? <Spinner /> : 'End Auction'}
-                        </PrimaryButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              )}
-            </Table>
-            {!!data && data.length === 0 && (
-              <NoDataContainer>
-                <EmptyPage name="here" />
-              </NoDataContainer>
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <TableHead className={classes.tableHeadStyle}>
+              <TableRow>
+                <TableCell>LOCATION</TableCell>
+                <TableCell>MANAGER</TableCell>
+                <TableCell>TYPE</TableCell>
+                <TableCell>STATUS</TableCell>
+                <TableCell>VALUE</TableCell>
+                <TableCell>ACTION</TableCell>
+              </TableRow>
+            </TableHead>
+            {!!data && data.length > 0 && (
+              <TableBody>
+                {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((row: any, k: number) =>
+                  renderTableRows(row, k)
+                )}
+              </TableBody>
             )}
-          </TableContainer>
-          {!!data && data.length > 10 && (
-            <Grid container className={classes.paginationCont} justify="space-between">
-              <PaginationText>Showing 1 to 15 of 35 element</PaginationText>
-              <Pagination count={10} showFirstButton showLastButton />
-            </Grid>
+            {!!data && data.length > 10 && (
+              <TableFooter>
+                <TableRow>
+                  <CustomPagination rows={data} rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} page={page} setPage={setPage} />
+                </TableRow>
+              </TableFooter>
+            )}
+          </Table>
+          {!!data && data.length === 0 && (
+            <NoDataContainer>
+              <EmptyPage name="here for end-auction" />
+            </NoDataContainer>
           )}
-        </div>
+        </TableContainer>
       )}
     </Grid>
   )

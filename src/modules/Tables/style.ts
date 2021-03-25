@@ -25,12 +25,6 @@ export const useStyles = makeStyles(() =>
   })
 )
 
-export const PaginationText = styled.p`
-  margin: 0;
-  font-size: 16px;
-  line-height: 19px;
-  color: ${colors.textPrimary};
-`
 export const NoDataContainer = styled.div`
   margin: 50px 0;
   width: 100%;

@@ -7,14 +7,6 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import LastPageIcon from '@material-ui/icons/LastPage'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      marginTop: '50px',
-    },
-  })
-)
-
 const useStyles1 = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -71,7 +63,6 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
 }
 
 export const CustomPagination = (props: any) => {
-  const classes = useStyles()
   const { rows, rowsPerPage, page, setPage, setRowsPerPage } = props
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {

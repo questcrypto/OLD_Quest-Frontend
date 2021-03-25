@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useStyles, HeaderTitle } from 'shared/styles/dashboardStyle'
-import { NewPropertyTable, ApprovePropertyTable, PublishedPropertyTable, PreAuctionTable, OnAuctionTable } from 'modules/Tables'
+import {
+  NewPropertyTable,
+  ApprovePropertyTable,
+  PublishedPropertyTable,
+  PreAuctionTable,
+  OnAuctionTable,
+  PostAuctionTable,
+} from 'modules/Tables'
 import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
-import ComponentLoader from 'shared/loader-components/component-loader'
 import TabComponent from 'shared/tab-component'
 import { propertyTabList } from 'shared/helpers/dataConstant'
 import { Paths } from 'modules/app/components/routes/types'
@@ -18,8 +24,8 @@ import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
 const AdminDashboard = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('new')
-  const [propertiesList, setPropertiesList] = useState<any>([])
-  const [dataLoading, setDataLoading] = useState(false)
+  const [newPropertiesList, setNewPropertiesList] = useState<any>([])
+  const [newPropertyLoading, setNewPropertyLoading] = useState(false)
   const [approvedProperties, setApprovedProperties] = useState<any>([])
   const [approvedLoading, setApprovedLoading] = useState(false)
   const [publishedProperties, setPublishedProperties] = useState<any>([])
@@ -28,16 +34,19 @@ const AdminDashboard = (props: any) => {
   const [preAuctionLoading, setPreAuctionLoading] = useState(false)
   const [onAuctionProperties, setOnAuctionProperties] = useState<any>([])
   const [onAuctionLoading, setOnAuctionLoading] = useState(false)
+  const [postAuctionProperties, setPostAuctionProperties] = useState<any>([])
+  const [postAuctionLoading, setPostAuctionLoading] = useState(false)
 
   useEffect(() => {
-    const getPropertiesList = async () => {
+    const getNewPropertiesList = async () => {
       try {
-        setDataLoading(true)
+        setNewPropertyLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
-        setPropertiesList(res.data)
+        setNewPropertiesList(res.data)
       } catch (error) {
+        setNewPropertiesList([])
       } finally {
-        setDataLoading(false)
+        setNewPropertyLoading(false)
       }
     }
     const getApproveProperties = async () => {
@@ -46,6 +55,7 @@ const AdminDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyHOA`)
         setApprovedProperties(res.data)
       } catch (error) {
+        setApprovedProperties([])
       } finally {
         setApprovedLoading(false)
       }
@@ -56,6 +66,7 @@ const AdminDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedProperty`)
         setPublishedProperties(res.data)
       } catch (error) {
+        setPublishedProperties([])
       } finally {
         setPublishedLoading(false)
       }
@@ -66,6 +77,7 @@ const AdminDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
         setPreAuctionProperties(res.data)
       } catch (error) {
+        setPreAuctionProperties([])
       } finally {
         setPreAuctionLoading(false)
       }
@@ -76,11 +88,12 @@ const AdminDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/auction/listOfAllActiveAuction`)
         setOnAuctionProperties(res.data)
       } catch (error) {
+        setOnAuctionProperties([])
       } finally {
         setOnAuctionLoading(false)
       }
     }
-    getPropertiesList()
+    getNewPropertiesList()
     getApproveProperties()
     getPublishedProperties()
     getPreAuctionProperties()
@@ -144,26 +157,20 @@ const AdminDashboard = (props: any) => {
         </Grid>
       </Grid>
       <div>
-        {dataLoading ? (
-          <ComponentLoader />
-        ) : (
-          <div>
-            {activeTab === 'new' && <NewPropertyTable data={propertiesList} />}
-            {activeTab === 'approved' && (
-              <ApprovePropertyTable
-                type="admin"
-                data={approvedProperties}
-                approvedLoading={approvedLoading}
-                setActiveTab={setActiveTab}
-                updateApprove={updateApprove}
-              />
-            )}
-            {activeTab === 'published' && <PublishedPropertyTable data={publishedProperties} dataLoading={publishedLoading} />}
-            {activeTab === 'preAuction' && <PreAuctionTable data={preAuctionProperties} dataLoading={preAuctionLoading} />}
-            {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
-            {activeTab === 'postAuction' && <p>Content can be added here</p>}
-          </div>
+        {activeTab === 'new' && <NewPropertyTable data={newPropertiesList} dataLoading={newPropertyLoading} />}
+        {activeTab === 'approved' && (
+          <ApprovePropertyTable
+            type="admin"
+            data={approvedProperties}
+            dataLoading={approvedLoading}
+            setActiveTab={setActiveTab}
+            updateApprove={updateApprove}
+          />
         )}
+        {activeTab === 'published' && <PublishedPropertyTable data={publishedProperties} dataLoading={publishedLoading} />}
+        {activeTab === 'preAuction' && <PreAuctionTable data={preAuctionProperties} dataLoading={preAuctionLoading} />}
+        {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
+        {activeTab === 'postAuction' && <PostAuctionTable data={postAuctionProperties} dataLoading={postAuctionLoading} />}
       </div>
     </Grid>
   )

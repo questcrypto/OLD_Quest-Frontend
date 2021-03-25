@@ -9,11 +9,11 @@ import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableFooter from '@material-ui/core/TableFooter'
+import CustomPagination from './CustomPagination'
 import Paper from '@material-ui/core/Paper'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import { getFullName } from 'shared/helpers/globalFunction'
 import EmptyPage from 'shared/empty-page'
-import CustomPagination from './CustomPagination'
 
 const OnAuctionTable = (props: any) => {
   const classes = useStyles()
@@ -30,7 +30,7 @@ const OnAuctionTable = (props: any) => {
         </TableCell>
         <TableCell>{getFullName(PropertyDetails.Fname, PropertyDetails.Lname)}</TableCell>
         <TableCell>{getPropertyType(PropertyDetails.PropertyType)}</TableCell>
-        <TableCell>New</TableCell>
+        <TableCell>Approved</TableCell>
         <TableCell>${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
       </TableRow>
     )
@@ -68,7 +68,7 @@ const OnAuctionTable = (props: any) => {
           </Table>
           {!!data && data.length === 0 && (
             <NoDataContainer>
-              <EmptyPage name="for auction" />
+              <EmptyPage name="for on-auction" />
             </NoDataContainer>
           )}
         </TableContainer>

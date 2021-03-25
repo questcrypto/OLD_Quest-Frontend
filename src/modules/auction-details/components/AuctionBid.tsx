@@ -8,6 +8,7 @@ import coin from 'assets/images/coin.svg'
 import TextInputField from './TextInputField'
 import { PrimaryButton } from 'shared/components/buttons'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
+
 // import TelegramIcon from '@material-ui/icons/Telegram'
 // import FacebookIcon from '@material-ui/icons/Facebook'
 // import TwitterIcon from '@material-ui/icons/Twitter'

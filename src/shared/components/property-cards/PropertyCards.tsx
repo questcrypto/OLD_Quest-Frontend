@@ -17,7 +17,7 @@ interface Props {
 
 const PropertyCards = (props: Props) => {
   const classes = useStyles()
-  const { list, published } = props
+  const { list } = props
 
   const [showAuctionModal, setShowAuctionModal] = useState(false)
   const [modalAuctionDetails, setModalAuctionDetails] = useState({ auctionDetails: {}, currentValue: 0 })

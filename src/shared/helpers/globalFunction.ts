@@ -40,6 +40,7 @@ export const getDaysValue = (startData: any, endDate: any) => {
 export function formatDateString(date: Date | string): string {
   let dateValue: string = ''
   if (typeof date === 'string') {
+    // eslint-disable-next-line no-useless-escape
     dateValue = dateFormat(date.split('T')[0].replace(/\-/g, '/'), 'mm/dd/yyyy')
   } else {
     dateValue = dateFormat(date, 'mm/dd/yyyy')
@@ -50,6 +51,7 @@ export function formatDateString(date: Date | string): string {
 export function formatExtendedDateString(date: Date | string): string {
   let dateValue: string = ''
   if (typeof date === 'string') {
+    // eslint-disable-next-line no-useless-escape
     dateValue = dateFormat(date.split('T')[0].replace(/\-/g, '/'), 'dd mmm yyyy')
   } else {
     dateValue = dateFormat(date, 'dd mmm yyyy')

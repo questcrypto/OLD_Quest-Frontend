@@ -119,11 +119,11 @@ const OwnerPropertyDetails = (props: any) => {
                       <InfoBoldTxt>{propertyInfo.propertyDetails.Address1!}</InfoBoldTxt>
                       <InfoLightTxt>
                         {`${propertyInfo.propertyDetails.Address2!},
-                                             ${propertyInfo.propertyDetails.State!},
-                                             ${propertyInfo.propertyDetails.City!},
-                                             ${propertyInfo.propertyDetails.Country!} 
-                                             ${propertyInfo.propertyDetails.PostalCode!}
-                                             `}
+                          ${propertyInfo.propertyDetails.State!},
+                          ${propertyInfo.propertyDetails.City!},
+                          ${propertyInfo.propertyDetails.Country!} 
+                          ${propertyInfo.propertyDetails.PostalCode!}
+                        `}
                       </InfoLightTxt>
                     </Grid>
                     <Divider orientation="vertical" className={classes.verticalDividerStyle} />

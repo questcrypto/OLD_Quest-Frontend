@@ -38,7 +38,7 @@ const AuctionStats = (props: any) => {
 
   const getTotalTokenSold = () => {
     const soldToken = (bidStats.totalTokensSold / totalToken) * 100
-    return `${soldToken.toFixed(0)}%`
+    return `${soldToken.toFixed(2)}%`
   }
   return (
     <Box>

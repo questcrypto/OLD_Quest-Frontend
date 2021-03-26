@@ -59,6 +59,8 @@ const Login = (props: any) => {
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
+      } else if (!!error.message) {
+        errorAlert(error.message)
       } else {
         errorAlert('Something went wrong , please try again')
       }

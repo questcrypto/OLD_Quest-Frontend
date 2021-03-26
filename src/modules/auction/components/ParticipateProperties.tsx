@@ -53,7 +53,6 @@ const ParticipateProperties = (props: any) => {
 
   const renderParticipatedCard = (item: any) => {
     const { bidDetails, PropertyDetails, auctionDetail } = item
-    console.log('item==>', item)
     return (
       <Card className={classes.root}>
         <img className={classes.media} src={getImg(PropertyDetails.getDocs)} alt="" />

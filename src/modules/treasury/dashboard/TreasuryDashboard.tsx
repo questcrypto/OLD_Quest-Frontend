@@ -74,7 +74,17 @@ const TreasuryDashboard = (props: any) => {
         setOnAuctionLoading(false)
       }
     }
-
+    const getPostAuctionProperties = async () => {
+      try {
+        setPostAuctionLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/getPostAuctionList`)
+        setPostAuctionProperties(res.data)
+      } catch (error) {
+        setPostAuctionProperties([])
+      } finally {
+        setPostAuctionLoading(false)
+      }
+    }
     const getEndAuctionProperties = async () => {
       try {
         setEndAuctionLoading(true)
@@ -92,6 +102,7 @@ const TreasuryDashboard = (props: any) => {
     getPreAuctionProperties()
     getOnAuctionProperties()
     getEndAuctionProperties()
+    getPostAuctionProperties()
   }, [userInfo])
 
   const updateOnAuction = async () => {

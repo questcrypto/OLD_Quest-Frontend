@@ -15,8 +15,8 @@ import axios from 'axios'
 const OwnerDashboard = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('new')
-  const [propertiesList, setPropertiesList] = useState<any>([])
-  const [dataLoading, setDataLoading] = useState(false)
+  const [newPropertiesList, setNewPropertiesList] = useState<any>([])
+  const [newPropertyLoading, setNewPropertyLoading] = useState(false)
   const [approvedProperties, setApprovedProperties] = useState<any>([])
   const [approvedLoading, setApprovedLoading] = useState(false)
   const [publishedProperties, setPublishedProperties] = useState<any>([])
@@ -33,12 +33,13 @@ const OwnerDashboard = (props: any) => {
   useEffect(() => {
     const getPropertiesList = async () => {
       try {
-        setDataLoading(true)
+        setNewPropertyLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${userInfo.publicaddress}`)
-        setPropertiesList(res.data)
+        setNewPropertiesList(res.data)
       } catch (error) {
+        setNewPropertiesList([])
       } finally {
-        setDataLoading(false)
+        setNewPropertyLoading(false)
       }
     }
     const getApproveProperties = async () => {
@@ -47,6 +48,7 @@ const OwnerDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyOwner/${userInfo.publicaddress}`)
         setApprovedProperties(res.data)
       } catch (error) {
+        setApprovedProperties([])
       } finally {
         setApprovedLoading(false)
       }
@@ -57,6 +59,7 @@ const OwnerDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
         setPublishedProperties(res.data)
       } catch (error) {
+        setPublishedProperties([])
       } finally {
         setPublishedLoading(false)
       }
@@ -67,6 +70,7 @@ const OwnerDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/auction/ListofNewAuction/${userInfo.publicaddress}`)
         setPreAuctionProperties(res.data)
       } catch (error) {
+        setPreAuctionProperties([])
       } finally {
         setPreAuctionLoading(false)
       }
@@ -77,8 +81,20 @@ const OwnerDashboard = (props: any) => {
         const res = await axios.get(`${apiBaseUrl}/auction/myListOfActiveAuction/${userInfo.publicaddress}`)
         setOnAuctionProperties(res.data)
       } catch (error) {
+        setOnAuctionProperties([])
       } finally {
         setOnAuctionLoading(false)
+      }
+    }
+    const getPostAuctionProperties = async () => {
+      try {
+        setPostAuctionLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/auction/getPostAuctionListUser/${userInfo.publicaddress}`)
+        setPostAuctionProperties(res.data)
+      } catch (error) {
+        setPostAuctionProperties([])
+      } finally {
+        setPostAuctionLoading(false)
       }
     }
     getPropertiesList()
@@ -86,14 +102,8 @@ const OwnerDashboard = (props: any) => {
     getPublishedProperties()
     getPreAuctionProperties()
     getOnAuctionProperties()
+    getPostAuctionProperties()
   }, [userInfo])
-
-  const updatePreAuction = async () => {
-    try {
-      const res = await axios.get(`${apiBaseUrl}/auction/ListofNewAuction/${userInfo.publicaddress}`)
-      setPreAuctionProperties(res.data)
-    } catch (error) {}
-  }
 
   return (
     <Grid>
@@ -125,16 +135,16 @@ const OwnerDashboard = (props: any) => {
         </Grid>
       </Grid>
       <div>
-        {dataLoading ? (
+        {newPropertyLoading ? (
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'new' && <PropertyCards list={propertiesList} />}
-            {activeTab === 'approved' && <PropertyCards list={approvedProperties} />}
-            {activeTab === 'published' && <PropertyCards list={publishedProperties} />}
-            {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} />}
-            {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} />}
-            {activeTab === 'postAuction' && <PropertyCards list={postAuctionProperties} />}
+            {activeTab === 'new' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
+            {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
+            {activeTab === 'published' && <PropertyCards list={publishedProperties} dataLoading={publishedLoading} />}
+            {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} dataLoading={preAuctionLoading} />}
+            {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} dataLoading={onAuctionLoading} />}
+            {activeTab === 'postAuction' && <PropertyCards list={postAuctionProperties} dataLoading={postAuctionLoading} />}
           </div>
         )}
       </div>

@@ -53,17 +53,6 @@ export const useStyles = makeStyles((theme) =>
       width: '100%',
       marginTop: '8px',
     },
-    addPropertyBtnStyle: {
-      width: '100% !important',
-      height: '36px',
-      color: `${colors.white} !important`,
-      backgroundColor: `${colors.primary} !important`,
-      fontSize: '12px',
-      padding: '10px 5px',
-      '&:hover': {
-        backgroundColor: `${colors.primary} !important`,
-      },
-    },
   })
 )
 

@@ -9,7 +9,7 @@ import {
   OnAuctionTable,
   PostAuctionTable,
 } from 'modules/Tables'
-import Button from '@material-ui/core/Button'
+import { PrimaryButton } from 'shared/components/buttons'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
@@ -151,9 +151,7 @@ const AdminDashboard = (props: any) => {
           </div>
         </Grid>
         <Grid item xs={6} md={2}>
-          <Button onClick={() => handleAddProperty()} className={classes.addPropertyBtnStyle}>
-            Add New Property
-          </Button>
+          <PrimaryButton onClick={() => handleAddProperty()}>Add New Property</PrimaryButton>
         </Grid>
       </Grid>
       <div>

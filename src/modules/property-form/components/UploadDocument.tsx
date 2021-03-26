@@ -4,7 +4,7 @@ import { useStyle, UploadDataWrapper, ModalHeader, CloseModalBtnCont, DocFormWra
 import { Formik, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
+import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import CloseIcon from '@material-ui/icons/Close'
 import { DropzoneAreaBase } from 'material-ui-dropzone'
 import CustomTextField from 'shared/components/custom-text-field'
@@ -95,25 +95,10 @@ const UploadDocument = (props: any) => {
               <CustomTextField label="Description" name="description" />
               <ErrorMessage component={err} name="description" />
               <UploadDocBtnGroup>
-                <Button
-                  type="button"
-                  variant="contained"
-                  classes={{
-                    root: classes.cancelFileBtnStyle,
-                  }}
-                  onClick={() => setShowDocModal(false)}
-                >
+                <SecondaryButton type="button" onClick={() => setShowDocModal(false)}>
                   Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  classes={{
-                    root: classes.insertFileBtnStyle,
-                  }}
-                >
-                  Insert files
-                </Button>
+                </SecondaryButton>
+                <PrimaryButton type="submit">Insert files</PrimaryButton>
               </UploadDocBtnGroup>
             </DocFormWrapper>
           </Form>

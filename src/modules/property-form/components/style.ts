@@ -18,17 +18,6 @@ export const useStyle = makeStyles(() =>
         background: 'red',
       },
     },
-
-    cancelFileBtnStyle: {
-      marginRight: '20px',
-    },
-    insertFileBtnStyle: {
-      color: colors.white,
-      backgroundColor: colors.primary,
-      '&:hover': {
-        backgroundColor: colors.primary,
-      },
-    },
   })
 )
 
@@ -60,4 +49,7 @@ export const UploadDocBtnGroup = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 50px;
+  button {
+    margin-left: 20px;
+  }
 `

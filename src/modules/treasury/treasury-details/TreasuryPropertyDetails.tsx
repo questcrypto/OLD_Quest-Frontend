@@ -109,7 +109,8 @@ const TreasuryPropertyDetails = (props: any) => {
   const handleApproveByAdmin = async () => {
     setMintLoading(true)
     const propertyId = props.match.params.propertyId
-    handlePropertyDetailsSubmit(contractSLF, account, propertyInfo.propertyDetails.CurrentValue, 1613575905, propertyId)
+    const date = Math.floor(new Date().getTime() / 1000) + 7890000
+    handlePropertyDetailsSubmit(contractSLF, account, propertyInfo.propertyDetails.CurrentValue, date, propertyId)
       .on('confirmation', async function (confirmationNumber: any, receipt: any) {
         if (confirmationNumber === 1) {
           try {

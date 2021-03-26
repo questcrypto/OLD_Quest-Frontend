@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { useStyles, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
 import Grid from '@material-ui/core/Grid'
@@ -30,7 +32,7 @@ const PreAuctionTable = (props: any) => {
   const [modalData, setModalData] = useState<any>({})
   const [loading, setLoading] = useState(false)
   const [selectedAuctionId, setSelectedAuctionId] = useState('')
-  const { data, dataLoading, type, updatePreAuction, refreshPreAuction, refreshOnAuction } = props
+  const { data, dataLoading, type, updatePreAuction, refreshPreAuction, refreshOnAuction, errorAlert } = props
 
   const handleReviewAuction = (auctionDataVal: any, propertyValue: any) => {
     const dataVal = { ...auctionDataVal, propertyValue }
@@ -50,7 +52,11 @@ const PreAuctionTable = (props: any) => {
       refreshPreAuction()
       refreshOnAuction()
     } catch (error) {
-      console.log('error => ', error)
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setLoading(false)
     }
@@ -150,4 +156,5 @@ const PreAuctionTable = (props: any) => {
     </Grid>
   )
 }
-export default PreAuctionTable
+
+export default connect(null, { errorAlert })(PreAuctionTable)

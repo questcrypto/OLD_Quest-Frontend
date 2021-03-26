@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
 import {
@@ -61,14 +62,16 @@ import Badge from '@material-ui/core/Badge'
 import Spinner from 'shared/loader-components/spinner'
 import { propertyType } from 'shared/helpers/dataConstant'
 import moment from 'moment'
-import axios from 'axios'
-import { apiBaseUrl } from 'services/global-constant'
-import history from 'modules/app/components/history'
-import { Paths } from 'modules/app/components/routes/types'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import MoneyInputField from 'shared/components/money-input-field'
+import history from 'modules/app/components/history'
+import { Paths } from 'modules/app/components/routes/types'
+import { apiBaseUrl } from 'services/global-constant'
+import axios from 'axios'
 
 const EditPropertyForm = (props: any) => {
+  const classes = useStyle()
+  const classes01 = useStyle01()
   const [initialData, setInitialData] = useState(initialValues)
   const [name, setName] = useState('')
   const [showImgModal, setShowImgModal] = useState(false)
@@ -87,11 +90,7 @@ const EditPropertyForm = (props: any) => {
   const [commentLoading, setCommentLoading] = useState(true)
   const [unReadComments, setUnReadComments] = useState<any>({})
   const [approved, setApproved] = useState(false)
-
-  const classes = useStyle()
-  const classes01 = useStyle01()
-
-  const { userInfo } = props
+  const { userInfo, errorAlert } = props
 
   useEffect(() => {
     if (approved) {
@@ -201,7 +200,11 @@ const EditPropertyForm = (props: any) => {
       await axios.post(`${apiBaseUrl}/properties/UpdateProperty`, values)
       history.push(Paths.root)
     } catch (error) {
-      console.log('error==>', error)
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setLoading(false)
     }
@@ -213,7 +216,11 @@ const EditPropertyForm = (props: any) => {
       await axios.post(`${apiBaseUrl}/properties/ApproveByPropertyOwner`, data)
       history.push(Paths.root)
     } catch (error) {
-      console.log('error==>', error)
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setLoading(false)
     }
@@ -282,8 +289,12 @@ const EditPropertyForm = (props: any) => {
         }
 
         await axios.post(`${apiBaseUrl}/properties/AddComment`, commentData)
-      } catch (err) {
-        console.log('Error==>', err)
+      } catch (error) {
+        if (!!error && error.response && error.response.data.message) {
+          errorAlert(error.response.data.message)
+        } else {
+          errorAlert('Something went wrong , please try again')
+        }
       }
     }
   }
@@ -415,7 +426,7 @@ const EditPropertyForm = (props: any) => {
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Landscaping" />
                             <FieldMsgBox>
-                              <MoneyInputField label="Lot Facts" name="Lotfacts" acceptDecimals={true} />
+                              <MoneyInputField label="Lot Facts" name="Lotfacts" acceptDecimals />
                               <Badge badgeContent={!!unReadComments && unReadComments[11]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(11)} />
                               </Badge>
@@ -537,21 +548,21 @@ const EditPropertyForm = (props: any) => {
                           <Grid item className={classes.editFormGroup}>
                             <FormTitle>T.I.M.E contract</FormTitle>
                             <FieldMsgBox>
-                              <MoneyInputField label="Insurance" name="Insurance" dollarPrefix={true} acceptDecimals={true} />
+                              <MoneyInputField label="Insurance" name="Insurance" dollarPrefix acceptDecimals />
                               <Badge badgeContent={!!unReadComments && unReadComments[23]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(23)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Insurance" />
                             <FieldMsgBox>
-                              <MoneyInputField label="Maintenance" name="Maintenance" dollarPrefix={true} acceptDecimals={true} />
+                              <MoneyInputField label="Maintenance" name="Maintenance" dollarPrefix acceptDecimals />
                               <Badge badgeContent={!!unReadComments && unReadComments[24]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(24)} />
                               </Badge>
                             </FieldMsgBox>
                             <ErrorMessage component={err} name="Maintenance" />
                             <FieldMsgBox>
-                              <MoneyInputField label="HOA fees" name="HOAFees" dollarPrefix={true} acceptDecimals={true} />
+                              <MoneyInputField label="HOA fees" name="HOAFees" dollarPrefix acceptDecimals />
                               <Badge badgeContent={!!unReadComments && unReadComments[25]} color="secondary">
                                 <img src={chatIcon} alt="" onClick={() => getComments(25)} />
                               </Badge>
@@ -934,4 +945,4 @@ const EditPropertyForm = (props: any) => {
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
 })
-export default withRouter(connect(mapStateToProps)(EditPropertyForm))
+export default withRouter(connect(mapStateToProps, { errorAlert })(EditPropertyForm))

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { useStyles, HeaderContainer, HeaderPath, HeaderTitle } from './style'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -23,7 +24,7 @@ const AuctionDetails = (props: any) => {
   const [reservePriceMet, setReservePriceMet] = useState(false)
   const [currentBid, setCurrentBid] = useState(0)
   const [propertyId, setPropertyId] = useState('')
-  const { userInfo, match } = props
+  const { userInfo, match, errorAlert } = props
 
   useEffect(() => {
     const auctionId = match.params.auctionId
@@ -109,6 +110,7 @@ const AuctionDetails = (props: any) => {
                   myBidDetails={auctionData?.myBidDetails!}
                   email={userInfo?.email}
                   suggestedLowestBid={auctionData.auctionDetails[0].suggestedLowestBid}
+                  errorAlert={errorAlert}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3} container>
@@ -130,4 +132,4 @@ const AuctionDetails = (props: any) => {
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
 })
-export default withRouter(connect(mapStateToProps)(AuctionDetails))
+export default withRouter(connect(mapStateToProps, { errorAlert })(AuctionDetails))

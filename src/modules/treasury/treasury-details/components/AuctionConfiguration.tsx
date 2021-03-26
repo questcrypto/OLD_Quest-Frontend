@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { auctionConfigStyle, HeaderCont, TitleText } from './style'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
@@ -10,6 +12,7 @@ import Spinner from 'shared/loader-components/spinner'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import CloseIcon from '@material-ui/icons/Close'
+import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
@@ -27,7 +30,7 @@ const initialValues = {
 const AuctionConfiguration = (props: any) => {
   const classes = auctionConfigStyle()
   const [loading, setLoading] = useState(false)
-  const { propId, publicAddress, setShowAuctionModal, history } = props
+  const { propId, publicAddress, setShowAuctionModal, errorAlert } = props
 
   const handleSubmit = async (values: any) => {
     const endDate = new Date(values.startDate)
@@ -50,7 +53,11 @@ const AuctionConfiguration = (props: any) => {
 
       history.push('/dashboard')
     } catch (error) {
-      console.log(error)
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setShowAuctionModal(false)
       setLoading(false)
@@ -79,16 +86,16 @@ const AuctionConfiguration = (props: any) => {
                 <ErrorMessage component={err} name="duration" />
                 <Grid container spacing={1}>
                   <Grid item xs={12} sm={6}>
-                    <MoneyInputField label="Min - Reserve" name="minReserve" dollarPrefix={true} />
+                    <MoneyInputField label="Min - Reserve" name="minReserve" dollarPrefix />
                     <ErrorMessage component={err} name="minReserve" />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <MoneyInputField label="SL - Reserve" name="slReserve" dollarPrefix={true} />
+                    <MoneyInputField label="SL - Reserve" name="slReserve" dollarPrefix />
                     <ErrorMessage component={err} name="slReserve" />
                   </Grid>
                 </Grid>
 
-                <MoneyInputField label="Suggested lowest bid" name="suggestedLowestBid" dollarPrefix={true} acceptDecimals />
+                <MoneyInputField label="Suggested lowest bid" name="suggestedLowestBid" dollarPrefix acceptDecimals />
                 <ErrorMessage component={err} name="suggestedLowestBid" />
                 <CustomTextField label="Memo" name="memo" />
                 <ErrorMessage component={err} name="memo" />
@@ -110,4 +117,5 @@ const AuctionConfiguration = (props: any) => {
     </Box>
   )
 }
-export default AuctionConfiguration
+
+export default connect(null, { errorAlert })(AuctionConfiguration)

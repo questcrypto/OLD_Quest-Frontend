@@ -35,7 +35,18 @@ const AuctionBid = (props: any) => {
 
   const [showBidModal, setShowBidModal] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { propertyName, currentBid, biddersID, propertyID, auctionID, totalToken, myBidDetails, email, suggestedLowestBid } = props
+  const {
+    propertyName,
+    currentBid,
+    biddersID,
+    propertyID,
+    auctionID,
+    totalToken,
+    myBidDetails,
+    email,
+    suggestedLowestBid,
+    errorAlert,
+  } = props
 
   let sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100
   sliderDefaultValue = parseFloat(sliderDefaultValue.toFixed(2))
@@ -223,6 +234,7 @@ const AuctionBid = (props: any) => {
           biddersID={biddersID}
           propertyID={propertyID}
           email={email}
+          errorAlert={errorAlert}
         />
       </CustomModal>
     </Box>

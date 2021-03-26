@@ -34,9 +34,7 @@ import AuctionConfiguration from './components/AuctionConfiguration'
 import CustomModal from 'shared/custom-modal'
 import TabComponent from 'shared/tab-component'
 import { treasuryDetailsTabList } from 'shared/helpers/dataConstant'
-// import {getWeb3Val} from 'modules/block-chain'
 import { SLFContractAddress, selfAbi } from 'modules/block-chain/abi'
-// import { SLCContractAddress, SLFContractAddress, selfAbi, slcAbi } from 'modules/chain/abi'
 import { getWeb3Val, handlePropertyDetailsSubmit } from 'modules/block-chain/BlockChainMethods'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
@@ -65,16 +63,13 @@ const TreasuryPropertyDetails = (props: any) => {
           const accounts = await web3.eth.getAccounts()
           setAccount(accounts[0])
           const SLFInstance = new web3.eth.Contract(selfAbi, SLFContractAddress)
-          // const SLCInstance = new web3.eth.Contract(slcAbi, SLCContractAddress)
           window.ethereum.on('accountsChanged', (accounts: any) => {
             setAccount(accounts[0])
           })
           setContractSLF(SLFInstance)
-          // setContractSLC(SLCInstance)
         }
       } catch (err) {
         alert(`Failed to load web3, accounts, or contract. Check console for details.`)
-        console.log('err->', err)
       }
     }
     getChainDetails()
@@ -262,17 +257,6 @@ const TreasuryPropertyDetails = (props: any) => {
                       </TreasuryOwnerCont>
                     </Paper>
                   </Grid>
-                  {/* <Grid item>
-                    <Paper className={classes.treasuryOwnersPaper} elevation={0}>
-                      <TreasuryOwnerCont>
-                        <div>
-                          <InfoLightTxt>Lawyer</InfoLightTxt>
-                          <InfoBoldTxt>Dejesus Norris</InfoBoldTxt>
-                        </div>
-                        <MailIcon />
-                      </TreasuryOwnerCont>
-                    </Paper>
-                  </Grid> */}
                 </Grid>
               </Paper>
               <TabComponent tabOptions={treasuryDetailsTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -287,7 +271,6 @@ const TreasuryPropertyDetails = (props: any) => {
       )}
       <CustomModal show={showAuctionModal} toggleModal={setShowAuctionModal}>
         <AuctionConfiguration
-          history={props.history}
           propId={props.match.params.propertyId}
           publicAddress={userInfo.publicaddress}
           setShowAuctionModal={setShowAuctionModal}

@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { useStyles, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
 import ComponentLoader from 'shared/loader-components/component-loader'
@@ -27,18 +29,13 @@ import {
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
-interface Props {
-  data: any
-  dataLoading: boolean
-}
-
-const EndAuctionTable = (props: Props) => {
+const EndAuctionTable = (props: any) => {
   const classes = useStyles()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [loading, setLoading] = useState(false)
   const [selectedId, setSelectedId] = useState('')
-  const { data, dataLoading } = props
+  const { data, dataLoading, errorAlert } = props
 
   const endAuction = async (auctionID: string) => {
     setSelectedId(auctionID)
@@ -92,8 +89,12 @@ const EndAuctionTable = (props: Props) => {
           await handleDAIapproval(daiContract, accounts[0], auctionContractAddress, sum)
         }
       }
-    } catch (err) {
-      console.log('Error===>', err)
+    } catch (error) {
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setLoading(false)
     }
@@ -162,4 +163,4 @@ const EndAuctionTable = (props: Props) => {
     </Grid>
   )
 }
-export default EndAuctionTable
+export default connect(null, { errorAlert })(EndAuctionTable)

@@ -25,7 +25,6 @@ interface Props {
 
 const CustomTextField = (props: Props) => {
   const { name, label, type, isDisabled, handleBlur } = props
-  // console.log("-----",handleBlur)
   const classes = textFieldStyle()
   return (
     <Field name={name}>

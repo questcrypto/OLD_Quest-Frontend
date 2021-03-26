@@ -19,7 +19,7 @@ const PassedProperties = (props: any) => {
   const [showTokenClaim, setShowTokenClaim] = useState(false)
   const [showUsdClaim, setShowUsdClaim] = useState(false)
   const [claimData, setClaimData] = useState<any>({})
-  const { dataLoading, data, setActiveTab, updatePassedProp } = props
+  const { dataLoading, data, setActiveTab, updatePassedProp, errorAlert } = props
   const classes = cardStyle()
 
   const handlePropertyDetails = (id: string) => {
@@ -146,6 +146,7 @@ const PassedProperties = (props: any) => {
             setClaimData={setClaimData}
             setShowTokenClaim={setShowTokenClaim}
             updatePassedProp={updatePassedProp}
+            errorAlert={errorAlert}
           />
         )}
       </CustomModal>
@@ -157,6 +158,7 @@ const PassedProperties = (props: any) => {
             setShowUsdClaim={setShowUsdClaim}
             setActiveTab={setActiveTab}
             updatePassedProp={updatePassedProp}
+            errorAlert={errorAlert}
           />
         )}
       </CustomModal>

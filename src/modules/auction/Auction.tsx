@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { useStyles, HeaderTitle } from './style'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -26,7 +27,7 @@ const Auction = (props: any) => {
   const [upcomingLoading, setUpcomingLoading] = useState(false)
   const [passedProperties, setPassedProperties] = useState<any>([])
   const [passedLoading, setPassedLoading] = useState(false)
-  const { userInfo } = props
+  const { userInfo, errorAlert } = props
 
   useEffect(() => {
     const getOnGoingProperties = async () => {
@@ -140,6 +141,7 @@ const Auction = (props: any) => {
           dataLoading={passedLoading}
           setActiveTab={setActiveTab}
           updatePassedProp={updatePassedProp}
+          errorAlert={errorAlert}
         />
       )}
     </Box>
@@ -149,4 +151,4 @@ const Auction = (props: any) => {
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
 })
-export default connect(mapStateToProps)(Auction)
+export default connect(mapStateToProps, { errorAlert })(Auction)

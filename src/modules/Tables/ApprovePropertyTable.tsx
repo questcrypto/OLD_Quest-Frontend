@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { useStyles, NoDataContainer } from './style'
 import { getPropertyType } from 'shared/helpers/globalFunction'
 import ComponentLoader from 'shared/loader-components/component-loader'
@@ -25,7 +27,7 @@ const ApprovePropertyTable = (props: any) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [loading, setLoading] = useState(false)
   const [selectedId, setSelectedId] = useState('')
-  const { type, data, dataLoading, setActiveTab, updateApprove } = props
+  const { type, data, dataLoading, setActiveTab, updateApprove, errorAlert } = props
 
   const handleApproveByAdmin = async (id: any) => {
     setSelectedId(id)
@@ -36,7 +38,11 @@ const ApprovePropertyTable = (props: any) => {
       updateApprove()
       setActiveTab('published')
     } catch (error) {
-      console.log('error==>', error)
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setLoading(false)
     }
@@ -105,4 +111,5 @@ const ApprovePropertyTable = (props: any) => {
     </Grid>
   )
 }
-export default ApprovePropertyTable
+
+export default connect(null, { errorAlert })(ApprovePropertyTable)

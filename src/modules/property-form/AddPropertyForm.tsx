@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err, Error } from 'shared/styles/styled'
 import {
@@ -50,13 +51,16 @@ import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
 import Spinner from 'shared/loader-components/spinner'
 import { propertyType, Landscaping } from 'shared/helpers/dataConstant'
-import axios from 'axios'
-import { apiBaseUrl } from 'services/global-constant'
+import MoneyInputField from 'shared/components/money-input-field'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
+import { apiBaseUrl } from 'services/global-constant'
 import moment from 'moment'
-import MoneyInputField from 'shared/components/money-input-field'
-const AddPropertyForm = () => {
+import axios from 'axios'
+
+const AddPropertyForm = (props: any) => {
+  const classes = useStyle()
+  const classes01 = useStyle01()
   const [showImgModal, setShowImgModal] = useState(false)
   const [imageList, setImageList] = useState<any>([])
   const [imageData, setImageData] = useState<any>([])
@@ -67,8 +71,7 @@ const AddPropertyForm = () => {
   const [showDocError, setShowDocError] = useState(false)
   const [permission, setPermission] = useState(false)
   const [loading, setLoading] = useState(false)
-  const classes = useStyle()
-  const classes01 = useStyle01()
+  const { errorAlert } = props
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -103,7 +106,11 @@ const AddPropertyForm = () => {
         await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
         history.push(Paths.root)
       } catch (error) {
-        console.log('error==>', error)
+        if (!!error && error.response && error.response.data.message) {
+          errorAlert(error.response.data.message)
+        } else {
+          errorAlert('Something went wrong , please try again')
+        }
       } finally {
         setLoading(false)
       }
@@ -220,7 +227,7 @@ const AddPropertyForm = () => {
                     <ErrorMessage component={err} name="Zoning" />
                     <FieldSelect label="Landscaping" name="Landscaping" options={Landscaping} />
                     <ErrorMessage component={err} name="Landscaping" />
-                    <MoneyInputField label="Lot Facts" name="Lotfacts" acceptDecimals={true} />
+                    <MoneyInputField label="Lot Facts" name="Lotfacts" acceptDecimals />
                     <ErrorMessage component={err} name="Lotfacts" />
                   </Grid>
                   <Divider className={classes.dividerStyle} />
@@ -287,11 +294,11 @@ const AddPropertyForm = () => {
                 <Grid item xs={10} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitle>T.I.M.E contract</FormTitle>
-                    <MoneyInputField label="Insurance" name="Insurance" dollarPrefix={true} acceptDecimals={true} />
+                    <MoneyInputField label="Insurance" name="Insurance" dollarPrefix acceptDecimals />
                     <ErrorMessage component={err} name="Insurance" />
-                    <MoneyInputField label="Maintenance" name="Maintenance" dollarPrefix={true} acceptDecimals={true} />
+                    <MoneyInputField label="Maintenance" name="Maintenance" dollarPrefix acceptDecimals />
                     <ErrorMessage component={err} name="Maintenance" />
-                    <MoneyInputField label="HOA fees" name="HOAFees" dollarPrefix={true} acceptDecimals={true} />
+                    <MoneyInputField label="HOA fees" name="HOAFees" dollarPrefix acceptDecimals />
                     <ErrorMessage component={err} name="HOAFees" />
                   </Grid>
                   <Divider className={classes.dividerStyle} />
@@ -539,4 +546,4 @@ const AddPropertyForm = () => {
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
 })
-export default connect(mapStateToProps)(AddPropertyForm)
+export default connect(mapStateToProps, { errorAlert })(AddPropertyForm)

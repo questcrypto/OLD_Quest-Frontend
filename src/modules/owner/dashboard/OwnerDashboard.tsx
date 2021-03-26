@@ -7,10 +7,10 @@ import Grid from '@material-ui/core/Grid'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import TabComponent from 'shared/tab-component'
 import { propertyTabList } from 'shared/helpers/dataConstant'
-import axios from 'axios'
-import { apiBaseUrl } from 'services/global-constant'
 import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
 import PropertyCards from 'shared/components/property-cards'
+import { apiBaseUrl } from 'services/global-constant'
+import axios from 'axios'
 
 const OwnerDashboard = (props: any) => {
   const classes = useStyles()
@@ -131,7 +131,7 @@ const OwnerDashboard = (props: any) => {
           <div>
             {activeTab === 'new' && <PropertyCards list={propertiesList} />}
             {activeTab === 'approved' && <PropertyCards list={approvedProperties} />}
-            {activeTab === 'published' && <PropertyCards published history={props.history} list={publishedProperties} />}
+            {activeTab === 'published' && <PropertyCards list={publishedProperties} />}
             {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} />}
             {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} />}
             {activeTab === 'postAuction' && <PropertyCards list={postAuctionProperties} />}

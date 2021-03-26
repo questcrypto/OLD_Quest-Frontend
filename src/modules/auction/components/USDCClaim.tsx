@@ -9,7 +9,7 @@ import { getWeb3Val, handleDAITokenClaim } from 'modules/block-chain/BlockChainM
 const USDCClaim = (props: any) => {
   const [loading, setLoading] = useState(false)
   const classes = claimModalStyle()
-  const { claimData, setClaimData, setShowUsdClaim, setActiveTab, updatePassedProp } = props
+  const { claimData, setClaimData, setShowUsdClaim, setActiveTab, updatePassedProp, errorAlert } = props
 
   const handleUSDClaim = async () => {
     try {
@@ -20,8 +20,12 @@ const USDCClaim = (props: any) => {
         const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
         await handleDAITokenClaim(auctionContract, accounts[0], claimData.auctionId, treasuryAddress)
       }
-    } catch (err) {
-      console.log('err==>', err)
+    } catch (error) {
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setLoading(false)
       updatePassedProp()

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { auctionConfigStyle, HeaderCont, TitleText } from './style'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
+import { formatDateString } from 'shared/helpers/globalFunction'
+import * as Yup from 'yup'
 import CustomTextField from 'shared/components/custom-text-field'
 import { PrimaryButton } from 'shared/components/buttons'
 import Spinner from 'shared/loader-components/spinner'
@@ -11,10 +13,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
-import { formatDateString } from 'shared/helpers/globalFunction'
-import * as Yup from 'yup'
-import { withRouter } from 'react-router'
-
 const auctionReviewSchema = Yup.object().shape({
   changeNote: Yup.string().required('This field is required'),
 })
@@ -23,7 +21,7 @@ const AuctionReview = (props: any) => {
   const classes = auctionConfigStyle()
   const [agreeLoading, setAgreeLoading] = useState(false)
   const [disagreeLoading, setDisagreeLoading] = useState(false)
-  const { setShowAuctionModal, history, auctionDetails, projectedValue } = props
+  const { setShowAuctionModal, auctionDetails, projectedValue, errorAlert } = props
 
   const handleAuctionRejection = async (e: any, { changeNote }: any) => {
     e.preventDefault()
@@ -37,8 +35,12 @@ const AuctionReview = (props: any) => {
       }
       await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
       setShowAuctionModal(false)
-    } catch (err) {
-      console.log('error ==>', err)
+    } catch (error) {
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setDisagreeLoading(false)
     }
@@ -54,12 +56,12 @@ const AuctionReview = (props: any) => {
         isApprovedByOwner: true,
       }
       await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
-
-      history.push('/')
-      //   setModalAuctionDetails({ currentValue: projectedValue, auctionDetails: { ...auctionDetails, isApprovedByOwner: true } })
-      //   setShowAuctionModal(false)
-    } catch (err) {
-      console.log('error ==>', err)
+    } catch (error) {
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setAgreeLoading(false)
     }
@@ -71,9 +73,7 @@ const AuctionReview = (props: any) => {
         <Box className={classes.rootAuctionStyle}>
           <TitleText>SUCCESS- AUCTION CONFIGURED</TitleText>
           <br />
-          {/* <br /> */}
           <p> YOUR PROPERTY WILL BE AUCTIONED ON {formatDateString(auctionDetails?.startDate)} </p>
-          {/* <br /> */}
           <b>Contact for support:</b>
           <Box marginTop="5px">
             <span>admin@questcrypto.com</span>
@@ -127,7 +127,6 @@ const AuctionReview = (props: any) => {
                     initialValues={{ changeNote: '' }}
                     validationSchema={auctionReviewSchema}
                     onSubmit={(values, { setSubmitting }) => {
-                      // handleSubmit(values)
                       setSubmitting(false)
                     }}
                   >
@@ -172,4 +171,4 @@ const AuctionReview = (props: any) => {
     </Box>
   )
 }
-export default withRouter(AuctionReview)
+export default AuctionReview

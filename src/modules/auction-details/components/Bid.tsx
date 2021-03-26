@@ -26,7 +26,7 @@ export const bidFormSchema = Yup.object().shape({
 const Bid = (props: any) => {
   const classes = bidStyle()
   const [loading, setLoading] = useState(false)
-  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email } = props
+  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email, errorAlert } = props
 
   const handleSubmit = async (values: any) => {
     const totalAmount = token * parseFloat(bidValue)
@@ -49,7 +49,11 @@ const Bid = (props: any) => {
       }
       history.push(Paths.auction)
     } catch (error) {
-      console.log('Error ==>', error)
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setLoading(false)
     }

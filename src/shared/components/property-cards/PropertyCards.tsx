@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { Button, CardActions, CardContent } from '@material-ui/core'
 import { ImageWrap, useStyles, StyledCard } from './style'
 import { Paths } from 'modules/app/components/routes/types'
@@ -9,15 +11,9 @@ import EmptyPage from 'shared/empty-page'
 import CustomModal from 'shared/custom-modal'
 import AuctionReview from 'modules/owner/owner-property-details/components/AuctionReview'
 
-interface Props {
-  list: any[]
-  published?: boolean
-  history?: boolean
-}
-
-const PropertyCards = (props: Props) => {
+const PropertyCards = (props: any) => {
   const classes = useStyles()
-  const { list } = props
+  const { list, errorAlert } = props
 
   const [showAuctionModal, setShowAuctionModal] = useState(false)
   const [modalAuctionDetails, setModalAuctionDetails] = useState({ auctionDetails: {}, currentValue: 0 })
@@ -92,15 +88,14 @@ const PropertyCards = (props: Props) => {
 
       <CustomModal show={showAuctionModal} toggleModal={setShowAuctionModal}>
         <AuctionReview
-          history={props.history}
-          // setModalAuctionDetails={setModalAuctionDetails}
           projectedValue={modalAuctionDetails.currentValue}
           auctionDetails={modalAuctionDetails.auctionDetails}
           setShowAuctionModal={setShowAuctionModal}
+          errorAlert={errorAlert}
         />
       </CustomModal>
     </div>
   )
 }
 
-export default PropertyCards
+export default connect(null, errorAlert)(PropertyCards)

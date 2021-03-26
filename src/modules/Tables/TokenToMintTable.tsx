@@ -43,7 +43,6 @@ const TokenToMintTable = (props: any) => {
         }
       } catch (err) {
         alert(`Failed to load web3, accounts, or contract. Check console for details.`)
-        console.log('err->', err)
       }
     }
     getChainDetails()

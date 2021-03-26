@@ -9,7 +9,7 @@ import { getWeb3Val, handleAuctionWinTokenClaim } from 'modules/block-chain/Bloc
 const TokenClaim = (props: any) => {
   const [loading, setLoading] = useState(false)
   const classes = claimModalStyle()
-  const { claimData, setClaimData, setShowTokenClaim, updatePassedProp } = props
+  const { claimData, setClaimData, setShowTokenClaim, updatePassedProp, errorAlert } = props
 
   const handleTokenClaim = async () => {
     try {
@@ -20,8 +20,12 @@ const TokenClaim = (props: any) => {
         const slcContract = new web3.eth.Contract(slcAbi, SLCContractAddress)
         await handleAuctionWinTokenClaim(slcContract, accounts[0], claimData.auctionId, treasuryAddress)
       }
-    } catch (err) {
-      console.log('err==>', err)
+    } catch (error) {
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setLoading(false)
       updatePassedProp()

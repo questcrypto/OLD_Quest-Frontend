@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { loginStart } from 'logic/actions/user.actions'
 import { useStyle, LoginImgCont, LoginText } from './style'
 import Box from '@material-ui/core/Box'
@@ -25,7 +26,7 @@ const loginSchema = Yup.object().shape({
 const Login = (props: any) => {
   const [dataLoading, setDataLoading] = useState(false)
   const classes = useStyle()
-  const { loading, loginStart } = props
+  const { loading, loginStart, errorAlert } = props
 
   const handleSubmit = async (values: any) => {
     try {
@@ -56,7 +57,11 @@ const Login = (props: any) => {
         loginStart(loginData)
       }
     } catch (error) {
-      console.log('error-->', error)
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     } finally {
       setDataLoading(false)
     }
@@ -96,4 +101,4 @@ const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
 })
 
-export default withRouter(connect(mapStateToProps, { loginStart })(Login))
+export default withRouter(connect(mapStateToProps, { loginStart, errorAlert })(Login))

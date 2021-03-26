@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components'
 import { theme, GlobalStyle } from 'shared/styles/theme'
 import { authStart } from 'logic/actions/user.actions'
 import Routes from './components/routes/Routes'
+import Notifications from 'shared/notifications'
 
 const App = (props: any) => {
   const { authStart } = props
@@ -15,6 +16,7 @@ const App = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <Notifications />
       <Routes />
     </ThemeProvider>
   )

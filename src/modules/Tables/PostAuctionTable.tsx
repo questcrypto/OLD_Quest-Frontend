@@ -22,16 +22,16 @@ const PostAuctionTable = (props: any) => {
   const { data, dataLoading } = props
 
   const renderTableRows = (rowData: any, index: number) => {
-    const { propertyDetails } = rowData
+    const { PropertyDetails } = rowData
     return (
       <TableRow key={index} className={classes.tableRowStyle}>
         <TableCell component="th" scope="row">
-          {`${propertyDetails.Address1},${propertyDetails.State},${propertyDetails.Country}`}
+          {`${PropertyDetails.Address1},${PropertyDetails.State},${PropertyDetails.Country}`}
         </TableCell>
-        <TableCell>{getFullName(propertyDetails.Fname, propertyDetails.Lname)}</TableCell>
-        <TableCell>{getPropertyType(propertyDetails.PropertyType)}</TableCell>
+        <TableCell>{getFullName(PropertyDetails.Fname, PropertyDetails.Lname)}</TableCell>
+        <TableCell>{getPropertyType(PropertyDetails.PropertyType)}</TableCell>
         <TableCell>Approved</TableCell>
-        <TableCell>${parseFloat(propertyDetails.CurrentValue).toFixed(2)}</TableCell>
+        <TableCell>${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
       </TableRow>
     )
   }

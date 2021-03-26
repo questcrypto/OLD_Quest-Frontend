@@ -84,6 +84,7 @@ export const useStyle01 = makeStyles((theme) =>
   createStyles({
     heading: {
       fontSize: theme.typography.pxToRem(15),
+      fontFamily: 'RobotoBold',
     },
     headerStyle: {
       background: '#E0E0E0',
@@ -128,6 +129,7 @@ export const HeaderPath = styled.div`
   margin: 0 0 24px 0;
   font-size: 16px;
   line-height: 19px;
+  font-family: RobotoRegular;
   span {
     opacity: 0.5;
   }
@@ -138,6 +140,7 @@ export const HeaderTitle = styled.h2`
   font-size: 24px;
   line-height: 29px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
 `
 export const PropertyFormCont = styled.div`
   box-sizing: border-box;
@@ -151,6 +154,7 @@ export const FormTitleNumber = styled.div`
   background: ${colors.primary};
   font-size: 16px;
   color: ${colors.white};
+  font-family: RobotoBold;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -163,12 +167,14 @@ export const FormTitle = styled.h4`
   font-size: 20px;
   line-height: 24px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   margin: 0 20px 30px 0;
 `
 export const FormSubTitle = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: ${colors.textSecondary};
+  font-family: RobotoRegular;
   margin: 6px 0 20px 0;
 `
 export const SelectedFileCont = styled.div`
@@ -195,6 +201,7 @@ export const DocText = styled.p`
   font-size: 14px;
   line-height: 19px;
   color: ${colors.textSecondary};
+  font-family: RobotoRegular;
   margin: 0 10px;
   border-bottom: 1px solid ${colors.textSecondary};
   padding-bottom: 5px;
@@ -255,6 +262,7 @@ export const AddAnotherFloorCont = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: ${colors.textPrimary};
+    font-family: RobotoRegular;
   }
   cursor: pointer;
 `
@@ -266,6 +274,7 @@ export const CheckBoxText = styled.p`
   margin: 0;
   font-size: 16px;
   color: ${colors.primary};
+  font-family: RobotoRegular;
 `
 export const FormButtonGroup = styled.div`
   display: flex;
@@ -291,6 +300,7 @@ export const UpLoadedDocImages = styled.div`
     font-size: 14px;
     line-height: 19px;
     color: ${colors.textSecondary};
+    font-family: RobotoRegular;
     margin: 5px 0 0 0;
     text-align: center;
   }
@@ -305,7 +315,7 @@ export const EditFormTitle = styled.p`
   margin: 0 0 12px 0;
   font-size: 24px;
   color: ${colors.textPrimary};
-  font-weight: 600;
+  font-family: RobotoBold;
 `
 export const CommentWrapper = styled.div<any>`
   display: ${(props: any) => (props.showComments ? 'block' : 'none')};
@@ -340,13 +350,14 @@ export const CommentInfo = styled.div`
 export const SenderName = styled.p`
   margin: 0 0 10px 0;
   font-size: 16px;
-  font-weight: bold;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   word-break: break-all;
 `
 
 export const CommentText = styled.p`
   color: #4f4f4f;
   font-size: 14px;
+  font-family: RobotoRegular;
   margin: 0;
 `

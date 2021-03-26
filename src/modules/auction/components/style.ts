@@ -20,12 +20,10 @@ export const cardStyle = makeStyles(() =>
     },
     btnStyle: {
       fontSize: '12px !important',
-      fontWeight: 'bold',
       height: '31px',
     },
     upcomingBtnStyle: {
       fontSize: '12px !important',
-      fontWeight: 'bold',
       height: '40px',
       marginBottom: '10px',
     },
@@ -48,28 +46,32 @@ export const Title = styled.h4`
   font-size: 16px;
   color: ${colors.textPrimary};
   text-align: left;
+  font-family: RobotoBold;
   margin: 0;
 `
 export const CardBoldText = styled.h4`
   font-size: 14px;
   line-height: 16px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   margin: 0;
 `
 export const CardLightText = styled.p`
   font-size: 12px;
   line-height: 26px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   opacity: 0.87;
   margin: 0;
   span {
     opacity: 1;
-    font-weight: bold;
+    font-family: RobotoBold;
   }
 `
 export const UpgradeBidTxt = styled.p`
   font-size: 12px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   opacity: 0.87;
   margin: 0;
   border-bottom: 1px solid ${colors.textPrimary};
@@ -103,6 +105,7 @@ export const claimModalStyle = makeStyles(() =>
 export const ClaimTitle = styled.h2`
   font-size: 24px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   text-align: left;
   margin: 0;
 `
@@ -110,12 +113,14 @@ export const ClaimBoldText = styled.h4`
   font-size: 16px;
   line-height: 20px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   margin: 0;
 `
 export const ClaimLightText = styled.p`
   font-size: 16px;
   line-height: 26px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   margin: 0;
   opacity: 0.87;
 `

@@ -26,6 +26,7 @@ export const useStyle = makeStyles(() =>
 
 export const LoginText = styled.p`
   font-size: 18x;
+  font-family: RobotoRegular;
   text-align: center;
   margin: 0 0 100px 0;
 `

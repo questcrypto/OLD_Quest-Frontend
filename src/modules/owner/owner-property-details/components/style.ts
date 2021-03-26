@@ -31,6 +31,7 @@ export const auctionConfigStyle = makeStyles(() =>
       lineHeight: '16px',
       margin: 0,
       color: colors.textPrimary,
+      fontFamily: 'RobotoRegular',
     },
   })
 )
@@ -40,6 +41,7 @@ export const PaginationText = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
 `
 export const NoDataContainer = styled.div`
   margin: 50px 0;
@@ -60,4 +62,5 @@ export const TitleText = styled.h2`
   font-size: 20px;
   margin: 0;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
 `

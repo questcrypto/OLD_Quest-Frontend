@@ -1,10 +1,9 @@
 import { createGlobalStyle } from 'styled-components'
-import ProximaBold from 'assets/fonts/proxima/ProximaNovaBold.otf'
-import ProximaThin from 'assets/fonts/proxima/ProximaNovaThin.otf'
-import NunitoBold from 'assets/fonts/Nunito_Sans/NunitoSans-Bold.ttf'
-import NunitoSemiBold from 'assets/fonts/Nunito_Sans/NunitoSans-SemiBold.ttf'
-import NunitoRegular from 'assets/fonts/Nunito_Sans/NunitoSans-Regular.ttf'
-import NunitoLight from 'assets/fonts/Nunito_Sans/NunitoSans-Light.ttf'
+import RobotoBold from 'assets/fonts/Roboto/Roboto-Bold.ttf'
+import RobotoMediumBold from 'assets/fonts/Roboto/Roboto-Medium.ttf'
+import RobotoRegular from 'assets/fonts/Roboto/Roboto-Regular.ttf'
+import RobotoLight from 'assets/fonts/Roboto/Roboto-Light.ttf'
+import RobotoThin from 'assets/fonts/Roboto/Roboto-Thin.ttf'
 
 export interface Colors {
   themeBackground: string
@@ -88,37 +87,28 @@ export const screenSizes: ScreenSizes = {
 
 export const GlobalStyle = createGlobalStyle`
 @font-face {
-  font-family: ProximaBold;
-  src: url(${ProximaBold});
+  font-family: RobotoBold;
+  src: url(${RobotoBold});
 }
 
 @font-face {
-  font-family: ProximaThin;
-  src: url(${ProximaThin});
+  font-family: RobotoMediumBold;
+  src: url(${RobotoMediumBold});
 }
 
 @font-face {
-  font-family: ProximaRegular;
-  src: url(${NunitoRegular});
+  font-family: RobotoRegular;
+  src: url(${RobotoRegular});
 }
 
 @font-face {
-  font-family: NunitoBold;
-  src: url(${NunitoBold});
+  font-family: RobotoLight;
+  src: url(${RobotoLight});
 }
 @font-face {
-  font-family: NunitoSemiBold;
-  src: url(${NunitoSemiBold});
+  font-family: RobotoThin;
+  src: url(${RobotoThin});
 }
-@font-face {
-  font-family: NunitoRegular; 
-  src: url(${NunitoRegular});
-}
-@font-face {
-  font-family: NunitoLight;
-  src: url(${NunitoLight});
-}
-
 
 body {
   background: ${colors.themeBackground} !important

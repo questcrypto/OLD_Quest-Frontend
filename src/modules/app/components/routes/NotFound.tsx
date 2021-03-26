@@ -10,15 +10,16 @@ const StyledNotFound = styled.div`
   margin-top: 50px;
 `
 const Title = styled.div`
-  font-weight: 600;
   font-size: 20px;
   line-height: 26px;
   color: #2b3141;
+  font-family: RobotoBold;
 `
 const Text = styled.div`
   font-size: 14px;
   line-height: 26px;
   color: #676767;
+  font-family: RobotoRegular;
 `
 
 export function NotFound() {

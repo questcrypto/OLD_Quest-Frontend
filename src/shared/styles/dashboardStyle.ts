@@ -78,8 +78,10 @@ export const StyledLinearProgress = withStyles({
 
 export const HeaderTitle = styled.h3`
   margin: 0;
+  font-family: RobotoBold;
 `
 export const ProgressText = styled.p`
   margin: 0;
   color: #302e35;
+  font-family: RobotoRegular;
 `

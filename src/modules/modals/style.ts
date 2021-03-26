@@ -54,12 +54,14 @@ export const BoldText = styled.h4`
   font-size: 16px;
   line-height: 20px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   margin: 0;
 `
 export const LightText = styled.p`
   font-size: 14px;
   line-height: 26px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   opacity: 0.87;
   margin: 0;
 `
@@ -68,7 +70,7 @@ export const Title = styled.p`
   line-height: 24px;
   margin: 0;
   color: ${colors.textPrimary};
-  font-weight: bold;
+  font-family: RobotoBold;
   span {
     font-size: 15px;
     line-height: 18px;
@@ -81,5 +83,6 @@ export const InformationText = styled.p`
   font-size: 12px;
   line-height: 20px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   margin: 0;
 `

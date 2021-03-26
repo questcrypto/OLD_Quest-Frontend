@@ -22,6 +22,7 @@ export const HeaderPath = styled.div`
   margin: 0 0 24px 0;
   font-size: 16px;
   line-height: 19px;
+  font-family: RobotoRegular;
   span {
     opacity: 0.5;
   }
@@ -32,4 +33,5 @@ export const HeaderTitle = styled.h2`
   font-size: 24px;
   line-height: 29px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
 `

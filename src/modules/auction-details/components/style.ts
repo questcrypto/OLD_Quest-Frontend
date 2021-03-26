@@ -9,7 +9,7 @@ export const imagesStyle = makeStyles(() =>
       height: 250,
       // width: '100%',
       objectFit: 'contain',
-      width: '225px'
+      width: '225px',
     },
     smallImgCont: {
       margin: '20px 0 12px 0',
@@ -142,12 +142,14 @@ export const BoldText = styled.h4`
   font-size: 16px;
   line-height: 20px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   margin: 0;
 `
 export const LightText = styled.p`
   font-size: 14px;
   line-height: 26px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   opacity: 0.87;
   margin: 0;
 `
@@ -155,6 +157,7 @@ export const UpgradeInfoText = styled.p`
   font-size: 12px;
   line-height: 16px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   margin: 0 0 8px 0;
 `
 export const AboutPropertyTxt = styled(LightText)`
@@ -165,7 +168,7 @@ export const Title = styled.p`
   line-height: 24px;
   margin: 0;
   color: ${colors.textPrimary};
-  font-weight: bold;
+  font-family: RobotoRegular;
   span {
     font-size: 15px;
     line-height: 18px;
@@ -214,6 +217,7 @@ export const StyledSlider = withStyles({
     '& *': {
       background: 'transparent',
       color: colors.primary,
+      fontFamily: 'RobotoRegular',
       fontSize: '16px',
       lineHeight: '26px',
     },
@@ -269,6 +273,7 @@ export const StatText = styled.p`
   font-size: 12px;
   line-height: 26px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   opacity: 0.87;
   margin: 0;
 `
@@ -276,6 +281,7 @@ export const StatTitle = styled.h2`
   font-size: 18px;
   line-height: 22px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   margin: 0 0 30px 0;
 `
 export const StatTimeText = styled(StatText)`

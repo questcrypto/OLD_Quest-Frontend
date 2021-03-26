@@ -52,6 +52,7 @@ export const useStyles = makeStyles(() =>
       fontSize: '16px',
       lineHeight: '19px',
       color: colors.textPrimary,
+      fontFamily: 'RobotoRegular',
     },
 
     dividerStyle: {
@@ -77,4 +78,5 @@ export const ListItemText = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
 `

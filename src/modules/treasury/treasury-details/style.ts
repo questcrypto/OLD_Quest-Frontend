@@ -34,24 +34,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       border: '1px solid #E0E0E0',
     },
     btnGroup: { display: 'flex', alignItems: 'center', marginTop: '80px' },
-    btn1Style: {
-      color: colors.textPrimary,
-      fontSize: '14px',
-      backgroundColor: '#E0E0E0',
-      width: '120px',
-      maxWidth: '120px',
-      marginRight: '24px',
-    },
-    btn2Style: {
-      color: colors.white,
-      backgroundColor: colors.primary,
-      fontSize: '14px',
-      '&:hover': {
-        backgroundColor: colors.primary,
-      },
-      width: '120px',
-      maxWidth: '120px',
-    },
     rentalPaper: {
       padding: theme.spacing(3),
       backgroundColor: '#FBFBFB',
@@ -125,6 +107,7 @@ export const HeaderPath = styled.div`
   margin: 0 0 24px 0;
   font-size: 16px;
   line-height: 19px;
+  font-family: RobotoRegular;
   span {
     opacity: 0.5;
   }
@@ -135,6 +118,7 @@ export const HeaderTitle = styled.h2`
   font-size: 24px;
   line-height: 29px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
 `
 export const AddressContainer = styled.div`
   display: flex;
@@ -144,12 +128,14 @@ export const AddressContainer = styled.div`
 export const AddressInfo = styled.div`
   h4 {
     font-size: 20px;
+    font-family: RobotoBold;
     margin: 0;
   }
   p {
     margin: 10px 0 0 0;
     font-size: 16px;
     color: ${colors.textPrimary};
+    font-family: RobotoRegular;
     opacity: 0.87;
   }
 `
@@ -163,6 +149,7 @@ export const EditSection = styled.div`
   span {
     font-size: 14px;
     color: ${colors.primary};
+    font-family: RobotoRegular;
     margin-right: 6px;
   }
   cursor: pointer;
@@ -186,12 +173,14 @@ export const PriceInfo = styled.div`
 export const AboutProperty = styled.p`
   color: ${colors.textPrimary};
   font-size: 14px;
+  font-family: RobotoRegular;
 `
 export const DocWrapper = styled.div`
   margin-top: 30px;
   p {
     font-size: 14px;
     color: ${colors.textPrimary};
+    font-family: RobotoRegular;
     opacity: 0.87;
   }
   .doc-img {
@@ -210,6 +199,7 @@ export const DocName = styled.p`
   text-align: center;
   font-size: 12px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   opacity: 0.6;
 `
 
@@ -217,18 +207,21 @@ export const FeatureHeading = styled.h4`
   margin: 0 0 30px 0;
   font-size: 15px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   text-align: left;
 `
 export const InfoBoldTxt = styled.h2`
   font-size: 16px;
   line-height: 22px;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
   margin: 0;
 `
 export const InfoLightTxt = styled.p`
   font-size: 14px;
   line-height: 16px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   opacity: 0.87;
   margin: 0;
 `

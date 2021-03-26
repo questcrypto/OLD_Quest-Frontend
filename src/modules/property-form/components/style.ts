@@ -5,10 +5,10 @@ import { createStyles, makeStyles } from '@material-ui/core/styles'
 export const useStyle = makeStyles(() =>
   createStyles({
     headerTitle: {
-      fontWeight: 500,
       fontSize: '20px',
       lineHeight: '20px',
-      color: '#302E35',
+      color: colors.textPrimary,
+      fontFamily: 'RobotoBold',
     },
     uploadDocStyle: {
       backgroundColor: '#F3F3F3 !important',

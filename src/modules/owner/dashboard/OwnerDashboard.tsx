@@ -105,6 +105,18 @@ const OwnerDashboard = (props: any) => {
     getPostAuctionProperties()
   }, [userInfo])
 
+  const refreshPublishedPropertiesList = async () => {
+    try {
+      setPublishedLoading(true)
+      const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
+      setPublishedProperties(res.data)
+    } catch (error) {
+      setPublishedProperties([])
+    } finally {
+      setPublishedLoading(false)
+    }
+  }
+
   return (
     <Grid>
       <Grid container spacing={2} className={classes.headerStyle}>
@@ -141,7 +153,9 @@ const OwnerDashboard = (props: any) => {
           <div>
             {activeTab === 'new' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
             {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
-            {activeTab === 'published' && <PropertyCards list={publishedProperties} dataLoading={publishedLoading} />}
+            {activeTab === 'published' && (
+              <PropertyCards refresh={refreshPublishedPropertiesList} list={publishedProperties} dataLoading={publishedLoading} />
+            )}
             {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} dataLoading={preAuctionLoading} />}
             {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} dataLoading={onAuctionLoading} />}
             {activeTab === 'postAuction' && <PropertyCards list={postAuctionProperties} dataLoading={postAuctionLoading} />}

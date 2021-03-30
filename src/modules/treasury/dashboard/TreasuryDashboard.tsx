@@ -40,6 +40,7 @@ const TreasuryDashboard = (props: any) => {
         setPublishedLoading(false)
       }
     }
+
     // const getTokenToMintData = async () => {
     //   try {
     //     setTransactionLoading(true)
@@ -53,6 +54,7 @@ const TreasuryDashboard = (props: any) => {
     //     setTransactionLoading(false)
     //   }
     // }
+
     const getPreAuctionProperties = async () => {
       try {
         setPreAuctionLoading(true)

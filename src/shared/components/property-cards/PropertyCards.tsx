@@ -14,7 +14,7 @@ import { apiBaseUrl } from 'services/global-constant'
 
 const PropertyCards = (props: any) => {
   const classes = useStyles()
-  const { list, dataLoading, errorAlert } = props
+  const { list, dataLoading, errorAlert, refresh } = props
 
   const [showAuctionModal, setShowAuctionModal] = useState(false)
   const [modalAuctionDetails, setModalAuctionDetails] = useState({ auctionDetails: {}, currentValue: 0 })
@@ -93,6 +93,7 @@ const PropertyCards = (props: any) => {
 
           <CustomModal show={showAuctionModal} toggleModal={setShowAuctionModal}>
             <AuctionReview
+              refresh={refresh}
               projectedValue={modalAuctionDetails.currentValue}
               auctionDetails={modalAuctionDetails.auctionDetails}
               setShowAuctionModal={setShowAuctionModal}

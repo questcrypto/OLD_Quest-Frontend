@@ -41,7 +41,8 @@ const Bid = (props: any) => {
     try {
       setLoading(true)
       const currentValue = await currentBidValue(dataVal.auctionID)
-      await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount, treasuryAddress)
+      console.log(dataVal.totalAmount - currentValue)
+      await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount - currentValue, treasuryAddress)
       if (currentValue > 0) {
         await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
       } else {

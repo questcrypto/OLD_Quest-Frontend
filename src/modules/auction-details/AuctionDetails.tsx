@@ -13,6 +13,7 @@ import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import history from 'modules/app/components/history'
 import { getDaysValue } from 'shared/helpers/globalFunction'
+import { getApprovedTokens } from 'modules/block-chain/BlockChainMethods'
 
 const AuctionDetails = (props: any) => {
   const classes = useStyles()
@@ -24,7 +25,20 @@ const AuctionDetails = (props: any) => {
   const [reservePriceMet, setReservePriceMet] = useState(false)
   const [currentBid, setCurrentBid] = useState(0)
   const [propertyId, setPropertyId] = useState('')
+  const [approvedTokens, setApprovedTokens] = useState(0)
   const { userInfo, match, errorAlert } = props
+
+  const getApprovedTokenValue = async () => {
+    try {
+      setDataLoading(true)
+      const tokens = await getApprovedTokens()
+      setApprovedTokens(tokens)
+    } catch (err) {
+      setApprovedTokens(0)
+    } finally {
+      setDataLoading(false)
+    }
+  }
 
   useEffect(() => {
     const auctionId = match.params.auctionId
@@ -69,6 +83,8 @@ const AuctionDetails = (props: any) => {
         setDataLoading(false)
       }
     }
+
+    getApprovedTokenValue()
     getAuctionData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match])
@@ -105,6 +121,8 @@ const AuctionDetails = (props: any) => {
                   totalToken={totalToken}
                   auctionID={match.params.auctionId}
                   biddersID={!!userInfo && userInfo.publicaddress}
+                  approvedTokens={approvedTokens}
+                  refreshApprovedTokensValue={setApprovedTokens}
                   propertyID={auctionData.auctionDetails[0].propidId}
                   propertyName={auctionData.propertyDetail.propertyDetails.PropertyName}
                   myBidDetails={auctionData?.myBidDetails!}

@@ -107,10 +107,6 @@ export const saveBlockchainBid = async (auctionId: string, totalAmount: any, add
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
-    const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
-    const approvedTokens = await daiContract.methods.allowance(accounts[0], auctionContractAddress).call()
-    if (parseInt(approvedTokens) < totalAmount)
-      await daiContract.methods.approve(auctionContractAddress, totalAmount - approvedTokens).send({ from: accounts[0] })
     const res = await auctionContract.methods.saveBid(auctionId, totalAmount, address).send({ from: accounts[0] })
     return res
   }
@@ -135,6 +131,19 @@ export const handleStoreWinTokenAmount = async (
 ) => {
   const res = await contractSLC.methods.STORE_AUCTION_TOKENS_TO_BE_GIVEN(auctionID, BiddersArray, BidAmount).send({ from: account })
   return res
+}
+
+export const getApprovedTokens = async () => {
+  const web3 = await getWeb3Val()
+
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
+    const approvedTokens = await daiContract.methods.allowance(accounts[0], auctionContractAddress).call()
+    return approvedTokens
+  }
+
+  return 0
 }
 
 export const handleDAIapproval = async (contractDai: any, account: string, user: any, ApproveAmount: any) => {

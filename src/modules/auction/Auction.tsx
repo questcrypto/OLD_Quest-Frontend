@@ -14,6 +14,7 @@ import UpcomingProperties from './components/UpcomingProperties'
 import PassedProperties from './components/PassedProperties'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import { getApprovedTokens } from '../../modules/block-chain/BlockChainMethods'
 
 const Auction = (props: any) => {
   const classes = useStyles()
@@ -27,6 +28,8 @@ const Auction = (props: any) => {
   const [upcomingLoading, setUpcomingLoading] = useState(false)
   const [passedProperties, setPassedProperties] = useState<any>([])
   const [passedLoading, setPassedLoading] = useState(false)
+  const [approvedTokens, setApprovedTokens] = useState(0)
+
   const { userInfo, errorAlert } = props
 
   useEffect(() => {
@@ -66,15 +69,16 @@ const Auction = (props: any) => {
     }
     const getPassedProperties = async () => {
       try {
-        setPassedLoading(true)
+        setOnGoingLoading(true)
         const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction/${userInfo.publicaddress}`)
         setPassedProperties(res.data)
       } catch (error) {
         setPassedProperties([])
       } finally {
-        setPassedLoading(false)
+        setOnGoingLoading(false)
       }
     }
+
     getOnGoingProperties()
     getParticipateProperties()
     getUpcomingProperties()
@@ -132,7 +136,9 @@ const Auction = (props: any) => {
         </Grid>
       </Grid>
       <TabComponent tabOptions={auctionTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
-      {activeTab === 'ongoing' && <OnGoingProperties data={onGoingProperties} dataLoading={onGoingLoading} />}
+      {activeTab === 'ongoing' && (
+        <OnGoingProperties data={onGoingProperties} dataLoading={onGoingLoading} approvedTokens={approvedTokens} />
+      )}
       {activeTab === 'participating' && <ParticipateProperties data={participateProperties} dataLoading={participateLoading} />}
       {activeTab === 'upcoming' && <UpcomingProperties data={upcomingProperties} dataLoading={upcomingLoading} />}
       {activeTab === 'passed' && (

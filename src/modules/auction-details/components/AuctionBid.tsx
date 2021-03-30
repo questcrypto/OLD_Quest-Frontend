@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Error } from 'shared/styles/styled'
 import { auctionBidStyle, LightText, BoldText, Title, CurrentBidInfo, StyledSlider, SliderWrap, ShareLinkCont, MakeBidCont } from './style'
 import Box from '@material-ui/core/Box'
@@ -21,6 +21,8 @@ import Bid from './Bid'
 import { integerNumberRegex, floatNumRegex } from 'shared/helpers/regexConstants'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import { currentBidValue, getWeb3Val, handleDAIapproval } from 'modules/block-chain/BlockChainMethods'
+import { auctionContractAddress, daiAbi, DAIContractAddress } from 'modules/block-chain/abi'
 
 const valuetext = (value: number) => {
   return `${value}%`
@@ -46,7 +48,11 @@ const AuctionBid = (props: any) => {
     email,
     suggestedLowestBid,
     errorAlert,
+    approvedTokens,
+    refreshApprovedTokensValue,
   } = props
+
+  console.log(approvedTokens)
 
   let sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100
   sliderDefaultValue = parseFloat(sliderDefaultValue.toFixed(2))
@@ -55,6 +61,17 @@ const AuctionBid = (props: any) => {
   const [equityValue, setEquityValue] = useState(sliderDefaultValue! || 0)
   const [bidValue, setBidValue] = useState(myBidDetails[0]?.bidPrice! || '0.00')
   const [minBid, setMinBid] = useState(myBidDetails[0]?.bidPrice! || 0)
+  const [isTokensApproved, setIsTokensApproved] = useState(approvedTokens > 0 ? false : true)
+  const [currentBidTokens, setCurrentBidTokens] = useState(0)
+
+  const updateCurrentBidTokens = async () => {
+    const currentValue = await currentBidValue(auctionID)
+    setCurrentBidTokens(currentValue)
+  }
+
+  useEffect(() => {
+    updateCurrentBidTokens()
+  })
 
   const handleTokenChange = (event: any) => {
     const { value } = event.target
@@ -65,6 +82,9 @@ const AuctionBid = (props: any) => {
         const equityVal: any = (tokenVal / totalToken) * 100
         setEquityValue(equityVal.toFixed(2))
       }
+      const totalAmount = tokenVal * parseFloat(bidValue) - currentBidTokens
+      setIsTokensApproved(approvedTokens >= totalAmount)
+
       if (tokenVal < myBidDetails[0]?.currentAllotment) {
         setTokenError(true)
       } else setTokenError(false)
@@ -78,7 +98,11 @@ const AuctionBid = (props: any) => {
     setEquityValue(equityVal)
     const tokenValData: any = (totalToken / 100) * equityVal
     setToken(parseInt(tokenValData))
+
+    const totalAmount = parseInt(tokenValData) * parseFloat(bidValue) - currentBidTokens
+    setIsTokensApproved(approvedTokens >= totalAmount)
   }
+
   const handleBidValueChange = (event: any) => {
     setMinBidError(false)
     const { value } = event.target
@@ -87,6 +111,9 @@ const AuctionBid = (props: any) => {
       if (floatNumRegex.test(value.toString())) {
         setBidValue(value)
         setBidError(false)
+
+        const totalAmount = token * parseFloat(value) - currentBidTokens
+        setIsTokensApproved(approvedTokens >= totalAmount)
       }
       if (value < myBidDetails[0]?.bidPrice!) setMinBidError(true)
       else setMinBidError(false)
@@ -108,6 +135,32 @@ const AuctionBid = (props: any) => {
       return `0.00 USDC`
     }
   }
+
+  const handleApproveTokens = async () => {
+    try {
+      const web3 = await getWeb3Val()
+
+      const totalAmount = token * parseFloat(bidValue)
+
+      if (web3) {
+        const accounts = await web3.eth.getAccounts()
+        const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
+
+        const res = await handleDAIapproval(
+          daiContract,
+          accounts[0],
+          auctionContractAddress,
+          totalAmount - approvedTokens - currentBidTokens
+        )
+        console.log(res)
+        refreshApprovedTokensValue(totalAmount - approvedTokens - currentBidTokens)
+        console.log(totalAmount - approvedTokens - currentBidTokens)
+      }
+    } catch (err) {
+      console.log('Error===>', err)
+    }
+  }
+
   const handleMakeBid = async () => {
     if (parseFloat(bidValue) > 0 && token > 0) {
       try {
@@ -186,9 +239,19 @@ const AuctionBid = (props: any) => {
               <TextInputField name="total" label="Total" value={getTotalValue()} isDisabled />
             </Grid>
             <Grid item>
-              <PrimaryButton disabled={tokenError || suggMinBidError} onClick={() => handleMakeBid()}>
-                {loading ? <Spinner /> : 'MAKE BID'}
-              </PrimaryButton>
+              <Grid container>
+                <Grid item>
+                  <PrimaryButton disabled={tokenError || suggMinBidError || isTokensApproved} onClick={() => handleApproveTokens()}>
+                    {loading ? <Spinner /> : 'Approval'}
+                  </PrimaryButton>
+                </Grid>
+
+                <Grid item>
+                  <PrimaryButton disabled={tokenError || suggMinBidError || !isTokensApproved} onClick={() => handleMakeBid()}>
+                    {loading ? <Spinner /> : 'MAKE BID'}
+                  </PrimaryButton>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
           <LightText style={{ marginTop: '10px' }}>Total wallet balance = 2597.88 USDC</LightText>

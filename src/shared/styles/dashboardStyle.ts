@@ -53,17 +53,6 @@ export const useStyles = makeStyles((theme) =>
       width: '100%',
       marginTop: '8px',
     },
-    addPropertyBtnStyle: {
-      width: '100% !important',
-      height: '36px',
-      color: `${colors.white} !important`,
-      backgroundColor: `${colors.primary} !important`,
-      fontSize: '12px',
-      padding: '10px 5px',
-      '&:hover': {
-        backgroundColor: `${colors.primary} !important`,
-      },
-    },
   })
 )
 
@@ -78,8 +67,10 @@ export const StyledLinearProgress = withStyles({
 
 export const HeaderTitle = styled.h3`
   margin: 0;
+  font-family: RobotoBold;
 `
 export const ProgressText = styled.p`
   margin: 0;
   color: #302e35;
+  font-family: RobotoRegular;
 `

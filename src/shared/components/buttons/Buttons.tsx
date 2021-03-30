@@ -6,7 +6,8 @@ export const PrimaryButton = withStyles({
   root: {
     backgroundColor: colors.primary,
     color: colors.white,
-    fontSize: '14px',
+    fontFamily: 'RobotoBold',
+    fontSize: '12px',
     variant: 'contained',
     '&:hover': {
       backgroundColor: colors.primary,
@@ -24,7 +25,8 @@ export const SecondaryButton = withStyles({
   root: {
     backgroundColor: colors.lightGray,
     color: colors.textPrimary,
-    fontSize: '14px',
+    fontFamily: 'RobotoBold',
+    fontSize: '12px',
     '&:hover': {
       backgroundColor: colors.lightGray,
     },

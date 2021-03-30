@@ -21,7 +21,7 @@ const AuctionReview = (props: any) => {
   const classes = auctionConfigStyle()
   const [agreeLoading, setAgreeLoading] = useState(false)
   const [disagreeLoading, setDisagreeLoading] = useState(false)
-  const { setShowAuctionModal, auctionDetails, projectedValue, errorAlert } = props
+  const { setShowAuctionModal, auctionDetails, projectedValue, errorAlert, refresh } = props
 
   const handleAuctionRejection = async (e: any, { changeNote }: any) => {
     e.preventDefault()
@@ -55,7 +55,10 @@ const AuctionReview = (props: any) => {
         Comment: changeNote,
         isApprovedByOwner: true,
       }
-      await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
+      const res = await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
+      setShowAuctionModal(false)
+      refresh()
+      console.log(res)
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)

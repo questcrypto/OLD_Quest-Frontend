@@ -14,6 +14,7 @@ export const FeatureName = styled.div`
   span {
     font-size: 15px;
     color: ${colors.textPrimary};
+    font-family: RobotoRegular;
     opacity: 0.6;
   }
   img {
@@ -25,6 +26,7 @@ export const FeatureValue = styled.p`
   margin: 0;
   font-size: 15px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
   width: 40%;
   text-align: left;
 `

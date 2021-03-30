@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Button from '@material-ui/core/Button'
-import Web3 from 'web3'
-
-import { useStyles, TopPanelCont } from './style'
+import { PrimaryButton } from 'shared/components/buttons'
 import { connect } from 'react-redux'
-import { logout } from '../../../../../logic/actions/user.actions'
+import { logout } from 'logic/actions/user.actions'
+import Web3 from 'web3'
+import { TopPanelCont } from './style'
 
 const TopPanel = (props: any) => {
   const [account, setAccount] = useState(false)
-  const classes = useStyles()
   const web3: Web3 = new Web3(window.ethereum)
 
   setInterval(function () {
@@ -33,14 +31,6 @@ const TopPanel = (props: any) => {
         return
       }
     }
-
-    // if (!coinbase) {
-    //   setAccount(false)
-    //   return
-    // }
-    // const publicaddress = coinbase.toLowerCase()
-
-    // if (publicaddress) setAccount(true)
   }
 
   useEffect(() => {
@@ -54,7 +44,7 @@ const TopPanel = (props: any) => {
     })
   }
 
-  return <TopPanelCont>{!account && <Button className={classes.buttonStyle}>Connect Wallet</Button>}</TopPanelCont>
+  return <TopPanelCont>{!account && <PrimaryButton>Connect Wallet</PrimaryButton>}</TopPanelCont>
 }
 
 const mapStateToProps = (state: any) => ({

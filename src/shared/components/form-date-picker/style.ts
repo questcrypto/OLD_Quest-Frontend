@@ -11,11 +11,10 @@ export const StyledDatePicker = styled.div`
       border: 1px solid;
       border-color: ${colors.primary};
       padding: 18px 26px;
-      font-size: 18px;
       font-size: 14px;
       line-height: 26px;
       color: ${colors.textPrimary};
-      font-family: NunitoRegular;
+      font-family: RobotoRegular;
       outline: none;
       border: 1px solid rgb(240, 243, 244);
       background: ${colors.white};
@@ -39,7 +38,6 @@ export const err = styled.p`
   color: red;
   font-size: 12px;
   margin: -10px 0 1rem 5px;
-  font-family: Light;
   text-align: left;
-  font-family: NunitoRegular;
+  font-family: RobotoRegular;
 `

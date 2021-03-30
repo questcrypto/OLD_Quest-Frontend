@@ -5,10 +5,10 @@ import { createStyles, makeStyles } from '@material-ui/core/styles'
 export const useStyle = makeStyles(() =>
   createStyles({
     headerTitle: {
-      fontWeight: 500,
       fontSize: '20px',
       lineHeight: '20px',
-      color: '#302E35',
+      color: colors.textPrimary,
+      fontFamily: 'RobotoBold',
     },
     uploadDocStyle: {
       backgroundColor: '#F3F3F3 !important',
@@ -16,17 +16,6 @@ export const useStyle = makeStyles(() =>
       padding: '20px 30px',
       dropzoneClass: {
         background: 'red',
-      },
-    },
-
-    cancelFileBtnStyle: {
-      marginRight: '20px',
-    },
-    insertFileBtnStyle: {
-      color: colors.white,
-      backgroundColor: colors.primary,
-      '&:hover': {
-        backgroundColor: colors.primary,
       },
     },
   })
@@ -60,4 +49,7 @@ export const UploadDocBtnGroup = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 50px;
+  button {
+    margin-left: 20px;
+  }
 `

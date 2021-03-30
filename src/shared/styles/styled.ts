@@ -8,12 +8,14 @@ export const Container = styled.div`
 `
 export const Error = styled.p`
   font-size: 12px;
+  font-family: RobotoRegular;
   color: red;
 `
 export const err = styled.p`
   color: red;
   font-size: 12px;
   margin: -10px 0 1rem 5px;
+  font-family: RobotoRegular;
   text-align: left;
 `
 export const WinLossText = styled.div<any>`
@@ -21,7 +23,7 @@ export const WinLossText = styled.div<any>`
   width: 200px;
   height: 45px;
   font-size: 18px;
-  font-weight: bold;
+  font-family: RobotoBold;
   text-transform: uppercase;
   text-align: center;
   display: flex;

@@ -17,7 +17,7 @@ export const docTableStyle = makeStyles(() =>
         fontSize: '15px',
         lineHeight: '18px',
         color: colors.textPrimary,
-        fontWeight: 600,
+        fontFamily: 'RobotoBold',
       },
       // boxShadow: '0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.14), 0px 1px 8px rgba(0, 0, 0, 0.12);',
     },
@@ -70,6 +70,7 @@ export const PaginationText = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: ${colors.textPrimary};
+  font-family: RobotoRegular;
 `
 export const NoDataContainer = styled.div`
   margin: 50px 0;
@@ -90,4 +91,5 @@ export const TitleText = styled.h2`
   font-size: 20px;
   margin: 0;
   color: ${colors.textPrimary};
+  font-family: RobotoBold;
 `

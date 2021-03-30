@@ -87,140 +87,138 @@ const OwnerPropertyDetails = (props: any) => {
   }
 
   return (
-    <>
-      <Box>
-        <HeaderContainer>
-          <HeaderPath>
-            <span>Properties / Details</span> / {props.match.params.propertyId}
-          </HeaderPath>
-          <Grid container justify="space-between" spacing={2}>
-            <Grid item>
-              <HeaderTitle>{propertyInfo?.propertyDetails ? propertyInfo.propertyDetails.PropertyName : ''}</HeaderTitle>
-            </Grid>
-            <Grid item>
-              <PrimaryButton variant="contained" onClick={() => handleEditProperty()}>
-                REVIEW PROPERTY
-              </PrimaryButton>
-            </Grid>
+    <Box>
+      <HeaderContainer>
+        <HeaderPath>
+          <span>Properties / Details</span> / {props.match.params.propertyId}
+        </HeaderPath>
+        <Grid container justify="space-between" spacing={2}>
+          <Grid item>
+            <HeaderTitle>{propertyInfo?.propertyDetails ? propertyInfo.propertyDetails.PropertyName : ''}</HeaderTitle>
           </Grid>
-        </HeaderContainer>
-        {dataLoading ? (
-          <ComponentLoader />
-        ) : (
-          <div>
-            {!!propertyInfo && Object.values(propertyInfo).length > 0 ? (
-              <div>
-                <Paper className={classes.treasuryPaper} elevation={1}>
-                  <Grid container className={classes.infoContStyle} spacing={2}>
-                    <Grid item>
-                      <img src={`${apiBaseUrl}/${selectImg}`} alt="" />
-                    </Grid>
-                    <Grid item>
-                      <InfoBoldTxt>{propertyInfo.propertyDetails.Address1!}</InfoBoldTxt>
-                      <InfoLightTxt>
-                        {`${propertyInfo.propertyDetails.Address2!},
+          <Grid item>
+            <PrimaryButton variant="contained" onClick={() => handleEditProperty()}>
+              REVIEW PROPERTY
+            </PrimaryButton>
+          </Grid>
+        </Grid>
+      </HeaderContainer>
+      {dataLoading ? (
+        <ComponentLoader />
+      ) : (
+        <div>
+          {!!propertyInfo && Object.values(propertyInfo).length > 0 ? (
+            <div>
+              <Paper className={classes.treasuryPaper} elevation={1}>
+                <Grid container className={classes.infoContStyle} spacing={2}>
+                  <Grid item>
+                    <img src={`${apiBaseUrl}/${selectImg}`} alt="" />
+                  </Grid>
+                  <Grid item>
+                    <InfoBoldTxt>{propertyInfo.propertyDetails.Address1!}</InfoBoldTxt>
+                    <InfoLightTxt>
+                      {`${propertyInfo.propertyDetails.Address2!},
                           ${propertyInfo.propertyDetails.State!},
                           ${propertyInfo.propertyDetails.City!},
                           ${propertyInfo.propertyDetails.Country!} 
                           ${propertyInfo.propertyDetails.PostalCode!}
                         `}
-                      </InfoLightTxt>
-                    </Grid>
-                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                    <Grid item>
-                      <InfoLightTxt>Onboarding date</InfoLightTxt>
-                      <InfoBoldTxt>{formatExtendedDateString(propertyInfo.propertyDetails.CreatedAt)}</InfoBoldTxt>
-                    </Grid>
-                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                    <Grid item>
-                      <InfoLightTxt>Status</InfoLightTxt>
-                      <InfoBoldTxt>Published</InfoBoldTxt>
-                    </Grid>
-                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                    <Grid item>
-                      <InfoLightTxt>Estimated value</InfoLightTxt>
-                      <InfoBoldTxt>{currencyString(propertyInfo.propertyDetails.CurrentValue)}</InfoBoldTxt>
-                    </Grid>
-                    <Grid item>
-                      <ExpandIconButton
-                        expandStatus={expanded}
-                        onClick={() => {
-                          setExpanded(!expanded)
-                        }}
+                    </InfoLightTxt>
+                  </Grid>
+                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                  <Grid item>
+                    <InfoLightTxt>Onboarding date</InfoLightTxt>
+                    <InfoBoldTxt>{formatExtendedDateString(propertyInfo.propertyDetails.CreatedAt)}</InfoBoldTxt>
+                  </Grid>
+                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                  <Grid item>
+                    <InfoLightTxt>Status</InfoLightTxt>
+                    <InfoBoldTxt>Published</InfoBoldTxt>
+                  </Grid>
+                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                  <Grid item>
+                    <InfoLightTxt>Estimated value</InfoLightTxt>
+                    <InfoBoldTxt>{currencyString(propertyInfo.propertyDetails.CurrentValue)}</InfoBoldTxt>
+                  </Grid>
+                  <Grid item>
+                    <ExpandIconButton
+                      expandStatus={expanded}
+                      onClick={() => {
+                        setExpanded(!expanded)
+                      }}
+                    >
+                      <IconButton>
+                        <ExpandMoreIcon />
+                      </IconButton>
+                    </ExpandIconButton>
+                  </Grid>
+                </Grid>
+                <Collapse in={expanded} timeout="auto">
+                  <Grid container direction="column">
+                    <Accordion className={classes.accordionStyle}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
+                        aria-controls="panel2a-content"
+                        id="feature-header"
                       >
-                        <IconButton>
-                          <ExpandMoreIcon />
-                        </IconButton>
-                      </ExpandIconButton>
-                    </Grid>
-                  </Grid>
-                  <Collapse in={expanded} timeout="auto">
-                    <Grid container direction="column">
-                      <Accordion className={classes.accordionStyle}>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
-                          aria-controls="panel2a-content"
-                          id="feature-header"
-                        >
-                          <FeatureHeading>Features</FeatureHeading>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          <Features data={propertyInfo.propertyDetails} />
-                        </AccordionDetails>
-                      </Accordion>
+                        <FeatureHeading>Features</FeatureHeading>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Features data={propertyInfo.propertyDetails} />
+                      </AccordionDetails>
+                    </Accordion>
 
-                      <Accordion className={classes.accordionStyle}>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
-                          aria-controls="panel1a-content"
-                          id="rental-fact-header"
-                        >
-                          <FeatureHeading style={{ marginTop: '18px' }}>Rental facts and features</FeatureHeading>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          <RentalFacts data={propertyInfo.propertyDetails} />
-                        </AccordionDetails>
-                      </Accordion>
-                    </Grid>
-                  </Collapse>
-
-                  <Grid container spacing={2} className={classes.treasuryOwnersContStyle}>
-                    <Grid item>
-                      <Paper className={classes.treasuryOwnersPaper} elevation={0}>
-                        <TreasuryOwnerCont>
-                          <div>
-                            <InfoLightTxt>Owner</InfoLightTxt>
-                            <InfoBoldTxt>{getFullName(propertyInfo.propertyDetails.Fname, propertyInfo.propertyDetails.Lname)}</InfoBoldTxt>
-                          </div>
-                          <MailIcon />
-                        </TreasuryOwnerCont>
-                      </Paper>
-                    </Grid>
-                    <Grid item>
-                      <Paper className={classes.treasuryOwnersPaper} elevation={0}>
-                        <TreasuryOwnerCont>
-                          <div>
-                            <InfoLightTxt>HOA Admin</InfoLightTxt>
-                            <InfoBoldTxt>{'HOA Admin'}</InfoBoldTxt>
-                          </div>
-                          <MailIcon />
-                        </TreasuryOwnerCont>
-                      </Paper>
-                    </Grid>
+                    <Accordion className={classes.accordionStyle}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
+                        aria-controls="panel1a-content"
+                        id="rental-fact-header"
+                      >
+                        <FeatureHeading style={{ marginTop: '18px' }}>Rental facts and features</FeatureHeading>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <RentalFacts data={propertyInfo.propertyDetails} />
+                      </AccordionDetails>
+                    </Accordion>
                   </Grid>
-                </Paper>
-                <TabComponent tabOptions={treasuryDetailsTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
-                <DocumentsTable data={docList} />
-              </div>
-            ) : (
-              <NoDetailsAvailable>
-                <p>No details available</p>
-              </NoDetailsAvailable>
-            )}
-          </div>
-        )}
-      </Box>
-    </>
+                </Collapse>
+
+                <Grid container spacing={2} className={classes.treasuryOwnersContStyle}>
+                  <Grid item>
+                    <Paper className={classes.treasuryOwnersPaper} elevation={0}>
+                      <TreasuryOwnerCont>
+                        <div>
+                          <InfoLightTxt>Owner</InfoLightTxt>
+                          <InfoBoldTxt>{getFullName(propertyInfo.propertyDetails.Fname, propertyInfo.propertyDetails.Lname)}</InfoBoldTxt>
+                        </div>
+                        <MailIcon />
+                      </TreasuryOwnerCont>
+                    </Paper>
+                  </Grid>
+                  <Grid item>
+                    <Paper className={classes.treasuryOwnersPaper} elevation={0}>
+                      <TreasuryOwnerCont>
+                        <div>
+                          <InfoLightTxt>HOA Admin</InfoLightTxt>
+                          <InfoBoldTxt>{'HOA Admin'}</InfoBoldTxt>
+                        </div>
+                        <MailIcon />
+                      </TreasuryOwnerCont>
+                    </Paper>
+                  </Grid>
+                </Grid>
+              </Paper>
+              <TabComponent tabOptions={treasuryDetailsTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
+              <DocumentsTable data={docList} />
+            </div>
+          ) : (
+            <NoDetailsAvailable>
+              <p>No details available</p>
+            </NoDetailsAvailable>
+          )}
+        </div>
+      )}
+    </Box>
   )
 }
 const mapStateToProps = (state: any) => ({

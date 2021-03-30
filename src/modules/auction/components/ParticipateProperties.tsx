@@ -22,7 +22,9 @@ const ParticipateProperties = (props: any) => {
   const handleUpgradeBidDetails = (id: string) => {
     history.push(`${Paths.upgradeBid}/${id}`)
   }
-
+  const handlePropertyDetails = (id: string) => {
+    history.push(`${Paths.propertyDetails}/${id}`)
+  }
   const getRemainingDays = (endDate: Date) => {
     const daysRemaining = getDaysValue(new Date(), endDate) + 1
     return (
@@ -67,9 +69,7 @@ const ParticipateProperties = (props: any) => {
               <CardBoldText>${bidDetails[1].averageBid}</CardBoldText>
             </Grid>
             <Grid item>
-              <CardLightText style={{ textAlign: 'right' }}>
-                <span>{getRemainingDays(auctionDetail[0]?.endDate!)}</span>
-              </CardLightText>
+              {getRemainingDays(auctionDetail[0]?.endDate!)}
               <StyledLinearProgress
                 variant="determinate"
                 value={getProgressValue(auctionDetail[0]?.startDate!, auctionDetail[0]?.endDate!)}
@@ -94,7 +94,7 @@ const ParticipateProperties = (props: any) => {
               </PrimaryButton>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <SecondaryButton fullWidth className={classes.btnStyle}>
+              <SecondaryButton fullWidth className={classes.btnStyle} onClick={() => handlePropertyDetails(bidDetails[0].propertyID)}>
                 PROPERTY DETAILS
               </SecondaryButton>
             </Grid>

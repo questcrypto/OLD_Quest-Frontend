@@ -56,7 +56,7 @@ const AuctionDetails = (props: any) => {
             }
           }
           setPropertyId(res.data.propertyDetail.propertyDetails.id)
-
+          console.log(res.data.propertyDetail)
           const totalTokenVal = parseInt(res.data.propertyDetail.propertyDetails.CurrentValue)
           const reserveVal = res.data.auctionDetails[0].minReserve + res.data.auctionDetails[0].slReserve
           if (res.data.bidStats.amountRaised > reserveVal) {

@@ -17,6 +17,7 @@ import { treasuryAddress } from 'modules/block-chain/abi'
 import { currentBidValue, saveBlockchainBid } from 'modules/block-chain/BlockChainMethods'
 import { err } from 'shared/styles/styled'
 import * as Yup from 'yup'
+import { connect } from 'react-redux'
 
 export const bidFormSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('This field is required'),
@@ -24,11 +25,13 @@ export const bidFormSchema = Yup.object().shape({
 })
 
 const Bid = (props: any) => {
+  console.table(props)
   const classes = bidStyle()
   const [loading, setLoading] = useState(false)
   const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email, errorAlert } = props
 
   const handleSubmit = async (values: any) => {
+    console.log(values)
     const totalAmount = token * parseFloat(bidValue)
     const dataVal = {
       auctionID,
@@ -37,13 +40,14 @@ const Bid = (props: any) => {
       totalAmount: parseFloat(totalAmount.toFixed(2)),
       propertyID,
       initialAllotedTokens: token,
+      contactNumber: 9874987401,
     }
     try {
       setLoading(true)
       const currentValue = await currentBidValue(dataVal.auctionID)
       console.log(dataVal.totalAmount - currentValue)
       await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount - currentValue, treasuryAddress)
-      if (currentValue > 0) {
+      if (currentValue > 0 && false) {
         await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
       } else {
         await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
@@ -114,4 +118,10 @@ const Bid = (props: any) => {
   )
 }
 
-export default Bid
+const mapStateToProps: any = (state: any) => {
+  return {
+    user: state.user,
+  }
+}
+
+export default connect(mapStateToProps)(Bid)

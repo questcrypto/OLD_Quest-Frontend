@@ -36,7 +36,8 @@ const AuctionBid = (props: any) => {
   const [suggMinBidError, setSuggMinBidError] = useState(false)
 
   const [showBidModal, setShowBidModal] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [approvalLoading, setApprovalLoading] = useState(false)
+  const [makeBidLoading, setMakeBidLoading] = useState(false)
   const {
     propertyName,
     currentBid,
@@ -52,8 +53,6 @@ const AuctionBid = (props: any) => {
     refreshApprovedTokensValue,
   } = props
 
-  console.log(approvedTokens)
-
   let sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100
   sliderDefaultValue = parseFloat(sliderDefaultValue.toFixed(2))
 
@@ -61,16 +60,21 @@ const AuctionBid = (props: any) => {
   const [equityValue, setEquityValue] = useState(sliderDefaultValue! || 0)
   const [bidValue, setBidValue] = useState(myBidDetails[0]?.bidPrice! || '0.00')
   const [minBid, setMinBid] = useState(myBidDetails[0]?.bidPrice! || 0)
-  const [isTokensApproved, setIsTokensApproved] = useState(approvedTokens > 0 ? false : true)
+  const [isTokensApproved, setIsTokensApproved] = useState(false)
   const [currentBidTokens, setCurrentBidTokens] = useState(0)
 
   const updateCurrentBidTokens = async () => {
-    const currentValue = await currentBidValue(auctionID)
+    const currentValue = parseInt(await currentBidValue(auctionID))
+    console.log(currentValue)
     setCurrentBidTokens(currentValue)
   }
 
+  console.log(currentBidTokens, approvedTokens, isTokensApproved)
+
   useEffect(() => {
     updateCurrentBidTokens()
+    const totalAmount = token * parseFloat(bidValue) - currentBidTokens
+    setIsTokensApproved(approvedTokens >= totalAmount)
   })
 
   const handleTokenChange = (event: any) => {
@@ -138,33 +142,32 @@ const AuctionBid = (props: any) => {
 
   const handleApproveTokens = async () => {
     try {
+      setApprovalLoading(true)
       const web3 = await getWeb3Val()
 
       const totalAmount = token * parseFloat(bidValue)
 
+      console.log(totalAmount - currentBidTokens)
       if (web3) {
         const accounts = await web3.eth.getAccounts()
         const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
 
-        const res = await handleDAIapproval(
-          daiContract,
-          accounts[0],
-          auctionContractAddress,
-          totalAmount - approvedTokens - currentBidTokens
-        )
+        const res = await handleDAIapproval(daiContract, accounts[0], auctionContractAddress, totalAmount - currentBidTokens)
         console.log(res)
-        refreshApprovedTokensValue(totalAmount - approvedTokens - currentBidTokens)
-        console.log(totalAmount - approvedTokens - currentBidTokens)
+        refreshApprovedTokensValue(totalAmount - currentBidTokens)
+        console.log(totalAmount - currentBidTokens)
       }
     } catch (err) {
       console.log('Error===>', err)
+    } finally {
+      setApprovalLoading(false)
     }
   }
 
   const handleMakeBid = async () => {
     if (parseFloat(bidValue) > 0 && token > 0) {
       try {
-        setLoading(true)
+        setMakeBidLoading(true)
         const data = {
           bidPrice: parseFloat(bidValue),
           totalQuantity: token,
@@ -180,7 +183,7 @@ const AuctionBid = (props: any) => {
         }
       } catch (error) {
       } finally {
-        setLoading(false)
+        setMakeBidLoading(false)
       }
     }
   }
@@ -242,18 +245,24 @@ const AuctionBid = (props: any) => {
               <Grid container>
                 <Grid item>
                   <PrimaryButton disabled={tokenError || suggMinBidError || isTokensApproved} onClick={() => handleApproveTokens()}>
-                    {loading ? <Spinner /> : 'Approval'}
+                    {approvalLoading ? <Spinner /> : 'Approval'}
                   </PrimaryButton>
                 </Grid>
 
                 <Grid item>
-                  <PrimaryButton disabled={tokenError || suggMinBidError || !isTokensApproved} onClick={() => handleMakeBid()}>
-                    {loading ? <Spinner /> : 'MAKE BID'}
+                  <PrimaryButton
+                    style={{ marginLeft: '15px' }}
+                    disabled={tokenError || suggMinBidError || !isTokensApproved || currentBidTokens === token * bidValue}
+                    onClick={() => handleMakeBid()}
+                  >
+                    {makeBidLoading ? <Spinner /> : 'MAKE BID'}
                   </PrimaryButton>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
+          <LightText style={{ marginTop: '10px' }}>Current Allowance = {approvedTokens}</LightText>
+          <LightText style={{ marginTop: '10px' }}>Current Bid = {currentBidTokens}</LightText>
           <LightText style={{ marginTop: '10px' }}>Total wallet balance = 2597.88 USDC</LightText>
         </Box>
       </Paper>

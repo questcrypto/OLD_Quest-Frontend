@@ -31,7 +31,7 @@ const AuctionDetails = (props: any) => {
   const getApprovedTokenValue = async () => {
     try {
       setDataLoading(true)
-      const tokens = await getApprovedTokens()
+      const tokens = parseInt(await getApprovedTokens())
       setApprovedTokens(tokens)
     } catch (err) {
       setApprovedTokens(0)

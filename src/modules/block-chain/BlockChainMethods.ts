@@ -146,6 +146,10 @@ export const getApprovedTokens = async () => {
   return 0
 }
 
+export const convertToWei = (totalAmount: any) => {
+  return web3.utils.toWei(totalAmount.toString(), 'ether')
+}
+
 export const handleDAIapproval = async (contractDai: any, account: string, user: any, ApproveAmount: any) => {
   const res = await contractDai.methods.approve(user, ApproveAmount).send({ from: account })
   return res

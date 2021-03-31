@@ -17,6 +17,7 @@ export const PrimaryButton = withStyles({
     borderRadius: '4px',
     '&:disabled': {
       color: colors.white,
+      backgroundColor: colors.lightGray,
     },
   },
 })(Button)

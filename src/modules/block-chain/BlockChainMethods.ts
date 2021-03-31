@@ -112,6 +112,17 @@ export const saveBlockchainBid = async (auctionId: string, totalAmount: any, add
   }
 }
 
+export const getDaiBalance = async () => {
+  const web3 = await getWeb3Val()
+
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
+    const res = await daiContract.methods.balanceOf(accounts[0]).call()
+    return res
+  }
+}
+
 export const handleStoreDaiClaimAmount = async (
   contractAuction: any,
   account: string,

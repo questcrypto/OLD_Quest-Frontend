@@ -21,7 +21,7 @@ import Bid from './Bid'
 import { integerNumberRegex, floatNumRegex } from 'shared/helpers/regexConstants'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { currentBidValue, getWeb3Val, handleDAIapproval } from 'modules/block-chain/BlockChainMethods'
+import { currentBidValue, getDaiBalance, getWeb3Val, handleDAIapproval } from 'modules/block-chain/BlockChainMethods'
 import { auctionContractAddress, daiAbi, DAIContractAddress } from 'modules/block-chain/abi'
 
 const valuetext = (value: number) => {
@@ -62,6 +62,7 @@ const AuctionBid = (props: any) => {
   const [minBid, setMinBid] = useState(myBidDetails[0]?.bidPrice! || 0)
   const [isTokensApproved, setIsTokensApproved] = useState(false)
   const [currentBidTokens, setCurrentBidTokens] = useState(0)
+  const [balance, setBalance] = useState(0)
 
   const updateCurrentBidTokens = async () => {
     const currentValue = parseInt(await currentBidValue(auctionID))
@@ -69,10 +70,18 @@ const AuctionBid = (props: any) => {
     setCurrentBidTokens(currentValue)
   }
 
+  const getBalance = async () => {
+    const balance = await getDaiBalance()
+    setBalance(balance)
+  }
+
   console.log(currentBidTokens, approvedTokens, isTokensApproved)
 
   useEffect(() => {
     updateCurrentBidTokens()
+
+    getBalance()
+
     const totalAmount = token * parseFloat(bidValue) - currentBidTokens
     setIsTokensApproved(approvedTokens >= totalAmount)
   })
@@ -263,7 +272,7 @@ const AuctionBid = (props: any) => {
           </Grid>
           <LightText style={{ marginTop: '10px' }}>Current Allowance = {approvedTokens}</LightText>
           <LightText style={{ marginTop: '10px' }}>Current Bid = {currentBidTokens}</LightText>
-          <LightText style={{ marginTop: '10px' }}>Total wallet balance = 2597.88 USDC</LightText>
+          <LightText style={{ marginTop: '10px' }}>Total wallet balance = {balance}</LightText>
         </Box>
       </Paper>
       <Grid container spacing={3} justify="space-between" className={classes.linkContStyle}>

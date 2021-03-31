@@ -13,6 +13,9 @@ import Pagination from '@material-ui/lab/Pagination'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import Select from '@material-ui/core/Select'
 import EmptyPage from 'shared/empty-page'
+import { formatExtendedDateString } from 'shared/helpers/globalFunction'
+import { PrimaryButton } from 'shared/components/buttons'
+import { apiBaseUrl } from 'services/global-constant'
 
 const dataVal = [
   {
@@ -36,6 +39,8 @@ const dataVal = [
 ]
 
 const DocumentsTable = (props: any) => {
+  const { data } = props
+  console.log(data)
   const classes = docTableStyle()
   return (
     <Box>
@@ -50,30 +55,20 @@ const DocumentsTable = (props: any) => {
               <TableCell style={{ width: '50px' }} />
             </TableRow>
           </TableHead>
-          {!!dataVal && dataVal.length > 0 && (
+          {!!data && data.length > 0 && (
             <TableBody>
-              {dataVal.map((row: any, k: number) => (
+              {data.map((row: any, k: number) => (
                 <TableRow key={k} className={classes.tableRowStyle}>
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {row.Name}
                   </TableCell>
-                  <TableCell>{row.upLoadedOn}</TableCell>
-                  <TableCell>{row.uploadedBy}</TableCell>
+                  <TableCell>{formatExtendedDateString(row.CreatedAt)}</TableCell>
+                  <TableCell>{'HOA Admin'}</TableCell>
+                  <TableCell>Public</TableCell>
                   <TableCell>
-                    <Select
-                      native
-                      inputProps={{
-                        name: 'authorization',
-                        id: 'authorization',
-                      }}
-                      className={classes.authorizationStyle}
-                    >
-                      <option value="public">Public</option>
-                      <option value="private">Private</option>
-                    </Select>
-                  </TableCell>
-                  <TableCell>
-                    <MoreVertIcon />
+                    <a className={classes.fileLink} target="__blank" href={`${apiBaseUrl}/${row.filename}`}>
+                      View
+                    </a>
                   </TableCell>
                 </TableRow>
               ))}

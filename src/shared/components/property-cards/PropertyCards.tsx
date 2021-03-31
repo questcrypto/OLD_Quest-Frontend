@@ -13,6 +13,7 @@ import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
 
 const PropertyCards = (props: any) => {
+  console.log(props)
   const classes = useStyles()
   const { list, dataLoading, errorAlert, refresh } = props
 
@@ -30,7 +31,7 @@ const PropertyCards = (props: any) => {
         imgArr.push(item)
       }
     }
-    const imgUrl = `${apiBaseUrl}/${imgArr[0].filename}`
+    const imgUrl = `${apiBaseUrl}/${imgArr[0]?.filename}`
     return imgUrl
   }
 

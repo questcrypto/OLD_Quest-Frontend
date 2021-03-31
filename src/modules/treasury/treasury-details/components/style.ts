@@ -11,6 +11,15 @@ export const docTableStyle = makeStyles(() =>
     paginationCont: {
       marginTop: '50px',
     },
+    fileLink: {
+      textDecoration: 'none',
+      color: 'white',
+      backgroundColor: colors.primary,
+      padding: '8px 10px',
+      borderRadius: '4px',
+      fontSize: '14px',
+      fontFamily: 'RobotoBold',
+    },
     tableHeadRowStyle: {
       padding: '24px 20px',
       '&:th': {
@@ -21,6 +30,7 @@ export const docTableStyle = makeStyles(() =>
       },
       // boxShadow: '0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.14), 0px 1px 8px rgba(0, 0, 0, 0.12);',
     },
+
     tableRowStyle: {
       '&:nth-child(even)': {
         background: '#F8F3ED',

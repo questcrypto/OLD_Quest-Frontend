@@ -40,14 +40,14 @@ const Bid = (props: any) => {
       totalAmount: parseFloat(totalAmount.toFixed(2)),
       propertyID,
       initialAllotedTokens: token,
-      contactNumber: 9874987401,
+      contactNumber: values.phoneNumber,
     }
     try {
       setLoading(true)
       const currentValue = await currentBidValue(dataVal.auctionID)
       console.log(dataVal.totalAmount - currentValue)
       await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount - currentValue, treasuryAddress)
-      if (currentValue > 0 && false) {
+      if (currentValue > 0) {
         await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
       } else {
         await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
@@ -94,7 +94,7 @@ const Bid = (props: any) => {
           We would like to keep you updated on this auction please update you communication preference.
         </LightText>
         <Formik
-          initialValues={{ email, phoneNumber: '' }}
+          initialValues={{ email, phoneNumber: props.user?.userInfo?.contactNumber }}
           validationSchema={bidFormSchema}
           onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values)

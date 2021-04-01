@@ -1,5 +1,6 @@
 import moment from 'moment'
 import dateFormat from 'dateformat'
+import axios from 'axios'
 
 export const getPropertyType = (type: number) => {
   switch (type) {
@@ -57,6 +58,19 @@ export function formatExtendedDateString(date: Date | string): string {
     dateValue = dateFormat(date, 'dd mmm yyyy')
   }
   return dateValue
+}
+
+export const getDaiPrice = async () => {
+  try {
+    var result = await axios.get(
+      'https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=0x6b175474e89094c44da98b954eedeac495271d0f&vs_currencies=usd'
+    )
+
+    console.log(result.data)
+    return result?.data['0x6b175474e89094c44da98b954eedeac495271d0f']?.usd
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 export const toCommaNumber = (value: number | string) => {

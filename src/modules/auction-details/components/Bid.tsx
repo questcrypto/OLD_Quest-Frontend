@@ -28,7 +28,7 @@ const Bid = (props: any) => {
   console.table(props)
   const classes = bidStyle()
   const [loading, setLoading] = useState(false)
-  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email, errorAlert } = props
+  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email, errorAlert, daiPrice } = props
 
   const handleSubmit = async (values: any) => {
     console.log(values)
@@ -86,7 +86,7 @@ const Bid = (props: any) => {
             <BoldText>{getTotalCost()} USD</BoldText>
           </Grid>
         </Grid>
-        <LightText>~1 Token = .92 USD</LightText>
+        <LightText>~1 Token = {daiPrice} USD</LightText>
       </Box>
       <Divider />
       <Box className={classes.bidCommunicationCont}>

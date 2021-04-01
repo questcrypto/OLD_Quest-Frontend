@@ -23,6 +23,7 @@ import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import { currentBidValue, getDaiBalance, getWeb3Val, handleDAIapproval } from 'modules/block-chain/BlockChainMethods'
 import { auctionContractAddress, daiAbi, DAIContractAddress } from 'modules/block-chain/abi'
+import { getDaiPrice } from 'shared/helpers/globalFunction'
 
 const valuetext = (value: number) => {
   return `${value}%`
@@ -63,6 +64,7 @@ const AuctionBid = (props: any) => {
   const [isTokensApproved, setIsTokensApproved] = useState(false)
   const [currentBidTokens, setCurrentBidTokens] = useState(0)
   const [balance, setBalance] = useState(0)
+  const [daiPrice, setDaiPrice] = useState(1)
 
   const updateCurrentBidTokens = async () => {
     const currentValue = parseInt(await currentBidValue(auctionID))
@@ -73,6 +75,9 @@ const AuctionBid = (props: any) => {
   const getBalance = async () => {
     const balance = await getDaiBalance()
     setBalance(balance)
+
+    const daiPrice = await getDaiPrice()
+    setDaiPrice(daiPrice)
   }
 
   console.log(currentBidTokens, approvedTokens, isTokensApproved)
@@ -316,6 +321,7 @@ const AuctionBid = (props: any) => {
           propertyID={propertyID}
           email={email}
           errorAlert={errorAlert}
+          daiPrice={daiPrice}
         />
       </CustomModal>
     </Box>

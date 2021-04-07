@@ -21,7 +21,7 @@ import Bid from './Bid'
 import { integerNumberRegex, floatNumRegex } from 'shared/helpers/regexConstants'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { currentBidValue, getDaiBalance, getWeb3Val, handleDAIapproval } from 'modules/block-chain/BlockChainMethods'
+import { convertToEther, currentBidValue, getDaiBalance, getWeb3Val, handleDAIapproval } from 'modules/block-chain/BlockChainMethods'
 import { auctionContractAddress, daiAbi, DAIContractAddress } from 'modules/block-chain/abi'
 import { getDaiPrice } from 'shared/helpers/globalFunction'
 
@@ -67,13 +67,13 @@ const AuctionBid = (props: any) => {
   const [daiPrice, setDaiPrice] = useState(1)
 
   const updateCurrentBidTokens = async () => {
-    const currentValue = parseInt(await currentBidValue(auctionID))
-    console.log(currentValue)
+    const currentValue: any = await currentBidValue(auctionID)
+    console.log('current bid amount', currentValue)
     setCurrentBidTokens(currentValue)
   }
 
   const getBalance = async () => {
-    const balance = await getDaiBalance()
+    const balance: any = await getDaiBalance()
     setBalance(balance)
 
     const daiPrice = await getDaiPrice()
@@ -133,6 +133,7 @@ const AuctionBid = (props: any) => {
         const totalAmount = token * parseFloat(value) - currentBidTokens
         setIsTokensApproved(approvedTokens >= totalAmount)
       }
+      console.log(value < myBidDetails[0]?.bidPrice)
       if (value < myBidDetails[0]?.bidPrice!) setMinBidError(true)
       else setMinBidError(false)
       if (parseFloat(value) < suggestedLowestBid) {
@@ -266,10 +267,10 @@ const AuctionBid = (props: any) => {
                 <Grid item>
                   <PrimaryButton
                     style={{ marginLeft: '15px' }}
-                    disabled={tokenError || suggMinBidError || !isTokensApproved || currentBidTokens === token * bidValue}
+                    disabled={tokenError || minBidError || suggMinBidError || !isTokensApproved || currentBidTokens === token * bidValue}
                     onClick={() => handleMakeBid()}
                   >
-                    {makeBidLoading ? <Spinner /> : 'MAKE BID'}
+                    {makeBidLoading ? <Spinner /> : currentBidTokens === 0 ? 'MAKE BID' : 'Upgrade Bid'}
                   </PrimaryButton>
                 </Grid>
               </Grid>
@@ -315,6 +316,7 @@ const AuctionBid = (props: any) => {
           setShowBidModal={setShowBidModal}
           equityValue={equityValue}
           token={token}
+          currentBidAmount={currentBidTokens}
           bidValue={bidValue}
           auctionID={auctionID}
           biddersID={biddersID}

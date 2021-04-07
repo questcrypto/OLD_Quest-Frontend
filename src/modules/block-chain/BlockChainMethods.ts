@@ -1,5 +1,14 @@
 import Web3 from 'web3'
-import { auctionAbi, auctionContractAddress, daiAbi, DAIContractAddress, slcAbi, SLCContractAddress } from './abi'
+import {
+  auctionAbi,
+  auctionContractAddress,
+  daiAbi,
+  DAIContractAddress,
+  selfAbi,
+  slcAbi,
+  SLCContractAddress,
+  SLFContractAddress,
+} from './abi'
 let web3: Web3
 
 export const getWeb3Val = async () => {
@@ -21,6 +30,13 @@ export const getWeb3Val = async () => {
     }
   }
   return web3
+}
+
+export const convertToWei = (totalAmount: any) => {
+  return web3.utils.toWei(totalAmount.toString(), 'ether')
+}
+export const convertToEther = (totalAmount: any) => {
+  return parseInt(web3.utils.fromWei(totalAmount.toString(), 'ether'))
 }
 
 export const getPublicAddress = async () => {
@@ -70,20 +86,33 @@ export const configureBlockchainAuction = async (
   auctionId: any,
   minReserve: any,
   slReserve: any,
-  suggestedLowestBid: any,
+  propertyValue: any,
   propId: any
 ) => {
   const web3 = await getWeb3Val()
 
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const SLCInstance = new web3.eth.Contract(slcAbi, SLCContractAddress)
+
+    const SLFInstance = new web3.eth.Contract(selfAbi, SLFContractAddress)
+
+    const SLCAddress = await SLFInstance.methods.PROPERTY_ERC20_ADDRESS(propId).call()
+    console.log(SLCAddress)
+    const SLCInstance = new web3.eth.Contract(slcAbi, SLCAddress)
 
     const newStartDate = new Date(startDate).getTime() / 1000
     const newEndDate = new Date(endDate).getTime() / 1000
 
     const res: any = await SLCInstance.methods
-      .EnlistAuction(auctionId, newStartDate, newEndDate, minReserve, slReserve, suggestedLowestBid, propId)
+      .EnlistAuction(
+        auctionId,
+        newStartDate,
+        newEndDate,
+        convertToWei(minReserve),
+        convertToWei(slReserve),
+        convertToWei(propertyValue),
+        propId
+      )
       .send({ from: accounts[0] })
     return res
   }
@@ -96,18 +125,21 @@ export const currentBidValue = async (auctionId: any) => {
     const accounts = await web3.eth.getAccounts()
     const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
 
-    const res = await auctionContract.methods.DAITransferred(auctionId, accounts[0]).call({ from: accounts[0] })
-    return res
+    const res: any = await auctionContract.methods
+      .BidTokensTransferred(DAIContractAddress, auctionId, accounts[0])
+      .call({ from: accounts[0] })
+    const currentBidValue: any = convertToEther(res)
+    return parseInt(currentBidValue)
   }
 }
 
-export const saveBlockchainBid = async (auctionId: string, totalAmount: any, address: string) => {
+export const saveBlockchainBid = async (auctionId: string, totalAmount: any, address: string, DaiAddress: any) => {
   const web3 = await getWeb3Val()
 
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
-    const res = await auctionContract.methods.saveBid(auctionId, totalAmount, address).send({ from: accounts[0] })
+    const res = await auctionContract.methods.saveBid(auctionId, convertToWei(totalAmount), address, DaiAddress).send({ from: accounts[0] })
     return res
   }
 }
@@ -119,7 +151,9 @@ export const getDaiBalance = async () => {
     const accounts = await web3.eth.getAccounts()
     const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
     const res = await daiContract.methods.balanceOf(accounts[0]).call()
-    return res
+
+    const daiBalance: any = convertToEther(res)
+    return parseInt(daiBalance)
   }
 }
 
@@ -150,19 +184,18 @@ export const getApprovedTokens = async () => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
-    const approvedTokens = await daiContract.methods.allowance(accounts[0], auctionContractAddress).call()
-    return approvedTokens
+    const res = await daiContract.methods.allowance(accounts[0], auctionContractAddress).call()
+
+    const approvedTokens: any = convertToEther(res)
+
+    return parseInt(approvedTokens)
   }
 
   return 0
 }
 
-export const convertToWei = (totalAmount: any) => {
-  return web3.utils.toWei(totalAmount.toString(), 'ether')
-}
-
 export const handleDAIapproval = async (contractDai: any, account: string, user: any, ApproveAmount: any) => {
-  const res = await contractDai.methods.approve(user, ApproveAmount).send({ from: account })
+  const res = await contractDai.methods.approve(user, convertToWei(ApproveAmount)).send({ from: account })
   return res
 }
 

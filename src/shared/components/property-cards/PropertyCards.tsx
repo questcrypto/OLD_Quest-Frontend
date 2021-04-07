@@ -13,7 +13,6 @@ import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
 
 const PropertyCards = (props: any) => {
-  console.log(props)
   const classes = useStyles()
   const { list, dataLoading, errorAlert, refresh } = props
 

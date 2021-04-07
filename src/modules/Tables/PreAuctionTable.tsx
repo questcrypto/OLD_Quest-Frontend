@@ -39,7 +39,7 @@ const PreAuctionTable = (props: any) => {
     setModalData(dataVal)
     setShowModal(true)
   }
-  const handleTreasuryAdminAction = async (auctionDetails: any) => {
+  const handleTreasuryAdminAction = async (auctionDetails: any, propertyValue: any) => {
     setSelectedAuctionId(auctionDetails.id)
     try {
       setLoading(true)
@@ -47,7 +47,7 @@ const PreAuctionTable = (props: any) => {
         id: auctionDetails.id,
       }
       const { startDate, endDate, id, minReserve, slReserve, suggestedLowestBid, propidId } = auctionDetails
-      await configureBlockchainAuction(startDate, endDate, id, minReserve, slReserve, suggestedLowestBid, propidId)
+      await configureBlockchainAuction(startDate, endDate, id, minReserve, slReserve, propertyValue, propidId)
       await axios.post(`${apiBaseUrl}/auction/activateAuction`, data)
       refreshPreAuction()
       refreshOnAuction()
@@ -89,7 +89,11 @@ const PreAuctionTable = (props: any) => {
         {!!type && type === 'treasuryAdmin' && (
           <TableCell>
             {AuctionDetail[0].isApprovedByOwner ? (
-              <PrimaryButton variant="contained" onClick={() => handleTreasuryAdminAction(AuctionDetail[0])} disabled={loading}>
+              <PrimaryButton
+                variant="contained"
+                onClick={() => handleTreasuryAdminAction(AuctionDetail[0], PropertyDetails.CurrentValue)}
+                disabled={loading}
+              >
                 {selectedAuctionId === AuctionDetail[0].id && loading ? <Spinner /> : 'Approve'}
               </PrimaryButton>
             ) : (

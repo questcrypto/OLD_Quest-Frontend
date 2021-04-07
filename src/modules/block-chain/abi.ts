@@ -1,18 +1,67 @@
-// export const SLCContractAddress = '0x4f54acbE20F61Ab83B7235b1EdC1E0DfcFB98967'
 export const SLCContractAddress = '0xbC83d3996bDC072E4Afd37BBF79A902C601bEBa6'
-export const SLFContractAddress = '0x334D9eDf9F5A3321789FAe0d128e576F50FfB59F'
+export const SLFContractAddress = '0x30e1b623d50461C1b0D778217c15763fcb35db6A'
 export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
-export const auctionContractAddress = '0x063d9F46BBf932c38ea32F5e199DFFEddCE6f71E'
+export const auctionContractAddress = '0xe7be6A88150C2eFef2167f8f4FCecFF0F517b1ae'
 export const treasuryAddress = '0xF51632261987F4578425Ca91a48117E11516a4CF'
 
 export const slcAbi: any = [
-  { inputs: [{ internalType: 'uint256', name: '_initialSupply', type: 'uint256' }], stateMutability: 'nonpayable', type: 'constructor' },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_symbol',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: '_decimals',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_initialSupply',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'receiver',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_AUCTION_DEPLOYED_ADDRESS',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: '_owner', type: 'address' },
-      { indexed: true, internalType: 'address', name: '_spender', type: 'address' },
-      { indexed: false, internalType: 'uint256', name: '_value', type: 'uint256' },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: '_spender',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
     ],
     name: 'Approval',
     type: 'event',
@@ -20,8 +69,18 @@ export const slcAbi: any = [
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: 'address', name: '', type: 'address' },
-      { indexed: false, internalType: 'uint256', name: '', type: 'uint256' },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
     name: 'DepositFunds',
     type: 'event',
@@ -29,8 +88,18 @@ export const slcAbi: any = [
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: 'uint256', name: '', type: 'uint256' },
-      { indexed: false, internalType: 'address', name: '', type: 'address' },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
     name: 'RegionAdminAdded',
     type: 'event',
@@ -38,8 +107,18 @@ export const slcAbi: any = [
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: 'uint256', name: '', type: 'uint256' },
-      { indexed: false, internalType: 'address', name: '', type: 'address' },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
     name: 'RegionAdminChanged',
     type: 'event',
@@ -47,8 +126,18 @@ export const slcAbi: any = [
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: 'string', name: 'auc_id', type: 'string' },
-      { indexed: false, internalType: 'address', name: 'bid_add', type: 'address' },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'auc_id',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'bid_add',
+        type: 'address',
+      },
     ],
     name: 'SLC_TOKEN_TRANSFER_SUCCESS',
     type: 'event',
@@ -56,114 +145,263 @@ export const slcAbi: any = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: '_from', type: 'address' },
-      { indexed: true, internalType: 'address', name: '_to', type: 'address' },
-      { indexed: false, internalType: 'uint256', name: '_value', type: 'uint256' },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: '_from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: '_to',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
     ],
     name: 'Transfer',
     type: 'event',
   },
-  { anonymous: false, inputs: [{ indexed: false, internalType: 'address', name: '', type: 'address' }], name: 'ownerAdded', type: 'event' },
   {
     anonymous: false,
-    inputs: [{ indexed: false, internalType: 'address', name: '', type: 'address' }],
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'ownerAdded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
     name: 'ownerRemoved',
     type: 'event',
   },
   {
     inputs: [
-      { internalType: 'uint256', name: 'region_no', type: 'uint256' },
-      { internalType: 'address', name: '_address', type: 'address' },
+      {
+        internalType: 'uint256',
+        name: 'region_no',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
     name: 'ADD_REGION_ADMIN',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
     name: 'AUCTION_DEPLOYED_ADDRESS',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'uint256', name: '_region_no', type: 'uint256' },
-      { internalType: 'address', name: '_address', type: 'address' },
+      {
+        internalType: 'uint256',
+        name: '_region_no',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
     name: 'CHANGE_REGION_ADMIN',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'string', name: 'uid', type: 'string' }],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'uid',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'property_id',
+        type: 'string',
+      },
+    ],
     name: 'EndAuction',
     outputs: [
-      { internalType: 'bool', name: '', type: 'bool' },
-      { internalType: 'uint256', name: '', type: 'uint256' },
-      { internalType: 'uint256', name: '', type: 'uint256' },
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'string', name: 'uid', type: 'string' },
-      { internalType: 'uint256', name: 's_date', type: 'uint256' },
-      { internalType: 'uint256', name: 'e_date', type: 'uint256' },
-      { internalType: 'uint256', name: 'res_price', type: 'uint256' },
-      { internalType: 'uint256', name: 'sl_reserve', type: 'uint256' },
-      { internalType: 'uint256', name: 'noOfTokens', type: 'uint256' },
-      { internalType: 'string', name: 'property_id', type: 'string' },
+      {
+        internalType: 'string',
+        name: 'uid',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: 's_date',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'e_date',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'res_price',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'sl_reserve',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'noOfTokens',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: 'property_id',
+        type: 'string',
+      },
     ],
     name: 'EnlistAuction',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'string', name: 'auctionID', type: 'string' },
-      { internalType: 'address', name: 'Treasury_Admin', type: 'address' },
+      {
+        internalType: 'string',
+        name: 'auctionID',
+        type: 'string',
+      },
+      {
+        internalType: 'address',
+        name: 'Treasury_Admin',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: 'property_id',
+        type: 'string',
+      },
     ],
     name: 'GET_AUCTION_WIN_SLC',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'string', name: '', type: 'string' },
-      { internalType: 'address', name: '', type: 'address' },
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
     name: 'GET_WIN_SLC',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'uint256', name: 'amount', type: 'uint256' },
-      { internalType: 'string', name: 'token_uri', type: 'string' },
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    name: 'InitiateTransaction',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MINTNFT_DEPLOYED_ADDRESS',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'address', name: 'account', type: 'address' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
     ],
     name: 'MINT_SLC',
     outputs: [],
@@ -171,45 +409,60 @@ export const slcAbi: any = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     name: 'REGION_NO_TO_ADMIN_ADDRESS',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: '_address', type: 'address' }],
-    name: 'SET_AUCTION_DEPLOYED_ADDRESS',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: '_address', type: 'address' }],
-    name: 'SET_MINTNFT_DEPLOYED_ADDRESS',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: '_address', type: 'address' }],
-    name: 'SET_SLF_DEPLOYED_ADDRESS',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'SLF_DEPLOYED_ADDRESS',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'string', name: 'auctionID', type: 'string' },
-      { internalType: 'address[]', name: 'BiddersArray', type: 'address[]' },
-      { internalType: 'uint256[]', name: 'BidAmount', type: 'uint256[]' },
+      {
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
+    ],
+    name: 'SET_AUCTION_DEPLOYED_ADDRESS',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'auctionID',
+        type: 'string',
+      },
+      {
+        internalType: 'address[]',
+        name: 'BiddersArray',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'BidAmount',
+        type: 'uint256[]',
+      },
     ],
     name: 'STORE_AUCTION_TOKENS_TO_BE_GIVEN',
     outputs: [],
@@ -217,87 +470,194 @@ export const slcAbi: any = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
     name: '_owners',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'address', name: '_owner', type: 'address' }],
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
+    ],
     name: 'addOwner',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'address', name: '', type: 'address' },
-      { internalType: 'address', name: '', type: 'address' },
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
     name: 'allowance',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'address', name: '_spender', type: 'address' },
-      { internalType: 'uint256', name: '_value', type: 'uint256' },
+      {
+        internalType: 'address',
+        name: '_spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
     ],
     name: 'approve',
-    outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
+    outputs: [
+      {
+        internalType: 'bool',
+        name: 'success',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'address', name: 'request', type: 'address' }],
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'request',
+        type: 'address',
+      },
+    ],
     name: 'balanceOf',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
     name: 'balances',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'daiInstance',
-    outputs: [{ internalType: 'contract DAI', name: '', type: 'address' }],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'decimals',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'address', name: '_oldAddress', type: 'address' },
-      { internalType: 'address', name: '_newAddress', type: 'address' },
+      {
+        internalType: 'address',
+        name: '_oldAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_newAddress',
+        type: 'address',
+      },
     ],
     name: 'modify',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
-  { inputs: [], name: 'name', outputs: [{ internalType: 'string', name: '', type: 'string' }], stateMutability: 'view', type: 'function' },
   {
     inputs: [],
-    name: 'owner',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'name',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'address', name: '_owner', type: 'address' }],
+    inputs: [],
+    name: 'owner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
+    ],
     name: 'removeOwner',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -305,37 +665,76 @@ export const slcAbi: any = [
   },
   {
     inputs: [
-      { internalType: 'address', name: '_from', type: 'address' },
-      { internalType: 'address', name: '_to', type: 'address' },
-      { internalType: 'uint256', name: '_value', type: 'uint256' },
+      {
+        internalType: 'address',
+        name: '_from',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
     ],
     name: 'safetransferFrom',
-    outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
+    outputs: [
+      {
+        internalType: 'bool',
+        name: 'success',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'payable',
     type: 'function',
   },
   {
     inputs: [],
     name: 'symbol',
-    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'totalSupply',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'walletBalance',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
-  { stateMutability: 'payable', type: 'receive' },
+  {
+    stateMutability: 'payable',
+    type: 'receive',
+  },
 ]
 
 export const selfAbi: any = [
@@ -345,6 +744,13 @@ export const selfAbi: any = [
     inputs: [{ indexed: false, internalType: 'string', name: 'ID', type: 'string' }],
     name: 'PROPERTY_TOKENS_MINTED',
     type: 'event',
+  },
+  {
+    inputs: [],
+    name: 'AUCTION_DEPLOYED_ADDRESS',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
@@ -365,6 +771,20 @@ export const selfAbi: any = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'MINTNFT_DEPLOYED_ADDRESS',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'string', name: '', type: 'string' }],
+    name: 'PROPERTY_ERC20_ADDRESS',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'string', name: '', type: 'string' }],
     name: 'PROP_INFO',
     outputs: [
@@ -382,8 +802,15 @@ export const selfAbi: any = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'address', name: 'SLC_CONTRACT_DEPLOYED_ADDRESS', type: 'address' }],
-    name: 'SET_SLC_DEPLOYED_ADDRESS',
+    inputs: [{ internalType: 'address', name: '_address', type: 'address' }],
+    name: 'SET_AUCTION_DEPLOYED_ADDRESS',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '_address', type: 'address' }],
+    name: 'SET_MINTNFT_DEPLOYED_ADDRESS',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -669,7 +1096,7 @@ export const daiAbi: any = [
 
 export const auctionAbi: any = [
   {
-    inputs: [{ internalType: 'contract IERC20', name: 'DAIcontractAddress', type: 'address' }],
+    inputs: [{ internalType: 'address', name: '_SLF_CONTRACT_ADDRESS', type: 'address' }],
     stateMutability: 'nonpayable',
     type: 'constructor',
   },
@@ -718,8 +1145,27 @@ export const auctionAbi: any = [
   },
   {
     inputs: [
+      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'string', name: '', type: 'string' },
+      { internalType: 'address', name: '', type: 'address' },
+    ],
+    name: 'BidTokensTransferred',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'NEW_SLF_ADDRESS', type: 'address' }],
+    name: 'Change_SLF_Contract_Address',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
       { internalType: 'string', name: 'auctionID', type: 'string' },
       { internalType: 'address', name: 'Bidder_Address', type: 'address' },
+      { internalType: 'string', name: 'property_id', type: 'string' },
     ],
     name: 'CheckBidderIdentity',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -728,16 +1174,9 @@ export const auctionAbi: any = [
   },
   {
     inputs: [
-      { internalType: 'string', name: '', type: 'string' },
-      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'string', name: 'auction_id', type: 'string' },
+      { internalType: 'string', name: 'property_id', type: 'string' },
     ],
-    name: 'DAITransferred',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'string', name: 'auction_id', type: 'string' }],
     name: 'End_Auction',
     outputs: [
       { internalType: 'bool', name: '', type: 'bool' },
@@ -763,8 +1202,18 @@ export const auctionAbi: any = [
     type: 'function',
   },
   {
-    inputs: [],
+    inputs: [
+      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'string', name: '', type: 'string' },
+    ],
     name: 'SLC_contract_address',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'SLF_CONTRACT_ADDRESS',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
@@ -772,11 +1221,22 @@ export const auctionAbi: any = [
   {
     inputs: [
       { internalType: 'string', name: 'auctionID', type: 'string' },
-      { internalType: 'address[]', name: 'Dai_Claimers', type: 'address[]' },
+      { internalType: 'address[]', name: 'Bid_Token_Claimers', type: 'address[]' },
       { internalType: 'uint256[]', name: 'claim_amount', type: 'uint256[]' },
+      { internalType: 'address', name: 'BidTokenAddress', type: 'address' },
     ],
-    name: 'StoreDaiClaimAmount',
+    name: 'StoreBidTokenClaimAmount',
     outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: '_address', type: 'address' },
+      { internalType: 'string', name: 'property_id', type: 'string' },
+    ],
+    name: 'Store_SLC_Contract_Address',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -809,10 +1269,11 @@ export const auctionAbi: any = [
   },
   {
     inputs: [
+      { internalType: 'address', name: '', type: 'address' },
       { internalType: 'string', name: '', type: 'string' },
       { internalType: 'address', name: '', type: 'address' },
     ],
-    name: 'claimDAI',
+    name: 'claimBidTokens',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
@@ -821,8 +1282,9 @@ export const auctionAbi: any = [
     inputs: [
       { internalType: 'string', name: 'auctionID', type: 'string' },
       { internalType: 'address', name: 'from', type: 'address' },
+      { internalType: 'address', name: 'BidTokenAddress', type: 'address' },
     ],
-    name: 'claimDAIback',
+    name: 'claimBidTokensback',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -846,15 +1308,9 @@ export const auctionAbi: any = [
       { internalType: 'string', name: 'auctionID', type: 'string' },
       { internalType: 'uint256', name: 'bid_amount', type: 'uint256' },
       { internalType: 'address', name: 'Treasurer_Address', type: 'address' },
+      { internalType: 'address', name: 'BidTokenAddress', type: 'address' },
     ],
     name: 'saveBid',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: '_address', type: 'address' }],
-    name: 'setSLCContractAddress',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'nonpayable',
     type: 'function',

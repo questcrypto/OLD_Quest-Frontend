@@ -40,7 +40,6 @@ const dataVal = [
 
 const DocumentsTable = (props: any) => {
   const { data } = props
-  console.log(data)
   const classes = docTableStyle()
   return (
     <Box>

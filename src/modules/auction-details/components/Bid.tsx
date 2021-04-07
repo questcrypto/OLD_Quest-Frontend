@@ -13,7 +13,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { treasuryAddress } from 'modules/block-chain/abi'
+import { DAIContractAddress, treasuryAddress } from 'modules/block-chain/abi'
 import { currentBidValue, saveBlockchainBid } from 'modules/block-chain/BlockChainMethods'
 import { err } from 'shared/styles/styled'
 import * as Yup from 'yup'
@@ -25,10 +25,21 @@ export const bidFormSchema = Yup.object().shape({
 })
 
 const Bid = (props: any) => {
-  console.table(props)
   const classes = bidStyle()
   const [loading, setLoading] = useState(false)
-  const { auctionID, biddersID, propertyID, token, bidValue, equityValue, setShowBidModal, email, errorAlert, daiPrice } = props
+  const {
+    auctionID,
+    biddersID,
+    propertyID,
+    currentBidAmount,
+    token,
+    bidValue,
+    equityValue,
+    setShowBidModal,
+    email,
+    errorAlert,
+    daiPrice,
+  } = props
 
   const handleSubmit = async (values: any) => {
     console.log(values)
@@ -44,10 +55,11 @@ const Bid = (props: any) => {
     }
     try {
       setLoading(true)
-      const currentValue = await currentBidValue(dataVal.auctionID)
-      console.log(dataVal.totalAmount - currentValue)
-      await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount - currentValue, treasuryAddress)
-      if (currentValue > 0) {
+
+      console.log('Total amount, Current Value :-', dataVal.totalAmount, currentBidAmount)
+      await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount - currentBidAmount, treasuryAddress, DAIContractAddress)
+
+      if (currentBidAmount > 0) {
         await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
       } else {
         await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
@@ -72,7 +84,7 @@ const Bid = (props: any) => {
     <Box className={classes.root}>
       <Box className={classes.bidInfoCont}>
         <Box className={classes.titleCont}>
-          <Title>Make Bid</Title>
+          <Title>{currentBidAmount === 0 ? 'Make Bid' : 'Upgrade Bid'}</Title>
           <CloseIcon className={classes.closeIconStyle} onClick={() => setShowBidModal(false)} />
         </Box>
         <LightText>Please confirm your bid and fill us with some basic details</LightText>

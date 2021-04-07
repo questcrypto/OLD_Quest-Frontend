@@ -66,7 +66,6 @@ export const getDaiPrice = async () => {
       'https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=0x6b175474e89094c44da98b954eedeac495271d0f&vs_currencies=usd'
     )
 
-    console.log(result.data)
     return result?.data['0x6b175474e89094c44da98b954eedeac495271d0f']?.usd
   } catch (err) {
     console.log(err)

@@ -3,7 +3,7 @@ import { claimModalStyle, ClaimTitle, ClaimLightText, ClaimBoldText, ClaimBtnGro
 import Paper from '@material-ui/core/Paper'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import Spinner from 'shared/loader-components/spinner'
-import { slcAbi, SLCContractAddress, treasuryAddress } from 'modules/block-chain/abi'
+import { selfAbi, slcAbi, SLCContractAddress, SLFContractAddress, treasuryAddress } from 'modules/block-chain/abi'
 import { getWeb3Val, handleAuctionWinTokenClaim } from 'modules/block-chain/BlockChainMethods'
 
 const TokenClaim = (props: any) => {
@@ -17,8 +17,10 @@ const TokenClaim = (props: any) => {
       const web3 = await getWeb3Val()
       if (web3) {
         const accounts = await web3.eth.getAccounts()
-        const slcContract = new web3.eth.Contract(slcAbi, SLCContractAddress)
-        await handleAuctionWinTokenClaim(slcContract, accounts[0], claimData.auctionId, treasuryAddress)
+        const SLFInstance = new web3.eth.Contract(selfAbi, SLFContractAddress)
+        const SLCAddress = await SLFInstance.methods.PROPERTY_ERC20_ADDRESS('prop id').call()
+        const slcContract = new web3.eth.Contract(slcAbi, SLCAddress)
+        await handleAuctionWinTokenClaim(slcContract, accounts[0], claimData.auctionId, treasuryAddress, 'prop id')
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {

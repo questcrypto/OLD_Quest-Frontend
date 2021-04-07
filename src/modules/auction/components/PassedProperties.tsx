@@ -12,7 +12,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
 import EmptyPage from 'shared/empty-page'
-import TokeClaim from './TokenClaim'
+import TokenClaim from './TokenClaim'
 import USDCClaim from './USDCClaim'
 
 const PassedProperties = (props: any) => {
@@ -141,7 +141,7 @@ const PassedProperties = (props: any) => {
       )}
       <CustomModal show={showTokenClaim} toggleModal={setShowTokenClaim}>
         {showTokenClaim && (
-          <TokeClaim
+          <TokenClaim
             claimData={claimData}
             setClaimData={setClaimData}
             setShowTokenClaim={setShowTokenClaim}

@@ -18,7 +18,16 @@ import { getFullName } from 'shared/helpers/globalFunction'
 import { PrimaryButton } from 'shared/components/buttons'
 import Spinner from 'shared/loader-components/spinner'
 import EmptyPage from 'shared/empty-page'
-import { auctionContractAddress, auctionAbi, slcAbi, SLCContractAddress, daiAbi, DAIContractAddress } from 'modules/block-chain/abi'
+import {
+  auctionContractAddress,
+  auctionAbi,
+  slcAbi,
+  SLCContractAddress,
+  daiAbi,
+  DAIContractAddress,
+  selfAbi,
+  SLFContractAddress,
+} from 'modules/block-chain/abi'
 import {
   getWeb3Val,
   handleEndAuction,
@@ -37,7 +46,7 @@ const EndAuctionTable = (props: any) => {
   const [selectedId, setSelectedId] = useState('')
   const { data, dataLoading, errorAlert } = props
 
-  const endAuction = async (auctionID: string) => {
+  const endAuction = async (auctionID: string, propId: any) => {
     setSelectedId(auctionID)
     try {
       setLoading(true)
@@ -45,9 +54,14 @@ const EndAuctionTable = (props: any) => {
       if (web3) {
         const accounts = await web3.eth.getAccounts()
         const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
-        const slcContract = new web3.eth.Contract(slcAbi, SLCContractAddress)
+
+        // read slc address from mapping
+        const SLFInstance = new web3.eth.Contract(selfAbi, SLFContractAddress)
+        const SLCAddress = await SLFInstance.methods.PROPERTY_ERC20_ADDRESS(propId).call()
+
+        const slcContract = new web3.eth.Contract(slcAbi, SLCAddress)
         const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
-        const res: any = await handleEndAuction(slcContract, accounts[0], auctionID)
+        const res: any = await handleEndAuction(slcContract, accounts[0], auctionID, propId)
         const eventRes = await auctionContract.getPastEvents('AuctionSuccess', { fromBlock: res.blockNumber, toBlock: res.blockNumber })
         const auctionStatus: boolean = eventRes[0].returnValues[1]
         if (auctionStatus === true) {
@@ -113,7 +127,10 @@ const EndAuctionTable = (props: any) => {
         <TableCell>Approved</TableCell>
         <TableCell>${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
         <TableCell>
-          <PrimaryButton onClick={() => endAuction(AuctionDetail[0].id)} disabled={AuctionDetail[0].status !== 2 || loading}>
+          <PrimaryButton
+            onClick={() => endAuction(AuctionDetail[0].id, AuctionDetail[0].propidId)}
+            disabled={AuctionDetail[0].status !== 2 || loading}
+          >
             {selectedId === AuctionDetail[0].id && loading ? <Spinner /> : 'End Auction'}
           </PrimaryButton>
         </TableCell>

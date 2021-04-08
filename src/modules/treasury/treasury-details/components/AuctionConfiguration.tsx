@@ -39,7 +39,7 @@ const AuctionConfiguration = (props: any) => {
     const data = {
       propid: propId,
       startDate: new Date(values.startDate),
-      endDate: 1617860121 + 600,
+      endDate: new Date(endDate),
       minReserve: parseInt(values.minReserve),
       slReserve: parseInt(values.slReserve),
       suggestedLowestBid: parseInt(values.suggestedLowestBid),

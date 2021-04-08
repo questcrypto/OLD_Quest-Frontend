@@ -62,6 +62,7 @@ const Bid = (props: any) => {
       if (currentBidAmount > 0) {
         await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
       } else {
+        console.log('makeBid')
         await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
       }
       history.push(Paths.auction)

@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import Spinner from 'shared/loader-components/spinner'
 import { selfAbi, slcAbi, SLCContractAddress, SLFContractAddress, treasuryAddress } from 'modules/block-chain/abi'
-import { getWeb3Val, handleAuctionWinTokenClaim } from 'modules/block-chain/BlockChainMethods'
+import { getPropertyId, getWeb3Val, handleAuctionWinTokenClaim } from 'modules/block-chain/BlockChainMethods'
 
 const TokenClaim = (props: any) => {
   const [loading, setLoading] = useState(false)
@@ -18,9 +18,10 @@ const TokenClaim = (props: any) => {
       if (web3) {
         const accounts = await web3.eth.getAccounts()
         const SLFInstance = new web3.eth.Contract(selfAbi, SLFContractAddress)
-        const SLCAddress = await SLFInstance.methods.PROPERTY_ERC20_ADDRESS('prop id').call()
+        const propId = await getPropertyId(claimData.auctionId)
+        const SLCAddress = await SLFInstance.methods.PROPERTY_ERC20_ADDRESS(propId).call()
         const slcContract = new web3.eth.Contract(slcAbi, SLCAddress)
-        await handleAuctionWinTokenClaim(slcContract, accounts[0], claimData.auctionId, treasuryAddress, 'prop id')
+        await handleAuctionWinTokenClaim(slcContract, accounts[0], claimData.auctionId, treasuryAddress)
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {

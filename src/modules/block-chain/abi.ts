@@ -1,8 +1,9 @@
 export const SLCContractAddress = '0xbC83d3996bDC072E4Afd37BBF79A902C601bEBa6'
-export const SLFContractAddress = '0x30e1b623d50461C1b0D778217c15763fcb35db6A'
+export const SLFContractAddress = '0xD0d211f4faF5F5964095756214Cf330163b1e4e5'
 export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
-export const auctionContractAddress = '0xe7be6A88150C2eFef2167f8f4FCecFF0F517b1ae'
+export const auctionContractAddress = '0xDC0c1218499E98cEfd8941b2014945Fcaa060259'
 export const treasuryAddress = '0xF51632261987F4578425Ca91a48117E11516a4CF'
+export const mintNft = '0x6d07776B7530f06A9844e06dB52a7F2a36632c46'
 
 export const slcAbi: any = [
   {
@@ -348,11 +349,6 @@ export const slcAbi: any = [
         internalType: 'address',
         name: 'Treasury_Admin',
         type: 'address',
-      },
-      {
-        internalType: 'string',
-        name: 'property_id',
-        type: 'string',
       },
     ],
     name: 'GET_AUCTION_WIN_SLC',
@@ -1165,7 +1161,6 @@ export const auctionAbi: any = [
     inputs: [
       { internalType: 'string', name: 'auctionID', type: 'string' },
       { internalType: 'address', name: 'Bidder_Address', type: 'address' },
-      { internalType: 'string', name: 'property_id', type: 'string' },
     ],
     name: 'CheckBidderIdentity',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],

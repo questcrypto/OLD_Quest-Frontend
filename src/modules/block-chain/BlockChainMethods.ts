@@ -165,6 +165,8 @@ export const handleStoreDaiClaimAmount = async (
   DaiClaimersArray: any,
   DaiClaimAmount: any
 ) => {
+  DaiClaimAmount = DaiClaimAmount.map((el: any) => convertToWei(el))
+
   const res = await contractAuction.methods
     .StoreBidTokenClaimAmount(auctionID, DaiClaimersArray, DaiClaimAmount, DAIContractAddress)
     .send({ from: account })
@@ -204,12 +206,21 @@ export const handleDAIapproval = async (contractDai: any, account: string, user:
   return res
 }
 
-export const handleAuctionWinTokenClaim = async (contractSLC: any, account: string, auctionID: any, TreasuryAddress: any, propId: any) => {
-  const res = await contractSLC.methods.GET_AUCTION_WIN_SLC(auctionID, TreasuryAddress, propId).send({ from: account })
+export const handleAuctionWinTokenClaim = async (contractSLC: any, account: string, auctionID: any, TreasuryAddress: any) => {
+  const res = await contractSLC.methods.GET_AUCTION_WIN_SLC(auctionID, TreasuryAddress).send({ from: account })
   return res
 }
 
 export const handleDAITokenClaim = async (contractAuction: any, account: string, auctionID: any, TreasuryAddress: any) => {
   const res = await contractAuction.methods.claimBidTokensback(auctionID, TreasuryAddress, DAIContractAddress).send({ from: account })
   return res
+}
+
+export const getPropertyId = async (auctionId: any) => {
+  const web3: any = await getWeb3Val()
+
+  const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
+
+  const { property_id } = await auctionContract.methods.auction(auctionId).call()
+  return property_id
 }

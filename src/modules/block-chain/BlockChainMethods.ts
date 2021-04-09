@@ -207,6 +207,7 @@ export const handleDAIapproval = async (contractDai: any, account: string, user:
 }
 
 export const handleAuctionWinTokenClaim = async (contractSLC: any, account: string, auctionID: any, TreasuryAddress: any) => {
+  console.log(auctionID, TreasuryAddress)
   const res = await contractSLC.methods.GET_AUCTION_WIN_SLC(auctionID, TreasuryAddress).send({ from: account })
   return res
 }

@@ -190,6 +190,7 @@ const AuctionBid = (props: any) => {
         }
         const res = await axios.post(`${apiBaseUrl}/auction/getEligibilty`, data)
         setMinBid(res.data)
+        console.log('bid value', bidValue)
         if (!!res && res.data && res.data <= parseFloat(bidValue)) {
           setShowBidModal(true)
           setMinBidError(false)

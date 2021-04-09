@@ -64,8 +64,11 @@ const EndAuctionTable = (props: any) => {
         const res: any = await handleEndAuction(slcContract, accounts[0], auctionID, propId)
         const eventRes = await auctionContract.getPastEvents('AuctionSuccess', { fromBlock: res.blockNumber, toBlock: res.blockNumber })
         const auctionStatus: boolean = eventRes[0].returnValues[1]
+        console.log('Event res', eventRes)
+        console.log('Auction Status', auctionStatus)
         if (auctionStatus === true) {
           const res: any = await axios.post(`${apiBaseUrl}/auction/EndAuction`, { auctionID, auctionStatus })
+          console.log('End Auction res, auctionStatus', res, auctionStatus)
           await handleStoreWinTokenAmount(
             slcContract,
             accounts[0],
@@ -88,6 +91,7 @@ const EndAuctionTable = (props: any) => {
           await handleDAIapproval(daiContract, accounts[0], auctionContractAddress, sum)
         } else {
           const res: any = await axios.post(`${apiBaseUrl}/auction/EndAuction`, { auctionID, auctionStatus })
+          console.log('End Auction res, auctionStatus', res, auctionStatus)
           await handleStoreDaiClaimAmount(
             auctionContract,
             accounts[0],

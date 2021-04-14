@@ -45,7 +45,9 @@ const EndAuctionTable = (props: any) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [loading, setLoading] = useState(false)
   const [selectedId, setSelectedId] = useState('')
-  const [showStats, setShowStats] = useState(false)
+  const [showStatus, setShowStatus] = useState(false)
+  const [statusLoading, setStatusLoading] = useState(false)
+  const [statusData, setStatusData] = useState<any>({})
   const { data, dataLoading, errorAlert } = props
 
   const endAuction = async (auctionID: string, propId: any) => {
@@ -116,6 +118,38 @@ const EndAuctionTable = (props: any) => {
     }
   }
 
+  const getImg = (imgData: any) => {
+    const imgArr: any = []
+    for (const item of imgData) {
+      if (item.type === 0) {
+        imgArr.push(item)
+      }
+    }
+    const imgUrl = `${apiBaseUrl}/${imgArr[0].filename}`
+    return imgUrl
+  }
+  const handleAuctionStatus = async (auctionId: string, imgData: any) => {
+    setSelectedId(auctionId)
+    try {
+      setStatusLoading(true)
+      const res = await axios.get(`${apiBaseUrl}/auction/getAuctionStatus/${auctionId}`)
+      if (!!res && res.data) {
+        const imgUrl = getImg(imgData)
+        const finalData = { ...res.data, imgUrl }
+        setStatusData(finalData)
+        setShowStatus(true)
+      }
+    } catch (error) {
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
+    } finally {
+      setStatusLoading(false)
+    }
+  }
+
   const renderTableRows = (rowData: any, index: number) => {
     const { PropertyDetails, AuctionDetail } = rowData
     return (
@@ -129,7 +163,9 @@ const EndAuctionTable = (props: any) => {
         <TableCell>Approved</TableCell>
         <TableCell>${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
         <TableCell>
-          <PrimaryButton onClick={() => setShowStats(true)}>AUCTION STATUS</PrimaryButton>
+          <PrimaryButton onClick={() => handleAuctionStatus(AuctionDetail[0].id, PropertyDetails.getDoc)} disabled={statusLoading}>
+            {selectedId === AuctionDetail[0].id && statusLoading ? <Spinner /> : 'AUCTION STATUS'}
+          </PrimaryButton>
         </TableCell>
         <TableCell>
           <PrimaryButton
@@ -183,8 +219,8 @@ const EndAuctionTable = (props: any) => {
           )}
         </TableContainer>
       )}
-      <CustomModal show={showStats} toggleModal={setShowStats}>
-        <AuctionStats setShowStats={setShowStats} />
+      <CustomModal show={showStatus} toggleModal={setShowStatus}>
+        {showStatus && <AuctionStats data={statusData} setShowStatus={setShowStatus} />}
       </CustomModal>
     </Grid>
   )

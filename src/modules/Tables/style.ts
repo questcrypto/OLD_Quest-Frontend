@@ -46,13 +46,17 @@ export const auctionStatsStyle = makeStyles(() =>
       maxWidth: 320,
     },
     media: {
-      height: 160,
+      height: '100%',
+      minHeight: '160px',
+      maxHeight: '200px',
       width: '100%',
       maxWidth: 320,
       boxSizing: 'border-box',
     },
 
     titleContStyle: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
       marginBottom: '20px',
     },
     cardDataContStyle: {
@@ -139,8 +143,8 @@ export const CardBoldText = styled.h4`
   margin: 0;
 `
 
-export const ReservePriceCont = styled.div`
-  background: ${colors.greenColor};
+export const ReservePriceCont = styled.div<any>`
+  background: ${(props: any) => (props.confirmStatus ? colors.greenColor : colors.lightYellow)};
   padding: 10px 0;
   display: flex;
   justify-content: center;
@@ -150,6 +154,8 @@ export const ReservePriceCont = styled.div`
   svg {
     color: ${colors.white};
     margin-right: 6px;
+    width: 22px;
+    height: 22px;
   }
 `
 export const ReserverAmountTxt = styled.p`

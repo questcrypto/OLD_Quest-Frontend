@@ -62,7 +62,7 @@ export function formatExtendedDateString(date: Date | string): string {
 
 export const getDaiPrice = async () => {
   try {
-    var result = await axios.get(
+    const result = await axios.get(
       'https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=0x6b175474e89094c44da98b954eedeac495271d0f&vs_currencies=usd'
     )
 

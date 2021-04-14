@@ -95,12 +95,8 @@ export const configureBlockchainAuction = async (
     const accounts = await web3.eth.getAccounts()
 
     const SLFInstance = new web3.eth.Contract(selfAbi, SLFContractAddress)
-
     const SLCAddress = await SLFInstance.methods.PROPERTY_ERC20_ADDRESS(propId).call()
-    console.log(SLCAddress)
-
     const SLCInstance = new web3.eth.Contract(slcAbi, SLCAddress)
-
     const newStartDate = new Date(startDate).getTime() / 1000
     const newEndDate = new Date(endDate).getTime() / 1000
 
@@ -207,7 +203,6 @@ export const handleDAIapproval = async (contractDai: any, account: string, user:
 }
 
 export const handleAuctionWinTokenClaim = async (contractSLC: any, account: string, auctionID: any, TreasuryAddress: any) => {
-  console.log(auctionID, TreasuryAddress)
   const res = await contractSLC.methods.GET_AUCTION_WIN_SLC(auctionID, TreasuryAddress).send({ from: account })
   return res
 }

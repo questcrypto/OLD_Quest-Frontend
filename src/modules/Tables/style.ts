@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
-import { createStyles, makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, withStyles } from '@material-ui/core/styles'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 export const useStyles = makeStyles(() =>
   createStyles({
@@ -24,11 +25,137 @@ export const useStyles = makeStyles(() =>
     },
   })
 )
-
 export const NoDataContainer = styled.div`
   margin: 50px 0;
   width: 100%;
   p {
     text-align: center;
   }
+`
+
+/* ================== Auction-stats-style ======================= */
+
+export const AuctionStatsCont = styled.div`
+  position: relative;
+`
+
+export const auctionStatsStyle = makeStyles(() =>
+  createStyles({
+    root: {
+      width: 320,
+      maxWidth: 320,
+    },
+    media: {
+      height: 160,
+      width: '100%',
+      maxWidth: 320,
+      boxSizing: 'border-box',
+    },
+
+    titleContStyle: {
+      marginBottom: '20px',
+    },
+    cardDataContStyle: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+    },
+    iconTxtContStyle: {
+      display: 'flex',
+      alignItems: 'center',
+      '& img': {
+        marginRight: '10px',
+      },
+    },
+    endDateContStyle: {
+      marginTop: '10px',
+    },
+    dividerStyle: {
+      margin: '8px 0',
+    },
+    btnStyle: {
+      fontSize: '12px !important',
+      height: '31px',
+      marginBottom: '16px',
+      width: '140px',
+    },
+  })
+)
+export const StyledLinearProgress = withStyles({
+  root: {
+    width: '100%',
+  },
+  colorPrimary: {
+    backgroundColor: '#C4C4C4',
+  },
+  barColorPrimary: {
+    backgroundColor: '#FC440A',
+  },
+})(LinearProgress)
+
+export const CloseIcon = styled.img`
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  cursor: pointer;
+`
+export const Title = styled.h4`
+  font-size: 16px;
+  color: ${colors.textPrimary};
+  text-align: left;
+  font-family: RobotoBold;
+  margin: 0;
+`
+export const EndDateCont = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    margin-right: 5px;
+  }
+`
+export const EndDateTxt = styled.p`
+  font-size: 10px;
+  line-height: 18px;
+  color: ${colors.textPrimary};
+  font-family: RobotoRegular;
+  margin: 0;
+`
+export const CardLightText = styled.p`
+  font-size: 12px;
+  line-height: 16px;
+  color: ${colors.textPrimary};
+  font-family: RobotoRegular;
+  opacity: 0.87;
+  margin: 0;
+  span {
+    opacity: 1;
+    font-family: RobotoBold;
+  }
+`
+export const CardBoldText = styled.h4`
+  font-size: 14px;
+  line-height: 20px;
+  color: ${colors.textPrimary};
+  font-family: RobotoBold;
+  margin: 0;
+`
+
+export const ReservePriceCont = styled.div`
+  background: ${colors.greenColor};
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  box-sizing: border-box;
+  svg {
+    color: ${colors.white};
+    margin-right: 6px;
+  }
+`
+export const ReserverAmountTxt = styled.p`
+  font-size: 14px;
+  line-height: 26px;
+  color: ${colors.white};
+  font-family: RobotoRegular;
+  margin: 0;
 `

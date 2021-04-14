@@ -42,7 +42,6 @@ const Bid = (props: any) => {
   } = props
 
   const handleSubmit = async (values: any) => {
-    console.log(values)
     const totalAmount = token * parseFloat(bidValue)
     const dataVal = {
       auctionID,
@@ -55,14 +54,11 @@ const Bid = (props: any) => {
     }
     try {
       setLoading(true)
-
-      console.log('Total amount, Current Value :-', dataVal.totalAmount, currentBidAmount)
       await saveBlockchainBid(dataVal.auctionID, dataVal.totalAmount - currentBidAmount, treasuryAddress, DAIContractAddress)
 
       if (currentBidAmount > 0) {
         await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
       } else {
-        console.log('makeBid')
         await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
       }
       history.push(Paths.auction)

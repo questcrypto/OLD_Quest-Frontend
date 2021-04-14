@@ -68,7 +68,6 @@ const AuctionBid = (props: any) => {
 
   const updateCurrentBidTokens = async () => {
     const currentValue: any = await currentBidValue(auctionID)
-    console.log('current bid amount', currentValue)
     setCurrentBidTokens(currentValue)
   }
 
@@ -79,8 +78,6 @@ const AuctionBid = (props: any) => {
     const daiPrice = await getDaiPrice()
     setDaiPrice(daiPrice)
   }
-
-  console.log(currentBidTokens, approvedTokens, isTokensApproved)
 
   useEffect(() => {
     updateCurrentBidTokens()
@@ -133,7 +130,6 @@ const AuctionBid = (props: any) => {
         const totalAmount = token * parseFloat(value) - currentBidTokens
         setIsTokensApproved(approvedTokens >= totalAmount)
       }
-      console.log(value < myBidDetails[0]?.bidPrice)
       if (value < myBidDetails[0]?.bidPrice!) setMinBidError(true)
       else setMinBidError(false)
       if (parseFloat(value) < suggestedLowestBid) {
@@ -159,18 +155,13 @@ const AuctionBid = (props: any) => {
     try {
       setApprovalLoading(true)
       const web3 = await getWeb3Val()
-
       const totalAmount = token * parseFloat(bidValue)
-
-      console.log(totalAmount - currentBidTokens)
       if (web3) {
         const accounts = await web3.eth.getAccounts()
         const daiContract = new web3.eth.Contract(daiAbi, DAIContractAddress)
 
-        const res = await handleDAIapproval(daiContract, accounts[0], auctionContractAddress, totalAmount - currentBidTokens)
-        console.log(res)
+        await handleDAIapproval(daiContract, accounts[0], auctionContractAddress, totalAmount - currentBidTokens)
         refreshApprovedTokensValue(totalAmount - currentBidTokens)
-        console.log(totalAmount - currentBidTokens)
       }
     } catch (err) {
       console.log('Error===>', err)
@@ -190,7 +181,6 @@ const AuctionBid = (props: any) => {
         }
         const res = await axios.post(`${apiBaseUrl}/auction/getEligibilty`, data)
         setMinBid(res.data)
-        console.log('bid value', bidValue)
         if (!!res && res.data && res.data <= parseFloat(bidValue)) {
           setShowBidModal(true)
           setMinBidError(false)

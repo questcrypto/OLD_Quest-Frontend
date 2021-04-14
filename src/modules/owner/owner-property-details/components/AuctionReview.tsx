@@ -55,10 +55,9 @@ const AuctionReview = (props: any) => {
         Comment: changeNote,
         isApprovedByOwner: true,
       }
-      const res = await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
+      await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
       setShowAuctionModal(false)
       refresh()
-      console.log(res)
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)

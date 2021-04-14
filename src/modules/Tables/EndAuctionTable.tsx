@@ -22,7 +22,6 @@ import {
   auctionContractAddress,
   auctionAbi,
   slcAbi,
-  SLCContractAddress,
   daiAbi,
   DAIContractAddress,
   selfAbi,
@@ -35,6 +34,8 @@ import {
   handleStoreDaiClaimAmount,
   handleDAIapproval,
 } from 'modules/block-chain/BlockChainMethods'
+import CustomModal from 'shared/custom-modal'
+import AuctionStats from './AuctionStats'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 
@@ -44,6 +45,7 @@ const EndAuctionTable = (props: any) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [loading, setLoading] = useState(false)
   const [selectedId, setSelectedId] = useState('')
+  const [showStats, setShowStats] = useState(false)
   const { data, dataLoading, errorAlert } = props
 
   const endAuction = async (auctionID: string, propId: any) => {
@@ -64,11 +66,8 @@ const EndAuctionTable = (props: any) => {
         const res: any = await handleEndAuction(slcContract, accounts[0], auctionID, propId)
         const eventRes = await auctionContract.getPastEvents('AuctionSuccess', { fromBlock: res.blockNumber, toBlock: res.blockNumber })
         const auctionStatus: boolean = eventRes[0].returnValues[1]
-        console.log('Event res', eventRes)
-        console.log('Auction Status', auctionStatus)
         if (auctionStatus === true) {
           const res: any = await axios.post(`${apiBaseUrl}/auction/EndAuction`, { auctionID, auctionStatus })
-          console.log('End Auction res, auctionStatus', res, auctionStatus)
           await handleStoreWinTokenAmount(
             slcContract,
             accounts[0],
@@ -91,7 +90,6 @@ const EndAuctionTable = (props: any) => {
           await handleDAIapproval(daiContract, accounts[0], auctionContractAddress, sum)
         } else {
           const res: any = await axios.post(`${apiBaseUrl}/auction/EndAuction`, { auctionID, auctionStatus })
-          console.log('End Auction res, auctionStatus', res, auctionStatus)
           await handleStoreDaiClaimAmount(
             auctionContract,
             accounts[0],
@@ -131,6 +129,9 @@ const EndAuctionTable = (props: any) => {
         <TableCell>Approved</TableCell>
         <TableCell>${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
         <TableCell>
+          <PrimaryButton onClick={() => setShowStats(true)}>AUCTION STATUS</PrimaryButton>
+        </TableCell>
+        <TableCell>
           <PrimaryButton
             onClick={() => endAuction(AuctionDetail[0].id, AuctionDetail[0].propidId)}
             disabled={AuctionDetail[0].status !== 2 || loading}
@@ -156,6 +157,7 @@ const EndAuctionTable = (props: any) => {
                 <TableCell>TYPE</TableCell>
                 <TableCell>STATUS</TableCell>
                 <TableCell>VALUE</TableCell>
+                <TableCell>ACTION STATUS</TableCell>
                 <TableCell>ACTION</TableCell>
               </TableRow>
             </TableHead>
@@ -181,6 +183,9 @@ const EndAuctionTable = (props: any) => {
           )}
         </TableContainer>
       )}
+      <CustomModal show={showStats} toggleModal={setShowStats}>
+        <AuctionStats setShowStats={setShowStats} />
+      </CustomModal>
     </Grid>
   )
 }

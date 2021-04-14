@@ -13,32 +13,42 @@ import {
 } from './style'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
 import Divider from '@material-ui/core/Divider'
 import { Grid } from '@material-ui/core'
-import { PrimaryButton } from 'shared/components/buttons'
 import CloseIconImg from 'assets/icons/close-icon.svg'
-import PropertyImg from 'assets/images/property-img.svg'
 import AuctionStatsIcon from 'assets/icons/auction-stats.svg'
 import ClockIcon from 'assets/icons/clock.svg'
 import TotalBiddersIcon from 'assets/icons/total-bidders-icon.svg'
 import BiddingAmountIcon from 'assets/icons/total-bidding-amount.svg'
-import TotalBidsIcon from 'assets/icons/total-bids-icon.svg'
-import TotalDollarIcon from 'assets/icons/total-dollars.svg'
 import EligibleBidsIcon from 'assets/icons/eligible-bids-icon.svg'
 import EligibleBidAmountIcon from 'assets/icons/eligible-bids-icon.svg'
 import ReserveAmountIcon from 'assets/icons/reserve-amount.svg'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
+import PriorityHighIcon from '@material-ui/icons/PriorityHigh'
+import { getDaysValue } from 'shared/helpers/globalFunction'
+import moment from 'moment'
 
 const AuctionStats = (props: any) => {
   const classes = auctionStatsStyle()
-  const { setShowStats } = props
+  const { data, setShowStatus } = props
+
+  const getProgressValue = (startDate: Date, endDate: Date) => {
+    let progressVal = 100
+    const daysRemaining = getDaysValue(new Date(), endDate)
+    if (daysRemaining > 0) {
+      const totalDays = getDaysValue(startDate, endDate)
+      const daysDIff = totalDays - daysRemaining
+      progressVal = (daysDIff / totalDays) * 100
+    }
+
+    return progressVal
+  }
 
   return (
     <AuctionStatsCont>
-      <CloseIcon src={CloseIconImg} alt="" onClick={() => setShowStats(false)} />
+      <CloseIcon src={CloseIconImg} alt="" onClick={() => setShowStatus(false)} />
       <Card className={classes.root}>
-        <img className={classes.media} src={PropertyImg} alt="" />
+        <img className={classes.media} src={data.imgUrl} alt="" />
         <CardContent>
           <Grid container className={classes.titleContStyle} justify="space-between" alignItems="center">
             <Grid item className={classes.iconTxtContStyle}>
@@ -46,10 +56,10 @@ const AuctionStats = (props: any) => {
               <Title>Auction Stats</Title>
             </Grid>
             <Grid item className={classes.endDateContStyle}>
-              <StyledLinearProgress variant="determinate" value={10} />
+              <StyledLinearProgress variant="determinate" value={getProgressValue(data.startDate, data.endDate)} />
               <EndDateCont>
                 <img src={ClockIcon} alt="" />
-                <EndDateTxt>Ends at 29 Jan | 01:30:08 GMT</EndDateTxt>
+                <EndDateTxt>{`Ends at ${moment(data.endDate).format('MMM Do YYYY ')}`}</EndDateTxt>
               </EndDateCont>
             </Grid>
           </Grid>
@@ -58,31 +68,14 @@ const AuctionStats = (props: any) => {
               <img src={TotalBiddersIcon} alt="" />
               <div>
                 <CardLightText>Total Bidders</CardLightText>
-                <CardBoldText>20</CardBoldText>
+                <CardBoldText>{parseInt(data.totalBidders).toLocaleString()}</CardBoldText>
               </div>
             </Grid>
             <Grid item className={classes.iconTxtContStyle}>
               <img src={BiddingAmountIcon} alt="" />
               <div>
                 <CardLightText>Total Bidding Amount</CardLightText>
-                <CardBoldText>$ 24010.00 </CardBoldText>
-              </div>
-            </Grid>
-          </Grid>
-          <Divider className={classes.dividerStyle} />
-          <Grid container className={classes.cardDataContStyle} alignItems="center">
-            <Grid item className={classes.iconTxtContStyle}>
-              <img src={TotalBidsIcon} alt="" />
-              <div>
-                <CardLightText>Total Bids</CardLightText>
-                <CardBoldText>2,251</CardBoldText>
-              </div>
-            </Grid>
-            <Grid item className={classes.iconTxtContStyle}>
-              <img src={TotalDollarIcon} alt="" />
-              <div>
-                <CardLightText>Total Dollar Amount</CardLightText>
-                <CardBoldText>$ 24010.00 </CardBoldText>
+                <CardBoldText>{`$ ${parseFloat(data.totalBiddingAmount).toFixed(2)}`}</CardBoldText>
               </div>
             </Grid>
           </Grid>
@@ -92,41 +85,32 @@ const AuctionStats = (props: any) => {
               <img src={EligibleBidsIcon} alt="" />
               <div>
                 <CardLightText>Eligible Bids</CardLightText>
-                <CardBoldText>1,103</CardBoldText>
+                <CardBoldText>{parseInt(data.eligibleBids).toLocaleString()}</CardBoldText>
               </div>
             </Grid>
             <Grid item className={classes.iconTxtContStyle}>
               <img src={EligibleBidAmountIcon} alt="" />
               <div>
                 <CardLightText>Eligible Bids Amount</CardLightText>
-                <CardBoldText>$ 24010.00 </CardBoldText>
+                <CardBoldText>{`$ ${parseFloat(data.eligibleBidAmount).toFixed(2)}`}</CardBoldText>
               </div>
             </Grid>
           </Grid>
           <Divider className={classes.dividerStyle} />
-          <Grid container justify="center" alignItems="center">
+          <Grid container>
             <Grid item className={classes.iconTxtContStyle}>
               <img src={ReserveAmountIcon} alt="" />
               <div>
                 <CardLightText>Reserve Amount</CardLightText>
-                <CardBoldText>$ 24010.00 </CardBoldText>
+                <CardBoldText>{`$ ${parseFloat(data.reserveAmount).toFixed(2)}`}</CardBoldText>
               </div>
             </Grid>
           </Grid>
         </CardContent>
-        <CardActions>
-          <Grid container justify="center" alignItems="center">
-            <Grid item>
-              <PrimaryButton fullWidth className={classes.btnStyle}>
-                Full Details
-              </PrimaryButton>
-            </Grid>
-          </Grid>
-        </CardActions>
       </Card>
-      <ReservePriceCont>
-        <CheckCircleOutlineIcon />
-        <ReserverAmountTxt>Reserve price met.</ReserverAmountTxt>
+      <ReservePriceCont confirmStatus={data.reservePriceMet}>
+        {data.reservePriceMet ? <CheckCircleOutlineIcon /> : <PriorityHighIcon />}
+        <ReserverAmountTxt>{data.reservePriceMet ? 'Reserve price met.' : 'Reserve price not met.'}</ReserverAmountTxt>
       </ReservePriceCont>
     </AuctionStatsCont>
   )

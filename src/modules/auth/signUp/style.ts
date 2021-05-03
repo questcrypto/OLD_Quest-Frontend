@@ -133,6 +133,15 @@ export const useStyle = makeStyles(() =>
     tryAgainDiv: {
       display: 'flex',
       justifyContent: 'flex-end'
+    },
+    otpStyle: {
+      borderTop: 'none',
+      borderLeft: 'none',
+      borderRight: 'none',
+      borderBottom: '1px solid #2B2D31',
+      '&:focus-visible': {
+        outline: 'none'
+      }
     }
   })
 )
@@ -189,7 +198,7 @@ export const CustomButton = styled(Button)`
   border-radius: 5px;
   padding: 6px 16px;
   &:hover {
-    background-color:none
+    background-color:none !important;
   }
 `;
 
@@ -199,6 +208,9 @@ export const IcoButton = styled(Button)`
   padding: 6px 0px;
   margin-left: 12px;
   min-width: 36px !important;
+  &:hover {
+    background-color: none !important;
+  }
 `;
 
 export const LogoImage = styled.img`

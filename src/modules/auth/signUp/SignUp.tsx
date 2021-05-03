@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
+import Grid, { GridSpacing } from '@material-ui/core/Grid';
 import { Paper, Card, Input } from '@material-ui/core';
 import {
   useStyle,
@@ -30,6 +31,7 @@ import closeIcon from 'assets/icons/closeIcon.svg';
 import Wallet from './components';
 import lynxIcon from 'assets/icons/lynxIcon.svg';
 import loadingIcon from 'assets/icons/loading.svg';
+import OtpInput from 'react-otp-input';
 
 const SignUp = (props: any) => {
 
@@ -39,6 +41,7 @@ const SignUp = (props: any) => {
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [loadingWallet, setLoadingWallet] = useState(false);
   const [errorConnecting, setErrorConnecting] = useState(false);
+  const [otp, setOtp] = useState<string>('');
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -55,6 +58,7 @@ const SignUp = (props: any) => {
   const handleOTPClose = () => {
     try {
       setShowOTPModal(false);
+      setOtp('');
     } catch (error) {
       console.log(error);
     }
@@ -69,6 +73,7 @@ const SignUp = (props: any) => {
   const handleWalletClose = () => {
     try {
       setShowWalletModal(false);
+      setLoadingWallet(false);
     } catch (error) {
       console.log(error);
     }
@@ -80,6 +85,12 @@ const SignUp = (props: any) => {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const handleChangeOTP = (otp: string) => {
+    try {
+      setOtp(otp);
+    } catch (error) { }
   }
 
   interface TabPanelProps {
@@ -143,13 +154,13 @@ const SignUp = (props: any) => {
             <div className={classes.fieldStyle}>
               <InputLabel>OTP <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
               <InpBtnWrapper>
-                <CustomInput type="text" fullWidth disabled /><IcoButton><InpBtn onClick={handleOTPClick} src={rightArrow} /></IcoButton>
+                <CustomInput type="text" fullWidth disabled /><IcoButton onClick={handleOTPClick}><InpBtn src={rightArrow} /></IcoButton>
               </InpBtnWrapper>
             </div>
             <div className={classes.fieldStyle}>
               <InputLabel>Wallet Address <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
               <InpBtnWrapper>
-                <CustomInput type="text" fullWidth disabled /><IcoButton><InpBtn onClick={handleWalletClick} src={wallet} /></IcoButton>
+                <CustomInput type="text" fullWidth disabled /><IcoButton onClick={handleWalletClick}><InpBtn src={wallet} /></IcoButton>
               </InpBtnWrapper>
             </div>
             <div className={classes.signUpBtndiv}>
@@ -172,7 +183,14 @@ const SignUp = (props: any) => {
           <div className={classes.OTPModalMail}>
             <img src={mailIcon} alt='Mail Icon' />
           </div>
-          <OTPInputField type='text' />
+          {/* <OTPInputField type='text' /> */}
+          <OtpInput
+            value={otp}
+            onChange={handleChangeOTP}
+            numInputs={4}
+            separator={<span>&nbsp;&nbsp;</span>}
+            inputStyle={classes.otpStyle}
+          />
           <div className={classes.OTPModalText}>
             Please check abc@abc.com for OTP CODE
           </div>

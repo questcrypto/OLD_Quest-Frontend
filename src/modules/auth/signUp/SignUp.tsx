@@ -11,7 +11,8 @@ import {
   InfoIcon,
   IcoButton,
   InpBtn,
-  InpBtnWrapper
+  InpBtnWrapper,
+  OTPInputField
 } from './style';
 import questLogo from 'assets/images/questLoginLogo.png';
 import signUpLogo from 'assets/images/signUp.png';
@@ -24,17 +25,62 @@ import Tab from '@material-ui/core/Tab';
 import { TabPanel } from '@material-ui/lab';
 import InputLabel from '@material-ui/core/InputLabel';
 import CustomModal from '../../../shared/custom-modal';
-
+import mailIcon from 'assets/images/OTPMail.svg';
+import closeIcon from 'assets/icons/closeIcon.svg';
+import Wallet from './components';
+import lynxIcon from 'assets/icons/lynxIcon.svg';
+import loadingIcon from 'assets/icons/loading.svg';
 
 const SignUp = (props: any) => {
 
   const classes = useStyle()
   const [value, setValue] = useState(0);
-  const [showImgModal, setShowImgModal] = useState(true);
+  const [showOTPModal, setShowOTPModal] = useState(false);
+  const [showWalletModal, setShowWalletModal] = useState(false);
+  const [loadingWallet, setLoadingWallet] = useState(false);
+  const [errorConnecting, setErrorConnecting] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
+
+  const handleOTPClick = () => {
+    try {
+      setShowOTPModal(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleOTPClose = () => {
+    try {
+      setShowOTPModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleWalletClick = () => {
+    try {
+      setShowWalletModal(true);
+    } catch (error) { }
+  }
+
+  const handleWalletClose = () => {
+    try {
+      setShowWalletModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleWalletSelect = (data: any, index: number) => {
+    try {
+      setLoadingWallet(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   interface TabPanelProps {
     children?: React.ReactNode;
@@ -97,13 +143,13 @@ const SignUp = (props: any) => {
             <div className={classes.fieldStyle}>
               <InputLabel>OTP <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
               <InpBtnWrapper>
-                <CustomInput type="text" fullWidth disabled /><IcoButton><InpBtn src={rightArrow} /></IcoButton>
+                <CustomInput type="text" fullWidth disabled /><IcoButton><InpBtn onClick={handleOTPClick} src={rightArrow} /></IcoButton>
               </InpBtnWrapper>
             </div>
             <div className={classes.fieldStyle}>
               <InputLabel>Wallet Address <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
               <InpBtnWrapper>
-                <CustomInput type="text" fullWidth disabled /><IcoButton><InpBtn src={wallet} /></IcoButton>
+                <CustomInput type="text" fullWidth disabled /><IcoButton><InpBtn onClick={handleWalletClick} src={wallet} /></IcoButton>
               </InpBtnWrapper>
             </div>
             <div className={classes.signUpBtndiv}>
@@ -115,9 +161,64 @@ const SignUp = (props: any) => {
 
       </Box>
 
-      <CustomModal show={showImgModal} toggleModal={setShowImgModal}>
-        <div>Hello World</div>
+      {/* Modals */}
+
+      {/* OTP Modal */}
+      <CustomModal show={showOTPModal} toggleModal={setShowOTPModal}>
+        <div className={classes.OTPModalDiv}>
+          <div className={classes.OTPModalClose} onClick={handleOTPClose}>
+            <img src={closeIcon} alt='close' />
+          </div>
+          <div className={classes.OTPModalMail}>
+            <img src={mailIcon} alt='Mail Icon' />
+          </div>
+          <OTPInputField type='text' />
+          <div className={classes.OTPModalText}>
+            Please check abc@abc.com for OTP CODE
+          </div>
+        </div>
       </CustomModal>
+
+      {/* Wallet Modal */}
+      <CustomModal show={showWalletModal} toggleModal={setShowWalletModal}>
+        <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '125px' : '350px' }}>
+          <div className={classes.walletModalHeader}>
+            {loadingWallet ? (
+              <span className={classes.walletBack} onClick={() => setLoadingWallet(false)}>
+                Back
+              </span>
+            ) : (
+              <span className={classes.walletHeadText}>Select a wallet</span>
+            )
+            }
+            <img src={closeIcon} alt='close' onClick={handleWalletClose} />
+          </div>
+          {loadingWallet ? (
+            <div className={classes.walletCont}>
+              { !errorConnecting ? (
+                <>
+                  <img src={loadingIcon} alt='Loading...' style={{ width: '18px' }} />
+                  <span>Initializing</span>
+                  <img src={lynxIcon} alt='Lynx' />
+                </>
+              ) : (
+                <>
+                  <span style={{ whiteSpace: 'nowrap' }}>Error Connecting</span>
+                  <img src={lynxIcon} alt='Lynx' />
+                  <div>
+                    <button>Try Again</button>
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <Wallet walletClick={() => handleWalletSelect} />
+          )
+          }
+
+        </div>
+      </CustomModal>
+
     </>
   );
 }

@@ -23,10 +23,10 @@ export const useStyle = makeStyles(() =>
       color: '#BA8E4D !important',
     },
     boxStyle: {
-      // width: '400px',
-      // maxWidth: '400px',
-      width: '587px',
-      maxWidth: '585px',
+      width: '400px',
+      maxWidth: '400px',
+      // width: '587px',
+      // maxWidth: '585px',
       padding: '20px',
       boxSizing: 'border-box',
       border: '1px solid #BDBDBD',
@@ -41,6 +41,99 @@ export const useStyle = makeStyles(() =>
       justifyContent: 'center',
       alignItems: 'center'
     },
+    OTPModalDiv: {
+      // width: '506px',
+      // height: '353px',
+      width: '350px',
+      height: '225px',
+      background: '#FFFFFF',
+      textAlign: 'center',
+      borderRadius: '5px',
+      padding: '16px',
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      flexDirection: 'column'
+    },
+    OTPModalClose: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      width: '100%',
+      padding: '16px',
+      cursor: 'pointer',
+      '& > img': {
+        width: '12px'
+      }
+    },
+    OTPModalMail: {
+      padding: '0px 16px 16px',
+      '& > img': {
+        width: '63px'
+      }
+    },
+    OTPModalText: {
+      padding: '16px'
+    },
+    walletModalDiv: {
+      // width: '507px',
+      // height: '635px',
+      width: '350px',
+      height: '350px',
+      background: '#FFFFFF',
+      textAlign: 'center',
+      borderRadius: '5px',
+      padding: '16px',
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      flexDirection: 'column'
+    },
+    walletModalHeader: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%',
+      padding: '16px',
+      '& > span': {
+      },
+      '& > img': {
+        width: '12px',
+        cursor: 'pointer',
+      }
+    },
+    walletHeadText: {
+      color: '#2B2D31',
+      fontWeight: 'bold'
+    },
+    walletBack: {
+      color: '#E27625',
+      fontWeight: 'bold',
+      cursor: 'pointer'
+    },
+    walletCont: {
+      cursor: 'pointer',
+      display: 'flex',
+      justifyContent: 'flex-start',
+      width: '100%',
+      alignItems: 'center',
+      border: '1px solid #BDBDBD',
+      borderRadius: '5px',
+      padding: '4px 8px',
+      marginBottom: '12px',
+      '&:hover': {
+        border: '1px solid #F5841F'
+      },
+      '& > img': {
+        width: '36px',
+        height: '36px'
+      },
+      '& > span': {
+        padding: '0px 8px'
+      },
+    },
+    tryAgainDiv: {
+      display: 'flex',
+      justifyContent: 'flex-end'
+    }
   })
 )
 
@@ -109,17 +202,17 @@ export const IcoButton = styled(Button)`
 `;
 
 export const LogoImage = styled.img`
-  /* width: 150px !important;
-  height: 39px !important; */
-  width: 300px !important;
-  height: 78px !important;
+  width: 150px !important;
+  height: 39px !important;
+  /* width: 300px !important;
+  height: 78px !important; */
 `;
 
 export const LoginLogo = styled.img`
-  /* width: 55px !important;
-  height: 55px !important; */
-  width: 109px !important;
-  height: 109px !important;
+  width: 55px !important;
+  height: 55px !important;
+  /* width: 109px !important;
+  height: 109px !important; */
 `;
 
 export const InfoIcon = styled.img`
@@ -134,4 +227,19 @@ export const InpBtn = styled.img`
 export const InpBtnWrapper = styled.div`
   display: flex;
   padding-top: 6px;
+`;
+
+export const OTPInputField = styled.input`
+  padding-left: 15px;
+  letter-spacing: 42px;
+  border: 0;
+  background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+  background-position: bottom;
+  background-size: 50px 1px;
+  background-repeat: repeat-x;
+  background-position-x: 35px;
+  width: 170px;
+  &:focus-visible {
+    outline: none;
+  }
 `;

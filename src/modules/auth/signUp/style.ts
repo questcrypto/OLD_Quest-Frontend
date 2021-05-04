@@ -17,7 +17,7 @@ export const useStyle = makeStyles(() =>
     },
     tabDivStyle: {
       flexGrow: 1,
-      padding: '2.5rem'
+      padding: '2rem 0'
     },
     tabStyle: {
       color: '#BA8E4D !important',
@@ -142,6 +142,21 @@ export const useStyle = makeStyles(() =>
       '&:focus-visible': {
         outline: 'none'
       }
+    },
+    err: {
+      color: 'red',
+      textAlign: 'left'
+    },
+    cryptoTransImageDiv: {
+      height: '100%',
+      display: 'flex',
+      alignItems: 'flex-end',
+      position: 'relative',
+      right: '5%'
+    },
+    cryptoTransImage: {
+      width: '200px',
+      height: '200px'
     }
   })
 )
@@ -152,9 +167,13 @@ interface StyledTabsProps {
 }
 
 export const StyledTabs = withStyles({
+  // `root: {
+  //   maxWidth: '210px !important'
+  // },`
   indicator: {
-    backgroundColor: '#BA8E4D',
-    // backgroundColor: 'transparent',
+    // backgroundColor: '#BA8E4D',
+
+    backgroundColor: 'transparent',
     // '& > span': {
     //   maxWidth: 40,
     //   width: '100%',
@@ -198,7 +217,7 @@ export const CustomButton = styled(Button)`
   border-radius: 5px;
   padding: 6px 16px;
   &:hover {
-    background-color:none !important;
+    background-color: #0D4459;
   }
 `;
 
@@ -209,7 +228,7 @@ export const IcoButton = styled(Button)`
   margin-left: 12px;
   min-width: 36px !important;
   &:hover {
-    background-color: none !important;
+    background-color: #BA8E4D;
   }
 `;
 
@@ -254,4 +273,12 @@ export const OTPInputField = styled.input`
   &:focus-visible {
     outline: none;
   }
+`;
+
+export const Indicator = styled.span`
+  border-top: 3px solid #BA8E4D;
+  display: block;
+  width: 50%;
+  left: 25%;
+  position: relative;
 `;

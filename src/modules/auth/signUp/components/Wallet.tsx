@@ -1,4 +1,5 @@
 import { useStyle } from './style';
+import metaMaskIcon from 'assets/images/metamask.jpg';
 import lynxIcon from 'assets/icons/lynxIcon.svg';
 import tokenPocketIcon from 'assets/icons/tokenPocketIcon.svg';
 import meetOneIcon from 'assets/icons/meetOneIcon.svg';
@@ -9,7 +10,7 @@ const Wallet = (props: any) => {
 
   const wallets = [
     {
-      icon: lynxIcon,
+      icon: metaMaskIcon,
       label: 'META MASK'
     },
     {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid, { GridSpacing } from '@material-ui/core/Grid';
 import { Paper, Card, Input } from '@material-ui/core';
@@ -13,7 +13,8 @@ import {
   IcoButton,
   InpBtn,
   InpBtnWrapper,
-  OTPInputField
+  OTPInputField,
+  Indicator
 } from './style';
 import questLogo from 'assets/images/questLoginLogo.png';
 import signUpLogo from 'assets/images/signUp.png';
@@ -26,29 +27,48 @@ import Tab from '@material-ui/core/Tab';
 import { TabPanel } from '@material-ui/lab';
 import InputLabel from '@material-ui/core/InputLabel';
 import CustomModal from '../../../shared/custom-modal';
-import mailIcon from 'assets/images/OTPMail.svg';
+import mailIcon from 'assets/images/otpMail.png';
 import closeIcon from 'assets/icons/closeIcon.svg';
 import Wallet from './components';
+import metaMaskIcon from 'assets/images/metamask.jpg';
 import lynxIcon from 'assets/icons/lynxIcon.svg';
 import loadingIcon from 'assets/icons/loading.svg';
 import OtpInput from 'react-otp-input';
+import { Formik, Form, ErrorMessage } from 'formik';
+import { initialValues, signUpFormSchema } from './formConstant';
+import cryptoImage from 'assets/images/signUpLogoCrypto.png';
 
 const SignUp = (props: any) => {
 
   const classes = useStyle()
-  const [value, setValue] = useState(0);
-  const [showOTPModal, setShowOTPModal] = useState(false);
-  const [showWalletModal, setShowWalletModal] = useState(false);
-  const [loadingWallet, setLoadingWallet] = useState(false);
-  const [errorConnecting, setErrorConnecting] = useState(false);
-  const [otp, setOtp] = useState<string>('');
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const ref = useRef<any>();
+
+  // Sign Up and Sign In Navigation
+  const [value, setValue] = useState(0);
+  // Open OTP Modal
+  const [showOTPModal, setShowOTPModal] = useState(false);
+  // Open Wallet Modal
+  const [showWalletModal, setShowWalletModal] = useState(false);
+  // Initializing Wallet Modal
+  const [loadingWallet, setLoadingWallet] = useState(false);
+  // Error Connecting Modal
+  const [errorConnecting, setErrorConnecting] = useState(false);
+  // OTP in Modal
+  const [otp, setOtp] = useState<string>('');
+  // Form Data
+  const [initialData, setInitialData] = useState(initialValues);
+  // Email 
+  const [emailData, setEmailData] = useState<string>('');
+
+  const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
   const handleOTPClick = () => {
     try {
+      const formData = JSON.parse(JSON.stringify(ref.current.values));
+      setEmailData(formData.email);
       setShowOTPModal(true);
     } catch (error) {
       console.log(error);
@@ -90,7 +110,22 @@ const SignUp = (props: any) => {
   const handleChangeOTP = (otp: string) => {
     try {
       setOtp(otp);
+      console.log(ref.current.values);
+      if (otp.length === 4) {
+        setShowOTPModal(false);
+        const formData = JSON.parse(JSON.stringify(ref.current.values));
+        formData.otp = otp;
+        setInitialData(formData);
+      }
     } catch (error) { }
+  }
+
+  const handleSubmit = (values: any) => {
+    try {
+      console.log(values);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   interface TabPanelProps {
@@ -101,14 +136,19 @@ const SignUp = (props: any) => {
 
   return (
     <>
-      <Box className={classes.root}>
+
+      <Grid container>
+        <Grid item xs={3}></Grid>
+
+        <Grid item xs={6}>
+          <Box className={classes.root}>
 
         <LogoImage src={questLogo} alt='Quest Logo' />
 
         <div className={classes.tabDivStyle}>
           <StyledTabs
             value={value}
-            onChange={handleChange}
+            onChange={handleChangeTab}
           >
             <Tab
               className={classes.tabStyle}
@@ -120,6 +160,7 @@ const SignUp = (props: any) => {
                     style={{ color: '#2B2D31', fontSize: '12px', opacity: 0.7, padding: '0px 18px' }}
                   >
                     Lorem ipsum dolor sit, amet consectetur adipisicing.
+                    {value === 0? <Indicator />: ''} 
                 </span>
                 </>
               }
@@ -134,6 +175,7 @@ const SignUp = (props: any) => {
                     style={{ color: '#2B2D31', fontSize: '12px', opacity: 0.7, padding: '0px 18px' }}
                   >
                     Lorem ipsum dolor sit, amet consectetur adipisicing.
+                    {value === 1? <Indicator />: ''} 
                 </span>
                 </>
               }
@@ -142,36 +184,65 @@ const SignUp = (props: any) => {
         </div>
 
         {value == 0 &&
-          <Box className={classes.boxStyle}>
-            <div className={classes.fieldStyle}>
-              <InputLabel>Username <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
-              <CustomInput type="text" fullWidth />
-            </div>
-            <div className={classes.fieldStyle}>
-              <InputLabel>Email Address <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
-              <CustomInput type="text" fullWidth />
-            </div>
-            <div className={classes.fieldStyle}>
-              <InputLabel>OTP <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
-              <InpBtnWrapper>
-                <CustomInput type="text" fullWidth disabled /><IcoButton onClick={handleOTPClick}><InpBtn src={rightArrow} /></IcoButton>
-              </InpBtnWrapper>
-            </div>
-            <div className={classes.fieldStyle}>
-              <InputLabel>Wallet Address <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
-              <InpBtnWrapper>
-                <CustomInput type="text" fullWidth disabled /><IcoButton onClick={handleWalletClick}><InpBtn src={wallet} /></IcoButton>
-              </InpBtnWrapper>
-            </div>
-            <div className={classes.signUpBtndiv}>
-              <CustomButton>GET STARTED</CustomButton>
-            </div>
-          </Box>
+
+          <Formik
+            innerRef={ref}
+            enableReinitialize
+            initialValues={initialData}
+            validationSchema={signUpFormSchema}
+            onSubmit={(values, { setSubmitting }) => {
+              handleSubmit(values)
+              setSubmitting(false)
+            }}
+          >
+            {({ values, handleChange, handleBlur, isValid, isSubmitting, isValidating, errors, touched }: any) => (
+              <Form>
+                <Box className={classes.boxStyle}>
+                  <div className={classes.fieldStyle}>
+                    <InputLabel>Username <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
+                    <CustomInput type="text" name="userName" value={values.userName} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                    {/* {  touched.userName ? (<span>hello</span>): null } */}
+                    <ErrorMessage component="div" className={classes.err} name="userName" />
+                  </div>
+                  <div className={classes.fieldStyle}>
+                    <InputLabel>Email Address <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
+                    <CustomInput type="text" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                    <ErrorMessage component="div" className={classes.err} name="email" />
+                  </div>
+                  <div className={classes.fieldStyle}>
+                    <InputLabel>OTP <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
+                    <InpBtnWrapper>
+                      <CustomInput type="text" name="otp" disabled value={values.otp} onChange={handleChange} onBlur={handleBlur} fullWidth /><IcoButton onClick={handleOTPClick}><InpBtn src={rightArrow} /></IcoButton>
+                    </InpBtnWrapper>
+                    <ErrorMessage component="div" className={classes.err} name="otp" />
+                  </div>
+                  <div className={classes.fieldStyle}>
+                    <InputLabel>Wallet Address <InfoIcon src={infoIcon} alt='Info' /></InputLabel>
+                    <InpBtnWrapper>
+                      <CustomInput type="text" name="walletAddress" disabled value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth /><IcoButton onClick={handleWalletClick}><InpBtn src={wallet} /></IcoButton>
+                    </InpBtnWrapper>
+                    <ErrorMessage component="div" className={classes.err} name="walletAddress" />
+                  </div>
+                  <div className={classes.signUpBtndiv}>
+                    <CustomButton type="submit">GET STARTED</CustomButton>
+                  </div>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+
         }
         {value == 1 && <div>Sign In Tab</div>}
 
       </Box>
+        </Grid>
 
+        <Grid item xs={3}>
+          <div className={classes.cryptoTransImageDiv}>
+            <img src={cryptoImage} className={classes.cryptoTransImage} />
+          </div>
+        </Grid>
+      </Grid>
       {/* Modals */}
 
       {/* OTP Modal */}
@@ -192,7 +263,7 @@ const SignUp = (props: any) => {
             inputStyle={classes.otpStyle}
           />
           <div className={classes.OTPModalText}>
-            Please check abc@abc.com for OTP CODE
+            Please check <span style={{ background: 'rgba(25, 163, 179, 0.1)'}}>{emailData}</span> for OTP CODE
           </div>
         </div>
       </CustomModal>
@@ -217,12 +288,12 @@ const SignUp = (props: any) => {
                 <>
                   <img src={loadingIcon} alt='Loading...' style={{ width: '18px' }} />
                   <span>Initializing</span>
-                  <img src={lynxIcon} alt='Lynx' />
+                  <img src={metaMaskIcon} alt='Meta Mask' />
                 </>
               ) : (
                 <>
                   <span style={{ whiteSpace: 'nowrap' }}>Error Connecting</span>
-                  <img src={lynxIcon} alt='Lynx' />
+                  <img src={metaMaskIcon} alt='Meta Mask' />
                   <div>
                     <button>Try Again</button>
                   </div>

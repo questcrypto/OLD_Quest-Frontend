@@ -37,6 +37,7 @@ import OtpInput from 'react-otp-input';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { initialValues, signUpFormSchema } from './formConstant';
 import cryptoImage from 'assets/images/signUpLogoCrypto.png';
+import { default as Login } from '../login'
 
 const SignUp = (props: any) => {
 
@@ -60,6 +61,8 @@ const SignUp = (props: any) => {
   const [initialData, setInitialData] = useState(initialValues);
   // Email 
   const [emailData, setEmailData] = useState<string>('');
+  // Wallet Data
+  const [walletSelected, setWalletSelected] = useState<any>({icon: null, label: null});
 
   const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -99,8 +102,10 @@ const SignUp = (props: any) => {
     }
   }
 
-  const handleWalletSelect = (data: any, index: number) => {
+  const handleWalletSelect = (item: any) => {
     try {
+      setWalletSelected({icon: item.icon, label: item.label});
+      console.log(walletSelected);
       setLoadingWallet(true);
     } catch (error) {
       console.log(error);
@@ -232,7 +237,13 @@ const SignUp = (props: any) => {
           </Formik>
 
         }
-        {value == 1 && <div>Sign In Tab</div>}
+        {
+          value == 1 && 
+            <div>
+             {/* Sign In Tab */}
+             <Login />
+            </div>
+        }
 
       </Box>
         </Grid>
@@ -269,7 +280,7 @@ const SignUp = (props: any) => {
       </CustomModal>
 
       {/* Wallet Modal */}
-      <CustomModal show={showWalletModal} toggleModal={setShowWalletModal}>
+      <CustomModal show={showWalletModal} toggleModal={handleWalletClose}>
         <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '125px' : '350px' }}>
           <div className={classes.walletModalHeader}>
             {loadingWallet ? (
@@ -287,13 +298,14 @@ const SignUp = (props: any) => {
               { !errorConnecting ? (
                 <>
                   <img src={loadingIcon} alt='Loading...' style={{ width: '18px' }} />
-                  <span>Initializing</span>
-                  <img src={metaMaskIcon} alt='Meta Mask' />
+                  <span>{ walletSelected.label? walletSelected.label: 'Initializing' }</span>
+                  <img src={ walletSelected.icon? walletSelected.icon: metaMaskIcon } alt='Meta Mask' />
                 </>
               ) : (
                 <>
                   <span style={{ whiteSpace: 'nowrap' }}>Error Connecting</span>
-                  <img src={metaMaskIcon} alt='Meta Mask' />
+                  {/* <img src={metaMaskIcon} alt='Meta Mask' /> */}
+                  <img src={ walletSelected.icon? walletSelected.icon: metaMaskIcon } alt='Meta Mask' />
                   <div>
                     <button>Try Again</button>
                   </div>
@@ -301,7 +313,7 @@ const SignUp = (props: any) => {
               )}
             </div>
           ) : (
-            <Wallet walletClick={() => handleWalletSelect} />
+            <Wallet walletClick={handleWalletSelect} />
           )
           }
 

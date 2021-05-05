@@ -8,6 +8,8 @@ import ledgerIcon from 'assets/icons/ledgerIcon.svg';
 
 const Wallet = (props: any) => {
 
+  const { walletClick } = props;
+
   const wallets = [
     {
       icon: metaMaskIcon,
@@ -37,7 +39,7 @@ const Wallet = (props: any) => {
     <>
       { wallets.map((item, i) => {
         return (
-          <div key={i} className={classes.walletCont} onClick={props.walletClick(item, i)}>
+          <div key={i} className={classes.walletCont} onClick={() => walletClick(item)}>
             <img src={item.icon} alt={item.label} />
             <span>{ item.label }</span>
           </div>

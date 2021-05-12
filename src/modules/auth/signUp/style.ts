@@ -2,9 +2,10 @@ import styled from 'styled-components'
 import { makeStyles, withStyles, Theme, createStyles, fade } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { colors } from 'shared/styles/theme'
+import { colors, GlobalStyle } from 'shared/styles/theme'
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
 
 export const useStyle = makeStyles(() =>
   createStyles({
@@ -13,14 +14,16 @@ export const useStyle = makeStyles(() =>
       justifyContent: 'center',
       alignItems: 'center',
       margin: '0 auto',
-      flexDirection: 'column'
+      flexDirection: 'column',
     },
     tabDivStyle: {
       flexGrow: 1,
-      padding: '2rem 0'
+      padding: '2rem 0',
+      fontFamily: 'NexaRegular'
     },
     tabStyle: {
       color: '#BA8E4D !important',
+      fontFamily: 'NexaRegular !important'
     },
     boxStyle: {
       width: '400px',
@@ -30,10 +33,12 @@ export const useStyle = makeStyles(() =>
       padding: '20px',
       boxSizing: 'border-box',
       border: '1px solid #BDBDBD',
-      borderRadius: '5px'
+      borderRadius: '5px',
+      fontFamily: 'NexaRegular'
     },
     fieldStyle: {
-      paddingTop: '12px'
+      paddingTop: '12px',
+      fontFamily: 'NexaRegular'
     },
     signUpBtndiv: {
       paddingTop: '16px',
@@ -132,7 +137,8 @@ export const useStyle = makeStyles(() =>
     },
     tryAgainDiv: {
       display: 'flex',
-      justifyContent: 'flex-end'
+      justifyContent: 'flex-end',
+      width: '100%'
     },
     otpStyle: {
       borderTop: 'none',
@@ -145,7 +151,8 @@ export const useStyle = makeStyles(() =>
     },
     err: {
       color: 'red',
-      textAlign: 'left'
+      textAlign: 'left',
+      fontFamily: 'NexaRegular'
     },
     cryptoTransImageDiv: {
       height: '100%',
@@ -199,6 +206,7 @@ export const CustomInput = withStyles((theme: Theme) =>
       width: '100%',
       padding: '10px 12px',
       transition: theme.transitions.create(['border-color', 'box-shadow']),
+      fontFamily: 'NexaRegular',
       '&:focus': {
         boxShadow: `${fade('#BA8E4D', 0.25)} 0 0 0 0.2rem`,
         borderColor: '#BA8E4D',
@@ -216,6 +224,7 @@ export const CustomButton = styled(Button)`
   box-shadow: 0px 3px 1px -2px rgba(224, 224, 224, 0.2), 0px 2px 2px rgba(224, 224, 224, 0.14), 0px 1px 5px rgba(224, 224, 224, 0.12);
   border-radius: 5px;
   padding: 6px 16px;
+  font-family: NexaBold;
   &:hover {
     background-color: #0D4459;
   }
@@ -227,8 +236,13 @@ export const IcoButton = styled(Button)`
   padding: 6px 0px;
   margin-left: 12px;
   min-width: 36px !important;
+  font-family: NexaRegular;
   &:hover {
     background-color: #BA8E4D;
+  };
+  &:disabled {
+    /* background-color: #F5F5F5; */
+    opacity: 0.4;
   }
 `;
 
@@ -258,6 +272,7 @@ export const InpBtn = styled.img`
 export const InpBtnWrapper = styled.div`
   display: flex;
   padding-top: 6px;
+  font-family: NexaRegular;
 `;
 
 export const OTPInputField = styled.input`
@@ -270,6 +285,7 @@ export const OTPInputField = styled.input`
   background-repeat: repeat-x;
   background-position-x: 35px;
   width: 170px;
+  font-family: NexaRegular;
   &:focus-visible {
     outline: none;
   }
@@ -281,4 +297,8 @@ export const Indicator = styled.span`
   width: 50%;
   left: 25%;
   position: relative;
+`;
+
+export const CustomLabel = styled(InputLabel)`
+  font-family: NexaRegular;
 `;

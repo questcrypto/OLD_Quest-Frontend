@@ -5,6 +5,12 @@ import RobotoRegular from 'assets/fonts/Roboto/Roboto-Regular.ttf'
 import RobotoLight from 'assets/fonts/Roboto/Roboto-Light.ttf'
 import RobotoThin from 'assets/fonts/Roboto/Roboto-Thin.ttf'
 
+import NexaBold from 'assets/fonts/Nexa/Nexa Bold.otf';
+import NexaMediumBold from 'assets/fonts/Roboto/Roboto-Medium.ttf';
+import NexaRegular from 'assets/fonts/Nexa/Nexa Regular.otf';
+import NexaLight from 'assets/fonts/Nexa/Nexa Light.otf';
+import NexaThin from 'assets/fonts/Nexa/Nexa Thin.otf';
+
 export interface Colors {
   themeBackground: string
   white: string
@@ -22,7 +28,8 @@ export interface Colors {
 }
 
 export const colors: Colors = {
-  themeBackground: '#E5E5E5',
+  // themeBackground: '#E5E5E5',
+  themeBackground: '#FFFFFF',
   white: '#FFFFFF',
   primary: '#1E3444',
   textPrimary: '#302E35',
@@ -108,6 +115,25 @@ export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: RobotoThin;
   src: url(${RobotoThin});
+}
+
+@font-face {
+  font-family: NexaBold;
+  src: url(${NexaBold});
+}
+
+@font-face {
+  font-family: NexaRegular;
+  src: url(${NexaRegular});
+}
+
+@font-face {
+  font-family: NexaLight;
+  src: url(${NexaLight});
+}
+@font-face {
+  font-family: NexaThin;
+  src: url(${NexaThin});
 }
 
 body {

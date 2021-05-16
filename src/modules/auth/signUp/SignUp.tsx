@@ -6,6 +6,7 @@ import {
   LogoImage,
   LoginLogo,
   StyledTabs,
+  StyledTab,
   CustomInput,
   CustomButton,
   InfoIcon,
@@ -111,7 +112,7 @@ const SignUp = (props: any) => {
 
   const handleWalletSelect = async (item: any) => {
     try {
-      // setLoadingWallet(true);
+      setLoadingWallet(true);
 
       setWalletSelected({ icon: item.icon, label: item.label });
       console.log('Selected Wallet', walletSelected);
@@ -133,6 +134,7 @@ const SignUp = (props: any) => {
         } else {
           setErrorConnecting(true);
         }
+        setLoadingWallet(false);
       }
 
     } catch (error) {
@@ -200,10 +202,10 @@ const SignUp = (props: any) => {
   return (
     <>
 
-      <Grid container>
-        <Grid item xs={3}></Grid>
+      <Grid container >
+        <Grid item sm={4}></Grid>
 
-        <Grid item xs={6}>
+        <Grid item sm={4} xs={12}>
           <Box className={classes.root} >
 
             <LogoImage src={questLogo} alt='Quest Logo' />
@@ -213,14 +215,14 @@ const SignUp = (props: any) => {
                 value={value}
                 onChange={handleChangeTab}
               >
-                <Tab
+                <StyledTab
                   className={classes.tabStyle}
                   icon={<LoginLogo src={signUpLogo} />}
                   label={
                     <>
                       Sign Up <br />
                       <span
-                        style={{ color: '#2B2D31', fontSize: '12px', opacity: 0.7, padding: '0px 18px' }}
+                        className={classes.tabText}
                       >
                         Lorem ipsum dolor sit, amet consectetur adipisicing.
                       {value === 0 ? <Indicator /> : ''}
@@ -228,14 +230,14 @@ const SignUp = (props: any) => {
                     </>
                   }
                 />
-                <Tab
+                <StyledTab
                   className={classes.tabStyle}
                   icon={<LoginLogo src={signInLogo} />}
                   label={
                     <>
                       Sign In <br />
                       <span
-                        style={{ color: '#2B2D31', fontSize: '12px', opacity: 0.7, padding: '0px 18px' }}
+                        className={classes.tabText}
                       >
                         Lorem ipsum dolor sit, amet consectetur adipisicing.
                       {value === 1 ? <Indicator /> : ''}
@@ -259,7 +261,7 @@ const SignUp = (props: any) => {
                 }}
               >
                 {({ values, handleChange, handleBlur, isValid, isSubmitting, isValidating, errors, touched }: any) => (
-                  <Form>
+                  <Form style={{ width: '100%' }}>
                     <Box className={classes.boxStyle}>
                       <div className={classes.fieldStyle}>
                         <CustomLabel>Username <InfoIcon src={infoIcon} alt='Info' /></CustomLabel>
@@ -300,17 +302,14 @@ const SignUp = (props: any) => {
 
             }
             {
-              value == 1 &&
-              <div>
-                {/* Sign In Tab */}
-                <Login />
-              </div>
+              // SignIn Tab
+              value == 1 && <Login />
             }
 
           </Box>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item sm={4}>
           <div className={classes.cryptoTransImageDiv}>
             <img src={cryptoImage} className={classes.cryptoTransImage} />
           </div>

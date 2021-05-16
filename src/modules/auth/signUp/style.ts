@@ -18,16 +18,18 @@ export const useStyle = makeStyles(() =>
     },
     tabDivStyle: {
       flexGrow: 1,
-      padding: '2rem 0',
+      padding: '2rem 0 1.5rem 0',
       fontFamily: 'NexaRegular'
     },
     tabStyle: {
       color: '#BA8E4D !important',
+      fontSize: '16px',
       fontFamily: 'NexaRegular !important'
     },
     boxStyle: {
-      width: '400px',
-      maxWidth: '400px',
+      width: '100%',
+      // width: '400px',
+      // maxWidth: '400px',
       // width: '587px',
       // maxWidth: '585px',
       padding: '20px',
@@ -38,10 +40,12 @@ export const useStyle = makeStyles(() =>
     },
     fieldStyle: {
       paddingTop: '12px',
+      paddingBottom: '4px',
       fontFamily: 'NexaRegular'
     },
     signUpBtndiv: {
-      paddingTop: '16px',
+      paddingTop: '32px',
+      paddingBottom: '12px',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center'
@@ -58,7 +62,8 @@ export const useStyle = makeStyles(() =>
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      fontFamily: 'NexaRegular'
     },
     OTPModalClose: {
       display: 'flex',
@@ -91,7 +96,8 @@ export const useStyle = makeStyles(() =>
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      fontFamily: 'NexaRegular'
     },
     walletModalHeader: {
       display: 'flex',
@@ -120,9 +126,10 @@ export const useStyle = makeStyles(() =>
       justifyContent: 'flex-start',
       width: '100%',
       alignItems: 'center',
-      border: '1px solid #BDBDBD',
+      // border: '1px solid #BDBDBD',
       borderRadius: '5px',
       padding: '4px 8px',
+      border: '1px solid #F5841F',
       marginBottom: '12px',
       '&:hover': {
         border: '1px solid #F5841F'
@@ -138,7 +145,8 @@ export const useStyle = makeStyles(() =>
     tryAgainDiv: {
       display: 'flex',
       justifyContent: 'flex-end',
-      width: '100%'
+      width: '100%',
+      fontFamily: 'NexaRegular'
     },
     otpStyle: {
       borderTop: 'none',
@@ -159,11 +167,21 @@ export const useStyle = makeStyles(() =>
       display: 'flex',
       alignItems: 'flex-end',
       position: 'relative',
-      right: '5%'
+      // right: '5%'
+      paddingLeft: '48px'
     },
     cryptoTransImage: {
       width: '200px',
       height: '200px'
+    },
+    tabText: {
+      color: '#2B2D31', 
+      fontSize: '14px', 
+      opacity: 0.7, 
+      // padding: '0px 18px',
+      lineHeight: '20px',
+      paddingTop: '4px',
+      paddingBottom: '12px'
     }
   })
 )
@@ -174,9 +192,9 @@ interface StyledTabsProps {
 }
 
 export const StyledTabs = withStyles({
-  // `root: {
-  //   maxWidth: '210px !important'
-  // },`
+  root: {
+    maxWidth: '485px'
+  },
   indicator: {
     // backgroundColor: '#BA8E4D',
 
@@ -187,8 +205,16 @@ export const StyledTabs = withStyles({
     //   backgroundColor: 'orange',
     // },
   },
+
 })(Tabs);
 // })((props: StyledTabsProps) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />)
+
+export const StyledTab = withStyles({
+  root: {
+    maxWidth: '245px',
+    textTransform: 'initial'
+  }
+})(Tab);
 
 export const CustomInput = withStyles((theme: Theme) =>
   createStyles({
@@ -224,7 +250,7 @@ export const CustomButton = styled(Button)`
   box-shadow: 0px 3px 1px -2px rgba(224, 224, 224, 0.2), 0px 2px 2px rgba(224, 224, 224, 0.14), 0px 1px 5px rgba(224, 224, 224, 0.12);
   border-radius: 5px;
   padding: 6px 16px;
-  font-family: NexaBold;
+  font-family: NexaRegular;
   &:hover {
     background-color: #0D4459;
   }
@@ -247,17 +273,21 @@ export const IcoButton = styled(Button)`
 `;
 
 export const LogoImage = styled.img`
-  width: 150px !important;
-  height: 39px !important;
+  /* width: 150px !important; */
+  /* height: 39px !important; */
   /* width: 300px !important;
   height: 78px !important; */
+  width: 225px;
+  height: 58px;
 `;
 
 export const LoginLogo = styled.img`
-  width: 55px !important;
-  height: 55px !important;
+  /* width: 55px !important; */
+  /* height: 55px !important; */
   /* width: 109px !important;
   height: 109px !important; */
+  height: 78px;
+  padding-bottom: 4px;
 `;
 
 export const InfoIcon = styled.img`
@@ -297,6 +327,7 @@ export const Indicator = styled.span`
   width: 50%;
   left: 25%;
   position: relative;
+  top: 12px;
 `;
 
 export const CustomLabel = styled(InputLabel)`

@@ -7,10 +7,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 export const useStyle = makeStyles(() =>
   createStyles({
     boxStyle: {
-      width: '400px',
-      maxWidth: '400px',
+      // width: '400px',
+      // maxWidth: '400px',
       // width: '587px',
       // maxWidth: '585px',
+      width: '100%',
       padding: '20px',
       boxSizing: 'border-box',
       border: '1px solid #BDBDBD',
@@ -19,10 +20,12 @@ export const useStyle = makeStyles(() =>
     },
     fieldStyle: {
       paddingTop: '12px',
+      paddingBottom: '4px',
       fontFamily: 'NexaRegular'
     },
     signUpBtndiv: {
-      paddingTop: '16px',
+      paddingTop: '32px',
+      paddingBottom: '12px',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center'
@@ -39,7 +42,8 @@ export const useStyle = makeStyles(() =>
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      fontFamily: 'NexaRegular'
     },
     walletModalHeader: {
       display: 'flex',
@@ -68,7 +72,8 @@ export const useStyle = makeStyles(() =>
       justifyContent: 'flex-start',
       width: '100%',
       alignItems: 'center',
-      border: '1px solid #BDBDBD',
+      // border: '1px solid #BDBDBD',
+      border: '1px solid #F5841F',
       borderRadius: '5px',
       padding: '4px 8px',
       marginBottom: '12px',
@@ -86,7 +91,8 @@ export const useStyle = makeStyles(() =>
     tryAgainDiv: {
       display: 'flex',
       justifyContent: 'flex-end',
-      width: '100%'
+      width: '100%',
+      fontFamily: 'NexaRegular'
     },
     otpStyle: {
       borderTop: 'none',
@@ -139,7 +145,7 @@ export const CustomButton = styled(Button)`
   box-shadow: 0px 3px 1px -2px rgba(224, 224, 224, 0.2), 0px 2px 2px rgba(224, 224, 224, 0.14), 0px 1px 5px rgba(224, 224, 224, 0.12);
   border-radius: 5px;
   padding: 6px 16px;
-  font-family: NexaBold;
+  font-family: NexaRegular;
   &:hover {
     background-color: #0D4459;
   }

@@ -155,7 +155,7 @@ const Login = (props: any) => {
         // validator={() => ({})}
       >
         {({ values, handleChange, handleBlur, isValid, isSubmitting, isValidating, errors, touched }: any) => (
-          <Form>
+          <Form style={{ width: '100%' }}>
             <Box className={classes.boxStyle}>
               <div className={classes.fieldStyle}>
                 <CustomLabel>Email Address <InfoIcon src={infoIcon} alt='Info' /></CustomLabel>

@@ -5,11 +5,10 @@ import RobotoRegular from 'assets/fonts/Roboto/Roboto-Regular.ttf'
 import RobotoLight from 'assets/fonts/Roboto/Roboto-Light.ttf'
 import RobotoThin from 'assets/fonts/Roboto/Roboto-Thin.ttf'
 
-import NexaBold from 'assets/fonts/Nexa/Nexa Bold.otf';
-import NexaMediumBold from 'assets/fonts/Roboto/Roboto-Medium.ttf';
-import NexaRegular from 'assets/fonts/Nexa/Nexa Regular.otf';
-import NexaLight from 'assets/fonts/Nexa/Nexa Light.otf';
-import NexaThin from 'assets/fonts/Nexa/Nexa Thin.otf';
+import NexaBold from 'assets/fonts/Nexa/NexaBold.otf';
+import NexaRegular from 'assets/fonts/Nexa/NexaRegular.otf';
+import NexaLight from 'assets/fonts/Nexa/NexaLight.otf';
+import NexaThin from 'assets/fonts/Nexa/NexaThin.otf';
 
 export interface Colors {
   themeBackground: string

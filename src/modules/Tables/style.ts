@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
 import { createStyles, makeStyles, withStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import Button from '@material-ui/core/Button';
 
 export const useStyles = makeStyles(() =>
   createStyles({
@@ -165,3 +166,14 @@ export const ReserverAmountTxt = styled.p`
   font-family: RobotoRegular;
   margin: 0;
 `
+
+export const FullDetailsBtn = styled(Button)`
+  font-family: RobotoRegular;
+  margin-top: 20px;
+  background-color: rgba(30, 52, 68, 1);
+  color: rgba(255, 255, 255, 1);
+  font-size: 16px;
+  &:hover {
+    background-color: rgba(30, 52, 68, 1);
+  }
+`;

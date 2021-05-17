@@ -66,14 +66,15 @@ const Login = (props: any) => {
         const publicaddress = coinbase.toLowerCase()
         console.log(publicaddress);
         let signatureData: any = ''
-        const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
-        if (!!result && result.data && result.data.length === 0) {
-          const data: any = { email: values.email, publicaddress }
-          const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
-          signatureData = { publicaddress: signUpRes.data.publicaddress, nonce: signUpRes.data.nonce }
-        } else {
-          signatureData = { publicaddress: result.data[0].publicaddress, nonce: result.data[0].nonce }
-        }
+        const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`);
+        console.log('Result', result);
+        // if (!!result && result.data && result.data.length === 0) {
+        //   const data: any = { email: values.email, publicaddress }
+        //   const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
+        //   signatureData = { publicaddress: signUpRes.data.publicaddress, nonce: signUpRes.data.nonce }
+        // } else {
+        signatureData = { publicaddress: result.data[0].publicaddress, nonce: result.data[0].nonce }
+        // }
         const signature = await web3.eth.personal.sign(
           `I am signing my one-time nonce: ${signatureData.nonce}`,
           signatureData.publicaddress,
@@ -112,6 +113,7 @@ const Login = (props: any) => {
 
   const handleWalletSelect = async (item: any) => {
     try {
+      setLoadingWallet(true);
       setWalletSelected({ icon: item.icon, label: item.label });
       console.log('Selected Wallet', walletSelected);
 
@@ -126,6 +128,7 @@ const Login = (props: any) => {
         console.log('Public Address', publicaddress);
         if (publicaddress) {
           setShowWalletModal(false);
+          setLoadingWallet(false);
           console.log('Ref Values', ref.current.values);
           const formData = JSON.parse(JSON.stringify(ref.current.values));
           formData.walletAddress = publicaddress;
@@ -151,8 +154,8 @@ const Login = (props: any) => {
           handleSubmit(values)
           setSubmitting(false)
         }}
-        // onSubmit={() => { console.log("submit!"); }}
-        // validator={() => ({})}
+      // onSubmit={() => { console.log("submit!"); }}
+      // validator={() => ({})}
       >
         {({ values, handleChange, handleBlur, isValid, isSubmitting, isValidating, errors, touched }: any) => (
           <Form style={{ width: '100%' }}>

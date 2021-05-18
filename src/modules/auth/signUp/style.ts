@@ -6,6 +6,7 @@ import { colors, GlobalStyle } from 'shared/styles/theme'
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export const useStyle = makeStyles(() =>
   createStyles({
@@ -172,12 +173,15 @@ export const useStyle = makeStyles(() =>
     },
     cryptoTransImage: {
       width: '200px',
-      height: '200px'
+      height: '200px',
+      // background: '#FFFFFF',
+      // background: 'linear-gradient(45deg, #BA8E4D 30.82%, #D4A863 49.43%, #E6BA73 65.91%)',
+      // opacity: '0.1'
     },
     tabText: {
-      color: '#2B2D31', 
-      fontSize: '14px', 
-      opacity: 0.7, 
+      color: '#2B2D31',
+      fontSize: '14px',
+      opacity: 0.7,
       // padding: '0px 18px',
       lineHeight: '20px',
       paddingTop: '4px',
@@ -224,7 +228,7 @@ export const CustomInput = withStyles((theme: Theme) =>
       },
     },
     input: {
-      borderRadius: 4,
+      // borderRadius: 4,
       position: 'relative',
       backgroundColor: theme.palette.common.white,
       border: '1px solid #ced4da',
@@ -232,17 +236,33 @@ export const CustomInput = withStyles((theme: Theme) =>
       width: '100%',
       padding: '10px 12px',
       transition: theme.transitions.create(['border-color', 'box-shadow']),
+      borderRadius: '5px',
       fontFamily: 'NexaRegular',
       '&:focus': {
         boxShadow: `${fade('#BA8E4D', 0.25)} 0 0 0 0.2rem`,
         borderColor: '#BA8E4D',
       },
+      '&:hover': {
+        border: '1px solid #19A3B3',
+        boxShadow: '0px 4px 10px rgba(82, 167, 176, 0.1)',
+      },
       '&:disabled': {
-        backgroundColor: '#F5F5F5'
+        backgroundColor: '#F5F5F5',
+        border: '1px solid #ced4da',
       }
     },
   }),
 )(InputBase);
+
+export const CustomTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#1E3445',
+    fontFamily: 'NexaRegular'
+},
+  arrow: {
+  color: '#1E3445'
+}
+})) (Tooltip);
 
 export const CustomButton = styled(Button)`
   background-color: #0D4459;
@@ -279,6 +299,9 @@ export const LogoImage = styled.img`
   height: 78px !important; */
   width: 225px;
   height: 58px;
+  &:hover {
+    filter: drop-shadow(0.6rem 0.6rem 0.5rem rgba(186, 142, 77, 0.4));
+  }
 `;
 
 export const LoginLogo = styled.img`

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 import {
   useStyle,
   LogoImage,
@@ -14,11 +15,15 @@ import {
   InpBtn,
   InpBtnWrapper,
   Indicator,
-  CustomLabel
+  CustomLabel,
+  CustomTooltip
 } from './style';
 import questLogo from 'assets/images/questLoginLogo.png';
+import questHoverLogo from 'assets/images/questHoverLogo.png';
 import signUpLogo from 'assets/images/signUp.png';
+import signUpActiveLogo from 'assets/images/signUpActive.png';
 import signInLogo from 'assets/images/signIn.png';
+import signInActiveLogo from 'assets/images/signInActive.png';
 import rightArrow from 'assets/images/rightArrow.svg';
 import wallet from 'assets/images/wallet.svg';
 import infoIcon from 'assets/images/info.svg';
@@ -34,6 +39,7 @@ import OtpInput from 'react-otp-input';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { initialValues, signUpFormSchema } from './formConstant';
 import cryptoImage from 'assets/images/signUpLogoCrypto.png';
+import cryptoHoverImage from 'assets/images/signUpHoverLogoCrypto.png';
 import { default as Login } from '../login';
 import * as Yup from 'yup';
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods';
@@ -208,7 +214,13 @@ const SignUp = (props: any) => {
         <Grid item sm={4} xs={12}>
           <Box className={classes.root} >
 
-            <LogoImage src={questLogo} alt='Quest Logo' />
+            {/* <LogoImage src={questLogo} alt='Quest Logo' /> */}
+            <LogoImage
+              src={questLogo}
+              alt='Quest Logo'
+            // onMouseOver={e => (e.currentTarget.src = questHoverLogo)} 
+            // onMouseOut={e => (e.currentTarget.src = questLogo)} 
+            />
 
             <div className={classes.tabDivStyle}>
               <StyledTabs
@@ -217,10 +229,10 @@ const SignUp = (props: any) => {
               >
                 <StyledTab
                   className={classes.tabStyle}
-                  icon={<LoginLogo src={signUpLogo} />}
+                  icon={<LoginLogo src={value == 0 ? signUpActiveLogo : signUpLogo} />}
                   label={
                     <>
-                      Sign Up <br />
+                      <span style={{ color: value == 0 ? '#BA8E4D' : '#2B2D31' }}>Sign Up</span>
                       <span
                         className={classes.tabText}
                       >
@@ -232,10 +244,10 @@ const SignUp = (props: any) => {
                 />
                 <StyledTab
                   className={classes.tabStyle}
-                  icon={<LoginLogo src={signInLogo} />}
+                  icon={<LoginLogo src={value == 1 ? signInActiveLogo : signInLogo} />}
                   label={
                     <>
-                      Sign In <br />
+                      <span style={{ color: value == 1 ? '#BA8E4D' : '#2B2D31' }}>Sign In</span>
                       <span
                         className={classes.tabText}
                       >
@@ -264,29 +276,58 @@ const SignUp = (props: any) => {
                   <Form style={{ width: '100%' }}>
                     <Box className={classes.boxStyle}>
                       <div className={classes.fieldStyle}>
-                        <CustomLabel>Username <InfoIcon src={infoIcon} alt='Info' /></CustomLabel>
+                        <CustomLabel>
+                          Username &nbsp;
+                          <CustomTooltip title="Enter username" arrow>
+                            <InfoIcon src={infoIcon} alt='Info' />
+                          </CustomTooltip>
+                        </CustomLabel>
                         <CustomInput type="text" name="userName" value={values.userName} onChange={handleChange} onBlur={handleBlur} fullWidth />
                         {/* {  touched.userName ? (<span>hello</span>): null } */}
                         <ErrorMessage component="div" className={classes.err} name="userName" />
                       </div>
                       <div className={classes.fieldStyle}>
-                        <CustomLabel>Email Address <InfoIcon src={infoIcon} alt='Info' /></CustomLabel>
-                        <CustomInput type="text" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                        <CustomLabel>
+                          Email Address &nbsp;
+                          <CustomTooltip title="Enter Email" arrow>
+                            <InfoIcon src={infoIcon} alt='Info' />
+                          </CustomTooltip>
+                        </CustomLabel>
+                        <InpBtnWrapper>
+                          <CustomInput type="text" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                          <IcoButton
+                            disabled={(Yup.string().email().isValidSync(values.email) ? false : true) ||
+                              (Yup.string().required().isValidSync(values.userName) ? false : true)}
+                            onClick={handleOTPClick}><InpBtn src={rightArrow} />
+                          </IcoButton>
+                        </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="email" />
                       </div>
                       <div className={classes.fieldStyle}>
-                        <CustomLabel>OTP <InfoIcon src={infoIcon} alt='Info' /></CustomLabel>
+                        <CustomLabel>
+                          OTP &nbsp;
+                          <CustomTooltip title="Enter OTP" arrow>
+                            <InfoIcon src={infoIcon} alt='Info' />
+                          </CustomTooltip>
+                        </CustomLabel>
                         <InpBtnWrapper>
                           <CustomInput type="text" name="otp" disabled value={values.otp} onChange={handleChange} onBlur={handleBlur} fullWidth />
-                          <IcoButton disabled={Yup.string().email().isValidSync(values.email) ? false : true} onClick={handleOTPClick}><InpBtn src={rightArrow} /></IcoButton>
                         </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="otp" />
                       </div>
                       <div className={classes.fieldStyle}>
-                        <CustomLabel>Wallet Address <InfoIcon src={infoIcon} alt='Info' /></CustomLabel>
+                        <CustomLabel>
+                          Wallet Address &nbsp;
+                          <CustomTooltip title="Enter Wallet Address" arrow>
+                            <InfoIcon src={infoIcon} alt='Info' />
+                          </CustomTooltip>
+                        </CustomLabel>
                         <InpBtnWrapper>
                           <CustomInput type="text" name="walletAddress" disabled value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
-                          <IcoButton disabled={Yup.string().email().isValidSync(values.email) ? false : true} onClick={handleWalletClick}><InpBtn src={wallet} /></IcoButton>
+                          <IcoButton
+                            disabled={(Yup.string().email().isValidSync(values.email) ? false : true) ||
+                              (Yup.string().required().isValidSync(values.userName) ? false : true)}
+                            onClick={handleWalletClick}><InpBtn src={wallet} /></IcoButton>
                         </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="walletAddress" />
                       </div>
@@ -311,7 +352,12 @@ const SignUp = (props: any) => {
 
         <Grid item sm={4}>
           <div className={classes.cryptoTransImageDiv}>
-            <img src={cryptoImage} className={classes.cryptoTransImage} />
+            <img
+              src={cryptoImage}
+              className={classes.cryptoTransImage}
+              onMouseOver={e => (e.currentTarget.src = cryptoHoverImage)}
+              onMouseOut={e => (e.currentTarget.src = cryptoImage)}
+            />
           </div>
         </Grid>
       </Grid>

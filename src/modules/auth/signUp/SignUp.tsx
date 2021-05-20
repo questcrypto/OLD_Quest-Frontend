@@ -30,6 +30,7 @@ import infoIcon from 'assets/images/info.svg';
 import Tab from '@material-ui/core/Tab';
 import CustomModal from '../../../shared/custom-modal';
 import mailIcon from 'assets/images/otpMail.png';
+import mailIcon2 from 'assets/images/otpMail2.png';
 import closeIcon from 'assets/icons/closeIcon.svg';
 import Wallet from './components';
 import metaMaskIcon from 'assets/images/metamask.jpg';
@@ -77,6 +78,8 @@ const SignUp = (props: any) => {
   const [emailData, setEmailData] = useState<string>('');
   // Wallet Data
   const [walletSelected, setWalletSelected] = useState<any>({ icon: null, label: null });
+  // OTP Received
+  const [otpServiceData, setOtpServiceData] = useState<boolean>(false);
 
   const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -95,7 +98,8 @@ const SignUp = (props: any) => {
   const handleOTPClose = () => {
     try {
       setShowOTPModal(false);
-      setOtp('');
+      // setOtp('');
+      setOtpServiceData(true);
     } catch (error) {
       console.log(error);
     }
@@ -140,9 +144,8 @@ const SignUp = (props: any) => {
         } else {
           setErrorConnecting(true);
         }
-        setLoadingWallet(false);
       }
-
+      setLoadingWallet(false);
     } catch (error) {
       console.log(error);
     }
@@ -209,9 +212,9 @@ const SignUp = (props: any) => {
     <>
 
       <Grid container >
-        <Grid item sm={4}></Grid>
+        <Grid item md={4} sm={12} xs={12}></Grid>
 
-        <Grid item sm={4} xs={12}>
+        <Grid item md={4} sm={12} xs={12}>
           <Box className={classes.root} >
 
             {/* <LogoImage src={questLogo} alt='Quest Logo' /> */}
@@ -224,6 +227,8 @@ const SignUp = (props: any) => {
 
             <div className={classes.tabDivStyle}>
               <StyledTabs
+                centered
+                variant='standard'
                 value={value}
                 onChange={handleChangeTab}
               >
@@ -296,6 +301,7 @@ const SignUp = (props: any) => {
                         <InpBtnWrapper>
                           <CustomInput type="text" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} fullWidth />
                           <IcoButton
+                            style={{ display: otpServiceData? 'none': ''}}
                             disabled={(Yup.string().email().isValidSync(values.email) ? false : true) ||
                               (Yup.string().required().isValidSync(values.userName) ? false : true)}
                             onClick={handleOTPClick}><InpBtn src={rightArrow} />
@@ -311,7 +317,11 @@ const SignUp = (props: any) => {
                           </CustomTooltip>
                         </CustomLabel>
                         <InpBtnWrapper>
-                          <CustomInput type="text" name="otp" disabled value={values.otp} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                          <CustomInput 
+                            type="number" 
+                            name="otp" 
+                            disabled = {!otpServiceData} 
+                            value={values.otp} onChange={handleChange} onBlur={handleBlur} fullWidth />
                         </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="otp" />
                       </div>
@@ -323,8 +333,13 @@ const SignUp = (props: any) => {
                           </CustomTooltip>
                         </CustomLabel>
                         <InpBtnWrapper>
-                          <CustomInput type="text" name="walletAddress" disabled value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                          <CustomInput 
+                            type="text" 
+                            name="walletAddress" 
+                            disabled={!values.walletAddress} 
+                            value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
                           <IcoButton
+                            style={{ display: values.walletAddress? 'none': ''}}
                             disabled={(Yup.string().email().isValidSync(values.email) ? false : true) ||
                               (Yup.string().required().isValidSync(values.userName) ? false : true)}
                             onClick={handleWalletClick}><InpBtn src={wallet} /></IcoButton>
@@ -350,7 +365,7 @@ const SignUp = (props: any) => {
           </Box>
         </Grid>
 
-        <Grid item sm={4}>
+        <Grid item md={4} sm={12} xs={12}>
           <div className={classes.cryptoTransImageDiv}>
             <img
               src={cryptoImage}
@@ -370,16 +385,17 @@ const SignUp = (props: any) => {
             <img src={closeIcon} alt='close' />
           </div>
           <div className={classes.OTPModalMail}>
-            <img src={mailIcon} alt='Mail Icon' />
+            {/* <img src={mailIcon} alt='Mail Icon' /> */}
+            <img src={mailIcon2} alt='Mail Icon' />
           </div>
           {/* <OTPInputField type='text' /> */}
-          <OtpInput
+          {/* <OtpInput
             value={otp}
             onChange={handleChangeOTP}
             numInputs={4}
             separator={<span>&nbsp;&nbsp;</span>}
             inputStyle={classes.otpStyle}
-          />
+          /> */}
           <div className={classes.OTPModalText}>
             Please check <span style={{ background: 'rgba(25, 163, 179, 0.1)' }}>{emailData}</span> for OTP CODE
             </div>
@@ -388,7 +404,7 @@ const SignUp = (props: any) => {
 
       {/* Wallet Modal */}
       <CustomModal show={showWalletModal} toggleModal={handleWalletClose}>
-        <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '125px' : '350px' }}>
+        <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '135px' : '420px' }}>
           <div className={classes.walletModalHeader}>
             {loadingWallet ? (
               <span className={classes.walletBack} onClick={() => setLoadingWallet(false)}>

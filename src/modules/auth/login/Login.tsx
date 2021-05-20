@@ -128,7 +128,6 @@ const Login = (props: any) => {
         console.log('Public Address', publicaddress);
         if (publicaddress) {
           setShowWalletModal(false);
-          setLoadingWallet(false);
           console.log('Ref Values', ref.current.values);
           const formData = JSON.parse(JSON.stringify(ref.current.values));
           formData.walletAddress = publicaddress;
@@ -136,6 +135,7 @@ const Login = (props: any) => {
         } else {
           setErrorConnecting(true);
         }
+        setLoadingWallet(false);
       }
 
     } catch (error) {
@@ -168,8 +168,14 @@ const Login = (props: any) => {
               <div className={classes.fieldStyle}>
                 <CustomLabel>Wallet Address <InfoIcon src={infoIcon} alt='Info' /></CustomLabel>
                 <InpBtnWrapper>
-                  <CustomInput type="text" name="walletAddress" disabled value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
-                  <IcoButton disabled={Yup.string().email().isValidSync(values.email) ? false : true} onClick={handleWalletClick}>
+                  <CustomInput 
+                    type="text" 
+                    name="walletAddress" 
+                    disabled={!values.walletAddress} 
+                    value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                  <IcoButton 
+                    style={{ display: values.walletAddress? 'none': ''}}
+                    disabled={Yup.string().email().isValidSync(values.email) ? false : true} onClick={handleWalletClick}>
                     <InpBtn src={wallet} />
                   </IcoButton>
                 </InpBtnWrapper>
@@ -187,7 +193,7 @@ const Login = (props: any) => {
 
       {/* Wallet Modal */}
       <CustomModal show={showWalletModal} toggleModal={handleWalletClose}>
-        <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '125px' : '350px' }}>
+        <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '135px' : '420px' }}>
           <div className={classes.walletModalHeader}>
             {loadingWallet ? (
               <span className={classes.walletBack} onClick={() => setLoadingWallet(false)}>

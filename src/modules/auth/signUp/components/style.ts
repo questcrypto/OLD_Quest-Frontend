@@ -11,7 +11,7 @@ export const useStyle = makeStyles(() =>
       alignItems: 'center',
       border: '1px solid #BDBDBD',
       borderRadius: '5px',
-      padding: '4px 8px',
+      padding: '10px 8px',
       marginBottom: '12px',
       '&:hover': {
         border: '1px solid #F5841F'

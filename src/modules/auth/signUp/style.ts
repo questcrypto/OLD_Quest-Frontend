@@ -77,9 +77,9 @@ export const useStyle = makeStyles(() =>
       }
     },
     OTPModalMail: {
-      padding: '0px 16px 16px',
+      padding: '0px 16px',
       '& > img': {
-        width: '63px'
+        width: '110px'
       }
     },
     OTPModalText: {
@@ -93,7 +93,7 @@ export const useStyle = makeStyles(() =>
       background: '#FFFFFF',
       textAlign: 'center',
       borderRadius: '5px',
-      padding: '16px',
+      padding: '16px 32px',
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center',
@@ -129,7 +129,7 @@ export const useStyle = makeStyles(() =>
       alignItems: 'center',
       // border: '1px solid #BDBDBD',
       borderRadius: '5px',
-      padding: '4px 8px',
+      padding: '8px',
       border: '1px solid #F5841F',
       marginBottom: '12px',
       '&:hover': {
@@ -197,7 +197,8 @@ interface StyledTabsProps {
 
 export const StyledTabs = withStyles({
   root: {
-    maxWidth: '485px'
+    maxWidth: '485px',
+    overflow: 'auto'
   },
   indicator: {
     // backgroundColor: '#BA8E4D',

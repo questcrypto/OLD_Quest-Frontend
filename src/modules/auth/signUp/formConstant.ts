@@ -20,7 +20,7 @@ export const signUpFormSchema = Yup.object().shape({
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       'Must be a Valid Email'
     ).required('Email is required'),
-  otp: Yup.number().integer().required('OTP is required'),
+  otp: Yup.number().min(99999, 'OTP is not long enough').max(999999, 'OTP is of 6 digits').required('OTP is required'),
   walletAddress: Yup.string().required('Wallet Address is required'),
 
 })

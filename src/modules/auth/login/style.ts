@@ -38,7 +38,7 @@ export const useStyle = makeStyles(() =>
       background: '#FFFFFF',
       textAlign: 'center',
       borderRadius: '5px',
-      padding: '16px',
+      padding: '16px 32px',
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center',

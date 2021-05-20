@@ -48,7 +48,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import { loginStart } from 'logic/actions/user.actions'
-import { apiBaseUrl } from 'services/global-constant'
+import { apiBaseUrl, apiBaseUrl2 } from 'services/global-constant'
 import axios from 'axios'
 
 const SignUp = (props: any) => {
@@ -80,16 +80,31 @@ const SignUp = (props: any) => {
   const [walletSelected, setWalletSelected] = useState<any>({ icon: null, label: null });
   // OTP Received
   const [otpServiceData, setOtpServiceData] = useState<boolean>(false);
+  // Actual OTP Received
+  const [actualOtp, setActualOtp] = useState<any>('');
 
   const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-  const handleOTPClick = () => {
+  const handleOTPClick = async () => {
     try {
       const formData = JSON.parse(JSON.stringify(ref.current.values));
       setEmailData(formData.email);
+      const inputJson = {
+        name: formData.userName,
+        email: formData.email
+      }
       setShowOTPModal(true);
+
+      const result = await axios.post(`${apiBaseUrl2}/api/user/checkEmail`, inputJson);
+      console.log(result);
+
+      const actualOtp = await axios.get(`${apiBaseUrl2}/user/getPassCode/${formData.email}`);
+      // const actualOtp = 123456;
+      setActualOtp(actualOtp);
+      console.log(actualOtp);
+
     } catch (error) {
       console.log(error);
     }
@@ -165,6 +180,10 @@ const SignUp = (props: any) => {
     } catch (error) { }
   }
 
+  const handleChange = (event: any) => {
+    console.log(event);
+  }
+
   const handleSubmit = async (values: any) => {
     try {
       console.log(values);
@@ -180,13 +199,16 @@ const SignUp = (props: any) => {
         console.log(publicaddress);
         let signatureData: any = ''
         const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
-        if (!!result && result.data && result.data.length === 0) {
-          const data: any = { email: values.email, publicaddress }
-          const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
-          signatureData = { publicaddress: signUpRes.data.publicaddress, nonce: signUpRes.data.nonce }
-        } else {
-          signatureData = { publicaddress: result.data[0].publicaddress, nonce: result.data[0].nonce }
-        }
+        const data: any = { email: values.email, publicaddress, name: values.userName }
+        const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
+        signatureData = { publicaddress: signUpRes.data.publicaddress, nonce: signUpRes.data.nonce }
+        // if (!!result && result.data && result.data.length === 0) {
+        //   const data: any = { email: values.email, publicaddress, name: values.userName }
+        //   const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
+        //   signatureData = { publicaddress: signUpRes.data.publicaddress, nonce: signUpRes.data.nonce }
+        // } else {
+        //   signatureData = { publicaddress: result.data[0].publicaddress, nonce: result.data[0].nonce }
+        // }
         const signature = await web3.eth.personal.sign(
           `I am signing my one-time nonce: ${signatureData.nonce}`,
           signatureData.publicaddress,
@@ -271,7 +293,27 @@ const SignUp = (props: any) => {
                 innerRef={ref}
                 enableReinitialize
                 initialValues={initialData}
-                validationSchema={signUpFormSchema}
+                validationSchema={Yup.object().shape({
+
+                  userName: Yup.string().required('UserName is required'),
+                  email: Yup.string()
+                    .nullable()
+                    .min(3, 'Email Not Long Enough')
+                    .max(100)
+                    .email('Invalid Email')
+                    .matches(
+                      // eslint-disable-next-line no-useless-escape
+                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      'Must be a Valid Email'
+                    ).required('Email is required'),
+                  otp: Yup.number()
+                    .min(99999, 'OTP is not long enough')
+                    .max(999999, 'OTP is of 6 digits')
+                    .required('OTP is required')
+                    .equals([actualOtp], 'Pls enter correct OTP'),
+                  walletAddress: Yup.string().required('Wallet Address is required'),
+
+                })}
                 onSubmit={(values, { setSubmitting }) => {
                   handleSubmit(values)
                   setSubmitting(false)
@@ -301,7 +343,7 @@ const SignUp = (props: any) => {
                         <InpBtnWrapper>
                           <CustomInput type="text" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} fullWidth />
                           <IcoButton
-                            style={{ display: otpServiceData? 'none': ''}}
+                            style={{ display: otpServiceData ? 'none' : '' }}
                             disabled={(Yup.string().email().isValidSync(values.email) ? false : true) ||
                               (Yup.string().required().isValidSync(values.userName) ? false : true)}
                             onClick={handleOTPClick}><InpBtn src={rightArrow} />
@@ -317,10 +359,10 @@ const SignUp = (props: any) => {
                           </CustomTooltip>
                         </CustomLabel>
                         <InpBtnWrapper>
-                          <CustomInput 
-                            type="number" 
-                            name="otp" 
-                            disabled = {!otpServiceData} 
+                          <CustomInput
+                            type="number"
+                            name="otp"
+                            disabled={!otpServiceData}
                             value={values.otp} onChange={handleChange} onBlur={handleBlur} fullWidth />
                         </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="otp" />
@@ -333,13 +375,13 @@ const SignUp = (props: any) => {
                           </CustomTooltip>
                         </CustomLabel>
                         <InpBtnWrapper>
-                          <CustomInput 
-                            type="text" 
-                            name="walletAddress" 
-                            disabled={!values.walletAddress} 
+                          <CustomInput
+                            type="text"
+                            name="walletAddress"
+                            disabled={!values.walletAddress}
                             value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
                           <IcoButton
-                            style={{ display: values.walletAddress? 'none': ''}}
+                            style={{ display: values.walletAddress ? 'none' : '' }}
                             disabled={(Yup.string().email().isValidSync(values.email) ? false : true) ||
                               (Yup.string().required().isValidSync(values.userName) ? false : true)}
                             onClick={handleWalletClick}><InpBtn src={wallet} /></IcoButton>
@@ -347,7 +389,7 @@ const SignUp = (props: any) => {
                         <ErrorMessage component="div" className={classes.err} name="walletAddress" />
                       </div>
                       <div className={classes.signUpBtndiv}>
-                        <CustomButton type="submit">
+                        <CustomButton type="submit" >
                           {dataLoading ? 'Loading...' : 'GET STARTED'}
                         </CustomButton>
                       </div>

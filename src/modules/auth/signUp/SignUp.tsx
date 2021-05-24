@@ -46,7 +46,7 @@ import * as Yup from 'yup';
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { errorAlert } from 'logic/actions/alerts.actions'
+import { errorAlert, warningAlert } from 'logic/actions/alerts.actions'
 import { loginStart } from 'logic/actions/user.actions'
 import { apiBaseUrl, apiBaseUrl2 } from 'services/global-constant'
 import axios from 'axios'
@@ -57,7 +57,7 @@ const SignUp = (props: any) => {
 
   const ref = useRef<any>();
 
-  const { loading, loginStart, errorAlert } = props
+  const { loading, loginStart, errorAlert, warningAlert } = props
 
   const [dataLoading, setDataLoading] = useState(false)
   // Sign Up and Sign In Navigation
@@ -95,18 +95,22 @@ const SignUp = (props: any) => {
         name: formData.userName,
         email: formData.email
       }
+      const result = await axios.post(`${apiBaseUrl2}/user/checkEmail`, inputJson)
+      // console.log('result', result.data);
       setShowOTPModal(true);
-
-      const result = await axios.post(`${apiBaseUrl2}/api/user/checkEmail`, inputJson);
-      console.log(result);
-
-      const actualOtp = await axios.get(`${apiBaseUrl2}/user/getPassCode/${formData.email}`);
+      const Otp = await axios.get(`${apiBaseUrl2}/user/getPassCode/${formData.email}`);
       // const actualOtp = 123456;
-      setActualOtp(actualOtp);
-      console.log(actualOtp);
-
+      setActualOtp(Otp.data);
+      // console.log(Otp.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else if (!!error.message) {
+        errorAlert(error.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
     }
   }
 
@@ -255,6 +259,7 @@ const SignUp = (props: any) => {
                 onChange={handleChangeTab}
               >
                 <StyledTab
+                  disableRipple
                   className={classes.tabStyle}
                   icon={<LoginLogo src={value == 0 ? signUpActiveLogo : signUpLogo} />}
                   label={
@@ -270,6 +275,7 @@ const SignUp = (props: any) => {
                   }
                 />
                 <StyledTab
+                  disableRipple
                   className={classes.tabStyle}
                   icon={<LoginLogo src={value == 1 ? signInActiveLogo : signInLogo} />}
                   label={
@@ -319,7 +325,7 @@ const SignUp = (props: any) => {
                   setSubmitting(false)
                 }}
               >
-                {({ values, handleChange, handleBlur, isValid, isSubmitting, isValidating, errors, touched }: any) => (
+                {({ values, handleChange, handleBlur, isValid, dirty, isSubmitting, isValidating, errors, touched }: any) => (
                   <Form style={{ width: '100%' }}>
                     <Box className={classes.boxStyle}>
                       <div className={classes.fieldStyle}>
@@ -389,7 +395,7 @@ const SignUp = (props: any) => {
                         <ErrorMessage component="div" className={classes.err} name="walletAddress" />
                       </div>
                       <div className={classes.signUpBtndiv}>
-                        <CustomButton type="submit" >
+                        <CustomButton type="submit" disabled={!(isValid)}>
                           {dataLoading ? 'Loading...' : 'GET STARTED'}
                         </CustomButton>
                       </div>
@@ -504,4 +510,4 @@ const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
 })
 
-export default withRouter(connect(mapStateToProps, { loginStart, errorAlert })(SignUp))
+export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, warningAlert })(SignUp))

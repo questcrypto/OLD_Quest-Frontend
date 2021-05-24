@@ -71,7 +71,14 @@ export const useStyles = makeStyles(() =>
 )
 
 export const QuestLogoCont = styled.div`
+  width: 179px;
+  height: 112px;
+  box-sizing: border-box;
   padding: 30px 12px;
+  img { 
+    width: 155px;
+    height: 48px;
+  }
 `
 export const ListItemText = styled.p`
   margin: 0;

@@ -20,6 +20,7 @@ import { DrawerWrapper } from './style'
 import { IconButton } from '@material-ui/core'
 import { handleDrawerClose } from 'logic/actions/drawer.open'
 import { Close } from '@material-ui/icons'
+import questLogo from 'assets/images/questLoginLogo.png';
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
@@ -47,7 +48,8 @@ const LeftPanel = (props: any) => {
 
         <Grid className={classes.root}>
           <QuestLogoCont>
-            <img src={QuestLogo} alt="" />
+            {/* <img src={QuestLogo} alt="" /> */}
+            <img src={questLogo} alt="" />
           </QuestLogoCont>
           <Divider className={classes.dividerStyle} />
           <List>

@@ -55,7 +55,7 @@ export const useStyle = makeStyles(() =>
       // width: '506px',
       // height: '353px',
       width: '350px',
-      height: '225px',
+      height: 'auto',
       background: '#FFFFFF',
       textAlign: 'center',
       borderRadius: '5px',
@@ -274,6 +274,9 @@ export const CustomButton = styled(Button)`
   font-family: NexaRegular;
   &:hover {
     background-color: #0D4459;
+  };
+  &:disabled {
+    color: #FFFFFF;
   }
 `;
 

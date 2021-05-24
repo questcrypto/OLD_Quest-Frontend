@@ -10,6 +10,7 @@ import {
   CardBoldText,
   ReservePriceCont,
   ReserverAmountTxt,
+  FullDetailsBtn
 } from './style'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -97,13 +98,18 @@ const AuctionStats = (props: any) => {
             </Grid>
           </Grid>
           <Divider className={classes.dividerStyle} />
-          <Grid container>
+          <Grid container justify="center">
             <Grid item className={classes.iconTxtContStyle}>
               <img src={ReserveAmountIcon} alt="" />
               <div>
                 <CardLightText>Reserve Amount</CardLightText>
                 <CardBoldText>{`$ ${parseFloat(data.reserveAmount).toFixed(2)}`}</CardBoldText>
               </div>
+            </Grid>
+          </Grid>
+          <Grid container justify="center">
+            <Grid item >
+              <FullDetailsBtn variant="contained">FULL DETAILS</FullDetailsBtn>
             </Grid>
           </Grid>
         </CardContent>

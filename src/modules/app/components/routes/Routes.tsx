@@ -9,7 +9,8 @@ import Loader from 'shared/loader-components/loader'
 import history from '../history'
 import { Paths } from './types'
 import { NotFound } from './NotFound'
-import { Login } from 'modules/auth'
+// import { Login } from 'modules/auth'
+import { SignUp } from 'modules/auth'
 import Dashboard from 'modules/dashboard'
 import { AddPropertyForm, EditPropertyForm } from 'modules/property-form'
 import PropertyDetails from 'modules/property-details'
@@ -31,9 +32,16 @@ const notFoundRoute: RouteDefinition = {
 }
 
 export const routes: RouteDefinition[] = [
+  // {
+  //   path: Paths.root,
+  //   component: Login,
+  //   protected: false,
+  //   redirect: Paths.root,
+  //   title: '',
+  // },
   {
     path: Paths.root,
-    component: Login,
+    component: SignUp,
     protected: false,
     redirect: Paths.root,
     title: '',

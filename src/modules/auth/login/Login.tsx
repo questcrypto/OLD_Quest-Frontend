@@ -64,10 +64,10 @@ const Login = (props: any) => {
           return
         }
         const publicaddress = coinbase.toLowerCase()
-        console.log(publicaddress);
+        // console.log(publicaddress);
         let signatureData: any = ''
         const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`);
-        console.log('Result', result);
+        // console.log('Result', result);
         // if (!!result && result.data && result.data.length === 0) {
         //   const data: any = { email: values.email, publicaddress }
         //   const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
@@ -80,7 +80,7 @@ const Login = (props: any) => {
           signatureData.publicaddress,
           ''
         )
-        const loginData = { publicaddress, signature }
+        const loginData = { email: values.email, publicaddress, signature }
         loginStart(loginData)
       }
     } catch (error) {
@@ -115,7 +115,7 @@ const Login = (props: any) => {
     try {
       setLoadingWallet(true);
       setWalletSelected({ icon: item.icon, label: item.label });
-      console.log('Selected Wallet', walletSelected);
+      // console.log('Selected Wallet', walletSelected);
 
       const web3 = await getWeb3Val()
       if (web3) {
@@ -125,10 +125,10 @@ const Login = (props: any) => {
           return
         }
         const publicaddress = coinbase.toLowerCase()
-        console.log('Public Address', publicaddress);
+        // console.log('Public Address', publicaddress);
         if (publicaddress) {
           setShowWalletModal(false);
-          console.log('Ref Values', ref.current.values);
+          // console.log('Ref Values', ref.current.values);
           const formData = JSON.parse(JSON.stringify(ref.current.values));
           formData.walletAddress = publicaddress;
           setInitialData(formData);

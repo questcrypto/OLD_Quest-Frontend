@@ -136,7 +136,11 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 body {
-  background: ${colors.themeBackground} !important
+  background: ${colors.themeBackground} !important;
+}
+
+* {
+  font-family: NexaRegular !important;
 }
 
 `

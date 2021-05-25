@@ -144,7 +144,7 @@ const SignUp = (props: any) => {
       setLoadingWallet(true);
 
       setWalletSelected({ icon: item.icon, label: item.label });
-      console.log('Selected Wallet', walletSelected);
+      // console.log('Selected Wallet', walletSelected);
       const web3 = await getWeb3Val()
       if (web3) {
         const coinbase = await web3.eth.getCoinbase()
@@ -153,10 +153,10 @@ const SignUp = (props: any) => {
           return
         }
         const publicaddress = coinbase.toLowerCase()
-        console.log('Public Address', publicaddress);
+        // console.log('Public Address', publicaddress);
         if (publicaddress) {
           setShowWalletModal(false);
-          console.log('Ref Values', ref.current.values);
+          // console.log('Ref Values', ref.current.values);
           const formData = JSON.parse(JSON.stringify(ref.current.values));
           formData.walletAddress = publicaddress;
           setInitialData(formData);
@@ -173,7 +173,7 @@ const SignUp = (props: any) => {
   const handleChangeOTP = (otp: string) => {
     try {
       setOtp(otp);
-      console.log(ref.current.values);
+      // console.log(ref.current.values);
       if (otp.length === 4) {
         setShowOTPModal(false);
         const formData = JSON.parse(JSON.stringify(ref.current.values));
@@ -190,7 +190,7 @@ const SignUp = (props: any) => {
 
   const handleSubmit = async (values: any) => {
     try {
-      console.log(values);
+      // console.log(values);
       setDataLoading(true);
       const web3 = await getWeb3Val()
       if (web3) {
@@ -200,7 +200,7 @@ const SignUp = (props: any) => {
           return
         }
         const publicaddress = coinbase.toLowerCase()
-        console.log(publicaddress);
+        // console.log(publicaddress);
         let signatureData: any = ''
         const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
         const data: any = { email: values.email, publicaddress, name: values.userName }

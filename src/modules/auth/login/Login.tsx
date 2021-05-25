@@ -80,7 +80,7 @@ const Login = (props: any) => {
           signatureData.publicaddress,
           ''
         )
-        const loginData = { publicaddress, signature }
+        const loginData = { email: values.email, publicaddress, signature }
         loginStart(loginData)
       }
     } catch (error) {

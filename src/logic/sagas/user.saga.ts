@@ -47,7 +47,7 @@ function* loginWorker(action: any): any {
 }
 
 function loginUser(data: any) {
-  return axios.post(`${apiBaseUrl}/user/getAuth`, { publicaddress: data.publicaddress, signature: data.signature })
+  return axios.post(`${apiBaseUrl}/user/getAuth`, { publicaddress: data.publicaddress, signature: data.signature, email: data.email })
 }
 
 /*=======================getUserInfo  ============================*/

@@ -23,7 +23,7 @@ import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
 
 const AdminDashboard = (props: any) => {
   const classes = useStyles()
-  const [activeTab, setActiveTab] = useState('new')
+  const [activeTab, setActiveTab] = useState('published')
   const [newPropertiesList, setNewPropertiesList] = useState<any>([])
   const [newPropertyLoading, setNewPropertyLoading] = useState(false)
   const [approvedProperties, setApprovedProperties] = useState<any>([])

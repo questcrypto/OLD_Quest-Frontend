@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { logout } from 'logic/actions/user.actions'
 import Web3 from 'web3'
 import { TopPanelCont } from './style'
+import Notifications from './components/Notifications'
 
 const TopPanel = (props: any) => {
   const [account, setAccount] = useState(false)
@@ -44,7 +45,12 @@ const TopPanel = (props: any) => {
     })
   }
 
-  return <TopPanelCont>{!account && <PrimaryButton>Connect Wallet</PrimaryButton>}</TopPanelCont>
+  return (
+    <TopPanelCont>
+      {/* <Notifications /> */}
+      {!account && <PrimaryButton>Connect Wallet</PrimaryButton>}
+    </TopPanelCont>
+  );
 }
 
 const mapStateToProps = (state: any) => ({

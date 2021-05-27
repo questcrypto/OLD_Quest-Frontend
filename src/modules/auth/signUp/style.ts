@@ -259,11 +259,11 @@ export const CustomTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: '#1E3445',
     fontFamily: 'NexaRegular'
-},
+  },
   arrow: {
-  color: '#1E3445'
-}
-})) (Tooltip);
+    color: '#1E3445'
+  }
+}))(Tooltip);
 
 export const CustomButton = styled(Button)`
   background-color: #0D4459;
@@ -277,6 +277,7 @@ export const CustomButton = styled(Button)`
   };
   &:disabled {
     color: #FFFFFF;
+    opacity: 0.5;
   }
 `;
 
@@ -319,6 +320,7 @@ export const LoginLogo = styled.img`
 
 export const InfoIcon = styled.img`
   width: 12px;
+  cursor: pointer
 `;
 
 export const InpBtn = styled.img`

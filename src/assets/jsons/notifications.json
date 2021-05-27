@@ -1,0 +1,75 @@
+{
+  "status": true,
+  "data": {
+    "today": [
+      {
+        "name": "A property get listed",
+        "type": "new",
+        "time": "5mins",
+        "id": "1"
+      },
+      {
+        "name": "B property time updated",
+        "type": "updated",
+        "time": "2mins",
+        "id": "2"
+      },
+      {
+        "name": "C property time end",
+        "type": "end",
+        "time": "1hr",
+        "id": "3"
+      }
+    ],
+    "yesterday": [
+      {
+        "name": "D property get listed",
+        "type": "new",
+        "time": "5hr",
+        "id": "4"
+      },
+      {
+        "name": "E property time updated",
+        "type": "updated",
+        "time": "10hr",
+        "id": "5"
+      },
+      {
+        "name": "F property time end",
+        "type": "end",
+        "time": "25hr",
+        "id": "6"
+      }
+    ],
+    "old": [
+      {
+        "date": "25 Mar 2021",
+        "subItems": [
+          {
+            "name": "F property time end",
+            "type": "end",
+            "time": "25hr",
+            "id": "7"
+          },
+          {
+            "name": "F property time end",
+            "type": "end",
+            "time": "25hr",
+            "id": "8"
+          }
+        ]
+      },
+      {
+        "date": "25 Apr 2021",
+        "subItems": [
+          {
+            "name": "F property time end",
+            "type": "end",
+            "time": "25hr",
+            "id": "9"
+          }
+        ]
+      }
+    ]
+  }
+}

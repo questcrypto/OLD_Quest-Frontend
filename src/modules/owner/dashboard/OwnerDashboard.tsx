@@ -14,7 +14,7 @@ import axios from 'axios'
 
 const OwnerDashboard = (props: any) => {
   const classes = useStyles()
-  const [activeTab, setActiveTab] = useState('new')
+  const [activeTab, setActiveTab] = useState('published')
   const [newPropertiesList, setNewPropertiesList] = useState<any>([])
   const [newPropertyLoading, setNewPropertyLoading] = useState(false)
   const [approvedProperties, setApprovedProperties] = useState<any>([])

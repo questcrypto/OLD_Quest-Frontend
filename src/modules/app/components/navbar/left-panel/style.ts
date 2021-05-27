@@ -77,7 +77,7 @@ export const QuestLogoCont = styled.div`
   padding: 30px 12px;
   img { 
     width: 155px;
-    height: 48px;
+    /* height: 48px; */
   }
 `
 export const ListItemText = styled.p`

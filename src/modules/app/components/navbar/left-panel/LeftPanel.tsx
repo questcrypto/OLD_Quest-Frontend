@@ -20,7 +20,8 @@ import { DrawerWrapper } from './style'
 import { IconButton } from '@material-ui/core'
 import { handleDrawerClose } from 'logic/actions/drawer.open'
 import { Close } from '@material-ui/icons'
-import questLogo from 'assets/images/questLoginLogo.png';
+// import questLogo from 'assets/images/questLoginLogo.png';
+import questLogo from 'assets/images/questDashboardLogo.svg';
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()

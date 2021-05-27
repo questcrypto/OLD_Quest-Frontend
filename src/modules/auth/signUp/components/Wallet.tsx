@@ -15,22 +15,22 @@ const Wallet = (props: any) => {
       icon: metaMaskIcon,
       label: 'META MASK'
     },
-    {
-      icon: lynxIcon,
-      label: 'Lynx'
-    },
-    {
-      icon: tokenPocketIcon,
-      label: 'Token Pocket'
-    },
-    {
-      icon: meetOneIcon,
-      label: 'Meet.One'
-    },
-    {
-      icon: ledgerIcon,
-      label: 'Ledger'
-    },
+    // {
+    //   icon: lynxIcon,
+    //   label: 'Lynx'
+    // },
+    // {
+    //   icon: tokenPocketIcon,
+    //   label: 'Token Pocket'
+    // },
+    // {
+    //   icon: meetOneIcon,
+    //   label: 'Meet.One'
+    // },
+    // {
+    //   icon: ledgerIcon,
+    //   label: 'Ledger'
+    // },
   ]
 
   const classes = useStyle()

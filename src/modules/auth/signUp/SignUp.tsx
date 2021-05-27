@@ -46,10 +46,11 @@ import * as Yup from 'yup';
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { errorAlert, warningAlert } from 'logic/actions/alerts.actions'
+import { errorAlert } from 'logic/actions/alerts.actions'
 import { loginStart } from 'logic/actions/user.actions'
 import { apiBaseUrl, apiBaseUrl2 } from 'services/global-constant'
 import axios from 'axios'
+import Spinner from 'shared/loader-components/spinner'
 
 const SignUp = (props: any) => {
 
@@ -57,7 +58,7 @@ const SignUp = (props: any) => {
 
   const ref = useRef<any>();
 
-  const { loading, loginStart, errorAlert, warningAlert } = props
+  const { loading, loginStart, errorAlert } = props
 
   const [dataLoading, setDataLoading] = useState(false)
   // Sign Up and Sign In Navigation
@@ -82,6 +83,19 @@ const SignUp = (props: any) => {
   const [otpServiceData, setOtpServiceData] = useState<boolean>(false);
   // Actual OTP Received
   const [actualOtp, setActualOtp] = useState<any>('');
+  // Email Service Loader
+  const [emailLoader, setEmailLoader] = useState(false)
+
+  window.ethereum.on('accountsChanged', function (accounts: any) {
+    // Time to reload your interface with accounts[0]!
+    if (value === 0 && !!ref.current && !!ref.current.values) {
+      const formData = JSON.parse(JSON.stringify(ref.current.values));
+      if (accounts && accounts.length > 0 && formData.walletAddress !== '') {
+        formData.walletAddress = accounts[0];
+      }
+      setInitialData({ ...formData });
+    }
+  })
 
   const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -89,16 +103,17 @@ const SignUp = (props: any) => {
 
   const handleOTPClick = async () => {
     try {
+      setEmailLoader(true);
       const formData = JSON.parse(JSON.stringify(ref.current.values));
       setEmailData(formData.email);
       const inputJson = {
         name: formData.userName,
         email: formData.email
       }
-      const result = await axios.post(`${apiBaseUrl2}/user/checkEmail`, inputJson)
+      const result = await axios.post(`${apiBaseUrl}/user/checkEmail`, inputJson)
       // console.log('result', result.data);
       setShowOTPModal(true);
-      const Otp = await axios.get(`${apiBaseUrl2}/user/getPassCode/${formData.email}`);
+      const Otp = await axios.get(`${apiBaseUrl}/user/getPassCode/${formData.email}`);
       // const actualOtp = 123456;
       setActualOtp(Otp.data);
       // console.log(Otp.data);
@@ -111,6 +126,8 @@ const SignUp = (props: any) => {
       } else {
         errorAlert('Something went wrong , please try again')
       }
+    } finally {
+      setEmailLoader(false);
     }
   }
 
@@ -159,7 +176,7 @@ const SignUp = (props: any) => {
           // console.log('Ref Values', ref.current.values);
           const formData = JSON.parse(JSON.stringify(ref.current.values));
           formData.walletAddress = publicaddress;
-          setInitialData(formData);
+          setInitialData({ ...formData });
         } else {
           setErrorConnecting(true);
         }
@@ -303,15 +320,15 @@ const SignUp = (props: any) => {
 
                   userName: Yup.string().required('UserName is required'),
                   email: Yup.string()
-                    .nullable()
                     .min(3, 'Email Not Long Enough')
                     .max(100)
                     .email('Invalid Email')
-                    .matches(
-                      // eslint-disable-next-line no-useless-escape
-                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                      'Must be a Valid Email'
-                    ).required('Email is required'),
+                    .required('Email is required'),
+                  // .matches(
+                  //   // eslint-disable-next-line no-useless-escape
+                  //   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  //   'Must be a Valid Email'
+                  // )
                   otp: Yup.number()
                     .min(99999, 'OTP is not long enough')
                     .max(999999, 'OTP is of 6 digits')
@@ -350,9 +367,10 @@ const SignUp = (props: any) => {
                           <CustomInput type="text" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} fullWidth />
                           <IcoButton
                             style={{ display: otpServiceData ? 'none' : '' }}
-                            disabled={(Yup.string().email().isValidSync(values.email) ? false : true) ||
+                            disabled={(Yup.string().email().required().isValidSync(values.email) ? false : true) ||
                               (Yup.string().required().isValidSync(values.userName) ? false : true)}
-                            onClick={handleOTPClick}><InpBtn src={rightArrow} />
+                            onClick={handleOTPClick}>
+                            {emailLoader ? <Spinner /> : <InpBtn src={rightArrow} />}
                           </IcoButton>
                         </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="email" />
@@ -385,17 +403,23 @@ const SignUp = (props: any) => {
                             type="text"
                             name="walletAddress"
                             disabled={!values.walletAddress}
+                            readOnly={true}
                             value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
                           <IcoButton
                             style={{ display: values.walletAddress ? 'none' : '' }}
-                            disabled={(Yup.string().email().isValidSync(values.email) ? false : true) ||
+                            disabled={(Yup.string().email().required().isValidSync(values.email) ? false : true) ||
                               (Yup.string().required().isValidSync(values.userName) ? false : true)}
                             onClick={handleWalletClick}><InpBtn src={wallet} /></IcoButton>
                         </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="walletAddress" />
                       </div>
+                      {/* disabled={!(isValid && dirty)} */}
                       <div className={classes.signUpBtndiv}>
-                        <CustomButton type="submit" disabled={!(isValid)}>
+                        <CustomButton
+                          type="submit"
+                          disabled={(!(values.email) || !(values.walletAddress) ||
+                            !(values.userName) || !(values.otp)) || !(isValid)}
+                        >
                           {dataLoading ? 'Loading...' : 'GET STARTED'}
                         </CustomButton>
                       </div>
@@ -452,7 +476,7 @@ const SignUp = (props: any) => {
 
       {/* Wallet Modal */}
       <CustomModal show={showWalletModal} toggleModal={handleWalletClose}>
-        <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '135px' : '420px' }}>
+        <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '135px' : 'auto' }}>
           <div className={classes.walletModalHeader}>
             {loadingWallet ? (
               <span className={classes.walletBack} onClick={() => setLoadingWallet(false)}>
@@ -510,4 +534,4 @@ const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
 })
 
-export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, warningAlert })(SignUp))
+export default withRouter(connect(mapStateToProps, { loginStart, errorAlert })(SignUp))

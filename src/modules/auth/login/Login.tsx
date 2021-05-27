@@ -17,7 +17,8 @@ import {
   IcoButton,
   InpBtn,
   InpBtnWrapper,
-  CustomLabel
+  CustomLabel,
+  CustomTooltip
 } from './style';
 import infoIcon from 'assets/images/info.svg';
 import wallet from 'assets/images/wallet.svg';
@@ -27,12 +28,13 @@ import closeIcon from 'assets/icons/closeIcon.svg';
 import Wallet from '../signUp/components';
 import metaMaskIcon from 'assets/images/metamask.jpg';
 import loadingIcon from 'assets/icons/loading.svg';
+import { setTimeout } from 'timers'
 
 
 const Login = (props: any) => {
 
   const initialValues = {
-    email: null,
+    email: '',
     walletAddress: ''
   }
 
@@ -52,6 +54,17 @@ const Login = (props: any) => {
   const [walletSelected, setWalletSelected] = useState<any>({ icon: null, label: null });
   // Form Data
   const [initialData, setInitialData] = useState(initialValues);
+
+  window.ethereum.on('accountsChanged', function (accounts: any) {
+    // Time to reload your interface with accounts[0]!
+    if (!!ref.current && !!ref.current.values) {
+      const formData = JSON.parse(JSON.stringify(ref.current.values));
+      if (accounts && accounts.length > 0 && formData.walletAddress !== '') {
+        formData.walletAddress = accounts[0];
+        setInitialData({ ...formData });
+      }
+    }
+  })
 
   const handleSubmit = async (values: any) => {
     try {
@@ -92,7 +105,7 @@ const Login = (props: any) => {
         errorAlert('Something went wrong , please try again')
       }
     } finally {
-      setDataLoading(false)
+      setTimeout(() => setDataLoading(false), 3000);
     }
   }
 
@@ -142,12 +155,11 @@ const Login = (props: any) => {
       console.log(error);
     }
   }
-
   return (
     <>
       <Formik
-        innerRef={ref}
         enableReinitialize
+        innerRef={ref}
         initialValues={initialData}
         validationSchema={loginFormSchema}
         onSubmit={(values, { setSubmitting }) => {
@@ -157,32 +169,44 @@ const Login = (props: any) => {
       // onSubmit={() => { console.log("submit!"); }}
       // validator={() => ({})}
       >
-        {({ values, handleChange, handleBlur, isValid, isSubmitting, isValidating, errors, touched }: any) => (
+        {({ values, handleChange, handleBlur, isValid, dirty, isSubmitting, isValidating, errors, touched }: any) => (
           <Form style={{ width: '100%' }}>
             <Box className={classes.boxStyle}>
               <div className={classes.fieldStyle}>
-                <CustomLabel>Email Address <InfoIcon src={infoIcon} alt='Info' /></CustomLabel>
+                <CustomLabel>
+                  Email Address &nbsp;
+                  <CustomTooltip title="Enter Email" arrow>
+                    <InfoIcon src={infoIcon} alt='Info' />
+                  </CustomTooltip>
+                </CustomLabel>
                 <CustomInput type="text" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} fullWidth />
                 <ErrorMessage component="div" className={classes.err} name="email" />
               </div>
               <div className={classes.fieldStyle}>
-                <CustomLabel>Wallet Address <InfoIcon src={infoIcon} alt='Info' /></CustomLabel>
+                <CustomLabel>
+                  Wallet Address &nbsp;
+                  <CustomTooltip title="Enter Wallet Address" arrow>
+                    <InfoIcon src={infoIcon} alt='Info' />
+                  </CustomTooltip>
+                </CustomLabel>
                 <InpBtnWrapper>
-                  <CustomInput 
-                    type="text" 
-                    name="walletAddress" 
-                    disabled={!values.walletAddress} 
+                  <CustomInput
+                    type="text"
+                    name="walletAddress"
+                    disabled={!values.walletAddress}
+                    readOnly={true}
                     value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
-                  <IcoButton 
-                    style={{ display: values.walletAddress? 'none': ''}}
-                    disabled={Yup.string().email().isValidSync(values.email) ? false : true} onClick={handleWalletClick}>
+                  <IcoButton
+                    style={{ display: values.walletAddress ? 'none' : '' }}
+                    disabled={Yup.string().email().required().isValidSync(values.email) ? false : true} onClick={handleWalletClick}>
                     <InpBtn src={wallet} />
                   </IcoButton>
                 </InpBtnWrapper>
                 <ErrorMessage component="div" className={classes.err} name="walletAddress" />
               </div>
               <div className={classes.signUpBtndiv}>
-                <CustomButton type="submit">
+                {/* disabled={!(isValid && dirty)} */}
+                <CustomButton type="submit" disabled={(!(values.email) || !(values.walletAddress)) || !(isValid)}>
                   {dataLoading ? 'Loading...' : 'ENTER HERE'}
                 </CustomButton>
               </div>
@@ -193,7 +217,7 @@ const Login = (props: any) => {
 
       {/* Wallet Modal */}
       <CustomModal show={showWalletModal} toggleModal={handleWalletClose}>
-        <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '135px' : '420px' }}>
+        <div className={classes.walletModalDiv} style={{ height: loadingWallet ? '135px' : 'auto' }}>
           <div className={classes.walletModalHeader}>
             {loadingWallet ? (
               <span className={classes.walletBack} onClick={() => setLoadingWallet(false)}>

@@ -86,6 +86,17 @@ const SignUp = (props: any) => {
   // Email Service Loader
   const [emailLoader, setEmailLoader] = useState(false)
 
+  window.ethereum.on('accountsChanged', function (accounts: any) {
+    // Time to reload your interface with accounts[0]!
+    if (value === 0 && !!ref.current && !!ref.current.values) {
+      const formData = JSON.parse(JSON.stringify(ref.current.values));
+      if (accounts && accounts.length > 0 && formData.walletAddress !== '') {
+        formData.walletAddress = accounts[0];
+      }
+      setInitialData({ ...formData });
+    }
+  })
+
   const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
@@ -165,7 +176,7 @@ const SignUp = (props: any) => {
           // console.log('Ref Values', ref.current.values);
           const formData = JSON.parse(JSON.stringify(ref.current.values));
           formData.walletAddress = publicaddress;
-          setInitialData(formData);
+          setInitialData({ ...formData });
         } else {
           setErrorConnecting(true);
         }
@@ -313,11 +324,11 @@ const SignUp = (props: any) => {
                     .max(100)
                     .email('Invalid Email')
                     .required('Email is required'),
-                    // .matches(
-                    //   // eslint-disable-next-line no-useless-escape
-                    //   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    //   'Must be a Valid Email'
-                    // )
+                  // .matches(
+                  //   // eslint-disable-next-line no-useless-escape
+                  //   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  //   'Must be a Valid Email'
+                  // )
                   otp: Yup.number()
                     .min(99999, 'OTP is not long enough')
                     .max(999999, 'OTP is of 6 digits')
@@ -359,7 +370,7 @@ const SignUp = (props: any) => {
                             disabled={(Yup.string().email().required().isValidSync(values.email) ? false : true) ||
                               (Yup.string().required().isValidSync(values.userName) ? false : true)}
                             onClick={handleOTPClick}>
-                              {emailLoader? <Spinner /> : <InpBtn src={rightArrow} />}
+                            {emailLoader ? <Spinner /> : <InpBtn src={rightArrow} />}
                           </IcoButton>
                         </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="email" />
@@ -392,6 +403,7 @@ const SignUp = (props: any) => {
                             type="text"
                             name="walletAddress"
                             disabled={!values.walletAddress}
+                            readOnly={true}
                             value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
                           <IcoButton
                             style={{ display: values.walletAddress ? 'none' : '' }}

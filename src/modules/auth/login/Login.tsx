@@ -55,6 +55,17 @@ const Login = (props: any) => {
   // Form Data
   const [initialData, setInitialData] = useState(initialValues);
 
+  window.ethereum.on('accountsChanged', function (accounts: any) {
+    // Time to reload your interface with accounts[0]!
+    if (!!ref.current && !!ref.current.values) {
+      const formData = JSON.parse(JSON.stringify(ref.current.values));
+      if (accounts && accounts.length > 0 && formData.walletAddress !== '') {
+        formData.walletAddress = accounts[0];
+        setInitialData({ ...formData });
+      }
+    }
+  })
+
   const handleSubmit = async (values: any) => {
     try {
       setDataLoading(true);
@@ -183,6 +194,7 @@ const Login = (props: any) => {
                     type="text"
                     name="walletAddress"
                     disabled={!values.walletAddress}
+                    readOnly={true}
                     value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
                   <IcoButton
                     style={{ display: values.walletAddress ? 'none' : '' }}

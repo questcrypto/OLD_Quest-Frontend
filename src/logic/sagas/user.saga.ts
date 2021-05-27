@@ -6,6 +6,9 @@ import { AUTH_START, LOGIN_START } from '../actions/action.config'
 import { setAuthToken } from '../helpers/set-auth-token'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
+import { CodeOutlined, ContactSupportOutlined } from '@material-ui/icons'
+import { errorAlert } from 'logic/actions/alerts.actions'
+
 
 /* ============== USER AUTH SAGA =============== */
 
@@ -42,6 +45,13 @@ function* loginWorker(action: any): any {
     yield put(loginSuccess(successData))
     history.push(`${Paths.dashboard}`)
   } catch (error) {
+    if (!!error && error.response && error.response.data.message) {
+      yield put(errorAlert(error.response.data.message))
+    } else if (!!error.message) {
+      yield put(errorAlert(error.message))
+    } else {
+      yield put(errorAlert('Something went wrong , please try again'))
+    }
     yield put(loginFail())
   }
 }

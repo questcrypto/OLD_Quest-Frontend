@@ -93,7 +93,8 @@ const Login = (props: any) => {
           signatureData.publicaddress,
           ''
         )
-        const loginData = { email: values.email, publicaddress, signature }
+        // const loginData = { email: values.email, publicaddress, signature }
+        const loginData = { publicaddress, signature }
         loginStart(loginData)
       }
     } catch (error) {
@@ -172,7 +173,7 @@ const Login = (props: any) => {
         {({ values, handleChange, handleBlur, isValid, dirty, isSubmitting, isValidating, errors, touched }: any) => (
           <Form style={{ width: '100%' }}>
             <Box className={classes.boxStyle}>
-              <div className={classes.fieldStyle}>
+              {/* <div className={classes.fieldStyle}>
                 <CustomLabel>
                   Email Address &nbsp;
                   <CustomTooltip title="Enter Email" arrow>
@@ -181,7 +182,7 @@ const Login = (props: any) => {
                 </CustomLabel>
                 <CustomInput type="text" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} fullWidth />
                 <ErrorMessage component="div" className={classes.err} name="email" />
-              </div>
+              </div> */}
               <div className={classes.fieldStyle}>
                 <CustomLabel>
                   Wallet Address &nbsp;
@@ -198,7 +199,8 @@ const Login = (props: any) => {
                     value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
                   <IcoButton
                     style={{ display: values.walletAddress ? 'none' : '' }}
-                    disabled={Yup.string().email().required().isValidSync(values.email) ? false : true} onClick={handleWalletClick}>
+                    // disabled={Yup.string().email().required().isValidSync(values.email) ? false : true} 
+                    onClick={handleWalletClick}>
                     <InpBtn src={wallet} />
                   </IcoButton>
                 </InpBtnWrapper>
@@ -206,7 +208,8 @@ const Login = (props: any) => {
               </div>
               <div className={classes.signUpBtndiv}>
                 {/* disabled={!(isValid && dirty)} */}
-                <CustomButton type="submit" disabled={(!(values.email) || !(values.walletAddress)) || !(isValid)}>
+                {/* disabled={(!(values.email) || !(values.walletAddress)) || !(isValid)} */}
+                <CustomButton type="submit" disabled={(!(values.walletAddress)) || !(isValid)}>
                   {dataLoading ? 'Loading...' : 'ENTER HERE'}
                 </CustomButton>
               </div>

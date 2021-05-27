@@ -27,12 +27,12 @@ export const signUpFormSchema = Yup.object().shape({
 
 export const loginFormSchema = Yup.object().shape({
 
-  email: Yup.string()
-    .nullable()
-    .min(3, 'Email Not Long Enough')
-    .max(100)
-    .email('Invalid Email')
-    .required('Email is required'),
+  // email: Yup.string()
+  //   .nullable()
+  //   .min(3, 'Email Not Long Enough')
+  //   .max(100)
+  //   .email('Invalid Email')
+  //   .required('Email is required'),
   walletAddress: Yup.string().required('Wallet Address is required'),
   // .matches(
   //   // eslint-disable-next-line no-useless-escape

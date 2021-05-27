@@ -3,6 +3,7 @@ import { makeStyles, withStyles, Theme, createStyles, fade } from '@material-ui/
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export const useStyle = makeStyles(() =>
   createStyles({
@@ -132,12 +133,27 @@ export const CustomInput = withStyles((theme: Theme) =>
         boxShadow: `${fade('#BA8E4D', 0.25)} 0 0 0 0.2rem`,
         borderColor: '#BA8E4D',
       },
+      '&:hover': {
+        border: '1px solid #19A3B3',
+        boxShadow: '0px 4px 10px rgba(82, 167, 176, 0.1)',
+      },
       '&:disabled': {
-        backgroundColor: '#F5F5F5'
+        backgroundColor: '#F5F5F5',
+        border: '1px solid #ced4da',
       }
     },
   }),
 )(InputBase);
+
+export const CustomTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#1E3445',
+    fontFamily: 'NexaRegular',
+},
+  arrow: {
+  color: '#1E3445'
+}
+})) (Tooltip);
 
 export const CustomButton = styled(Button)`
   background-color: #0D4459;
@@ -148,6 +164,10 @@ export const CustomButton = styled(Button)`
   font-family: NexaRegular;
   &:hover {
     background-color: #0D4459;
+  };
+  &:disabled {
+    color: #FFFFFF;
+    opacity: 0.5;
   }
 `;
 
@@ -169,6 +189,7 @@ export const IcoButton = styled(Button)`
 
 export const InfoIcon = styled.img`
   width: 12px;
+  cursor: pointer;
 `;
 
 export const InpBtn = styled.img`

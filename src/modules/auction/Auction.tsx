@@ -18,7 +18,7 @@ import { getApprovedTokens } from '../../modules/block-chain/BlockChainMethods'
 
 const Auction = (props: any) => {
   const classes = useStyles()
-  const [activeTab, setActiveTab] = useState('participating')
+  const [activeTab, setActiveTab] = useState('ongoing')
   const [onGoingGlobal, setOnGoingGlobal] = useState<any>([])
   const [onGoingProperties, setOnGoingProperties] = useState<any>([])
   const [onGoingLoading, setOnGoingLoading] = useState(false)

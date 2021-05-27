@@ -99,10 +99,10 @@ const SignUp = (props: any) => {
         name: formData.userName,
         email: formData.email
       }
-      const result = await axios.post(`${apiBaseUrl2}/user/checkEmail`, inputJson)
+      const result = await axios.post(`${apiBaseUrl}/user/checkEmail`, inputJson)
       // console.log('result', result.data);
       setShowOTPModal(true);
-      const Otp = await axios.get(`${apiBaseUrl2}/user/getPassCode/${formData.email}`);
+      const Otp = await axios.get(`${apiBaseUrl}/user/getPassCode/${formData.email}`);
       // const actualOtp = 123456;
       setActualOtp(Otp.data);
       // console.log(Otp.data);

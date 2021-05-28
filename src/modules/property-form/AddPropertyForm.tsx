@@ -185,7 +185,7 @@ const AddPropertyForm = (props: any) => {
             setSubmitting(false)
           }}
         >
-          {({ values, handleBlur }: any) => (
+          {({ values, handleBlur, isValid }: any) => (
             <Form>
               <Grid container>
                 <Grid item xs={2} className={classes.titleNumberStyle}>
@@ -194,11 +194,11 @@ const AddPropertyForm = (props: any) => {
                 <Grid item xs={10} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitle>Owner details</FormTitle>
-                    <CustomTextField label="First name" name="Fname" handleBlur={handleBlur} />
+                    <CustomTextField label="First name" name="Fname" />
                     <ErrorMessage component={err} name="Fname" />
-                    <CustomTextField label="Last name" name="Lname" handleBlur={handleBlur} />
+                    <CustomTextField label="Last name" name="Lname" />
                     <ErrorMessage component={err} name="Lname" />
-                    <CustomTextField label="Email Address" type="email" name="Email" handleBlur={handleBlur} />
+                    <CustomTextField label="Email Address" type="email" name="Email" />
                     <ErrorMessage component={err} name="Email" />
                     <CustomTextField label="Wallet public key" name="PublicAddress" />
                     <ErrorMessage component={err} name="PublicAddress" />
@@ -215,7 +215,7 @@ const AddPropertyForm = (props: any) => {
                     <FormTitle>Property info</FormTitle>
                     <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
                     <ErrorMessage component={err} name="PropertyType" />
-                    <CustomTextField label="Property name" name="PropertyName" handleBlur={handleBlur} />
+                    <CustomTextField label="Property name" name="PropertyName" />
                     <ErrorMessage component={err} name="PropertyName" />
                     <MoneyInputField label="Property current value" name="CurrentValue" acceptDecimals dollarPrefix />
                     <ErrorMessage component={err} name="CurrentValue" />
@@ -442,13 +442,13 @@ const AddPropertyForm = (props: any) => {
                     <FormTitle>Amenities</FormTitle>
                     <CustomTextField label="Heating" name="Heating" />
                     <ErrorMessage component={err} name="Heating" />
-                    <CustomTextField label="AC" name="AC" handleBlur={handleBlur} />
+                    <CustomTextField label="AC" name="AC" />
                     <ErrorMessage component={err} name="AC" />
-                    <CustomTextField label="Roof" name="Roof" handleBlur={handleBlur} />
+                    <CustomTextField label="Roof" name="Roof" />
                     <ErrorMessage component={err} name="Roof" />
-                    <CustomTextField label="Floor" name="Floor" handleBlur={handleBlur} />
+                    <CustomTextField label="Floor" name="Floor" />
                     <ErrorMessage component={err} name="Floor" />
-                    <CustomTextField label="Window Covering" name="WindowCovering" handleBlur={handleBlur} />
+                    <CustomTextField label="Window Covering" name="WindowCovering" />
                     <ErrorMessage component={err} name="WindowCovering" />
                     <FieldSelect label="Pool" name="Pool" options={Landscaping} />
                     <ErrorMessage component={err} name="Pool" />

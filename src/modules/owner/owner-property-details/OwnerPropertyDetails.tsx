@@ -191,7 +191,7 @@ const OwnerPropertyDetails = (props: any) => {
                           <InfoLightTxt>Owner</InfoLightTxt>
                           <InfoBoldTxt>{getFullName(propertyInfo.propertyDetails.Fname, propertyInfo.propertyDetails.Lname)}</InfoBoldTxt>
                         </div>
-                        <MailIcon />
+                        {/* <MailIcon /> */}
                       </TreasuryOwnerCont>
                     </Paper>
                   </Grid>
@@ -202,7 +202,7 @@ const OwnerPropertyDetails = (props: any) => {
                           <InfoLightTxt>HOA Admin</InfoLightTxt>
                           <InfoBoldTxt>{'HOA Admin'}</InfoBoldTxt>
                         </div>
-                        <MailIcon />
+                        {/* <MailIcon /> */}
                       </TreasuryOwnerCont>
                     </Paper>
                   </Grid>

@@ -3,7 +3,7 @@ import { claimModalStyle, ClaimTitle, ClaimLightText, ClaimBoldText, ClaimBtnGro
 import Paper from '@material-ui/core/Paper'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 import Spinner from 'shared/loader-components/spinner'
-import { selfAbi, slcAbi, SLCContractAddress, SLFContractAddress, treasuryAddress } from 'modules/block-chain/abi'
+import { selfAbi, slcAbi, SLFContractAddress, treasuryAddress } from 'modules/block-chain/abi'
 import { getPropertyId, getWeb3Val, handleAuctionWinTokenClaim } from 'modules/block-chain/BlockChainMethods'
 
 const TokenClaim = (props: any) => {

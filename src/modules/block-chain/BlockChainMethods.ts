@@ -6,7 +6,6 @@ import {
   DAIContractAddress,
   selfAbi,
   slcAbi,
-  SLCContractAddress,
   SLFContractAddress,
 } from './abi'
 let web3: Web3

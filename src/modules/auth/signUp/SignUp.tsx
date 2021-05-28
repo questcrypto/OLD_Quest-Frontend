@@ -330,8 +330,8 @@ const SignUp = (props: any) => {
                   //   'Must be a Valid Email'
                   // )
                   otp: Yup.number()
-                    .min(99999, 'OTP is not long enough')
-                    .max(999999, 'OTP is of 6 digits')
+                    // .min(99999, 'OTP is not long enough')
+                    .max(999999, 'OTP is not more than 6 digits')
                     .required('OTP is required')
                     .equals([actualOtp], 'Pls enter correct OTP'),
                   walletAddress: Yup.string().required('Wallet Address is required'),

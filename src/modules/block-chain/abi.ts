@@ -1,7 +1,7 @@
 export const SLFContractAddress = '0x8c9Ba9aEeBEb1F0F15a430964438809102099e69'
 export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
 export const auctionContractAddress = '0x8482cf391ABAc8Fed36Cba191cCDA486BA119341'
-export const treasuryAddress = '0xF51632261987F4578425Ca91a48117E11516a4CF'
+export const treasuryAddress = '0x9ec6df50fcF77637996AFFa60b43121F8B4F27c6'
 
 export const slcAbi: any = [
   {

@@ -48,7 +48,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import { loginStart } from 'logic/actions/user.actions'
-import { apiBaseUrl, apiBaseUrl2 } from 'services/global-constant'
+import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 import Spinner from 'shared/loader-components/spinner'
 

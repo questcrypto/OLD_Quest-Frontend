@@ -243,7 +243,7 @@ const TreasuryPropertyDetails = (props: any) => {
                           <InfoLightTxt>Owner</InfoLightTxt>
                           <InfoBoldTxt>{`${propertyInfo.propertyDetails.Fname} ${propertyInfo.propertyDetails.Lname}`}</InfoBoldTxt>
                         </div>
-                        <MailIcon />
+                        {/* <MailIcon /> */}
                       </TreasuryOwnerCont>
                     </Paper>
                   </Grid>
@@ -254,7 +254,7 @@ const TreasuryPropertyDetails = (props: any) => {
                           <InfoLightTxt>HOA Admin</InfoLightTxt>
                           <InfoBoldTxt>HOA Admin</InfoBoldTxt>
                         </div>
-                        <MailIcon />
+                        {/* <MailIcon /> */}
                       </TreasuryOwnerCont>
                     </Paper>
                   </Grid>

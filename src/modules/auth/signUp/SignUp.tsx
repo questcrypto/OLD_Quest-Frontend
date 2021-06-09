@@ -86,16 +86,18 @@ const SignUp = (props: any) => {
   // Email Service Loader
   const [emailLoader, setEmailLoader] = useState(false)
 
-  window.ethereum.on('accountsChanged', function (accounts: any) {
-    // Time to reload your interface with accounts[0]!
-    if (value === 0 && !!ref.current && !!ref.current.values) {
-      const formData = JSON.parse(JSON.stringify(ref.current.values));
-      if (accounts && accounts.length > 0 && formData.walletAddress !== '') {
-        formData.walletAddress = accounts[0];
+  if (window.ethereum) {
+    window.ethereum.on('accountsChanged', function (accounts: any) {
+      // Time to reload your interface with accounts[0]!
+      if (value === 0 && !!ref.current && !!ref.current.values) {
+        const formData = JSON.parse(JSON.stringify(ref.current.values));
+        if (accounts && accounts.length > 0 && formData.walletAddress !== '') {
+          formData.walletAddress = accounts[0];
+        }
+        setInitialData({ ...formData });
       }
-      setInitialData({ ...formData });
-    }
-  })
+    })
+  }
 
   const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);

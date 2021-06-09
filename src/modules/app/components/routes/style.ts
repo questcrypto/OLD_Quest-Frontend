@@ -11,8 +11,9 @@ export const useStyles = makeStyles(() =>
       background: colors.themeBackground,
     },
     rightPanelStyle: {
-      padding: '30px',
-      boxSizing: 'border-box',
+      // padding: '30px',
+      padding: '15px',
+      boxSizing: 'border-box'
     },
   })
 )

@@ -24,6 +24,7 @@ import OwnerPropertyDetails from 'modules/owner/owner-property-details'
 import { handleDrawerOpen, handleDrawerClose } from 'logic/actions/drawer.open'
 import { IconButton } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
+import Portfolio from 'modules/portfolio'
 
 const notFoundRoute: RouteDefinition = {
   path: '*',
@@ -43,6 +44,13 @@ export const routes: RouteDefinition[] = [
     path: Paths.root,
     component: SignUp,
     protected: false,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.portfolio,
+    component: Portfolio,
+    protected: true,
     redirect: Paths.root,
     title: '',
   },

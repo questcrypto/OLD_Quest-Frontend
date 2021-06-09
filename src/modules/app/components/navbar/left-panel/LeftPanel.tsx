@@ -22,6 +22,7 @@ import { handleDrawerClose } from 'logic/actions/drawer.open'
 import { Close } from '@material-ui/icons'
 // import questLogo from 'assets/images/questLoginLogo.png';
 import questLogo from 'assets/images/questDashboardLogo.svg';
+import PieIcon from 'assets/icons/pieIcon.svg';
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
@@ -33,6 +34,13 @@ const LeftPanel = (props: any) => {
   const handleAuction = () => {
     history.push(Paths.auction)
   }
+
+  const handlePortfolio = () => {
+    try {
+      history.push(Paths.portfolio)
+    } catch (error) { console.log(error) }
+  }
+
   return (
     //@ts-ignore
     <DrawerWrapper open={openDrawer}>
@@ -57,6 +65,10 @@ const LeftPanel = (props: any) => {
             <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
               <ApartmentIcon className={classes.iconStyle} />
               <ListItemText>Properties</ListItemText>
+            </ListItem>
+            <ListItem button className={classes.itemButtonStyle} onClick={() => handlePortfolio()}>
+              <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
+                <ListItemText>Portfolio</ListItemText>
             </ListItem>
             {!!userInfo && userInfo.role !== 2 && (
               <>

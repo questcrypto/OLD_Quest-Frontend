@@ -2,49 +2,98 @@ import { useState } from 'react';
 import {
   Typography,
   Grid,
-  Paper,
-  Input,
-  InputAdornment,
+  Paper
 } from '@material-ui/core';
 
 import {
   useStyles,
-  DFlexDiv,
-  ModalHeaderDiv,
-  ModalHeaderText,
-  ContaDiv,
-  ContaInnerDiv,
-  SwapDetailsDiv,
-  SwapInnerDiv
 } from './style';
 import CustomButton from './components/shared/Button';
 import Question from '../../assets/icons/question.svg';
-import CustomModal from '../../shared/custom-modal/CustomModal';
-import closeIcon from 'assets/icons/closeIcon.svg';
-import SwapVertIcon from '@material-ui/icons/SwapVert';
-import DropDownButton from './components/shared/DropDownButton';
-import CustomInput from './components/shared/CustomInput';
+
 import MaticIcon from 'assets/icons/matic.svg';
 import KnabDummy from 'assets/icons/knab_dummy.svg';
 import MoreWithCrypto from './components/MoreWithCrypto';
 import YourAssets from './components/YourAssets';
+import BuyAndConvertModal from './components/BuyAndConvertModal';
+import { getWeb3Val, buyKnab, getStableCoinBalance, handlestableCoinapproval } from '../../modules/block-chain/BlockChainMethods';
+import { stableCoinAbi, stableCoinContractAddress } from '../../modules/block-chain/abi';
+import { errorAlert } from 'logic/actions/alerts.actions';
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
 
 const Portfolio = (props: any) => {
 
   const classes = useStyles();
 
   const [pb, setPb] = useState(0.00);
-  const [bcQuestModal, setBcQuestModal] = useState(false);
+  const [bcModal, setBcModal] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [isTransaction, setIsTransaction] = useState(false);
 
-  const openbcQuestModal = () => {
+  const { errorAlert } = props;
+
+  const openbcModal = () => {
     try {
-      setBcQuestModal(true);
+      setBcModal(true);
     } catch (error) { console.log(error) }
   }
 
-  const handlebcQuestModalClose = () => {
+  const handlebcModalClose = () => {
     try {
-      setBcQuestModal(false);
+      setBcModal(false);
+      setIsConfirm(false);
+    } catch (error) { console.log(error) }
+  }
+
+  const submitModalFn = (values: any) => {
+    try {
+      setIsConfirm(true);
+    } catch (error) { console.log(error) }
+  }
+
+  const confirmTransaction = async (values: any) => {
+    try {
+      const fromData = values.from;
+      // console.log(typeof fromData);
+      const web3 = await getWeb3Val();
+      if (web3) {
+        setIsTransaction(true);
+        const accounts = await web3.eth.getAccounts();
+        const contractSc = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress);
+        const res: any = await contractSc.methods.approve(accounts[0], fromData);
+        const data = buyKnab(fromData);
+        data.then((res) => {
+          console.log(res);
+          setIsTransaction(false);
+          setBcModal(false);
+          setIsConfirm(false);
+        }, error => {
+          setIsTransaction(false);
+          setBcModal(false);
+          setIsConfirm(false);
+          console.log(error);
+          errorAlert('Something went wrong , please try again')
+          // if (!!error && error.response && error.response.data.message) {
+          //   errorAlert(error.response.data.message)
+          // } else if (!!error.message) {
+          //   errorAlert(error.message)
+          // } else {
+          //   errorAlert('Something went wrong , please try again')
+          // }
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
+      // setIsTransaction(false);
+    }
+  }
+
+  const rejectTransaction = () => {
+    try {
+      setIsConfirm(false);
     } catch (error) { console.log(error) }
   }
 
@@ -80,7 +129,6 @@ const Portfolio = (props: any) => {
           </CustomButton>&nbsp;&nbsp;&nbsp;
           <CustomButton
             size="small"
-            onClick={openbcQuestModal}
             style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
           >
             Buy | Convert Quest
@@ -88,6 +136,7 @@ const Portfolio = (props: any) => {
           <CustomButton
             size="small"
             style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
+            onClick={openbcModal}
           >
             Buy | Convert KNAB
           </CustomButton>
@@ -122,6 +171,7 @@ const Portfolio = (props: any) => {
                 <CustomButton
                   size="large"
                   style={{ backgroundColor: '#1E3444', padding: '8px 80px' }}
+                  onClick={openbcModal}
                 >
                   Buy KNAB Tokens
                 </CustomButton><br />
@@ -129,6 +179,18 @@ const Portfolio = (props: any) => {
               </div>
             </div>
           </Paper>
+
+          {/* <Paper className={classes.portfolioDiv2}>
+            <Typography variant="subtitle1">
+              Portfolio Balance
+            </Typography>
+            <div>
+              <Typography variant="h4">
+                {pb.toFixed(2)}
+                <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} />
+              </Typography>
+            </div>
+          </Paper> */}
 
           <YourAssets />
         </Grid>
@@ -139,71 +201,53 @@ const Portfolio = (props: any) => {
       </Grid>
 
       {/* Buy or Convert Quest Modal */}
-      <CustomModal show={bcQuestModal} toggleModal={handlebcQuestModalClose}>
-        <div className={classes.bcQuestDiv}>
-          <ModalHeaderDiv>
-            <ModalHeaderText>Buying | Converting Quest Tokens</ModalHeaderText>
-            <div onClick={handlebcQuestModalClose}>
-              <img src={closeIcon} alt='close' style={{ width: '12px', height: '12px' }} />
-            </div>
-          </ModalHeaderDiv>
-          <div className={classes.line}></div>
-          <div className={classes.swapDiv}>
-            <Typography variant="subtitle2" className={classes.swapDivText}>Price</Typography>
-            <CustomButton
-              size="small"
-              style={{ backgroundColor: '#C4C4C4', color: '#000000' }}
-            >
-              <SwapVertIcon />
-            </CustomButton>
-          </div>
-          <ContaDiv>
-            <Typography variant="subtitle2">From</Typography>
-            <ContaInnerDiv>
-              <DropDownButton
-                options={options}
-              />
-              <CustomInput id="1" type="number" />
-            </ContaInnerDiv>
+      {/* <BuyAndConvertModal
+        show={bcQuestModal}
+        toggleModal={handlebcQuestModalClose}
+        onClose={handlebcQuestModalClose}
+        headerText="Buying | Converting Quest Tokens"
+        options1={options1}
+        options2={options2}
+      /> */}
 
-            <Typography variant="subtitle2" style={{ paddingTop: '16px' }}>To</Typography>
-            <ContaInnerDiv>
-              <DropDownButton
-                options={options}
-              />
-              <CustomInput id="1" type="number" />
-            </ContaInnerDiv>
-          </ContaDiv>
-          <SwapDetailsDiv>
-            <Typography variant="subtitle1">Swap Details</Typography>
-            <SwapInnerDiv>
-              <div>Minimum Received</div>
-              <div>17.77 USDT</div>
-            </SwapInnerDiv>
-            <SwapInnerDiv>
-              <div>Price Impact</div>
-              <div>0.01%</div>
-            </SwapInnerDiv>
-            <SwapInnerDiv>
-              <div>Liquidity Provider Fee</div>
-              <div>0.03% Quest</div>
-            </SwapInnerDiv>
-          </SwapDetailsDiv>
-          <DFlexDiv>
-            <CustomButton
-              size="large"
-              style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}
-            >
-              Submit
-            </CustomButton>
-          </DFlexDiv>
-        </div>
-      </CustomModal>
+      {/* Buy or Convert KNAB Modal */}
+      <BuyAndConvertModal
+        show={bcModal}
+        toggleModal={handlebcModalClose}
+        onClose={handlebcModalClose}
+        headerText="Buying | Converting KNAB Tokens"
+        options1={options1}
+        options2={options2}
+        onModalSubmit={submitModalFn}
+        isConfirm={isConfirm}
+        conversionData={conversionData}
+        confirmTransaction={confirmTransaction}
+        rejectTransaction={rejectTransaction}
+        isTransaction={isTransaction}
+      />
 
     </div>
   )
 }
 
-const options = [{ name: 'Matic', icon: MaticIcon }, { name: 'Knab', icon: KnabDummy }]
+const options1 = [{ name: 'Matic', icon: MaticIcon, id: 'matic_from', key: 'matic' },
+{ name: 'Knab', icon: KnabDummy, id: 'knab_from', key: 'knab' }]
+const options2 = [{ name: 'Knab', icon: KnabDummy, id: 'knab_to', key: 'knab' },
+{ name: 'Matic', icon: MaticIcon, id: 'matic_to', key: 'matic' }]
+const conversionData = {
+  matic: {
+    matic: 1,
+    knab: 2.672,
+  },
+  knab: {
+    knab: 1,
+    matic: 0.374255
+  }
+}
 
-export default Portfolio;
+// export default Portfolio;
+const mapStateToProps = (state: any) => ({
+  loading: state.user.loading,
+})
+export default withRouter(connect(mapStateToProps, { errorAlert })(Portfolio))
+

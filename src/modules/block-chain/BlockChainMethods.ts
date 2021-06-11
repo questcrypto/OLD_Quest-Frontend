@@ -7,6 +7,10 @@ import {
   selfAbi,
   slcAbi,
   SLFContractAddress,
+  stableCoinAbi,
+  stableCoinContractAddress,
+  ICOabi,
+  ICOAddress
 } from './abi'
 let web3: Web3
 
@@ -218,4 +222,31 @@ export const getPropertyId = async (auctionId: any) => {
 
   const { property_id } = await auctionContract.methods.auction(auctionId).call()
   return property_id
+}
+
+export const getStableCoinBalance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const stableCoinContract = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
+    const res = await stableCoinContract.methods.balanceOf(accounts[0]).call()
+    const stableCoinBalance: any = convertToEther(res)
+    return parseInt(stableCoinBalance)
+  }
+}
+
+export const buyKnab = async ( amount : number) => {
+  const web3 = await getWeb3Val();    
+  if (web3)
+  {
+    const accounts = await web3.eth.getAccounts() 
+    const ICOinstance = new web3.eth.Contract(ICOabi,ICOAddress)
+    const res : any = await ICOinstance.methods.buy(convertToWei(amount)).send({from : accounts[0]})
+    return res
+  }
+}
+
+export const handlestableCoinapproval = async (contractStableCoin: any, account: string, user: any, ApproveAmount: any) => {
+  const res = await contractStableCoin.methods.approve(user, convertToWei(ApproveAmount)).send({ from: account })
+  return res
 }

@@ -1,0 +1,93 @@
+{
+  "tableData": {
+    "tableHeaders": [
+      {
+        "key": "asset",
+        "label": "Asset"
+      },
+      {
+        "key": "balance",
+        "label": "Balance"
+      },
+      {
+        "key": "availableQty",
+        "label": "Available Qty."
+      },
+      {
+        "key": "price",
+        "label": "Price"
+      },
+      {
+        "key": "holdings",
+        "label": "Holdings"
+      }
+    ],
+    "tableBody": [
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "KNAB - USDC"
+        },
+        "balance": "$6.76",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 56782.74,
+          "percent": 3.57
+        },
+        "holdings": 27.8
+      },
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "KNAB - USDC"
+        },
+        "balance": "$6.76",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 56782.74,
+          "percent": 3.57
+        },
+        "holdings": 27.8
+      },
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "KNAB - USDC"
+        },
+        "balance": "$6.76",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 56782.74,
+          "percent": 3.57
+        },
+        "holdings": 27.8
+      },
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "KNAB - USDC"
+        },
+        "balance": "$6.76",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 56782.74,
+          "percent": 3.57
+        },
+        "holdings": 27.8
+      },
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "KNAB - USDC"
+        },
+        "balance": "$6.76",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 56782.74,
+          "percent": 3.57
+        },
+        "holdings": 27.8
+      }
+    ]
+  }
+}

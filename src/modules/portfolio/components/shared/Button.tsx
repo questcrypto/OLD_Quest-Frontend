@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     '&:disabled': {
       backgroundColor: theme.palette.primary.main,
       color: '#FFF',
-      opacity: 0.8,
+      opacity: 0.6,
     },
   },
   label: {
@@ -29,7 +29,6 @@ const CustomButton = (props: any) => {
     onClick,
     backgroundColor,
     padding,
-    colour,
     ...other
   } = props;
 
@@ -43,7 +42,6 @@ const CustomButton = (props: any) => {
       style={{
         backgroundColor: backgroundColor ? backgroundColor : '',
         padding: padding ? padding : '',
-        colour: colour ? colour : ''
       }}
       {...other}
     >

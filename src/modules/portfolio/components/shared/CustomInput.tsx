@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 const CustomInput = (props: any) => {
 
   const classes = useStyles();
-  const { id, type } = props;
+  const { id, type, ...other } = props;
 
   return (
     <Input
@@ -23,6 +23,7 @@ const CustomInput = (props: any) => {
       disableUnderline={true}
       // endAdornment={<InputAdornment position="end">MAX</InputAdornment>}
       classes={{ root: classes.fromDivInput }}
+      { ...other }
     />
   );
 }

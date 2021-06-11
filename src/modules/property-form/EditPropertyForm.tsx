@@ -303,7 +303,7 @@ const EditPropertyForm = (props: any) => {
     <PropertyFormWrapper>
       <FormHeader>
         <HeaderPath>
-          <span>Properties</span> {!!userInfo && userInfo.role === 1 ? '/ Edit property from' : '/ View property from'}
+          <span>Properties</span> {!!userInfo && userInfo.role === 1 ? '/ Edit property form' : '/ View property form'}
         </HeaderPath>
       </FormHeader>
       <Grid container spacing={4} alignItems="stretch">

@@ -16,6 +16,7 @@ import KnabDummy from 'assets/icons/knab_dummy.svg';
 const useStyles = makeStyles(theme => ({
   root: {
     padding: '6px',
+    border: '1px solid #EDEDED',
     '&:hover': {
       backgroundColor: 'transparent'
     }
@@ -26,6 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   root2: {
     borderLeft: 'none',
+    border: '1px solid #EDEDED',
     '&:hover': {
       backgroundColor: 'transparent'
     }
@@ -40,7 +42,7 @@ const DropDownButton = (props: any) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
+    console.info(`You clicked ${options[selectedIndex].id}`);
   };
 
   const handleMenuItemClick = (
@@ -49,6 +51,8 @@ const DropDownButton = (props: any) => {
   ) => {
     setSelectedIndex(index);
     setOpen(false);
+    // console.info(`You selected ${options[index].id}`);
+    valueChange(options[index]);
   };
 
   const handleToggle = () => {
@@ -64,7 +68,7 @@ const DropDownButton = (props: any) => {
   };
 
   const classes = useStyles();
-  const { options } = props;
+  const { options, valueChange } = props;
 
   return (
     <Grid container style={{ width: 'auto' }}>
@@ -111,7 +115,7 @@ const DropDownButton = (props: any) => {
                   <MenuList id="split-button-menu">
                     {options.map((option: any, index: any) => (
                       <MenuItem
-                        key={option}
+                        key={option.id}
                         selected={index === selectedIndex}
                         onClick={(event) => handleMenuItemClick(event, index)}
                       >

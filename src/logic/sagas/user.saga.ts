@@ -43,7 +43,7 @@ function* loginWorker(action: any): any {
     const userInfoRes = yield call(getUserInfo, res.data.accessToken)
     const successData = { userInfo: userInfoRes, token: res.data.accessToken }
     yield put(loginSuccess(successData))
-    history.push(`${Paths.dashboard}`)
+    // history.push(`${Paths.dashboard}`)
   } catch (error) {
     if (!!error && error.response && error.response.data.message) {
       yield put(errorAlert(error.response.data.message))

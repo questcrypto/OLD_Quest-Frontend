@@ -41,16 +41,17 @@ export const routes: RouteDefinition[] = [
   //   title: '',
   // },
   {
-    path: Paths.root,
-    component: SignUp,
-    protected: false,
+    path: Paths.portfolio,
+    component: Portfolio,
+    protected: true,
     redirect: Paths.root,
     title: '',
   },
   {
-    path: Paths.portfolio,
-    component: Portfolio,
-    protected: true,
+    // path: Paths.root,
+    path: Paths.login,
+    component: SignUp,
+    protected: false,
     redirect: Paths.root,
     title: '',
   },
@@ -151,13 +152,15 @@ function getRouteRenderWithAuth(loggedIn: boolean, route: RouteDefinition, i: nu
   if (loggedIn === route.protected) {
     return () => <route.component />
   } else if (loggedIn && !route.protected) {
-    return () => <Redirect to={`${Paths.dashboard}`} />
+    // return () => <Redirect to={`${Paths.dashboard}`} />
+    return () => <Redirect to={`${Paths.portfolio}`} />
   } else {
     return () => <Redirect to={route.redirect!} />
   }
 }
 
 const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (props) => {
+
   const { isLoaded, loggedIn, authLoading } = props
 
   const [width] = useState(window.innerWidth)
@@ -212,8 +215,10 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
 }
 
 const mapStateToProps = (state: any) => ({
-  loggedIn: state.user.loggedIn,
-  isLoaded: state.user.isLoaded,
+  // loggedIn: state.user.loggedIn,
+  // isLoaded: state.user.isLoaded,
+  loggedIn: true,
+  isLoaded: true,
   authLoading: state.user.authLoading,
   openDrawer: state.drawer.openDrawer,
 })

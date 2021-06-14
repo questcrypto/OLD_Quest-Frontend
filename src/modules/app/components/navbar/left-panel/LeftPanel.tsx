@@ -26,7 +26,7 @@ import PieIcon from 'assets/icons/pieIcon.svg';
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
-  const { userInfo, logout, openDrawer, handleDrawerClose } = props
+  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn } = props
 
   const handleProperty = () => {
     history.push(Paths.dashboard)
@@ -62,15 +62,17 @@ const LeftPanel = (props: any) => {
           </QuestLogoCont>
           <Divider className={classes.dividerStyle} />
           <List>
-            <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
-              <ApartmentIcon className={classes.iconStyle} />
-              <ListItemText>Properties</ListItemText>
-            </ListItem>
+            {!!userInfo && loggedIn &&
+              <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
+                <ApartmentIcon className={classes.iconStyle} />
+                <ListItemText>Properties</ListItemText>
+              </ListItem>
+            }
             <ListItem button className={classes.itemButtonStyle} onClick={() => handlePortfolio()}>
               <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
-                <ListItemText>Portfolio</ListItemText>
+              <ListItemText>Portfolio</ListItemText>
             </ListItem>
-            {!!userInfo && userInfo.role !== 2 && (
+            {loggedIn && !!userInfo && userInfo.role !== 2 && (
               <>
                 <ListItem button className={classes.itemButtonStyle}>
                   <AccountBalanceIcon className={classes.iconStyle} />
@@ -86,7 +88,7 @@ const LeftPanel = (props: any) => {
                 </ListItem>
               </>
             )}
-            {!!userInfo && userInfo.role === 2 && (
+            {loggedIn && !!userInfo && userInfo.role === 2 && (
               <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
                 <AssessmentIcon className={classes.iconStyle} />
                 <ListItemText>Auctions</ListItemText>
@@ -97,7 +99,10 @@ const LeftPanel = (props: any) => {
             <Divider className={classes.signOutDividerStyle} />
             <ListItem button onClick={() => logout()}>
               <PowerSettingsNewIcon className={classes.iconStyle} />
-              <ListItemText>Sign Out</ListItemText>
+              <ListItemText>
+                Disconnect
+                {/* Sign Out */}
+              </ListItemText>
             </ListItem>
           </Grid>
         </Grid>
@@ -108,6 +113,7 @@ const LeftPanel = (props: any) => {
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
   openDrawer: state.drawer.openDrawer,
+  loggedIn: state.user.loggedIn,
 })
 
 export default connect(mapStateToProps, { logout, handleDrawerClose })(LeftPanel)

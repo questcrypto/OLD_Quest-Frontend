@@ -3,13 +3,47 @@ import {
   makeStyles,
   Typography
 } from '@material-ui/core';
+import { useState, useEffect } from 'react';
 
 import Question from 'assets/icons/question.svg';
 import KnabDummy from 'assets/icons/knab_dummy.svg';
+import CustomButton from './shared/Button';
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
+  hoverBtnDiv: {
+    // display: 'block',
+    // position: 'absolute',
+    // top: '40%',
+    // left: '25%',
+    // color: '#FFFFFF'
+    top: '0%',
+    left: '0%',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    background: '#858585',
+    color: '#FFFFFF'
+  },
+  hoverBtnTxt: {
+    // color: '#FFFFFF'
+    position: 'relative',
+    left: '3%'
+  },
+  mainDiv: {
+    position: 'relative',
+  },
   root: {
     height: 'auto',
+    // '&:hover': {
+    //   opacity: 0.4
+    // },
+
+    // opacity: 0.4,
     // padding: theme.spacing(2)
   },
   title: {
@@ -42,88 +76,74 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MoreWithCrypto = () => {
+const MoreWithCrypto = (props: any) => {
 
   const classes = useStyles();
+  const { loggedIn } = props;
+  const [isWallet, setIsWallet] = useState(true);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setIsWallet(loggedIn);
+  }, [loggedIn])
 
   return (
-    <Paper className={classes.root}>
+    <>
+      <div className={classes.mainDiv}>
 
-      <Typography variant="subtitle1" className={classes.title}>
-        Do more with Crypto
-        <img src={Question} alt="question" className={classes.questionImg} />
-      </Typography>
-      <div className={classes.line}></div>
+        <Paper
+          className={classes.root}
+          style={{ opacity: isWallet? 1: 0.4 }}
+          onMouseOver={() => setShow(true)}
+        >
+          <Typography variant="subtitle1" className={classes.title}>
+            Do more with Crypto
+            <img src={Question} alt="question" className={classes.questionImg} />
+          </Typography>
+          <div className={classes.line}></div>
 
-      {
-        content.map((item, ind) => {
-          return (
-            <div key={ind}>
-              <div className={classes.contentDiv} >
-                <div className={classes.contentImgDiv}>
-                  <img src={item.icon} alt="" />
+          {
+            content.map((item, ind) => {
+              return (
+                <div key={ind}>
+                  <div className={classes.contentDiv} >
+                    <div className={classes.contentImgDiv}>
+                      <img src={item.icon} alt="" />
+                    </div>
+                    <div className={classes.contentTextDiv}>
+                      <Typography variant="subtitle2">
+                        {item.title}
+                      </Typography>
+                      <Typography variant="subtitle2" className={classes.secondLineText}>
+                        {item.subTitle}
+                      </Typography>
+                    </div>
+                  </div>
+                  <div className={classes.line}></div>
                 </div>
-                <div className={classes.contentTextDiv}>
-                  <Typography variant="subtitle2">
-                    { item.title }
-                  </Typography>
-                  <Typography variant="subtitle2" className={classes.secondLineText}>
-                    { item.subTitle }
-                  </Typography>
-                </div>
-              </div>
-              <div className={classes.line}></div>
-            </div>
-          )
-        })
-      }
+              )
+            })
+          }
+        </Paper>
 
-      {/* <div className={classes.contentDiv}>
-        <div className={classes.contentImgDiv}>
-          <img src={KnabDummy} alt="" />
-        </div>
-        <div className={classes.contentTextDiv}>
-          <Typography variant="subtitle2">
-            Lipsum text
-          </Typography>
-          <Typography variant="subtitle2" className={classes.secondLineText}>
-            Spend crypto, get rewards
-          </Typography>
-        </div>
+        {show && !isWallet && !loggedIn &&
+          <div
+            className={classes.hoverBtnDiv}
+            onMouseOut={() => setShow(false)}
+          >
+            <CustomButton
+              size="small"
+              style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
+            >
+              Connect Wallet
+            </CustomButton>
+            <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
+              For Accessing Complete Features
+            </Typography>
+          </div>
+        }
       </div>
-      <div className={classes.line}></div>
-
-      <div className={classes.contentDiv}>
-        <div className={classes.contentImgDiv}>
-          <img src={KnabDummy} alt="" />
-        </div>
-        <div className={classes.contentTextDiv}>
-          <Typography variant="subtitle2">
-            Lipsum text
-          </Typography>
-          <Typography variant="subtitle2" className={classes.secondLineText}>
-            Get Cash using your Bitcoin as collateral
-          </Typography>
-        </div>
-      </div>
-      <div className={classes.line}></div>
-
-      <div className={classes.contentDiv}>
-        <div className={classes.contentImgDiv}>
-          <img src={KnabDummy} alt="" />
-        </div>
-        <div className={classes.contentTextDiv}>
-          <Typography variant="subtitle2">
-            Lipsum text
-          </Typography>
-          <Typography variant="subtitle2" className={classes.secondLineText}>
-            Get Cash using your Bitcoin as collateral
-          </Typography>
-        </div>
-      </div>
-      <div className={classes.line}></div> */}
-
-    </Paper>
+    </>
   );
 }
 
@@ -145,4 +165,9 @@ const content = [
   }
 ]
 
-export default MoreWithCrypto;
+// export default MoreWithCrypto;
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
+})
+
+export default connect(mapStateToProps, { })(MoreWithCrypto)

@@ -4,6 +4,7 @@ import {
   Typography,
   Slider
 } from '@material-ui/core';
+import { useState, useEffect } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -16,6 +17,7 @@ import Chart from 'assets/images/chart.png';
 import KnabDummy from 'assets/icons/knab_dummy.svg';
 import CustomButton from './shared/Button';
 import * as tableData from '../../../assets/jsons/yourAssets.json';
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,102 +62,159 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       boxShadow: 'none'
     }
-  }
+  },
+  mainDiv: {
+    position: 'relative',
+  },
+  hoverBtnDiv: {
+    top: '0%',
+    left: '0%',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    background: '#858585',
+    color: '#FFFFFF'
+  },
+  hoverBtnTxt: {
+    position: 'relative',
+    left: '3%'
+  },
 }))
 
 
 let tableInfo = tableData.tableData;
 
-const YourAssets = () => {
+const YourAssets = (props: any) => {
+
+  const { loggedIn } = props;
 
   const classes = useStyles();
+  const [isWallet, setIsWallet] = useState(false);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setIsWallet(loggedIn);
+  }, [loggedIn])
 
   return (
-    <Paper className={classes.root}>
+    <div className={classes.mainDiv}>
 
-      <Typography variant="subtitle1" className={classes.title}>
-        Your Assets
-        <img src={Question} alt="question" className={classes.questionImg} />
-      </Typography>
+      <Paper 
+        className={classes.root}
+        style={{ opacity: isWallet? 1: 0.4 }}
+        onMouseOver={() => setShow(true)}
+      >
 
-      <Table className={classes.table} aria-label="simple table">
+        <Typography variant="subtitle1" className={classes.title}>
+          Your Assets
+          <img src={Question} alt="question" className={classes.questionImg} />
+        </Typography>
 
-        <TableHead>
-          <TableRow>
-            {tableInfo && tableInfo.tableHeaders &&
-              tableInfo.tableHeaders.map((header: any, index: any) => {
+        <Table className={classes.table} aria-label="simple table">
+
+          <TableHead>
+            <TableRow>
+              {tableInfo && tableInfo.tableHeaders &&
+                tableInfo.tableHeaders.map((header: any, index: any) => {
+                  return (
+                    <TableCell key={index}>{header.label}</TableCell>
+                  )
+                })
+              }
+              <TableCell>Chart</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {tableInfo && tableInfo.tableBody &&
+              tableInfo.tableBody.map((row: any, index) => {
                 return (
-                  <TableCell key={index}>{header.label}</TableCell>
+                  <TableRow key={index}>
+                    {tableInfo.tableHeaders.map((item: any, ind) => {
+                      return (
+                        <TableCell key={ind}>
+                          {item.key === 'asset' &&
+                            <div className={classes.firstDiv}>
+                              {/* <img src={row[item.key].icon} alt="" className={classes.iconImg} /> */}
+                              <img src={KnabDummy} alt="" className={classes.iconImg} />
+                              {row[item.key].name}
+                            </div>
+                          }
+                          {
+                            item.key === 'price' &&
+                            <div>
+                              {row[item.key].value} <br />
+                              <span className={classes.percentText} >
+                                +{row[item.key].percent}%
+                              </span>
+                            </div>
+                          }
+                          {
+                            item.key === 'holdings' &&
+                            <div>
+                              <div>
+                                {row[item.key]}<br />
+                                <Slider
+                                  value={row[item.key]}
+                                  classes={{ root: classes.sliderRoot, thumb: classes.sliderThumb }}
+                                />
+                              </div>
+                            </div>
+                          }
+                          {item.key !== 'asset' && item.key !== 'price' && item.key !== 'holdings' &&
+                            row[item.key]
+                          }
+                        </TableCell>
+                      )
+                    })}
+                    <TableCell>
+                      <img src={Chart} alt="" />
+                    </TableCell>
+                  </TableRow>
                 )
               })
             }
-            <TableCell>Chart</TableCell>
-          </TableRow>
-        </TableHead>
+          </TableBody>
+        </Table>
 
-        <TableBody>
-          {tableInfo && tableInfo.tableBody &&
-            tableInfo.tableBody.map((row: any, index) => {
-              return (
-                <TableRow key={index}>
-                  { tableInfo.tableHeaders.map((item: any, ind) => {
-                    return (
-                      <TableCell key={ind}>
-                        { item.key === 'asset' &&
-                          <div className={classes.firstDiv}>
-                            {/* <img src={row[item.key].icon} alt="" className={classes.iconImg} /> */}
-                            <img src={KnabDummy} alt="" className={classes.iconImg} />
-                            { row[item.key].name }
-                          </div>
-                        }
-                        {
-                          item.key === 'price' &&
-                          <div>
-                            { row[item.key].value } <br />
-                            <span className={classes.percentText} >
-                             +{ row[item.key].percent }%
-                             </span>
-                          </div>
-                        }
-                        {
-                          item.key === 'holdings' &&
-                          <div>
-                            <div>
-                              { row[item.key] }<br />
-                              <Slider 
-                                value={row[item.key]} 
-                                classes={{ root: classes.sliderRoot, thumb: classes.sliderThumb }} 
-                              />
-                            </div>
-                          </div>
-                        }
-                        { item.key !== 'asset' && item.key !== 'price' && item.key !== 'holdings' && 
-                          row[item.key] 
-                        }
-                      </TableCell>
-                    )
-                  })}
-                  <TableCell>
-                    <img src={Chart} alt="" />
-                  </TableCell>
-                </TableRow>
-              )
-            })
-          }
-        </TableBody>
-      </Table>
+        <div className={classes.btnDiv}>
+          <CustomButton
+            size="large"
+            style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}
+          >
+            View More
+          </CustomButton>
+        </div>
 
-      <div className={classes.btnDiv}>
-        <CustomButton
-          size="large"
-          style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}
+      </Paper>
+
+      {show && !isWallet && !loggedIn &&
+        <div
+          className={classes.hoverBtnDiv}
+          onMouseOut={() => setShow(false)}
         >
-          View More
-        </CustomButton>
-      </div>
-
-    </Paper>
+          <CustomButton
+            size="small"
+            style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
+          >
+            Connect Wallet
+          </CustomButton>
+          <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
+            For Accessing Complete Features
+          </Typography>
+        </div>
+      }
+    </div>
   );
 }
 
-export default YourAssets;
+// export default YourAssets;
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
+})
+
+export default connect(mapStateToProps, { })(YourAssets)

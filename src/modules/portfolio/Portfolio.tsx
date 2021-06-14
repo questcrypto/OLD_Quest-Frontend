@@ -248,6 +248,7 @@ const conversionData = {
 // export default Portfolio;
 const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
+  loggedIn: state.user.loggedIn,
 })
 export default withRouter(connect(mapStateToProps, { errorAlert })(Portfolio))
 

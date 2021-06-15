@@ -14,7 +14,9 @@ import DropDownButton from './shared/DropDownButton';
 import CustomInput from './shared/CustomInput';
 import CustomButton from './shared/Button';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import Spinner from 'shared/loader-components/spinner'
+import Spinner from 'shared/loader-components/spinner';
+import { getWeb3Val, fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods';
+
 
 const useStyles = makeStyles(theme => ({
   bcDiv: {
@@ -81,6 +83,14 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     marginTop: '32px',
     marginBottom: '16px'
+  },
+  learnMoreText: {
+    color: '#35AEBC',
+    fontSize: '12px',
+    textDecoration: 'underline',
+    position: 'relative',
+    bottom: '2px',
+    cursor: 'pointer'
   }
 }));
 
@@ -90,13 +100,14 @@ const BuyAndConvertModal = (props: any) => {
 
   const { show, toggleModal, onClose, options1,
     options2, headerText, onModalSubmit,
-    isConfirm, conversionData, confirmTransaction, rejectTransaction, isTransaction } = props;
+    isConfirm, conversionData, confirmTransaction,
+    rejectTransaction, isTransaction, loader } = props;
 
   const [initialRender, setInitialRender] = useState(true);
-  const [formData, setFormData] = useState({ from: 0.00, to: 0.00 });
+  const [formData, setFormData] = useState({ from: 1, to: '' });
   const [dropDownData, setDropDownData] = useState({ from: options1[0], to: options2[0] });
   const [conversionFactor, setConversionFactor] = useState(2);
-  const [swapData, setSwapData] = useState({ minimumReceived: '17.77 USDT', priceImpact: '0.01%', fee: '0.03% Matic' });
+  const [swapData, setSwapData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' });
   const [swapDivValue, setSwapDivValue] = useState(1);
 
   const handleChange = (e: any) => {
@@ -115,11 +126,36 @@ const BuyAndConvertModal = (props: any) => {
     } catch (error) { console.log(error) }
   }
 
+  // Resetting Form
+  useEffect(() => {
+    fetchValue(formData.from).then(res => {
+      setFormData({ ...formData, to: res })
+    }, err => { console.log(err) })
+    // Tokens Sold and Left
+    fetchDetails().then(res => {
+      setSwapData({ ...swapData, tokensSold: res['tokensSold'], tokensLeft: res['tokensLeft']})
+      console.log(res)
+    }, err => { console.log(err) })
+  }, [show])
+
   // Form Data Change From
   useEffect(() => {
     if (!initialRender) {
-      setFormData({ ...formData, to: formData.from * conversionFactor });
-      setSwapDivValue(conversionFactor)
+
+      const timeOutId = setTimeout(() => {
+        if (formData && formData.from && formData.from >= 0) {
+          fetchValue(formData.from).then(res => {
+            setFormData({ ...formData, to: res });
+          }, err => { console.log(err) })
+        } else {
+          setFormData({ ...formData, to: '0' });
+        }
+      }, 500);
+      return () => clearTimeout(timeOutId);
+
+
+      // setFormData({ ...formData, to: formData.from * conversionFactor });
+      // setSwapDivValue(conversionFactor)
     }
     setInitialRender(false);
     setConversionFactor(conversionData[dropDownData.from.key][dropDownData.to.key]);
@@ -128,7 +164,8 @@ const BuyAndConvertModal = (props: any) => {
   // Form Data Change To
   useEffect(() => {
     if (!initialRender) {
-      setFormData({ ...formData, from: formData.to / conversionFactor });
+      // setFormData({ ...formData, from: formData.to / conversionFactor });
+      setSwapData({ ...swapData, bonusRatio: Number(formData.to) / formData.from })
     }
     setInitialRender(false);
   }, [formData.to])
@@ -138,7 +175,7 @@ const BuyAndConvertModal = (props: any) => {
     if (!initialRender) {
       if (conversionData && dropDownData) {
         setConversionFactor(conversionData[dropDownData.from.key][dropDownData.to.key]);
-        console.log(conversionData[dropDownData.from.key][dropDownData.to.key]);
+        // console.log(conversionData[dropDownData.from.key][dropDownData.to.key]);
       }
     }
     setInitialRender(false);
@@ -172,7 +209,7 @@ const BuyAndConvertModal = (props: any) => {
                   style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}
                   onClick={() => confirmTransaction(formData)}
                 >
-                  { isTransaction? <Spinner /> : 'Confirm' }
+                  {isTransaction ? <Spinner /> : 'Confirm'}
                 </CustomButton>
                 <CustomButton
                   size="large"
@@ -193,11 +230,12 @@ const BuyAndConvertModal = (props: any) => {
               <Typography variant="subtitle2" className={classes.swapDivText}>Price</Typography>
               <div className={classes.swapRightDiv}>
                 <Typography variant="subtitle2" className={classes.swapRightText}>
-                  { (formData.from > 0 || formData.to > 0) ?
+                  {/* { (formData.from > 0 || formData.to > 0) ?
                     `${swapDivValue} ${dropDownData.to.name} per ${dropDownData.from.name}` : ''
-                  }
+                  } */}
+                  1 USDC per KNAB
                 </Typography>
-                <CustomButton
+                {/* <CustomButton
                   size="small"
                   style={{
                     backgroundColor: '#C4C4C4',
@@ -208,7 +246,7 @@ const BuyAndConvertModal = (props: any) => {
                   }}
                 >
                   <SwapVertIcon />
-                </CustomButton>
+                </CustomButton> */}
               </div>
             </div>
             <ContaDiv>
@@ -223,6 +261,7 @@ const BuyAndConvertModal = (props: any) => {
                   type="number"
                   value={formData.from}
                   onChange={handleChange}
+                  adornment='| MAX'
                 />
               </ContaInnerDiv>
 
@@ -237,38 +276,45 @@ const BuyAndConvertModal = (props: any) => {
                   type="number"
                   value={formData.to}
                   onChange={handleChange}
+                  adornment=''
+                  readOnly
                 />
               </ContaInnerDiv>
             </ContaDiv>
-            {(formData.from > 0 || formData.to > 0) ? '': ''
-              // <SwapDetailsDiv>
-              //   <Typography variant="subtitle1">Swap Details</Typography>
-              //   <SwapInnerDiv>
-              //     <div className={classes.eightFiveC}>Minimum Received</div>
-              //     <div>{swapData.minimumReceived}</div>
-              //   </SwapInnerDiv>
-              //   <SwapInnerDiv>
-              //     <div className={classes.eightFiveC}>Price Impact</div>
-              //     <DFlexDiv className={classes.impactValue}>
-              //       <ArrowDropUpIcon />
-              //       {swapData.priceImpact}
-              //     </DFlexDiv>
-              //   </SwapInnerDiv>
-              //   <SwapInnerDiv>
-              //     <div className={classes.eightFiveC}>Liquidity Provider Fee</div>
-              //     <div>{swapData.fee}</div>
-              //   </SwapInnerDiv>
-              // </SwapDetailsDiv> : ''
-            }
+            {/* {(formData.from > 0 || formData.to > 0) ? '': '' */}
+            <SwapDetailsDiv>
+              <Typography variant="subtitle1">
+                ICO Details (
+                <span className={classes.learnMoreText}>Learn More</span>
+                )
+              </Typography>
+              <SwapInnerDiv>
+                <div className={classes.eightFiveC}>Current Bonus Ratio</div>
+                <div>{swapData.bonusRatio}</div>
+              </SwapInnerDiv>
+              <SwapInnerDiv>
+                <div className={classes.eightFiveC}>Tokens Sold</div>
+                {/* <DFlexDiv className={classes.impactValue}> */}
+                {/* <ArrowDropUpIcon /> */}
+                {swapData.tokensSold}
+                {/* </DFlexDiv> */}
+              </SwapInnerDiv>
+              <SwapInnerDiv>
+                <div className={classes.eightFiveC}>Tokens Left</div>
+                <div>{swapData.tokensLeft}</div>
+              </SwapInnerDiv>
+            </SwapDetailsDiv>
+            {/* } */}
             <DFlexDiv>
               <CustomButton
                 size="large"
                 style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}
-                disabled={!(formData.from > 0 || formData.to > 0)}
+                // disabled={!(formData.from > 0 || formData.to > 0)}
+                disabled={!(formData.from > 0)}
                 onClick={() => onModalSubmit(formData)}
               >
-                Submit
-            </CustomButton>
+                {loader ? <Spinner /> : 'Buy KNAB'}
+              </CustomButton>
             </DFlexDiv>
           </div>
         }

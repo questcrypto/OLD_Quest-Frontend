@@ -13,12 +13,14 @@ import Question from '../../assets/icons/question.svg';
 
 import MaticIcon from 'assets/icons/matic.svg';
 import KnabDummy from 'assets/icons/knab_dummy.svg';
+import USDC from 'assets/icons/USDC.svg';
+import KNAB from 'assets/icons/KNAB.svg';
 import MoreWithCrypto from './components/MoreWithCrypto';
 import YourAssets from './components/YourAssets';
 import BuyAndConvertModal from './components/BuyAndConvertModal';
 import { getWeb3Val, buyKnab, getStableCoinBalance, handlestableCoinapproval } from '../../modules/block-chain/BlockChainMethods';
-import { stableCoinAbi, stableCoinContractAddress } from '../../modules/block-chain/abi';
-import { errorAlert } from 'logic/actions/alerts.actions';
+import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../modules/block-chain/abi';
+import { successAlert, errorAlert } from 'logic/actions/alerts.actions';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
@@ -30,8 +32,9 @@ const Portfolio = (props: any) => {
   const [bcModal, setBcModal] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
   const [isTransaction, setIsTransaction] = useState(false);
+  const [loader, setLoader] = useState(false);
 
-  const { errorAlert } = props;
+  const { errorAlert, loggedIn, successAlert } = props;
 
   const openbcModal = () => {
     try {
@@ -46,9 +49,29 @@ const Portfolio = (props: any) => {
     } catch (error) { console.log(error) }
   }
 
-  const submitModalFn = (values: any) => {
+  const submitModalFn = async (values: any) => {
     try {
-      setIsConfirm(true);
+      const fromData = values.from;
+      if (loggedIn) {
+        setLoader(true);
+        const web3 = await getWeb3Val();
+        if (web3) {
+          const accounts = await web3.eth.getAccounts();
+          const contractSc = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress);
+          // const res: any = await contractSc.methods.approve(ICOAddress, fromData).send({ from: accounts[0] });
+          handlestableCoinapproval(contractSc, accounts[0], fromData).then(res => {
+            if (res) {
+              setLoader(false);
+              setIsConfirm(true);
+            }
+          }, err => {
+            setLoader(false);
+            console.log(err)
+          })
+        }
+      } else {
+        alert('Please connect wallet to continue');
+      }
     } catch (error) { console.log(error) }
   }
 
@@ -59,15 +82,14 @@ const Portfolio = (props: any) => {
       const web3 = await getWeb3Val();
       if (web3) {
         setIsTransaction(true);
-        const accounts = await web3.eth.getAccounts();
-        const contractSc = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress);
-        const res: any = await contractSc.methods.approve(accounts[0], fromData);
+        // const res2: any = await contractSc.methods.approve(accounts[0], 0);
         const data = buyKnab(fromData);
         data.then((res) => {
-          console.log(res);
+          // console.log(res);
           setIsTransaction(false);
           setBcModal(false);
           setIsConfirm(false);
+          successAlert('Transaction completed successfully')
         }, error => {
           setIsTransaction(false);
           setBcModal(false);
@@ -82,6 +104,7 @@ const Portfolio = (props: any) => {
           //   errorAlert('Something went wrong , please try again')
           // }
         })
+
       }
     } catch (error) {
       console.log(error)
@@ -215,7 +238,8 @@ const Portfolio = (props: any) => {
         show={bcModal}
         toggleModal={handlebcModalClose}
         onClose={handlebcModalClose}
-        headerText="Buying | Converting KNAB Tokens"
+        // headerText="Buying | Converting KNAB Tokens"
+        headerText="Buy KNAB Tokens"
         options1={options1}
         options2={options2}
         onModalSubmit={submitModalFn}
@@ -224,24 +248,27 @@ const Portfolio = (props: any) => {
         confirmTransaction={confirmTransaction}
         rejectTransaction={rejectTransaction}
         isTransaction={isTransaction}
+        loader={loader}
       />
 
     </div>
   )
 }
 
-const options1 = [{ name: 'Matic', icon: MaticIcon, id: 'matic_from', key: 'matic' },
-{ name: 'Knab', icon: KnabDummy, id: 'knab_from', key: 'knab' }]
-const options2 = [{ name: 'Knab', icon: KnabDummy, id: 'knab_to', key: 'knab' },
-{ name: 'Matic', icon: MaticIcon, id: 'matic_to', key: 'matic' }]
+// const options1 = [{ name: 'Matic', icon: MaticIcon, id: 'matic_from', key: 'matic' },
+// { name: 'Knab', icon: KnabDummy, id: 'knab_from', key: 'knab' }]
+// const options2 = [{ name: 'Knab', icon: KnabDummy, id: 'knab_to', key: 'knab' },
+// { name: 'Matic', icon: MaticIcon, id: 'matic_to', key: 'matic' }]
+const options1 = [{ name: 'USDC', icon: USDC, id: 'usdc_from', key: 'usdc' }]
+const options2 = [{ name: 'KNAB', icon: KNAB, id: 'knab_to', key: 'knab' }]
 const conversionData = {
-  matic: {
-    matic: 1,
+  usdc: {
+    usdc: 1,
     knab: 2.672,
   },
   knab: {
     knab: 1,
-    matic: 0.374255
+    usdc: 0.374255
   }
 }
 
@@ -250,5 +277,5 @@ const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
   loggedIn: state.user.loggedIn,
 })
-export default withRouter(connect(mapStateToProps, { errorAlert })(Portfolio))
+export default withRouter(connect(mapStateToProps, { successAlert, errorAlert })(Portfolio))
 

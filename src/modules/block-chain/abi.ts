@@ -2,8 +2,8 @@ export const SLFContractAddress = '0x8c9Ba9aEeBEb1F0F15a430964438809102099e69'
 export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
 export const auctionContractAddress = '0x8482cf391ABAc8Fed36Cba191cCDA486BA119341'
 export const treasuryAddress = '0x9ec6df50fcF77637996AFFa60b43121F8B4F27c6'
-export const stableCoinContractAddress = '0x8c9Ba9aEeBEb1F0F15a430964438809102099e69'
-export const ICOAddress = '0x8c9Ba9aEeBEb1F0F15a430964438809102099e69'
+export const stableCoinContractAddress = '0x262b15C1969eF695863B08BaD02B5d5C2798AD85'
+export const ICOAddress = '0x23600B5Ff63E1F7F0880af09ecABBcD6a29Acf2C'
 
 export const slcAbi: any = [
   {
@@ -2226,6 +2226,25 @@ export const ICOabi : any = [
 		"type": "event"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "KnabAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "_amountRaised",
 		"outputs": [
@@ -2272,6 +2291,24 @@ export const ICOabi : any = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "details",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -2292,6 +2329,32 @@ export const ICOabi : any = [
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tokenSold",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "transferAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

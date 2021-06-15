@@ -42,6 +42,10 @@ export const convertToEther = (totalAmount: any) => {
   return parseInt(web3.utils.fromWei(totalAmount.toString(), 'ether'))
 }
 
+export const convertToEther2 = (totalAmount: any) => {
+  return web3.utils.fromWei(totalAmount.toString(), 'ether')
+}
+
 export const getPublicAddress = async () => {
   const web3: Web3 = new Web3(window.ethereum)
   try {
@@ -246,7 +250,19 @@ export const buyKnab = async ( amount : number) => {
   }
 }
 
-export const handlestableCoinapproval = async (contractStableCoin: any, account: string, user: any, ApproveAmount: any) => {
-  const res = await contractStableCoin.methods.approve(user, convertToWei(ApproveAmount)).send({ from: account })
+export const handlestableCoinapproval = async (contractStableCoin: any, account: string, ApproveAmount: any) => {
+  const res = await contractStableCoin.methods.approve(ICOAddress, convertToWei(ApproveAmount)).send({ from: account })
   return res
+}
+
+export const fetchValue = async (amount : number) => {
+  const IcoContract = new web3.eth.Contract(ICOabi,ICOAddress)
+  const res = await IcoContract.methods.KnabAmount(convertToWei(amount)).call()
+  return convertToEther2(res);
+}
+
+export const fetchDetails = async () => {
+  const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
+  const res = await IcoContract.methods.details().call()
+  return { tokensSold: convertToEther2(res['0']), tokensLeft: convertToEther2(res['1']) }
 }

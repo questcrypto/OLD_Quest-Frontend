@@ -34,6 +34,7 @@ export const userReducer = (state = initialState, action: any) => {
         isLoaded: true,
         authLoading: false,
         userInfo: payload.userInfo,
+        isWalletCon: true
       }
     case AUTH_FAIL:
     case LOGIN_FAIL:

@@ -87,7 +87,7 @@ const MoreWithCrypto = (props: any) => {
   //   setIsWallet(loggedIn);
   // }, [loggedIn])
   useEffect(() => {
-    console.log('More With Crypto', isWalletCon);
+    // console.log('More With Crypto', isWalletCon);
     setIsWallet(isWalletCon);
   }, [isWalletCon])
 

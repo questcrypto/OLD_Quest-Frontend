@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { errorAlert } from 'logic/actions/alerts.actions'
-import { loginStart } from 'logic/actions/user.actions'
+import { loginStart, walletConnect, logout } from 'logic/actions/user.actions'
 import { useStyle } from './style'
 import Box from '@material-ui/core/Box'
 import { Formik, Form, ErrorMessage } from 'formik'
@@ -40,7 +40,7 @@ const Login = (props: any) => {
 
   const [dataLoading, setDataLoading] = useState(false)
   const classes = useStyle()
-  const { loading, loginStart, errorAlert } = props
+  const { loading, loginStart, errorAlert, walletConnect, logout } = props
 
   const ref = useRef<any>();
 
@@ -57,6 +57,7 @@ const Login = (props: any) => {
 
   if (window.ethereum) {
     window.ethereum.on('accountsChanged', function (accounts: any) {
+      logout();
       // Time to reload your interface with accounts[0]!
       if (!!ref.current && !!ref.current.values) {
         const formData = JSON.parse(JSON.stringify(ref.current.values));
@@ -98,6 +99,7 @@ const Login = (props: any) => {
         // const loginData = { email: values.email, publicaddress, signature }
         const loginData = { publicaddress, signature }
         loginStart(loginData)
+        walletConnect(true);
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
@@ -268,4 +270,4 @@ const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
 })
 
-export default withRouter(connect(mapStateToProps, { loginStart, errorAlert })(Login))
+export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, walletConnect, logout })(Login))

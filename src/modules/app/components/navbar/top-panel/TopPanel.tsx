@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { PrimaryButton } from 'shared/components/buttons'
 import { connect } from 'react-redux'
-import { logout } from 'logic/actions/user.actions'
+import { logout, logout2, walletConnect } from 'logic/actions/user.actions'
 import Web3 from 'web3'
 import { TopPanelCont } from './style'
 import Notifications from './components/Notifications'
@@ -36,7 +36,7 @@ const TopPanel = (props: any) => {
   const [account, setAccount] = useState(false)
   const web3: Web3 = new Web3(window.ethereum)
 
-  const { loginStart, errorAlert, loggedIn } = props;
+  const { loginStart, errorAlert, loggedIn, walletConnect } = props;
   const [dataLoading, setDataLoading] = useState(false);
   const [walletAddress, setWalletAddress] = useState('');
   const [tokenDummy, setTokenDummy] = useState('')
@@ -55,19 +55,19 @@ const TopPanel = (props: any) => {
     getAccount()
   }, 1000)
 
-  const checkWalletAccount = async () => {
-    const coinbase = await web3?.eth.getCoinbase()
-    if (props.userInfo && coinbase) {
-      if (props.userInfo.publicaddress !== coinbase) {
-        props.logout()
-        return
-      }
-    }
-  }
+  // const checkWalletAccount = async () => {
+  //   const coinbase = await web3?.eth.getCoinbase()
+  //   if (props.userInfo && coinbase) {
+  //     if (props.userInfo.publicaddress !== coinbase) {
+  //       props.logout()
+  //       return
+  //     }
+  //   }
+  // }
 
-  useEffect(() => {
-    checkWalletAccount()
-  })
+  // useEffect(() => {
+  //   checkWalletAccount()
+  // })
 
   useEffect(() => {
     getToken();
@@ -88,7 +88,10 @@ const TopPanel = (props: any) => {
   // Event handler to handle metamask account change
   if (window.ethereum) {
     window.ethereum.on('accountsChanged', function () {
-      props.logout()
+      // props.logout()
+      props.logout2();
+      setWalletAddress('');
+      // walletConnect(false);
     })
   }
 
@@ -110,18 +113,19 @@ const TopPanel = (props: any) => {
           return
         }
         const publicaddress = coinbase.toLowerCase()
-        let signatureData: any = ''
-        const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`);
-        signatureData = { publicaddress: result.data[0].publicaddress, nonce: result.data[0].nonce }
-        // }
-        const signature = await web3.eth.personal.sign(
-          `I am signing my one-time nonce: ${signatureData.nonce}`,
-          signatureData.publicaddress,
-          ''
-        )
-        const loginData = { publicaddress, signature }
-        loginStart(loginData)
+        // let signatureData: any = ''
+        // const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`);
+        // signatureData = { publicaddress: result.data[0].publicaddress, nonce: result.data[0].nonce }
+        // // }
+        // const signature = await web3.eth.personal.sign(
+        //   `I am signing my one-time nonce: ${signatureData.nonce}`,
+        //   signatureData.publicaddress,
+        //   ''
+        // )
+        // const loginData = { publicaddress, signature }
+        // loginStart(loginData)
         setWalletAddress(publicaddress);
+        walletConnect(true);
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
@@ -140,7 +144,8 @@ const TopPanel = (props: any) => {
   return (
     <TopPanelCont>
       {
-        loggedIn && (walletAddress !== '') && (tokenDummy !== '') ?
+        // loggedIn && (walletAddress !== '') && (tokenDummy !== '') ?
+        (walletAddress !== '') ?
           <div className={classes.walletDiv}>
             <img src={MetaMaskIcon} alt='' />
             <span className={classes.walletDivText}>
@@ -166,4 +171,4 @@ const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
 })
 
-export default connect(mapStateToProps, { loginStart, errorAlert, logout })(TopPanel)
+export default connect(mapStateToProps, { loginStart, errorAlert, logout, logout2, walletConnect })(TopPanel)

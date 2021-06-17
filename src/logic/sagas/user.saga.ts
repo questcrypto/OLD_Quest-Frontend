@@ -52,7 +52,7 @@ function* loginWorker(action: any): any {
     } else {
       yield put(errorAlert('Something went wrong , please try again'))
     }
-    yield put(loginFail())
+    yield put(loginFail(true))
   }
 }
 

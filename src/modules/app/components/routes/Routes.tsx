@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Switch } from 'react-router'
-import { Router, Route } from 'react-router-dom'
+import { Router, Route, useLocation } from 'react-router-dom'
 import { useStyles } from './style'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -41,17 +41,31 @@ export const routes: RouteDefinition[] = [
   //   title: '',
   // },
   {
-    path: Paths.portfolio,
+    path: Paths.root,
     component: Portfolio,
-    protected: true,
-    redirect: Paths.root,
+    protected: false,
+    redirect: Paths.portfolio,
     title: '',
   },
+  // {
+  //   path: Paths.portfolio,
+  //   component: Portfolio,
+  //   protected: true,
+  //   redirect: Paths.root,
+  //   title: '',
+  // },
   {
     // path: Paths.root,
     path: Paths.login,
     component: SignUp,
     protected: false,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.portfolio,
+    component: Portfolio,
+    protected: true,
     redirect: Paths.root,
     title: '',
   },
@@ -136,12 +150,13 @@ export interface RouteDefinition {
   routes?: RouteDefinition[]
 }
 
-interface Props {}
-interface RoutesProps {}
+interface Props { }
+interface RoutesProps { }
 interface StateProps {
   loggedIn: boolean
   isLoaded: boolean
-  authLoading: boolean
+  authLoading: boolean,
+  isNav: boolean
 }
 
 interface DrawerProps {
@@ -161,7 +176,7 @@ function getRouteRenderWithAuth(loggedIn: boolean, route: RouteDefinition, i: nu
 
 const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (props) => {
 
-  const { isLoaded, loggedIn, authLoading } = props
+  const { isLoaded, loggedIn, authLoading, isNav } = props
 
   const [width] = useState(window.innerWidth)
 
@@ -169,7 +184,7 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
     if (width < 990) {
       props.handleDrawerClose()
     }
-    return () => {}
+    return () => { }
   })
 
   const classes = useStyles()
@@ -187,15 +202,22 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
         <Grid container>
           {width > 990 && (
             <Grid item xs={2}>
-              {loggedIn && (
+              {/* {loggedIn && (
                 <>
                   <LeftPanel />
                 </>
-              )}
+              )} */}
+              { ((isNav) || (loggedIn))? 
+                <>
+                  <LeftPanel />
+                </> : ''
+              }
             </Grid>
           )}
-          <Grid item xs={loggedIn ? (width > 990 ? 10 : 12) : 12} className={classes.rightPanelStyle}>
-            {loggedIn && <TopPanel />}
+          {/* <Grid item xs={loggedIn ? (width > 990 ? 10 : 12) : 12} className={classes.rightPanelStyle}> */}
+          {/* {loggedIn && <TopPanel />} */}
+          <Grid item xs={((isNav)|| (loggedIn)) ? (width > 990 ? 10 : 12) : 12} className={classes.rightPanelStyle}>
+            { ((isNav)|| (loggedIn))? <TopPanel /> : '' }
             <Switch>
               {routes.map((route, i) => {
                 if (authLoading) {
@@ -215,12 +237,13 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
 }
 
 const mapStateToProps = (state: any) => ({
-  // loggedIn: state.user.loggedIn,
-  // isLoaded: state.user.isLoaded,
-  loggedIn: true,
-  isLoaded: true,
+  loggedIn: state.user.loggedIn,
+  isLoaded: state.user.isLoaded,
+  // loggedIn: true,
+  // isLoaded: true,
   authLoading: state.user.authLoading,
   openDrawer: state.drawer.openDrawer,
+  isNav: state.user.isNav
 })
 
 export default connect(mapStateToProps, { handleDrawerOpen, handleDrawerClose })(Routes)

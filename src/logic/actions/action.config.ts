@@ -12,6 +12,8 @@ export const AUTH_START = 'AUTH_START'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
 export const LOGOUT = 'LOGOUT'
+export const LOGOUT2 = 'LOGOUT2'
+export const WALLET_CONNECT = 'WALLET_CONNECT'
 
 /* =================================== LOGIN Actions ========================== */
 

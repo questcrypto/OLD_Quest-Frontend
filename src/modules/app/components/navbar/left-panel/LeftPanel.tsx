@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { logout } from 'logic/actions/user.actions'
+import { logout, logout2 } from 'logic/actions/user.actions'
 import { useStyles, QuestLogoCont, ListItemText } from './style'
 import Grid from '@material-ui/core/Grid'
 import Drawer from '@material-ui/core/Drawer'
@@ -26,18 +26,38 @@ import PieIcon from 'assets/icons/pieIcon.svg';
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
-  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn } = props
+  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2 } = props
 
   const handleProperty = () => {
-    history.push(Paths.dashboard)
+    if (loggedIn) {
+      history.push(Paths.dashboard)
+    } else {
+      logout(false)
+      history.push(Paths.login);
+    }
   }
   const handleAuction = () => {
-    history.push(Paths.auction)
+    // if (loggedIn && !!userInfo && userInfo.role === 2) {
+      history.push(Paths.auction)
+    // } else {
+    //   logout(false)
+    //   history.push(Paths.login);
+    // }
   }
 
   const handlePortfolio = () => {
     try {
       history.push(Paths.portfolio)
+    } catch (error) { console.log(error) }
+  }
+
+  const logOutFn = () => {
+    try {
+      logout(false)
+      // logout2(false);
+      setTimeout(() => {
+        history.push('/login');
+      }, 100);
     } catch (error) { console.log(error) }
   }
 
@@ -62,8 +82,9 @@ const LeftPanel = (props: any) => {
           </QuestLogoCont>
           <Divider className={classes.dividerStyle} />
           <List>
-            {!!userInfo && loggedIn &&
-              <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
+            {/* {!!userInfo && loggedIn && */}
+            {
+              < ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
                 <ApartmentIcon className={classes.iconStyle} />
                 <ListItemText>Properties</ListItemText>
               </ListItem>
@@ -89,6 +110,7 @@ const LeftPanel = (props: any) => {
               </>
             )}
             {loggedIn && !!userInfo && userInfo.role === 2 && (
+            // {(
               <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
                 <AssessmentIcon className={classes.iconStyle} />
                 <ListItemText>Auctions</ListItemText>
@@ -97,17 +119,18 @@ const LeftPanel = (props: any) => {
           </List>
           <Grid className={classes.signOutStyle}>
             <Divider className={classes.signOutDividerStyle} />
-            <ListItem button onClick={() => logout()}>
+            {/* <ListItem button onClick={() => logout()}> */}
+            <ListItem button onClick={logOutFn}>
               <PowerSettingsNewIcon className={classes.iconStyle} />
               <ListItemText>
-                Disconnect
-                {/* Sign Out */}
+                {/* Disconnect */}
+                Sign Out
               </ListItemText>
             </ListItem>
           </Grid>
         </Grid>
       </Drawer>
-    </DrawerWrapper>
+    </DrawerWrapper >
   )
 }
 const mapStateToProps = (state: any) => ({
@@ -116,4 +139,4 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
 })
 
-export default connect(mapStateToProps, { logout, handleDrawerClose })(LeftPanel)
+export default connect(mapStateToProps, { logout, handleDrawerClose, logout2 })(LeftPanel)

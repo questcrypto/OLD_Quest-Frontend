@@ -90,22 +90,26 @@ let tableInfo = tableData.tableData;
 
 const YourAssets = (props: any) => {
 
-  const { loggedIn } = props;
+  const { loggedIn, isWalletCon } = props;
 
   const classes = useStyles();
   const [isWallet, setIsWallet] = useState(false);
   const [show, setShow] = useState(false);
 
+  // useEffect(() => {
+  //   setIsWallet(loggedIn);
+  // }, [loggedIn])
+
   useEffect(() => {
-    setIsWallet(loggedIn);
-  }, [loggedIn])
+    setIsWallet(isWalletCon);
+  }, [isWalletCon])
 
   return (
     <div className={classes.mainDiv}>
 
-      <Paper 
+      <Paper
         className={classes.root}
-        style={{ opacity: isWallet? 1: 0.4 }}
+        style={{ opacity: isWallet ? 1 : 0.4 }}
         onMouseOver={() => setShow(true)}
       >
 
@@ -192,7 +196,7 @@ const YourAssets = (props: any) => {
 
       </Paper>
 
-      {show && !isWallet && !loggedIn &&
+      {show && !isWallet &&
         <div
           className={classes.hoverBtnDiv}
           onMouseOut={() => setShow(false)}
@@ -215,6 +219,7 @@ const YourAssets = (props: any) => {
 // export default YourAssets;
 const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
+  isWalletCon: state.user.isWalletCon
 })
 
-export default connect(mapStateToProps, { })(YourAssets)
+export default connect(mapStateToProps, {})(YourAssets)

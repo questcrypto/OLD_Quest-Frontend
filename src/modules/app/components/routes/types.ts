@@ -1,5 +1,6 @@
 export enum Paths {
   root = '/',
+  // root = '/portfolio',
   dashboard = '/dashboard',
   addPropertyForm = '/add-property-form',
   propertyDetails = '/property-details',

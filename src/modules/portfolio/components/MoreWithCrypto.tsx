@@ -79,13 +79,17 @@ const useStyles = makeStyles(theme => ({
 const MoreWithCrypto = (props: any) => {
 
   const classes = useStyles();
-  const { loggedIn } = props;
-  const [isWallet, setIsWallet] = useState(true);
+  const { loggedIn, isWalletCon } = props;
+  const [isWallet, setIsWallet] = useState(false);
   const [show, setShow] = useState(false);
 
+  // useEffect(() => {
+  //   setIsWallet(loggedIn);
+  // }, [loggedIn])
   useEffect(() => {
-    setIsWallet(loggedIn);
-  }, [loggedIn])
+    console.log('More With Crypto', isWalletCon);
+    setIsWallet(isWalletCon);
+  }, [isWalletCon])
 
   return (
     <>
@@ -126,7 +130,7 @@ const MoreWithCrypto = (props: any) => {
           }
         </Paper>
 
-        {show && !isWallet && !loggedIn &&
+        {show && !isWallet &&
           <div
             className={classes.hoverBtnDiv}
             onMouseOut={() => setShow(false)}
@@ -168,6 +172,7 @@ const content = [
 // export default MoreWithCrypto;
 const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
+  isWalletCon: state.user.isWalletCon
 })
 
 export default connect(mapStateToProps, { })(MoreWithCrypto)

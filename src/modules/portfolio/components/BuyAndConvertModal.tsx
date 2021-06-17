@@ -134,7 +134,7 @@ const BuyAndConvertModal = (props: any) => {
     // Tokens Sold and Left
     fetchDetails().then(res => {
       setSwapData({ ...swapData, tokensSold: res['tokensSold'], tokensLeft: res['tokensLeft']})
-      console.log(res)
+      // console.log(res)
     }, err => { console.log(err) })
   }, [show])
 

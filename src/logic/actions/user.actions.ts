@@ -1,4 +1,4 @@
-import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, LOGIN_START, LOGIN_SUCCESS, LOGIN_FAIL } from './action.config'
+import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT,LOGOUT2, LOGIN_START, LOGIN_SUCCESS, LOGIN_FAIL, WALLET_CONNECT } from './action.config'
 
 export const authStart = () => {
   return {
@@ -16,9 +16,16 @@ export const authFail = () => {
     type: AUTH_FAIL,
   }
 }
-export const logout = () => {
+export const logout = (data: any) => {
   return {
     type: LOGOUT,
+    payload: data
+  }
+}
+export const logout2 = (data: any) => {
+  return {
+    type: LOGOUT2,
+    payload: data
   }
 }
 export const loginStart = (data: any) => {
@@ -33,8 +40,15 @@ export const loginSuccess = (data: any) => {
     payload: data,
   }
 }
-export const loginFail = () => {
+export const loginFail = (data: any) => {
   return {
     type: LOGIN_FAIL,
+    payload: data
+  }
+}
+export const walletConnect = (data: any) => {
+  return {
+    type: WALLET_CONNECT,
+    payload: data
   }
 }

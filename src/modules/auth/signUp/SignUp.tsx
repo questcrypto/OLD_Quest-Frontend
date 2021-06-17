@@ -47,7 +47,7 @@ import { getWeb3Val } from 'modules/block-chain/BlockChainMethods';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { errorAlert } from 'logic/actions/alerts.actions'
-import { loginStart } from 'logic/actions/user.actions'
+import { loginStart, logout } from 'logic/actions/user.actions'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 import Spinner from 'shared/loader-components/spinner'
@@ -58,7 +58,7 @@ const SignUp = (props: any) => {
 
   const ref = useRef<any>();
 
-  const { loading, loginStart, errorAlert } = props
+  const { loading, loginStart, errorAlert, logout } = props
 
   const [dataLoading, setDataLoading] = useState(false)
   // Sign Up and Sign In Navigation
@@ -88,6 +88,7 @@ const SignUp = (props: any) => {
 
   if (window.ethereum) {
     window.ethereum.on('accountsChanged', function (accounts: any) {
+      logout();
       // Time to reload your interface with accounts[0]!
       if (value === 0 && !!ref.current && !!ref.current.values) {
         const formData = JSON.parse(JSON.stringify(ref.current.values));
@@ -536,4 +537,4 @@ const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
 })
 
-export default withRouter(connect(mapStateToProps, { loginStart, errorAlert })(SignUp))
+export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, logout })(SignUp))

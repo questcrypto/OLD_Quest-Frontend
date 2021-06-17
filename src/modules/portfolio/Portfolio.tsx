@@ -52,7 +52,8 @@ const Portfolio = (props: any) => {
   const submitModalFn = async (values: any) => {
     try {
       const fromData = values.from;
-      if (loggedIn) {
+      // if (loggedIn) {
+      if (true) {
         setLoader(true);
         const web3 = await getWeb3Val();
         if (web3) {
@@ -161,7 +162,8 @@ const Portfolio = (props: any) => {
             style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
             onClick={openbcModal}
           >
-            Buy | Convert KNAB
+            {/* Buy | Convert KNAB */}
+            Buy KNAB
           </CustomButton>
         </div>
       </div>

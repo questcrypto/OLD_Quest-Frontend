@@ -1,4 +1,5 @@
-import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, LOGIN_START, LOGIN_SUCCESS, LOGIN_FAIL } from '../actions/action.config'
+import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, LOGOUT2, LOGIN_START, LOGIN_SUCCESS, LOGIN_FAIL, WALLET_CONNECT } from '../actions/action.config'
+import history from 'modules/app/components/history'
 
 const initialState = {
   authLoading: false,
@@ -6,6 +7,8 @@ const initialState = {
   loggedIn: false,
   isLoaded: false,
   userInfo: '',
+  isNav: true,
+  isWalletCon: false
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -33,7 +36,6 @@ export const userReducer = (state = initialState, action: any) => {
         userInfo: payload.userInfo,
       }
     case AUTH_FAIL:
-    case LOGOUT:
     case LOGIN_FAIL:
       localStorage.removeItem('token')
       return {
@@ -42,6 +44,33 @@ export const userReducer = (state = initialState, action: any) => {
         loggedIn: false,
         isLoaded: true,
         authLoading: false,
+      }
+    case LOGOUT:
+      localStorage.removeItem('token')
+      return {
+        ...state,
+        loading: false,
+        loggedIn: false,
+        isLoaded: true,
+        authLoading: false,
+        isNav: false,
+        isWalletCon: false
+      }
+    case LOGOUT2:
+      localStorage.removeItem('token')
+      return {
+        ...state,
+        loading: false,
+        loggedIn: false,
+        isLoaded: true,
+        authLoading: false,
+        isWalletCon: false,
+        isNav: true,
+      }
+    case WALLET_CONNECT:
+      return {
+        ...state,
+        isWalletCon: payload
       }
     default:
       return state

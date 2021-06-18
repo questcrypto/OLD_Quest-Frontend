@@ -222,8 +222,9 @@ const BuyAndConvertModal = (props: any) => {
                 <Typography variant="subtitle1">
                   {/* You are swaping your coins from other stable coins.<br />
                   After the confirmation you can check it's status <br /> in your metamask */}
-                  {`You are purchasing KNAB ICO Tokens. Please confirm this transaction in your
-                    MetaMask wallet. You can see the status of this transaction in your wallet.`}
+                  {`You are purchasing KNAB ICO Tokens.
+                    Please confirm this transaction in your MetaMask wallet.
+                    You can see the status of this transaction in your wallet.`}
                 </Typography>
               </div>
               <div className={classes.confirmDialogBtn}>

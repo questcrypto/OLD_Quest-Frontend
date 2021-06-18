@@ -157,4 +157,4 @@ const Auction = (props: any) => {
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
 })
-export default withRouter(connect(mapStateToProps, { errorAlert })(Auction))
+export default connect(mapStateToProps, { errorAlert })(Auction)

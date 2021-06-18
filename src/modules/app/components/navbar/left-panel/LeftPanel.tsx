@@ -37,13 +37,18 @@ const LeftPanel = (props: any) => {
     }
   }
   const handleAuction = () => {
-    console.log(Paths)
     // if (loggedIn && !!userInfo && userInfo.role === 2) {
-    history.push(Paths.auction)
+    // history.push(Paths.auction)
     // } else {
     //   logout(false)
-    //   history.push(Paths.login);
+    // history.push(Paths.login)
     // }
+    if (loggedIn) {
+      history.push(Paths.auction)
+    } else {
+      logout(false)
+      history.push(Paths.login)
+    }
   }
 
   const handlePortfolio = () => {

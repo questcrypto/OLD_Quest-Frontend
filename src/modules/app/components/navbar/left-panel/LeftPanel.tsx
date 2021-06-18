@@ -21,8 +21,8 @@ import { IconButton } from '@material-ui/core'
 import { handleDrawerClose } from 'logic/actions/drawer.open'
 import { Close } from '@material-ui/icons'
 // import questLogo from 'assets/images/questLoginLogo.png';
-import questLogo from 'assets/images/questDashboardLogo.svg';
-import PieIcon from 'assets/icons/pieIcon.svg';
+import questLogo from 'assets/images/questDashboardLogo.svg'
+import PieIcon from 'assets/icons/pieIcon.svg'
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
@@ -33,12 +33,13 @@ const LeftPanel = (props: any) => {
       history.push(Paths.dashboard)
     } else {
       logout(false)
-      history.push(Paths.login);
+      history.push(Paths.login)
     }
   }
   const handleAuction = () => {
+    console.log(Paths)
     // if (loggedIn && !!userInfo && userInfo.role === 2) {
-      history.push(Paths.auction)
+    history.push(Paths.auction)
     // } else {
     //   logout(false)
     //   history.push(Paths.login);
@@ -48,7 +49,9 @@ const LeftPanel = (props: any) => {
   const handlePortfolio = () => {
     try {
       history.push(Paths.portfolio)
-    } catch (error) { console.log(error) }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const logOutFn = () => {
@@ -56,9 +59,11 @@ const LeftPanel = (props: any) => {
       logout(false)
       // logout2(false);
       setTimeout(() => {
-        history.push('/login');
-      }, 100);
-    } catch (error) { console.log(error) }
+        history.push('/login')
+      }, 100)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -84,11 +89,18 @@ const LeftPanel = (props: any) => {
           <List>
             {/* {!!userInfo && loggedIn && */}
             {
-              < ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
+              <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
                 <ApartmentIcon className={classes.iconStyle} />
                 <ListItemText>Properties</ListItemText>
               </ListItem>
             }
+            {/* {loggedIn && !!userInfo && userInfo.role === 2 && ( */}
+            {/* // {( */}
+            <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
+              <AssessmentIcon className={classes.iconStyle} />
+              <ListItemText>Auctions</ListItemText>
+            </ListItem>
+            {/* // )} */}
             <ListItem button className={classes.itemButtonStyle} onClick={() => handlePortfolio()}>
               <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
               <ListItemText>Portfolio</ListItemText>
@@ -109,13 +121,6 @@ const LeftPanel = (props: any) => {
                 </ListItem>
               </>
             )}
-            {loggedIn && !!userInfo && userInfo.role === 2 && (
-            // {(
-              <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
-                <AssessmentIcon className={classes.iconStyle} />
-                <ListItemText>Auctions</ListItemText>
-              </ListItem>
-            )}
           </List>
           <Grid className={classes.signOutStyle}>
             <Divider className={classes.signOutDividerStyle} />
@@ -130,7 +135,7 @@ const LeftPanel = (props: any) => {
           </Grid>
         </Grid>
       </Drawer>
-    </DrawerWrapper >
+    </DrawerWrapper>
   )
 }
 const mapStateToProps = (state: any) => ({

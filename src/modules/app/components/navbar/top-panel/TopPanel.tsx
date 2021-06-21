@@ -42,7 +42,7 @@ const TopPanel = (props: any) => {
 
   setInterval(function () {
     async function getAccount() {
-      const coinbase = await web3?.eth.getCoinbase()
+      const coinbase = await web3.eth.getCoinbase()
       if (!coinbase) {
         setAccount(false)
         return

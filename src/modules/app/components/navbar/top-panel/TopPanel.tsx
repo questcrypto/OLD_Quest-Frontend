@@ -42,7 +42,7 @@ const TopPanel = (props: any) => {
 
   setInterval(function () {
     async function getAccount() {
-      const coinbase = await web3?.eth.getCoinbase()
+      const coinbase = await web3.eth.getCoinbase()
       if (!coinbase) {
         setAccount(false)
         return
@@ -103,6 +103,14 @@ const TopPanel = (props: any) => {
     }
   }
 
+  https://geolocation-db.com/json/7bad3e80-c704-11eb-a4bc-19a5c6a04c5d
+
+    useEffect(() => {
+      axios
+        .get('https://jsonplaceholder.typicode.com/posts')
+        .then((response) => )
+        .catch((err) => console.log(err))
+    })
   const connectWallet = async () => {
     try {
       setDataLoading(true)

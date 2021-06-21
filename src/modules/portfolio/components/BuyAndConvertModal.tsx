@@ -203,7 +203,13 @@ const BuyAndConvertModal = (props: any) => {
     }
     setInitialRender(false)
   }, [dropDownData])
-  const handleLearnMorePage = () => history.push(Paths.learnMore)
+  // const handleLearnMorePage = () => history.push(Paths.learnMore)
+  // openInNewTab
+  const openInNewTab = (url: string) => {
+    console.log(url)
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
   return (
     <CustomModal show={show} toggleModal={toggleModal}>
       <div className={classes.bcDiv}>
@@ -299,7 +305,11 @@ const BuyAndConvertModal = (props: any) => {
             <SwapDetailsDiv>
               <Typography variant="subtitle1">
                 ICO Details (
-                <span className={classes.learnMoreText} onClick={() => handleLearnMorePage()}>
+                <span
+                  className={classes.learnMoreText}
+                  onClick={() => openInNewTab(`http://localhost:3000${Paths.icoDetails}`)}
+                  //  onClick={() => handleLearnMorePage()}
+                >
                   Learn More
                 </span>
                 )

@@ -1,21 +1,46 @@
-import { useStyles } from '../style'
-import { Paper, Typography, Grid } from '@material-ui/core'
-import CustomButton from './shared/Button'
-import TokenCard from './TokenCard'
-import FullICODetails from './FullICODetails'
-import Graph from './Graph/Graph'
-import history from 'modules/app/components/history'
-import { Paths } from 'modules/app/components/routes/types'
+import { makeStyles, Paper, Typography, Grid } from '@material-ui/core'
+import CustomButton from '../components/shared/Button'
+// import history from 'modules/app/components/history'
+// import { Paths } from 'modules/app/components/routes/types'
+import ICOHoldings from './ICOHoldings'
+import RaisedTokens from './RaisedTokes'
+import TokensRemaining from './TokensRemainng'
 
-const LearnMore = () => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100%',
+    // backgroundColor: '#E5E5E5'
+    paddingTop: theme.spacing(7),
+    paddingRight: theme.spacing(5),
+  },
+  header: {
+    display: 'flex',
+  },
+  btnDiv: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  title: {
+    // color: '#C4C4C4',
+    fontSize: '0.em',
+  },
+  subTitle: {
+    color: '##C4C4C4',
+    fontWeight: 'bold',
+    fontSize: '1em',
+  },
+}))
+const ICODetails = () => {
   const classes = useStyles()
-  const handleBackButton = () => history.push(Paths.root)
+  // const handleBackButton = () => history.push(Paths.root)
 
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Typography className={classes.title} variant="h6">
-          Token
+        <Typography className={classes.title}>
+          {/* `${}` */}
+          ICO Details
         </Typography>
         <div className={classes.btnDiv}>
           <CustomButton
@@ -56,28 +81,22 @@ const LearnMore = () => {
 
       <Paper>
         <br />
-        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-        <CustomButton
-          size="small"
-          disableElevation
-          disableFocusRipple
-          disableRipple
-          style={{ backgroundColor: '#858585', padding: '0px 16px' }}
-          onClick={() => handleBackButton()}
-          // onClick={openbcModal}
-        >
-          back
-        </CustomButton>
         <Grid container spacing={4} style={{ padding: '38px 0px' }}>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Grid item md={5} xs={12}>
-            <TokenCard />
+            <ICOHoldings />
           </Grid>
           <Grid item md={5} xs={12}>
-            <TokenCard />
+            <RaisedTokens />
           </Grid>
         </Grid>
         <Grid container spacing={4} style={{ padding: '38px 0px' }}>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <Grid item md={10} xs={12}>
+            <TokensRemaining />
+          </Grid>
+        </Grid>
+        {/* <Grid container spacing={4} style={{ padding: '38px 0px' }}>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Grid item md={10} xs={12}>
             <Graph />
@@ -88,10 +107,10 @@ const LearnMore = () => {
           <Grid item md={10} xs={12}>
             <FullICODetails />
           </Grid>
-        </Grid>
+        </Grid> */}
       </Paper>
     </div>
   )
 }
 
-export default LearnMore
+export default ICODetails

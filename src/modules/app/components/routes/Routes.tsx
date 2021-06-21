@@ -26,6 +26,7 @@ import { IconButton } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import Portfolio from 'modules/portfolio'
 import LearnMore from 'modules/portfolio/components/LearnMore'
+import ICODetails from 'modules/portfolio/ICO/ICODetails'
 
 const notFoundRoute: RouteDefinition = {
   path: '*',
@@ -146,6 +147,13 @@ export const routes: RouteDefinition[] = [
     component: LearnMore,
     protected: false,
     redirect: Paths.learnMore,
+    title: '',
+  },
+  {
+    path: Paths.icoDetails,
+    component: ICODetails,
+    protected: false,
+    redirect: Paths.icoDetails,
     title: '',
   },
 ].concat(notFoundRoute as any) // Ensure that notFound is the last route

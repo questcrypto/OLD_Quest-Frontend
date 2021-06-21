@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { PrimaryButton } from 'shared/components/buttons'
 import { connect } from 'react-redux'
-import { logout, logout2, walletConnect } from 'logic/actions/user.actions'
+import { logout, logout2, walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
 import Web3 from 'web3'
 import { TopPanelCont } from './style'
 import Notifications from './components/Notifications'
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core'
 
-import CustomButton from '../../../../../modules/portfolio/components/shared/Button';
+import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
@@ -15,7 +15,7 @@ import { errorAlert } from 'logic/actions/alerts.actions'
 import { loginStart } from 'logic/actions/user.actions'
 import MetaMaskIcon from '../../../../../assets/icons/metaMaskIcon.svg'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   walletDiv: {
     display: 'flex',
     border: '1px solid #C4C4C4',
@@ -25,20 +25,19 @@ const useStyles = makeStyles(theme => ({
   walletDivText: {
     paddingLeft: '8px',
     position: 'relative',
-    top: '3px'
-  }
-}));
+    top: '3px',
+  },
+}))
 
 const TopPanel = (props: any) => {
-
-  const classes = useStyles();
+  const classes = useStyles()
 
   const [account, setAccount] = useState(false)
   const web3: Web3 = new Web3(window.ethereum)
 
-  const { loginStart, errorAlert, loggedIn, walletConnect } = props;
-  const [dataLoading, setDataLoading] = useState(false);
-  const [walletAddress, setWalletAddress] = useState('');
+  const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress } = props
+  const [dataLoading, setDataLoading] = useState(false)
+  const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
 
   setInterval(function () {
@@ -70,7 +69,7 @@ const TopPanel = (props: any) => {
   // })
 
   useEffect(() => {
-    getToken();
+    getToken()
     setTimeout(() => {
       if (tokenDummy && tokenDummy.length > 0) {
         const data = async () => {
@@ -80,32 +79,35 @@ const TopPanel = (props: any) => {
             setWalletAddress(coinbase)
           }
         }
-        data();
+        data()
       }
-    }, 3000);
+    }, 3000)
   }, [walletAddress, tokenDummy, loggedIn])
 
   // Event handler to handle metamask account change
   if (window.ethereum) {
     window.ethereum.on('accountsChanged', function () {
       // props.logout()
-      props.logout2();
-      setWalletAddress('');
+      props.logout2()
+      setWalletAddress('')
       // walletConnect(false);
     })
   }
 
   const getToken = () => {
     try {
-      const token: any = localStorage.getItem('token');
+      const token: any = localStorage.getItem('token')
       setTokenDummy(token)
-    } catch (error) { console.log(error) }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const connectWallet = async () => {
     try {
-      setDataLoading(true);
+      setDataLoading(true)
       const web3 = await getWeb3Val()
+
       if (web3) {
         const coinbase = await web3.eth.getCoinbase()
         if (!coinbase) {
@@ -124,8 +126,9 @@ const TopPanel = (props: any) => {
         // )
         // const loginData = { publicaddress, signature }
         // loginStart(loginData)
-        setWalletAddress(publicaddress);
-        walletConnect(true);
+        setWalletAddress(publicaddress)
+        walletConnectAddress(publicaddress)
+        walletConnect(true)
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
@@ -136,22 +139,26 @@ const TopPanel = (props: any) => {
         errorAlert('Something went wrong , please try again')
       }
     } finally {
-      setTimeout(() => setDataLoading(false), 3000);
-      getToken();
+      setTimeout(() => setDataLoading(false), 3000)
+      getToken()
     }
   }
-
+  useEffect(() => {
+    // console.log(walletConAddress, '0000')
+    if (walletConAddress !== '' && walletConnect) {
+      setWalletAddress(walletConAddress)
+    }
+  })
   return (
     <TopPanelCont>
       {
         // loggedIn && (walletAddress !== '') && (tokenDummy !== '') ?
-        (walletAddress !== '') ?
+        walletAddress !== '' ? (
           <div className={classes.walletDiv}>
-            <img src={MetaMaskIcon} alt='' />
-            <span className={classes.walletDivText}>
-              {`${walletAddress.substring(0, 4)}...${walletAddress.substring(37, 42)}`}
-            </span>
-          </div> :
+            <img src={MetaMaskIcon} alt="" />
+            <span className={classes.walletDivText}>{`${walletAddress.substring(0, 4)}...${walletAddress.substring(37, 42)}`}</span>
+          </div>
+        ) : (
           <CustomButton
             size="large"
             style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
@@ -159,16 +166,19 @@ const TopPanel = (props: any) => {
           >
             {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
           </CustomButton>
+        )
         // <PrimaryButton>Connect Wallet</PrimaryButton>
       }
       {/* <Notifications /> */}
     </TopPanelCont>
-  );
+  )
 }
 
 const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   userInfo: state.user.userInfo,
+  isWalletCon: state.user.isWalletCon,
+  walletConAddress: state.user.walletConAddress,
 })
 
-export default connect(mapStateToProps, { loginStart, errorAlert, logout, logout2, walletConnect })(TopPanel)
+export default connect(mapStateToProps, { loginStart, errorAlert, logout, logout2, walletConnect, walletConnectAddress })(TopPanel)

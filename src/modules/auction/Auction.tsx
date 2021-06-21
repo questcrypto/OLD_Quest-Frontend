@@ -15,6 +15,7 @@ import PassedProperties from './components/PassedProperties'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import { getApprovedTokens } from '../../modules/block-chain/BlockChainMethods'
+import { withRouter } from 'react-router'
 
 const Auction = (props: any) => {
   const classes = useStyles()
@@ -111,12 +112,11 @@ const Auction = (props: any) => {
       setPassedProperties(res.data)
     } catch (error) {}
   }
-
   return (
     <Box className={classes.root}>
       <Grid container spacing={2} className={classes.headerStyle} alignItems="center">
         <Grid item xs={12} sm={6} md={8}>
-          <HeaderTitle>Auction</HeaderTitle>
+          <HeaderTitle>Auctions</HeaderTitle>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <div className={classes.search}>

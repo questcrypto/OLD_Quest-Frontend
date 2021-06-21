@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { PrimaryButton } from 'shared/components/buttons'
 import { connect } from 'react-redux'
-import { logout, logout2, walletConnect } from 'logic/actions/user.actions'
+import { logout, logout2, walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
 import Web3 from 'web3'
 import { TopPanelCont } from './style'
 import Notifications from './components/Notifications'
@@ -35,7 +35,7 @@ const TopPanel = (props: any) => {
   const [account, setAccount] = useState(false)
   const web3: Web3 = new Web3(window.ethereum)
 
-  const { loginStart, errorAlert, loggedIn, walletConnect } = props
+  const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
@@ -127,6 +127,7 @@ const TopPanel = (props: any) => {
         // const loginData = { publicaddress, signature }
         // loginStart(loginData)
         setWalletAddress(publicaddress)
+        walletConnectAddress(publicaddress)
         walletConnect(true)
       }
     } catch (error) {
@@ -142,7 +143,12 @@ const TopPanel = (props: any) => {
       getToken()
     }
   }
-  console.log(props.isWalletCon)
+  useEffect(() => {
+    // console.log(walletConAddress, '0000')
+    if (walletConAddress !== '' && walletConnect) {
+      setWalletAddress(walletConAddress)
+    }
+  })
   return (
     <TopPanelCont>
       {
@@ -172,6 +178,7 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   userInfo: state.user.userInfo,
   isWalletCon: state.user.isWalletCon,
+  walletConAddress: state.user.walletConAddress,
 })
 
-export default connect(mapStateToProps, { loginStart, errorAlert, logout, logout2, walletConnect })(TopPanel)
+export default connect(mapStateToProps, { loginStart, errorAlert, logout, logout2, walletConnect, walletConnectAddress })(TopPanel)

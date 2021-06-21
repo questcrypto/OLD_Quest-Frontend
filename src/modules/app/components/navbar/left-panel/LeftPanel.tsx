@@ -103,7 +103,7 @@ const LeftPanel = (props: any) => {
             {/* // {( */}
             <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
               <AssessmentIcon className={classes.iconStyle} />
-              <ListItemText>Auctions</ListItemText>
+              <ListItemText>Real Estate Auctions</ListItemText>
             </ListItem>
             {/* // )} */}
             <ListItem button className={classes.itemButtonStyle} onClick={() => handlePortfolio()}>
@@ -127,17 +127,17 @@ const LeftPanel = (props: any) => {
               </>
             )}
           </List>
-          <Grid className={classes.signOutStyle}>
-            <Divider className={classes.signOutDividerStyle} />
-            {/* <ListItem button onClick={() => logout()}> */}
-            <ListItem button onClick={logOutFn}>
+          {/* <Grid className={classes.signOutStyle}>
+            <Divider className={classes.signOutDividerStyle} /> */}
+          {/* <ListItem button onClick={() => logout()}> */}
+          {/* <ListItem button onClick={logOutFn}>
               <PowerSettingsNewIcon className={classes.iconStyle} />
-              <ListItemText>
-                {/* Disconnect */}
-                Sign Out
+              <ListItemText> */}
+          {/* Disconnect */}
+          {/* Sign Out
               </ListItemText>
             </ListItem>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Drawer>
     </DrawerWrapper>

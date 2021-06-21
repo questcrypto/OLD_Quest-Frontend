@@ -11,6 +11,8 @@ import CustomButton from './shared/Button'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import Spinner from 'shared/loader-components/spinner'
 import { getWeb3Val, fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
+import history from 'modules/app/components/history'
+import { Paths } from 'modules/app/components/routes/types'
 
 const useStyles = makeStyles((theme) => ({
   bcDiv: {
@@ -201,7 +203,7 @@ const BuyAndConvertModal = (props: any) => {
     }
     setInitialRender(false)
   }, [dropDownData])
-
+  const handleLearnMorePage = () => history.push(Paths.learnMore)
   return (
     <CustomModal show={show} toggleModal={toggleModal}>
       <div className={classes.bcDiv}>
@@ -296,7 +298,11 @@ const BuyAndConvertModal = (props: any) => {
             {/* {(formData.from > 0 || formData.to > 0) ? '': '' */}
             <SwapDetailsDiv>
               <Typography variant="subtitle1">
-                ICO Details (<span className={classes.learnMoreText}>Learn More</span>)
+                ICO Details (
+                <span className={classes.learnMoreText} onClick={() => handleLearnMorePage()}>
+                  Learn More
+                </span>
+                )
               </Typography>
               <SwapInnerDiv>
                 <div className={classes.eightFiveC}>Current Bonus Ratio</div>

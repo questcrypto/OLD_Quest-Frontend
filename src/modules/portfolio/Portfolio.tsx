@@ -17,6 +17,10 @@ import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../modu
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { logout } from 'logic/actions/user.actions'
+import history from 'modules/app/components/history'
+import { Paths } from 'modules/app/components/routes/types'
+import HoverModal from './components/HoverModal'
 
 const Portfolio = (props: any) => {
   const classes = useStyles()
@@ -26,6 +30,7 @@ const Portfolio = (props: any) => {
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [loader, setLoader] = useState(false)
+  const [hoverModal, setHoverModal] = useState(false)
 
   const { errorAlert, loggedIn, successAlert } = props
 
@@ -125,6 +130,31 @@ const Portfolio = (props: any) => {
       console.log(error)
     }
   }
+  const handleAuction = () => {
+    if (loggedIn) {
+      history.push(Paths.auction)
+    } else {
+      logout(false)
+      history.push(Paths.login)
+    }
+  }
+  const handleBuyKNABModal = () => {
+    try {
+      setHoverModal(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleHoverModalClose = () => {
+    try {
+      setHoverModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleTestPage = () => history.push(Paths.learnMore)
 
   return (
     <div className={classes.root}>
@@ -153,7 +183,7 @@ const Portfolio = (props: any) => {
             00.00 KNAB
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
-          <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}>
+          <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }} onClick={() => handleAuction()}>
             Real Estate Auctions
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
@@ -165,6 +195,17 @@ const Portfolio = (props: any) => {
             {/* Buy | Convert KNAB */}
             Buy KNAB
           </CustomButton>
+          &nbsp;&nbsp;&nbsp;
+          {/* <CustomButton
+            size="small"
+            disableElevation
+            disableFocusRipple
+            disableRipple
+            style={{ backgroundColor: '#858585', padding: '0px 16px' }}
+            onClick={() => handleTestPage()}
+          >
+            Test
+          </CustomButton> */}
         </div>
       </div>
 
@@ -187,7 +228,13 @@ const Portfolio = (props: any) => {
                 <span className={classes.pfBtnhelpText}>Purchase Equity in Real Estate</span>
               </div>
               <div>
-                <CustomButton size="large" style={{ backgroundColor: '#1E3444', padding: '8px 80px' }} onClick={openbcModal}>
+                <CustomButton
+                  size="large"
+                  style={{ backgroundColor: '#1E3444', padding: '8px 80px' }}
+                  onClick={openbcModal}
+                  // onMouseOver={handleBuyKNABModal}
+                  // onMouseLeave={handleHoverModalClose}
+                >
                   Buy KNAB Tokens
                 </CustomButton>
                 <br />
@@ -243,6 +290,7 @@ const Portfolio = (props: any) => {
         isTransaction={isTransaction}
         loader={loader}
       />
+      <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} />
     </div>
   )
 }

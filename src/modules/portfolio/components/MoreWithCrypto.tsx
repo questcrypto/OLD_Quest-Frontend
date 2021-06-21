@@ -7,6 +7,11 @@ import KnabIcon from 'assets/icons/KNAB.svg'
 import CustomButton from './shared/Button'
 import { connect } from 'react-redux'
 
+import Web3 from 'web3'
+import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
+import { walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
+import { errorAlert } from 'logic/actions/alerts.actions'
+
 const useStyles = makeStyles((theme) => ({
   hoverBtnDiv: {
     // display: 'block',
@@ -87,6 +92,63 @@ const MoreWithCrypto = (props: any) => {
     setIsWallet(isWalletCon)
   }, [isWalletCon])
 
+  const { errorAlert, walletConnect, walletConnectAddress } = props
+  const [dataLoading, setDataLoading] = useState(false)
+  const [walletAddress, setWalletAddress] = useState('')
+  const [tokenDummy, setTokenDummy] = useState('')
+  const getToken = () => {
+    try {
+      const token: any = localStorage.getItem('token')
+      setTokenDummy(token)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const connectWallet = async () => {
+    try {
+      setDataLoading(true)
+      const web3 = await getWeb3Val()
+      if (web3) {
+        const coinbase = await web3.eth.getCoinbase()
+        if (!coinbase) {
+          window.alert('Please activate Wallet first.')
+          return
+        }
+        const publicaddress = coinbase.toLowerCase()
+        setWalletAddress(publicaddress)
+        walletConnectAddress(publicaddress)
+        walletConnect(true)
+      }
+    } catch (error) {
+      if (!!error && error.response && error.response.data.message) {
+        errorAlert(error.response.data.message)
+      } else if (!!error.message) {
+        errorAlert(error.message)
+      } else {
+        errorAlert('Something went wrong , please try again')
+      }
+    } finally {
+      setTimeout(() => setDataLoading(false), 3000)
+      getToken()
+    }
+  }
+  useEffect(() => {
+    getToken()
+    setTimeout(() => {
+      if (tokenDummy && tokenDummy.length > 0) {
+        const data = async () => {
+          const web3 = await getWeb3Val()
+          if (web3) {
+            const coinbase = await web3.eth.getCoinbase()
+            setWalletAddress(coinbase)
+          }
+        }
+        data()
+      }
+    }, 3000)
+  }, [walletAddress, tokenDummy, loggedIn])
+
   return (
     <>
       <div className={classes.mainDiv}>
@@ -119,8 +181,9 @@ const MoreWithCrypto = (props: any) => {
 
         {show && !isWallet && (
           <div className={classes.hoverBtnDiv} onMouseOut={() => setShow(false)}>
-            <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}>
-              Connect Wallet
+            <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '8px 48px' }} onClick={connectWallet}>
+              {/* Connect Wallet */}
+              {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
             </CustomButton>
             <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
               For Accessing Complete Features
@@ -154,6 +217,7 @@ const content = [
 const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   isWalletCon: state.user.isWalletCon,
+  walletConnectAddress: state.user.walletConnectAddress,
 })
 
-export default connect(mapStateToProps, {})(MoreWithCrypto)
+export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress })(MoreWithCrypto)

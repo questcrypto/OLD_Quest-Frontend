@@ -116,7 +116,7 @@ const Auction = (props: any) => {
     <Box className={classes.root}>
       <Grid container spacing={2} className={classes.headerStyle} alignItems="center">
         <Grid item xs={12} sm={6} md={8}>
-          <HeaderTitle>Real Estate Auctions</HeaderTitle>
+          <HeaderTitle>Auctions</HeaderTitle>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <div className={classes.search}>

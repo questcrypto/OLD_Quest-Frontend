@@ -15,7 +15,7 @@ import * as tableData from '../../../assets/jsons/yourAssets.json'
 import { connect } from 'react-redux'
 import Web3 from 'web3'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
-import { walletConnect } from 'logic/actions/user.actions'
+import { walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
 import { errorAlert } from 'logic/actions/alerts.actions'
 
 const useStyles = makeStyles((theme) => ({
@@ -101,7 +101,7 @@ const YourAssets = (props: any) => {
     setIsWallet(isWalletCon)
   }, [isWalletCon])
 
-  const { errorAlert, walletConnect } = props
+  const { errorAlert, walletConnect, walletConnectAddress } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
@@ -127,6 +127,7 @@ const YourAssets = (props: any) => {
         }
         const publicaddress = coinbase.toLowerCase()
         setWalletAddress(publicaddress)
+        walletConnectAddress(publicaddress)
         walletConnect(true)
       }
     } catch (error) {
@@ -158,7 +159,7 @@ const YourAssets = (props: any) => {
     }, 3000)
   }, [walletAddress, tokenDummy, loggedIn])
 
-  console.log(walletAddress)
+  // console.log(props.walletConnectAddress, '0000')
   return (
     <div className={classes.mainDiv}>
       <Paper className={classes.root} style={{ opacity: isWallet ? 1 : 0.4 }} onMouseOver={() => setShow(true)}>
@@ -249,6 +250,7 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   isWalletCon: state.user.isWalletCon,
   userInfo: state.user.userInfo,
+  walletConnectAddress: state.user.walletConnectAddress,
 })
 
-export default connect(mapStateToProps, { errorAlert, walletConnect })(YourAssets)
+export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress })(YourAssets)

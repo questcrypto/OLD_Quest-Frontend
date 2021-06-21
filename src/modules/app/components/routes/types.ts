@@ -12,5 +12,6 @@ export enum Paths {
   auctionDetails = '/auction-details',
   upgradeBid = '/auction-upgrade-bid',
   portfolio = '/portfolio',
-  login = '/login'
+  login = '/login',
+  learnMore = '/learnMore',
 }

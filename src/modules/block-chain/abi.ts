@@ -2,1089 +2,1089 @@ export const SLFContractAddress = '0x8c9Ba9aEeBEb1F0F15a430964438809102099e69'
 export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
 export const auctionContractAddress = '0x8482cf391ABAc8Fed36Cba191cCDA486BA119341'
 export const treasuryAddress = '0x9ec6df50fcF77637996AFFa60b43121F8B4F27c6'
-export const stableCoinContractAddress = '0x262b15C1969eF695863B08BaD02B5d5C2798AD85'
-export const ICOAddress = '0x23600B5Ff63E1F7F0880af09ecABBcD6a29Acf2C'
+export const stableCoinContractAddress = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
+export const ICOAddress = '0x254Ea1dE4471778283959a281e7967C5D41bf644'
 
 export const slcAbi: any = [
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
       },
       {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
+        internalType: 'string',
+        name: '_symbol',
+        type: 'string',
       },
       {
-        "internalType": "uint256",
-        "name": "_decimals",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_decimals',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "_initialSupply",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_initialSupply',
+        type: 'uint256',
       },
       {
-        "internalType": "address",
-        "name": "receiver",
-        "type": "address"
+        internalType: 'address',
+        name: 'receiver',
+        type: 'address',
       },
       {
-        "internalType": "address",
-        "name": "_AUCTION_DEPLOYED_ADDRESS",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_AUCTION_DEPLOYED_ADDRESS',
+        type: 'address',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
+        indexed: true,
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_spender",
-        "type": "address"
+        indexed: true,
+        internalType: 'address',
+        name: '_spender',
+        type: 'address',
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_value",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
     ],
-    "name": "Approval",
-    "type": "event"
+    name: 'Approval',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "name": "DepositFunds",
-    "type": "event"
+    name: 'DepositFunds',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        indexed: false,
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "RegionAdminAdded",
-    "type": "event"
+    name: 'RegionAdminAdded',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        indexed: false,
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "RegionAdminChanged",
-    "type": "event"
+    name: 'RegionAdminChanged',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "string",
-        "name": "auc_id",
-        "type": "string"
+        indexed: false,
+        internalType: 'string',
+        name: 'auc_id',
+        type: 'string',
       },
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "bid_add",
-        "type": "address"
-      }
+        indexed: false,
+        internalType: 'address',
+        name: 'bid_add',
+        type: 'address',
+      },
     ],
-    "name": "SLC_TOKEN_TRANSFER_SUCCESS",
-    "type": "event"
+    name: 'SLC_TOKEN_TRANSFER_SUCCESS',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_from",
-        "type": "address"
+        indexed: true,
+        internalType: 'address',
+        name: '_from',
+        type: 'address',
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_to",
-        "type": "address"
+        indexed: true,
+        internalType: 'address',
+        name: '_to',
+        type: 'address',
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_value",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
     ],
-    "name": "Transfer",
-    "type": "event"
+    name: 'Transfer',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "ownerAdded",
-    "type": "event"
+    name: 'ownerAdded',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "ownerRemoved",
-    "type": "event"
+    name: 'ownerRemoved',
+    type: 'event',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "region_no",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'region_no',
+        type: 'uint256',
       },
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
-    "name": "ADD_REGION_ADMIN",
-    "outputs": [
+    name: 'ADD_REGION_ADMIN',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "AUCTION_DEPLOYED_ADDRESS",
-    "outputs": [
+    inputs: [],
+    name: 'AUCTION_DEPLOYED_ADDRESS',
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "_region_no",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_region_no',
+        type: 'uint256',
       },
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
-    "name": "CHANGE_REGION_ADMIN",
-    "outputs": [
+    name: 'CHANGE_REGION_ADMIN',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "uid",
-        "type": "string"
+        internalType: 'string',
+        name: 'uid',
+        type: 'string',
       },
       {
-        "internalType": "string",
-        "name": "property_id",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: 'property_id',
+        type: 'string',
+      },
     ],
-    "name": "EndAuction",
-    "outputs": [
+    name: 'EndAuction',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "uid",
-        "type": "string"
+        internalType: 'string',
+        name: 'uid',
+        type: 'string',
       },
       {
-        "internalType": "uint256",
-        "name": "s_date",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 's_date',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "e_date",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'e_date',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "res_price",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'res_price',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "sl_reserve",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'sl_reserve',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "noOfTokens",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'noOfTokens',
+        type: 'uint256',
       },
       {
-        "internalType": "string",
-        "name": "property_id",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: 'property_id',
+        type: 'string',
+      },
     ],
-    "name": "EnlistAuction",
-    "outputs": [
+    name: 'EnlistAuction',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "auctionID",
-        "type": "string"
+        internalType: 'string',
+        name: 'auctionID',
+        type: 'string',
       },
       {
-        "internalType": "address",
-        "name": "Treasury_Admin",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: 'Treasury_Admin',
+        type: 'address',
+      },
     ],
-    "name": "GET_AUCTION_WIN_SLC",
-    "outputs": [
+    name: 'GET_AUCTION_WIN_SLC',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "GET_WIN_SLC",
-    "outputs": [
+    name: 'GET_WIN_SLC',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
       },
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
     ],
-    "name": "MINT_SLC",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: 'MINT_SLC',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "name": "REGION_NO_TO_ADMIN_ADDRESS",
-    "outputs": [
+    name: 'REGION_NO_TO_ADMIN_ADDRESS',
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
-    "name": "SET_AUCTION_DEPLOYED_ADDRESS",
-    "outputs": [
+    name: 'SET_AUCTION_DEPLOYED_ADDRESS',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "auctionID",
-        "type": "string"
+        internalType: 'string',
+        name: 'auctionID',
+        type: 'string',
       },
       {
-        "internalType": "address[]",
-        "name": "BiddersArray",
-        "type": "address[]"
+        internalType: 'address[]',
+        name: 'BiddersArray',
+        type: 'address[]',
       },
       {
-        "internalType": "uint256[]",
-        "name": "BidAmount",
-        "type": "uint256[]"
-      }
+        internalType: 'uint256[]',
+        name: 'BidAmount',
+        type: 'uint256[]',
+      },
     ],
-    "name": "STORE_AUCTION_TOKENS_TO_BE_GIVEN",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: 'STORE_AUCTION_TOKENS_TO_BE_GIVEN',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "_owners",
-    "outputs": [
+    name: '_owners',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
     ],
-    "name": "addOwner",
-    "outputs": [
+    name: 'addOwner',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "allowance",
-    "outputs": [
+    name: 'allowance',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_spender",
-        "type": "address"
+        internalType: 'address',
+        name: '_spender',
+        type: 'address',
       },
       {
-        "internalType": "uint256",
-        "name": "_value",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
     ],
-    "name": "approve",
-    "outputs": [
+    name: 'approve',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "success",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: 'success',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "request",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: 'request',
+        type: 'address',
+      },
     ],
-    "name": "balanceOf",
-    "outputs": [
+    name: 'balanceOf',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "balances",
-    "outputs": [
+    name: 'balances',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "decimals",
-    "outputs": [
+    inputs: [],
+    name: 'decimals',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "name",
-    "outputs": [
+    inputs: [],
+    name: 'name',
+    outputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
+    inputs: [],
+    name: 'owner',
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
     ],
-    "name": "removeOwner",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: 'removeOwner',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_from",
-        "type": "address"
+        internalType: 'address',
+        name: '_from',
+        type: 'address',
       },
       {
-        "internalType": "address",
-        "name": "_to",
-        "type": "address"
+        internalType: 'address',
+        name: '_to',
+        type: 'address',
       },
       {
-        "internalType": "uint256",
-        "name": "_value",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
     ],
-    "name": "safetransferFrom",
-    "outputs": [
+    name: 'safetransferFrom',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "success",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: 'success',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "payable",
-    "type": "function"
+    stateMutability: 'payable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_spender",
-        "type": "address"
+        internalType: 'address',
+        name: '_spender',
+        type: 'address',
       },
       {
-        "internalType": "uint256",
-        "name": "_value",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
     ],
-    "name": "setAllowance",
-    "outputs": [
+    name: 'setAllowance',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "success",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: 'success',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "symbol",
-    "outputs": [
+    inputs: [],
+    name: 'symbol',
+    outputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "walletBalance",
-    "outputs": [
+    inputs: [],
+    name: 'walletBalance',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "withdrawFundsFromContract",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
+    inputs: [],
+    name: 'withdrawFundsFromContract',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ]
 
 export const selfAbi: any = [
   {
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "string",
-        "name": "ID",
-        "type": "string"
-      }
+        indexed: false,
+        internalType: 'string',
+        name: 'ID',
+        type: 'string',
+      },
     ],
-    "name": "PROPERTY_TOKENS_MINTED",
-    "type": "event"
+    name: 'PROPERTY_TOKENS_MINTED',
+    type: 'event',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "propID",
-        "type": "string"
+        internalType: 'string',
+        name: 'propID',
+        type: 'string',
       },
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
-    "name": "ADD_OWNERS_OF_SLC",
-    "outputs": [
+    name: 'ADD_OWNERS_OF_SLC',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "AUCTION_DEPLOYED_ADDRESS",
-    "outputs": [
+    inputs: [],
+    name: 'AUCTION_DEPLOYED_ADDRESS',
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "newUri",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: 'newUri',
+        type: 'string',
+      },
     ],
-    "name": "CHANGE_NFT_BASEURI",
-    "outputs": [
+    name: 'CHANGE_NFT_BASEURI',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "CONTRACT_OWNER",
-    "outputs": [
+    inputs: [],
+    name: 'CONTRACT_OWNER',
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "_origValue",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_origValue',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "_currValue",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_currValue',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "_coins_issued",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_coins_issued',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "_equity_at_issuance",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_equity_at_issuance',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "_varriation",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_varriation',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "_current_coin_value",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_current_coin_value',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "_orig_issue_rate",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_orig_issue_rate',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "_next_schedule_reevaluation",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '_next_schedule_reevaluation',
+        type: 'uint256',
       },
       {
-        "internalType": "string",
-        "name": "token_uri",
-        "type": "string"
+        internalType: 'string',
+        name: 'token_uri',
+        type: 'string',
       },
       {
-        "internalType": "string",
-        "name": "propertyID",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: 'propertyID',
+        type: 'string',
+      },
     ],
-    "name": "ListProperty_details",
-    "outputs": [
+    name: 'ListProperty_details',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "MINTNFT_DEPLOYED_ADDRESS",
-    "outputs": [
+    inputs: [],
+    name: 'MINTNFT_DEPLOYED_ADDRESS',
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
     ],
-    "name": "PROPERTY_ERC20_ADDRESS",
-    "outputs": [
+    name: 'PROPERTY_ERC20_ADDRESS',
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
     ],
-    "name": "PROP_INFO",
-    "outputs": [
+    name: 'PROP_INFO',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "origValue",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'origValue',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "currValue",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'currValue',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "coins_issued",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'coins_issued',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "equity_at_issuance",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'equity_at_issuance',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "Total_Current_Value",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'Total_Current_Value',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "Varriation",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'Varriation',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "Current_Coin_Value",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'Current_Coin_Value',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "Original_Issuance_Rate",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'Original_Issuance_Rate',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "Next_Schedule_Revaluation",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: 'Next_Schedule_Revaluation',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "propID",
-        "type": "string"
+        internalType: 'string',
+        name: 'propID',
+        type: 'string',
       },
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
-    "name": "REMOVE_OWNERS_OF_SLC",
-    "outputs": [
+    name: 'REMOVE_OWNERS_OF_SLC',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
-    "name": "SET_AUCTION_DEPLOYED_ADDRESS",
-    "outputs": [
+    name: 'SET_AUCTION_DEPLOYED_ADDRESS',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
-    "name": "SET_NFT_DEPLOYED_ADDRESS",
-    "outputs": [
+    name: 'SET_NFT_DEPLOYED_ADDRESS',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
-    "name": "SET_NFT_OWNER_ADDRESS",
-    "outputs": [
+    name: 'SET_NFT_OWNER_ADDRESS',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
     ],
-    "name": "SET_SLF_OWNER_ADDRESS",
-    "outputs": [
+    name: 'SET_SLF_OWNER_ADDRESS',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ]
 
 export const daiAbi: any = [
@@ -1366,1011 +1366,851 @@ export const daiAbi: any = [
 
 export const auctionAbi: any = [
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_SLF_CONTRACT_ADDRESS",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '_SLF_CONTRACT_ADDRESS',
+        type: 'address',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "string",
-        "name": "auc_id",
-        "type": "string"
+        indexed: false,
+        internalType: 'string',
+        name: 'auc_id',
+        type: 'string',
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "time",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: 'uint256',
+        name: 'time',
+        type: 'uint256',
+      },
     ],
-    "name": "AuctionCreated",
-    "type": "event"
+    name: 'AuctionCreated',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "string",
-        "name": "auc_id",
-        "type": "string"
+        indexed: false,
+        internalType: 'string',
+        name: 'auc_id',
+        type: 'string',
       },
       {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "state",
-        "type": "bool"
-      }
+        indexed: false,
+        internalType: 'bool',
+        name: 'state',
+        type: 'bool',
+      },
     ],
-    "name": "AuctionSuccess",
-    "type": "event"
+    name: 'AuctionSuccess',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "string",
-        "name": "auc_id",
-        "type": "string"
+        indexed: false,
+        internalType: 'string',
+        name: 'auc_id',
+        type: 'string',
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "time",
-        "type": "uint256"
+        indexed: false,
+        internalType: 'uint256',
+        name: 'time',
+        type: 'uint256',
       },
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "bidder",
-        "type": "address"
+        indexed: false,
+        internalType: 'address',
+        name: 'bidder',
+        type: 'address',
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: 'uint256',
+        name: 'price',
+        type: 'uint256',
+      },
     ],
-    "name": "BidPlaced",
-    "type": "event"
+    name: 'BidPlaced',
+    type: 'event',
   },
   {
-    "inputs": [],
-    "name": "AuctionSuspended",
-    "outputs": [
+    inputs: [],
+    name: 'AuctionSuspended',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
     ],
-    "name": "Auction_Success",
-    "outputs": [
+    name: 'Auction_Success',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "BidTokensTransferred",
-    "outputs": [
+    name: 'BidTokensTransferred',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "NEW_SLF_ADDRESS",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: 'NEW_SLF_ADDRESS',
+        type: 'address',
+      },
     ],
-    "name": "Change_SLF_Contract_Address",
-    "outputs": [
+    name: 'Change_SLF_Contract_Address',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "auction_id",
-        "type": "string"
+        internalType: 'string',
+        name: 'auction_id',
+        type: 'string',
       },
       {
-        "internalType": "string",
-        "name": "property_id",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: 'property_id',
+        type: 'string',
+      },
     ],
-    "name": "End_Auction",
-    "outputs": [
+    name: 'End_Auction',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "uid",
-        "type": "string"
+        internalType: 'string',
+        name: 'uid',
+        type: 'string',
       },
       {
-        "internalType": "uint256",
-        "name": "s_date",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 's_date',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "e_date",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'e_date',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "res_price",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'res_price',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "sl_reserve",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'sl_reserve',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "noOfTokens",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'noOfTokens',
+        type: 'uint256',
       },
       {
-        "internalType": "string",
-        "name": "property_id",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: 'property_id',
+        type: 'string',
+      },
     ],
-    "name": "Enlist_Auction",
-    "outputs": [
+    name: 'Enlist_Auction',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
     ],
-    "name": "SLC_contract_address",
-    "outputs": [
+    name: 'SLC_contract_address',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "SLF_CONTRACT_ADDRESS",
-    "outputs": [
+    inputs: [],
+    name: 'SLF_CONTRACT_ADDRESS',
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "auctionID",
-        "type": "string"
+        internalType: 'string',
+        name: 'auctionID',
+        type: 'string',
       },
       {
-        "internalType": "address[]",
-        "name": "Bid_Token_Claimers",
-        "type": "address[]"
+        internalType: 'address[]',
+        name: 'Bid_Token_Claimers',
+        type: 'address[]',
       },
       {
-        "internalType": "uint256[]",
-        "name": "claim_amount",
-        "type": "uint256[]"
+        internalType: 'uint256[]',
+        name: 'claim_amount',
+        type: 'uint256[]',
       },
       {
-        "internalType": "address",
-        "name": "BidTokenAddress",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: 'BidTokenAddress',
+        type: 'address',
+      },
     ],
-    "name": "StoreBidTokenClaimAmount",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: 'StoreBidTokenClaimAmount',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
       },
       {
-        "internalType": "string",
-        "name": "property_id",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: 'property_id',
+        type: 'string',
+      },
     ],
-    "name": "Store_SLC_Contract_Address",
-    "outputs": [
+    name: 'Store_SLC_Contract_Address',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "SuspendAuction",
-    "outputs": [
+    inputs: [],
+    name: 'SuspendAuction',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
     ],
-    "name": "auction",
-    "outputs": [
+    name: 'auction',
+    outputs: [
       {
-        "internalType": "string",
-        "name": "unique_id",
-        "type": "string"
+        internalType: 'string',
+        name: 'unique_id',
+        type: 'string',
       },
       {
-        "internalType": "string",
-        "name": "property_id",
-        "type": "string"
+        internalType: 'string',
+        name: 'property_id',
+        type: 'string',
       },
       {
-        "internalType": "uint256",
-        "name": "auction_enlist_date",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'auction_enlist_date',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "start_date",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'start_date',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "end_date",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'end_date',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "reserve_price",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'reserve_price',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "sl_reserve",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'sl_reserve',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "no_of_tokens",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'no_of_tokens',
+        type: 'uint256',
       },
       {
-        "internalType": "uint256",
-        "name": "collected_amount",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'collected_amount',
+        type: 'uint256',
       },
       {
-        "internalType": "bool",
-        "name": "auction_start",
-        "type": "bool"
+        internalType: 'bool',
+        name: 'auction_start',
+        type: 'bool',
       },
       {
-        "internalType": "bool",
-        "name": "auction_end",
-        "type": "bool"
+        internalType: 'bool',
+        name: 'auction_end',
+        type: 'bool',
       },
       {
-        "internalType": "bool",
-        "name": "auction_exist",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: 'auction_exist',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "name": "claimBidTokens",
-    "outputs": [
+    name: 'claimBidTokens',
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "auctionID",
-        "type": "string"
+        internalType: 'string',
+        name: 'auctionID',
+        type: 'string',
       },
       {
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
       },
       {
-        "internalType": "address",
-        "name": "BidTokenAddress",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: 'BidTokenAddress',
+        type: 'address',
+      },
     ],
-    "name": "claimBidTokensback",
-    "outputs": [
+    name: 'claimBidTokensback',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "contractOwner",
-    "outputs": [
+    inputs: [],
+    name: 'contractOwner',
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "auctionID",
-        "type": "string"
-      }
+        internalType: 'string',
+        name: 'auctionID',
+        type: 'string',
+      },
     ],
-    "name": "getAuctionBidders",
-    "outputs": [
+    name: 'getAuctionBidders',
+    outputs: [
       {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
+        internalType: 'address[]',
+        name: '',
+        type: 'address[]',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "auctionID",
-        "type": "string"
+        internalType: 'string',
+        name: 'auctionID',
+        type: 'string',
       },
       {
-        "internalType": "uint256",
-        "name": "bid_amount",
-        "type": "uint256"
+        internalType: 'uint256',
+        name: 'bid_amount',
+        type: 'uint256',
       },
       {
-        "internalType": "address",
-        "name": "Treasurer_Address",
-        "type": "address"
+        internalType: 'address',
+        name: 'Treasurer_Address',
+        type: 'address',
       },
       {
-        "internalType": "address",
-        "name": "BidTokenAddress",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: 'BidTokenAddress',
+        type: 'address',
+      },
     ],
-    "name": "saveBid",
-    "outputs": [
+    name: 'saveBid',
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ]
 
-export const stableCoinAbi : any = [
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "_spender",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "Approval",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "Transfer",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "allowance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_spender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "approve",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "decimals",
-		"outputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "name",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "symbol",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "totalSupply",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "transfer",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "transferFrom",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	}
+export const stableCoinAbi: any = [
+  {
+    type: 'function',
+    stateMutability: 'view',
+    outputs: [
+      {
+        type: 'uint256',
+        name: '',
+        internalType: 'uint256',
+      },
+    ],
+    name: 'balanceOf',
+    inputs: [
+      {
+        type: 'address',
+        name: 'account',
+        internalType: 'address',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    stateMutability: 'nonpayable',
+    outputs: [
+      {
+        type: 'bool',
+        name: '',
+        internalType: 'bool',
+      },
+    ],
+    name: 'approve',
+    inputs: [
+      {
+        type: 'address',
+        name: 'spender',
+        internalType: 'address',
+      },
+      {
+        type: 'uint256',
+        name: 'amount',
+        internalType: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    stateMutability: 'view',
+    outputs: [
+      {
+        type: 'uint256',
+        name: '',
+        internalType: 'uint256',
+      },
+    ],
+    name: 'allowance',
+    inputs: [
+      {
+        type: 'address',
+        name: 'owner',
+        internalType: 'address',
+      },
+      {
+        type: 'address',
+        name: 'spender',
+        internalType: 'address',
+      },
+    ],
+  },
 ]
 
-export const ICOabi : any = [
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_tokenusdcAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_tokenknabAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_beneficiary",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "token",
-				"type": "uint256"
-			}
-		],
-		"name": "Buy",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "beneficiary",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "ICOInitialized",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "prevAmount",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "newAmount",
-				"type": "uint256"
-			}
-		],
-		"name": "amountRaisedUpdated",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "KnabAmount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "_amountRaised",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "beneficiary",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "buy",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "crowdSaleEnd",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "details",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_amountTransfer",
-				"type": "uint256"
-			}
-		],
-		"name": "fundTransfer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "knabToken",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "tokenSold",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "transferAmount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "usdcToken",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
+export const ICOabi: any = [
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_tokenusdcAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_tokenknabAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_beneficiary',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'token',
+        type: 'uint256',
+      },
+    ],
+    name: 'Buy',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'beneficiary',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timestamp',
+        type: 'uint256',
+      },
+    ],
+    name: 'ICOInitialized',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'prevAmount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'amountRaisedUpdated',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'KnabAmount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: '_amountRaised',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'beneficiary',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'buy',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'crowdSaleEnd',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'details',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_amountTransfer',
+        type: 'uint256',
+      },
+    ],
+    name: 'fundTransfer',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'knabToken',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'tokenSold',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'transferAmount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'usdcToken',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 ]

@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 let tableInfo = tableData.tableData
 
 const YourAssets = (props: any) => {
-  const { loggedIn, isWalletCon } = props
+  const { loggedIn, isWalletCon, getBalance } = props
 
   const classes = useStyles()
   const [isWallet, setIsWallet] = useState(false)
@@ -129,6 +129,7 @@ const YourAssets = (props: any) => {
         setWalletAddress(publicaddress)
         walletConnectAddress(publicaddress)
         walletConnect(true)
+        getBalance()
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {

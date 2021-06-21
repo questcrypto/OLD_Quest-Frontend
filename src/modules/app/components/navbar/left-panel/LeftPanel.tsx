@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { logout, logout2 } from 'logic/actions/user.actions'
 import { useStyles, QuestLogoCont, ListItemText } from './style'
@@ -23,10 +23,15 @@ import { Close } from '@material-ui/icons'
 // import questLogo from 'assets/images/questLoginLogo.png';
 import questLogo from 'assets/images/questDashboardLogo.svg'
 import PieIcon from 'assets/icons/pieIcon.svg'
+import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
+import web3modal from 'web3modal'
+
+import Web3 from 'web3'
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
-  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2 } = props
+  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2, isWalletCon, walletConAddress } = props
+  const [account, setAccount] = useState('')
 
   const handleProperty = () => {
     if (loggedIn) {
@@ -71,6 +76,11 @@ const LeftPanel = (props: any) => {
     }
   }
 
+  function disConnectWallet() {
+    window.location.reload()
+    // web3.eth.accounts.wallet.remove(walletConAddress)
+    // web3.eth.accounts.wallet.clear()
+  }
   return (
     //@ts-ignore
     <DrawerWrapper open={openDrawer}>
@@ -138,6 +148,31 @@ const LeftPanel = (props: any) => {
               </ListItemText>
             </ListItem>
           </Grid> */}
+          {isWalletCon ? (
+            <Grid className={classes.signOutStyle}>
+              <Divider className={classes.signOutDividerStyle} />
+              <ListItem button>
+                <CustomButton
+                  size="large"
+                  style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
+                  onClick={disConnectWallet}
+                >
+                  {/* {dataLoading ? 'Connecting ...' : 'Connect Wallet'} */}
+                  Disconnect Wallet
+                </CustomButton>
+              </ListItem>
+            </Grid>
+          ) : (
+            ''
+          )}
+
+          {/* <CustomButton
+            size="large"
+            style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
+            onClick={connectWallet}
+          >
+            {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
+          </CustomButton> */}
         </Grid>
       </Drawer>
     </DrawerWrapper>
@@ -147,6 +182,8 @@ const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
   openDrawer: state.drawer.openDrawer,
   loggedIn: state.user.loggedIn,
+  isWalletCon: state.user.isWalletCon,
+  walletConAddress: state.user.walletConAddress,
 })
 
 export default connect(mapStateToProps, { logout, handleDrawerClose, logout2 })(LeftPanel)

@@ -9,6 +9,7 @@ import {
   LOGIN_FAIL,
   WALLET_CONNECT,
   WALLET_CONNECT_ADDRESS,
+  KNAB_BALANCE,
 } from './action.config'
 
 export const authStart = () => {
@@ -66,6 +67,13 @@ export const walletConnect = (data: any) => {
 export const walletConnectAddress = (data: any) => {
   return {
     type: WALLET_CONNECT_ADDRESS,
+    payload: data,
+  }
+}
+
+export const getKNABbalance = (data: any) => {
+  return {
+    type: KNAB_BALANCE,
     payload: data,
   }
 }

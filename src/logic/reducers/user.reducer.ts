@@ -9,6 +9,7 @@ import {
   LOGIN_FAIL,
   WALLET_CONNECT,
   WALLET_CONNECT_ADDRESS,
+  KNAB_BALANCE,
 } from '../actions/action.config'
 import history from 'modules/app/components/history'
 
@@ -21,6 +22,7 @@ const initialState = {
   isNav: true,
   isWalletCon: false,
   walletConAddress: '',
+  KNABBalance: 0.0,
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -89,6 +91,11 @@ export const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         walletConAddress: payload,
+      }
+    case KNAB_BALANCE:
+      return {
+        ...state,
+        KNABBalance: payload,
       }
     default:
       return state

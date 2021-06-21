@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MoreWithCrypto = (props: any) => {
   const classes = useStyles()
-  const { loggedIn, isWalletCon } = props
+  const { loggedIn, isWalletCon, getBalance } = props
   const [isWallet, setIsWallet] = useState(false)
   const [show, setShow] = useState(false)
 
@@ -119,6 +119,8 @@ const MoreWithCrypto = (props: any) => {
         setWalletAddress(publicaddress)
         walletConnectAddress(publicaddress)
         walletConnect(true)
+        getBalance()
+        // getBalance()
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {

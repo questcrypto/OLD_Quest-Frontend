@@ -10,9 +10,9 @@ import { makeStyles } from '@material-ui/core'
 import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
-import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
+import { getWeb3Val, getKNABBalance } from 'modules/block-chain/BlockChainMethods'
 import { errorAlert } from 'logic/actions/alerts.actions'
-import { loginStart } from 'logic/actions/user.actions'
+import { loginStart, getKNABbalance } from 'logic/actions/user.actions'
 import MetaMaskIcon from '../../../../../assets/icons/metaMaskIcon.svg'
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +35,7 @@ const TopPanel = (props: any) => {
   const [account, setAccount] = useState(false)
   const web3: Web3 = new Web3(window.ethereum)
 
-  const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress } = props
+  const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress, getKNABbalance } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
@@ -102,7 +102,10 @@ const TopPanel = (props: any) => {
       console.log(error)
     }
   }
-
+  const getBalance = async () => {
+    const KNABBalance: any = await getKNABBalance()
+    getKNABbalance(KNABBalance / 10 ** 18)
+  }
   const connectWallet = async () => {
     try {
       setDataLoading(true)
@@ -129,6 +132,7 @@ const TopPanel = (props: any) => {
         setWalletAddress(publicaddress)
         walletConnectAddress(publicaddress)
         walletConnect(true)
+        getBalance()
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
@@ -177,8 +181,10 @@ const TopPanel = (props: any) => {
 const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   userInfo: state.user.userInfo,
-  isWalletCon: state.user.isWalletCon,
   walletConAddress: state.user.walletConAddress,
+  KNABBalance: state.user.KNABBalance,
 })
 
-export default connect(mapStateToProps, { loginStart, errorAlert, logout, logout2, walletConnect, walletConnectAddress })(TopPanel)
+export default connect(mapStateToProps, { loginStart, errorAlert, logout, logout2, walletConnect, walletConnectAddress, getKNABbalance })(
+  TopPanel
+)

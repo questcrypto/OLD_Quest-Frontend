@@ -10,7 +10,9 @@ import {
   stableCoinAbi,
   stableCoinContractAddress,
   ICOabi,
-  ICOAddress
+  ICOAddress,
+  KNABaddress,
+  KNABabi,
 } from './abi'
 let web3: Web3
 
@@ -239,30 +241,43 @@ export const getStableCoinBalance = async () => {
   }
 }
 
-export const buyKnab = async ( amount : number) => {
-  const web3 = await getWeb3Val();    
-  if (web3)
-  {
-    const accounts = await web3.eth.getAccounts() 
-    const ICOinstance = new web3.eth.Contract(ICOabi,ICOAddress)
-    const res : any = await ICOinstance.methods.buy(convertToWei(amount)).send({from : accounts[0]})
+export const buyKnab = async (amount: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const ICOinstance = new web3.eth.Contract(ICOabi, ICOAddress)
+    const res: any = await ICOinstance.methods.buy(convertToWei(amount)).send({ from: accounts[0] })
     return res
   }
 }
 
 export const handlestableCoinapproval = async (contractStableCoin: any, account: string, ApproveAmount: any) => {
-  const res = await contractStableCoin.methods.approve(ICOAddress, convertToWei(ApproveAmount)).send({ from: account })
+  const deci = await contractStableCoin.methods.decimals().call()
+  console.log(ApproveAmount * 10 ** deci, 'abc')
+  const res = await contractStableCoin.methods.approve(ICOAddress, ApproveAmount * 10 ** deci).send({ from: account })
   return res
 }
 
-export const fetchValue = async (amount : number) => {
-  const IcoContract = new web3.eth.Contract(ICOabi,ICOAddress)
+export const fetchValue = async (amount: number) => {
+  const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.KnabAmount(convertToWei(amount)).call()
-  return convertToEther2(res);
+  return convertToEther2(res)
 }
 
 export const fetchDetails = async () => {
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.details().call()
   return { tokensSold: convertToEther2(res['0']), tokensLeft: convertToEther2(res['1']) }
+}
+
+export const getKNABBalance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const KNABContract = new web3.eth.Contract(KNABabi, KNABaddress)
+    const res = await KNABContract.methods.balanceOf(accounts[0]).call()
+    const KNABBalance: any = res
+
+    return parseInt(KNABBalance)
+  }
 }

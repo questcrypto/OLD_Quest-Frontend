@@ -15,6 +15,7 @@ export const LOGOUT = 'LOGOUT'
 export const LOGOUT2 = 'LOGOUT2'
 export const WALLET_CONNECT = 'WALLET_CONNECT'
 export const WALLET_CONNECT_ADDRESS = 'WALLET_CONNECT_ADDRESS'
+export const KNAB_BALANCE = 'KNAB_BALANCE'
 
 /* =================================== LOGIN Actions ========================== */
 

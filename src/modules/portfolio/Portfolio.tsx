@@ -21,6 +21,7 @@ import { logout } from 'logic/actions/user.actions'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import HoverModal from './components/HoverModal'
+import { getKNABBalance } from '../../modules/block-chain/BlockChainMethods'
 
 const Portfolio = (props: any) => {
   const classes = useStyles()
@@ -61,6 +62,7 @@ const Portfolio = (props: any) => {
         if (web3) {
           const accounts = await web3.eth.getAccounts()
           const contractSc = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
+          const res: any = await getKNABBalance()
           // const res: any = await contractSc.methods.approve(ICOAddress, fromData).send({ from: accounts[0] });
           handlestableCoinapproval(contractSc, accounts[0], fromData).then(
             (res) => {
@@ -156,6 +158,10 @@ const Portfolio = (props: any) => {
 
   const handleTestPage = () => history.push(Paths.learnMore)
 
+  const getBalance = async () => {
+    const KNABBalance: any = await getKNABBalance()
+    setPb(KNABBalance / 10 ** 18)
+  }
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -215,8 +221,9 @@ const Portfolio = (props: any) => {
             <Typography variant="subtitle1">Portfolio Balance</Typography>
             <div>
               <Typography variant="h4">
-                {pb.toFixed(2)}
-                <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} />
+                {props.KNABBalance || pb.toFixed(2)}
+                {getBalance}
+                {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
               </Typography>
             </div>
             <div className={classes.pfBtnDiv}>
@@ -255,11 +262,11 @@ const Portfolio = (props: any) => {
             </div>
           </Paper> */}
 
-          <YourAssets />
+          <YourAssets getBalance={getBalance} />
         </Grid>
 
         <Grid item md={5} xs={12}>
-          <MoreWithCrypto />
+          <MoreWithCrypto getBalance={getBalance} />
         </Grid>
       </Grid>
 
@@ -316,5 +323,6 @@ const conversionData = {
 const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
   loggedIn: state.user.loggedIn,
+  KNABBalance: state.user.KNABBalance,
 })
 export default withRouter(connect(mapStateToProps, { successAlert, errorAlert })(Portfolio))

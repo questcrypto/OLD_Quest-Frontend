@@ -4,6 +4,7 @@ import CustomButton from '../components/shared/Button'
 // import { Paths } from 'modules/app/components/routes/types'
 import ICOHoldings from './ICOHoldings'
 import RaisedTokens from './RaisedTokes'
+import RewardsGrid from './RewardsGrid'
 import TokensRemaining from './TokensRemainng'
 
 const useStyles = makeStyles((theme) => ({
@@ -96,18 +97,12 @@ const ICODetails = () => {
             <TokensRemaining />
           </Grid>
         </Grid>
-        {/* <Grid container spacing={4} style={{ padding: '38px 0px' }}>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Grid item md={10} xs={12}>
-            <Graph />
-          </Grid>
-        </Grid>
         <Grid container spacing={4} style={{ padding: '38px 0px' }}>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Grid item md={10} xs={12}>
-            <FullICODetails />
+            <RewardsGrid />
           </Grid>
-        </Grid> */}
+        </Grid>
       </Paper>
     </div>
   )

@@ -3,8 +3,8 @@ export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
 export const auctionContractAddress = '0x8482cf391ABAc8Fed36Cba191cCDA486BA119341'
 export const treasuryAddress = '0x9ec6df50fcF77637996AFFa60b43121F8B4F27c6'
 export const stableCoinContractAddress = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-export const ICOAddress = '0xDcFC11FC853bddb04522A5d064EaE2ec594Fe438'
-export const KNABaddress = '0xf6Ff181eE777306e0D0cd6F1943f69d1cB3c40eC'
+export const ICOAddress = '0xE96342fb23254A8940aE305D7920ABc930E27257'
+export const KNABaddress = '0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8'
 
 export const slcAbi: any = [
   {

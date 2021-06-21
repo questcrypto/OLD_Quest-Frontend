@@ -186,7 +186,8 @@ const Portfolio = (props: any) => {
             disableRipple
             style={{ backgroundColor: '#858585', padding: '0px 16px' }}
           >
-            00.00 KNAB
+            {/* 00.00 KNAB */}
+            {props.KNABBalance || pb.toFixed(2)} KNAB
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
           <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }} onClick={() => handleAuction()}>

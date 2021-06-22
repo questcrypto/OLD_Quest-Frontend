@@ -1,5 +1,6 @@
-import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
-import KnabIcon from 'assets/icons/KNAB.svg'
+import { Paper, makeStyles, Typography, Grid, Slider } from '@material-ui/core'
+// import KnabIcon from 'assets/icons/KNAB.svg'
+import { StyledSlider, SliderWrap } from './style'
 
 const useStyles = makeStyles((theme) => ({
   mainDiv: {
@@ -48,6 +49,18 @@ const RaisedTokens = () => {
         <Paper className={classes.root} style={{ opacity: 1 }}>
           <div>
             <Typography variant="subtitle1">&nbsp;&nbsp;&nbsp;Raised Tokens</Typography>
+            <SliderWrap>
+              <StyledSlider
+                value={0}
+                // onChange={(e: any, val: any) => handleEquityValue(e, val)}
+                // valueLabelFormat={valuetext}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="on"
+                step={0.01}
+                min={0}
+                max={100}
+              />
+            </SliderWrap>
             <Grid container spacing={4} style={{ padding: '38px 0px' }}>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Grid item md={4} xs={12}>

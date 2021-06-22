@@ -14,5 +14,5 @@ export enum Paths {
   portfolio = '/portfolio',
   login = '/login',
   learnMore = '/learnMore',
-  icoDetails = '/icoDetails',
+  ICOdetails = '/ICOdetails',
 }

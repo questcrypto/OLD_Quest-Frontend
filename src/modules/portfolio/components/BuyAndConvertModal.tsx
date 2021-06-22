@@ -307,7 +307,7 @@ const BuyAndConvertModal = (props: any) => {
                 ICO Details (
                 <span
                   className={classes.learnMoreText}
-                  // onClick={() => openInNewTab(`http://localhost:3000${Paths.icoDetails}`)}
+                  onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}
                   //  onClick={() => handleLearnMorePage()}
                 >
                   Learn More

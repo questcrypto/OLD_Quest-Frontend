@@ -82,12 +82,13 @@ const ICODetails = () => {
 
       <Paper>
         <br />
-        <Grid container spacing={4} style={{ padding: '38px 0px' }}>
+        <Grid container spacing={3} style={{ padding: '38px 0px' }}>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Grid item md={5} xs={12}>
+          <Grid item md={4} xs={12}>
             <ICOHoldings />
           </Grid>
-          <Grid item md={5} xs={12}>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <Grid item md={8} xs={12}>
             <RaisedTokens />
           </Grid>
         </Grid>

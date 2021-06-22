@@ -277,7 +277,7 @@ export const getKNABBalance = async () => {
     const KNABContract = new web3.eth.Contract(KNABabi, KNABaddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNABBalance: any = res
-
+    // console.log(res, 'blc')
     return parseInt(KNABBalance)
   }
 }

@@ -40,19 +40,20 @@ const TopPanel = (props: any) => {
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
 
-  setInterval(function () {
-    async function getAccount() {
-      const coinbase = await web3.eth.getCoinbase()
-      if (!coinbase) {
-        setAccount(false)
-        return
-      }
-      const publicaddress = coinbase.toLowerCase()
+  // setInterval(function () {
+  //   async function getAccount() {
 
-      if (publicaddress) setAccount(true)
-    }
-    getAccount()
-  }, 1000)
+  //     const coinbase = await web3.eth.getCoinbase()
+  //     if (!coinbase) {
+  //       setAccount(false)
+  //       return
+  //     }
+  //     const publicaddress = coinbase.toLowerCase()
+
+  //     if (publicaddress) setAccount(true)
+  //   }
+  //   getAccount()
+  // }, 1000)
 
   // const checkWalletAccount = async () => {
   //   const coinbase = await web3?.eth.getCoinbase()

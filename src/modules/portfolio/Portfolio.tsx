@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { Typography, Grid, Paper } from '@material-ui/core'
-
 import { useStyles } from './style'
 import CustomButton from './components/shared/Button'
-import Question from '../../assets/icons/question.svg'
-
-import MaticIcon from 'assets/icons/matic.svg'
-import KnabDummy from 'assets/icons/knab_dummy.svg'
+// import Question from '../../assets/icons/question.svg'
+// import MaticIcon from 'assets/icons/matic.svg'
+// import KnabDummy from 'assets/icons/knab_dummy.svg'
 import USDC from 'assets/icons/USDC.svg'
 import KNAB from 'assets/icons/KNAB.svg'
 import MoreWithCrypto from './components/MoreWithCrypto'
@@ -26,7 +24,7 @@ import { getKNABBalance } from '../../modules/block-chain/BlockChainMethods'
 const Portfolio = (props: any) => {
   const classes = useStyles()
 
-  const [pb, setPb] = useState(0.0)
+  const [pb, setPb] = useState(0)
   const [bcModal, setBcModal] = useState(false)
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
@@ -63,6 +61,7 @@ const Portfolio = (props: any) => {
           const accounts = await web3.eth.getAccounts()
           const contractSc = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
           const res: any = await getKNABBalance()
+          // console.log(res, 'blc')
           // const res: any = await contractSc.methods.approve(ICOAddress, fromData).send({ from: accounts[0] });
           handlestableCoinapproval(contractSc, accounts[0], fromData).then(
             (res) => {
@@ -101,6 +100,8 @@ const Portfolio = (props: any) => {
             setBcModal(false)
             setIsConfirm(false)
             successAlert('Transaction completed successfully')
+
+            getBalance()
           },
           (error) => {
             setIsTransaction(false)
@@ -160,8 +161,15 @@ const Portfolio = (props: any) => {
 
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
+
+    console.log(KNABBalance / 10 ** 18)
     setPb(KNABBalance / 10 ** 18)
   }
+  // setPb(props.KNABBalance)
+  const KNABbalance = props.KNABBalance
+  // const conv = Number(KNABbalance.toFixed(3))
+  // console.log(KNABbalance, conv, typeof conv, 'blc')
+  // console.log(pb, 'blc')
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -187,7 +195,8 @@ const Portfolio = (props: any) => {
             style={{ backgroundColor: '#858585', padding: '0px 16px' }}
           >
             {/* 00.00 KNAB */}
-            {props.KNABBalance || pb.toFixed(2)} KNAB
+            {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
+            {KNABbalance || pb.toFixed(3)} KNAB
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
           <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }} onClick={() => handleAuction()}>
@@ -222,7 +231,7 @@ const Portfolio = (props: any) => {
             <Typography variant="subtitle1">Portfolio Balance</Typography>
             <div>
               <Typography variant="h4">
-                {props.KNABBalance || pb.toFixed(2)}
+                {props.KNABBalance || pb.toFixed(2)} KNAB
                 {getBalance}
                 {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
               </Typography>

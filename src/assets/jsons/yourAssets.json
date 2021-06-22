@@ -28,65 +28,65 @@
           "icon": "KnabDummy",
           "name": "KNAB - USDC"
         },
-        "balance": "$6.76",
+        "balance": "$0",
         "availableQty": "0.000000",
         "price": {
-          "value": 56782.74,
-          "percent": 3.57
+          "value": 0.0,
+          "percent": 0.0
         },
-        "holdings": 27.8
+        "holdings": 0.0
       },
       {
         "asset": {
           "icon": "KnabDummy",
           "name": "KNAB - USDC"
         },
-        "balance": "$6.76",
+        "balance": "$0",
         "availableQty": "0.000000",
         "price": {
-          "value": 56782.74,
-          "percent": 3.57
+          "value": 0.0,
+          "percent": 0.0
         },
-        "holdings": 27.8
+        "holdings": 0.0
       },
       {
         "asset": {
           "icon": "KnabDummy",
           "name": "KNAB - USDC"
         },
-        "balance": "$6.76",
+        "balance": "$0",
         "availableQty": "0.000000",
         "price": {
-          "value": 56782.74,
-          "percent": 3.57
+          "value": 0.0,
+          "percent": 0.0
         },
-        "holdings": 27.8
+        "holdings": 0.0
       },
       {
         "asset": {
           "icon": "KnabDummy",
           "name": "KNAB - USDC"
         },
-        "balance": "$6.76",
+        "balance": "$0",
         "availableQty": "0.000000",
         "price": {
-          "value": 56782.74,
-          "percent": 3.57
+          "value": 0.0,
+          "percent": 0.0
         },
-        "holdings": 27.8
+        "holdings": 0.0
       },
       {
         "asset": {
           "icon": "KnabDummy",
           "name": "KNAB - USDC"
         },
-        "balance": "$6.76",
+        "balance": "$0",
         "availableQty": "0.000000",
         "price": {
-          "value": 56782.74,
-          "percent": 3.57
+          "value": 0.0,
+          "percent": 0.0
         },
-        "holdings": 27.8
+        "holdings": 0.0
       }
     ]
   }

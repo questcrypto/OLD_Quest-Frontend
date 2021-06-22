@@ -150,10 +150,10 @@ export const routes: RouteDefinition[] = [
     title: '',
   },
   {
-    path: Paths.icoDetails,
+    path: Paths.ICOdetails,
     component: ICODetails,
     protected: false,
-    redirect: Paths.icoDetails,
+    redirect: Paths.ICOdetails,
     title: '',
   },
 ].concat(notFoundRoute as any) // Ensure that notFound is the last route

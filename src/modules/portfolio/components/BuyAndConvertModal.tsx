@@ -194,17 +194,15 @@ const BuyAndConvertModal = (props: any) => {
   // Form Data Change To
   useEffect(() => {
     if (!initialRender) {
-      // console.log(Number(formData.to))
-      // console.log(formData.from)
       const a = Number(formData.to) * 10 ** 6
       const b = formData.from * 10 ** 6
+      // console.log((a / b).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'))
       if (b == 0) {
         // setSwapData({ ...swapData, bonusRatio:  })
       } else {
         setSwapData({ ...swapData, bonusRatio: a / b })
       }
       // setFormData({ ...formData, from: formData.to / conversionFactor });
-      // setSwapData({ ...swapData, bonusRatio: a / b })
     }
     setInitialRender(false)
   }, [formData.to])

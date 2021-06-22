@@ -313,7 +313,7 @@ const BuyAndConvertModal = (props: any) => {
               </Typography>
               <ContaInnerDiv>
                 <DropDownButton options={options2} valueChange={handleBtnChange} />
-                <CustomInput id="to" type="text" value={formData.to} onChange={handleChange} readOnly />
+                <CustomInput id="to" type="text" value={formData.to} onChange={handleChange} adornment="" readOnly />
               </ContaInnerDiv>
             </ContaDiv>
             {/* {(formData.from > 0 || formData.to > 0) ? '': '' */}

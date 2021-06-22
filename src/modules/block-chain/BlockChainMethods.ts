@@ -238,7 +238,8 @@ export const getStableCoinBalance = async () => {
     const accounts = await web3.eth.getAccounts()
     const stableCoinContract = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
     const res = await stableCoinContract.methods.balanceOf(accounts[0]).call()
-    const stableCoinBalance: any = convertToEther(res)
+    const stableCoinBalance: any = res * 10 ** 6
+    console.log(stableCoinBalance)
     return parseInt(stableCoinBalance)
   }
 }

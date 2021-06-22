@@ -13,6 +13,7 @@ import Spinner from 'shared/loader-components/spinner'
 import { getWeb3Val, fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
+const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
   bcDiv: {
@@ -149,7 +150,13 @@ const BuyAndConvertModal = (props: any) => {
     // Tokens Sold and Left
     fetchDetails().then(
       (res) => {
-        setSwapData({ ...swapData, tokensSold: res['tokensSold'], tokensLeft: res['tokensLeft'] })
+        setSwapData({
+          ...swapData,
+          // tokensSold: commaNumber(res['tokensSold']),
+          // tokensLeft: commaNumber(res['tokensLeft']),
+          tokensSold: res['tokensSold'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+          tokensLeft: res['tokensLeft'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+        })
         // console.log(res)
       },
       (err) => {
@@ -187,8 +194,17 @@ const BuyAndConvertModal = (props: any) => {
   // Form Data Change To
   useEffect(() => {
     if (!initialRender) {
+      // console.log(Number(formData.to))
+      // console.log(formData.from)
+      const a = Number(formData.to) * 10 ** 6
+      const b = formData.from * 10 ** 6
+      if (b == 0) {
+        // setSwapData({ ...swapData, bonusRatio:  })
+      } else {
+        setSwapData({ ...swapData, bonusRatio: a / b })
+      }
       // setFormData({ ...formData, from: formData.to / conversionFactor });
-      setSwapData({ ...swapData, bonusRatio: Number(formData.to) / formData.from })
+      // setSwapData({ ...swapData, bonusRatio: a / b })
     }
     setInitialRender(false)
   }, [formData.to])

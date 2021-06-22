@@ -150,12 +150,13 @@ const BuyAndConvertModal = (props: any) => {
     // Tokens Sold and Left
     fetchDetails().then(
       (res) => {
+        // console.log(res.tokensLeft.toLocaleString('en-US));
         setSwapData({
           ...swapData,
-          // tokensSold: commaNumber(res['tokensSold']),
-          // tokensLeft: commaNumber(res['tokensLeft']),
-          tokensSold: res['tokensSold'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-          tokensLeft: res['tokensLeft'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+          tokensSold: commaNumber(res['tokensSold']),
+          tokensLeft: commaNumber(res['tokensLeft']),
+          // tokensSold: res['tokensSold'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+          // tokensLeft: res['tokensLeft'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
         })
         // console.log(res)
       },
@@ -321,7 +322,7 @@ const BuyAndConvertModal = (props: any) => {
                 ICO Details (
                 <span
                   className={classes.learnMoreText}
-                  onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}
+                  // onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}
                   //  onClick={() => handleLearnMorePage()}
                 >
                   Learn More

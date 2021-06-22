@@ -13,6 +13,7 @@ import BuyAndConvertModal from './components/BuyAndConvertModal'
 import { getWeb3Val, buyKnab, getStableCoinBalance, handlestableCoinapproval } from '../../modules/block-chain/BlockChainMethods'
 import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../modules/block-chain/abi'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
+import { getKNABbalance } from 'logic/actions/user.actions'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { logout } from 'logic/actions/user.actions'
@@ -31,7 +32,7 @@ const Portfolio = (props: any) => {
   const [loader, setLoader] = useState(false)
   const [hoverModal, setHoverModal] = useState(false)
 
-  const { errorAlert, loggedIn, successAlert } = props
+  const { errorAlert, loggedIn, successAlert, getKNABbalance } = props
 
   const openbcModal = () => {
     try {
@@ -100,7 +101,6 @@ const Portfolio = (props: any) => {
             setBcModal(false)
             setIsConfirm(false)
             successAlert('Transaction completed successfully')
-
             getBalance()
           },
           (error) => {
@@ -161,15 +161,10 @@ const Portfolio = (props: any) => {
 
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
-
-    console.log(KNABBalance / 10 ** 18)
-    setPb(KNABBalance / 10 ** 18)
+    getKNABbalance(KNABBalance / 10 ** 18)
+    // setPb(KNABBalance / 10 ** 18)
   }
-  // setPb(props.KNABBalance)
-  const KNABbalance = props.KNABBalance
-  // const conv = Number(KNABbalance.toFixed(3))
-  // console.log(KNABbalance, conv, typeof conv, 'blc')
-  // console.log(pb, 'blc')
+  console.log(props.KNABBalance)
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -194,9 +189,9 @@ const Portfolio = (props: any) => {
             disableRipple
             style={{ backgroundColor: '#858585', padding: '0px 16px' }}
           >
-            {/* 00.00 KNAB */}
             {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
-            {KNABbalance || pb.toFixed(3)} KNAB
+            {/* {KNABbalance || pb.toFixed(3)} KNAB */}
+            {Number(props.KNABBalance.toFixed(3))} KNAB
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
           <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }} onClick={() => handleAuction()}>
@@ -231,7 +226,8 @@ const Portfolio = (props: any) => {
             <Typography variant="subtitle1">Portfolio Balance</Typography>
             <div>
               <Typography variant="h4">
-                {props.KNABBalance || pb.toFixed(2)} KNAB
+                {/* {props.KNABBalance || pb.toFixed(2)} KNAB */}
+                {Number(props.KNABBalance.toFixed(3))} KNAB
                 {getBalance}
                 {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
               </Typography>
@@ -335,4 +331,4 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   KNABBalance: state.user.KNABBalance,
 })
-export default withRouter(connect(mapStateToProps, { successAlert, errorAlert })(Portfolio))
+export default withRouter(connect(mapStateToProps, { successAlert, errorAlert, getKNABbalance })(Portfolio))

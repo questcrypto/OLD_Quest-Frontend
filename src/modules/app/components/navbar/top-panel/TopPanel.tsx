@@ -33,7 +33,7 @@ const TopPanel = (props: any) => {
   const classes = useStyles()
 
   const [account, setAccount] = useState(false)
-  const web3: Web3 = new Web3(window.ethereum)
+  let web3: Web3 = new Web3(window.ethereum)
 
   const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress, getKNABbalance } = props
   const [dataLoading, setDataLoading] = useState(false)
@@ -41,18 +41,23 @@ const TopPanel = (props: any) => {
   const [tokenDummy, setTokenDummy] = useState('')
 
   // setInterval(function () {
-  //   async function getAccount() {
+  //   async function getProvider() {
+  //     if(web3) {
 
-  //     const coinbase = await web3.eth.getCoinbase()
-  //     if (!coinbase) {
-  //       setAccount(false)
-  //       return
+  //     } else {
+  //       web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/7abab3b743864efd81bba0f969adf157'))
   //     }
-  //     const publicaddress = coinbase.toLowerCase()
 
-  //     if (publicaddress) setAccount(true)
+  //     // const coinbase = await web3.eth.getCoinbase()
+  //     // if (!coinbase) {
+  //     //   setAccount(false)
+  //     //   return
+  //     // }
+  //     // const publicaddress = coinbase.toLowerCase()
+
+  //     // if (publicaddress) setAccount(true)
   //   }
-  //   getAccount()
+  //   getProvider()
   // }, 1000)
 
   // const checkWalletAccount = async () => {

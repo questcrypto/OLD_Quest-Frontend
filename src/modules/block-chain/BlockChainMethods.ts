@@ -38,9 +38,11 @@ export const getWeb3Val = async () => {
 }
 
 export const convertToWei = (totalAmount: any) => {
+  web3 = new Web3(window.ethereum)
   return web3.utils.toWei(totalAmount.toString(), 'ether')
 }
 export const convertToEther = (totalAmount: any) => {
+  web3 = new Web3(window.ethereum)
   return parseInt(web3.utils.fromWei(totalAmount.toString(), 'ether'))
 }
 
@@ -259,14 +261,18 @@ export const handlestableCoinapproval = async (contractStableCoin: any, account:
 }
 
 export const fetchValue = async (amount: number) => {
+  const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.KnabAmount(convertToWei(amount)).call()
+  console.log(res, '***')
   return convertToEther2(res)
 }
 
 export const fetchDetails = async () => {
+  const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.details().call()
+  console.log(res, '***')
   return { tokensSold: convertToEther2(res['0']), tokensLeft: convertToEther2(res['1']) }
 }
 

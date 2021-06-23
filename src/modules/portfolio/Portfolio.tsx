@@ -203,7 +203,11 @@ const Portfolio = (props: any) => {
             Real Estate Auctions
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
-          <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}>
+          <CustomButton
+            size="small"
+            style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
+            onClick={() => history.push(Paths.login)}
+          >
             Buy | Convert Quest
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
@@ -242,7 +246,11 @@ const Portfolio = (props: any) => {
             </div>
             <div className={classes.pfBtnDiv}>
               <div>
-                <CustomButton size="large" style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}>
+                <CustomButton
+                  size="large"
+                  style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
+                  onClick={() => history.push(Paths.login)}
+                >
                   Buy Quest Tokens
                 </CustomButton>
                 <br />

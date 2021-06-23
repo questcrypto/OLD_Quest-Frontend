@@ -12,7 +12,6 @@ const App = (props: any) => {
   useEffect(() => {
     authStart()
   }, [authStart])
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

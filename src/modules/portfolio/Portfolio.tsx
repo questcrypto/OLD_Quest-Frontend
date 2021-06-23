@@ -157,57 +157,64 @@ const Portfolio = (props: any) => {
     }
   }
 
-  const handleTestPage = () => history.push(Paths.learnMore)
+  // const handleTestPage = () => history.push(Paths.dashboard)
 
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
     getKNABbalance(KNABBalance / 10 ** 18)
     // setPb(KNABBalance / 10 ** 18)
   }
-  console.log(props.KNABBalance)
+  console.log(props)
+  // loggedIn ? () : ''
   return (
-    <div className={classes.root}>
-      <div className={classes.header}>
-        <Typography className={classes.title} variant="h6">
-          Portfolio
-        </Typography>
-        <div className={classes.btnDiv}>
-          <CustomButton
-            size="small"
-            disableElevation
-            disableFocusRipple
-            disableRipple
-            style={{ backgroundColor: '#858585', padding: '0px 16px' }}
-          >
-            00.00 KNABr
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          <CustomButton
-            size="small"
-            disableElevation
-            disableFocusRipple
-            disableRipple
-            style={{ backgroundColor: '#858585', padding: '0px 16px' }}
-          >
-            {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
-            {/* {KNABbalance || pb.toFixed(3)} KNAB */}
-            {Number(props.KNABBalance.toFixed(3))} KNAB
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }} onClick={() => handleAuction()}>
-            Real Estate Auctions
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}>
-            Buy | Convert Quest
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }} onClick={openbcModal}>
-            {/* Buy | Convert KNAB */}
-            Buy KNAB
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          {/* <CustomButton
+    <>
+      {/* {!loggedIn ? ( */}
+      <div className={classes.root}>
+        <div className={classes.header}>
+          <Typography className={classes.title} variant="h6">
+            Portfolio
+          </Typography>
+          <div className={classes.btnDiv}>
+            <CustomButton
+              size="small"
+              disableElevation
+              disableFocusRipple
+              disableRipple
+              style={{ backgroundColor: '#858585', padding: '0px 16px' }}
+            >
+              00.00 KNABr
+            </CustomButton>
+            &nbsp;&nbsp;&nbsp;
+            <CustomButton
+              size="small"
+              disableElevation
+              disableFocusRipple
+              disableRipple
+              style={{ backgroundColor: '#858585', padding: '0px 16px' }}
+            >
+              {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
+              {/* {KNABbalance || pb.toFixed(3)} KNAB */}
+              {Number(props.KNABBalance.toFixed(3))} KNAB
+            </CustomButton>
+            &nbsp;&nbsp;&nbsp;
+            <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }} onClick={() => handleAuction()}>
+              Real Estate Auctions
+            </CustomButton>
+            &nbsp;&nbsp;&nbsp;
+            <CustomButton
+              size="small"
+              style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
+              onClick={() => history.push(Paths.login)}
+            >
+              Buy | Convert Quest
+            </CustomButton>
+            &nbsp;&nbsp;&nbsp;
+            <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }} onClick={openbcModal}>
+              {/* Buy | Convert KNAB */}
+              Buy KNAB
+            </CustomButton>
+            &nbsp;&nbsp;&nbsp;
+            {/* <CustomButton
             size="small"
             disableElevation
             disableFocusRipple
@@ -217,46 +224,50 @@ const Portfolio = (props: any) => {
           >
             Test
           </CustomButton> */}
+          </div>
         </div>
-      </div>
 
-      <Grid container spacing={4} style={{ padding: '32px 0px' }}>
-        <Grid item md={7} xs={12}>
-          <Paper className={classes.portfolioDiv}>
-            <Typography variant="subtitle1">Portfolio Balance</Typography>
-            <div>
-              <Typography variant="h4">
-                {/* {props.KNABBalance || pb.toFixed(2)} KNAB */}
-                {Number(props.KNABBalance.toFixed(3))} KNAB
-                {getBalance}
-                {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
-              </Typography>
-            </div>
-            <div className={classes.pfBtnDiv}>
+        <Grid container spacing={4} style={{ padding: '32px 0px' }}>
+          <Grid item md={7} xs={12}>
+            <Paper className={classes.portfolioDiv}>
+              <Typography variant="subtitle1">Portfolio Balance</Typography>
               <div>
-                <CustomButton size="large" style={{ backgroundColor: '#1E3444', padding: '8px 80px' }}>
-                  Buy Quest Tokens
-                </CustomButton>
-                <br />
-                <span className={classes.pfBtnhelpText}>Purchase Equity in Real Estate</span>
+                <Typography variant="h4">
+                  {/* {props.KNABBalance || pb.toFixed(2)} KNAB */}
+                  {Number(props.KNABBalance.toFixed(3))} KNAB
+                  {getBalance}
+                  {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
+                </Typography>
               </div>
-              <div>
-                <CustomButton
-                  size="large"
-                  style={{ backgroundColor: '#1E3444', padding: '8px 80px' }}
-                  onClick={openbcModal}
-                  // onMouseOver={handleBuyKNABModal}
-                  // onMouseLeave={handleHoverModalClose}
-                >
-                  Buy KNAB Tokens
-                </CustomButton>
-                <br />
-                <span className={classes.pfBtnhelpText}>Purchase ICO tokens from Quest Crypto</span>
+              <div className={classes.pfBtnDiv}>
+                <div>
+                  <CustomButton
+                    size="large"
+                    style={{ backgroundColor: '#1E3444', padding: '8px 80px' }}
+                    onClick={() => history.push(Paths.login)}
+                  >
+                    Buy Quest Tokens
+                  </CustomButton>
+                  <br />
+                  <span className={classes.pfBtnhelpText}>Purchase Equity in Real Estate</span>
+                </div>
+                <div>
+                  <CustomButton
+                    size="large"
+                    style={{ backgroundColor: '#1E3444', padding: '8px 80px' }}
+                    onClick={openbcModal}
+                    // onMouseOver={handleBuyKNABModal}
+                    // onMouseLeave={handleHoverModalClose}
+                  >
+                    Buy KNAB Tokens
+                  </CustomButton>
+                  <br />
+                  <span className={classes.pfBtnhelpText}>Purchase ICO tokens from Quest Crypto</span>
+                </div>
               </div>
-            </div>
-          </Paper>
+            </Paper>
 
-          {/* <Paper className={classes.portfolioDiv2}>
+            {/* <Paper className={classes.portfolioDiv2}>
             <Typography variant="subtitle1">
               Portfolio Balance
             </Typography>
@@ -268,16 +279,16 @@ const Portfolio = (props: any) => {
             </div>
           </Paper> */}
 
-          <YourAssets getBalance={getBalance} />
+            <YourAssets getBalance={getBalance} />
+          </Grid>
+
+          <Grid item md={5} xs={12}>
+            <MoreWithCrypto getBalance={getBalance} />
+          </Grid>
         </Grid>
 
-        <Grid item md={5} xs={12}>
-          <MoreWithCrypto getBalance={getBalance} />
-        </Grid>
-      </Grid>
-
-      {/* Buy or Convert Quest Modal */}
-      {/* <BuyAndConvertModal
+        {/* Buy or Convert Quest Modal */}
+        {/* <BuyAndConvertModal
         show={bcQuestModal}
         toggleModal={handlebcQuestModalClose}
         onClose={handlebcQuestModalClose}
@@ -286,25 +297,29 @@ const Portfolio = (props: any) => {
         options2={options2}
       /> */}
 
-      {/* Buy or Convert KNAB Modal */}
-      <BuyAndConvertModal
-        show={bcModal}
-        toggleModal={handlebcModalClose}
-        onClose={handlebcModalClose}
-        // headerText="Buying | Converting KNAB Tokens"
-        headerText="Buy KNAB Tokens"
-        options1={options1}
-        options2={options2}
-        onModalSubmit={submitModalFn}
-        isConfirm={isConfirm}
-        conversionData={conversionData}
-        confirmTransaction={confirmTransaction}
-        rejectTransaction={rejectTransaction}
-        isTransaction={isTransaction}
-        loader={loader}
-      />
-      <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} />
-    </div>
+        {/* Buy or Convert KNAB Modal */}
+        <BuyAndConvertModal
+          show={bcModal}
+          toggleModal={handlebcModalClose}
+          onClose={handlebcModalClose}
+          // headerText="Buying | Converting KNAB Tokens"
+          headerText="Buy KNAB Tokens"
+          options1={options1}
+          options2={options2}
+          onModalSubmit={submitModalFn}
+          isConfirm={isConfirm}
+          conversionData={conversionData}
+          confirmTransaction={confirmTransaction}
+          rejectTransaction={rejectTransaction}
+          isTransaction={isTransaction}
+          loader={loader}
+        />
+        <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} />
+      </div>
+      {/* ) : (
+        handleTestPage()
+      )} */}
+    </>
   )
 }
 

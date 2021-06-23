@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
+import React, { useRef, useState } from 'react'
+import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
+import Tooltip from '@material-ui/core/Tooltip'
 import {
   useStyle,
   LogoImage,
@@ -16,34 +16,34 @@ import {
   InpBtnWrapper,
   Indicator,
   CustomLabel,
-  CustomTooltip
-} from './style';
-import questLogo from 'assets/images/questLoginLogo.png';
-import questHoverLogo from 'assets/images/questHoverLogo.png';
-import signUpLogo from 'assets/images/signUp.png';
-import signUpActiveLogo from 'assets/images/signUpActive.png';
-import signInLogo from 'assets/images/signIn.png';
-import signInActiveLogo from 'assets/images/signInActive.png';
-import rightArrow from 'assets/images/rightArrow.svg';
-import wallet from 'assets/images/wallet.svg';
-import infoIcon from 'assets/images/info.svg';
-import Tab from '@material-ui/core/Tab';
-import CustomModal from '../../../shared/custom-modal';
-import mailIcon from 'assets/images/otpMail.png';
-import mailIcon2 from 'assets/images/otpMail2.png';
-import closeIcon from 'assets/icons/closeIcon.svg';
-import Wallet from './components';
-import metaMaskIcon from 'assets/images/metamask.jpg';
-import lynxIcon from 'assets/icons/lynxIcon.svg';
-import loadingIcon from 'assets/icons/loading.svg';
-import OtpInput from 'react-otp-input';
-import { Formik, Form, ErrorMessage } from 'formik';
-import { initialValues, signUpFormSchema } from './formConstant';
-import cryptoImage from 'assets/images/signUpLogoCrypto.png';
-import cryptoHoverImage from 'assets/images/signUpHoverLogoCrypto.png';
-import { default as Login } from '../login';
-import * as Yup from 'yup';
-import { getWeb3Val } from 'modules/block-chain/BlockChainMethods';
+  CustomTooltip,
+} from './style'
+import questLogo from 'assets/images/questLoginLogo.png'
+import questHoverLogo from 'assets/images/questHoverLogo.png'
+import signUpLogo from 'assets/images/signUp.png'
+import signUpActiveLogo from 'assets/images/signUpActive.png'
+import signInLogo from 'assets/images/signIn.png'
+import signInActiveLogo from 'assets/images/signInActive.png'
+import rightArrow from 'assets/images/rightArrow.svg'
+import wallet from 'assets/images/wallet.svg'
+import infoIcon from 'assets/images/info.svg'
+import Tab from '@material-ui/core/Tab'
+import CustomModal from '../../../shared/custom-modal'
+import mailIcon from 'assets/images/otpMail.png'
+import mailIcon2 from 'assets/images/otpMail2.png'
+import closeIcon from 'assets/icons/closeIcon.svg'
+import Wallet from './components'
+import metaMaskIcon from 'assets/images/metamask.jpg'
+import lynxIcon from 'assets/icons/lynxIcon.svg'
+import loadingIcon from 'assets/icons/loading.svg'
+import OtpInput from 'react-otp-input'
+import { Formik, Form, ErrorMessage } from 'formik'
+import { initialValues, signUpFormSchema } from './formConstant'
+import cryptoImage from 'assets/images/signUpLogoCrypto.png'
+import cryptoHoverImage from 'assets/images/signUpHoverLogoCrypto.png'
+import { default as Login } from '../login'
+import * as Yup from 'yup'
+import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { errorAlert } from 'logic/actions/alerts.actions'
@@ -53,72 +53,71 @@ import axios from 'axios'
 import Spinner from 'shared/loader-components/spinner'
 
 const SignUp = (props: any) => {
-
   const classes = useStyle()
 
-  const ref = useRef<any>();
+  const ref = useRef<any>()
 
   const { loading, loginStart, errorAlert, logout } = props
 
   const [dataLoading, setDataLoading] = useState(false)
   // Sign Up and Sign In Navigation
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0)
   // Open OTP Modal
-  const [showOTPModal, setShowOTPModal] = useState(false);
+  const [showOTPModal, setShowOTPModal] = useState(false)
   // Open Wallet Modal
-  const [showWalletModal, setShowWalletModal] = useState(false);
+  const [showWalletModal, setShowWalletModal] = useState(false)
   // Initializing Wallet Modal
-  const [loadingWallet, setLoadingWallet] = useState(false);
+  const [loadingWallet, setLoadingWallet] = useState(false)
   // Error Connecting Modal
-  const [errorConnecting, setErrorConnecting] = useState(false);
+  const [errorConnecting, setErrorConnecting] = useState(false)
   // OTP in Modal
-  const [otp, setOtp] = useState<string>('');
+  const [otp, setOtp] = useState<string>('')
   // Form Data
-  const [initialData, setInitialData] = useState(initialValues);
-  // Email 
-  const [emailData, setEmailData] = useState<string>('');
+  const [initialData, setInitialData] = useState(initialValues)
+  // Email
+  const [emailData, setEmailData] = useState<string>('')
   // Wallet Data
-  const [walletSelected, setWalletSelected] = useState<any>({ icon: null, label: null });
+  const [walletSelected, setWalletSelected] = useState<any>({ icon: null, label: null })
   // OTP Received
-  const [otpServiceData, setOtpServiceData] = useState<boolean>(false);
+  const [otpServiceData, setOtpServiceData] = useState<boolean>(false)
   // Actual OTP Received
-  const [actualOtp, setActualOtp] = useState<any>('');
+  const [actualOtp, setActualOtp] = useState<any>('')
   // Email Service Loader
   const [emailLoader, setEmailLoader] = useState(false)
 
   if (window.ethereum) {
     window.ethereum.on('accountsChanged', function (accounts: any) {
-      logout();
+      logout()
       // Time to reload your interface with accounts[0]!
       if (value === 0 && !!ref.current && !!ref.current.values) {
-        const formData = JSON.parse(JSON.stringify(ref.current.values));
+        const formData = JSON.parse(JSON.stringify(ref.current.values))
         if (accounts && accounts.length > 0 && formData.walletAddress !== '') {
-          formData.walletAddress = accounts[0];
+          formData.walletAddress = accounts[0]
         }
-        setInitialData({ ...formData });
+        setInitialData({ ...formData })
       }
     })
   }
 
   const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
 
   const handleOTPClick = async () => {
     try {
-      setEmailLoader(true);
-      const formData = JSON.parse(JSON.stringify(ref.current.values));
-      setEmailData(formData.email);
+      setEmailLoader(true)
+      const formData = JSON.parse(JSON.stringify(ref.current.values))
+      setEmailData(formData.email)
       const inputJson = {
         name: formData.userName,
-        email: formData.email
+        email: formData.email,
       }
       const result = await axios.post(`${apiBaseUrl}/user/checkEmail`, inputJson)
       // console.log('result', result.data);
-      setShowOTPModal(true);
-      const Otp = await axios.get(`${apiBaseUrl}/user/getPassCode/${formData.email}`);
+      setShowOTPModal(true)
+      const Otp = await axios.get(`${apiBaseUrl}/user/getPassCode/${formData.email}`)
       // const actualOtp = 123456;
-      setActualOtp(Otp.data);
+      setActualOtp(Otp.data)
       // console.log(Otp.data);
     } catch (error) {
       // console.log(error);
@@ -130,40 +129,40 @@ const SignUp = (props: any) => {
         errorAlert('Something went wrong , please try again')
       }
     } finally {
-      setEmailLoader(false);
+      setEmailLoader(false)
     }
   }
 
   const handleOTPClose = () => {
     try {
-      setShowOTPModal(false);
+      setShowOTPModal(false)
       // setOtp('');
-      setOtpServiceData(true);
+      setOtpServiceData(true)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   const handleWalletClick = () => {
     try {
-      setShowWalletModal(true);
-    } catch (error) { }
+      setShowWalletModal(true)
+    } catch (error) {}
   }
 
   const handleWalletClose = () => {
     try {
-      setShowWalletModal(false);
-      setLoadingWallet(false);
+      setShowWalletModal(false)
+      setLoadingWallet(false)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   const handleWalletSelect = async (item: any) => {
     try {
-      setLoadingWallet(true);
+      setLoadingWallet(true)
 
-      setWalletSelected({ icon: item.icon, label: item.label });
+      setWalletSelected({ icon: item.icon, label: item.label })
       // console.log('Selected Wallet', walletSelected);
       const web3 = await getWeb3Val()
       if (web3) {
@@ -175,43 +174,43 @@ const SignUp = (props: any) => {
         const publicaddress = coinbase.toLowerCase()
         // console.log('Public Address', publicaddress);
         if (publicaddress) {
-          setShowWalletModal(false);
+          setShowWalletModal(false)
           // console.log('Ref Values', ref.current.values);
-          const formData = JSON.parse(JSON.stringify(ref.current.values));
-          formData.walletAddress = publicaddress;
-          setInitialData({ ...formData });
+          const formData = JSON.parse(JSON.stringify(ref.current.values))
+          formData.walletAddress = publicaddress
+          setInitialData({ ...formData })
         } else {
-          setErrorConnecting(true);
+          setErrorConnecting(true)
         }
       }
-      setLoadingWallet(false);
+      setLoadingWallet(false)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   const handleChangeOTP = (otp: string) => {
     try {
-      setOtp(otp);
+      setOtp(otp)
       // console.log(ref.current.values);
       if (otp.length === 4) {
-        setShowOTPModal(false);
-        const formData = JSON.parse(JSON.stringify(ref.current.values));
-        formData.otp = otp;
-        setInitialData(formData);
-        setOtp('');
+        setShowOTPModal(false)
+        const formData = JSON.parse(JSON.stringify(ref.current.values))
+        formData.otp = otp
+        setInitialData(formData)
+        setOtp('')
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   const handleChange = (event: any) => {
-    console.log(event);
+    console.log(event)
   }
 
   const handleSubmit = async (values: any) => {
     try {
       // console.log(values);
-      setDataLoading(true);
+      setDataLoading(true)
       const web3 = await getWeb3Val()
       if (web3) {
         const coinbase = await web3.eth.getCoinbase()
@@ -222,7 +221,7 @@ const SignUp = (props: any) => {
         const publicaddress = coinbase.toLowerCase()
         // console.log(publicaddress);
         let signatureData: any = ''
-        const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
+        // const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
         const data: any = { email: values.email, publicaddress, name: values.userName }
         const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
         signatureData = { publicaddress: signUpRes.data.publicaddress, nonce: signUpRes.data.nonce }
@@ -256,28 +255,21 @@ const SignUp = (props: any) => {
 
   return (
     <>
-
-      <Grid container >
+      <Grid container>
         <Grid item md={4} sm={12} xs={12}></Grid>
 
         <Grid item md={4} sm={12} xs={12}>
-          <Box className={classes.root} >
-
+          <Box className={classes.root}>
             {/* <LogoImage src={questLogo} alt='Quest Logo' /> */}
             <LogoImage
               src={questLogo}
-              alt='Quest Logo'
-            // onMouseOver={e => (e.currentTarget.src = questHoverLogo)} 
-            // onMouseOut={e => (e.currentTarget.src = questLogo)} 
+              alt="Quest Logo"
+              // onMouseOver={e => (e.currentTarget.src = questHoverLogo)}
+              // onMouseOut={e => (e.currentTarget.src = questLogo)}
             />
 
             <div className={classes.tabDivStyle}>
-              <StyledTabs
-                centered
-                variant='standard'
-                value={value}
-                onChange={handleChangeTab}
-              >
+              <StyledTabs centered variant="standard" value={value} onChange={handleChangeTab}>
                 <StyledTab
                   disableRipple
                   className={classes.tabStyle}
@@ -285,11 +277,9 @@ const SignUp = (props: any) => {
                   label={
                     <>
                       <span style={{ color: value == 0 ? '#BA8E4D' : '#2B2D31' }}>Sign Up</span>
-                      <span
-                        className={classes.tabText}
-                      >
+                      <span className={classes.tabText}>
                         Lorem ipsum dolor sit, amet consectetur adipisicing.
-                      {value === 0 ? <Indicator /> : ''}
+                        {value === 0 ? <Indicator /> : ''}
                       </span>
                     </>
                   }
@@ -301,11 +291,9 @@ const SignUp = (props: any) => {
                   label={
                     <>
                       <span style={{ color: value == 1 ? '#BA8E4D' : '#2B2D31' }}>Sign In</span>
-                      <span
-                        className={classes.tabText}
-                      >
+                      <span className={classes.tabText}>
                         Lorem ipsum dolor sit, amet consectetur adipisicing.
-                      {value === 1 ? <Indicator /> : ''}
+                        {value === 1 ? <Indicator /> : ''}
                       </span>
                     </>
                   }
@@ -313,20 +301,14 @@ const SignUp = (props: any) => {
               </StyledTabs>
             </div>
 
-            {value == 0 &&
-
+            {value == 0 && (
               <Formik
                 innerRef={ref}
                 enableReinitialize
                 initialValues={initialData}
                 validationSchema={Yup.object().shape({
-
                   userName: Yup.string().required('UserName is required'),
-                  email: Yup.string()
-                    .min(3, 'Email Not Long Enough')
-                    .max(100)
-                    .email('Invalid Email')
-                    .required('Email is required'),
+                  email: Yup.string().min(3, 'Email Not Long Enough').max(100).email('Invalid Email').required('Email is required'),
                   // .matches(
                   //   // eslint-disable-next-line no-useless-escape
                   //   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -338,7 +320,6 @@ const SignUp = (props: any) => {
                     .required('OTP is required')
                     .equals([actualOtp], 'Pls enter correct OTP'),
                   walletAddress: Yup.string().required('Wallet Address is required'),
-
                 })}
                 onSubmit={(values, { setSubmitting }) => {
                   handleSubmit(values)
@@ -352,10 +333,17 @@ const SignUp = (props: any) => {
                         <CustomLabel>
                           Username &nbsp;
                           <CustomTooltip title="Enter username" arrow>
-                            <InfoIcon src={infoIcon} alt='Info' />
+                            <InfoIcon src={infoIcon} alt="Info" />
                           </CustomTooltip>
                         </CustomLabel>
-                        <CustomInput type="text" name="userName" value={values.userName} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                        <CustomInput
+                          type="text"
+                          name="userName"
+                          value={values.userName}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          fullWidth
+                        />
                         {/* {  touched.userName ? (<span>hello</span>): null } */}
                         <ErrorMessage component="div" className={classes.err} name="userName" />
                       </div>
@@ -363,16 +351,26 @@ const SignUp = (props: any) => {
                         <CustomLabel>
                           Email Address &nbsp;
                           <CustomTooltip title="Enter Email" arrow>
-                            <InfoIcon src={infoIcon} alt='Info' />
+                            <InfoIcon src={infoIcon} alt="Info" />
                           </CustomTooltip>
                         </CustomLabel>
                         <InpBtnWrapper>
-                          <CustomInput type="text" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                          <CustomInput
+                            type="text"
+                            name="email"
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            fullWidth
+                          />
                           <IcoButton
                             style={{ display: otpServiceData ? 'none' : '' }}
-                            disabled={(Yup.string().email().required().isValidSync(values.email) ? false : true) ||
-                              (Yup.string().required().isValidSync(values.userName) ? false : true)}
-                            onClick={handleOTPClick}>
+                            disabled={
+                              (Yup.string().email().required().isValidSync(values.email) ? false : true) ||
+                              (Yup.string().required().isValidSync(values.userName) ? false : true)
+                            }
+                            onClick={handleOTPClick}
+                          >
                             {emailLoader ? <Spinner /> : <InpBtn src={rightArrow} />}
                           </IcoButton>
                         </InpBtnWrapper>
@@ -382,7 +380,7 @@ const SignUp = (props: any) => {
                         <CustomLabel>
                           OTP &nbsp;
                           <CustomTooltip title="Enter OTP" arrow>
-                            <InfoIcon src={infoIcon} alt='Info' />
+                            <InfoIcon src={infoIcon} alt="Info" />
                           </CustomTooltip>
                         </CustomLabel>
                         <InpBtnWrapper>
@@ -390,7 +388,11 @@ const SignUp = (props: any) => {
                             type="number"
                             name="otp"
                             disabled={!otpServiceData}
-                            value={values.otp} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                            value={values.otp}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            fullWidth
+                          />
                         </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="otp" />
                       </div>
@@ -398,7 +400,7 @@ const SignUp = (props: any) => {
                         <CustomLabel>
                           Wallet Address &nbsp;
                           <CustomTooltip title="Enter Wallet Address" arrow>
-                            <InfoIcon src={infoIcon} alt='Info' />
+                            <InfoIcon src={infoIcon} alt="Info" />
                           </CustomTooltip>
                         </CustomLabel>
                         <InpBtnWrapper>
@@ -407,12 +409,21 @@ const SignUp = (props: any) => {
                             name="walletAddress"
                             disabled={!values.walletAddress}
                             readOnly={true}
-                            value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                            value={values.walletAddress}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            fullWidth
+                          />
                           <IcoButton
                             style={{ display: values.walletAddress ? 'none' : '' }}
-                            disabled={(Yup.string().email().required().isValidSync(values.email) ? false : true) ||
-                              (Yup.string().required().isValidSync(values.userName) ? false : true)}
-                            onClick={handleWalletClick}><InpBtn src={wallet} /></IcoButton>
+                            disabled={
+                              (Yup.string().email().required().isValidSync(values.email) ? false : true) ||
+                              (Yup.string().required().isValidSync(values.userName) ? false : true)
+                            }
+                            onClick={handleWalletClick}
+                          >
+                            <InpBtn src={wallet} />
+                          </IcoButton>
                         </InpBtnWrapper>
                         <ErrorMessage component="div" className={classes.err} name="walletAddress" />
                       </div>
@@ -420,8 +431,7 @@ const SignUp = (props: any) => {
                       <div className={classes.signUpBtndiv}>
                         <CustomButton
                           type="submit"
-                          disabled={(!(values.email) || !(values.walletAddress) ||
-                            !(values.userName) || !(values.otp)) || !(isValid)}
+                          disabled={!values.email || !values.walletAddress || !values.userName || !values.otp || !isValid}
                         >
                           {dataLoading ? 'Loading...' : 'GET STARTED'}
                         </CustomButton>
@@ -430,13 +440,11 @@ const SignUp = (props: any) => {
                   </Form>
                 )}
               </Formik>
-
-            }
+            )}
             {
               // SignIn Tab
               value == 1 && <Login />
             }
-
           </Box>
         </Grid>
 
@@ -445,8 +453,8 @@ const SignUp = (props: any) => {
             <img
               src={cryptoImage}
               className={classes.cryptoTransImage}
-              onMouseOver={e => (e.currentTarget.src = cryptoHoverImage)}
-              onMouseOut={e => (e.currentTarget.src = cryptoImage)}
+              onMouseOver={(e) => (e.currentTarget.src = cryptoHoverImage)}
+              onMouseOut={(e) => (e.currentTarget.src = cryptoImage)}
             />
           </div>
         </Grid>
@@ -457,11 +465,11 @@ const SignUp = (props: any) => {
       <CustomModal show={showOTPModal} toggleModal={handleOTPClose}>
         <div className={classes.OTPModalDiv}>
           <div className={classes.OTPModalClose} onClick={handleOTPClose}>
-            <img src={closeIcon} alt='close' />
+            <img src={closeIcon} alt="close" />
           </div>
           <div className={classes.OTPModalMail}>
             {/* <img src={mailIcon} alt='Mail Icon' /> */}
-            <img src={mailIcon2} alt='Mail Icon' />
+            <img src={mailIcon2} alt="Mail Icon" />
           </div>
           {/* <OTPInputField type='text' /> */}
           {/* <OtpInput
@@ -473,7 +481,7 @@ const SignUp = (props: any) => {
           /> */}
           <div className={classes.OTPModalText}>
             Please check <span style={{ background: 'rgba(25, 163, 179, 0.1)' }}>{emailData}</span> for OTP CODE
-            </div>
+          </div>
         </div>
       </CustomModal>
 
@@ -487,23 +495,22 @@ const SignUp = (props: any) => {
               </span>
             ) : (
               <span className={classes.walletHeadText}>Select a wallet</span>
-            )
-            }
-            <img src={closeIcon} alt='close' onClick={handleWalletClose} />
+            )}
+            <img src={closeIcon} alt="close" onClick={handleWalletClose} />
           </div>
           {loadingWallet ? (
             <div className={classes.walletCont}>
-              { !errorConnecting ? (
+              {!errorConnecting ? (
                 <>
-                  <img src={loadingIcon} alt='Loading...' style={{ width: '18px' }} />
+                  <img src={loadingIcon} alt="Loading..." style={{ width: '18px' }} />
                   <span>{walletSelected.label ? walletSelected.label : 'Initializing'}</span>
-                  <img src={walletSelected.icon ? walletSelected.icon : metaMaskIcon} alt='Meta Mask' />
+                  <img src={walletSelected.icon ? walletSelected.icon : metaMaskIcon} alt="Meta Mask" />
                 </>
               ) : (
                 <>
                   <span style={{ whiteSpace: 'nowrap' }}>Error Connecting</span>
                   {/* <img src={metaMaskIcon} alt='Meta Mask' /> */}
-                  <img src={walletSelected.icon ? walletSelected.icon : metaMaskIcon} alt='Meta Mask' />
+                  <img src={walletSelected.icon ? walletSelected.icon : metaMaskIcon} alt="Meta Mask" />
                   <div className={classes.tryAgainDiv}>
                     <button>Try Again</button>
                   </div>
@@ -512,24 +519,18 @@ const SignUp = (props: any) => {
             </div>
           ) : (
             <Wallet walletClick={handleWalletSelect} />
-          )
-          }
-
+          )}
         </div>
       </CustomModal>
-
     </>
-  );
-
+  )
 }
 
 interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
+  children?: React.ReactNode
+  index: any
+  value: any
 }
-
-
 
 // export default SignUp;
 

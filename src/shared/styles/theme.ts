@@ -77,6 +77,7 @@ export const theme: ThemeStarter = {
 }
 
 export interface ScreenSizes {
+  mediaXS: number,
   mediaS: number
   mediaM: number
   mediaL: number
@@ -84,6 +85,7 @@ export interface ScreenSizes {
   mediaXXL: number
 }
 export const screenSizes: ScreenSizes = {
+  mediaXS: 567,
   mediaS: 640,
   mediaM: 800,
   mediaL: 1024,
@@ -92,6 +94,7 @@ export const screenSizes: ScreenSizes = {
 }
 
 export const GlobalStyle = createGlobalStyle`
+
 @font-face {
   font-family: RobotoBold;
   src: url(${RobotoBold});

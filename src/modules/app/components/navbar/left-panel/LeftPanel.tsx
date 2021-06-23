@@ -94,7 +94,7 @@ const LeftPanel = (props: any) => {
         <IconButton className={classes.closeDrawerBtn} onClick={() => handleDrawerClose()}>
           <Close />
         </IconButton>
-
+        
         <Grid className={classes.root}>
           <QuestLogoCont>
             {/* <img src={QuestLogo} alt="" /> */}

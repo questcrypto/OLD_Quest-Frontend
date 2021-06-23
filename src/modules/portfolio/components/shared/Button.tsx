@@ -6,6 +6,7 @@ import {
 const useStyles = makeStyles(theme => ({
   root: {
     borderRadius: '2px',
+    
     '&:disabled': {
       backgroundColor: theme.palette.primary.main,
       color: '#FFF',
@@ -29,6 +30,9 @@ const CustomButton = (props: any) => {
     onClick,
     backgroundColor,
     padding,
+    margin,
+    width,
+    display,
     ...other
   } = props;
 
@@ -42,6 +46,9 @@ const CustomButton = (props: any) => {
       style={{
         backgroundColor: backgroundColor ? backgroundColor : '',
         padding: padding ? padding : '',
+        margin: margin ? margin : '',
+        width: width ? width : '',
+        display: display ? display : '',
       }}
       {...other}
     >

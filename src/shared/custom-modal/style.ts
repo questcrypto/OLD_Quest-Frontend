@@ -33,7 +33,7 @@ export const ModalContent = styled.div<any>`
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
   width: auto;
-  @media (min-width: ${screenSizes.mediaL}px) {
-    width: auto;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
   }
 `

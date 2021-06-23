@@ -200,7 +200,7 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
       props.handleDrawerClose()
     }
     return () => {}
-  })
+  }, [width])
 
   const classes = useStyles()
   return (

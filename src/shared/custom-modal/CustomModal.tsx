@@ -9,7 +9,7 @@ const CustomModal = (props: any) => {
     }
   }
   return (
-    <ModalBody show={show} onMouseDown={handleClickOutside}>
+    <ModalBody show={show} onMouseDown={handleClickOutside} >
       <ModalContent borderRadius={borderRadius}>{props.children}</ModalContent>
     </ModalBody>
   )

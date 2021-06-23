@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { makeStyles, Typography, Input, InputAdornment } from '@material-ui/core'
 import styled from 'styled-components'
-
+import {screenSizes} from '../../../shared/styles/theme'
 import CustomModal from '../../../shared/custom-modal/CustomModal'
 import closeIcon from 'assets/icons/closeIcon.svg'
 import SwapVertIcon from '@material-ui/icons/SwapVert'
@@ -16,9 +16,11 @@ import { Paths } from 'modules/app/components/routes/types'
 const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
-  bcDiv: {
-    minWidth: '464px',
-    // padding: theme.spacing(4)
+  dcDiv: {
+    minWidth: '100%',
+    [theme.breakpoints.up('sm')]: {
+      minWidth: '500px',
+    },
   },
   modalBody: {
     padding: theme.spacing(4),
@@ -227,7 +229,7 @@ const BuyAndConvertModal = (props: any) => {
   }
   return (
     <CustomModal show={show} toggleModal={toggleModal}>
-      <div className={classes.bcDiv}>
+      <div className={classes.dcDiv}>
         <ModalHeaderDiv>
           <ModalHeaderText>{headerText}</ModalHeaderText>
           <div onClick={onClose}>
@@ -366,11 +368,25 @@ const BuyAndConvertModal = (props: any) => {
 
 export default BuyAndConvertModal
 
+
+
+// style components
+
+// export const BcDiv = styled.div`
+//   @media only screen and (max-width: 480px) {
+//     min-width: '100%';
+//   }
+// `
+
+
 export const DFlexDiv = styled.div`
   width: '100%';
   display: flex;
   justify-content: center;
 `
+
+
+
 
 export const ModalHeaderDiv = styled.div`
   display: flex;

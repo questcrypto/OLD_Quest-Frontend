@@ -24,7 +24,7 @@ import { getKNABBalance } from '../../modules/block-chain/BlockChainMethods'
 
 const Portfolio = (props: any) => {
   const classes = useStyles()
- 
+
   const [pb, setPb] = useState(0)
   const [bcModal, setBcModal] = useState(false)
   const [isConfirm, setIsConfirm] = useState(false)
@@ -157,57 +157,66 @@ const Portfolio = (props: any) => {
     }
   }
 
-  const handleTestPage = () => history.push(Paths.learnMore)
+  // const handleTestPage = () => history.push(Paths.dashboard)
 
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
     getKNABbalance(KNABBalance / 10 ** 18)
     // setPb(KNABBalance / 10 ** 18)
   }
-  console.log(props.KNABBalance)
+  console.log(props)
+  // loggedIn ? () : ''
   return (
     <div className={classes.root}>
-        <div className={classes.header}>
-          <Typography className={classes.title} variant="h6">
-            Portfolio
-          </Typography>
-          <div className={classes.btnDiv}>
-            <CustomButton
-              size="small"
-              disableElevation
-              disableFocusRipple
-              disableRipple
-              style={{ backgroundColor: '#858585', padding: '4px 16px',  margin: "0 0 10px 0" }}
-            >
-              00.00 KNABr
-            </CustomButton>
-            &nbsp;&nbsp;&nbsp;
-            <CustomButton
-              size="small"
-              disableElevation
-              disableFocusRipple
-              disableRipple
-              style={{ backgroundColor: '#858585', padding: '4px 16px', margin: "0 0 10px 0" }}
-            >
-              {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
-              {/* {KNABbalance || pb.toFixed(3)} KNAB */}
-              {Number(props.KNABBalance.toFixed(3))} KNAB
-            </CustomButton>
-            &nbsp;&nbsp;&nbsp;
-            <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: "0 0 10px 0" }} onClick={() => handleAuction()}>
-              Real Estate Auctions
-            </CustomButton>
-            &nbsp;&nbsp;&nbsp;
-            <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: "0 0 10px 0" }}>
-              Buy | Convert Quest
-            </CustomButton>
-            &nbsp;&nbsp;&nbsp;
-            <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: "0 0 10px 0" }} onClick={openbcModal}>
-              {/* Buy | Convert KNAB */}
-              Buy KNAB
-            </CustomButton>
-            &nbsp;&nbsp;&nbsp;
-            {/* <CustomButton
+      <div className={classes.header}>
+        <Typography className={classes.title} variant="h6">
+          Portfolio
+        </Typography>
+        <div className={classes.btnDiv}>
+          <CustomButton
+            size="small"
+            disableElevation
+            disableFocusRipple
+            disableRipple
+            style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
+          >
+            00.00 KNABr
+          </CustomButton>
+          &nbsp;&nbsp;&nbsp;
+          <CustomButton
+            size="small"
+            disableElevation
+            disableFocusRipple
+            disableRipple
+            style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
+          >
+            {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
+            {/* {KNABbalance || pb.toFixed(3)} KNAB */}
+            {Number(props.KNABBalance.toFixed(3))} KNAB
+          </CustomButton>
+          &nbsp;&nbsp;&nbsp;
+          <CustomButton
+            size="small"
+            style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
+            onClick={() => handleAuction()}
+          >
+            Real Estate Auctions
+          </CustomButton>
+          &nbsp;&nbsp;&nbsp;
+          <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}>
+            Buy | Convert Quest
+          </CustomButton>
+          &nbsp;&nbsp;&nbsp;
+          <CustomButton
+            size="small"
+            style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
+            onClick={openbcModal}
+          >
+            {/* Buy | Convert KNAB */}
+            Buy KNAB
+          </CustomButton>
+          &nbsp;&nbsp;&nbsp;
+          {/* <CustomButton
               size="small"
               disableElevation
               disableFocusRipple
@@ -217,9 +226,9 @@ const Portfolio = (props: any) => {
             >
               Test
             </CustomButton> */}
-          </div>
         </div>
-        <Grid container spacing={4} style={{ padding: '32px 0px' }}>
+      </div>
+      <Grid container spacing={4} style={{ padding: '32px 0px' }}>
         <Grid item md={7} xs={12}>
           <Paper className={classes.portfolioDiv}>
             <Typography variant="subtitle1">Portfolio Balance</Typography>
@@ -233,7 +242,7 @@ const Portfolio = (props: any) => {
             </div>
             <div className={classes.pfBtnDiv}>
               <div>
-                <CustomButton size="large"  style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}>
+                <CustomButton size="large" style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}>
                   Buy Quest Tokens
                 </CustomButton>
                 <br />
@@ -302,7 +311,6 @@ const Portfolio = (props: any) => {
         isTransaction={isTransaction}
         loader={loader}
       />
- 
 
       <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} />
     </div>

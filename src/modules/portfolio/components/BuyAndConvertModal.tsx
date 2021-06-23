@@ -13,6 +13,7 @@ import Spinner from 'shared/loader-components/spinner'
 import { getWeb3Val, fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
+import './fieldStyle.css'
 const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
@@ -128,6 +129,7 @@ const BuyAndConvertModal = (props: any) => {
   }
 
   const handleBtnChange = (e: any) => {
+    console.log(e)
     try {
       if (e.id.includes('from')) {
         setDropDownData({ ...dropDownData, from: { ...e } })
@@ -223,7 +225,8 @@ const BuyAndConvertModal = (props: any) => {
   // const handleLearnMorePage = () => history.push(Paths.learnMore)
   // openInNewTab
   const openInNewTab = (url: string) => {
-    console.log(url)
+    // const currentUrl = `${window.location.href}${url}`
+    // console.log(currentUrl, '227')
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
   }
@@ -307,7 +310,7 @@ const BuyAndConvertModal = (props: any) => {
               <Typography variant="subtitle2">From</Typography>
               <ContaInnerDiv>
                 <DropDownButton options={options1} valueChange={handleBtnChange} />
-                <CustomInput id="from" type="text" value={formData.from} onChange={handleChange} />
+                <CustomInput id="from" type="number" value={formData.from} onChange={handleChange} />
               </ContaInnerDiv>
 
               <Typography variant="subtitle2" style={{ paddingTop: '16px' }}>
@@ -324,6 +327,7 @@ const BuyAndConvertModal = (props: any) => {
                 ICO Details (
                 <span
                   className={classes.learnMoreText}
+                  // onClick={() => openInNewTab(`${Paths.ICOdetails}`)}
                   // onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}
                   //  onClick={() => handleLearnMorePage()}
                 >

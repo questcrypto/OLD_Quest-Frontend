@@ -239,7 +239,7 @@ export const getStableCoinBalance = async () => {
     const stableCoinContract = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
     const res = await stableCoinContract.methods.balanceOf(accounts[0]).call()
     const stableCoinBalance: any = res * 10 ** 6
-    console.log(stableCoinBalance)
+    // console.log(stableCoinBalance)
     return parseInt(stableCoinBalance)
   }
 }
@@ -256,7 +256,7 @@ export const buyKnab = async (amount: number) => {
 
 export const handlestableCoinapproval = async (contractStableCoin: any, account: string, ApproveAmount: any) => {
   const deci = await contractStableCoin.methods.decimals().call()
-  console.log(ApproveAmount * 10 ** deci, 'abc')
+  // console.log(ApproveAmount * 10 ** deci, 'abc')
   const res = await contractStableCoin.methods.approve(ICOAddress, ApproveAmount * 10 ** deci).send({ from: account })
   return res
 }
@@ -265,7 +265,7 @@ export const fetchValue = async (amount: number) => {
   const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.KnabAmount(convertToWei(amount)).call()
-  console.log(res, '***')
+  // console.log(res, '***')
   return convertToEther2(res)
 }
 
@@ -273,7 +273,7 @@ export const fetchDetails = async () => {
   const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.details().call()
-  console.log(res, '***')
+  // console.log(res, '***')
   return { tokensSold: convertToEther2(res['0']), tokensLeft: convertToEther2(res['1']) }
 }
 

@@ -10,68 +10,58 @@ import * as Yup from 'yup'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
-import {
-  CustomInput,
-  CustomButton,
-  InfoIcon,
-  IcoButton,
-  InpBtn,
-  InpBtnWrapper,
-  CustomLabel,
-  CustomTooltip
-} from './style';
-import infoIcon from 'assets/images/info.svg';
-import wallet from 'assets/images/wallet.svg';
-import { loginFormSchema } from '../signUp/formConstant';
-import CustomModal from '../../../shared/custom-modal';
-import closeIcon from 'assets/icons/closeIcon.svg';
-import Wallet from '../signUp/components';
-import metaMaskIcon from 'assets/images/metamask.jpg';
-import loadingIcon from 'assets/icons/loading.svg';
+import { CustomInput, CustomButton, InfoIcon, IcoButton, InpBtn, InpBtnWrapper, CustomLabel, CustomTooltip } from './style'
+import infoIcon from 'assets/images/info.svg'
+import wallet from 'assets/images/wallet.svg'
+import { loginFormSchema } from '../signUp/formConstant'
+import CustomModal from '../../../shared/custom-modal'
+import closeIcon from 'assets/icons/closeIcon.svg'
+import Wallet from '../signUp/components'
+import metaMaskIcon from 'assets/images/metamask.jpg'
+import loadingIcon from 'assets/icons/loading.svg'
 import { setTimeout } from 'timers'
 
-
 const Login = (props: any) => {
-
   const initialValues = {
     email: '',
-    walletAddress: ''
+    walletAddress: '',
   }
 
   const [dataLoading, setDataLoading] = useState(false)
   const classes = useStyle()
   const { loading, loginStart, errorAlert, walletConnect, logout } = props
 
-  const ref = useRef<any>();
+  const ref = useRef<any>()
 
   // Open Wallet Modal
-  const [showWalletModal, setShowWalletModal] = useState(false);
+  const [showWalletModal, setShowWalletModal] = useState(false)
   // Initializing Wallet Modal
-  const [loadingWallet, setLoadingWallet] = useState(false);
+  const [loadingWallet, setLoadingWallet] = useState(false)
   // Error Connecting Modal
-  const [errorConnecting, setErrorConnecting] = useState(false);
+  const [errorConnecting, setErrorConnecting] = useState(false)
   // Wallet Data
-  const [walletSelected, setWalletSelected] = useState<any>({ icon: null, label: null });
+  const [walletSelected, setWalletSelected] = useState<any>({ icon: null, label: null })
   // Form Data
-  const [initialData, setInitialData] = useState(initialValues);
+  const [initialData, setInitialData] = useState(initialValues)
 
   if (window.ethereum) {
     window.ethereum.on('accountsChanged', function (accounts: any) {
-      logout();
+      logout()
       // Time to reload your interface with accounts[0]!
       if (!!ref.current && !!ref.current.values) {
-        const formData = JSON.parse(JSON.stringify(ref.current.values));
+        const formData = JSON.parse(JSON.stringify(ref.current.values))
         if (accounts && accounts.length > 0 && formData.walletAddress !== '') {
-          formData.walletAddress = accounts[0];
-          setInitialData({ ...formData });
+          formData.walletAddress = accounts[0]
+          setInitialData({ ...formData })
         }
       }
     })
   }
 
   const handleSubmit = async (values: any) => {
+    console.log('logg')
     try {
-      setDataLoading(true);
+      setDataLoading(true)
       const web3 = await getWeb3Val()
       if (web3) {
         const coinbase = await web3.eth.getCoinbase()
@@ -82,7 +72,7 @@ const Login = (props: any) => {
         const publicaddress = coinbase.toLowerCase()
         // console.log(publicaddress);
         let signatureData: any = ''
-        const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`);
+        const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
         // console.log('Result', result);
         // if (!!result && result.data && result.data.length === 0) {
         //   const data: any = { email: values.email, publicaddress }
@@ -99,7 +89,7 @@ const Login = (props: any) => {
         // const loginData = { email: values.email, publicaddress, signature }
         const loginData = { publicaddress, signature }
         loginStart(loginData)
-        walletConnect(true);
+        walletConnect(true)
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
@@ -110,29 +100,29 @@ const Login = (props: any) => {
         errorAlert('Something went wrong , please try again')
       }
     } finally {
-      setTimeout(() => setDataLoading(false), 3000);
+      setTimeout(() => setDataLoading(false), 3000)
     }
   }
 
   const handleWalletClick = () => {
     try {
-      setShowWalletModal(true);
-    } catch (error) { }
+      setShowWalletModal(true)
+    } catch (error) {}
   }
 
   const handleWalletClose = () => {
     try {
-      setShowWalletModal(false);
-      setLoadingWallet(false);
+      setShowWalletModal(false)
+      setLoadingWallet(false)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   const handleWalletSelect = async (item: any) => {
     try {
-      setLoadingWallet(true);
-      setWalletSelected({ icon: item.icon, label: item.label });
+      setLoadingWallet(true)
+      setWalletSelected({ icon: item.icon, label: item.label })
       // console.log('Selected Wallet', walletSelected);
 
       const web3 = await getWeb3Val()
@@ -145,19 +135,18 @@ const Login = (props: any) => {
         const publicaddress = coinbase.toLowerCase()
         // console.log('Public Address', publicaddress);
         if (publicaddress) {
-          setShowWalletModal(false);
+          setShowWalletModal(false)
           // console.log('Ref Values', ref.current.values);
-          const formData = JSON.parse(JSON.stringify(ref.current.values));
-          formData.walletAddress = publicaddress;
-          setInitialData(formData);
+          const formData = JSON.parse(JSON.stringify(ref.current.values))
+          formData.walletAddress = publicaddress
+          setInitialData(formData)
         } else {
-          setErrorConnecting(true);
+          setErrorConnecting(true)
         }
-        setLoadingWallet(false);
+        setLoadingWallet(false)
       }
-
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
   return (
@@ -171,8 +160,8 @@ const Login = (props: any) => {
           handleSubmit(values)
           setSubmitting(false)
         }}
-      // onSubmit={() => { console.log("submit!"); }}
-      // validator={() => ({})}
+        // onSubmit={() => { console.log("submit!"); }}
+        // validator={() => ({})}
       >
         {({ values, handleChange, handleBlur, isValid, dirty, isSubmitting, isValidating, errors, touched }: any) => (
           <Form style={{ width: '100%' }}>
@@ -191,7 +180,7 @@ const Login = (props: any) => {
                 <CustomLabel>
                   Wallet Address &nbsp;
                   <CustomTooltip title="Enter Wallet Address" arrow>
-                    <InfoIcon src={infoIcon} alt='Info' />
+                    <InfoIcon src={infoIcon} alt="Info" />
                   </CustomTooltip>
                 </CustomLabel>
                 <InpBtnWrapper>
@@ -200,11 +189,16 @@ const Login = (props: any) => {
                     name="walletAddress"
                     disabled={!values.walletAddress}
                     readOnly={true}
-                    value={values.walletAddress} onChange={handleChange} onBlur={handleBlur} fullWidth />
+                    value={values.walletAddress}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    fullWidth
+                  />
                   <IcoButton
                     style={{ display: values.walletAddress ? 'none' : '' }}
-                    // disabled={Yup.string().email().required().isValidSync(values.email) ? false : true} 
-                    onClick={handleWalletClick}>
+                    // disabled={Yup.string().email().required().isValidSync(values.email) ? false : true}
+                    onClick={handleWalletClick}
+                  >
                     <InpBtn src={wallet} />
                   </IcoButton>
                 </InpBtnWrapper>
@@ -213,7 +207,7 @@ const Login = (props: any) => {
               <div className={classes.signUpBtndiv}>
                 {/* disabled={!(isValid && dirty)} */}
                 {/* disabled={(!(values.email) || !(values.walletAddress)) || !(isValid)} */}
-                <CustomButton type="submit" disabled={(!(values.walletAddress)) || !(isValid)}>
+                <CustomButton type="submit" disabled={!values.walletAddress || !isValid}>
                   {dataLoading ? 'Loading...' : 'ENTER HERE'}
                 </CustomButton>
               </div>
@@ -232,23 +226,22 @@ const Login = (props: any) => {
               </span>
             ) : (
               <span className={classes.walletHeadText}>Select a wallet</span>
-            )
-            }
-            <img src={closeIcon} alt='close' onClick={handleWalletClose} />
+            )}
+            <img src={closeIcon} alt="close" onClick={handleWalletClose} />
           </div>
           {loadingWallet ? (
             <div className={classes.walletCont}>
-              { !errorConnecting ? (
+              {!errorConnecting ? (
                 <>
-                  <img src={loadingIcon} alt='Loading...' style={{ width: '18px' }} />
+                  <img src={loadingIcon} alt="Loading..." style={{ width: '18px' }} />
                   <span>{walletSelected.label ? walletSelected.label : 'Initializing'}</span>
-                  <img src={walletSelected.icon ? walletSelected.icon : metaMaskIcon} alt='Meta Mask' />
+                  <img src={walletSelected.icon ? walletSelected.icon : metaMaskIcon} alt="Meta Mask" />
                 </>
               ) : (
                 <>
                   <span style={{ whiteSpace: 'nowrap' }}>Error Connecting</span>
                   {/* <img src={metaMaskIcon} alt='Meta Mask' /> */}
-                  <img src={walletSelected.icon ? walletSelected.icon : metaMaskIcon} alt='Meta Mask' />
+                  <img src={walletSelected.icon ? walletSelected.icon : metaMaskIcon} alt="Meta Mask" />
                   <div className={classes.tryAgainDiv}>
                     <button>Try Again</button>
                   </div>
@@ -257,9 +250,7 @@ const Login = (props: any) => {
             </div>
           ) : (
             <Wallet walletClick={handleWalletSelect} />
-          )
-          }
-
+          )}
         </div>
       </CustomModal>
     </>

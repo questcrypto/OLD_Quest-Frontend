@@ -290,7 +290,7 @@ export const fetchDetails = async () => {
   const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.details().call()
-  console.log(res, '***')
+  // console.log(res, '***')
   return { tokensSold: convertToEther2(res['0']), tokensLeft: convertToEther2(res['1']) }
 }
 

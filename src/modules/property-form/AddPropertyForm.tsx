@@ -104,7 +104,8 @@ const AddPropertyForm = (props: any) => {
       try {
         setLoading(true)
         await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
-        history.push(Paths.root)
+        // history.push(Paths.root)
+        history.push(Paths.dashboard)
       } catch (error) {
         if (!!error && error.response && error.response.data.message) {
           errorAlert(error.response.data.message)

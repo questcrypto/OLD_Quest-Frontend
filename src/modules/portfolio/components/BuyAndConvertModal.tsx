@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { makeStyles, Typography, Input, InputAdornment } from '@material-ui/core'
 import styled from 'styled-components'
-import {screenSizes} from '../../../shared/styles/theme'
+import { screenSizes } from '../../../shared/styles/theme'
 import CustomModal from '../../../shared/custom-modal/CustomModal'
 import closeIcon from 'assets/icons/closeIcon.svg'
 import SwapVertIcon from '@material-ui/icons/SwapVert'
@@ -226,7 +226,8 @@ const BuyAndConvertModal = (props: any) => {
   // openInNewTab
   const openInNewTab = (url: string) => {
     // const currentUrl = `${window.location.href}${url}`
-    // console.log(currentUrl, '227')
+    console.log(url, '227')
+
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
   }
@@ -328,7 +329,7 @@ const BuyAndConvertModal = (props: any) => {
                 <span
                   className={classes.learnMoreText}
                   // onClick={() => openInNewTab(`${Paths.ICOdetails}`)}
-                  // onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}
+                  onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}
                   //  onClick={() => handleLearnMorePage()}
                 >
                   Learn More
@@ -372,8 +373,6 @@ const BuyAndConvertModal = (props: any) => {
 
 export default BuyAndConvertModal
 
-
-
 // style components
 
 // export const BcDiv = styled.div`
@@ -382,15 +381,11 @@ export default BuyAndConvertModal
 //   }
 // `
 
-
 export const DFlexDiv = styled.div`
   width: '100%';
   display: flex;
   justify-content: center;
 `
-
-
-
 
 export const ModalHeaderDiv = styled.div`
   display: flex;

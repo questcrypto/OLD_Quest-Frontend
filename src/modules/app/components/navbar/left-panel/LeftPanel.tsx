@@ -69,7 +69,8 @@ const LeftPanel = (props: any) => {
       logout(false)
       // logout2(false);
       setTimeout(() => {
-        history.push('/login')
+        // history.push('/login')
+        history.push('/')
       }, 100)
     } catch (error) {
       console.log(error)
@@ -94,7 +95,7 @@ const LeftPanel = (props: any) => {
         <IconButton className={classes.closeDrawerBtn} onClick={() => handleDrawerClose()}>
           <Close />
         </IconButton>
-        
+
         <Grid className={classes.root}>
           <QuestLogoCont>
             {/* <img src={QuestLogo} alt="" /> */}
@@ -148,7 +149,7 @@ const LeftPanel = (props: any) => {
               </ListItemText>
             </ListItem>
           </Grid> */}
-          {isWalletCon ? (
+          {/* {isWalletCon ? (
             <Grid className={classes.signOutStyle}>
               <Divider className={classes.signOutDividerStyle} />
               <ListItem button>
@@ -156,15 +157,44 @@ const LeftPanel = (props: any) => {
                   size="large"
                   style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
                   onClick={disConnectWallet}
+                > */}
+          {/* {dataLoading ? 'Connecting ...' : 'Connect Wallet'} */}
+          {/* Disconnect Wallet
+                </CustomButton>
+              </ListItem>
+            </Grid>
+          ) : (
+            ''
+          )} */}
+          {loggedIn ? (
+            <Grid className={classes.signOutStyle}>
+              <Divider className={classes.signOutDividerStyle} />
+              {/* <ListItem button onClick={() => logout()}> */}
+              <ListItem button onClick={logOutFn}>
+                <PowerSettingsNewIcon className={classes.iconStyle} />
+                <ListItemText>Sign Out</ListItemText>
+              </ListItem>
+            </Grid>
+          ) : (
+            ''
+          )}
+
+          {/* {isWalletCon ? (
+            <Grid className={classes.signOutStyle}>
+              <Divider className={classes.signOutDividerStyle} />
+              <ListItem button>
+                <CustomButton
+                  size="large"
+                  style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px', marginBottom: '20px' }}
+                  onClick={disConnectWallet}
                 >
-                  {/* {dataLoading ? 'Connecting ...' : 'Connect Wallet'} */}
                   Disconnect Wallet
                 </CustomButton>
               </ListItem>
             </Grid>
           ) : (
             ''
-          )}
+          )} */}
 
           {/* <CustomButton
             size="large"

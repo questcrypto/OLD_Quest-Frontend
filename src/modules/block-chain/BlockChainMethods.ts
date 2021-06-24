@@ -257,7 +257,19 @@ export const buyKnab = async (amount: number) => {
 export const handlestableCoinapproval = async (contractStableCoin: any, account: string, ApproveAmount: any) => {
   const deci = await contractStableCoin.methods.decimals().call()
   // console.log(ApproveAmount * 10 ** deci, 'abc')
-  const res = await contractStableCoin.methods.approve(ICOAddress, ApproveAmount * 10 ** deci).send({ from: account })
+  let gasPrice: any
+  const desiredFee: number = 20000000000
+  const avgGasPrice = await web3.eth.getGasPrice().then((res) => {
+    const gasFee: number = Number(res)
+    if (gasFee < desiredFee) {
+      gasPrice = gasFee
+    } else if (gasFee > desiredFee) {
+      gasPrice = gasFee
+    } else {
+      gasPrice = desiredFee
+    }
+  })
+  const res = await contractStableCoin.methods.approve(ICOAddress, ApproveAmount * 10 ** deci).send({ from: account, gasPrice: gasPrice })
   return res
 }
 
@@ -273,7 +285,7 @@ export const fetchDetails = async () => {
   const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.details().call()
-  // console.log(res, '***')
+  console.log(res, '***')
   return { tokensSold: convertToEther2(res['0']), tokensLeft: convertToEther2(res['1']) }
 }
 

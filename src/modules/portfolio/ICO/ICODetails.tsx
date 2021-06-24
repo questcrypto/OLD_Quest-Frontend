@@ -1,12 +1,12 @@
+import { useState, useEffect } from 'react'
 import { makeStyles, Paper, Typography, Grid } from '@material-ui/core'
 import CustomButton from '../components/shared/Button'
-// import history from 'modules/app/components/history'
-// import { Paths } from 'modules/app/components/routes/types'
+import { fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
 import ICOHoldings from './ICOHoldings'
 import RaisedTokens from './RaisedTokes'
-import RewardsGrid from './RewardsGrid'
 import TokensRemaining from './TokensRemainng'
 import CrowdSaleContract from './CrowdSaleContract'
+const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +36,42 @@ const useStyles = makeStyles((theme) => ({
 const ICODetails = () => {
   const classes = useStyles()
   // const handleBackButton = () => history.push(Paths.root)
+  const [formData, setFormData] = useState({ from: 1, to: '' })
+  const [swapData, setSwapData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
 
+  useEffect(() => {
+    fetchValue(formData.from).then(
+      (res) => {
+        setFormData({ ...formData, to: res })
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
+    // Tokens Sold and Left
+    fetchDetails().then(
+      (res) => {
+        setSwapData({
+          ...swapData,
+          tokensSold: commaNumber(res['tokensSold']),
+          tokensLeft: commaNumber(res['tokensLeft']),
+        })
+        const a = Number(formData.to) * 10 ** 6
+        const b = formData.from * 10 ** 6
+        if (b == 0) {
+          // setSwapData({ ...swapData, bonusRatio:  })
+        } else {
+          setSwapData({ ...swapData, bonusRatio: a / b })
+        }
+        // console.log(res)
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
+  }, [])
+  console.log(swapData, '***')
+  console.log(formData, '***')
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -96,7 +131,7 @@ const ICODetails = () => {
         <Grid container spacing={4} style={{ padding: '38px 0px' }}>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Grid item md={10} xs={12}>
-            <TokensRemaining />
+            <TokensRemaining swapData={swapData} />
           </Grid>
         </Grid>
         <Grid container spacing={4} style={{ padding: '38px 0px' }}>

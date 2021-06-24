@@ -226,8 +226,7 @@ const BuyAndConvertModal = (props: any) => {
   // openInNewTab
   const openInNewTab = (url: string) => {
     // const currentUrl = `${window.location.href}${url}`
-    console.log(url, '227')
-
+    // console.log(url, '227')
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
   }

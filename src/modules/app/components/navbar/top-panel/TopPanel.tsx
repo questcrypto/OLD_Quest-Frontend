@@ -35,7 +35,7 @@ const TopPanel = (props: any) => {
   const [account, setAccount] = useState(false)
   let web3: Web3 = new Web3(window.ethereum)
 
-  const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress, getKNABbalance } = props
+  const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress, getKNABbalance, isWalletCon } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
@@ -180,6 +180,19 @@ const TopPanel = (props: any) => {
         // <PrimaryButton>Connect Wallet</PrimaryButton>
       }
       {/* <Notifications /> */}
+      &nbsp;&nbsp;
+      {/* {isWalletCon ? ( */}
+      {!loggedIn && isWalletCon ? (
+        <CustomButton
+          size="large"
+          style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
+          onClick={() => window.location.reload()}
+        >
+          Disconnect Wallet
+        </CustomButton>
+      ) : (
+        ''
+      )}
     </TopPanelCont>
   )
 }
@@ -189,6 +202,7 @@ const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
   walletConAddress: state.user.walletConAddress,
   KNABBalance: state.user.KNABBalance,
+  isWalletCon: state.user.isWalletCon,
 })
 
 export default connect(mapStateToProps, { loginStart, errorAlert, logout, logout2, walletConnect, walletConnectAddress, getKNABbalance })(

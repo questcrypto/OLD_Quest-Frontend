@@ -59,7 +59,6 @@ const Login = (props: any) => {
   }
 
   const handleSubmit = async (values: any) => {
-    console.log('logg')
     try {
       setDataLoading(true)
       const web3 = await getWeb3Val()

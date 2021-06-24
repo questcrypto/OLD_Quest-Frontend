@@ -6,6 +6,7 @@ import ICOHoldings from './ICOHoldings'
 import RaisedTokens from './RaisedTokes'
 import RewardsGrid from './RewardsGrid'
 import TokensRemaining from './TokensRemainng'
+import CrowdSaleContract from './CrowdSaleContract'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,7 +102,7 @@ const ICODetails = () => {
         <Grid container spacing={4} style={{ padding: '38px 0px' }}>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Grid item md={10} xs={12}>
-            <RewardsGrid />
+            <CrowdSaleContract />
           </Grid>
         </Grid>
       </Paper>

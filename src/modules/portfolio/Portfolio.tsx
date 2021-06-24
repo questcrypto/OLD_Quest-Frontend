@@ -164,7 +164,7 @@ const Portfolio = (props: any) => {
     getKNABbalance(KNABBalance / 10 ** 18)
     // setPb(KNABBalance / 10 ** 18)
   }
-  console.log(props)
+  // console.log(props)
   // loggedIn ? () : ''
   return (
     <div className={classes.root}>

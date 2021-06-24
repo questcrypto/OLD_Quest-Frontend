@@ -197,6 +197,8 @@ function getRouteRenderWithAuth(loggedIn: boolean, route: RouteDefinition, i: nu
   // if user is loggedin and is present on login page, then redirect the user to Paths.root
   if (loggedIn && window.location.pathname === Paths.login) {
     history.push(Paths.root)
+  } else if (!loggedIn && window.location.pathname === Paths.dashboard) {
+    history.push(Paths.root)
   }
   return () => <route.component />
 }

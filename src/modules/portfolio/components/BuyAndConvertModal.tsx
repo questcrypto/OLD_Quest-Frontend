@@ -117,7 +117,7 @@ const BuyAndConvertModal = (props: any) => {
   const [formData, setFormData] = useState({ from: 1, to: '' })
   const [dropDownData, setDropDownData] = useState({ from: options1[0], to: options2[0] })
   const [conversionFactor, setConversionFactor] = useState(2)
-  const [swapData, setSwapData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
+  const [swapData, setSwapData] = useState({ bonusRatio: 1.5, tokensSold: '0', tokensLeft: '0' })
   const [swapDivValue, setSwapDivValue] = useState(1)
 
   const handleChange = (e: any) => {
@@ -154,11 +154,15 @@ const BuyAndConvertModal = (props: any) => {
     // Tokens Sold and Left
     fetchDetails().then(
       (res) => {
+        // console.log(res.tokensLeft.toLocaleString('en-US));
         setSwapData({
           ...swapData,
           tokensSold: commaNumber(res['tokensSold']),
           tokensLeft: commaNumber(res['tokensLeft']),
+          // tokensSold: res['tokensSold'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+          // tokensLeft: res['tokensLeft'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
         })
+        // console.log(res)
       },
       (err) => {
         console.log(err)

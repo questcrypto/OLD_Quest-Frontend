@@ -154,15 +154,11 @@ const BuyAndConvertModal = (props: any) => {
     // Tokens Sold and Left
     fetchDetails().then(
       (res) => {
-        // console.log(res.tokensLeft.toLocaleString('en-US));
         setSwapData({
           ...swapData,
           tokensSold: commaNumber(res['tokensSold']),
           tokensLeft: commaNumber(res['tokensLeft']),
-          // tokensSold: res['tokensSold'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-          // tokensLeft: res['tokensLeft'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
         })
-        // console.log(res)
       },
       (err) => {
         console.log(err)

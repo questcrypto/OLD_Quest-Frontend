@@ -258,7 +258,7 @@ export const handlestableCoinapproval = async (contractStableCoin: any, account:
   const deci = await contractStableCoin.methods.decimals().call()
   // console.log(ApproveAmount * 10 ** deci, 'abc')
   let gasPrice: any
-  const desiredFee: number = 20000000000
+  const minimumGasFee: number = 20000000000
   const avgGasPrice = await web3.eth.getGasPrice().then((res) => {
     const gasFee: number = Number(res)
     // if (gasFee < desiredFee) {
@@ -268,11 +268,7 @@ export const handlestableCoinapproval = async (contractStableCoin: any, account:
     // } else {
     //   gasPrice = desiredFee
     // }
-    if (gasFee < desiredFee) {
-      gasPrice = desiredFee
-    } else {
-      gasPrice = gasFee
-    }
+    gasFee < minimumGasFee ? (gasPrice = minimumGasFee) : (gasPrice = gasFee)
   })
   const res = await contractStableCoin.methods.approve(ICOAddress, ApproveAmount * 10 ** deci).send({ from: account, gasPrice: gasPrice })
   return res

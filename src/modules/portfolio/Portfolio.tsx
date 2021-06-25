@@ -21,6 +21,7 @@ import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import HoverModal from './components/HoverModal'
 import { getKNABBalance } from '../../modules/block-chain/BlockChainMethods'
+import axios from 'axios'
 
 const Portfolio = (props: any) => {
   const classes = useStyles()
@@ -50,7 +51,6 @@ const Portfolio = (props: any) => {
       console.log(error)
     }
   }
-
   const submitModalFn = async (values: any) => {
     try {
       const fromData = values.from
@@ -64,6 +64,7 @@ const Portfolio = (props: any) => {
           const res: any = await getKNABBalance()
           // console.log(res, 'blc')
           // const res: any = await contractSc.methods.approve(ICOAddress, fromData).send({ from: accounts[0] });
+
           handlestableCoinapproval(contractSc, accounts[0], fromData).then(
             (res) => {
               if (res) {

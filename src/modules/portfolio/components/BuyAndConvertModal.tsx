@@ -117,7 +117,7 @@ const BuyAndConvertModal = (props: any) => {
   const [formData, setFormData] = useState({ from: 1, to: '' })
   const [dropDownData, setDropDownData] = useState({ from: options1[0], to: options2[0] })
   const [conversionFactor, setConversionFactor] = useState(2)
-  const [swapData, setSwapData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
+  const [swapData, setSwapData] = useState({ bonusRatio: 1.5, tokensSold: '0', tokensLeft: '0' })
   const [swapDivValue, setSwapDivValue] = useState(1)
 
   const handleChange = (e: any) => {

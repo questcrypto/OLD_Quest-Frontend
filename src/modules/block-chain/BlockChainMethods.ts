@@ -249,7 +249,17 @@ export const buyKnab = async (amount: number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const ICOinstance = new web3.eth.Contract(ICOabi, ICOAddress)
-    const res: any = await ICOinstance.methods.buy(convertToWei(amount)).send({ from: accounts[0] })
+    let gasPrice: any
+    const desiredFee: number = 20000000000
+    const avgGasPrice = await web3.eth.getGasPrice().then((res) => {
+      const gasFee: number = Number(res)
+      if (gasFee < desiredFee) {
+        gasPrice = desiredFee
+      } else {
+        gasPrice = gasFee
+      }
+    })
+    const res: any = await ICOinstance.methods.buy(convertToWei(amount)).send({ from: accounts[0], gasPrice })
     return res
   }
 }
@@ -258,19 +268,21 @@ export const handlestableCoinapproval = async (contractStableCoin: any, account:
   const deci = await contractStableCoin.methods.decimals().call()
   // console.log(ApproveAmount * 10 ** deci, 'abc')
   let gasPrice: any
-  const minimumGasFee: number = 20000000000
+  const desiredFee: number = 20000000000
   const avgGasPrice = await web3.eth.getGasPrice().then((res) => {
     const gasFee: number = Number(res)
-    // if (gasFee < desiredFee) {
-    //   gasPrice = gasFee
-    // } else if (gasFee > desiredFee) {
-    //   gasPrice = gasFee
-    // } else {
-    //   gasPrice = desiredFee
-    // }
-    gasFee < minimumGasFee ? (gasPrice = minimumGasFee) : (gasPrice = gasFee)
+    if (gasFee < desiredFee) {
+      gasPrice = desiredFee
+    } else {
+      gasPrice = gasFee
+    }
   })
-  const res = await contractStableCoin.methods.approve(ICOAddress, ApproveAmount * 10 ** deci).send({ from: account, gasPrice: gasPrice })
+  // let minGasFee: any
+  // const gasFee = await fetch('https://gasstation-mainnet.matic.network')
+  //   .then((response) => response.json())
+  //   .then((json) => (minGasFee = json))
+  // const gasPrice: any = minGasFee.fast * 10 ** 9
+  const res = await contractStableCoin.methods.approve(ICOAddress, ApproveAmount * 10 ** deci).send({ from: account, gasPrice })
   return res
 }
 

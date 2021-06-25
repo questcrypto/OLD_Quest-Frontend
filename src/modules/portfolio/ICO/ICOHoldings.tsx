@@ -8,73 +8,87 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: 'auto',
   },
-  //   title: {
-  //     padding: theme.spacing(2),
-  //   },
-  line: {
-    height: '1px',
-    width: '100%',
-    backgroundColor: '#DEDEDE',
+  header: {
+    display: 'flex',
+    padding: '30px',
+  },
+  logo: {
+    // padding: '30px',
   },
   contentDiv: {
     display: 'flex',
-    padding: theme.spacing(2),
+    // padding: theme.spacing(5),
   },
   contentImgDiv: {
     display: 'flex',
     alignItems: 'center',
     paddingRight: '12px',
+    marginTop: '-20px',
+    marginLeft: '20px',
   },
-  contentTextDiv: {},
-  secondLineText: {
-    color: '#C4C4C4',
+  contentImg: {
+    height: '10vh',
   },
-  title: {
-    color: '#C4C4C4',
-    fontSize: '0.8em',
+  contentTextDiv: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  subTitle: {
-    color: '##C4C4C4',
-    fontWeight: 'bold',
+  details: {
+    display: 'flex',
+    padding: '30px',
+  },
+  // detailsHeading: {
+  //   fontSize: '0.8em',
+  // },
+
+  detailsTitle: {
+    fontSize: '0.7em',
+  },
+  detailsSubtitle: {
     fontSize: '1em',
+    fontWeight: 'bold',
+  },
+  nestedSubTitle: {
+    fontSize: '0.7em',
   },
 }))
 
-const ICOHoldings = () => {
+const ICOHoldings = (props: any) => {
+  console.log(props.knabBalance)
   const classes = useStyles()
   return (
     <>
       <div className={classes.mainDiv}>
         <Paper className={classes.root} style={{ opacity: 1 }}>
-          <div>
-            <Typography variant="subtitle1">&nbsp;&nbsp;&nbsp;ICO Holdings</Typography>
-            <div className={classes.contentDiv}>
+          <Typography className={classes.header}>ICO Holdings</Typography>
+          <Grid container className={classes.logo}>
+            <Grid item md={3} xs={12}>
               <div className={classes.contentImgDiv}>
-                <img src={KnabIcon} alt="" />
+                <img src={KnabIcon} alt="" className={classes.contentImg} />
               </div>
-              <div className={classes.contentTextDiv}>
-                <Typography variant="subtitle2">KNAB</Typography>
-              </div>
-            </div>
-            <Grid container spacing={4} style={{ padding: '38px 0px' }}>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Grid item md={4} xs={12}>
-                KNAB Balance
-                <br />
-                1000.000
-                <br />
-                $1200.00 USDC
-              </Grid>
-              <Grid item md={3} xs={12}>
-                Available USDC <br />
-                $56872.30
-              </Grid>
-              <Grid item md={2} xs={12}>
-                Supply of ICO <br />
-                +3.57%
-              </Grid>
             </Grid>
-          </div>
+            <Grid item md={3} xs={12} style={{ marginTop: '5px' }}>
+              <div className={classes.contentTextDiv}>
+                <Typography variant="h5">KNAB</Typography>
+              </div>
+            </Grid>
+          </Grid>
+          <Grid container className={classes.details} spacing={2}>
+            <Grid item md={4} xs={12}>
+              <Typography className={classes.detailsTitle}>KNAB Balance</Typography>
+              <Typography className={classes.detailsSubtitle}>{Number(props.knabBalance.toFixed(3))}</Typography>
+              <Typography className={classes.nestedSubTitle}>$1200.00 USDC</Typography>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <Typography className={classes.detailsTitle}>Available USDC</Typography>
+              <Typography className={classes.detailsSubtitle}>10.00</Typography>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <Typography className={classes.detailsTitle}>Supply of ICO</Typography>
+              <Typography className={classes.detailsSubtitle}>10%</Typography>
+            </Grid>
+          </Grid>
         </Paper>
       </div>
     </>

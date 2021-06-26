@@ -1,6 +1,6 @@
-import { Paper, makeStyles, Typography, Grid, Slider } from '@material-ui/core'
+import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
 import { useState, useEffect } from 'react'
-import { StyledSlider, SliderWrap } from './style'
+import { StyledSlider } from './style'
 
 const useStyles = makeStyles((theme) => ({
   mainDiv: {

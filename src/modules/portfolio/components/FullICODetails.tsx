@@ -1,5 +1,4 @@
-import { Paper, makeStyles, Typography, Grid, Card, CardContent } from '@material-ui/core'
-// import { useState, useEffect } from 'react'
+import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
 import { connect } from 'react-redux'
 
 import CustomButton from '../../../modules/portfolio/components/shared/Button'

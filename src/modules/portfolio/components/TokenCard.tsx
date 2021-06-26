@@ -2,8 +2,8 @@ import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
 // import { useState, useEffect } from 'react'
 import KnabIcon from 'assets/icons/KNAB.svg'
 import { connect } from 'react-redux'
-import Warning from '../../../assets/icons/warning.svg'
-import Question from '../../../assets/icons/question.svg'
+// import Warning from '../../../assets/icons/warning.svg'
+// import Question from '../../../assets/icons/question.svg'
 
 const useStyles = makeStyles((theme) => ({
   hoverBtnDiv: {

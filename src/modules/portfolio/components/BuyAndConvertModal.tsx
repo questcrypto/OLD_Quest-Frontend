@@ -117,7 +117,7 @@ const BuyAndConvertModal = (props: any) => {
   const [formData, setFormData] = useState({ from: 1, to: '' })
   const [dropDownData, setDropDownData] = useState({ from: options1[0], to: options2[0] })
   const [conversionFactor, setConversionFactor] = useState(2)
-  const [swapData, setSwapData] = useState({ bonusRatio: 1.5, tokensSold: '0', tokensLeft: '0' })
+  const [swapData, setSwapData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
   const [swapDivValue, setSwapDivValue] = useState(1)
 
   const handleChange = (e: any) => {
@@ -201,16 +201,15 @@ const BuyAndConvertModal = (props: any) => {
     if (!initialRender) {
       const a = Number(formData.to) * 10 ** 6
       const b = formData.from * 10 ** 6
-      // console.log((a / b).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'))
       if (b == 0) {
-        // setSwapData({ ...swapData, bonusRatio:  })
+        setSwapData({ ...swapData, bonusRatio: 0 })
       } else {
-        setSwapData({ ...swapData, bonusRatio: a / b })
+        setSwapData((prevData) => ({ ...prevData, bonusRatio: a / b }))
       }
       // setFormData({ ...formData, from: formData.to / conversionFactor });
     }
     setInitialRender(false)
-  }, [formData.to])
+  }, [formData.to, swapData.bonusRatio])
 
   // Drop Down Data Change
   useEffect(() => {

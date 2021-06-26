@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     display: 'flex',
+    // padding: '30px',
   },
   btnDiv: {
     width: '100%',
@@ -28,26 +29,28 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   title: {
-    // color: '#C4C4C4',
-    fontSize: '0.em',
+    fontSize: '1.1em',
+    fontWeight: 'bold',
   },
   subTitle: {
     color: '##C4C4C4',
     fontWeight: 'bold',
     fontSize: '1em',
   },
+  paper: {
+    display: 'flex',
+    padding: '30px',
+  },
 }))
 const ICODetails = (props: any) => {
   const { getKNABbalance } = props
   const classes = useStyles()
-  // const handleBackButton = () => history.push(Paths.root)
   const [formData, setFormData] = useState({ from: 1, to: '' })
   const [swapData, setSwapData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
 
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
     getKNABbalance(KNABBalance / 10 ** 18)
-    // setPb(KNABBalance / 10 ** 18)
   }
 
   useEffect(() => {
@@ -91,10 +94,7 @@ const ICODetails = (props: any) => {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Typography className={classes.title}>
-          {/* `${}` */}
-          ICO Details
-        </Typography>
+        <Typography className={classes.title}>ICO Details</Typography>
         <div className={classes.btnDiv}>
           <CustomButton
             size="small"
@@ -135,25 +135,21 @@ const ICODetails = (props: any) => {
 
       <Paper>
         <br />
-        <Grid container spacing={3} style={{ padding: '38px 0px' }}>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Grid item md={4} xs={12}>
+        <Grid container spacing={2} className={classes.paper}>
+          <Grid item md={5} xs={12}>
             <ICOHoldings knabBalance={props.KNABBalance} />
           </Grid>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Grid item md={8} xs={12}>
+          <Grid item md={7} xs={12}>
             <RaisedTokens />
           </Grid>
         </Grid>
-        <Grid container spacing={4} style={{ padding: '38px 0px' }}>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Grid item md={10} xs={12}>
+        <Grid container spacing={2} className={classes.paper}>
+          <Grid item md={12} xs={12}>
             <TokensRemaining swapData={swapData} />
           </Grid>
         </Grid>
-        <Grid container spacing={4} style={{ padding: '38px 0px' }}>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Grid item md={10} xs={12}>
+        <Grid container spacing={2} className={classes.paper}>
+          <Grid item md={12} xs={12}>
             <CrowdSaleContract />
           </Grid>
         </Grid>

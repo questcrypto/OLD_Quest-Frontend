@@ -1,4 +1,5 @@
 import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
+import { Paths } from 'modules/app/components/routes/types'
 import KnabIcon from 'assets/icons/KNAB.svg'
 
 const useStyles = makeStyles((theme) => ({
@@ -7,17 +8,16 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     height: 'auto',
+    '&:hover': {
+      border: '2px solid #E6BA73',
+    },
   },
   header: {
     display: 'flex',
     padding: '30px',
   },
-  logo: {
-    // padding: '30px',
-  },
   contentDiv: {
     display: 'flex',
-    // padding: theme.spacing(5),
   },
   contentImgDiv: {
     display: 'flex',
@@ -38,10 +38,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     padding: '30px',
   },
-  // detailsHeading: {
-  //   fontSize: '0.8em',
-  // },
-
   detailsTitle: {
     fontSize: '0.7em',
   },
@@ -51,18 +47,22 @@ const useStyles = makeStyles((theme) => ({
   },
   nestedSubTitle: {
     fontSize: '0.7em',
+    color: '#C4C4C4',
   },
 }))
 
 const ICOHoldings = (props: any) => {
-  console.log(props.knabBalance)
   const classes = useStyles()
+  const openInNewTab = (url: string) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
   return (
     <>
       <div className={classes.mainDiv}>
-        <Paper className={classes.root} style={{ opacity: 1 }}>
+        <Paper className={classes.root} style={{ opacity: 1 }} onClick={() => openInNewTab(`http://localhost:3000${Paths.learnMore}`)}>
           <Typography className={classes.header}>ICO Holdings</Typography>
-          <Grid container className={classes.logo}>
+          <Grid container>
             <Grid item md={3} xs={12}>
               <div className={classes.contentImgDiv}>
                 <img src={KnabIcon} alt="" className={classes.contentImg} />
@@ -86,7 +86,7 @@ const ICOHoldings = (props: any) => {
             </Grid>
             <Grid item md={4} xs={12}>
               <Typography className={classes.detailsTitle}>Supply of ICO</Typography>
-              <Typography className={classes.detailsSubtitle}>10%</Typography>
+              <Typography className={classes.detailsSubtitle}>3.75%</Typography>
             </Grid>
           </Grid>
         </Paper>

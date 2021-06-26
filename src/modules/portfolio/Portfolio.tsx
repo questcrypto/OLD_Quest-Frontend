@@ -302,24 +302,26 @@ const Portfolio = (props: any) => {
         options1={options1}
         options2={options2}
       /> */}
-
-      {/* Buy or Convert KNAB Modal */}
-      <BuyAndConvertModal
-        show={bcModal}
-        toggleModal={handlebcModalClose}
-        onClose={handlebcModalClose}
-        // headerText="Buying | Converting KNAB Tokens"
-        headerText="Buy KNAB Tokens"
-        options1={options1}
-        options2={options2}
-        onModalSubmit={submitModalFn}
-        isConfirm={isConfirm}
-        conversionData={conversionData}
-        confirmTransaction={confirmTransaction}
-        rejectTransaction={rejectTransaction}
-        isTransaction={isTransaction}
-        loader={loader}
-      />
+      {bcModal ? (
+        <BuyAndConvertModal
+          show={bcModal}
+          toggleModal={handlebcModalClose}
+          onClose={handlebcModalClose}
+          // headerText="Buying | Converting KNAB Tokens"
+          headerText="Buy KNAB Tokens"
+          options1={options1}
+          options2={options2}
+          onModalSubmit={submitModalFn}
+          isConfirm={isConfirm}
+          conversionData={conversionData}
+          confirmTransaction={confirmTransaction}
+          rejectTransaction={rejectTransaction}
+          isTransaction={isTransaction}
+          loader={loader}
+        />
+      ) : (
+        ''
+      )}
 
       <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} />
     </div>

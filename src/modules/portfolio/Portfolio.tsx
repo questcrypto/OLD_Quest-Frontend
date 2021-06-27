@@ -22,6 +22,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import HoverModal from './components/HoverModal'
 import { getKNABBalance } from '../../modules/block-chain/BlockChainMethods'
 import axios from 'axios'
+import Staking from './Staking/Staking'
 
 const Portfolio = (props: any) => {
   const classes = useStyles()
@@ -324,6 +325,7 @@ const Portfolio = (props: any) => {
       )}
 
       <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} />
+      <Staking />
     </div>
   )
 }

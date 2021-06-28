@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { Paper, Grid } from '@material-ui/core'
 import {
   useStyles,
@@ -8,10 +10,22 @@ import {
 } from '../style'
 import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
+import { getKnabBal, getKnabrBal } from '../../../../logic/actions/staking.action'
+import { getKNABBalance } from '../../../../modules/block-chain/BlockChainMethods'
 
 const StakingHeader = (props: any) => {
 
   const classes = useStyles();
+
+  const { 
+    getKnabBal, 
+    getKnabrBal,
+    staking: { knab, knabr } 
+  } = props;
+
+  const [knabRBal, setKnabR] = useState({value: '0.0000', dollarValue: '0.00'})
+  const [conknabBal, setConknabBal] = useState({value: '00.00', dollarValue: '214.261'})
+  const [knabREarn, setKnabREarn] = useState({value: '00.00', dollarValue: '0.00'})
 
   const handleChange = (e: any) => {
     try {
@@ -29,13 +43,16 @@ const StakingHeader = (props: any) => {
           <FlexDiv>
             <FlexColumn>
               <Heading>KNABr Balance</Heading>
-              <Value>0.0000 ($0.00)</Value>
+              <Value>
+                {/* { knabRBal['value']}  */} { knabr }
+                (${ knabRBal['dollarValue'] })
+              </Value>
             </FlexColumn>
 
             <FlexColumn>
               <Heading>Converted KNAB Balance</Heading>
               <Value>
-                00.00 (~$214.261)
+                { conknabBal['value'] } (~${ conknabBal['dollarValue'] })
               </Value>
             </FlexColumn>
           </FlexDiv><br />
@@ -70,10 +87,10 @@ const StakingHeader = (props: any) => {
           <FlexDiv>
             <FlexColumn>
               <Value>
-                00.00 KNABr
+                { knabREarn['value'] } KNABr
               </Value>
               <Value>
-                ($0.00)
+                (${ knabREarn['dollarValue'] })
               </Value>
             </FlexColumn>
             <CustomButton
@@ -93,4 +110,8 @@ const StakingHeader = (props: any) => {
   );
 }
 
-export default StakingHeader;
+// export default StakingHeader;
+const mapStateToProps = (state: any) => ({
+  staking: state.staking
+})
+export default connect(mapStateToProps, { getKnabBal, getKnabrBal })(StakingHeader)

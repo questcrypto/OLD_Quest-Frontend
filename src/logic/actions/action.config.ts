@@ -26,3 +26,11 @@ export const LOGIN_FAIL = 'LOGIN_FAIL'
 /* =================================== DRAWER Actions ========================== */
 export const OPEN_DRAWER = 'OPEN_DRAWER'
 export const CLOSE_DRAWER = 'CLOSE_DRAWER'
+
+/* =================================== STAKING Actions ========================== */
+export const KNAB_BAL = 'KNAB_BAL'
+export const KNABR_BAL = 'KNABR_BAL'
+export const KNAB_USDC_BAL = 'KNAB_USDC_BAL'
+export const KNABR_USDC_BAL= 'KNABR_USDC_BAL'
+
+

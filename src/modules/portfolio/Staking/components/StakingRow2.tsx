@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     color: '#848E9C',
     padding: '16px 60px',
-    '& $h6' :{
+    '& $h6': {
       textAlign: 'center'
     }
   },
@@ -130,7 +130,7 @@ const StakingRow2 = (props: any) => {
   }
 
   return (
-    <Accordion classes={{ root: classes.accordionRoot }} onClick={handleOpen}>
+    <Accordion classes={{ root: classes.accordionRoot }} >
       <AccordionSummary
         // expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -139,6 +139,7 @@ const StakingRow2 = (props: any) => {
           root: classes.accordionSummary,
           // expandIcon: classes.expandIcon
         }}
+        onClick={handleOpen}
       >
         <FlexDiv>
           <FlexRow>
@@ -213,7 +214,7 @@ const StakingRow2 = (props: any) => {
                 <FlexColumn>
                   <div className={classes.btnCenterText}>
                     <Typography variant="subtitle2">
-                      Add/remove liquidity to the KNAB-USDT on Quick Swap to get LP tokens. 
+                      Add/remove liquidity to the KNAB-USDT on Quick Swap to get LP tokens.
                       Then stake those LP tokens on Quest Crypto to receive QC rewards.
                     </Typography>
                   </div>

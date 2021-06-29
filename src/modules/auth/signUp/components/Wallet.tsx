@@ -1,19 +1,17 @@
-import { useStyle } from './style';
-import metaMaskIcon from 'assets/images/metamask.jpg';
-import lynxIcon from 'assets/icons/lynxIcon.svg';
-import tokenPocketIcon from 'assets/icons/tokenPocketIcon.svg';
-import meetOneIcon from 'assets/icons/meetOneIcon.svg';
-import ledgerIcon from 'assets/icons/ledgerIcon.svg';
-
+import { useStyle } from './style'
+import metaMaskIcon from 'assets/images/metamask.jpg'
+// import lynxIcon from 'assets/icons/lynxIcon.svg';
+// import tokenPocketIcon from 'assets/icons/tokenPocketIcon.svg';
+// import meetOneIcon from 'assets/icons/meetOneIcon.svg';
+// import ledgerIcon from 'assets/icons/ledgerIcon.svg';
 
 const Wallet = (props: any) => {
-
-  const { walletClick } = props;
+  const { walletClick } = props
 
   const wallets = [
     {
       icon: metaMaskIcon,
-      label: 'META MASK'
+      label: 'META MASK',
     },
     // {
     //   icon: lynxIcon,
@@ -37,16 +35,16 @@ const Wallet = (props: any) => {
 
   return (
     <>
-      { wallets.map((item, i) => {
+      {wallets.map((item, i) => {
         return (
           <div key={i} className={classes.walletCont} onClick={() => walletClick(item)}>
             <img src={item.icon} alt={item.label} />
-            <span>{ item.label }</span>
+            <span>{item.label}</span>
           </div>
-        );
+        )
       })}
     </>
-  );
+  )
 }
 
-export default Wallet;
+export default Wallet

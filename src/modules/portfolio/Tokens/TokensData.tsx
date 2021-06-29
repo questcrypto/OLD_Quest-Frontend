@@ -1,5 +1,7 @@
-import { Paper, makeStyles, Typography, Grid, Card, CardContent } from '@material-ui/core'
-import CustomButton from '../components/shared/Button'
+import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
+import { connect } from 'react-redux'
+
+import CustomButton from '../../../modules/portfolio/components/shared/Button'
 
 const useStyles = makeStyles((theme) => ({
   mainDiv: {

@@ -24,6 +24,7 @@ import { apiBaseUrl } from 'services/global-constant'
 // import Question from '../../assets/icons/question.svg'
 // import MaticIcon from 'assets/icons/matic.svg'
 // import KnabDummy from 'assets/icons/knab_dummy.svg'
+import Staking from './Staking/Staking'
 
 const Portfolio = (props: any) => {
   const classes = useStyles()
@@ -358,6 +359,8 @@ const Portfolio = (props: any) => {
           ''
         )}
       </div>
+      <Staking />
+      {/* </div> */}
     </>
   )
 }

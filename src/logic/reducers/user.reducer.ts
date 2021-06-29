@@ -24,7 +24,7 @@ const initialState = {
   isWalletCon: false,
   walletConAddress: '',
   KNABBalance: 0.0,
-  applicationAccess: false,
+  applicationAccess: true,
 }
 
 export const userReducer = (state = initialState, action: any) => {

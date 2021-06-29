@@ -188,7 +188,7 @@ const Portfolio = (props: any) => {
       axios
         .post(`${apiBaseUrl}/user/blockIp`, { ip: ip })
         .then((response) => {
-          // console.log(response, '***')
+          console.log(response, '***')
           setApplicationAccess(response.data.access)
           hasApplcationAccess(response.data.access)
           // hasAccess(response.data.access)

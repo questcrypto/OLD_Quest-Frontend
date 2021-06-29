@@ -36,7 +36,16 @@ export const useStyles = makeStyles((theme) => ({
   outerDiv: {
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4)
-  }
+  },
+  accordionHeadRoot: {
+    marginTop: '28px',
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
+    boxShadow: 'none',
+    '&:before': {
+      backgroundColor: '#FFFFFF'
+    }
+  },
 }));
 
 export const FlexDiv = styled.div`
@@ -53,18 +62,18 @@ export const FlexRow = styled.div`
 `;
 
 export const Headers = styled.div`
-  width: 100%;
+  /* width: 100%; */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-top: 24px;
-  flex-basis: '100%';
-  /* padding-left: 8px;
-  padding-right: 8px; */
+  padding-left: 32px;
+  padding-right: 32px;
 `;
 
 export const FlexItem = styled.div`
   width: '100%';
-  flex-grow: 1;
+  /* flex-grow: 1; */
+  flex-basis: '100%';
 `;
 
 export const FlexColumn = styled.div`

@@ -5,28 +5,28 @@ import {
   KNABR_USDC_BAL
 } from './action.config'
 
-export const getKnabBal = (data: any) => {
+export const setKnabBal = (data: any) => {
   return {
     type: KNAB_BAL,
     payload: data,
   }
 }
 
-export const getKnabrBal = (data: any) => {
+export const setKnabrBal = (data: any) => {
   return {
     type: KNABR_BAL,
     payload: data,
   }
 }
 
-export const getKnabUsdcBal = (data: any) => {
+export const setKnabUsdcBal = (data: any) => {
   return {
     type: KNAB_USDC_BAL,
     payload: data,
   }
 }
 
-export const getKnabrUsdcBal = (data: any) => {
+export const setKnabrUsdcBal = (data: any) => {
   return {
     type: KNABR_USDC_BAL,
     payload: data,

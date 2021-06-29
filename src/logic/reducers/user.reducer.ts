@@ -10,6 +10,7 @@ import {
   WALLET_CONNECT,
   WALLET_CONNECT_ADDRESS,
   KNAB_BALANCE,
+  WEB3_INSTANCE
 } from '../actions/action.config'
 import history from 'modules/app/components/history'
 
@@ -23,6 +24,7 @@ const initialState = {
   isWalletCon: false,
   walletConAddress: '',
   KNABBalance: 0.0,
+  web3Instance: 'asf'
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -96,6 +98,11 @@ export const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         KNABBalance: payload,
+      }
+    case WEB3_INSTANCE:
+      return {
+        ...state,
+        web3Instance: payload,
       }
     default:
       return state

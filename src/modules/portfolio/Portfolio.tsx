@@ -325,7 +325,7 @@ const Portfolio = (props: any) => {
       )}
 
       <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} />
-      <Staking />
+      {/* <Staking /> */}
     </div>
   )
 }

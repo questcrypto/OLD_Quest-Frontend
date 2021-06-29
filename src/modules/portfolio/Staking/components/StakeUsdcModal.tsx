@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { makeStyles, Typography } from '@material-ui/core'
 import CustomModal from '../../../../shared/custom-modal/CustomModal'
 import styled from 'styled-components'
@@ -8,6 +8,7 @@ import Spinner from 'shared/loader-components/spinner'
 import CustomInput from '../../components/shared/CustomInput'
 import KNAB from 'assets/icons/KNAB.svg'
 import USDC from 'assets/icons/USDC.svg'
+import { deposit } from '../../../../modules/block-chain/BlockChainMethods'
 
 const useStyles = makeStyles((theme) => ({
   dcDiv: {
@@ -78,15 +79,15 @@ const StakeUsdcModal = (props: any) => {
   const { show, toggleModal } = props;
 
   // const [show, setShow] = useState(false);
-  const [isConfirm, setIsConfirm] = useState(false)
-  const [isTransaction, setIsTransaction] = useState(false)
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [loader, setLoader] = useState({ confirmTrans: false });
+  const [stakeUsdcVal, setStakeUsdcVal] = useState(0.00);
 
-  const handleChange = (e: any) => {
-    try {
-    } catch (error) {
-      console.log(error)
+  useEffect(() => {
+    if (!show) {
+      setIsConfirm(false);
     }
-  }
+  }, [show]);
 
   const stake = () => {
     try {
@@ -94,9 +95,21 @@ const StakeUsdcModal = (props: any) => {
     } catch (error) { console.log(error) }
   }
 
-  const confirmTransaction = async (values: any) => {
+  const confirmTransaction = async () => {
     try {
-      setIsConfirm(false)
+      setLoader({ ...loader, confirmTrans: true });
+      deposit(2, stakeUsdcVal).then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, confirmTrans: false });
+          setIsConfirm(false)
+          toggleModal();
+        }
+      }, err => {
+        setLoader({ ...loader, confirmTrans: false });
+        setIsConfirm(false);
+        toggleModal();
+        console.log(err)
+      })
     } catch (error) {
       console.log(error)
     }
@@ -138,9 +151,9 @@ const StakeUsdcModal = (props: any) => {
                 <CustomButton
                   size="large"
                   style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}
-                  onClick={() => confirmTransaction(1)}
+                  onClick={() => confirmTransaction()}
                 >
-                  {isTransaction ? <Spinner /> : 'Confirm'}
+                  {loader.confirmTrans ? <Spinner /> : 'Confirm'}
                 </CustomButton>
                 <CustomButton
                   size="large"
@@ -173,8 +186,8 @@ const StakeUsdcModal = (props: any) => {
               <CustomInput
                 id="knab"
                 type="number"
-                value={0.00}
-                onChange={handleChange}
+                value={stakeUsdcVal}
+                onChange={(e: any) => { setStakeUsdcVal(e.target.value) }}
                 adornment={' | MAX'}
                 style={{ minHeight: '48px' }}
               />

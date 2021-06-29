@@ -13,9 +13,13 @@ import {
   ICOAddress,
   KNABaddress,
   KNABabi,
+  KNABFarmaddress,
+  KnabrFarmAbi,
 } from './abi'
 let web3: Web3
+// import axios from 'axios'
 
+let isWallectConnect: boolean = false
 export const getWeb3Val = async () => {
   // Check if MetaMask is installed
   if (!window.ethereum) {
@@ -80,7 +84,7 @@ export const getPendingTransaction = async (contractSLC: any, account: string) =
       const trans = await contractSLC.methods._transactions(pendingTransaction[0]).call({ from: account })
       return trans
     }
-  } catch (err) {}
+  } catch (err) { }
 }
 export const handleSignPendingTransactionSubmit = (contractSLC: any, account: string, transactionNumber: number) => {
   contractSLC.methods.signTransaction(transactionNumber).send({ from: account })
@@ -232,16 +236,30 @@ export const getPropertyId = async (auctionId: any) => {
   return property_id
 }
 
+// export const getStableCoinBalance = async () => {
+//   const web3 = await getWeb3Val()
+//   if (web3) {
+//     const accounts = await web3.eth.getAccounts()
+//     const stableCoinContract = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
+//     const res = await stableCoinContract.methods.balanceOf(accounts[0]).call()
+//     const stableCoinBalance: any = res * 10 ** 6
+//     console.log(stableCoinBalance, '&&&')
+//     return parseInt(stableCoinBalance)
+//   }
+// }
 export const getStableCoinBalance = async () => {
-  const web3 = await getWeb3Val()
-  if (web3) {
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(window.ethereum)
+  if (web3 && isWallectConnect) {
     const accounts = await web3.eth.getAccounts()
     const stableCoinContract = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
     const res = await stableCoinContract.methods.balanceOf(accounts[0]).call()
-    const stableCoinBalance: any = res * 10 ** 6
-    // console.log(stableCoinBalance)
-    return parseInt(stableCoinBalance)
+    console.log(accounts[0], '&&')
+    const stableCoinBalance: any = res / 10 ** 6
+    console.log(stableCoinBalance, '&&&&')
+    return stableCoinBalance
   }
+  return 0
 }
 
 export const buyKnab = async (amount: number) => {
@@ -249,16 +267,7 @@ export const buyKnab = async (amount: number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const ICOinstance = new web3.eth.Contract(ICOabi, ICOAddress)
-    let gasPrice: any
-    const desiredFee: number = 20000000000
-    const avgGasPrice = await web3.eth.getGasPrice().then((res) => {
-      const gasFee: number = Number(res)
-      if (gasFee < desiredFee) {
-        gasPrice = desiredFee
-      } else {
-        gasPrice = gasFee
-      }
-    })
+    const gasPrice = gasPriceFn();
     const res: any = await ICOinstance.methods.buy(convertToWei(amount)).send({ from: accounts[0], gasPrice })
     return res
   }
@@ -267,21 +276,7 @@ export const buyKnab = async (amount: number) => {
 export const handlestableCoinapproval = async (contractStableCoin: any, account: string, ApproveAmount: any) => {
   const deci = await contractStableCoin.methods.decimals().call()
   // console.log(ApproveAmount * 10 ** deci, 'abc')
-  let gasPrice: any
-  const desiredFee: number = 20000000000
-  const avgGasPrice = await web3.eth.getGasPrice().then((res) => {
-    const gasFee: number = Number(res)
-    if (gasFee < desiredFee) {
-      gasPrice = desiredFee
-    } else {
-      gasPrice = gasFee
-    }
-  })
-  // let minGasFee: any
-  // const gasFee = await fetch('https://gasstation-mainnet.matic.network')
-  //   .then((response) => response.json())
-  //   .then((json) => (minGasFee = json))
-  // const gasPrice: any = minGasFee.fast * 10 ** 9
+  const gasPrice = gasPriceFn();
   const res = await contractStableCoin.methods.approve(ICOAddress, ApproveAmount * 10 ** deci).send({ from: account, gasPrice })
   return res
 }
@@ -309,7 +304,76 @@ export const getKNABBalance = async () => {
     const KNABContract = new web3.eth.Contract(KNABabi, KNABaddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNABBalance: any = res
-    // console.log(res, 'blc')
     return parseInt(KNABBalance)
   }
+}
+
+export const getUSDCRaised = async () => {
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const ICOContract = new web3.eth.Contract(ICOabi, ICOAddress)
+    const res = await ICOContract.methods._amountRaised().call()
+    const USDCRaised: any = convertToEther2(res)
+    return USDCRaised
+  }
+}
+
+// const BlockChainMethods = (props: any) => {
+//   console.log(props.isWalletCon)
+//   return <div>Hello</div>
+// }
+// const mapStateToProps = (state: any) => ({
+//   isWalletCon: state.user.isWalletCon,
+// })
+
+// export default connect(mapStateToProps, {})(BlockChainMethods)
+
+export const getisWallet = (walletCon: boolean) => {
+  console.log(walletCon, '&&&')
+  isWallectConnect = walletCon
+}
+
+export const deposit = async (pid: number, amount: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const res = await farmContract.methods.deposit(pid, amount).send({ from: accounts[0] })
+    console.log(res);
+  }
+}
+
+export const gasPriceFn = async () => {
+  const desiredFee: number = 20000000000
+  let minGasFee: any
+  // const gasFee = await fetch('https://gasstation-mainnet.matic.network')
+  //   .then((response) => response.json())
+  //   .then((json) => (minGasFee = json))    
+  // let gasPrice: any = minGasFee.fast * 10 ** 9
+  // if (desiredFee < gasPrice) {
+  //   gasPrice = desiredFee
+  // } 
+  // return gasPrice;
+  const gasFee = fetch('https://gasstation-mainnet.matic.network');
+  gasFee.then((res: any) => {
+    let gasPrice: any = res['fast'] * 10 ** 9
+    if (desiredFee < gasPrice) {
+      gasPrice = desiredFee
+    }
+    return gasPrice;
+  }, err => { console.log(err) })
+}
+
+export const handleKnabApproval = async (contractKnab: any, account: string, ApproveAmount: number) => {
+  const gasPrice = await gasPriceFn();
+  const res = await contractKnab.methods.approve(KNABFarmaddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
+  console.log(res);
+}
+
+export const handleUsdcApproval = async (contractUsdc: any, account: string, ApproveAmount: number) => {
+  const gasPrice = await gasPriceFn();
+  const res = await contractUsdc.methods.approve(KNABFarmaddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
+  console.log(res);
 }

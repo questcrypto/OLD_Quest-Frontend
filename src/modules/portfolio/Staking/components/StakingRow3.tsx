@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { connect } from 'react-redux'
 import {
   makeStyles,
   Accordion,
@@ -28,6 +29,9 @@ import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
 import StakeUsdcModal from './StakeUsdcModal'
+import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi'
+import { handleUsdcApproval } from '../../../../modules/block-chain/BlockChainMethods'
+import Spinner from 'shared/loader-components/spinner'
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -99,9 +103,13 @@ const useStyles = makeStyles((theme) => ({
 const StakingRow3 = (props: any) => {
 
   const classes = useStyles();
+  const { user: { walletConAddress, web3Instance } } = props;
 
   const [isOpen, setIsOpen] = useState(false);
   const [show, setShow] = useState(false);
+  const [loader, setLoader] = useState({ approveLoad: false })
+  const [usdcAppr, setUsdcAppr] = useState(0.00);
+  const [usdcStake, setUsdcStake] = useState(0.00);
 
   const handleOpen = () => {
     try {
@@ -117,16 +125,30 @@ const StakingRow3 = (props: any) => {
     } catch (error) { console.log(error) }
   }
 
-  const handleChange = (e: any) => {
-    try {
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const stakeFn = () => {
     try {
       setShow(true);
+    } catch (error) { console.log(error) }
+  }
+
+  const ApproveUsdcTokenFn = async () => {
+    try {
+      setLoader({ ...loader, approveLoad: true });
+      const knabContract = new web3Instance.eth.Contract(KNABabi, KNABAddressTest);
+      const accounts = await web3Instance.eth.getAccounts()
+      handleUsdcApproval(knabContract, accounts[0], usdcAppr).then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, approveLoad: false });
+        }
+      }, err => {
+        setLoader({ ...loader, approveLoad: false });
+        console.log(err)
+      })
+    } catch (error) { console.log(error) }
+  }
+
+  const unStakeFn = () => {
+    try {
     } catch (error) { console.log(error) }
   }
 
@@ -211,8 +233,8 @@ const StakingRow3 = (props: any) => {
                       <CustomInput
                         id="knab"
                         type="number"
-                        value={0.00}
-                        onChange={handleChange}
+                        value={usdcAppr}
+                        onChange={(e: any) => { setUsdcAppr(e.target.value) }}
                         adornment={' | MAX'}
                       />
                     </div>
@@ -228,8 +250,9 @@ const StakingRow3 = (props: any) => {
                           padding: '8px 48px',
                           marginRight: '12px',
                         }}
+                        onClick={ApproveUsdcTokenFn}
                       >
-                        Approve&nbsp;USDC&nbsp;Token
+                        {loader.approveLoad ? <Spinner /> : <span>Approve&nbsp;USDC&nbsp;Token</span>}
                       </CustomButton>
                     </div>
                     <FlexColumn className={classes.knabValues}>
@@ -253,8 +276,8 @@ const StakingRow3 = (props: any) => {
                       <CustomInput
                         id="knabStake"
                         type="number"
-                        value={0.00}
-                        onChange={handleChange}
+                        value={usdcStake}
+                        onChange={(e: any) => { setUsdcStake(e.target.value) }}
                         adornment={' | MAX'}
                       />
                       <CustomButton
@@ -264,6 +287,7 @@ const StakingRow3 = (props: any) => {
                           padding: '8px 48px',
                           marginLeft: '12px',
                         }}
+                        onClick={unStakeFn}
                       >
                         Unstake
                       </CustomButton>
@@ -316,4 +340,9 @@ const StakingRow3 = (props: any) => {
   );
 }
 
-export default StakingRow3;
+// export default StakingRow3;
+const mapStateToProps = (state: any) => ({
+  user: state.user,
+})
+
+export default connect(mapStateToProps, {})(StakingRow3)

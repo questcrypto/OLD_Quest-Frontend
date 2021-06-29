@@ -6,10 +6,29 @@ import {
 } from '../actions/action.config'
 
 const initialState = {
+  
   knab: 0.0,
+  knab_dollar: 0.0,
+  knab_converted: 0.0,
+  knab_converted_dollar: 0.0,
+  knab_staked: 0.0,
+  knab_staked_dollar: 0.0,
+
   knabr: 1.0,
-  knabUsdc: 0.0,
-  knabrUsdc: 0.0
+  knabr_dollar: 0.0,
+  knabr_earned: 0.0,
+  knabr_earned_dollar: 0.0,
+
+  usdc: 0.0,
+  usdc_dollar: 0.0,
+  usdc_staked: 0.0,
+  usdc_staked_dollar: 0.0,
+
+  lp: 0.0,
+  lp_dollar: 0.0,
+  lp_staked: 0.0,
+  lp_staked_dollar: 0.0
+
 }
 
 export const stakingReducer = (state = initialState, action: any) => {

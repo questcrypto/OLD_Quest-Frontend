@@ -113,12 +113,7 @@ const StakingRow2 = (props: any) => {
 
   const classes = useStyles();
 
-  const handleChange = (e: any) => {
-    try {
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const [lpStackVal, setLpStackVal] = useState(0.00)
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -127,6 +122,14 @@ const StakingRow2 = (props: any) => {
       if (isOpen) { setIsOpen(false) }
       else { setIsOpen(true) }
     } catch { }
+  }
+
+  const unStakeFn = () => {
+    try {
+      console.log(lpStackVal);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -258,8 +261,8 @@ const StakingRow2 = (props: any) => {
                     <CustomInput
                       id="knabStake"
                       type="number"
-                      value={0.00}
-                      onChange={handleChange}
+                      value={lpStackVal}
+                      onChange={(e: any) => setLpStackVal(e.target.value)}
                       adornment={' | MAX'}
                     />
                     <CustomButton
@@ -269,6 +272,7 @@ const StakingRow2 = (props: any) => {
                         padding: '8px 48px',
                         marginLeft: '12px',
                       }}
+                      onClick={unStakeFn}
                     >
                       Unstake
                     </CustomButton>

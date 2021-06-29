@@ -25,7 +25,7 @@ const Staking = (props: any) => {
   const [isWallet, setIsWallet] = useState(false)
   const [show, setShow] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
-  
+
   useEffect(() => {
     // console.log('More With Crypto', isWalletCon);
     setIsWallet(isWalletCon)
@@ -70,16 +70,6 @@ const Staking = (props: any) => {
         </Typography>
         <div className={classes.mainDiv}>
           <StakingHeader />
-          {/* <div className={classes.outerDiv}>
-          <Headers>
-            <FlexItem></FlexItem>
-            <FlexItem>Token</FlexItem>
-            <FlexItem>Yield(APY)</FlexItem>
-            <FlexItem>Current Balance</FlexItem>
-            <FlexItem>Rewards</FlexItem>
-            <FlexItem></FlexItem>
-          </Headers>
-        </div> */}
           <StakingRow1 />
           <StakingRow2 />
           <StakingRow3 />

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import {
   makeStyles,
   Accordion,
@@ -27,10 +28,13 @@ import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
 import StakeKnabModal from './StakeKnabModal'
+import { handleKnabApproval } from '../../../../modules/block-chain/BlockChainMethods'
+import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi'
+import Spinner from 'shared/loader-components/spinner'
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
-    marginTop: '28px',
+    // marginTop: '28px',
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4)
   },
@@ -98,21 +102,25 @@ const useStyles = makeStyles((theme) => ({
 const StakingRow1 = (props: any) => {
 
   const classes = useStyles();
+  const { user: { walletConAddress, web3Instance } } = props;
+
+  const [loader, setLoader] = useState({ approveLoad: false })
 
   const [show, setShow] = useState(false);
+  const [knabAppValue, setKnabAppValue] = useState(0.00);
+  const [knabStakeValue, setKnabStakeValue] = useState(0.00);
+
+  // useEffect(() => {
+  //   console.log('web3Instance', web3Instance);
+  // }, [web3Instance]);
 
   const toggleModal = () => {
     try {
-      if (show) { setShow(false) }
+      if (show) {
+        setShow(false);
+      }
       else { setShow(true) }
     } catch (error) { console.log(error) }
-  }
-
-  const handleChange = (e: any) => {
-    try {
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   const [isOpen, setIsOpen] = useState(false);
@@ -127,6 +135,31 @@ const StakingRow1 = (props: any) => {
   const stakeFn = () => {
     try {
       setShow(true);
+      // deposit(0, 1);
+    } catch (error) { console.log(error) }
+  }
+
+  const ApproveKnabTokFn = async () => {
+    try {
+      setLoader({ ...loader, approveLoad: true });
+      const knabContract = new web3Instance.eth.Contract(KNABabi, KNABAddressTest);
+      const accounts = await web3Instance.eth.getAccounts()
+      handleKnabApproval(knabContract, accounts[0], knabAppValue).then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, approveLoad: false });
+        }
+      }, err => {
+        setLoader({ ...loader, approveLoad: false });
+        console.log(err)
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const unStakeFn = () => {
+    try {
+
     } catch (error) { console.log(error) }
   }
 
@@ -211,8 +244,8 @@ const StakingRow1 = (props: any) => {
                       <CustomInput
                         id="knab"
                         type="number"
-                        value={0.00}
-                        onChange={handleChange}
+                        value={knabAppValue}
+                        onChange={(e: any) => setKnabAppValue(e.target.value)}
                         adornment={' | MAX'}
                       />
                     </div>
@@ -228,8 +261,9 @@ const StakingRow1 = (props: any) => {
                           padding: '8px 48px',
                           marginRight: '12px',
                         }}
+                        onClick={ApproveKnabTokFn}
                       >
-                        Approve&nbsp;KNAB&nbsp;Token
+                        {loader.approveLoad ? <Spinner /> : <span>Approve&nbsp;KNAB&nbsp;Token</span>}
                       </CustomButton>
                     </div>
                     <FlexColumn className={classes.knabValues}>
@@ -253,8 +287,8 @@ const StakingRow1 = (props: any) => {
                       <CustomInput
                         id="knabStake"
                         type="number"
-                        value={0.00}
-                        onChange={handleChange}
+                        value={knabStakeValue}
+                        onChange={(e: any) => setKnabStakeValue(e.target.value)}
                         adornment={' | MAX'}
                       />
                       <CustomButton
@@ -264,6 +298,7 @@ const StakingRow1 = (props: any) => {
                           padding: '8px 48px',
                           marginLeft: '12px',
                         }}
+                        onClick={unStakeFn}
                       >
                         Unstake
                       </CustomButton>
@@ -316,4 +351,9 @@ const StakingRow1 = (props: any) => {
   );
 }
 
-export default StakingRow1;
+// export default StakingRow1;
+const mapStateToProps = (state: any) => ({
+  user: state.user,
+})
+
+export default connect(mapStateToProps, {})(StakingRow1)

@@ -10,6 +10,7 @@ import {
   WALLET_CONNECT,
   WALLET_CONNECT_ADDRESS,
   KNAB_BALANCE,
+  WEB3_INSTANCE
 } from './action.config'
 
 export const authStart = () => {
@@ -74,6 +75,13 @@ export const walletConnectAddress = (data: any) => {
 export const getKNABbalance = (data: any) => {
   return {
     type: KNAB_BALANCE,
+    payload: data,
+  }
+}
+
+export const setWeb3Instance = (data: any) => {
+  return {
+    type: WEB3_INSTANCE,
     payload: data,
   }
 }

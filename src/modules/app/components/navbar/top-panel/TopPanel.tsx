@@ -10,10 +10,11 @@ import { makeStyles } from '@material-ui/core'
 import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
-import { getWeb3Val, getKNABBalance } from 'modules/block-chain/BlockChainMethods'
+import { getWeb3Val, getKNABBalance, getisWallet } from 'modules/block-chain/BlockChainMethods'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import { loginStart, getKNABbalance } from 'logic/actions/user.actions'
 import MetaMaskIcon from '../../../../../assets/icons/metaMaskIcon.svg'
+import { hasApplcationAccess } from 'logic/actions/user.actions'
 
 const useStyles = makeStyles((theme) => ({
   walletDiv: {
@@ -159,8 +160,13 @@ const TopPanel = (props: any) => {
       setWalletAddress(walletConAddress)
     }
   })
+  const setAppAccess = () => {
+    hasApplcationAccess(false)
+  }
+  console.log(props.applicationAccess, '***')
   return (
     <TopPanelCont>
+      {getisWallet(props.isWalletCon)}
       {
         // loggedIn && (walletAddress !== '') && (tokenDummy !== '') ?
         walletAddress !== '' ? (
@@ -169,13 +175,16 @@ const TopPanel = (props: any) => {
             <span className={classes.walletDivText}>{`${walletAddress.substring(0, 4)}...${walletAddress.substring(37, 42)}`}</span>
           </div>
         ) : (
-          <CustomButton
-            size="large"
-            style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
-            onClick={connectWallet}
-          >
-            {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
-          </CustomButton>
+          <>
+            <CustomButton
+              size="large"
+              style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
+              onClick={props.applicationAccess ? connectWallet : setAppAccess}
+              // onClick={connectWallet}
+            >
+              {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
+            </CustomButton>
+          </>
         )
         // <PrimaryButton>Connect Wallet</PrimaryButton>
       }
@@ -203,8 +212,16 @@ const mapStateToProps = (state: any) => ({
   walletConAddress: state.user.walletConAddress,
   KNABBalance: state.user.KNABBalance,
   isWalletCon: state.user.isWalletCon,
+  applicationAccess: state.user.applicationAccess,
 })
 
-export default connect(mapStateToProps, { loginStart, errorAlert, logout, logout2, walletConnect, walletConnectAddress, getKNABbalance })(
-  TopPanel
-)
+export default connect(mapStateToProps, {
+  loginStart,
+  errorAlert,
+  logout,
+  logout2,
+  walletConnect,
+  walletConnectAddress,
+  getKNABbalance,
+  hasApplcationAccess,
+})(TopPanel)

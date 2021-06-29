@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
-import { createStyles, makeStyles, withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
 import { LinearProgress, Slider } from '@material-ui/core'
 
 export const SliderWrap = styled.div`
@@ -9,25 +9,23 @@ export const SliderWrap = styled.div`
   padding: 5px 12px;
   box-sizing: border-box;
   border-radius: 5px;
-  margin: 24px 0;
   box-sizing: border-box;
-  width: 80%;
+  margin-left: 30px;
+  margin-right: 30px;
 `
 export const StyledSlider = withStyles({
   root: {
-    color: colors.lightYellow,
-    height: 0.5,
-    width: '80%',
-
-    display: 'flex',
-    padding: '30px',
+    color: colors.gold,
+    height: 2,
+    width: '100%',
+    marginTop: '12px',
   },
   thumb: {
     height: 20,
     width: 20,
     top: '35%',
-    backgroundColor: '#1E3444',
-    border: '2px solid currentColor',
+    backgroundColor: '#E1B56',
+    border: '2px solid #E1B56',
     '&:focus,&:hover,&$active': {
       boxShadow: 'inherit',
     },
@@ -56,12 +54,3 @@ export const StyledSlider = withStyles({
     borderRadius: 2,
   },
 })(Slider)
-
-export const StyledLinearProgress = withStyles({
-  colorPrimary: {
-    backgroundColor: '#949DA4',
-  },
-  barColorPrimary: {
-    backgroundColor: '#EB5757',
-  },
-})(LinearProgress)

@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MoreWithCrypto = (props: any) => {
   const classes = useStyles()
-  const { loggedIn, isWalletCon, getBalance } = props
+  const { loggedIn, isWalletCon, getBalance, hasAccess, handleBlocking } = props
   const [isWallet, setIsWallet] = useState(false)
   const [show, setShow] = useState(false)
 
@@ -183,7 +183,12 @@ const MoreWithCrypto = (props: any) => {
 
         {show && !isWallet && (
           <div className={classes.hoverBtnDiv} onMouseOut={() => setShow(false)}>
-            <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '8px 48px' }} onClick={connectWallet}>
+            <CustomButton
+              size="small"
+              style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
+              // onClick={connectWallet}
+              onClick={hasAccess ? connectWallet : handleBlocking}
+            >
               {/* Connect Wallet */}
               {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
             </CustomButton>

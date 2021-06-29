@@ -1,22 +1,50 @@
-import { useStyles } from '../style'
-import { Paper, Typography, Grid } from '@material-ui/core'
-import CustomButton from './shared/Button'
+import { makeStyles, Paper, Typography, Grid } from '@material-ui/core'
+import CustomButton from '../components/shared/Button'
 import TokenCard from './TokenCard'
-import FullICODetails from './FullICODetails'
-import Graph from './Graph/Graph'
-import history from 'modules/app/components/history'
-import { Paths } from 'modules/app/components/routes/types'
+import TokensData from './TokensData'
+import TokensGraph from '../components/Graph/Graph'
+// import history from 'modules/app/components/history'
+// import { Paths } from 'modules/app/components/routes/types'
 
-const LearnMore = () => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100%',
+    // backgroundColor: '#E5E5E5'
+    paddingTop: theme.spacing(7),
+    paddingRight: theme.spacing(5),
+  },
+  header: {
+    display: 'flex',
+    // padding: '30px',
+  },
+  btnDiv: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  title: {
+    fontSize: '1em',
+    fontWeight: 'bold',
+  },
+  subTitle: {
+    color: '##C4C4C4',
+    fontWeight: 'bold',
+    fontSize: '1em',
+  },
+  paper: {
+    display: 'flex',
+    padding: '30px',
+  },
+  gridHeight: {
+    height: '100%',
+  },
+}))
+const TokenDetails = () => {
   const classes = useStyles()
-  const handleBackButton = () => history.push(Paths.root)
-
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Typography className={classes.title} variant="h6">
-          Token
-        </Typography>
+        <Typography className={classes.title}>Token Details</Typography>
         <div className={classes.btnDiv}>
           <CustomButton
             size="small"
@@ -53,8 +81,28 @@ const LearnMore = () => {
         </div>
       </div>
       <br />
-
       <Paper>
+        <br />
+        <Grid container spacing={2} className={classes.paper}>
+          <Grid item md={5} xs={12}>
+            <TokenCard />
+          </Grid>
+          <Grid item md={7} xs={12}>
+            <TokenCard />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} className={classes.paper}>
+          <Grid item md={12} xs={12}>
+            <TokensGraph />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} className={classes.paper}>
+          <Grid item md={12} xs={12}>
+            <TokensData />
+          </Grid>
+        </Grid>
+      </Paper>
+      {/* <Paper>
         <br />
         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         <CustomButton
@@ -89,9 +137,9 @@ const LearnMore = () => {
             <FullICODetails />
           </Grid>
         </Grid>
-      </Paper>
+      </Paper> */}
     </div>
   )
 }
 
-export default LearnMore
+export default TokenDetails

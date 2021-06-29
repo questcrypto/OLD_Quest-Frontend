@@ -3,9 +3,9 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { makeStyles, Paper, Typography, Grid } from '@material-ui/core'
 import CustomButton from '../components/shared/Button'
-import { fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
+import { fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
 import ICOHoldings from './ICOHoldings'
-import RaisedTokens from './RaisedTokes'
+import RaisedTokens from './RaisedTokens'
 import TokensRemaining from './TokensRemainng'
 import CrowdSaleContract from './CrowdSaleContract'
 import { getKNABbalance } from 'logic/actions/user.actions'
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   title: {
-    fontSize: '1.1em',
+    fontSize: '1em',
     fontWeight: 'bold',
   },
   subTitle: {
@@ -41,12 +41,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     padding: '30px',
   },
+  gridHeight: {
+    height: '100%',
+  },
 }))
 const ICODetails = (props: any) => {
   const { getKNABbalance } = props
   const classes = useStyles()
-  const [formData, setFormData] = useState({ from: 1, to: '' })
-  const [swapData, setSwapData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
+  const [tokensData, setTokensData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
 
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
@@ -56,41 +58,21 @@ const ICODetails = (props: any) => {
   useEffect(() => {
     getBalance()
   }, [])
-  console.log(props, '***')
-  // useEffect(() => {
-  //   fetchValue(formData.from).then(
-  //     (res) => {
-  //       console.log(res, '***')
-  //       setFormData({ ...formData, to: res })
-  //     },
-  //     (err) => {
-  //       console.log(err)
-  //     }
-  //   )
-  //   // Tokens Sold and Left
-  //   fetchDetails().then(
-  //     (res) => {
-  //       setSwapData({
-  //         ...swapData,
-  //         tokensSold: commaNumber(res['tokensSold']),
-  //         tokensLeft: commaNumber(res['tokensLeft']),
-  //       })
-  //       const a = Number(formData.to) * 10 ** 6
-  //       const b = formData.from * 10 ** 6
-  //       if (b == 0) {
-  //         // setSwapData({ ...swapData, bonusRatio:  })
-  //       } else {
-  //         setSwapData({ ...swapData, bonusRatio: a / b })
-  //       }
-  //       // console.log(res)
-  //     },
-  //     (err) => {
-  //       console.log(err)
-  //     }
-  //   )
-  // }, [])
-  // console.log(swapData, '***')
-  // console.log(formData, '***')
+  useEffect(() => {
+    // Tokens Sold and Left
+    fetchDetails().then(
+      (res) => {
+        setTokensData({
+          ...tokensData,
+          tokensSold: commaNumber(res['tokensSold']),
+          tokensLeft: commaNumber(res['tokensLeft']),
+        })
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
+  }, [])
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -113,8 +95,8 @@ const ICODetails = (props: any) => {
             disableRipple
             style={{ backgroundColor: '#858585', padding: '0px 16px' }}
           >
-            {/* 00.00 KNAB */}
-            {Number(props.KNABBalance.toFixed(3))} KNAB
+            {props.isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0.0} KNAB
+            {/* {Number(props.KNABBalance.toFixed(3))} KNAB */}
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
           <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}>
@@ -137,15 +119,18 @@ const ICODetails = (props: any) => {
         <br />
         <Grid container spacing={2} className={classes.paper}>
           <Grid item md={5} xs={12}>
-            <ICOHoldings knabBalance={props.KNABBalance} />
+            <ICOHoldings
+              knabBalance={props.isWalletCon ? props.KNABBalance : 0}
+              // knabBalance={props.KNABBalance}
+            />
           </Grid>
           <Grid item md={7} xs={12}>
-            <RaisedTokens />
+            <RaisedTokens tokensData={tokensData} />
           </Grid>
         </Grid>
-        <Grid container spacing={2} className={classes.paper}>
+        <Grid spacing={2} className={classes.paper}>
           <Grid item md={12} xs={12}>
-            <TokensRemaining swapData={swapData} />
+            <TokensRemaining tokensData={tokensData} />
           </Grid>
         </Grid>
         <Grid container spacing={2} className={classes.paper}>
@@ -160,5 +145,6 @@ const ICODetails = (props: any) => {
 
 const mapStateToProps = (state: any) => ({
   KNABBalance: state.user.KNABBalance,
+  isWalletCon: state.user.isWalletCon,
 })
 export default withRouter(connect(mapStateToProps, { getKNABbalance })(ICODetails))

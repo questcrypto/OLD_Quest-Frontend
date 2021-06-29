@@ -1,11 +1,31 @@
+// import { connect } from 'react-redux'
 import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
-// import { useState, useEffect } from 'react'
 import KnabIcon from 'assets/icons/KNAB.svg'
-import { connect } from 'react-redux'
-import Warning from '../../../assets/icons/warning.svg'
-import Question from '../../../assets/icons/question.svg'
+import Exclamation from 'assets/images/exclamation.png'
+import triangle from 'assets/images/upArrow.png'
 
 const useStyles = makeStyles((theme) => ({
+  mainDiv: {
+    position: 'relative',
+  },
+  root: {
+    height: 'auto',
+  },
+  arrowImage: {
+    height: 12,
+    width: 12,
+  },
+  exclamationImage: {
+    height: 15,
+    width: 15,
+    color: '#C4C4C4',
+    marginLeft: '3px',
+    marginRight: '3px',
+  },
+  arrowText: {
+    color: '#C4C4C4',
+    fontSize: '0.9rem',
+  },
   hoverBtnDiv: {
     top: '0%',
     left: '0%',
@@ -24,12 +44,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     left: '3%',
   },
-  mainDiv: {
-    position: 'relative',
-  },
-  root: {
-    height: 'auto',
-  },
+
   title: {
     padding: theme.spacing(2),
   },
@@ -55,12 +70,14 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '12px',
   },
   contentTextDiv: {},
-  secondLineText: {
+  secondLineText: {},
+  warningText: {
     color: '#C4C4C4',
+    marginBottom: '2px',
   },
 }))
 
-const MoreWithCrypto = (props: any) => {
+const TokenCard = (props: any) => {
   const classes = useStyles()
 
   return (
@@ -73,11 +90,23 @@ const MoreWithCrypto = (props: any) => {
                 <img src={KnabIcon} alt="" />
               </div>
               <div className={classes.contentTextDiv}>
-                <Typography variant="subtitle2">KNABr</Typography>
+                <Typography>KNABr</Typography>
                 <Typography className={classes.secondLineText} variant="h5">
-                  $6.76 2.58%
+                  $6.76 &nbsp;
+                  <span className={classes.arrowText}>
+                    <img src={triangle} alt="" className={classes.arrowImage} />
+                    2.58%
+                  </span>
                 </Typography>
+                {/* <Typography className={classes.arrowText}></Typography> */}
               </div>
+              {/* <Grid container spacing={2}>
+                <Grid item md={4} xs={12}>
+                  <Typography>KNABr</Typography>
+                  <Typography>$6.76</Typography>
+                  <Typography>$1200.00 USDC</Typography>
+                </Grid>
+              </Grid> */}
             </div>
             <Grid container spacing={4} style={{ padding: '38px 0px' }}>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -96,8 +125,8 @@ const MoreWithCrypto = (props: any) => {
               </Grid>
             </Grid>
             <hr />
-            <Typography variant="subtitle2" className={classes.secondLineText}>
-              {`**This is subject to market variations for field.`}
+            <Typography variant="subtitle2" className={classes.warningText}>
+              <img src={Exclamation} alt="" className={classes.exclamationImage} /> This is subject to market variations for field.
             </Typography>
           </div>
         </Paper>
@@ -107,10 +136,11 @@ const MoreWithCrypto = (props: any) => {
 }
 
 // export default MoreWithCrypto;
-const mapStateToProps = (state: any) => ({
-  loggedIn: state.user.loggedIn,
-  isWalletCon: state.user.isWalletCon,
-  walletConnectAddress: state.user.walletConnectAddress,
-})
+// const mapStateToProps = (state: any) => ({
+//   loggedIn: state.user.loggedIn,
+//   isWalletCon: state.user.isWalletCon,
+//   walletConnectAddress: state.user.walletConnectAddress,
+// })
 
-export default connect(mapStateToProps, {})(MoreWithCrypto)
+// export default connect(mapStateToProps, {})(MoreWithCrypto)
+export default TokenCard

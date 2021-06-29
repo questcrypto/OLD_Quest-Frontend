@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 const TokensRemaining = (props: any) => {
-  const { swapData } = props
   const classes = useStyles()
   return (
     <>
@@ -35,7 +34,7 @@ const TokensRemaining = (props: any) => {
               <Typography className={classes.title}>KNAB Tokens remainig</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
-              <Typography className={classes.subTitle}>{swapData.tokensLeft}</Typography>
+              <Typography className={classes.subTitle}>{props.tokensData.tokensLeft}</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.title}>ICO Price</Typography>

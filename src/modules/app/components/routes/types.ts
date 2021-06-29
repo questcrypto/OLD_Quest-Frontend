@@ -13,6 +13,6 @@ export enum Paths {
   upgradeBid = '/auction-upgrade-bid',
   portfolio = '/portfolio',
   login = '/login',
-  learnMore = '/learnMore',
+  tokenDetails = '/tokenDetails',
   ICOdetails = '/ICOdetails',
 }

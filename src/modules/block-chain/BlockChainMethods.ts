@@ -16,6 +16,7 @@ import {
 } from './abi'
 let web3: Web3
 
+let isWallectConnect: boolean = false
 export const getWeb3Val = async () => {
   // Check if MetaMask is installed
   if (!window.ethereum) {
@@ -232,16 +233,28 @@ export const getPropertyId = async (auctionId: any) => {
   return property_id
 }
 
+// export const getStableCoinBalance = async () => {
+//   const web3 = await getWeb3Val()
+//   if (web3) {
+//     const accounts = await web3.eth.getAccounts()
+//     const stableCoinContract = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
+//     const res = await stableCoinContract.methods.balanceOf(accounts[0]).call()
+//     const stableCoinBalance: any = res * 10 ** 6
+//     console.log(stableCoinBalance, '&&&')
+//     return parseInt(stableCoinBalance)
+//   }
+// }
 export const getStableCoinBalance = async () => {
-  const web3 = await getWeb3Val()
-  if (web3) {
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(window.ethereum)
+  if (web3 && isWallectConnect) {
     const accounts = await web3.eth.getAccounts()
     const stableCoinContract = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
     const res = await stableCoinContract.methods.balanceOf(accounts[0]).call()
-    const stableCoinBalance: any = res * 10 ** 6
-    // console.log(stableCoinBalance)
-    return parseInt(stableCoinBalance)
+    const stableCoinBalance: any = res / 10 ** 6
+    return stableCoinBalance
   }
+  return 0
 }
 
 export const buyKnab = async (amount: number) => {
@@ -298,7 +311,6 @@ export const fetchDetails = async () => {
   const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.details().call()
-  // console.log(res, '***')
   return { tokensSold: convertToEther2(res['0']), tokensLeft: convertToEther2(res['1']) }
 }
 
@@ -309,7 +321,20 @@ export const getKNABBalance = async () => {
     const KNABContract = new web3.eth.Contract(KNABabi, KNABaddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNABBalance: any = res
-    // console.log(res, 'blc')
     return parseInt(KNABBalance)
   }
 }
+
+export const getUSDCRaised = async () => {
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const ICOContract = new web3.eth.Contract(ICOabi, ICOAddress)
+    const res = await ICOContract.methods._amountRaised().call()
+    const USDCRaised: any = convertToEther2(res)
+    return USDCRaised
+  }
+}
+
+export const getisWallet = (walletCon: boolean) => (isWallectConnect = walletCon)

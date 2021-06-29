@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Typography, Grid, Paper } from '@material-ui/core'
 import { useStyles } from './style'
+// import publicIp from 'public-ip'
+import axios from 'axios'
 import CustomButton from './components/shared/Button'
 // import Question from '../../assets/icons/question.svg'
 // import MaticIcon from 'assets/icons/matic.svg'
@@ -19,11 +21,14 @@ import { connect } from 'react-redux'
 import { logout } from 'logic/actions/user.actions'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
-import HoverModal from './components/HoverModal'
+// import HoverModal from './components/HoverModal'
 import { getKNABBalance } from '../../modules/block-chain/BlockChainMethods'
-import axios from 'axios'
+import IPBlockingModal from './IPBlocking/IPBlockingModal'
+import { hasApplcationAccess } from 'logic/actions/user.actions'
+import { apiBaseUrl } from 'services/global-constant'
 
 const Portfolio = (props: any) => {
+  // let toggled = useRef(false)
   const classes = useStyles()
 
   const [pb, setPb] = useState(0)
@@ -31,9 +36,12 @@ const Portfolio = (props: any) => {
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [loader, setLoader] = useState(false)
-  const [hoverModal, setHoverModal] = useState(false)
+  // const [hoverModal, setHoverModal] = useState(false)
+  const [showIPBlockingModal, setIPBlockingModal] = useState(true)
+  const [appAccess, setApplicationAccess] = useState(true)
+  const [ip, setIPAddress] = useState('')
 
-  const { errorAlert, loggedIn, successAlert, getKNABbalance } = props
+  const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess } = props
 
   const openbcModal = () => {
     try {
@@ -142,17 +150,25 @@ const Portfolio = (props: any) => {
       history.push(Paths.login)
     }
   }
-  const handleBuyKNABModal = () => {
-    try {
-      setHoverModal(true)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const handleBuyKNABModal = () => {
+  //   try {
+  //     setHoverModal(true)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
-  const handleHoverModalClose = () => {
+  // const handleHoverModalClose = () => {
+  //   try {
+  //     setHoverModal(false)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
+  const toggleIPBLockingModal = () => {
     try {
-      setHoverModal(false)
+      setIPBlockingModal(false)
     } catch (error) {
       console.log(error)
     }
@@ -165,115 +181,159 @@ const Portfolio = (props: any) => {
     getKNABbalance(KNABBalance / 10 ** 18)
     // setPb(KNABBalance / 10 ** 18)
   }
-  // console.log(props)
-  // loggedIn ? () : ''
+  const handleBlocking = () => {
+    try {
+      setIPBlockingModal(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleApplicationAccess = (access: any) => {
+    // hasApplcationAccess(access)
+    setApplicationAccess(access)
+  }
+
+  useEffect(() => {
+    axios
+      .get('https://api.ipify.org')
+      .then((response) => {
+        setIPAddress(response.data)
+      })
+      .catch((err) => console.log(err))
+  }, [])
+
+  // const ip2: string = '193.37.254.170' // random IP from USA
+  // const ip2: string = '115.241.201.82' // random IP from INDIA
+  // console.log(ip, typeof ip, '**')
+  useEffect(() => {
+    // if (ip2.length > 0) {
+    if (ip.length > 0) {
+      axios
+        .post(`${apiBaseUrl}/user/blockIp`, { ip: ip })
+        .then((response) => {
+          console.log(response, '***')
+          setApplicationAccess(response.data.access)
+          hasApplcationAccess(response.data.access)
+          // hasAccess(response.data.access)
+        })
+        .catch((err) => console.log(err, '*** er'))
+    }
+  })
+  // console.log(props.applicationAccess, '**')
   return (
-    <div className={classes.root}>
-      <div className={classes.header}>
-        <Typography className={classes.title} variant="h6">
-          Portfolio
-        </Typography>
-        <div className={classes.btnDiv}>
-          <CustomButton
-            size="small"
-            disableElevation
-            disableFocusRipple
-            disableRipple
-            style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
-          >
-            00.00 KNABr
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          <CustomButton
-            size="small"
-            disableElevation
-            disableFocusRipple
-            disableRipple
-            style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
-          >
-            {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
-            {/* {KNABbalance || pb.toFixed(3)} KNAB */}
-            {Number(props.KNABBalance.toFixed(3))} KNAB
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          <CustomButton
-            size="small"
-            style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
-            onClick={() => handleAuction()}
-          >
-            Real Estate Auctions
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          <CustomButton
-            size="small"
-            style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
-            onClick={() => history.push(Paths.login)}
-          >
-            Buy | Convert Quest
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          <CustomButton
-            size="small"
-            style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
-            onClick={openbcModal}
-          >
-            {/* Buy | Convert KNAB */}
-            Buy KNAB
-          </CustomButton>
-          &nbsp;&nbsp;&nbsp;
-          {/* <CustomButton
+    <>
+      <>
+        {!appAccess ? (
+          <IPBlockingModal
+            show={showIPBlockingModal}
+            toggleModal={toggleIPBLockingModal}
+            onClose={toggleIPBLockingModal}
+            // hasAccess={handleApplicationAccess}
+            hasAccess={appAccess}
+          />
+        ) : (
+          ''
+        )}
+      </>
+      <div className={classes.root}>
+        <div className={classes.header}>
+          <Typography className={classes.title} variant="h6">
+            Portfolio
+          </Typography>
+          <div className={classes.btnDiv}>
+            <CustomButton
               size="small"
               disableElevation
               disableFocusRipple
               disableRipple
-              style={{ backgroundColor: '#858585', padding: '0px 16px' }}
-              onClick={() => handleTestPage()}
+              style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
             >
-              Test
-            </CustomButton> */}
+              00.00 KNABr
+            </CustomButton>
+            &nbsp;&nbsp;&nbsp;
+            <CustomButton
+              size="small"
+              disableElevation
+              disableFocusRipple
+              disableRipple
+              style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
+            >
+              {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
+              {/* {KNABbalance || pb.toFixed(3)} KNAB */}
+              {Number(props.KNABBalance.toFixed(3))} KNAB
+            </CustomButton>
+            &nbsp;&nbsp;&nbsp;
+            <CustomButton
+              size="small"
+              style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
+              // onClick={() => handleAuction()}
+              onClick={appAccess ? () => handleAuction() : handleBlocking}
+            >
+              Real Estate Auctions
+            </CustomButton>
+            &nbsp;&nbsp;&nbsp;
+            <CustomButton
+              size="small"
+              style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
+              // onClick={() => history.push(Paths.login)}
+              onClick={appAccess ? () => history.push(Paths.login) : handleBlocking}
+            >
+              Buy | Convert Quest
+            </CustomButton>
+            &nbsp;&nbsp;&nbsp;
+            <CustomButton
+              size="small"
+              style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
+              // onClick={openbcModal}
+              onClick={appAccess ? openbcModal : handleBlocking}
+            >
+              {/* Buy | Convert KNAB */}
+              Buy KNAB
+            </CustomButton>
+          </div>
         </div>
-      </div>
-      <Grid container spacing={4} style={{ padding: '32px 0px' }}>
-        <Grid item md={7} xs={12}>
-          <Paper className={classes.portfolioDiv}>
-            <Typography variant="subtitle1">Portfolio Balance</Typography>
-            <div>
-              <Typography variant="h4">
-                {/* {props.KNABBalance || pb.toFixed(2)} KNAB */}
-                {Number(props.KNABBalance.toFixed(3))} KNAB
-                {getBalance}
-                {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
-              </Typography>
-            </div>
-            <div className={classes.pfBtnDiv}>
+        <Grid container spacing={4} style={{ padding: '32px 0px' }}>
+          <Grid item md={7} xs={12}>
+            <Paper className={classes.portfolioDiv}>
+              <Typography variant="subtitle1">Portfolio Balance</Typography>
               <div>
-                <CustomButton
-                  size="large"
-                  style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                  onClick={() => history.push(Paths.login)}
-                >
-                  Buy Quest Tokens
-                </CustomButton>
-                <br />
-                <span className={classes.pfBtnhelpText}>Purchase Equity in Real Estate</span>
+                <Typography variant="h4">
+                  {/* {props.KNABBalance || pb.toFixed(2)} KNAB */}
+                  {Number(props.KNABBalance.toFixed(3))} KNAB
+                  {getBalance}
+                  {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
+                </Typography>
               </div>
-              <div>
-                <CustomButton
-                  size="large"
-                  style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                  onClick={openbcModal}
-                  // onMouseOver={handleBuyKNABModal}
-                  // onMouseLeave={handleHoverModalClose}
-                >
-                  Buy KNAB Tokens
-                </CustomButton>
-                <br />
-                <span className={classes.pfBtnhelpText}>Purchase ICO tokens from Quest Crypto</span>
+              <div className={classes.pfBtnDiv}>
+                <div>
+                  <CustomButton
+                    size="large"
+                    style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
+                    onClick={appAccess ? () => history.push(Paths.login) : handleBlocking}
+                    // onClick={() => history.push(Paths.login)}
+                  >
+                    Buy Quest Tokens
+                  </CustomButton>
+                  <br />
+                  <span className={classes.pfBtnhelpText}>Purchase Equity in Real Estate</span>
+                </div>
+                <div>
+                  <CustomButton
+                    size="large"
+                    style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
+                    onClick={appAccess ? openbcModal : handleBlocking}
+                    // onMouseOver={handleBuyKNABModal}
+                    // onMouseLeave={handleHoverModalClose}
+                  >
+                    Buy KNAB Tokens
+                  </CustomButton>
+                  <br />
+                  <span className={classes.pfBtnhelpText}>Purchase ICO tokens from Quest Crypto</span>
+                </div>
               </div>
-            </div>
-          </Paper>
+            </Paper>
 
-          {/* <Paper className={classes.portfolioDiv2}>
+            {/* <Paper className={classes.portfolioDiv2}>
             <Typography variant="subtitle1">
               Portfolio Balance
             </Typography>
@@ -285,46 +345,49 @@ const Portfolio = (props: any) => {
             </div>
           </Paper> */}
 
-          <YourAssets getBalance={getBalance} />
+            <YourAssets getBalance={getBalance} hasAccess={appAccess} handleBlocking={handleBlocking} />
+          </Grid>
+
+          <Grid item md={5} xs={12}>
+            <MoreWithCrypto getBalance={getBalance} hasAccess={appAccess} handleBlocking={handleBlocking} />
+          </Grid>
         </Grid>
 
-        <Grid item md={5} xs={12}>
-          <MoreWithCrypto getBalance={getBalance} />
-        </Grid>
-      </Grid>
-
-      {/* Buy or Convert Quest Modal */}
-      {/* <BuyAndConvertModal
+        {/* Buy or Convert Quest Modal */}
+        {/* <BuyAndConvertModal
         show={bcQuestModal}
         toggleModal={handlebcQuestModalClose}
         onClose={handlebcQuestModalClose}
         headerText="Buying | Converting Quest Tokens"
         options1={options1}
         options2={options2}
-      /> */}
-      {bcModal ? (
-        <BuyAndConvertModal
-          show={bcModal}
-          toggleModal={handlebcModalClose}
-          onClose={handlebcModalClose}
-          // headerText="Buying | Converting KNAB Tokens"
-          headerText="Buy KNAB Tokens"
-          options1={options1}
-          options2={options2}
-          onModalSubmit={submitModalFn}
-          isConfirm={isConfirm}
-          conversionData={conversionData}
-          confirmTransaction={confirmTransaction}
-          rejectTransaction={rejectTransaction}
-          isTransaction={isTransaction}
-          loader={loader}
-        />
-      ) : (
-        ''
-      )}
+      // /> */}
+        {/* // {appAccess ? ()} */}
 
-      <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} />
-    </div>
+        {bcModal ? (
+          <BuyAndConvertModal
+            show={bcModal}
+            toggleModal={handlebcModalClose}
+            onClose={handlebcModalClose}
+            // headerText="Buying | Converting KNAB Tokens"
+            headerText="Buy KNAB Tokens"
+            options1={options1}
+            options2={options2}
+            onModalSubmit={submitModalFn}
+            isConfirm={isConfirm}
+            conversionData={conversionData}
+            confirmTransaction={confirmTransaction}
+            rejectTransaction={rejectTransaction}
+            isTransaction={isTransaction}
+            loader={loader}
+          />
+        ) : (
+          ''
+        )}
+
+        {/* <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} /> */}
+      </div>
+    </>
   )
 }
 
@@ -350,5 +413,6 @@ const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
   loggedIn: state.user.loggedIn,
   KNABBalance: state.user.KNABBalance,
+  applicationAccess: state.user.applicationAccess,
 })
-export default withRouter(connect(mapStateToProps, { successAlert, errorAlert, getKNABbalance })(Portfolio))
+export default withRouter(connect(mapStateToProps, { successAlert, errorAlert, getKNABbalance, hasApplcationAccess })(Portfolio))

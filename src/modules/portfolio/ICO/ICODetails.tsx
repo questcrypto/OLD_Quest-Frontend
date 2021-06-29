@@ -59,7 +59,6 @@ const ICODetails = (props: any) => {
     getBalance()
   }, [])
   useEffect(() => {
-    // Tokens Sold and Left
     fetchDetails().then(
       (res) => {
         setTokensData({
@@ -108,7 +107,6 @@ const ICODetails = (props: any) => {
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
           <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}>
-            {/* Buy | Convert KNAB */}
             Buy KNAB
           </CustomButton>
         </div>

@@ -1,5 +1,5 @@
 import { Paper, makeStyles, Typography, Grid, Card, CardContent } from '@material-ui/core'
-import { fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
+// import { fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
 const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
@@ -64,16 +64,4 @@ const TokensRemaining = (props: any) => {
   )
 }
 
-// const options1 = [{ name: 'USDC', id: 'usdc_from', key: 'usdc' }]
-// const options2 = [{ name: 'KNAB', id: 'knab_to', key: 'knab' }]
-// const conversionData: any = {
-//   usdc: {
-//     usdc: 1,
-//     knab: 2.672,
-//   },
-//   knab: {
-//     knab: 1,
-//     usdc: 0.374255,
-//   },
-// }
 export default TokensRemaining

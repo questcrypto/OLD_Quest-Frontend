@@ -303,7 +303,6 @@ export const fetchValue = async (amount: number) => {
   const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.KnabAmount(convertToWei(amount)).call()
-  // console.log(res, '***')
   return convertToEther2(res)
 }
 

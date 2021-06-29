@@ -61,8 +61,6 @@ const ICOHoldings = (props: any) => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
   }
-  // getStableCoinBalance
-
   useEffect(() => {
     const displayMax = async () => {
       const usdcValue = await getStableCoinBalance()

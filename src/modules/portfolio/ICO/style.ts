@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { colors } from 'shared/styles/theme'
 import { withStyles } from '@material-ui/core/styles'
-import { LinearProgress, Slider } from '@material-ui/core'
+import { Slider } from '@material-ui/core'
 
 export const SliderWrap = styled.div`
   background: rgba(245, 245, 245, 0.15);

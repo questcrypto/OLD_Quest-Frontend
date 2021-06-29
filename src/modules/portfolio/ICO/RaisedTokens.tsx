@@ -1,7 +1,6 @@
-import { Paper, makeStyles, Typography, Grid, Slider } from '@material-ui/core'
+import { Paper, makeStyles, Typography, Grid, Slider, Tooltip, Button } from '@material-ui/core'
 import { useState, useEffect } from 'react'
 import { StyledSlider, SliderWrap } from './style'
-
 import { getUSDCRaised } from '../../../modules/block-chain/BlockChainMethods'
 
 const useStyles = makeStyles((theme) => ({
@@ -110,14 +109,17 @@ const RaisedTokens = (props: any) => {
             <Typography className={classes.rightHeader}>Target : 80 Million Tokens</Typography>
           </Grid>
         </Grid>
-        <SliderWrap>
-          <StyledSlider
-            value={props.tokensData.tokensSold ? props.tokensData.tokensSold : 0}
-            aria-labelledby="discrete-slider"
-            min={0}
-            max={100000000}
-          />
-        </SliderWrap>
+        <Tooltip title={raisedTokens} enterDelay={200} leaveDelay={100}>
+          <SliderWrap>
+            <StyledSlider
+              // onMouseOver={() => alert(raisedTokens)
+              value={raisedTokens ? raisedTokens : 0}
+              aria-labelledby="discrete-slider"
+              min={0}
+              max={100000000}
+            />
+          </SliderWrap>
+        </Tooltip>
         <Grid container className={classes.details} spacing={2}>
           <Grid item md={4} xs={12}>
             <Typography className={classes.detailsTitle}>Current Bonus Ratio</Typography>

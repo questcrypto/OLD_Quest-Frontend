@@ -1,4 +1,3 @@
-// import { connect } from 'react-redux'
 import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
 import KnabIcon from 'assets/icons/KNAB.svg'
 import Exclamation from 'assets/images/exclamation.png'
@@ -98,15 +97,7 @@ const TokenCard = (props: any) => {
                     2.58%
                   </span>
                 </Typography>
-                {/* <Typography className={classes.arrowText}></Typography> */}
               </div>
-              {/* <Grid container spacing={2}>
-                <Grid item md={4} xs={12}>
-                  <Typography>KNABr</Typography>
-                  <Typography>$6.76</Typography>
-                  <Typography>$1200.00 USDC</Typography>
-                </Grid>
-              </Grid> */}
             </div>
             <Grid container spacing={4} style={{ padding: '38px 0px' }}>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -135,12 +126,4 @@ const TokenCard = (props: any) => {
   )
 }
 
-// export default MoreWithCrypto;
-// const mapStateToProps = (state: any) => ({
-//   loggedIn: state.user.loggedIn,
-//   isWalletCon: state.user.isWalletCon,
-//   walletConnectAddress: state.user.walletConnectAddress,
-// })
-
-// export default connect(mapStateToProps, {})(MoreWithCrypto)
 export default TokenCard

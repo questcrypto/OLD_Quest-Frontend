@@ -1,10 +1,13 @@
+import { useEffect } from 'react'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
 import { makeStyles, Paper, Typography, Grid } from '@material-ui/core'
 import CustomButton from '../components/shared/Button'
 import TokenCard from './TokenCard'
 import TokensData from './TokensData'
 import TokensGraph from '../components/Graph/Graph'
-// import history from 'modules/app/components/history'
-// import { Paths } from 'modules/app/components/routes/types'
+import { getKNABbalance } from 'logic/actions/user.actions'
+import { getKNABBalance } from '../../../modules/block-chain/BlockChainMethods'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,8 +42,16 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
 }))
-const TokenDetails = () => {
+const TokenDetails = (props: any) => {
   const classes = useStyles()
+  const getBalance = async () => {
+    const KNABBalance: any = await getKNABBalance()
+    getKNABbalance(KNABBalance / 10 ** 18)
+  }
+
+  useEffect(() => {
+    getBalance()
+  }, [])
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -63,7 +74,7 @@ const TokenDetails = () => {
             disableRipple
             style={{ backgroundColor: '#858585', padding: '0px 16px' }}
           >
-            00.00 KNAB
+            {props.KNABBalance} KNAB
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
           <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}>
@@ -75,7 +86,6 @@ const TokenDetails = () => {
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
           <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}>
-            {/* Buy | Convert KNAB */}
             Buy KNAB
           </CustomButton>
         </div>
@@ -102,44 +112,11 @@ const TokenDetails = () => {
           </Grid>
         </Grid>
       </Paper>
-      {/* <Paper>
-        <br />
-        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-        <CustomButton
-          size="small"
-          disableElevation
-          disableFocusRipple
-          disableRipple
-          style={{ backgroundColor: '#858585', padding: '0px 16px' }}
-          onClick={() => handleBackButton()}
-          // onClick={openbcModal}
-        >
-          back
-        </CustomButton>
-        <Grid container spacing={4} style={{ padding: '38px 0px' }}>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Grid item md={5} xs={12}>
-            <TokenCard />
-          </Grid>
-          <Grid item md={5} xs={12}>
-            <TokenCard />
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} style={{ padding: '38px 0px' }}>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Grid item md={10} xs={12}>
-            <Graph />
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} style={{ padding: '38px 0px' }}>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Grid item md={10} xs={12}>
-            <FullICODetails />
-          </Grid>
-        </Grid>
-      </Paper> */}
     </div>
   )
 }
 
-export default TokenDetails
+const mapStateToProps = (state: any) => ({
+  KNABBalance: state.user.KNABBalance,
+})
+export default withRouter(connect(mapStateToProps, { getKNABbalance })(TokenDetails))

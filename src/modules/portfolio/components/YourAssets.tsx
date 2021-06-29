@@ -160,7 +160,6 @@ const YourAssets = (props: any) => {
     }, 3000)
   }, [walletAddress, tokenDummy, loggedIn])
 
-  // console.log(props.walletConnectAddress, '0000')
   return (
     <div className={classes.mainDiv}>
       <Paper className={classes.root} style={{ opacity: isWallet ? 1 : 0.4 }} onMouseOver={() => setShow(true)}>

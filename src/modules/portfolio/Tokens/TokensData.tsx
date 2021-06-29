@@ -1,5 +1,3 @@
-// import { useState, useEffect } from 'react'
-// import { connect } from 'react-redux'
 import { Paper, makeStyles, Typography, Grid, Card, CardContent } from '@material-ui/core'
 import CustomButton from '../components/shared/Button'
 
@@ -100,11 +98,4 @@ const TokensData = (props: any) => {
   )
 }
 
-// const mapStateToProps = (state: any) => ({
-//   loggedIn: state.user.loggedIn,
-//   isWalletCon: state.user.isWalletCon,
-//   walletConnectAddress: state.user.walletConnectAddress,
-// })
-
-// export default connect(mapStateToProps, {})(TokensData)
 export default TokensData

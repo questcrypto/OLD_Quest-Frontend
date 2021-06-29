@@ -1,16 +1,7 @@
-import { useState, useEffect } from 'react'
-// import useState from 'react-usestateref'
-// import { withRouter } from 'react-router'
-// import { connect } from 'react-redux'
-// import publicIp from 'public-ip'
 import { makeStyles, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
-import axios from 'axios'
 import CustomModal from '../../../shared/custom-modal/CustomModal'
 import CustomButton from '../components/shared/Button'
-import { apiBaseUrl } from 'services/global-constant'
-// import { hasApplcationAccess } from 'logic/actions/user.actions'
-// const publicIp = require('public-ip')
 
 const useStyles = makeStyles((theme) => ({
   bcDiv: {
@@ -56,77 +47,10 @@ const useStyles = makeStyles((theme) => ({
 
 const IPBlockingModal = (props: any) => {
   const classes = useStyles()
-  const { show, toggleModal, onClose, hasAccess } = props
-  // const [geoLocation, setGeoLocation] = useState({ data: '' })
-  const [ipAddress, setIPAddress] = useState('')
-  // useEffect(() => {
-  //   axios
-  //     // .get('https://geolocation-db.com/json/7bad3e80-c704-11eb-a4bc-19a5c6a04c5d')
-  //     // .get('http://ip-api.com/json')
-  //     // .get('http://www.geoplugin.net/json.gp')
-  //     .get('https://api.ipify.org')
-  //     .then((response) => {
-  //       // console.log(JSON.stringify(response.data, null, 2))
-  //       // console.log(response, '*** api')
-  //       setGeoLocation(response)
-  //     })
-  //     .catch((err) => console.log(err))
-  // }, [])
+  const { show, toggleModal, onClose } = props
 
-  // const ip: string = geoLocation.data //local user
-  // const ip: string = '193.37.254.170' // random IP from USA
-  // const ip: string = '115.241.201.82'
-  // console.log(ip, '***')
-  // useEffect(() => {
-  //   axios
-  //     .post(`${apiBaseUrl}/user/blockIp`, { ip })
-  //     .then((response) => {
-  //       console.log(response, '***')
-  //       hasAccess(response.data.access)
-  //     })
-  //     .catch((err) => console.log(err, '*** er'))
-  // }, [])
-  // console.log(props.applicationAccess, '**')
-  // const fetchIP = async () => {
-  //   console.log('**', 'hello')
-  //   const intIp = await internalIp.v6()
-  //   console.log(intIp, '*')
-  // }
-  // console.log(internalIp.v6.sync(), '**')
-
-  // const ip = address.ip() // '192.168.0.2'
-  // address.ipv6()
-  // address(function (err: any, addrs: any) {
-  //   console.log(addrs.ip, addrs.ipv6, addrs.mac, '**')
-  //   // '192.168.0.2', 'fe80::7aca:39ff:feb0:e67d', '78:ca:39:b0:e6:7d'
-  // })
-  // const ipAdd = async () => {
-  //   const ip = await publicIp.v4()
-  //   setIPAddress(ip)
-  // }
-  // console.log(ipAddress, '*** npm')
-  //  useEffect(() => {
-  //   axios
-  //     .post(`${apiBaseUrl}/user/blockIp`, { ip })
-  //     .then((response) => {
-  //       console.log(response, '***')
-  //       hasAccess(response.data.access)
-  //     })
-  //     .catch((err) => console.log(err, '*** er'))
-  // }, [])
-
-  // console.log('*** succ', hasAccess)
-  // useEffect(() => {
-  //   console.log('*** succ', hasAccess)
-  //   if (hasAccess.length > 0) {
-  //     // console.log('*** succ')
-  //     setIPAddress(hasAccess)
-  //   }
-  // }, [])
-  // console.log(ipAddress, '***')
   return (
     <CustomModal show={show} toggleModal={toggleModal}>
-      {/* {() => ipAdd()} */}
       <div className={classes.bcDiv}>
         <div className={classes.confirmDialog}>
           <div className={classes.confirmDialogText}>

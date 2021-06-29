@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+import axios from 'axios'
 import { Typography, Grid, Paper } from '@material-ui/core'
 import { useStyles } from './style'
-// import publicIp from 'public-ip'
-import axios from 'axios'
 import CustomButton from './components/shared/Button'
-// import Question from '../../assets/icons/question.svg'
-// import MaticIcon from 'assets/icons/matic.svg'
-// import KnabDummy from 'assets/icons/knab_dummy.svg'
 import USDC from 'assets/icons/USDC.svg'
 import KNAB from 'assets/icons/KNAB.svg'
 import MoreWithCrypto from './components/MoreWithCrypto'
@@ -16,27 +14,25 @@ import { getWeb3Val, buyKnab, getStableCoinBalance, handlestableCoinapproval } f
 import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../modules/block-chain/abi'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import { getKNABbalance } from 'logic/actions/user.actions'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
 import { logout } from 'logic/actions/user.actions'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
-// import HoverModal from './components/HoverModal'
 import { getKNABBalance } from '../../modules/block-chain/BlockChainMethods'
 import IPBlockingModal from './IPBlocking/IPBlockingModal'
 import { hasApplcationAccess } from 'logic/actions/user.actions'
 import { apiBaseUrl } from 'services/global-constant'
+// import Question from '../../assets/icons/question.svg'
+// import MaticIcon from 'assets/icons/matic.svg'
+// import KnabDummy from 'assets/icons/knab_dummy.svg'
 
 const Portfolio = (props: any) => {
-  // let toggled = useRef(false)
   const classes = useStyles()
 
-  const [pb, setPb] = useState(0)
+  // const [pb, setPb] = useState(0)
   const [bcModal, setBcModal] = useState(false)
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [loader, setLoader] = useState(false)
-  // const [hoverModal, setHoverModal] = useState(false)
   const [showIPBlockingModal, setIPBlockingModal] = useState(true)
   const [appAccess, setApplicationAccess] = useState(true)
   const [ip, setIPAddress] = useState('')
@@ -150,21 +146,6 @@ const Portfolio = (props: any) => {
       history.push(Paths.login)
     }
   }
-  // const handleBuyKNABModal = () => {
-  //   try {
-  //     setHoverModal(true)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // const handleHoverModalClose = () => {
-  //   try {
-  //     setHoverModal(false)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
 
   const toggleIPBLockingModal = () => {
     try {
@@ -173,8 +154,6 @@ const Portfolio = (props: any) => {
       console.log(error)
     }
   }
-
-  // const handleTestPage = () => history.push(Paths.dashboard)
 
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
@@ -203,10 +182,7 @@ const Portfolio = (props: any) => {
   }, [])
 
   // const ip2: string = '193.37.254.170' // random IP from USA
-  // const ip2: string = '115.241.201.82' // random IP from INDIA
-  // console.log(ip, typeof ip, '**')
   useEffect(() => {
-    // if (ip2.length > 0) {
     if (ip.length > 0) {
       axios
         .post(`${apiBaseUrl}/user/blockIp`, { ip: ip })
@@ -219,7 +195,6 @@ const Portfolio = (props: any) => {
         .catch((err) => console.log(err, '*** er'))
     }
   })
-  // console.log(props.applicationAccess, '**')
   return (
     <>
       <>
@@ -322,8 +297,6 @@ const Portfolio = (props: any) => {
                     size="large"
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
                     onClick={appAccess ? openbcModal : handleBlocking}
-                    // onMouseOver={handleBuyKNABModal}
-                    // onMouseLeave={handleHoverModalClose}
                   >
                     Buy KNAB Tokens
                   </CustomButton>
@@ -384,8 +357,6 @@ const Portfolio = (props: any) => {
         ) : (
           ''
         )}
-
-        {/* <HoverModal show={hoverModal} headerText="Buy KNAB Tokens" toggleModal={handleHoverModalClose} onClose={handleHoverModalClose} /> */}
       </div>
     </>
   )

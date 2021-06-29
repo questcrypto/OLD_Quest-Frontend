@@ -1,14 +1,11 @@
+import { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core'
 import Table from '@material-ui/core/Table'
-import { useState, useEffect } from 'react'
-import { StyledSlider, SliderWrap } from './style'
-
-import { getUSDCRaised } from '../../../modules/block-chain/BlockChainMethods'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
-// import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import { getUSDCRaised } from '../../../modules/block-chain/BlockChainMethods'
 
 const useStyles = makeStyles((theme) => ({
   root: {

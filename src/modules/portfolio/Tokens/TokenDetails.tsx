@@ -1,16 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { makeStyles, Paper, Typography, Grid } from '@material-ui/core'
 import CustomButton from '../components/shared/Button'
-import { fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
-import ICOHoldings from './ICOHoldings'
-import RaisedTokens from './RaisedTokens'
-import TokensRemaining from './TokensRemainng'
-import CrowdSaleContract from './CrowdSaleContract'
+import TokenCard from './TokenCard'
+import TokensData from './TokensData'
+import TokensGraph from '../components/Graph/Graph'
 import { getKNABbalance } from 'logic/actions/user.actions'
 import { getKNABBalance } from '../../../modules/block-chain/BlockChainMethods'
-const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,11 +42,8 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
 }))
-const ICODetails = (props: any) => {
-  const { getKNABbalance } = props
+const TokenDetails = (props: any) => {
   const classes = useStyles()
-  const [tokensData, setTokensData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
-
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
     getKNABbalance(KNABBalance / 10 ** 18)
@@ -58,24 +52,10 @@ const ICODetails = (props: any) => {
   useEffect(() => {
     getBalance()
   }, [])
-  useEffect(() => {
-    fetchDetails().then(
-      (res) => {
-        setTokensData({
-          ...tokensData,
-          tokensSold: commaNumber(res['tokensSold']),
-          tokensLeft: commaNumber(res['tokensLeft']),
-        })
-      },
-      (err) => {
-        console.log(err)
-      }
-    )
-  }, [])
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Typography className={classes.title}>ICO Details</Typography>
+        <Typography className={classes.title}>Token Details</Typography>
         <div className={classes.btnDiv}>
           <CustomButton
             size="small"
@@ -94,8 +74,7 @@ const ICODetails = (props: any) => {
             disableRipple
             style={{ backgroundColor: '#858585', padding: '0px 16px' }}
           >
-            {props.isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0.0} KNAB
-            {/* {Number(props.KNABBalance.toFixed(3))} KNAB */}
+            {props.KNABBalance} KNAB
           </CustomButton>
           &nbsp;&nbsp;&nbsp;
           <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}>
@@ -112,28 +91,24 @@ const ICODetails = (props: any) => {
         </div>
       </div>
       <br />
-
       <Paper>
         <br />
         <Grid container spacing={2} className={classes.paper}>
           <Grid item md={5} xs={12}>
-            <ICOHoldings
-              knabBalance={props.isWalletCon ? props.KNABBalance : 0}
-              // knabBalance={props.KNABBalance}
-            />
+            <TokenCard />
           </Grid>
           <Grid item md={7} xs={12}>
-            <RaisedTokens tokensData={tokensData} />
-          </Grid>
-        </Grid>
-        <Grid spacing={2} className={classes.paper}>
-          <Grid item md={12} xs={12}>
-            <TokensRemaining tokensData={tokensData} />
+            <TokenCard />
           </Grid>
         </Grid>
         <Grid container spacing={2} className={classes.paper}>
           <Grid item md={12} xs={12}>
-            <CrowdSaleContract />
+            <TokensGraph />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} className={classes.paper}>
+          <Grid item md={12} xs={12}>
+            <TokensData />
           </Grid>
         </Grid>
       </Paper>
@@ -143,6 +118,5 @@ const ICODetails = (props: any) => {
 
 const mapStateToProps = (state: any) => ({
   KNABBalance: state.user.KNABBalance,
-  isWalletCon: state.user.isWalletCon,
 })
-export default withRouter(connect(mapStateToProps, { getKNABbalance })(ICODetails))
+export default withRouter(connect(mapStateToProps, { getKNABbalance })(TokenDetails))

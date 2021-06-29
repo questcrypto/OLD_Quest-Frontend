@@ -10,6 +10,7 @@ import {
   WALLET_CONNECT,
   WALLET_CONNECT_ADDRESS,
   KNAB_BALANCE,
+  APPLICATION_ACCESS,
 } from './action.config'
 
 export const authStart = () => {
@@ -74,6 +75,13 @@ export const walletConnectAddress = (data: any) => {
 export const getKNABbalance = (data: any) => {
   return {
     type: KNAB_BALANCE,
+    payload: data,
+  }
+}
+
+export const hasApplcationAccess = (data: any) => {
+  return {
+    type: APPLICATION_ACCESS,
     payload: data,
   }
 }

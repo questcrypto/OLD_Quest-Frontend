@@ -1,5 +1,5 @@
 import { Paper, makeStyles, Typography, Grid, Card, CardContent } from '@material-ui/core'
-import { fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
+// import { fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
 const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 const TokensRemaining = (props: any) => {
-  const { swapData } = props
   const classes = useStyles()
   return (
     <>
@@ -35,7 +34,7 @@ const TokensRemaining = (props: any) => {
               <Typography className={classes.title}>KNAB Tokens remainig</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
-              <Typography className={classes.subTitle}>{swapData.tokensLeft}</Typography>
+              <Typography className={classes.subTitle}>{props.tokensData.tokensLeft}</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.title}>ICO Price</Typography>
@@ -65,16 +64,4 @@ const TokensRemaining = (props: any) => {
   )
 }
 
-// const options1 = [{ name: 'USDC', id: 'usdc_from', key: 'usdc' }]
-// const options2 = [{ name: 'KNAB', id: 'knab_to', key: 'knab' }]
-// const conversionData: any = {
-//   usdc: {
-//     usdc: 1,
-//     knab: 2.672,
-//   },
-//   knab: {
-//     knab: 1,
-//     usdc: 0.374255,
-//   },
-// }
 export default TokensRemaining

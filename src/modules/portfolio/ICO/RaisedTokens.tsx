@@ -1,6 +1,7 @@
-import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
+import { Paper, makeStyles, Typography, Grid, Slider, Tooltip, Button } from '@material-ui/core'
 import { useState, useEffect } from 'react'
-import { StyledSlider } from './style'
+import { StyledSlider, SliderWrap } from './style'
+import { getUSDCRaised } from '../../../modules/block-chain/BlockChainMethods'
 
 const useStyles = makeStyles((theme) => ({
   mainDiv: {
@@ -12,6 +13,14 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: 'flex',
     padding: '30px',
+    fontSize: '0.8em',
+    fontWeight: 'bold',
+    color: '#C4C4C4',
+  },
+  rightHeader: {
+    display: 'flex',
+    padding: '30px',
+    marginLeft: '180px',
     fontSize: '0.8em',
     fontWeight: 'bold',
     color: '#C4C4C4',
@@ -42,8 +51,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const RaisedTokens = () => {
+const RaisedTokens = (props: any) => {
   const classes = useStyles()
+  const [raisedTokens, setRaisedTokens] = useState(0)
   const [time, setTime] = useState({
     days: 0,
     hours: 0,
@@ -81,19 +91,35 @@ const RaisedTokens = () => {
       }
     }, 1000)
   }, [])
-
+  useEffect(() => {
+    const displayRaisedTokens = async () => {
+      const tokens = await getUSDCRaised()
+      setRaisedTokens(tokens)
+    }
+    displayRaisedTokens()
+  }, [])
   return (
     <div className={classes.mainDiv}>
       <Paper className={classes.root} style={{ opacity: 1 }}>
         <Grid container>
-          <Grid>
-            <Typography className={classes.header}>Raised : 11250 Tokens</Typography>
+          <Grid item>
+            <Typography className={classes.header}>Raised : {raisedTokens} Tokens</Typography>
           </Grid>
-          <Grid>
-            <Typography className={classes.header}>Target : 100,000,000 Tokens</Typography>
+          <Grid item>
+            <Typography className={classes.rightHeader}>Target : 80 Million Tokens</Typography>
           </Grid>
         </Grid>
-        <StyledSlider value={0} aria-labelledby="discrete-slider" valueLabelDisplay="on" step={0.01} min={0} max={100} />
+        <Tooltip title={raisedTokens} enterDelay={200} leaveDelay={100}>
+          <SliderWrap>
+            <StyledSlider
+              // onMouseOver={() => alert(raisedTokens)
+              value={raisedTokens ? raisedTokens : 0}
+              aria-labelledby="discrete-slider"
+              min={0}
+              max={100000000}
+            />
+          </SliderWrap>
+        </Tooltip>
         <Grid container className={classes.details} spacing={2}>
           <Grid item md={4} xs={12}>
             <Typography className={classes.detailsTitle}>Current Bonus Ratio</Typography>

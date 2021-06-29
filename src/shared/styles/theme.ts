@@ -5,10 +5,10 @@ import RobotoRegular from 'assets/fonts/Roboto/Roboto-Regular.ttf'
 import RobotoLight from 'assets/fonts/Roboto/Roboto-Light.ttf'
 import RobotoThin from 'assets/fonts/Roboto/Roboto-Thin.ttf'
 
-import NexaBold from 'assets/fonts/Nexa/NexaBold.otf';
-import NexaRegular from 'assets/fonts/Nexa/NexaRegular.otf';
-import NexaLight from 'assets/fonts/Nexa/NexaLight.otf';
-import NexaThin from 'assets/fonts/Nexa/NexaThin.otf';
+import NexaBold from 'assets/fonts/Nexa/NexaBold.otf'
+import NexaRegular from 'assets/fonts/Nexa/NexaRegular.otf'
+import NexaLight from 'assets/fonts/Nexa/NexaLight.otf'
+import NexaThin from 'assets/fonts/Nexa/NexaThin.otf'
 
 export interface Colors {
   themeBackground: string
@@ -24,6 +24,7 @@ export interface Colors {
   lightYellow: string
   greenColor: string
   darkRed: string
+  gold: string
 }
 
 export const colors: Colors = {
@@ -41,6 +42,7 @@ export const colors: Colors = {
   lightYellow: '#F2C94C',
   greenColor: '#219653',
   darkRed: '#bf4834',
+  gold: '#E1B56F',
 }
 
 export interface ThemeStarter {
@@ -77,7 +79,7 @@ export const theme: ThemeStarter = {
 }
 
 export interface ScreenSizes {
-  mediaXS: number,
+  mediaXS: number
   mediaS: number
   mediaM: number
   mediaL: number

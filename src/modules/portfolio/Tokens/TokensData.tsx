@@ -22,8 +22,13 @@ const useStyles = makeStyles((theme) => ({
   content: {
     marginTop: '5px',
   },
+  icoBtn: {
+    background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)',
+    padding: '4px 24px',
+    marginLeft: '40px',
+  },
 }))
-const FullICODetails = (props: any) => {
+const TokensData = (props: any) => {
   const classes = useStyles()
 
   return (
@@ -39,7 +44,7 @@ const FullICODetails = (props: any) => {
               <Typography className={classes.subTitle}>333,333 DOP</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
-              <Typography className={classes.title}>KNAB Tokens for sale.</Typography>
+              <Typography className={classes.title}>KNAB Tokens Temaining</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>500</Typography>
@@ -54,7 +59,7 @@ const FullICODetails = (props: any) => {
               <Typography className={classes.subTitle}>$0.6</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
-              <Typography className={classes.title}>% Of total supply</Typography>
+              <Typography className={classes.title}>% Of Total Supply</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>2.22%</Typography>
@@ -63,7 +68,7 @@ const FullICODetails = (props: any) => {
           <Grid container spacing={4} className={classes.content}>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Grid item md={2} xs={12}>
-              <Typography className={classes.title}>Fund rising goal.</Typography>
+              <Typography className={classes.title}>Fund Rising Goal.</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>$200,0000</Typography>
@@ -78,13 +83,13 @@ const FullICODetails = (props: any) => {
           <Grid container spacing={4} className={classes.content}>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Grid item md={2} xs={12}>
-              <Typography className={classes.title}>Total market cap</Typography>
+              <Typography className={classes.title}>Total Market Cap</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>11,412,813 USDT</Typography>
             </Grid>
             <Grid item md={5} xs={12}>
-              <CustomButton size="large" style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}>
+              <CustomButton size="large" className={classes.icoBtn}>
                 Full ICO Details
               </CustomButton>
             </Grid>
@@ -95,11 +100,4 @@ const FullICODetails = (props: any) => {
   )
 }
 
-// export default MoreWithCrypto;
-const mapStateToProps = (state: any) => ({
-  loggedIn: state.user.loggedIn,
-  isWalletCon: state.user.isWalletCon,
-  walletConnectAddress: state.user.walletConnectAddress,
-})
-
-export default connect(mapStateToProps, {})(FullICODetails)
+export default TokensData

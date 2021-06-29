@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 let tableInfo = tableData.tableData
 
 const YourAssets = (props: any) => {
-  const { loggedIn, isWalletCon, getBalance } = props
+  const { loggedIn, isWalletCon, getBalance, hasAccess, handleBlocking } = props
 
   const classes = useStyles()
   const [isWallet, setIsWallet] = useState(false)
@@ -160,7 +160,6 @@ const YourAssets = (props: any) => {
     }, 3000)
   }, [walletAddress, tokenDummy, loggedIn])
 
-  // console.log(props.walletConnectAddress, '0000')
   return (
     <div className={classes.mainDiv}>
       <Paper className={classes.root} style={{ opacity: isWallet ? 1 : 0.4 }} onMouseOver={() => setShow(true)}>
@@ -234,7 +233,12 @@ const YourAssets = (props: any) => {
 
       {show && !isWallet && (
         <div className={classes.hoverBtnDiv} onMouseOut={() => setShow(false)}>
-          <CustomButton size="small" style={{ backgroundColor: '#1E3444', padding: '8px 48px' }} onClick={connectWallet}>
+          <CustomButton
+            size="small"
+            style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
+            // onClick={connectWallet}
+            onClick={hasAccess ? connectWallet : handleBlocking}
+          >
             {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
           </CustomButton>
           <Typography variant="subtitle2" className={classes.hoverBtnTxt}>

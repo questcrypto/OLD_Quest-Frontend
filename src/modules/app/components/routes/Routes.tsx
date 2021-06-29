@@ -25,7 +25,7 @@ import { handleDrawerOpen, handleDrawerClose } from 'logic/actions/drawer.open'
 import { IconButton } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import Portfolio from 'modules/portfolio'
-import LearnMore from 'modules/portfolio/components/LearnMore'
+import TokenDetails from 'modules/portfolio/Tokens/TokenDetails'
 import ICODetails from 'modules/portfolio/ICO/ICODetails'
 
 const notFoundRoute: RouteDefinition = {
@@ -157,10 +157,10 @@ export const routes: RouteDefinition[] = [
     title: '',
   },
   {
-    path: Paths.learnMore,
-    component: LearnMore,
+    path: Paths.tokenDetails,
+    component: TokenDetails,
     protected: false,
-    redirect: Paths.learnMore,
+    redirect: Paths.tokenDetails,
     title: '',
   },
   {
@@ -317,7 +317,7 @@ export default connect(mapStateToProps, { handleDrawerOpen, handleDrawerClose })
 // import { IconButton } from '@material-ui/core'
 // import MenuIcon from '@material-ui/icons/Menu'
 // import Portfolio from 'modules/portfolio'
-// import LearnMore from 'modules/portfolio/components/LearnMore'
+// import TokenDetails from 'modules/portfolio/components/TokenDetails'
 // import ICODetails from 'modules/portfolio/ICO/ICODetails'
 
 // const notFoundRoute: RouteDefinition = {
@@ -435,10 +435,10 @@ export default connect(mapStateToProps, { handleDrawerOpen, handleDrawerClose })
 //     title: '',
 //   },
 //   {
-//     path: Paths.learnMore,
-//     component: LearnMore,
+//     path: Paths.TokenDetails,
+//     component: TokenDetails,
 //     protected: false,
-//     redirect: Paths.learnMore,
+//     redirect: Paths.TokenDetails,
 //     title: '',
 //   },
 //   {

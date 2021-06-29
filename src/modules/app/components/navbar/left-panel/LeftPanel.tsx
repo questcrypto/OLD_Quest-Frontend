@@ -25,12 +25,13 @@ import questLogo from 'assets/images/questDashboardLogo.svg'
 import PieIcon from 'assets/icons/pieIcon.svg'
 import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
 import web3modal from 'web3modal'
+import { hasApplcationAccess } from 'logic/actions/user.actions'
 
 import Web3 from 'web3'
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
-  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2, isWalletCon, walletConAddress } = props
+  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2, isWalletCon, walletConAddress, applicationAccess } = props
   const [account, setAccount] = useState('')
 
   const handleProperty = () => {
@@ -82,6 +83,10 @@ const LeftPanel = (props: any) => {
     // web3.eth.accounts.wallet.remove(walletConAddress)
     // web3.eth.accounts.wallet.clear()
   }
+  const setAppAccess = () => {
+    hasApplcationAccess(false)
+  }
+  console.log(applicationAccess, '***')
   return (
     //@ts-ignore
     <DrawerWrapper open={openDrawer}>
@@ -104,23 +109,42 @@ const LeftPanel = (props: any) => {
           <Divider className={classes.dividerStyle} />
           <List>
             {/* {!!userInfo && loggedIn && */}
-            {
-              <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
-                <ApartmentIcon className={classes.iconStyle} />
-                <ListItemText>Properties</ListItemText>
-              </ListItem>
-            }
+            {applicationAccess ? (
+              <>
+                <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
+                  <ApartmentIcon className={classes.iconStyle} />
+                  <ListItemText>Properties</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
+                  <AssessmentIcon className={classes.iconStyle} />
+                  <ListItemText>Real Estate Auctions</ListItemText>
+                </ListItem>
+                <ListItem button className={classes.itemButtonStyle} onClick={() => handlePortfolio()}>
+                  <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
+                  <ListItemText>Portfolio</ListItemText>
+                </ListItem>
+              </>
+            ) : (
+              <>
+                <ListItem button className={classes.itemButtonStyle} onClick={() => setAppAccess()}>
+                  <ApartmentIcon className={classes.iconStyle} />
+                  <ListItemText>Properties</ListItemText>
+                </ListItem>
+                <ListItem button className={classes.itemButtonStyle} onClick={() => setAppAccess()}>
+                  <AssessmentIcon className={classes.iconStyle} />
+                  <ListItemText>Real Estate Auctions</ListItemText>
+                </ListItem>
+                <ListItem button className={classes.itemButtonStyle} onClick={() => setAppAccess()}>
+                  <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
+                  <ListItemText>Portfolio</ListItemText>
+                </ListItem>
+              </>
+            )}
             {/* {loggedIn && !!userInfo && userInfo.role === 2 && ( */}
             {/* // {( */}
-            <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
-              <AssessmentIcon className={classes.iconStyle} />
-              <ListItemText>Real Estate Auctions</ListItemText>
-            </ListItem>
             {/* // )} */}
-            <ListItem button className={classes.itemButtonStyle} onClick={() => handlePortfolio()}>
-              <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
-              <ListItemText>Portfolio</ListItemText>
-            </ListItem>
+
             {loggedIn && !!userInfo && userInfo.role !== 2 && (
               <>
                 <ListItem button className={classes.itemButtonStyle}>
@@ -214,6 +238,7 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   isWalletCon: state.user.isWalletCon,
   walletConAddress: state.user.walletConAddress,
+  applicationAccess: state.user.applicationAccess,
 })
 
-export default connect(mapStateToProps, { logout, handleDrawerClose, logout2 })(LeftPanel)
+export default connect(mapStateToProps, { logout, handleDrawerClose, logout2, hasApplcationAccess })(LeftPanel)

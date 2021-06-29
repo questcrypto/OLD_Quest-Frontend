@@ -107,7 +107,7 @@ const StakingRow3 = (props: any) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [show, setShow] = useState(false);
-  const [loader, setLoader] = useState({ approveLoad: false })
+  const [loader, setLoader] = useState({ approveLoad: false, unstakeLoad: false, harvestLoad: false })
   const [usdcAppr, setUsdcAppr] = useState(0.00);
   const [usdcStake, setUsdcStake] = useState(0.00);
 
@@ -289,7 +289,8 @@ const StakingRow3 = (props: any) => {
                         }}
                         onClick={unStakeFn}
                       >
-                        Unstake
+                        {/* Unstake */}
+                        {loader.unstakeLoad ? <Spinner /> : <span>Unstake</span>}
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
@@ -316,7 +317,8 @@ const StakingRow3 = (props: any) => {
                           marginLeft: '12px',
                         }}
                       >
-                        Harvest
+                        {/* Harvest */}
+                        {loader.harvestLoad ? <Spinner /> : <span>Harvest</span>}
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>

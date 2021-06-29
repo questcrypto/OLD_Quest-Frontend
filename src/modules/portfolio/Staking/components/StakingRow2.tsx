@@ -28,6 +28,7 @@ import DownArrow from 'assets/icons/DownArrowAccord.svg'
 import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
+import Spinner from 'shared/loader-components/spinner'
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -114,6 +115,7 @@ const StakingRow2 = (props: any) => {
   const classes = useStyles();
 
   const [lpStackVal, setLpStackVal] = useState(0.00)
+  const [loader, setLoader] = useState({ unstakeLoad: false, harvestLoad: false })
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -274,7 +276,8 @@ const StakingRow2 = (props: any) => {
                       }}
                       onClick={unStakeFn}
                     >
-                      Unstake
+                      {/* Unstake */}
+                      {loader.unstakeLoad ? <Spinner /> : <span>Unstake</span>}
                     </CustomButton>
                   </FlexDiv><br />
                   <div className={classes.stakInfoText}>
@@ -301,7 +304,8 @@ const StakingRow2 = (props: any) => {
                         marginLeft: '12px',
                       }}
                     >
-                      Harvest
+                      {/* Harvest */}
+                      {loader.harvestLoad ? <Spinner /> : <span>Harvest</span>}
                     </CustomButton>
                   </FlexDiv><br />
                   <div className={classes.stakInfoText}>

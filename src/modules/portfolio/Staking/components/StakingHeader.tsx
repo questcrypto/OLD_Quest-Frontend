@@ -108,7 +108,7 @@ const StakingHeader = (props: any) => {
                 }}
                 onClick={convertToKnabFn}
               >
-                {loader.ctkBtn ? <div style={{ display: 'flex' }}>Loading...&nbsp;<Spinner /></div> : <span>Convert&nbsp;To&nbsp;KNAB</span>}
+                {loader.ctkBtn ? <Spinner /> : <span>Convert&nbsp;To&nbsp;KNAB</span>}
               </CustomButton>
             </FlexDiv>
 
@@ -137,7 +137,7 @@ const StakingHeader = (props: any) => {
                 }}
                 onClick={harvestFn}
               >
-                {loader.harBtn ? <div style={{ display: 'flex' }}>Loading...&nbsp;<Spinner /></div> : 'Harvest'}
+                {loader.harBtn ? <Spinner /> : 'Harvest'}
               </CustomButton>
             </FlexDiv>
           </Paper>

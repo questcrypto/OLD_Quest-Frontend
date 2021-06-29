@@ -104,7 +104,7 @@ const StakingRow1 = (props: any) => {
   const classes = useStyles();
   const { user: { walletConAddress, web3Instance } } = props;
 
-  const [loader, setLoader] = useState({ approveLoad: false })
+  const [loader, setLoader] = useState({ approveLoad: false, unstakeLoad: false, harvestLoad: false })
 
   const [show, setShow] = useState(false);
   const [knabAppValue, setKnabAppValue] = useState(0.00);
@@ -135,7 +135,6 @@ const StakingRow1 = (props: any) => {
   const stakeFn = () => {
     try {
       setShow(true);
-      // deposit(0, 1);
     } catch (error) { console.log(error) }
   }
 
@@ -300,7 +299,8 @@ const StakingRow1 = (props: any) => {
                         }}
                         onClick={unStakeFn}
                       >
-                        Unstake
+                        {/* Unstake */}
+                        {loader.unstakeLoad ? <Spinner /> : <span>Unstake</span>}
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
@@ -327,7 +327,8 @@ const StakingRow1 = (props: any) => {
                           marginLeft: '12px',
                         }}
                       >
-                        Harvest
+                        {/* Harvest */}
+                        {loader.harvestLoad ? <Spinner /> : <span>Harvest</span>}
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>

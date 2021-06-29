@@ -359,7 +359,7 @@ const Portfolio = (props: any) => {
           ''
         )}
       </div>
-      <Staking />
+      {/* <Staking /> */}
       {/* </div> */}
     </>
   )

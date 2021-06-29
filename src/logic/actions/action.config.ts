@@ -17,6 +17,7 @@ export const WALLET_CONNECT = 'WALLET_CONNECT'
 export const WALLET_CONNECT_ADDRESS = 'WALLET_CONNECT_ADDRESS'
 export const KNAB_BALANCE = 'KNAB_BALANCE'
 export const APPLICATION_ACCESS = 'APPLICATION_ACCESS'
+export const WEB3_INSTANCE = 'WEB3_INSTANCE'
 
 /* =================================== LOGIN Actions ========================== */
 
@@ -27,3 +28,11 @@ export const LOGIN_FAIL = 'LOGIN_FAIL'
 /* =================================== DRAWER Actions ========================== */
 export const OPEN_DRAWER = 'OPEN_DRAWER'
 export const CLOSE_DRAWER = 'CLOSE_DRAWER'
+
+/* =================================== STAKING Actions ========================== */
+export const KNAB_BAL = 'KNAB_BAL'
+export const KNABR_BAL = 'KNABR_BAL'
+export const KNAB_USDC_BAL = 'KNAB_USDC_BAL'
+export const KNABR_USDC_BAL= 'KNABR_USDC_BAL'
+
+

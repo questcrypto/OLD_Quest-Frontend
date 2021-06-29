@@ -11,6 +11,7 @@ import {
   WALLET_CONNECT_ADDRESS,
   KNAB_BALANCE,
   APPLICATION_ACCESS,
+  WEB3_INSTANCE
 } from '../actions/action.config'
 import history from 'modules/app/components/history'
 
@@ -25,6 +26,7 @@ const initialState = {
   walletConAddress: '',
   KNABBalance: 0.0,
   applicationAccess: true,
+  web3Instance: ''
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -103,6 +105,11 @@ export const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         applicationAccess: payload,
+      }
+    case WEB3_INSTANCE:
+      return {
+        ...state,
+        web3Instance: payload,
       }
     default:
       return state

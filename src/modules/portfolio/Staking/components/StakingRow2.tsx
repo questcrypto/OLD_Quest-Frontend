@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     color: '#848E9C',
     padding: '16px 60px',
-    '& $h6' :{
+    '& $h6': {
       textAlign: 'center'
     }
   },
@@ -113,12 +113,7 @@ const StakingRow2 = (props: any) => {
 
   const classes = useStyles();
 
-  const handleChange = (e: any) => {
-    try {
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const [lpStackVal, setLpStackVal] = useState(0.00)
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -129,8 +124,16 @@ const StakingRow2 = (props: any) => {
     } catch { }
   }
 
+  const unStakeFn = () => {
+    try {
+      console.log(lpStackVal);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
-    <Accordion classes={{ root: classes.accordionRoot }} onClick={handleOpen}>
+    <Accordion classes={{ root: classes.accordionRoot }} >
       <AccordionSummary
         // expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -139,6 +142,7 @@ const StakingRow2 = (props: any) => {
           root: classes.accordionSummary,
           // expandIcon: classes.expandIcon
         }}
+        onClick={handleOpen}
       >
         <FlexDiv>
           <FlexRow>
@@ -213,7 +217,7 @@ const StakingRow2 = (props: any) => {
                 <FlexColumn>
                   <div className={classes.btnCenterText}>
                     <Typography variant="subtitle2">
-                      Add/remove liquidity to the KNAB-USDT on Quick Swap to get LP tokens. 
+                      Add/remove liquidity to the KNAB-USDT on Quick Swap to get LP tokens.
                       Then stake those LP tokens on Quest Crypto to receive QC rewards.
                     </Typography>
                   </div>
@@ -257,8 +261,8 @@ const StakingRow2 = (props: any) => {
                     <CustomInput
                       id="knabStake"
                       type="number"
-                      value={0.00}
-                      onChange={handleChange}
+                      value={lpStackVal}
+                      onChange={(e: any) => setLpStackVal(e.target.value)}
                       adornment={' | MAX'}
                     />
                     <CustomButton
@@ -268,6 +272,7 @@ const StakingRow2 = (props: any) => {
                         padding: '8px 48px',
                         marginLeft: '12px',
                       }}
+                      onClick={unStakeFn}
                     >
                       Unstake
                     </CustomButton>

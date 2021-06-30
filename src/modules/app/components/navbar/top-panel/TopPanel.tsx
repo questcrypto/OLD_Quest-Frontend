@@ -36,7 +36,17 @@ const TopPanel = (props: any) => {
   const [account, setAccount] = useState(false)
   let web3: Web3 = new Web3(window.ethereum)
 
-  const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress, getKNABbalance, isWalletCon, walletConnectAddress, setWeb3Instance } = props
+  const {
+    loginStart,
+    errorAlert,
+    loggedIn,
+    walletConnect,
+    walletConAddress,
+    getKNABbalance,
+    isWalletCon,
+    walletConnectAddress,
+    setWeb3Instance,
+  } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
@@ -164,7 +174,7 @@ const TopPanel = (props: any) => {
   const setAppAccess = () => {
     hasApplcationAccess(false)
   }
-  console.log(props.applicationAccess, '***')
+  // console.log(props.applicationAccess, '***')
   return (
     <TopPanelCont>
       {getisWallet(props.isWalletCon)}
@@ -225,6 +235,5 @@ export default connect(mapStateToProps, {
   walletConnectAddress,
   getKNABbalance,
   hasApplcationAccess,
-  setWeb3Instance
+  setWeb3Instance,
 })(TopPanel)
-

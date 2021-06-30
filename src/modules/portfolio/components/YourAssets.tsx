@@ -1,4 +1,4 @@
-import { Paper, makeStyles, Typography, Slider } from '@material-ui/core'
+import { Paper, makeStyles, Typography, Slider, Tooltip } from '@material-ui/core'
 import { useState, useEffect } from 'react'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,14 +9,23 @@ import TableRow from '@material-ui/core/TableRow'
 
 import Question from 'assets/icons/question.svg'
 import Chart from 'assets/images/chart.png'
-import KnabDummy from 'assets/icons/knab_dummy.svg'
+// import KnabDummy from 'assets/icons/knab_dummy.svg'
 import CustomButton from './shared/Button'
 import * as tableData from '../../../assets/jsons/yourAssets.json'
 import { connect } from 'react-redux'
 // import Web3 from 'web3'
-import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
+import {
+  getWeb3Val,
+  getAssetsKNABBalance,
+  getAssetsKNABrBalance,
+  getAssetsUSDCBalance,
+  getAssetsKNAB_USDCBalance,
+} from 'modules/block-chain/BlockChainMethods'
 import { walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
 import { errorAlert } from 'logic/actions/alerts.actions'
+import KnabIcon from 'assets/icons/KNAB.svg'
+import CoinIcon from 'assets/icons/USDC.svg'
+import { KNABAddressTest, stableCoinAbi } from 'modules/block-chain/abi'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
   firstDiv: {
     display: 'flex',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     alignItems: 'center',
   },
   iconImg: {
@@ -105,6 +114,10 @@ const YourAssets = (props: any) => {
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
+  const [assetsKNABBalance, setAssetsKNABBalance] = useState(0)
+  const [assetsKNABrBalance, setassetsKNABrBalance] = useState(0)
+  const [assetsUSDCBalance, setassetsUSDCBalance] = useState(0)
+  const [assetsKNAB_USDCBalance, setKNAB_usdcBalance2] = useState(0)
 
   const getToken = () => {
     try {
@@ -114,7 +127,36 @@ const YourAssets = (props: any) => {
       console.log(error)
     }
   }
-
+  const tableBody2 = [
+    {
+      asset: { icon: `${KnabIcon}`, name: 'KNAB' },
+      balance: `${assetsKNABBalance}`,
+      availableQty: '0.000000',
+      price: { value: `$ 1`, percent: 0.0 },
+      holdings: 0.0,
+    },
+    {
+      asset: { icon: `${CoinIcon}`, name: 'KNABr' },
+      balance: `${assetsKNABrBalance}`,
+      availableQty: '0.000000',
+      price: { value: `$ 0`, percent: 0.0 },
+      holdings: 0.0,
+    },
+    {
+      asset: { icon: `${CoinIcon}`, name: 'USDC' },
+      balance: `${assetsUSDCBalance}`,
+      availableQty: '0.000000',
+      price: { value: `$ 1`, percent: 0.0 },
+      holdings: 0.0,
+    },
+    {
+      asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC' },
+      balance: `${assetsKNAB_USDCBalance}`,
+      availableQty: '0.000000',
+      price: { value: `$ 0`, percent: 0.0 },
+      holdings: 0.0,
+    },
+  ]
   const connectWallet = async () => {
     try {
       setDataLoading(true)
@@ -160,12 +202,27 @@ const YourAssets = (props: any) => {
     }, 3000)
   }, [walletAddress, tokenDummy, loggedIn])
 
+  const handleAssetsKNABBalance = async () => {
+    const KNABBalance: any = await getAssetsKNABBalance()
+    const KNABrBalance: any = await getAssetsKNABrBalance()
+    const USDCBalance: any = await getAssetsUSDCBalance()
+    const KNAB_USDCBalance: any = await getAssetsKNAB_USDCBalance()
+    setAssetsKNABBalance(KNABBalance / 10 ** 18)
+    setassetsKNABrBalance(KNABrBalance / 10 ** 18)
+    setassetsUSDCBalance(USDCBalance / 10 ** 18)
+    setKNAB_usdcBalance2(KNAB_USDCBalance / 10 ** 18)
+  }
+  useEffect(() => {
+    if (isWalletCon) handleAssetsKNABBalance()
+  }, [isWalletCon])
   return (
     <div className={classes.mainDiv}>
       <Paper className={classes.root} style={{ opacity: isWallet ? 1 : 0.4 }} onMouseOver={() => setShow(true)}>
         <Typography variant="subtitle1" className={classes.title}>
           Your Assets
-          <img src={Question} alt="question" className={classes.questionImg} />
+          <Tooltip title="Lorem ipsum dolor sit amet" enterDelay={100} leaveDelay={100}>
+            <img src={Question} alt="question" className={classes.questionImg} />
+          </Tooltip>
         </Typography>
 
         <Table className={classes.table} aria-label="simple table">
@@ -183,7 +240,7 @@ const YourAssets = (props: any) => {
           <TableBody>
             {tableInfo &&
               tableInfo.tableBody &&
-              tableInfo.tableBody.map((row: any, index) => {
+              tableBody2.map((row: any, index) => {
                 return (
                   <TableRow key={index}>
                     {tableInfo.tableHeaders.map((item: any, ind) => {
@@ -191,8 +248,8 @@ const YourAssets = (props: any) => {
                         <TableCell key={ind}>
                           {item.key === 'asset' && (
                             <div className={classes.firstDiv}>
-                              {/* <img src={row[item.key].icon} alt="" className={classes.iconImg} /> */}
-                              <img src={KnabDummy} alt="" className={classes.iconImg} />
+                              <img src={row[item.key].icon} alt="" className={classes.iconImg} />
+                              {/* <img src={KnabIcon} alt="" className={classes.iconImg} /> */}
                               {row[item.key].name}
                             </div>
                           )}
@@ -256,6 +313,7 @@ const mapStateToProps = (state: any) => ({
   isWalletCon: state.user.isWalletCon,
   userInfo: state.user.userInfo,
   walletConnectAddress: state.user.walletConnectAddress,
+  web3Instance: state.user.web3Instance,
 })
 
 export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress })(YourAssets)

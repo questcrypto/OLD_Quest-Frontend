@@ -86,7 +86,7 @@ const LeftPanel = (props: any) => {
   const setAppAccess = () => {
     hasApplcationAccess(false)
   }
-  console.log(applicationAccess, '***')
+  // console.log(applicationAccess, '***')
   return (
     //@ts-ignore
     <DrawerWrapper open={openDrawer}>

@@ -131,39 +131,30 @@ const YourAssets = (props: any) => {
     {
       asset: { icon: `${KnabIcon}`, name: 'KNAB' },
       balance: `${assetsKNABBalance}`,
-
-      // {
-      //   "key": "availableQty",
-      //   "label": "Available Qty."
-      // },
-      // availableQty: '0.000000',
+      availableQty: '0.000000',
       price: { value: `$ 1`, percent: 0.0 },
-      // holdings: 0.0,
-      // {
-      //   "key": "holdings",
-      //   "label": "Holdings"
-      // }
+      holdings: 0.0,
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNABr' },
       balance: `${assetsKNABrBalance}`,
-      // availableQty: '0.000000',
+      availableQty: '0.000000',
       price: { value: `$ 0`, percent: 0.0 },
-      // holdings: 0.0,
+      holdings: 0.0,
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'USDC' },
       balance: `${assetsUSDCBalance}`,
-      // availableQty: '0.000000',
+      availableQty: '0.000000',
       price: { value: `$ 1`, percent: 0.0 },
-      // holdings: 0.0,
+      holdings: 0.0,
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC' },
       balance: `${assetsKNAB_USDCBalance}`,
-      // availableQty: '0.000000',
+      availableQty: '0.000000',
       price: { value: `$ 0`, percent: 0.0 },
-      // holdings: 0.0,
+      holdings: 0.0,
     },
   ]
   const connectWallet = async () => {
@@ -242,7 +233,7 @@ const YourAssets = (props: any) => {
                 tableInfo.tableHeaders.map((header: any, index: any) => {
                   return <TableCell key={index}>{header.label}</TableCell>
                 })}
-              {/* <TableCell>Chart</TableCell> */}
+              <TableCell>Chart</TableCell>
             </TableRow>
           </TableHead>
 
@@ -265,7 +256,7 @@ const YourAssets = (props: any) => {
                           {item.key === 'price' && (
                             <div>
                               {row[item.key].value} <br />
-                              <span className={classes.percentText}>+{row[item.key].percent}%</span>
+                              {/* <span className={classes.percentText}>+{row[item.key].percent}%</span> */}
                             </div>
                           )}
                           {item.key === 'holdings' && (
@@ -281,9 +272,9 @@ const YourAssets = (props: any) => {
                         </TableCell>
                       )
                     })}
-                    {/* <TableCell>
+                    <TableCell>
                       <img src={Chart} alt="" />
-                    </TableCell> */}
+                    </TableCell>
                   </TableRow>
                 )
               })}

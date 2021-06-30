@@ -15,7 +15,7 @@ import {
 } from '../style'
 import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
-import { setKnabBal, setKnabrBal } from '../../../../logic/actions/staking.action'
+import { setKnab, setKnabr } from '../../../../logic/actions/staking.action'
 import Spinner from 'shared/loader-components/spinner'
 import { getKNABBalance } from '../../../../modules/block-chain/BlockChainMethods'
 
@@ -24,8 +24,8 @@ const StakingHeader = (props: any) => {
   const classes = useStyles();
 
   const {
-    setKnabBal,
-    setKnabrBal,
+    setKnab, 
+    setKnabr, 
     staking: { knab, knabr },
     walletAddress
   } = props;
@@ -174,4 +174,4 @@ const mapStateToProps = (state: any) => ({
   staking: state.staking,
   walletAddress: state.user.walletConAddress
 })
-export default connect(mapStateToProps, { setKnabBal, setKnabrBal })(StakingHeader)
+export default connect(mapStateToProps, { setKnab, setKnabr })(StakingHeader)

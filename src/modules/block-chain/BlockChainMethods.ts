@@ -15,6 +15,10 @@ import {
   KNABabi,
   KNABFarmaddress,
   KnabrFarmAbi,
+  USDCAddress,
+  LPTokenAddress,
+  KNABAddressTest,
+  KNABrAddress
 } from './abi'
 let web3: Web3
 // import axios from 'axios'
@@ -357,6 +361,78 @@ export const handleKnabApproval = async (contractKnab: any, account: string, App
 
 export const handleUsdcApproval = async (contractUsdc: any, account: string, ApproveAmount: number) => {
   const gasPrice = await gasPriceFn();
+  const deci = await contractUsdc.methods.decimals().call()
+  const res = await contractUsdc.methods.approve(USDCAddress, ApproveAmount * (10 ** deci)).send({ from: account, gasPrice })
+  console.log(res);
+}
+
+export const getAssetsKNABBalance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const KNABContract = new web3.eth.Contract(KNABabi, KNABAddressTest)
+    const res = await KNABContract.methods.balanceOf(accounts[0]).call()
+    const KNABBalance: any = res
+    return parseInt(KNABBalance)
+  }
+}
+export const getAssetsKNABrBalance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const KNABContract = new web3.eth.Contract(KNABabi, KNABrAddress)
+    const res = await KNABContract.methods.balanceOf(accounts[0]).call()
+    const KNABrBalance: any = res
+    return parseInt(KNABrBalance)
+  }
+}
+export const getAssetsUSDCBalance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const KNABContract = new web3.eth.Contract(KNABabi, USDCAddress)
+    const res = await KNABContract.methods.balanceOf(accounts[0]).call()
+    const USDCbalance: any = res
+    return parseInt(USDCbalance)
+  }
+}
+export const getAssetsKNAB_USDCBalance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const KNABContract = new web3.eth.Contract(KNABabi, LPTokenAddress)
+    const res = await KNABContract.methods.balanceOf(accounts[0]).call()
+    const KNAB_USDCBalance: any = res
+    return parseInt(KNAB_USDCBalance)
+  }
+}
+
+export const getLpBalance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const lpContract = new web3.eth.Contract(stableCoinAbi, LPTokenAddress)
+    // const deci = await lpContract.methods.decimals().call()
+    const res = await lpContract.methods.balanceOf(accounts[0]).call()
+    // const lpBalance: any = res / 10 ** 6
+    const lpBalance: any = convertToEther2(res);
+    return lpBalance
+  }
+  return 0
+}
+
+export const handleKnabUsdcApproval = async (contractUsdc: any, account: string, ApproveAmount: number) => {
+  const gasPrice = await gasPriceFn();
   const res = await contractUsdc.methods.approve(KNABFarmaddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
   console.log(res);
+}
+
+export const withdraw = async (pid: number, amount: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const res = await farmContract.methods.withdraw(pid, amount).send({ from: accounts[0] })
+    console.log(res);
+  }
 }

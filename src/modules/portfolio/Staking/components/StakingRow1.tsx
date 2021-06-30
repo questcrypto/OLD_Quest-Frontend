@@ -28,9 +28,10 @@ import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
 import StakeKnabModal from './StakeKnabModal'
-import { handleKnabApproval } from '../../../../modules/block-chain/BlockChainMethods'
+import { handleKnabApproval, withdraw, getAssetsKNABBalance, getAssetsKNABrBalance } from '../../../../modules/block-chain/BlockChainMethods'
 import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi'
 import Spinner from 'shared/loader-components/spinner'
+import { setKnab, setKnabr } from '../../../../logic/actions/staking.action';
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -102,13 +103,32 @@ const useStyles = makeStyles((theme) => ({
 const StakingRow1 = (props: any) => {
 
   const classes = useStyles();
-  const { user: { walletConAddress, web3Instance } } = props;
+  const { 
+    user: { walletConAddress, web3Instance },
+    staking: { knab, knabr } 
+  } = props;
+
+  useEffect(() => {
+    if (walletConAddress) {
+
+      getAssetsKNABBalance().then((res) => {
+        console.log(res);
+        setKnab(res);
+      }, err => { console.log(err) })
+
+      getAssetsKNABrBalance().then((res) => {
+        console.log(res);
+        setKnabr(res);
+      }, err => { console.log(err) })
+
+    }
+  }, [walletConAddress])
 
   const [loader, setLoader] = useState({ approveLoad: false, unstakeLoad: false, harvestLoad: false })
 
   const [show, setShow] = useState(false);
   const [knabAppValue, setKnabAppValue] = useState(0.00);
-  const [knabStakeValue, setKnabStakeValue] = useState(0.00);
+  const [knabUnStakeValue, setKnabUnStakeValue] = useState(0.00);
 
   // useEffect(() => {
   //   console.log('web3Instance', web3Instance);
@@ -158,7 +178,15 @@ const StakingRow1 = (props: any) => {
 
   const unStakeFn = () => {
     try {
-
+      setLoader({ ...loader, unstakeLoad: true });
+      withdraw(0, knabUnStakeValue).then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, unstakeLoad: false });
+        }
+      }, err => {
+        setLoader({ ...loader, unstakeLoad: false });
+        console.log(err)
+      })
     } catch (error) { console.log(error) }
   }
 
@@ -181,19 +209,19 @@ const StakingRow1 = (props: any) => {
             </FlexColumn>
             <FlexColumn>
               <AccordHeading>KNAB</AccordHeading>
-              <AccordValue>$1,163,99117 TVL</AccordValue>
+              <AccordValue>$0 TVL</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>2,012.39%</AccordHeading>
-              <AccordValue>5.51%(24hr)</AccordValue>
-            </FlexColumn>
-            <FlexColumn>
-              <AccordHeading>$0.00</AccordHeading>
-              <AccordValue>0.0000 LP</AccordValue>
+              <AccordHeading>0%</AccordHeading>
+              <AccordValue>0%(24hr)</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordHeading>$0.00</AccordHeading>
-              <AccordValue>0.0000 Knab R</AccordValue>
+              <AccordValue>{ knab } KNAB</AccordValue>
+            </FlexColumn>
+            <FlexColumn>
+              <AccordHeading>$0.00</AccordHeading>
+              <AccordValue>{ knabr } Knab R</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordArrIcon src={!isOpen ? UpArrow : DownArrow} alt='' />
@@ -215,7 +243,7 @@ const StakingRow1 = (props: any) => {
                     <FlexDiv>
                       <FlexColumn>
                         <Heading>KNAB Balance</Heading>
-                        <Value>000.00</Value>
+                        <Value>{ knab }</Value>
                         <Value>($00.00)</Value>
                       </FlexColumn>
                       <CustomButton
@@ -286,8 +314,8 @@ const StakingRow1 = (props: any) => {
                       <CustomInput
                         id="knabStake"
                         type="number"
-                        value={knabStakeValue}
-                        onChange={(e: any) => setKnabStakeValue(e.target.value)}
+                        value={knabUnStakeValue}
+                        onChange={(e: any) => setKnabUnStakeValue(e.target.value)}
                         adornment={' | MAX'}
                       />
                       <CustomButton
@@ -316,7 +344,7 @@ const StakingRow1 = (props: any) => {
                     </div><br />
                     <FlexDiv>
                       <FlexColumn>
-                        <Value>0.0000</Value>
+                        <Value>{ knabr }</Value>
                         <Value>($0.00)</Value>
                       </FlexColumn>
                       <CustomButton
@@ -355,6 +383,7 @@ const StakingRow1 = (props: any) => {
 // export default StakingRow1;
 const mapStateToProps = (state: any) => ({
   user: state.user,
+  staking: state.staking
 })
 
 export default connect(mapStateToProps, {})(StakingRow1)

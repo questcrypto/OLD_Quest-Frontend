@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import {
   makeStyles,
@@ -29,9 +29,11 @@ import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
 import StakeUsdcModal from './StakeUsdcModal'
-import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi'
-import { handleUsdcApproval } from '../../../../modules/block-chain/BlockChainMethods'
+import { USDCAddress, stableCoinAbi } from '../../../../modules/block-chain/abi'
+import { handleUsdcApproval, withdraw, getAssetsUSDCBalance, getAssetsKNABrBalance } from '../../../../modules/block-chain/BlockChainMethods'
 import Spinner from 'shared/loader-components/spinner'
+import { setUsdcDollar, setKnabr } from '../../../../logic/actions/staking.action';
+
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -103,13 +105,32 @@ const useStyles = makeStyles((theme) => ({
 const StakingRow3 = (props: any) => {
 
   const classes = useStyles();
-  const { user: { walletConAddress, web3Instance } } = props;
+  const {
+    staking: { usdc, knabr },  
+    user: { walletConAddress, web3Instance } 
+  } = props;
+
+  useEffect(() => {
+    if (walletConAddress.length > 0) {
+
+      getAssetsUSDCBalance().then((res) => {
+        console.log(res);
+        setUsdcDollar(res);
+      }, err => { console.log(err) })
+
+      getAssetsKNABrBalance().then((res) => {
+        console.log(res);
+        setKnabr(res);
+      }, err => { console.log(err) })
+
+    }
+  }, [walletConAddress])
 
   const [isOpen, setIsOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [loader, setLoader] = useState({ approveLoad: false, unstakeLoad: false, harvestLoad: false })
   const [usdcAppr, setUsdcAppr] = useState(0.00);
-  const [usdcStake, setUsdcStake] = useState(0.00);
+  const [usdcUnStake, setUsdcUnStake] = useState(0.00);
 
   const handleOpen = () => {
     try {
@@ -134,9 +155,9 @@ const StakingRow3 = (props: any) => {
   const ApproveUsdcTokenFn = async () => {
     try {
       setLoader({ ...loader, approveLoad: true });
-      const knabContract = new web3Instance.eth.Contract(KNABabi, KNABAddressTest);
+      const usdcContract = new web3Instance.eth.Contract(stableCoinAbi, USDCAddress);
       const accounts = await web3Instance.eth.getAccounts()
-      handleUsdcApproval(knabContract, accounts[0], usdcAppr).then((res: any) => {
+      handleUsdcApproval(usdcContract, accounts[0], usdcAppr).then((res: any) => {
         if (res) {
           setLoader({ ...loader, approveLoad: false });
         }
@@ -149,6 +170,15 @@ const StakingRow3 = (props: any) => {
 
   const unStakeFn = () => {
     try {
+      setLoader({ ...loader, unstakeLoad: true });
+      withdraw(2, usdcUnStake).then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, unstakeLoad: false });
+        }
+      }, err => {
+        setLoader({ ...loader, unstakeLoad: false });
+        console.log(err)
+      })
     } catch (error) { console.log(error) }
   }
 
@@ -171,19 +201,19 @@ const StakingRow3 = (props: any) => {
             </FlexColumn>
             <FlexColumn>
               <AccordHeading>USDC</AccordHeading>
-              <AccordValue>$1,163,99117 TVL</AccordValue>
+              <AccordValue>0 TVL</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>2,012.39%</AccordHeading>
-              <AccordValue>5.51%(24hr)</AccordValue>
-            </FlexColumn>
-            <FlexColumn>
-              <AccordHeading>$0.00</AccordHeading>
-              <AccordValue>0.0000 LP</AccordValue>
+              <AccordHeading>0%</AccordHeading>
+              <AccordValue>0%(24hr)</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordHeading>$0.00</AccordHeading>
-              <AccordValue>0.0000 Knab R</AccordValue>
+              <AccordValue>{ usdc } USDC</AccordValue>
+            </FlexColumn>
+            <FlexColumn>
+              <AccordHeading>$0.00</AccordHeading>
+              <AccordValue>{ knabr } Knab R</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordArrIcon src={!isOpen ? UpArrow : DownArrow} alt='' />
@@ -205,7 +235,7 @@ const StakingRow3 = (props: any) => {
                     <FlexDiv>
                       <FlexColumn>
                         <Heading>USDC Balance</Heading>
-                        <Value>000.00</Value>
+                        <Value>{ usdc }</Value>
                         <Value>($00.00)</Value>
                       </FlexColumn>
                       <CustomButton
@@ -276,8 +306,8 @@ const StakingRow3 = (props: any) => {
                       <CustomInput
                         id="knabStake"
                         type="number"
-                        value={usdcStake}
-                        onChange={(e: any) => { setUsdcStake(e.target.value) }}
+                        value={usdcUnStake}
+                        onChange={(e: any) => { setUsdcUnStake(e.target.value) }}
                         adornment={' | MAX'}
                       />
                       <CustomButton
@@ -306,7 +336,7 @@ const StakingRow3 = (props: any) => {
                     </div><br />
                     <FlexDiv>
                       <FlexColumn>
-                        <Value>0.0000</Value>
+                        <Value>{ knabr }</Value>
                         <Value>($0.00)</Value>
                       </FlexColumn>
                       <CustomButton
@@ -345,6 +375,7 @@ const StakingRow3 = (props: any) => {
 // export default StakingRow3;
 const mapStateToProps = (state: any) => ({
   user: state.user,
+  staking: state.staking
 })
 
-export default connect(mapStateToProps, {})(StakingRow3)
+export default connect(mapStateToProps, { setUsdcDollar, setKnabr })(StakingRow3)

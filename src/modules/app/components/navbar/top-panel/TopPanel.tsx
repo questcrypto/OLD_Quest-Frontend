@@ -190,8 +190,8 @@ const TopPanel = (props: any) => {
             <CustomButton
               size="large"
               style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
-              // onClick={props.applicationAccess ? connectWallet : setAppAccess}
-              onClick={connectWallet}
+              onClick={props.applicationAccess ? connectWallet : setAppAccess}
+              // onClick={connectWallet}
             >
               {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
             </CustomButton>

@@ -173,29 +173,31 @@ const Portfolio = (props: any) => {
     setApplicationAccess(access)
   }
 
-  useEffect(() => {
-    axios
-      .get('https://api.ipify.org')
-      .then((response) => {
-        setIPAddress(response.data)
-      })
-      .catch((err) => console.log(err))
-  }, [])
+  // useEffect(() => {
+  //   axios
+  //     .get('https://api.ipify.org')
+  //     .then((response) => {
+  //       console.log(response, '***')
+  //       setIPAddress(response.data)
+  //     })
+  //     .catch((err) => console.log(err))
+  // }, [])
 
   // const ip2: string = '193.37.254.170' // random IP from USA
-  useEffect(() => {
-    if (ip.length > 0) {
-      axios
-        .post(`${apiBaseUrl}/user/blockIp`, { ip: ip })
-        .then((response) => {
-          // console.log(response, '***')
-          setApplicationAccess(response.data.access)
-          hasApplcationAccess(response.data.access)
-          // hasAccess(response.data.access)
-        })
-        .catch((err) => console.log(err, '*** er'))
-    }
-  })
+  // useEffect(() => {
+  //   if (ip.length > 0) {
+  //     axios
+  //       .post(`${apiBaseUrl}/user/blockIp`, { ip: ip })
+  //       .then((response) => {
+  //         // console.log(response, '***')
+  //         setApplicationAccess(response.data.access)
+  //         hasApplcationAccess(response.data.access)
+  //         // hasAccess(response.data.access)
+  //       })
+  //       .catch((err) => console.log(err, '*** er'))
+  //   }
+  // })
+  // console.log(props.applicationAccess, appAccess, '***')
   return (
     <>
       <>
@@ -243,7 +245,7 @@ const Portfolio = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               // onClick={() => handleAuction()}
-              onClick={appAccess ? () => handleAuction() : handleBlocking}
+              onClick={appAccess && props.applicationAccess ? () => handleAuction() : handleBlocking}
             >
               Real Estate Auctions
             </CustomButton>
@@ -252,7 +254,7 @@ const Portfolio = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               // onClick={() => history.push(Paths.login)}
-              onClick={appAccess ? () => history.push(Paths.login) : handleBlocking}
+              onClick={appAccess && props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
             >
               Buy | Convert Quest
             </CustomButton>
@@ -261,7 +263,7 @@ const Portfolio = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               // onClick={openbcModal}
-              onClick={appAccess ? openbcModal : handleBlocking}
+              onClick={appAccess && props.applicationAccess ? openbcModal : handleBlocking}
             >
               {/* Buy | Convert KNAB */}
               Buy KNAB
@@ -285,7 +287,7 @@ const Portfolio = (props: any) => {
                   <CustomButton
                     size="large"
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                    onClick={appAccess ? () => history.push(Paths.login) : handleBlocking}
+                    onClick={appAccess && props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
                     // onClick={() => history.push(Paths.login)}
                   >
                     Buy Quest Tokens
@@ -297,7 +299,7 @@ const Portfolio = (props: any) => {
                   <CustomButton
                     size="large"
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                    onClick={appAccess ? openbcModal : handleBlocking}
+                    onClick={appAccess && props.applicationAccess ? openbcModal : handleBlocking}
                   >
                     Buy KNAB Tokens
                   </CustomButton>

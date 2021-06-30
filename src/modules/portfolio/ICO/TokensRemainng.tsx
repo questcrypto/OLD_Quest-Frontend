@@ -1,5 +1,7 @@
 import { Paper, makeStyles, Typography, Grid, Card, CardContent } from '@material-ui/core'
 // import { fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
+import { useState, useEffect } from 'react'
+import { getUSDCRaised } from '../../../modules/block-chain/BlockChainMethods'
 const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +26,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 const TokensRemaining = (props: any) => {
   const classes = useStyles()
+  const [raisedTokens, setRaisedTokens] = useState(0)
+  useEffect(() => {
+    const displayRaisedTokens = async () => {
+      const tokens = await getUSDCRaised()
+      setRaisedTokens(tokens)
+    }
+    displayRaisedTokens()
+  }, [])
   return (
     <>
       <div className={classes.mainDiv}>
@@ -55,7 +65,7 @@ const TokensRemaining = (props: any) => {
               <Typography className={classes.title}>Totala Market cap</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
-              <Typography className={classes.subTitle}>11,412,813 USDC</Typography>
+              <Typography className={classes.subTitle}>{raisedTokens} USDC</Typography>
             </Grid>
           </Grid>
         </Paper>

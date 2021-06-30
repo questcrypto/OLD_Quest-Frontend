@@ -10,16 +10,8 @@
         "label": "Balance"
       },
       {
-        "key": "availableQty",
-        "label": "Available Qty."
-      },
-      {
         "key": "price",
         "label": "Price"
-      },
-      {
-        "key": "holdings",
-        "label": "Holdings"
       }
     ],
     "tableBody": [

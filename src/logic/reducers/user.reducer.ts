@@ -25,7 +25,7 @@ const initialState = {
   isWalletCon: false,
   walletConAddress: '',
   KNABBalance: 0.0,
-  applicationAccess: false,
+  applicationAccess: true,
   web3Instance: '',
 }
 

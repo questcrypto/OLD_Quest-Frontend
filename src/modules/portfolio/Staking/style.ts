@@ -2,6 +2,27 @@ import { makeStyles } from '@material-ui/core'
 import styled from 'styled-components'
 
 export const useStyles = makeStyles((theme) => ({
+  hoverBtnDiv: {
+    top: '0%',
+    left: '0%',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    background: '#858585',
+    color: '#FFFFFF',
+  },
+  hoverBtnTxt: {
+    // color: '#FFFFFF'
+    position: 'relative',
+    left: '1.5%',
+  },
+  relativeDiv: {
+    position: 'relative'
+  },
   root: {
     padding: theme.spacing(2)
   },
@@ -11,7 +32,20 @@ export const useStyles = makeStyles((theme) => ({
   rowDiv: {
     border: '1px solid #E4E4E4',
     padding: theme.spacing(2)
-  }
+  },
+  outerDiv: {
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4)
+  },
+  accordionHeadRoot: {
+    marginTop: '28px',
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
+    boxShadow: 'none',
+    '&:before': {
+      backgroundColor: '#FFFFFF'
+    }
+  },
 }));
 
 export const FlexDiv = styled.div`
@@ -25,6 +59,21 @@ export const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
   flex-basis: 100%;
+`;
+
+export const Headers = styled.div`
+  /* width: 100%; */
+  display: flex;
+  justify-content: space-between;
+  padding-top: 24px;
+  padding-left: 32px;
+  padding-right: 32px;
+`;
+
+export const FlexItem = styled.div`
+  width: '100%';
+  /* flex-grow: 1; */
+  flex-basis: '100%';
 `;
 
 export const FlexColumn = styled.div`

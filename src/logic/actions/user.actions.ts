@@ -11,6 +11,7 @@ import {
   WALLET_CONNECT_ADDRESS,
   KNAB_BALANCE,
   APPLICATION_ACCESS,
+  WEB3_INSTANCE
 } from './action.config'
 
 export const authStart = () => {
@@ -82,6 +83,13 @@ export const getKNABbalance = (data: any) => {
 export const hasApplcationAccess = (data: any) => {
   return {
     type: APPLICATION_ACCESS,
+    payload: data,
+  }
+}
+
+export const setWeb3Instance = (data: any) => {
+  return {
+    type: WEB3_INSTANCE,
     payload: data,
   }
 }

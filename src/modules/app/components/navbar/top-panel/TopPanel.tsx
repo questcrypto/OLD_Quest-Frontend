@@ -12,7 +12,7 @@ import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 import { getWeb3Val, getKNABBalance, getisWallet } from 'modules/block-chain/BlockChainMethods'
 import { errorAlert } from 'logic/actions/alerts.actions'
-import { loginStart, getKNABbalance } from 'logic/actions/user.actions'
+import { loginStart, getKNABbalance, setWeb3Instance } from 'logic/actions/user.actions'
 import MetaMaskIcon from '../../../../../assets/icons/metaMaskIcon.svg'
 import { hasApplcationAccess } from 'logic/actions/user.actions'
 
@@ -36,7 +36,7 @@ const TopPanel = (props: any) => {
   const [account, setAccount] = useState(false)
   let web3: Web3 = new Web3(window.ethereum)
 
-  const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress, getKNABbalance, isWalletCon } = props
+  const { loginStart, errorAlert, loggedIn, walletConnect, walletConAddress, getKNABbalance, isWalletCon, walletConnectAddress, setWeb3Instance } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
@@ -136,6 +136,7 @@ const TopPanel = (props: any) => {
         // )
         // const loginData = { publicaddress, signature }
         // loginStart(loginData)
+        setWeb3Instance(web3)
         setWalletAddress(publicaddress)
         walletConnectAddress(publicaddress)
         walletConnect(true)
@@ -224,4 +225,6 @@ export default connect(mapStateToProps, {
   walletConnectAddress,
   getKNABbalance,
   hasApplcationAccess,
+  setWeb3Instance
 })(TopPanel)
+

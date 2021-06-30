@@ -337,25 +337,20 @@ export const gasPriceFn = async () => {
   let minGasFee: any
   // const gasFee = await fetch('https://gasstation-mainnet.matic.network')
   //   .then((response) => response.json())
-  //   .then((json) => (minGasFee = json))
+  //   .then((json) => (minGasFee = json))    
   // let gasPrice: any = minGasFee.fast * 10 ** 9
   // if (desiredFee < gasPrice) {
   //   gasPrice = desiredFee
-  // }
+  // } 
   // return gasPrice;
-  const gasFee = fetch('https://gasstation-mainnet.matic.network')
-  gasFee.then(
-    (res: any) => {
-      let gasPrice: any = res['fast'] * 10 ** 9
-      if (desiredFee < gasPrice) {
-        gasPrice = desiredFee
-      }
-      return gasPrice
-    },
-    (err) => {
-      console.log(err)
+  const gasFee = fetch('https://gasstation-mainnet.matic.network');
+  gasFee.then((res: any) => {
+    let gasPrice: any = res['fast'] * 10 ** 9
+    if (desiredFee < gasPrice) {
+      gasPrice = desiredFee
     }
-  )
+    return gasPrice;
+  }, err => { console.log(err) })
 }
 
 export const handleKnabApproval = async (contractKnab: any, account: string, ApproveAmount: number) => {
@@ -410,5 +405,35 @@ export const getAssetsKNAB_USDCBalance = async () => {
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNAB_USDCBalance: any = res
     return parseInt(KNAB_USDCBalance)
+  }
+}
+
+export const getLpBalance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const lpContract = new web3.eth.Contract(stableCoinAbi, LPTokenAddress)
+    // const deci = await lpContract.methods.decimals().call()
+    const res = await lpContract.methods.balanceOf(accounts[0]).call()
+    // const lpBalance: any = res / 10 ** 6
+    const lpBalance: any = convertToEther2(res);
+    return lpBalance
+  }
+  return 0
+}
+
+export const handleKnabUsdcApproval = async (contractUsdc: any, account: string, ApproveAmount: number) => {
+  const gasPrice = await gasPriceFn();
+  const res = await contractUsdc.methods.approve(KNABFarmaddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
+  console.log(res);
+}
+
+export const withdraw = async (pid: number, amount: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const res = await farmContract.methods.withdraw(pid, amount).send({ from: accounts[0] })
+    console.log(res);
   }
 }

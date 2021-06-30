@@ -365,9 +365,10 @@ export const handleKnabApproval = async (contractKnab: any, account: string, App
 }
 
 export const handleUsdcApproval = async (contractUsdc: any, account: string, ApproveAmount: number) => {
-  const gasPrice = await gasPriceFn()
-  const res = await contractUsdc.methods.approve(KNABFarmaddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
-  console.log(res)
+  const gasPrice = await gasPriceFn();
+  const deci = await contractUsdc.methods.decimals().call()
+  const res = await contractUsdc.methods.approve(USDCAddress, ApproveAmount * (10 ** deci)).send({ from: account, gasPrice })
+  console.log(res);
 }
 
 export const getAssetsKNABBalance = async () => {

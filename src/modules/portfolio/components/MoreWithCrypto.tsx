@@ -1,4 +1,4 @@
-import { Paper, makeStyles, Typography } from '@material-ui/core'
+import { Paper, makeStyles, Typography, Tooltip } from '@material-ui/core'
 import { useState, useEffect } from 'react'
 
 import Question from 'assets/icons/question.svg'
@@ -157,7 +157,9 @@ const MoreWithCrypto = (props: any) => {
         <Paper className={classes.root} style={{ opacity: isWallet ? 1 : 0.4 }} onMouseOver={() => setShow(true)}>
           <Typography variant="subtitle1" className={classes.title}>
             Do more with Crypto
-            <img src={Question} alt="question" className={classes.questionImg} />
+            <Tooltip title="Lorem ipsum dolor sit amet" enterDelay={100} leaveDelay={100}>
+              <img src={Question} alt="question" className={classes.questionImg} />
+            </Tooltip>
           </Typography>
           <div className={classes.line}></div>
 

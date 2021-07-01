@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import {
   makeStyles,
   Accordion,
@@ -28,6 +29,10 @@ import DownArrow from 'assets/icons/DownArrowAccord.svg'
 import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
+import Spinner from 'shared/loader-components/spinner'
+import { handleKnabUsdcApproval, deposit, withdraw, getLpBalance, getAssetsKNABrBalance } from '../../../../modules/block-chain/BlockChainMethods'
+import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi';
+import { setLp, setKnabr } from '../../../../logic/actions/staking.action';
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -112,8 +117,30 @@ const useStyles = makeStyles((theme) => ({
 const StakingRow2 = (props: any) => {
 
   const classes = useStyles();
+  const { 
+    user: { walletConAddress, web3Instance }, 
+    staking: { lp, knabr }, 
+    setLp 
+  } = props;
 
-  const [lpStackVal, setLpStackVal] = useState(0.00)
+  useEffect(() => {
+    if (walletConAddress.length > 0) {
+
+      getLpBalance().then((res) => {
+        console.log(res);
+        setLp(res);
+      }, err => { console.log(err) })
+
+      getAssetsKNABrBalance().then((res) => {
+        console.log(res);
+        setKnabr(res);
+      }, err => { console.log(err) })
+
+    }
+  }, [walletConAddress])
+
+  const [lpUnStackVal, setLpUnStackVal] = useState(0.00)
+  const [loader, setLoader] = useState({ approveLoad: false, stakeLoad: false, unstakeLoad: false, harvestLoad: false })
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -124,9 +151,51 @@ const StakingRow2 = (props: any) => {
     } catch { }
   }
 
+  const approveFn = async () => {
+    try {
+      setLoader({ ...loader, approveLoad: true });
+      const Contract = new web3Instance.eth.Contract(KNABabi, KNABAddressTest);
+      const accounts = await web3Instance.eth.getAccounts()
+      handleKnabUsdcApproval(Contract, accounts[0], lp).then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, approveLoad: false });
+        }
+      }, err => {
+        setLoader({ ...loader, approveLoad: false });
+        console.log(err)
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const stakeFn = async () => {
+    try {
+      setLoader({ ...loader, stakeLoad: true });
+      deposit(1, lp).then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, stakeLoad: false });;
+        }
+      }, err => {
+        setLoader({ ...loader, stakeLoad: false });
+        console.log(err)
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const unStakeFn = () => {
     try {
-      console.log(lpStackVal);
+      setLoader({ ...loader, unstakeLoad: true });
+      withdraw(1, lpUnStackVal).then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, unstakeLoad: false });
+        }
+      }, err => {
+        setLoader({ ...loader, unstakeLoad: false });
+        console.log(err)
+      })
     } catch (error) {
       console.log(error)
     }
@@ -155,19 +224,19 @@ const StakingRow2 = (props: any) => {
           </FlexRow>
           <FlexColumn>
             <AccordHeading>KNAB-USDC</AccordHeading>
-            <AccordValue>$1,163,99117 TVL</AccordValue>
+            <AccordValue>$0 TVL</AccordValue>
           </FlexColumn>
           <FlexColumn>
-            <AccordHeading>2,012.39%</AccordHeading>
-            <AccordValue>5.51%(24hr)</AccordValue>
-          </FlexColumn>
-          <FlexColumn>
-            <AccordHeading>$0.00</AccordHeading>
-            <AccordValue>0.0000 LP</AccordValue>
+            <AccordHeading>0%</AccordHeading>
+            <AccordValue>0%(24hr)</AccordValue>
           </FlexColumn>
           <FlexColumn>
             <AccordHeading>$0.00</AccordHeading>
-            <AccordValue>0.0000 Knab R</AccordValue>
+            <AccordValue>{ lp } LP</AccordValue>
+          </FlexColumn>
+          <FlexColumn>
+            <AccordHeading>$0.00</AccordHeading>
+            <AccordValue>{ knabr } Knab R</AccordValue>
           </FlexColumn>
           <FlexColumn>
             <AccordArrIcon src={!isOpen ? UpArrow : DownArrow} alt='' />
@@ -189,7 +258,7 @@ const StakingRow2 = (props: any) => {
                   <FlexDiv>
                     <FlexColumn>
                       <Heading>LP Balance</Heading>
-                      <Value>000.00</Value>
+                      <Value>{ lp }</Value>
                       <Value>($00.00)</Value>
                     </FlexColumn>
                     <CustomButton
@@ -198,8 +267,10 @@ const StakingRow2 = (props: any) => {
                         backgroundColor: '#1E3444',
                         padding: '8px 48px',
                       }}
+                      onClick={approveFn}
                     >
-                      Approve
+                      {/* Approve */}
+                      {loader.approveLoad ? <Spinner /> : <span>Approve</span>}
                     </CustomButton>
                     <CustomButton
                       size="small"
@@ -208,8 +279,10 @@ const StakingRow2 = (props: any) => {
                         padding: '8px 48px',
                         marginLeft: '12px'
                       }}
+                      onClick={stakeFn}
                     >
-                      Stake
+                      {/* Stake */}
+                      {loader.stakeLoad ? <Spinner /> : <span>Stake</span>}
                     </CustomButton>
                   </FlexDiv>
                 </div>
@@ -261,8 +334,8 @@ const StakingRow2 = (props: any) => {
                     <CustomInput
                       id="knabStake"
                       type="number"
-                      value={lpStackVal}
-                      onChange={(e: any) => setLpStackVal(e.target.value)}
+                      value={lpUnStackVal}
+                      onChange={(e: any) => setLpUnStackVal(e.target.value)}
                       adornment={' | MAX'}
                     />
                     <CustomButton
@@ -274,7 +347,8 @@ const StakingRow2 = (props: any) => {
                       }}
                       onClick={unStakeFn}
                     >
-                      Unstake
+                      {/* Unstake */}
+                      {loader.unstakeLoad ? <Spinner /> : <span>Unstake</span>}
                     </CustomButton>
                   </FlexDiv><br />
                   <div className={classes.stakInfoText}>
@@ -290,7 +364,7 @@ const StakingRow2 = (props: any) => {
                   </div><br />
                   <FlexDiv>
                     <FlexColumn>
-                      <Value>0.0000</Value>
+                      <Value>{ knabr }</Value>
                       <Value>($0.00)</Value>
                     </FlexColumn>
                     <CustomButton
@@ -301,7 +375,8 @@ const StakingRow2 = (props: any) => {
                         marginLeft: '12px',
                       }}
                     >
-                      Harvest
+                      {/* Harvest */}
+                      {loader.harvestLoad ? <Spinner /> : <span>Harvest</span>}
                     </CustomButton>
                   </FlexDiv><br />
                   <div className={classes.stakInfoText}>
@@ -320,4 +395,10 @@ const StakingRow2 = (props: any) => {
   );
 }
 
-export default StakingRow2;
+// export default StakingRow2;
+const mapStateToProps = (state: any) => ({
+  user: state.user,
+  staking: state.staking
+})
+
+export default connect(mapStateToProps, { setLp })(StakingRow2)

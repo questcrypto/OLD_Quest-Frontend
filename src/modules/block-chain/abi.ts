@@ -8,6 +8,7 @@ export const KNABaddress = '0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8'
 export const KNABFarmaddress = '0xdF4CA4A907777C92185980Eee9315238CA95Fb0e'
 export const KNABAddressTest = '0x6013c7f247f89999a3d38da3b60c11f23af210ad'
 export const USDCAddress = '0x9f6be77faab3df085a1a0764e727d5b083419a60'
+// export const USDCAddress = '0xA986d9F095493870A0278E174Ed52A84E3a96a01'
 export const KNABrAddress = '0x22c6b3e4c85ce109b652c0efac7445260382e0e9'
 export const LPTokenAddress = '0x0c2ea8f539fb285e12728f3ff2f8fffd42e2ddbb'
 

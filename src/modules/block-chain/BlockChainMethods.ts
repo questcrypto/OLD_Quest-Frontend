@@ -269,7 +269,7 @@ export const buyKnab = async (amount: number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const ICOinstance = new web3.eth.Contract(ICOabi, ICOAddress)
-    const gasPrice = gasPriceFn()
+    const gasPrice = await gasPriceFn()
     const res: any = await ICOinstance.methods.buy(convertToWei(amount)).send({ from: accounts[0], gasPrice })
     return res
   }
@@ -349,22 +349,32 @@ export const gasPriceFn = async () => {
   //   gasPrice = desiredFee
   // }
   // return gasPrice;
-  const gasFee = fetch('https://gasstation-mainnet.matic.network')
-  gasFee.then(
-    (res: any) => {
-      console.log(res, '**')
-      let gasPrice: any = 1 * 10 ** 9
-      console.log(gasPrice)
-      if (desiredFee < gasPrice) {
-        gasPrice = desiredFee
-      }
-      return gasPrice
-    },
-    (err) => {
-      console.log(err)
-    }
-  )
-  // return desiredFee
+  // const gasFee2 = fetch('https://gasstation-mainnet.matic.network')
+  //   .then((response) => response.json())
+  //   .then((json) => {
+  //     let gasPrice: any = json.fast * 10 ** 9
+  //     console.log(gasPrice)
+  //     if (desiredFee < gasPrice) {
+  //       minGasFee = desiredFee
+  //     }
+  //     return gasPrice
+  //   })
+  // const gasFee = fetch('https://gasstation-mainnet.matic.network')
+  // gasFee.then(
+  //   (res: any) => {
+  //     console.log(res, '**')
+  //     let gasPrice: any = res['fast'] * 10 ** 9
+  //     console.log(gasPrice)
+  //     if (desiredFee < gasPrice) {
+  //       gasPrice = desiredFee
+  //     }
+  //     return gasPrice
+  //   },
+  //   (err) => {
+  //     console.log(err)
+  //   }
+  // )
+  return desiredFee
 }
 
 export const handleKnabApproval = async (contractKnab: any, account: string, ApproveAmount: number) => {

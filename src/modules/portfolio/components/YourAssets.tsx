@@ -279,7 +279,12 @@ const YourAssets = (props: any) => {
                       )
                     })}
                     <TableCell>
-                      <img src={Chart} alt="" onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)} />
+                      <img
+                        src={Chart}
+                        alt=""
+                        // onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)}
+                        onClick={() => openInNewTab(`https://questcrypto.app${Paths.tokenDetails}`)}
+                      />
                     </TableCell>
                   </TableRow>
                 )

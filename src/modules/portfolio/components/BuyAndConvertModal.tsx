@@ -327,7 +327,8 @@ const BuyAndConvertModal = (props: any) => {
                 <span
                   className={classes.learnMoreText}
                   // onClick={() => openInNewTab(`${Paths.ICOdetails}`)}
-                  onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}
+                  // onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}
+                  onClick={() => openInNewTab(`https://questcrypto.app${Paths.ICOdetails}`)}
                 >
                   Learn More
                 </span>

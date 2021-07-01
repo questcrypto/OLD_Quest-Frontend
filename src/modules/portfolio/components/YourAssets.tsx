@@ -13,6 +13,7 @@ import Chart from 'assets/images/chart.png'
 import CustomButton from './shared/Button'
 import * as tableData from '../../../assets/jsons/yourAssets.json'
 import { connect } from 'react-redux'
+import { Paths } from 'modules/app/components/routes/types'
 // import Web3 from 'web3'
 import {
   getWeb3Val,

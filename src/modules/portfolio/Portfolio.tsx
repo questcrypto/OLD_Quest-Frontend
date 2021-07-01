@@ -86,7 +86,7 @@ const Portfolio = (props: any) => {
           const accounts = await web3.eth.getAccounts()
           const contractSc = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
           const res: any = await getKNABBalance()
-          // console.log(res, 'blc')
+          // console.log(res, '***')
           // const res: any = await contractSc.methods.approve(ICOAddress, fromData).send({ from: accounts[0] });
 
           handlestableCoinapproval(contractSc, accounts[0], fromData).then(

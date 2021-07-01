@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   rightHeader: {
     display: 'flex',
     padding: '30px',
-    marginLeft: '180px',
+    marginLeft: '170px',
     fontSize: '0.8em',
     fontWeight: 'bold',
     color: '#C4C4C4',
@@ -103,7 +103,7 @@ const RaisedTokens = (props: any) => {
       <Paper className={classes.root} style={{ opacity: 1 }}>
         <Grid container>
           <Grid item>
-            <Typography className={classes.header}>Raised : {raisedTokens} Tokens</Typography>
+            <Typography className={classes.header}>USDC Raised : {raisedTokens} Tokens</Typography>
           </Grid>
           <Grid item>
             <Typography className={classes.rightHeader}>Target : 80 Million Tokens</Typography>

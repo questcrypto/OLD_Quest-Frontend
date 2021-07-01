@@ -329,6 +329,7 @@ const BuyAndConvertModal = (props: any) => {
                   // onClick={() => openInNewTab(`${Paths.ICOdetails}`)}
                   // onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}
                   onClick={() => openInNewTab(`https://questcrypto.app${Paths.ICOdetails}`)}
+                  // onClick={() => history.push(Paths.ICOdetails)}
                 >
                   Learn More
                 </span>

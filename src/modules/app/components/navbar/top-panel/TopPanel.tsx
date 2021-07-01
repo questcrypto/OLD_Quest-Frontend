@@ -174,7 +174,7 @@ const TopPanel = (props: any) => {
   const setAppAccess = () => {
     hasApplcationAccess(false)
   }
-  // console.log(props.applicationAccess, '***')
+  console.log(props.applicationAccess, '***')
   return (
     <TopPanelCont>
       {getisWallet(props.isWalletCon)}

@@ -17,6 +17,9 @@ import {
   SET_LP_DOLLAR,
   SET_LP_STAKED,
   SET_LP_STAKED_DOLLAR,
+  SET_TVL_KNAB,
+  SET_TVL_KNAB_USDC,
+  SET_TVL_USDC
 } from '../actions/action.config'
 
 const initialState = {
@@ -28,7 +31,7 @@ const initialState = {
   knab_staked: 0.0,
   knab_staked_dollar: 0.0,
 
-  knabr: 1.0,
+  knabr: 0.0,
   knabr_dollar: 0.0,
   knabr_earned: 0.0,
   knabr_earned_dollar: 0.0,
@@ -41,7 +44,11 @@ const initialState = {
   lp: 0.0,
   lp_dollar: 0.0,
   lp_staked: 0.0,
-  lp_staked_dollar: 0.0
+  lp_staked_dollar: 0.0,
+
+  tvl_knab: 0.0,
+  tvl_knab_usdc: 0.0,
+  tvl_usdc: 0.0
 
 }
 
@@ -137,6 +144,21 @@ export const stakingReducer = (state = initialState, action: any) => {
       return {
         ...state,
         lp_staked_dollar: payload
+      }
+    case SET_TVL_KNAB:
+      return {
+        ...state,
+        tvl_knab: payload
+      }
+    case SET_TVL_KNAB_USDC:
+      return {
+        ...state,
+        tvl_knab_usdc: payload
+      }
+    case SET_TVL_USDC:
+      return {
+        ...state,
+        tvl_usdc: payload
       }
     default:
       return state

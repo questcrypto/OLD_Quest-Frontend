@@ -15,12 +15,23 @@ import CustomButton from '../components/shared/Button'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
 import { walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
 import { errorAlert } from 'logic/actions/alerts.actions'
+import { setKnab, setKnabr } from '../../../logic/actions/staking.action'
+import { handleKnabApproval, withdraw, getAssetsKNABBalance, getAssetsKNABrBalance, getTvl } from '../../../modules/block-chain/BlockChainMethods'
 
 const Staking = (props: any) => {
 
   const classes = useStyles();
 
-  const { loggedIn, isWalletCon, getBalance, walletConnect, walletConnectAddress } = props
+  const { 
+    loggedIn, 
+    isWalletCon, 
+    getBalance, 
+    walletConnect, 
+    walletConnectAddress,
+    walletConAddress,
+    setKnab, 
+    setKnabr  
+  } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [isWallet, setIsWallet] = useState(false)
   const [show, setShow] = useState(false)
@@ -30,6 +41,29 @@ const Staking = (props: any) => {
     // console.log('More With Crypto', isWalletCon);
     setIsWallet(isWalletCon)
   }, [isWalletCon])
+
+  useEffect(() => {
+    if (walletConAddress.length > 0) {
+
+      getAssetsKNABBalance().then((res) => {
+        console.log(res);
+        setKnab(res);
+      }, err => { console.log(err) })
+
+      getAssetsKNABrBalance().then((res) => {
+        console.log(res);
+        setKnabr(res);
+      }, err => { console.log(err) })
+
+      // const data = getTvl(0);
+      // console.log(data);
+
+      // getTvl(0).then((res) => {
+      //   console.log(res);
+      // }, err => { console.log(err) })
+
+    }
+  }, [walletConAddress])
 
   const connectWallet = async () => {
     try {
@@ -95,7 +129,14 @@ const Staking = (props: any) => {
 const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   isWalletCon: state.user.isWalletCon,
-  walletConnectAddress: state.user.walletConnectAddress,
+  walletConAddress: state.user.walletConAddress,
+  staking: state.staking,
 })
 
-export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress })(Staking)
+export default connect(mapStateToProps, { 
+  errorAlert, 
+  walletConnect, 
+  walletConnectAddress,
+  setKnab, 
+  setKnabr 
+})(Staking)

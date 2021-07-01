@@ -26,7 +26,7 @@ const StakingHeader = (props: any) => {
   const {
     setKnab, 
     setKnabr, 
-    staking: { knab, knabr },
+    staking: { knab, knabr, knabr_earned },
     walletAddress
   } = props;
 
@@ -86,7 +86,8 @@ const StakingHeader = (props: any) => {
               <FlexColumn>
                 <Heading>Converted KNAB Balance</Heading>
                 <Value>
-                  {conknabBal['value']} (~${conknabBal['dollarValue']})
+                  {/* {conknabBal['value']} (~${conknabBal['dollarValue']}) */}
+                  { 0.00 } (~${ 0.00 })
                 </Value>
               </FlexColumn>
             </FlexDiv><br />
@@ -122,7 +123,7 @@ const StakingHeader = (props: any) => {
             <FlexDiv>
               <FlexColumn>
                 <Value>
-                  {knabREarn['value']} KNABr
+                  { knabr_earned } KNABr
                 </Value>
                 <Value>
                   (${knabREarn['dollarValue']})

@@ -28,10 +28,10 @@ import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
 import StakeKnabModal from './StakeKnabModal'
-import { handleKnabApproval, withdraw, getAssetsKNABBalance, getAssetsKNABrBalance } from '../../../../modules/block-chain/BlockChainMethods'
+import { handleKnabApproval, withdraw, getAssetsKNABBalance, getAssetsKNABrBalance, getTvl } from '../../../../modules/block-chain/BlockChainMethods'
 import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi'
 import Spinner from 'shared/loader-components/spinner'
-import { setKnab, setKnabr } from '../../../../logic/actions/staking.action';
+import { setKnab, setKnabr, setTvlKnab } from '../../../../logic/actions/staking.action';
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -105,7 +105,9 @@ const StakingRow1 = (props: any) => {
   const classes = useStyles();
   const { 
     user: { walletConAddress, web3Instance },
-    staking: { knab, knabr } 
+    staking: { knab, knabr, tvl_knab },
+    setKnabr,
+    setTvlKnab
   } = props;
 
   useEffect(() => {
@@ -120,6 +122,12 @@ const StakingRow1 = (props: any) => {
         console.log(res);
         setKnabr(res);
       }, err => { console.log(err) })
+
+      setTvlKnab(getTvl(0));
+
+      // getTvl(0).then((res) => {
+      //   console.log(res);
+      // }, err => { console.log(err) })
 
     }
   }, [walletConAddress])
@@ -209,7 +217,7 @@ const StakingRow1 = (props: any) => {
             </FlexColumn>
             <FlexColumn>
               <AccordHeading>KNAB</AccordHeading>
-              <AccordValue>$0 TVL</AccordValue>
+              <AccordValue>${ tvl_knab } TVL</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordHeading>0%</AccordHeading>
@@ -386,4 +394,4 @@ const mapStateToProps = (state: any) => ({
   staking: state.staking
 })
 
-export default connect(mapStateToProps, {})(StakingRow1)
+export default connect(mapStateToProps, { setKnabr, setTvlKnab })(StakingRow1)

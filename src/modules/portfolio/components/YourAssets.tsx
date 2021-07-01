@@ -208,7 +208,7 @@ const YourAssets = (props: any) => {
     const KNABrBalance: any = await getAssetsKNABrBalance()
     const USDCBalance: any = await getAssetsUSDCBalance()
     const KNAB_USDCBalance: any = await getAssetsKNAB_USDCBalance()
-    console.log(typeof KNABBalance, typeof KNABrBalance, typeof USDCBalance, typeof KNAB_USDCBalance, '***')
+    // console.log(KNABBalance, KNABrBalance, USDCBalance, KNAB_USDCBalance, '***')
     setAssetsKNABBalance(KNABBalance / 10 ** 18)
     setassetsKNABrBalance(KNABrBalance / 10 ** 18)
     setassetsUSDCBalance(USDCBalance / 10 ** 6)

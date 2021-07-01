@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Paper, Typography } from '@material-ui/core'
-import {
-  useStyles,
-  Headers,
-  FlexItem
-} from './style'
+import { useStyles, Headers, FlexItem } from './style'
 import StakingHeader from './components/StakingHeader'
 import StakingRow1 from './components/StakingRow1'
 import StakingRow2 from './components/StakingRow2'
@@ -16,22 +12,18 @@ import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
 import { walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import { setKnab, setKnabr } from '../../../logic/actions/staking.action'
-import { handleKnabApproval, withdraw, getAssetsKNABBalance, getAssetsKNABrBalance, getTvl } from '../../../modules/block-chain/BlockChainMethods'
+import {
+  handleKnabApproval,
+  withdraw,
+  getAssetsKNABBalance,
+  getAssetsKNABrBalance,
+  getTvl,
+} from '../../../modules/block-chain/BlockChainMethods'
 
 const Staking = (props: any) => {
+  const classes = useStyles()
 
-  const classes = useStyles();
-
-  const { 
-    loggedIn, 
-    isWalletCon, 
-    getBalance, 
-    walletConnect, 
-    walletConnectAddress,
-    walletConAddress,
-    setKnab, 
-    setKnabr  
-  } = props
+  const { loggedIn, isWalletCon, getBalance, walletConnect, walletConnectAddress, walletConAddress, setKnab, setKnabr } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [isWallet, setIsWallet] = useState(false)
   const [show, setShow] = useState(false)
@@ -44,16 +36,25 @@ const Staking = (props: any) => {
 
   useEffect(() => {
     if (walletConAddress.length > 0) {
+      getAssetsKNABBalance().then(
+        (res) => {
+          console.log(res)
+          setKnab(res)
+        },
+        (err) => {
+          console.log(err)
+        }
+      )
 
-      getAssetsKNABBalance().then((res) => {
-        console.log(res);
-        setKnab(res);
-      }, err => { console.log(err) })
-
-      getAssetsKNABrBalance().then((res) => {
-        console.log(res);
-        setKnabr(res);
-      }, err => { console.log(err) })
+      getAssetsKNABrBalance().then(
+        (res) => {
+          console.log(res)
+          setKnabr(res)
+        },
+        (err) => {
+          console.log(err)
+        }
+      )
 
       // const data = getTvl(0);
       // console.log(data);
@@ -61,7 +62,6 @@ const Staking = (props: any) => {
       // getTvl(0).then((res) => {
       //   console.log(res);
       // }, err => { console.log(err) })
-
     }
   }, [walletConAddress])
 
@@ -97,11 +97,8 @@ const Staking = (props: any) => {
 
   return (
     <div className={classes.relativeDiv}>
-
       <Paper className={classes.root} style={{ opacity: isWallet ? 1 : 0.4 }} onMouseOver={() => setShow(true)}>
-        <Typography variant="h6">
-          QC Staking
-        </Typography>
+        <Typography variant="h6">QC Staking</Typography>
         <div className={classes.mainDiv}>
           <StakingHeader />
           <StakingRow1 />
@@ -122,7 +119,7 @@ const Staking = (props: any) => {
         </div>
       )}
     </div>
-  );
+  )
 }
 
 // export default Staking;
@@ -133,10 +130,10 @@ const mapStateToProps = (state: any) => ({
   staking: state.staking,
 })
 
-export default connect(mapStateToProps, { 
-  errorAlert, 
-  walletConnect, 
+export default connect(mapStateToProps, {
+  errorAlert,
+  walletConnect,
   walletConnectAddress,
-  setKnab, 
-  setKnabr 
+  setKnab,
+  setKnabr,
 })(Staking)

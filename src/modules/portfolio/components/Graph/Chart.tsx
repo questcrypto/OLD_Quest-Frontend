@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import coinGecko from './coinGecko'
 import HistoryChart from './HistoryChart'
-const Moment = require('moment')
-const MomentRange = require('moment-range')
-const moment = MomentRange.extendMoment(Moment)
+// const Moment = require('moment')
+// const MomentRange = require('moment-range')
+// const moment = MomentRange.extendMoment(Moment)
 
 const Chart = () => {
   const id = 'bitcoin'

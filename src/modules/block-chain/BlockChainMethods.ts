@@ -437,3 +437,23 @@ export const withdraw = async (pid: number, amount: number) => {
     console.log(res);
   }
 }
+
+export const getTvl = async (pid: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const res = await farmContract.methods.stakedWantTokens(pid, accounts[0]).call()
+    return convertToEther2(res);
+  }
+}
+
+export const getPendingKnabr = async (pid: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const res = await farmContract.methods.pendingKNABR(pid, accounts[0]).call()
+    return convertToEther2(res);
+  }
+}

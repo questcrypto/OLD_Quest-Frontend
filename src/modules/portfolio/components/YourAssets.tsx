@@ -210,7 +210,7 @@ const YourAssets = (props: any) => {
     const KNAB_USDCBalance: any = await getAssetsKNAB_USDCBalance()
     setAssetsKNABBalance(KNABBalance / 10 ** 18)
     setassetsKNABrBalance(KNABrBalance / 10 ** 18)
-    setassetsUSDCBalance(USDCBalance / 10 ** 18)
+    setassetsUSDCBalance(USDCBalance / 10 ** 6)
     setKNAB_usdcBalance2(KNAB_USDCBalance / 10 ** 18)
   }
   useEffect(() => {

@@ -48,5 +48,9 @@ export const SET_LP = 'SET_LP'
 export const SET_LP_DOLLAR = 'SET_LP_DOLLAR'
 export const SET_LP_STAKED = 'SET_LP_STAKED'
 export const SET_LP_STAKED_DOLLAR = 'SET_LP_STAKED_DOLLAR'
+export const SET_TVL_KNAB = 'SET_TVL_KNAB'
+export const SET_TVL_KNAB_USDC = 'SET_TVL_KNAB_USDC'
+export const SET_TVL_USDC = 'SET_TVL_USDC'
+
 
 

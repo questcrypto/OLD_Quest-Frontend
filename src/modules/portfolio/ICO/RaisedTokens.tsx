@@ -1,5 +1,5 @@
-import { Paper, makeStyles, Typography, Grid, Slider, Tooltip, Button } from '@material-ui/core'
 import { useState, useEffect } from 'react'
+import { Paper, makeStyles, Typography, Grid, Tooltip } from '@material-ui/core'
 import { StyledSlider, SliderWrap } from './style'
 import { getUSDCRaised } from '../../../modules/block-chain/BlockChainMethods'
 
@@ -111,13 +111,7 @@ const RaisedTokens = (props: any) => {
         </Grid>
         <Tooltip title={raisedTokens} enterDelay={200} leaveDelay={100}>
           <SliderWrap>
-            <StyledSlider
-              // onMouseOver={() => alert(raisedTokens)
-              value={raisedTokens ? raisedTokens : 0}
-              aria-labelledby="discrete-slider"
-              min={0}
-              max={100000000}
-            />
+            <StyledSlider value={raisedTokens ? raisedTokens : 0} aria-labelledby="discrete-slider" min={0} max={100000000} />
           </SliderWrap>
         </Tooltip>
         <Grid container className={classes.details} spacing={2}>

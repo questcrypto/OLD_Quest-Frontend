@@ -5,31 +5,34 @@ const Chartjs = require('chart.js')
 const HistoryChart = (props: any) => {
   const { data } = props
   const chartRef: any = useRef()
-  const { day, week, year, detail } = data
+  // const { day, week, year, detail } = data
+  const { days } = data
   const [timeFormat, setTimeFormat] = useState('24h')
 
-  const determineTimeFormat = () => {
-    switch (timeFormat) {
-      case '24h':
-        return day
-      case '7d':
-        return week
-      case '1y':
-        return year
-      default:
-        return day
-    }
-  }
+  // const determineTimeFormat = () => {
+  //   switch (timeFormat) {
+  //     case '24h':
+  //       return day
+  //     case '7d':
+  //       return week
+  //     case '1y':
+  //       return year
+  //     default:
+  //       return day
+  //   }
+  // }
 
   useEffect(() => {
-    if (chartRef && chartRef.current && detail) {
+    if (chartRef && chartRef.current) {
       const chartInstance = new Chartjs(chartRef.current, {
         type: 'line',
         data: {
           datasets: [
             {
-              label: `${detail.name} price`,
-              data: determineTimeFormat(),
+              // label: `${detail.name} price`,
+              // data: determineTimeFormat(),
+              label: `USDC (18-June-2021 to 01-July-2021)`,
+              data: days,
               backgroundColor: 'rgba(174, 305, 194, 0.5)',
               borderColor: 'rgba(174, 305, 194, 0.4',
               pointRadius: 0,
@@ -62,7 +65,7 @@ const HistoryChart = (props: any) => {
         <canvas ref={chartRef} id="myChart" width={200} height={250}></canvas>
       </div>
 
-      <div className="chart-button mt-1">
+      {/* <div className="chart-button mt-1">
         <button onClick={() => setTimeFormat('24h')} className="btn btn-outline-secondary btn-sm">
           24h
         </button>
@@ -72,7 +75,7 @@ const HistoryChart = (props: any) => {
         <button onClick={() => setTimeFormat('1y')} className="btn btn-outline-secondary btn-sm">
           1y
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }

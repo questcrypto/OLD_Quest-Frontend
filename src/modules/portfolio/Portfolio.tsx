@@ -40,6 +40,25 @@ const Portfolio = (props: any) => {
 
   const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess } = props
 
+  const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
+  useEffect(() => {
+    axios
+      // .get('https://api.ipify.org')
+      .get('https://ipapi.co/json/')
+      .then((response) => {
+        // console.log(response.data.country_code, '***')
+        const isFrom = blockedCountriesCodes.includes(response.data.country_code)
+        if (isFrom) {
+          setApplicationAccess(false)
+          hasApplcationAccess(false)
+        } else {
+          setApplicationAccess(true)
+          hasApplcationAccess(true)
+        }
+      })
+      .catch((err) => console.log(err))
+  })
+
   const openbcModal = () => {
     try {
       setBcModal(true)
@@ -172,16 +191,26 @@ const Portfolio = (props: any) => {
     // hasApplcationAccess(access)
     setApplicationAccess(access)
   }
-
-  // useEffect(() => {
-  //   axios
-  //     .get('https://api.ipify.org')
-  //     .then((response) => {
-  //       console.log(response, '***')
-  //       setIPAddress(response.data)
-  //     })
-  //     .catch((err) => console.log(err))
-  // }, [])
+  const blockedCountries = [
+    { name: 'United States of America', code: 'US' },
+    { name: 'Albania', code: 'AL' },
+    { name: 'Bosnia and Herzegovina', code: 'BA' },
+    { name: 'Belarus', code: 'BY' },
+    { name: 'Congo (DRC)', code: 'CD' },
+    { name: `Cote d'Ivoire`, code: 'CI' },
+    { name: 'Crimea', code: 'UA' },
+    { name: 'Cuba', code: 'CU' },
+    { name: 'Iraq', code: 'IQ' },
+    { name: 'Iran', code: 'IR' },
+    { name: 'North Korea', code: 'KP' },
+    { name: 'Liberia', code: 'LR' },
+    { name: 'Macedonia', code: 'MK' },
+    { name: 'Myanmar', code: 'MM' },
+    { name: 'Serbia', code: 'RS' },
+    { name: 'Sudan', code: 'SD' },
+    { name: 'Syria', code: 'SY' },
+    { name: 'Zimbabwe', code: 'ZW' },
+  ]
 
   // const ip2: string = '193.37.254.170' // random IP from USA
   // useEffect(() => {
@@ -197,7 +226,6 @@ const Portfolio = (props: any) => {
   //       .catch((err) => console.log(err, '*** er'))
   //   }
   // })
-  // console.log(props.applicationAccess, appAccess, '***')
   return (
     <>
       <>

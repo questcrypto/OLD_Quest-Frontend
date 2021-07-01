@@ -4,10 +4,13 @@ import { connect } from 'react-redux'
 import { makeStyles, Paper, Typography, Grid } from '@material-ui/core'
 import CustomButton from '../components/shared/Button'
 import TokenCard from './TokenCard'
+import KnabrCard from './KnabrCard'
 import TokensData from './TokensData'
 import TokensGraph from '../components/Graph/Graph'
 import { getKNABbalance } from 'logic/actions/user.actions'
 import { getKNABBalance } from '../../../modules/block-chain/BlockChainMethods'
+import KnabCard from './KnabCard'
+// import KnabCard from './KnabCard'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,10 +98,11 @@ const TokenDetails = (props: any) => {
         <br />
         <Grid container spacing={2} className={classes.paper}>
           <Grid item md={5} xs={12}>
-            <TokenCard />
+            <KnabCard />
           </Grid>
           <Grid item md={7} xs={12}>
-            <TokenCard />
+            {/* <TokenCard /> */}
+            <KnabrCard />
           </Grid>
         </Grid>
         <Grid container spacing={2} className={classes.paper}>

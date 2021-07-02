@@ -60,9 +60,9 @@ const TopPanel = (props: any) => {
   useEffect(() => {
     axios
       // .get('https://api.ipify.org')
-      .get('https://ipapi.co/json/')
+      // .get('https://ipapi.co/json/')
+      .get('https://ipapi.co/json/?key=55UO2jmzizMe4JbOojMgDTeczq2DA7LyLcTiLUTEg1x2grqYbr')
       .then((response) => {
-        // console.log(response.data.country_code, '***')
         const isFrom = blockedCountriesCodes.includes(response.data.country_code)
         if (isFrom) {
           setApplicationAccess(false)

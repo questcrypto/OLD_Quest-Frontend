@@ -195,26 +195,26 @@ const Portfolio = (props: any) => {
     // hasApplcationAccess(access)
     setApplicationAccess(access)
   }
-  const blockedCountries = [
-    { name: 'United States of America', code: 'US' },
-    { name: 'Albania', code: 'AL' },
-    { name: 'Bosnia and Herzegovina', code: 'BA' },
-    { name: 'Belarus', code: 'BY' },
-    { name: 'Congo (DRC)', code: 'CD' },
-    { name: `Cote d'Ivoire`, code: 'CI' },
-    { name: 'Crimea', code: 'UA' },
-    { name: 'Cuba', code: 'CU' },
-    { name: 'Iraq', code: 'IQ' },
-    { name: 'Iran', code: 'IR' },
-    { name: 'North Korea', code: 'KP' },
-    { name: 'Liberia', code: 'LR' },
-    { name: 'Macedonia', code: 'MK' },
-    { name: 'Myanmar', code: 'MM' },
-    { name: 'Serbia', code: 'RS' },
-    { name: 'Sudan', code: 'SD' },
-    { name: 'Syria', code: 'SY' },
-    { name: 'Zimbabwe', code: 'ZW' },
-  ]
+  // const blockedCountries = [
+  //   { name: 'United States of America', code: 'US' },
+  //   { name: 'Albania', code: 'AL' },
+  //   { name: 'Bosnia and Herzegovina', code: 'BA' },
+  //   { name: 'Belarus', code: 'BY' },
+  //   { name: 'Congo (DRC)', code: 'CD' },
+  //   { name: `Cote d'Ivoire`, code: 'CI' },
+  //   { name: 'Crimea', code: 'UA' },
+  //   { name: 'Cuba', code: 'CU' },
+  //   { name: 'Iraq', code: 'IQ' },
+  //   { name: 'Iran', code: 'IR' },
+  //   { name: 'North Korea', code: 'KP' },
+  //   { name: 'Liberia', code: 'LR' },
+  //   { name: 'Macedonia', code: 'MK' },
+  //   { name: 'Myanmar', code: 'MM' },
+  //   { name: 'Serbia', code: 'RS' },
+  //   { name: 'Sudan', code: 'SD' },
+  //   { name: 'Syria', code: 'SY' },
+  //   { name: 'Zimbabwe', code: 'ZW' },
+  // ]
 
   // const ip2: string = '193.37.254.170' // random IP from USA
   // useEffect(() => {
@@ -230,7 +230,6 @@ const Portfolio = (props: any) => {
   //       .catch((err) => console.log(err, '*** er'))
   //   }
   // })
-  console.log(props.applicationAccess, '1111')
   return (
     <>
       <>

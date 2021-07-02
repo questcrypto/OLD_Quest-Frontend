@@ -12,13 +12,14 @@ export const SliderWrap = styled.div`
   box-sizing: border-box;
   margin-left: 30px;
   margin-right: 30px;
+  margin-bottom: 4px;
 `
 export const StyledSlider = withStyles({
   root: {
     color: colors.gold,
     height: 2,
     width: '100%',
-    marginTop: '12px',
+    marginTop: '8px',
   },
   thumb: {
     height: 20,

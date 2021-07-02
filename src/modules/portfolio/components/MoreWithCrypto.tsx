@@ -189,7 +189,7 @@ const MoreWithCrypto = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
               // onClick={connectWallet}
-              onClick={hasAccess ? connectWallet : handleBlocking}
+              onClick={props.applicationAccess ? connectWallet : handleBlocking}
             >
               {/* Connect Wallet */}
               {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
@@ -227,6 +227,7 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   isWalletCon: state.user.isWalletCon,
   walletConnectAddress: state.user.walletConnectAddress,
+  applicationAccess: state.user.applicationAccess,
 })
 
 export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress })(MoreWithCrypto)

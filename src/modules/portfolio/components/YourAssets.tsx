@@ -306,7 +306,7 @@ const YourAssets = (props: any) => {
             size="small"
             style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
             // onClick={connectWallet}
-            onClick={hasAccess ? connectWallet : handleBlocking}
+            onClick={props.applicationAccess ? connectWallet : handleBlocking}
           >
             {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
           </CustomButton>
@@ -326,6 +326,7 @@ const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
   walletConnectAddress: state.user.walletConnectAddress,
   web3Instance: state.user.web3Instance,
+  applicationAccess: state.user.applicationAccess,
 })
 
 export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress })(YourAssets)

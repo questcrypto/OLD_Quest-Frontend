@@ -17,15 +17,15 @@ import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import { setKnab, setKnabr } from '../../../../logic/actions/staking.action'
 import Spinner from 'shared/loader-components/spinner'
-import { getKNABBalance } from '../../../../modules/block-chain/BlockChainMethods'
+import { getKNABBalance, getHarvestAll } from '../../../../modules/block-chain/BlockChainMethods'
 
 const StakingHeader = (props: any) => {
 
   const classes = useStyles();
 
   const {
-    setKnab, 
-    setKnabr, 
+    setKnab,
+    setKnabr,
     staking: { knab, knabr, knabr_earned },
     walletAddress
   } = props;
@@ -35,7 +35,7 @@ const StakingHeader = (props: any) => {
   const [knabREarn, setKnabREarn] = useState({ value: '00.00', dollarValue: '0.00' })
 
   const [convertValue, setConvertValue] = useState(0.00)
-  const [loader, setLoader] = useState({ ctkBtn: false, harBtn: false });
+  const [loader, setLoader] = useState({ ctkBtn: false, harvestLoad: false });
 
   const handleChange = (e: any) => {
     try {
@@ -63,7 +63,15 @@ const StakingHeader = (props: any) => {
 
   const harvestFn = () => {
     try {
-
+      setLoader({ ...loader, harvestLoad: true });
+      getHarvestAll().then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, harvestLoad: false });
+        }
+      }, err => {
+        setLoader({ ...loader, harvestLoad: false });
+        console.log(err)
+      })
     } catch (err) { console.log(err) }
   }
 
@@ -87,7 +95,7 @@ const StakingHeader = (props: any) => {
                 <Heading>Converted KNAB Balance</Heading>
                 <Value>
                   {/* {conknabBal['value']} (~${conknabBal['dollarValue']}) */}
-                  { 0.00 } (~${ 0.00 })
+                  {0.00} (~${0.00})
                 </Value>
               </FlexColumn>
             </FlexDiv><br />
@@ -123,7 +131,7 @@ const StakingHeader = (props: any) => {
             <FlexDiv>
               <FlexColumn>
                 <Value>
-                  { knabr_earned } KNABr
+                  {knabr_earned} KNABr
                 </Value>
                 <Value>
                   (${knabREarn['dollarValue']})
@@ -138,7 +146,7 @@ const StakingHeader = (props: any) => {
                 }}
                 onClick={harvestFn}
               >
-                {loader.harBtn ? <Spinner /> : 'Harvest'}
+                {loader.harvestLoad ? <Spinner /> : 'Harvest'}
               </CustomButton>
             </FlexDiv>
           </Paper>

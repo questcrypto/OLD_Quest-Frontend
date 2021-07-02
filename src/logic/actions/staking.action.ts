@@ -19,7 +19,9 @@ import {
   SET_LP_STAKED_DOLLAR,
   SET_TVL_KNAB,
   SET_TVL_KNAB_USDC,
-  SET_TVL_USDC
+  SET_TVL_USDC,
+  SET_USDC_KNAB_EARNED,
+  SET_LP_KNABR_EARNED
 } from './action.config'
 
 export const setKnab = (data: any) => {
@@ -165,6 +167,20 @@ export const setTvlKnabUsdc = (data: any) => {
 export const setTvlUsdc = (data: any) => {
   return {
     type: SET_TVL_USDC,
+    payload: data,
+  }
+}
+
+export const setUsdcKnabEarned = (data: any) => {
+  return {
+    type: SET_USDC_KNAB_EARNED,
+    payload: data,
+  }
+}
+
+export const setLpKnabREarned = (data: any) => {
+  return {
+    type: SET_LP_KNABR_EARNED,
     payload: data,
   }
 }

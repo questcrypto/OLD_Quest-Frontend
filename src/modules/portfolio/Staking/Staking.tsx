@@ -16,7 +16,7 @@ import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
 import { walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import { setKnab, setKnabr } from '../../../logic/actions/staking.action'
-import { handleKnabApproval, withdraw, getAssetsKNABBalance, getAssetsKNABrBalance, getTvl } from '../../../modules/block-chain/BlockChainMethods'
+import { handleKnabApproval, withdraw, getAssetsKNABBalance, getAssetsKNABrBalance } from '../../../modules/block-chain/BlockChainMethods'
 
 const Staking = (props: any) => {
 

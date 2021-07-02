@@ -15,6 +15,7 @@ import { errorAlert } from 'logic/actions/alerts.actions'
 import { loginStart, getKNABbalance, setWeb3Instance } from 'logic/actions/user.actions'
 import MetaMaskIcon from '../../../../../assets/icons/metaMaskIcon.svg'
 import { hasApplcationAccess } from 'logic/actions/user.actions'
+import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
 
 const useStyles = makeStyles((theme) => ({
   walletDiv: {
@@ -46,11 +47,38 @@ const TopPanel = (props: any) => {
     isWalletCon,
     walletConnectAddress,
     setWeb3Instance,
+    hasApplcationAccess,
   } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
+  const [appAccess, setApplicationAccess] = useState(true)
+  const [showIPBlockingModal, setIPBlockingModal] = useState(true)
 
+  const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
+
+  useEffect(() => {
+    axios
+      // .get('https://api.ipify.org')
+      .get('https://ipapi.co/json/')
+      .then((response) => {
+        // console.log(response.data.country_code, '***')
+        const isFrom = blockedCountriesCodes.includes(response.data.country_code)
+        if (isFrom) {
+          setApplicationAccess(false)
+          hasApplcationAccess(false)
+          //@ts-ignore
+          // localStorage.setItem('access', false)
+        } else {
+          // console.log('***')
+          hasApplcationAccess(true)
+          setApplicationAccess(true)
+          //@ts-ignore
+          // localStorage.setItem('access', true)
+        }
+      })
+      .catch((err) => console.log(err))
+  }, [props.applicationAccess])
   // setInterval(function () {
   //   async function getProvider() {
   //     if(web3) {
@@ -171,49 +199,77 @@ const TopPanel = (props: any) => {
       setWalletAddress(walletConAddress)
     }
   })
-  const setAppAccess = () => {
-    hasApplcationAccess(false)
+  // const setAppAccess = () => {
+  //   hasApplcationAccess(false)
+  // }
+  const handleBlocking = () => {
+    try {
+      // hasApplcationAccess(false)
+      setIPBlockingModal(true)
+    } catch (error) {
+      console.log(error)
+    }
   }
-  console.log(props.applicationAccess, '***')
+  const toggleIPBLockingModal = () => {
+    try {
+      setIPBlockingModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  // console.log(props.applicationAccess, appAccess, '***')
   return (
-    <TopPanelCont>
-      {getisWallet(props.isWalletCon)}
-      {
-        // loggedIn && (walletAddress !== '') && (tokenDummy !== '') ?
-        walletAddress !== '' ? (
-          <div className={classes.walletDiv}>
-            <img src={MetaMaskIcon} alt="" />
-            <span className={classes.walletDivText}>{`${walletAddress.substring(0, 4)}...${walletAddress.substring(37, 42)}`}</span>
-          </div>
-        ) : (
-          <>
-            <CustomButton
-              size="large"
-              style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
-              onClick={props.applicationAccess ? connectWallet : setAppAccess}
-              // onClick={connectWallet}
-            >
-              {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
-            </CustomButton>
-          </>
-        )
-        // <PrimaryButton>Connect Wallet</PrimaryButton>
-      }
-      {/* <Notifications /> */}
-      &nbsp;&nbsp;
-      {/* {isWalletCon ? ( */}
-      {!loggedIn && isWalletCon ? (
-        <CustomButton
-          size="large"
-          style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
-          onClick={() => window.location.reload()}
-        >
-          Disconnect Wallet
-        </CustomButton>
+    <>
+      {!appAccess ? (
+        <IPBlockingModal
+          show={showIPBlockingModal}
+          toggleModal={toggleIPBLockingModal}
+          onClose={toggleIPBLockingModal}
+          // hasAccess={handleApplicationAccess}
+          hasAccess={appAccess}
+        />
       ) : (
         ''
       )}
-    </TopPanelCont>
+      <TopPanelCont>
+        {getisWallet(props.isWalletCon)}
+        {
+          // loggedIn && (walletAddress !== '') && (tokenDummy !== '') ?
+          walletAddress !== '' ? (
+            <div className={classes.walletDiv}>
+              <img src={MetaMaskIcon} alt="" />
+              <span className={classes.walletDivText}>{`${walletAddress.substring(0, 4)}...${walletAddress.substring(37, 42)}`}</span>
+            </div>
+          ) : (
+            <>
+              <CustomButton
+                size="large"
+                style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
+                onClick={appAccess && props.applicationAccess ? connectWallet : handleBlocking}
+                // onClick={connectWallet}
+              >
+                {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
+              </CustomButton>
+            </>
+          )
+          // <PrimaryButton>Connect Wallet</PrimaryButton>
+        }
+        {/* <Notifications /> */}
+        &nbsp;&nbsp;
+        {/* {isWalletCon ? ( */}
+        {!loggedIn && isWalletCon ? (
+          <CustomButton
+            size="large"
+            style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
+            onClick={() => window.location.reload()}
+          >
+            Disconnect Wallet
+          </CustomButton>
+        ) : (
+          ''
+        )}
+      </TopPanelCont>
+    </>
   )
 }
 
@@ -227,6 +283,7 @@ const mapStateToProps = (state: any) => ({
 })
 
 export default connect(mapStateToProps, {
+  hasApplcationAccess,
   loginStart,
   errorAlert,
   logout,
@@ -234,6 +291,5 @@ export default connect(mapStateToProps, {
   walletConnect,
   walletConnectAddress,
   getKNABbalance,
-  hasApplcationAccess,
   setWeb3Instance,
 })(TopPanel)

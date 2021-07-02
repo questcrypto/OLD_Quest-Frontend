@@ -226,7 +226,6 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
   const routesBeforeLogin = routes.filter((each) => !each.protected)
   const routesAfterLogin = routes.filter((each) => each.protected)
   const routesToRender = loggedIn ? routesAfterLogin : routesBeforeLogin
-
   return (
     <Router history={history}>
       <Box className={classes.root}>

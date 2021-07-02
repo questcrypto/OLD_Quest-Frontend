@@ -30,7 +30,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '40px',
   },
 }))
-const TokensData = () => {
+const TokensData = (props: any) => {
+  const { handlePopup } = props
+
   const classes = useStyles()
   const [tokensData, setTokensData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
   const [raisedTokens, setRaisedTokens] = useState(0)
@@ -114,7 +116,7 @@ const TokensData = () => {
               <Typography className={classes.subTitle}>{raisedTokens}</Typography>
             </Grid>
             <Grid item md={5} xs={12}>
-              <CustomButton size="large" className={classes.icoBtn}>
+              <CustomButton size="large" className={classes.icoBtn} onClick={() => handlePopup()}>
                 Full ICO Details
               </CustomButton>
             </Grid>

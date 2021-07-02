@@ -11,7 +11,7 @@ import {
   WALLET_CONNECT_ADDRESS,
   KNAB_BALANCE,
   APPLICATION_ACCESS,
-  WEB3_INSTANCE
+  WEB3_INSTANCE,
 } from './action.config'
 
 export const authStart = () => {

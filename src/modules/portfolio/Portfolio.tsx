@@ -34,30 +34,34 @@ const Portfolio = (props: any) => {
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [loader, setLoader] = useState(false)
-  const [showIPBlockingModal, setIPBlockingModal] = useState(true)
+  const [showIPBlockingModal, setIPBlockingModal] = useState(false)
   const [appAccess, setApplicationAccess] = useState(true)
   const [ip, setIPAddress] = useState('')
 
-  const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess } = props
+  const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess, isWalletCon } = props
 
-  const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
-  useEffect(() => {
-    axios
-      // .get('https://api.ipify.org')
-      .get('https://ipapi.co/json/')
-      .then((response) => {
-        // console.log(response.data.country_code, '***')
-        const isFrom = blockedCountriesCodes.includes(response.data.country_code)
-        if (isFrom) {
-          setApplicationAccess(false)
-          hasApplcationAccess(false)
-        } else {
-          setApplicationAccess(true)
-          hasApplcationAccess(true)
-        }
-      })
-      .catch((err) => console.log(err))
-  })
+  // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
+  // useEffect(() => {
+  //   axios
+  //     // .get('https://api.ipify.org')
+  //     .get('https://ipapi.co/json/')
+  //     .then((response) => {
+  //       console.log(response.data.country_code, '***')
+  //       const isFrom = blockedCountriesCodes.includes(response.data.country_code)
+  //       if (isFrom) {
+  //         setApplicationAccess(false)
+  //         hasApplcationAccess(false)
+  //         //@ts-ignore
+  //         // localStorage.setItem('access', false)
+  //       } else {
+  //         setApplicationAccess(true)
+  //         hasApplcationAccess(true)
+  //         //@ts-ignore
+  //         // localStorage.setItem('access', true)
+  //       }
+  //     })
+  //     .catch((err) => console.log(err))
+  // })
 
   const openbcModal = () => {
     try {
@@ -226,10 +230,11 @@ const Portfolio = (props: any) => {
   //       .catch((err) => console.log(err, '*** er'))
   //   }
   // })
+  console.log(props.applicationAccess, '1111')
   return (
     <>
       <>
-        {!appAccess ? (
+        {/* {!appAccess ? (
           <IPBlockingModal
             show={showIPBlockingModal}
             toggleModal={toggleIPBLockingModal}
@@ -239,7 +244,14 @@ const Portfolio = (props: any) => {
           />
         ) : (
           ''
-        )}
+        )} */}
+        <IPBlockingModal
+          show={showIPBlockingModal}
+          toggleModal={toggleIPBLockingModal}
+          onClose={toggleIPBLockingModal}
+          // hasAccess={handleApplicationAccess}
+          hasAccess={appAccess}
+        />
       </>
       <div className={classes.root}>
         <div className={classes.header}>
@@ -266,14 +278,14 @@ const Portfolio = (props: any) => {
             >
               {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
               {/* {KNABbalance || pb.toFixed(3)} KNAB */}
-              {Number(props.KNABBalance.toFixed(3))} KNAB
+              {isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               // onClick={() => handleAuction()}
-              onClick={appAccess && props.applicationAccess ? () => handleAuction() : handleBlocking}
+              onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
             >
               Real Estate Auctions
             </CustomButton>
@@ -282,7 +294,7 @@ const Portfolio = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               // onClick={() => history.push(Paths.login)}
-              onClick={appAccess && props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+              onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
             >
               Buy | Convert Quest
             </CustomButton>
@@ -291,7 +303,7 @@ const Portfolio = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               // onClick={openbcModal}
-              onClick={appAccess && props.applicationAccess ? openbcModal : handleBlocking}
+              onClick={props.applicationAccess ? openbcModal : handleBlocking}
             >
               {/* Buy | Convert KNAB */}
               Buy KNAB
@@ -305,7 +317,7 @@ const Portfolio = (props: any) => {
               <div>
                 <Typography variant="h4">
                   {/* {props.KNABBalance || pb.toFixed(2)} KNAB */}
-                  {Number(props.KNABBalance.toFixed(3))} KNAB
+                  {isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB
                   {getBalance}
                   {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
                 </Typography>
@@ -315,7 +327,7 @@ const Portfolio = (props: any) => {
                   <CustomButton
                     size="large"
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                    onClick={appAccess && props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+                    onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
                     // onClick={() => history.push(Paths.login)}
                   >
                     Buy Quest Tokens
@@ -327,7 +339,7 @@ const Portfolio = (props: any) => {
                   <CustomButton
                     size="large"
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                    onClick={appAccess && props.applicationAccess ? openbcModal : handleBlocking}
+                    onClick={props.applicationAccess ? openbcModal : handleBlocking}
                   >
                     Buy KNAB Tokens
                   </CustomButton>
@@ -418,5 +430,6 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   KNABBalance: state.user.KNABBalance,
   applicationAccess: state.user.applicationAccess,
+  isWalletCon: state.user.isWalletCon,
 })
 export default withRouter(connect(mapStateToProps, { successAlert, errorAlert, getKNABbalance, hasApplcationAccess })(Portfolio))

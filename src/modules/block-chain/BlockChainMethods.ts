@@ -340,7 +340,7 @@ export const deposit = async (pid: number, amount: number) => {
 
 export const gasPriceFn = async () => {
   const desiredFee: number = 20000000000
-  let minGasFee: any
+  // let minGasFee: any
   // const gasFee = await fetch('https://gasstation-mainnet.matic.network')
   //   .then((response) => response.json())
   //   .then((json) => (minGasFee = json))

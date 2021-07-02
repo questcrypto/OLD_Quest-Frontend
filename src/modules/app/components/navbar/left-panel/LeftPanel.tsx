@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import { logout, logout2 } from 'logic/actions/user.actions'
 import { useStyles, QuestLogoCont, ListItemText } from './style'
 import Grid from '@material-ui/core/Grid'
@@ -28,12 +29,37 @@ import web3modal from 'web3modal'
 import { hasApplcationAccess } from 'logic/actions/user.actions'
 
 import Web3 from 'web3'
+import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
   const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2, isWalletCon, walletConAddress, applicationAccess } = props
   const [account, setAccount] = useState('')
+  const [appAccess, setApplicationAccess] = useState(true)
+  const [showIPBlockingModal, setIPBlockingModal] = useState(false)
+  // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
 
+  // useEffect(() => {
+  //   axios
+  //     // .get('https://api.ipify.org')
+  //     .get('https://ipapi.co/json/')
+  //     .then((response) => {
+  //       // console.log(response.data.country_code, '***')
+  //       const isFrom = blockedCountriesCodes.includes(response.data.country_code)
+  //       if (isFrom) {
+  //         setApplicationAccess(false)
+  //         hasApplcationAccess(false)
+  //         //@ts-ignore
+  //         // localStorage.setItem('access', false)
+  //       } else {
+  //         setApplicationAccess(true)
+  //         hasApplcationAccess(true)
+  //         //@ts-ignore
+  //         // localStorage.setItem('access', true)
+  //       }
+  //     })
+  //     .catch((err) => console.log(err))
+  // })
   const handleProperty = () => {
     if (loggedIn) {
       history.push(Paths.dashboard)
@@ -83,10 +109,25 @@ const LeftPanel = (props: any) => {
     // web3.eth.accounts.wallet.remove(walletConAddress)
     // web3.eth.accounts.wallet.clear()
   }
-  const setAppAccess = () => {
-    hasApplcationAccess(false)
-  }
+  // const setAppAccess = () => {
+  //   hasApplcationAccess(false)
+  // }
   // console.log(applicationAccess, '***')
+  const handleBlocking = () => {
+    try {
+      // hasApplcationAccess(false)
+      setIPBlockingModal(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const toggleIPBLockingModal = () => {
+    try {
+      setIPBlockingModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     //@ts-ignore
     <DrawerWrapper open={openDrawer}>
@@ -109,7 +150,7 @@ const LeftPanel = (props: any) => {
           <Divider className={classes.dividerStyle} />
           <List>
             {/* {!!userInfo && loggedIn && */}
-            {applicationAccess ? (
+            {/* {applicationAccess ? (
               <>
                 <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
                   <ApartmentIcon className={classes.iconStyle} />
@@ -125,22 +166,36 @@ const LeftPanel = (props: any) => {
                   <ListItemText>Portfolio</ListItemText>
                 </ListItem>
               </>
-            ) : (
-              <>
-                <ListItem button className={classes.itemButtonStyle} onClick={() => setAppAccess()}>
-                  <ApartmentIcon className={classes.iconStyle} />
-                  <ListItemText>Properties</ListItemText>
-                </ListItem>
-                <ListItem button className={classes.itemButtonStyle} onClick={() => setAppAccess()}>
-                  <AssessmentIcon className={classes.iconStyle} />
-                  <ListItemText>Real Estate Auctions</ListItemText>
-                </ListItem>
-                <ListItem button className={classes.itemButtonStyle} onClick={() => setAppAccess()}>
-                  <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
-                  <ListItemText>Portfolio</ListItemText>
-                </ListItem>
-              </>
-            )}
+            ) : ( */}
+            <>
+              <ListItem
+                button
+                className={classes.itemButtonStyle}
+                // onClick={() => setAppAccess()}
+                onClick={props.applicationAccess ? handleProperty : handleBlocking}
+              >
+                <ApartmentIcon className={classes.iconStyle} />
+                <ListItemText>Properties</ListItemText>
+              </ListItem>
+              <ListItem
+                button
+                className={classes.itemButtonStyle}
+                onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
+                // onClick={() => handleAuction()}
+              >
+                <AssessmentIcon className={classes.iconStyle} />
+                <ListItemText>Real Estate Auctions</ListItemText>
+              </ListItem>
+              <ListItem
+                button
+                className={classes.itemButtonStyle}
+                onClick={props.applicationAccess ? () => handlePortfolio() : handleBlocking}
+                // onClick={() => handlePortfolio()}
+              >
+                <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
+                <ListItemText>Portfolio</ListItemText>
+              </ListItem>
+            </>
             {/* {loggedIn && !!userInfo && userInfo.role === 2 && ( */}
             {/* // {( */}
             {/* // )} */}
@@ -229,6 +284,28 @@ const LeftPanel = (props: any) => {
           </CustomButton> */}
         </Grid>
       </Drawer>
+      <>
+        <IPBlockingModal
+          show={showIPBlockingModal}
+          toggleModal={toggleIPBLockingModal}
+          onClose={toggleIPBLockingModal}
+          // hasAccess={handleApplicationAccess}
+          hasAccess={appAccess}
+        />
+        {/* <>
+          {!appAccess ? (
+            <IPBlockingModal
+              show={showIPBlockingModal}
+              toggleModal={toggleIPBLockingModal}
+              onClose={toggleIPBLockingModal}
+              // hasAccess={handleApplicationAccess}
+              hasAccess={appAccess}
+            />
+          ) : (
+            ''
+          )}
+        </> */}
+      </>
     </DrawerWrapper>
   )
 }

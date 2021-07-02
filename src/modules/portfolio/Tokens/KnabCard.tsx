@@ -104,7 +104,7 @@ const KnabCard = (props: any) => {
               <div className={classes.contentTextDiv}>
                 <Typography>KNAB</Typography>
                 <Typography className={classes.secondLineText} variant="h5">
-                  {props.KNABBalance} &nbsp;
+                  {props.isWalletCon ? props.KNABBalance : 0} &nbsp;
                   <span className={classes.arrowText}>
                     <img src={triangle} alt="" className={classes.arrowImage} />
                     0.0%
@@ -141,6 +141,7 @@ const KnabCard = (props: any) => {
 
 // export default KnabCard
 const mapStateToProps = (state: any) => ({
+  isWalletCon: state.user.isWalletCon,
   KNABBalance: state.user.KNABBalance,
 })
 export default withRouter(connect(mapStateToProps, { getKNABbalance })(KnabCard))

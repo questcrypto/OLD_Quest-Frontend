@@ -83,7 +83,7 @@ const TokensData = (props: any) => {
               <Typography className={classes.title}>ICO Price.</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
-              <Typography className={classes.subTitle}>1 USDC</Typography>
+              <Typography className={classes.subTitle}>$ 1</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
               <Typography className={classes.title}>% Of Total Supply</Typography>
@@ -95,10 +95,10 @@ const TokensData = (props: any) => {
           <Grid container spacing={4} className={classes.content}>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Grid item md={2} xs={12}>
-              <Typography className={classes.title}>Fund Rising Goal.</Typography>
+              <Typography className={classes.title}>Fund Raising Goal.</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
-              <Typography className={classes.subTitle}>80 Million</Typography>
+              <Typography className={classes.subTitle}>80 Million USDC</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
               <Typography className={classes.title}>APY</Typography>

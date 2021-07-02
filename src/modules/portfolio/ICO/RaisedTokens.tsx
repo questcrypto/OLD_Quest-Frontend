@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     height: 'auto',
+    '&:hover': {
+      border: '2px solid #E6BA73',
+    },
   },
   header: {
     display: 'flex',
@@ -103,10 +106,10 @@ const RaisedTokens = (props: any) => {
       <Paper className={classes.root} style={{ opacity: 1 }}>
         <Grid container>
           <Grid item>
-            <Typography className={classes.header}>USDC Raised : {raisedTokens} Tokens</Typography>
+            <Typography className={classes.header}>Raised : {raisedTokens} USDC</Typography>
           </Grid>
           <Grid item>
-            <Typography className={classes.rightHeader}>Target : 80 Million Tokens</Typography>
+            <Typography className={classes.rightHeader}>Target : 80 Million USDC</Typography>
           </Grid>
         </Grid>
         <Tooltip title={raisedTokens} enterDelay={200} leaveDelay={100}>

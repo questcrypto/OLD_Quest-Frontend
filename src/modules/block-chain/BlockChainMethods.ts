@@ -276,16 +276,9 @@ export const buyKnab = async (amount: number) => {
 }
 
 export const handlestableCoinapproval = async (contractStableCoin: any, account: string, ApproveAmount: any) => {
-  // console.log('hello')
   const deci = await contractStableCoin.methods.decimals().call()
-  // console.log(deci)
-  // console.log(ApproveAmount * 10 ** deci, 'abc')
   const gasPrice = await gasPriceFn()
-  // console.log(gasPrice)
-
-  console.log(gasPrice, '273')
   const res = await contractStableCoin.methods.approve(ICOAddress, ApproveAmount * 10 ** deci).send({ from: account, gasPrice })
-  // console.log(res)
   return res
 }
 
@@ -339,41 +332,17 @@ export const deposit = async (pid: number, amount: number) => {
 }
 
 export const gasPriceFn = async () => {
-  const desiredFee: number = 20000000000
-  // let minGasFee: any
-  // const gasFee = await fetch('https://gasstation-mainnet.matic.network')
-  //   .then((response) => response.json())
-  //   .then((json) => (minGasFee = json))
-  // let gasPrice: any = minGasFee.fast * 10 ** 9
-  // if (desiredFee < gasPrice) {
-  //   gasPrice = desiredFee
-  // }
-  // return gasPrice;
-  // const gasFee2 = fetch('https://gasstation-mainnet.matic.network')
-  //   .then((response) => response.json())
-  //   .then((json) => {
-  //     let gasPrice: any = json.fast * 10 ** 9
-  //     console.log(gasPrice)
-  //     if (desiredFee < gasPrice) {
-  //       minGasFee = desiredFee
-  //     }
-  //     return gasPrice
-  //   })
-  // const gasFee = fetch('https://gasstation-mainnet.matic.network')
-  // gasFee.then(
-  //   (res: any) => {
-  //     console.log(res, '**')
-  //     let gasPrice: any = res['fast'] * 10 ** 9
-  //     console.log(gasPrice)
-  //     if (desiredFee < gasPrice) {
-  //       gasPrice = desiredFee
-  //     }
-  //     return gasPrice
-  //   },
-  //   (err) => {
-  //     console.log(err)
-  //   }
-  // )
+  let desiredFee: number = 20000000000
+  let gasPrice: any
+  const gasFee2 = await fetch('https://gasstation-mainnet.matic.network')
+    .then((response) => response.json())
+    .then((json) => {
+      gasPrice = json['fast'] * 10 ** 9
+      if (gasPrice > desiredFee) {
+        gasPrice = desiredFee
+      }
+      desiredFee = gasPrice
+    })
   return desiredFee
 }
 
@@ -417,7 +386,6 @@ export const getAssetsUSDCBalance = async () => {
     const KNABContract = new web3.eth.Contract(KNABabi, USDCAddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const USDCbalance: any = res
-    console.log(USDCbalance, accounts[0], 'bbb')
     return parseInt(USDCbalance)
   }
 }

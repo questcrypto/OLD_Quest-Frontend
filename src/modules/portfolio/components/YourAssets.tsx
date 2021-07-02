@@ -27,6 +27,7 @@ import { errorAlert } from 'logic/actions/alerts.actions'
 import KnabIcon from 'assets/icons/KNAB.svg'
 import CoinIcon from 'assets/icons/USDC.svg'
 import { KNABAddressTest, stableCoinAbi } from 'modules/block-chain/abi'
+const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -132,8 +133,8 @@ const YourAssets = (props: any) => {
     {
       asset: { icon: `${KnabIcon}`, name: 'KNAB' },
       balance: `${assetsKNABBalance}`,
-      availableQty: '0.000000',
-      price: { value: `$ 1`, percent: 0.0 },
+      availableQty: commaNumber(100000000),
+      price: { value: assetsKNABBalance / 100000000, percent: 0.0 },
       holdings: 0.0,
     },
     {
@@ -146,8 +147,8 @@ const YourAssets = (props: any) => {
     {
       asset: { icon: `${CoinIcon}`, name: 'USDC' },
       balance: `${assetsUSDCBalance}`,
-      availableQty: '0.000000',
-      price: { value: `$ 1`, percent: 0.0 },
+      availableQty: commaNumber(1243483555),
+      price: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
       holdings: 0.0,
     },
     {
@@ -269,8 +270,8 @@ const YourAssets = (props: any) => {
                             <div>
                               <div>
                                 {row[item.key]}
-                                <br />
-                                <Slider value={row[item.key]} classes={{ root: classes.sliderRoot, thumb: classes.sliderThumb }} />
+                                {/* <br />
+                                <Slider value={row[item.key]} classes={{ root: classes.sliderRoot, thumb: classes.sliderThumb }} /> */}
                               </div>
                             </div>
                           )}

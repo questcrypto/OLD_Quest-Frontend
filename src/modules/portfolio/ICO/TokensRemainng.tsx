@@ -50,19 +50,19 @@ const TokensRemaining = (props: any) => {
               <Typography className={classes.title}>ICO Price</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
-              <Typography className={classes.subTitle}>1 USDC</Typography>
+              <Typography className={classes.subTitle}>$ 1</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={4} className={classes.content}>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Grid item md={3} xs={12}>
-              <Typography className={classes.title}>Fund rising goal</Typography>
+              <Typography className={classes.title}>Fund raising goal</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
-              <Typography className={classes.subTitle}>80 million</Typography>
+              <Typography className={classes.subTitle}>80 million USDC</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
-              <Typography className={classes.title}>Totala Market cap</Typography>
+              <Typography className={classes.title}>Total Market cap</Typography>
             </Grid>
             <Grid item md={2} xs={12}>
               <Typography className={classes.subTitle}>{raisedTokens} USDC</Typography>

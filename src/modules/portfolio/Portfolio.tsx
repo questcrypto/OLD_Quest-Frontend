@@ -38,7 +38,7 @@ const Portfolio = (props: any) => {
   const [appAccess, setApplicationAccess] = useState(true)
   const [ip, setIPAddress] = useState('')
 
-  const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess,
+  const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess, isWalletCon,
     staking: { knab, knabr } } = props
 
   // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']

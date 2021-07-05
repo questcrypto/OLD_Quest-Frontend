@@ -38,7 +38,9 @@ import {
   getTvlUsdc,
   getStake,
   getPendingKnabr,
-  getHarvest
+  getHarvest,
+  getDefiAmount,
+  withdrawLoan
 } from '../../../../modules/block-chain/BlockChainMethods'
 import Spinner from 'shared/loader-components/spinner'
 import {
@@ -116,6 +118,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'flex-top',
     paddingRight: theme.spacing(1)
+  },
+  padLR: {
+    paddingRight: '16px'
   }
 }));
 
@@ -130,7 +135,12 @@ const StakingRow3 = (props: any) => {
 
   useEffect(() => {
     if (walletConAddress.length > 0) {
+      stateUpdate();
+    }
+  }, [walletConAddress])
 
+  const stateUpdate = () => {
+    try {
       getTvlUsdc().then((res) => {
         // console.log(res);
         setTvlUsdc(res);
@@ -157,9 +167,8 @@ const StakingRow3 = (props: any) => {
         // console.log(res);
         setUsdcKnabEarned(res);
       }, err => { console.log(err) })
-
-    }
-  }, [walletConAddress])
+    } catch (err) { console.log(err) }
+  }
 
   const [isOpen, setIsOpen] = useState(false);
   const [show, setShow] = useState(false);
@@ -206,9 +215,17 @@ const StakingRow3 = (props: any) => {
   const unStakeFn = () => {
     try {
       setLoader({ ...loader, unstakeLoad: true });
+
+      // getDefiAmount().then((res: any) => {
+      //   if (res) {
+      //     console.log(res);
+      //   }
+      // },err => { console.log(err) });
+
       withdraw(2, usdcUnStake).then((res: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
+          stateUpdate();
         }
       }, err => {
         setLoader({ ...loader, unstakeLoad: false });
@@ -223,12 +240,13 @@ const StakingRow3 = (props: any) => {
       getHarvest(2).then((res: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
+          stateUpdate();
         }
       }, err => {
         setLoader({ ...loader, harvestLoad: false });
         console.log(err)
       })
-    } catch(error) { console.log(error)}
+    } catch (error) { console.log(error) }
   }
 
   return (
@@ -249,20 +267,20 @@ const StakingRow3 = (props: any) => {
               <Avatar src={USDC} alt="" />
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>USDC</AccordHeading>
-              <AccordValue>${tvl_usdc} TVL</AccordValue>
+              <AccordHeading className={classes.padLR}>USDC</AccordHeading>
+              <AccordValue className={classes.padLR}>${tvl_usdc} TVL</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>0%</AccordHeading>
-              <AccordValue>0%(24hr)</AccordValue>
+              <AccordHeading className={classes.padLR}>0%</AccordHeading>
+              <AccordValue className={classes.padLR}>0%(24hr)</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>${usdc_dollar}</AccordHeading>
-              <AccordValue>{usdc} USDC</AccordValue>
+              <AccordHeading className={classes.padLR}>${usdc_dollar}</AccordHeading>
+              <AccordValue className={classes.padLR}>{usdc} USDC</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>$0.00</AccordHeading>
-              <AccordValue>{knabr} Knab R</AccordValue>
+              <AccordHeading className={classes.padLR}>{usdc_knabr_earned}</AccordHeading>
+              <AccordValue className={classes.padLR}>Knab R</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordArrIcon src={!isOpen ? UpArrow : DownArrow} alt='' />
@@ -373,10 +391,10 @@ const StakingRow3 = (props: any) => {
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
-                      <FlexRow>
+                      {/* <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
                         Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                      </FlexRow>
+                      </FlexRow> */}
                     </div>
                   </Paper>
                   <Paper className={classes.stakedDiv2}>
@@ -402,10 +420,10 @@ const StakingRow3 = (props: any) => {
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
-                      <FlexRow>
+                      {/* <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
                         Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                      </FlexRow>
+                      </FlexRow> */}
                     </div>
                   </Paper>
                 </FlexColumn>
@@ -417,6 +435,7 @@ const StakingRow3 = (props: any) => {
       <StakeUsdcModal
         show={show}
         toggleModal={toggleModal}
+        stUpdate={stateUpdate}
       />
     </>
   );

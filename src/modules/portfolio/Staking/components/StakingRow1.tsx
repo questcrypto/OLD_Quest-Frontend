@@ -28,16 +28,16 @@ import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
 import StakeKnabModal from './StakeKnabModal'
-import { 
-  handleKnabApproval, 
-  withdraw, 
-  getAssetsKNABBalance, 
-  getAssetsKNABrBalance, 
-  getStake, 
-  getPendingKnabr, 
+import {
+  handleKnabApproval,
+  withdraw,
+  getAssetsKNABBalance,
+  getAssetsKNABrBalance,
+  getStake,
+  getPendingKnabr,
   getTvlKnab,
   getHarvest
- } from '../../../../modules/block-chain/BlockChainMethods'
+} from '../../../../modules/block-chain/BlockChainMethods'
 import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi'
 import Spinner from 'shared/loader-components/spinner'
 import { setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab } from '../../../../logic/actions/staking.action';
@@ -106,6 +106,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'flex-top',
     paddingRight: theme.spacing(1)
+  },
+  padLR: {
+    paddingRight: '16px'
   }
 }));
 
@@ -119,8 +122,13 @@ const StakingRow1 = (props: any) => {
   } = props;
 
   useEffect(() => {
-    if (walletConAddress) {
+    if (walletConAddress.length > 0) {
+      stateUpdate();
+    }
+  }, [walletConAddress])
 
+  const stateUpdate = () => {
+    try {
       getAssetsKNABBalance().then((res) => {
         // console.log(res);
         setKnab(res);
@@ -128,7 +136,7 @@ const StakingRow1 = (props: any) => {
       }, err => { console.log(err) })
 
       getStake(0).then((res) => {
-        // console.log(res);
+        console.log('Pool 1', res);
         setKnabStaked(res);
         setKnabStakedDollar(res);
       }, err => { console.log(err) })
@@ -147,10 +155,8 @@ const StakingRow1 = (props: any) => {
         // console.log(res);
         setTvlKnab(res);
       }, err => { console.log(err) })
-      
-
-    }
-  }, [walletConAddress])
+    } catch (err) { console.log(err) }
+  }
 
   const [loader, setLoader] = useState({ approveLoad: false, unstakeLoad: false, harvestLoad: false })
 
@@ -192,6 +198,7 @@ const StakingRow1 = (props: any) => {
       const knabContract = new web3Instance.eth.Contract(KNABabi, KNABAddressTest);
       const accounts = await web3Instance.eth.getAccounts()
       handleKnabApproval(knabContract, accounts[0], knabAppValue).then((res: any) => {
+        console.log(res);
         if (res) {
           setLoader({ ...loader, approveLoad: false });
         }
@@ -210,6 +217,7 @@ const StakingRow1 = (props: any) => {
       withdraw(0, knabUnStakeValue).then((res: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
+          stateUpdate();
         }
       }, err => {
         setLoader({ ...loader, unstakeLoad: false });
@@ -224,12 +232,13 @@ const StakingRow1 = (props: any) => {
       getHarvest(0).then((res: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
+          stateUpdate();
         }
       }, err => {
         setLoader({ ...loader, harvestLoad: false });
         console.log(err)
       })
-    } catch(error) { console.log(error)}
+    } catch (error) { console.log(error) }
   }
 
   return (
@@ -250,20 +259,20 @@ const StakingRow1 = (props: any) => {
               <Avatar src={KNAB} alt="" />
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>KNAB</AccordHeading>
-              <AccordValue>${tvl_knab} TVL</AccordValue>
+              <AccordHeading className={classes.padLR}>KNAB</AccordHeading>
+              <AccordValue className={classes.padLR}>${tvl_knab} TVL</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>0%</AccordHeading>
-              <AccordValue>0%(24hr)</AccordValue>
+              <AccordHeading className={classes.padLR}>0%</AccordHeading>
+              <AccordValue className={classes.padLR}>0%(24hr)</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>${knab_dollar}</AccordHeading>
-              <AccordValue>{knab} KNAB</AccordValue>
+              <AccordHeading className={classes.padLR}>${knab_dollar}</AccordHeading>
+              <AccordValue className={classes.padLR}>{knab} KNAB</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>$0.00</AccordHeading>
-              <AccordValue>{knabr} Knab R</AccordValue>
+              <AccordHeading className={classes.padLR}>{knabr_earned}</AccordHeading>
+              <AccordValue className={classes.padLR}> Knab R</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordArrIcon src={!isOpen ? UpArrow : DownArrow} alt='' />
@@ -374,10 +383,10 @@ const StakingRow1 = (props: any) => {
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
-                      <FlexRow>
+                      {/* <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
                         Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                      </FlexRow>
+                      </FlexRow> */}
                     </div>
                   </Paper>
                   <Paper className={classes.stakedDiv2}>
@@ -403,10 +412,10 @@ const StakingRow1 = (props: any) => {
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
-                      <FlexRow>
+                      {/* <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
                         Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                      </FlexRow>
+                      </FlexRow> */}
                     </div>
                   </Paper>
                 </FlexColumn>
@@ -418,6 +427,7 @@ const StakingRow1 = (props: any) => {
       <StakeKnabModal
         show={show}
         toggleModal={toggleModal}
+        stUpdate={stateUpdate}
       />
     </>
   );
@@ -431,10 +441,10 @@ const mapStateToProps = (state: any) => ({
 
 export default connect(mapStateToProps, {
   setKnab,
-  setKnabDollar, 
-  setKnabStaked, 
-  setKnabStakedDollar, 
-  setKnabr, 
-  setKnabrEarned, 
+  setKnabDollar,
+  setKnabStaked,
+  setKnabStakedDollar,
+  setKnabr,
+  setKnabrEarned,
   setTvlKnab
 })(StakingRow1)

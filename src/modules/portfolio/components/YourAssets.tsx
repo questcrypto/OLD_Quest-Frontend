@@ -134,29 +134,29 @@ const YourAssets = (props: any) => {
       asset: { icon: `${KnabIcon}`, name: 'KNAB' },
       balance: `${assetsKNABBalance}`,
       availableQty: commaNumber(100000000),
-      price: { value: assetsKNABBalance / 100000000, percent: 0.0 },
-      holdings: 0.0,
+      price: 1,
+      holdings: { value: assetsKNABBalance / 100000000, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNABr' },
       balance: `${assetsKNABrBalance}`,
       availableQty: '0.000000',
-      price: { value: `$ 0`, percent: 0.0 },
-      holdings: 0.0,
+      price: 0.0,
+      holdings: { value: `$ 0`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'USDC' },
       balance: `${assetsUSDCBalance}`,
       availableQty: commaNumber(1243483555),
-      price: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
-      holdings: 0.0,
+      price: 1,
+      holdings: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC' },
       balance: `${assetsKNAB_USDCBalance}`,
       availableQty: '0.000000',
-      price: { value: `$ 0`, percent: 0.0 },
-      holdings: 0.0,
+      price: 0.0,
+      holdings: { value: `$ 0`, percent: 0.0 },
     },
   ]
   const connectWallet = async () => {
@@ -266,14 +266,14 @@ const YourAssets = (props: any) => {
                           )}
                           {item.key === 'price' && (
                             <div>
-                              {row[item.key].value} <br />
+                              {row[item.key]} <br />
                               {/* <span className={classes.percentText}>+{row[item.key].percent}%</span> */}
                             </div>
                           )}
                           {item.key === 'holdings' && (
                             <div>
                               <div>
-                                {row[item.key]}
+                                {row[item.key].value}
                                 {/* <br />
                                 <Slider value={row[item.key]} classes={{ root: classes.sliderRoot, thumb: classes.sliderThumb }} /> */}
                               </div>

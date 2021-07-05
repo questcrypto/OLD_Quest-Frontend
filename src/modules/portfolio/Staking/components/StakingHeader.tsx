@@ -15,9 +15,11 @@ import {
 } from '../style'
 import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
-import { setKnab, setKnabr } from '../../../../logic/actions/staking.action'
+import { setKnab, setKnabr, setKnabrEarned, setLpKnabREarned, setUsdcKnabEarned } from '../../../../logic/actions/staking.action'
 import Spinner from 'shared/loader-components/spinner'
-import { getKNABBalance, getHarvestAll } from '../../../../modules/block-chain/BlockChainMethods'
+import {
+  getKNABBalance, getHarvestAll, getAssetsKNABrBalance, getPendingKnabr,
+} from '../../../../modules/block-chain/BlockChainMethods'
 
 const StakingHeader = (props: any) => {
 
@@ -26,8 +28,9 @@ const StakingHeader = (props: any) => {
   const {
     setKnab,
     setKnabr,
-    staking: { knab, knabr, knabr_earned },
-    walletAddress
+    staking: { knab, knabr, knabr_earned, usdc_knabr_earned, lp_knabr_earned },
+    walletAddress,
+    setKnabrEarned, setLpKnabREarned, setUsdcKnabEarned
   } = props;
 
   const [knabRBal, setKnabR] = useState({ value: '0.0000', dollarValue: '0.00' })
@@ -46,18 +49,41 @@ const StakingHeader = (props: any) => {
   }
 
   useEffect(() => {
-    // console.log(walletAddress);
-    // if (walletAddress.length > 0) {
-    //   const res = getKNABBalance();
-    //   res.then((data) => {
-    //     console.log(data);
-    //   }, err => { console.log(err) })
-    // }
+    if (walletAddress.length > 0) {
+      stateUpdate();
+    }
   }, [walletAddress]);
+
+  const stateUpdate = () => {
+    try {
+
+      getAssetsKNABrBalance().then((res) => {
+        // console.log(res);
+        setKnabr(res);
+      }, err => { console.log(err) })
+
+      getPendingKnabr(0).then((res) => {
+        // console.log(res);
+        setKnabrEarned(res);
+      }, err => { console.log(err) })
+
+      getPendingKnabr(1).then((res) => {
+        // console.log(res);
+        setLpKnabREarned(res);
+      }, err => { console.log(err) })
+
+      getPendingKnabr(2).then((res) => {
+        // console.log(res);
+        setUsdcKnabEarned(res);
+      }, err => { console.log(err) })
+
+    } catch (error) { console.log(error) }
+  }
 
   const convertToKnabFn = () => {
     try {
       console.log(convertValue);
+      stateUpdate();
     } catch (err) { console.log(err) }
   }
 
@@ -67,6 +93,7 @@ const StakingHeader = (props: any) => {
       getHarvestAll().then((res: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
+          stateUpdate();
         }
       }, err => {
         setLoader({ ...loader, harvestLoad: false });
@@ -131,7 +158,7 @@ const StakingHeader = (props: any) => {
             <FlexDiv>
               <FlexColumn>
                 <Value>
-                  {knabr_earned} KNABr
+                  {knabr_earned + usdc_knabr_earned + lp_knabr_earned} KNABr
                 </Value>
                 <Value>
                   (${knabREarn['dollarValue']})
@@ -183,4 +210,4 @@ const mapStateToProps = (state: any) => ({
   staking: state.staking,
   walletAddress: state.user.walletConAddress
 })
-export default connect(mapStateToProps, { setKnab, setKnabr })(StakingHeader)
+export default connect(mapStateToProps, { setKnab, setKnabr, setKnabrEarned, setLpKnabREarned, setUsdcKnabEarned })(StakingHeader)

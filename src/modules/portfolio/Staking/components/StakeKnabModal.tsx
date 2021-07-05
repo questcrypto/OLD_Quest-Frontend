@@ -75,7 +75,7 @@ const StakeKnabModal = (props: any) => {
 
   const classes = useStyles();
 
-  const { show, toggleModal } = props;
+  const { show, toggleModal, stUpdate } = props;
 
   // const [show, setShow] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
@@ -102,6 +102,7 @@ const StakeKnabModal = (props: any) => {
           setLoader({ ...loader, confirmTrans: false });
           setIsConfirm(false)
           toggleModal();
+          stUpdate();
         }
       }, err => {
         setLoader({ ...loader, confirmTrans: false });
@@ -172,7 +173,7 @@ const StakeKnabModal = (props: any) => {
           <div className={classes.modalBody}>
             <FlexColumn>
               <Header>Total KNAB Balance</Header>
-              <Value>$ 200.00</Value>
+              <Value></Value>
             </FlexColumn>
             <div>
               Stake With

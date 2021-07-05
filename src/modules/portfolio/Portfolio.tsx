@@ -38,7 +38,8 @@ const Portfolio = (props: any) => {
   const [appAccess, setApplicationAccess] = useState(true)
   const [ip, setIPAddress] = useState('')
 
-  const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess, isWalletCon } = props
+  const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess,
+    staking: { knab, knabr } } = props
 
   // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
   // useEffect(() => {
@@ -265,7 +266,7 @@ const Portfolio = (props: any) => {
               disableRipple
               style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
             >
-              00.00 KNABr
+              { knabr } KNABr
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
@@ -277,7 +278,8 @@ const Portfolio = (props: any) => {
             >
               {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
               {/* {KNABbalance || pb.toFixed(3)} KNAB */}
-              {isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB
+              {/* {Number(props.KNABBalance.toFixed(3))} KNAB */}
+              { knab } KNAB
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
@@ -326,8 +328,8 @@ const Portfolio = (props: any) => {
                   <CustomButton
                     size="large"
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                    onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
-                    // onClick={() => history.push(Paths.login)}
+                    onClick={appAccess && props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+                  // onClick={() => history.push(Paths.login)}
                   >
                     Buy Quest Tokens
                   </CustomButton>
@@ -400,7 +402,7 @@ const Portfolio = (props: any) => {
           ''
         )}
       </div>
-      {/* <Staking /> */}
+      <Staking />
       {/* </div> */}
     </>
   )
@@ -430,5 +432,6 @@ const mapStateToProps = (state: any) => ({
   KNABBalance: state.user.KNABBalance,
   applicationAccess: state.user.applicationAccess,
   isWalletCon: state.user.isWalletCon,
+  staking: state.staking,
 })
 export default withRouter(connect(mapStateToProps, { successAlert, errorAlert, getKNABbalance, hasApplcationAccess })(Portfolio))

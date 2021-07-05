@@ -30,9 +30,28 @@ import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
 import StakeUsdcModal from './StakeUsdcModal'
 import { USDCAddress, stableCoinAbi } from '../../../../modules/block-chain/abi'
-import { handleUsdcApproval, withdraw, getAssetsUSDCBalance, getAssetsKNABrBalance } from '../../../../modules/block-chain/BlockChainMethods'
+import {
+  handleUsdcApproval,
+  withdraw,
+  getAssetsUSDCBalance,
+  getAssetsKNABrBalance,
+  getTvlUsdc,
+  getStake,
+  getPendingKnabr,
+  getHarvest,
+  getDefiAmount,
+  withdrawLoan
+} from '../../../../modules/block-chain/BlockChainMethods'
 import Spinner from 'shared/loader-components/spinner'
-import { setUsdcDollar, setKnabr } from '../../../../logic/actions/staking.action';
+import {
+  setTvlUsdc,
+  setUsdc,
+  setUsdcDollar,
+  setKnabr,
+  setUsdcStaked,
+  setUsdcStakedDollar,
+  setUsdcKnabEarned
+} from '../../../../logic/actions/staking.action';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -99,6 +118,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'flex-top',
     paddingRight: theme.spacing(1)
+  },
+  padLR: {
+    paddingRight: '16px'
   }
 }));
 
@@ -106,25 +128,47 @@ const StakingRow3 = (props: any) => {
 
   const classes = useStyles();
   const {
-    staking: { usdc, knabr },  
-    user: { walletConAddress, web3Instance } 
+    staking: { tvl_usdc, usdc, usdc_dollar, knabr, usdc_staked, usdc_staked_dollar, usdc_knabr_earned },
+    user: { walletConAddress, web3Instance },
+    setTvlUsdc, setUsdc, setUsdcDollar, setKnabr, setUsdcStaked, setUsdcStakedDollar, setUsdcKnabEarned
   } = props;
 
   useEffect(() => {
     if (walletConAddress.length > 0) {
+      stateUpdate();
+    }
+  }, [walletConAddress])
+
+  const stateUpdate = () => {
+    try {
+      getTvlUsdc().then((res) => {
+        // console.log(res);
+        setTvlUsdc(res);
+      }, err => { console.log(err) })
 
       getAssetsUSDCBalance().then((res) => {
-        console.log(res);
+        // console.log(res);
+        setUsdc(res);
         setUsdcDollar(res);
       }, err => { console.log(err) })
 
       getAssetsKNABrBalance().then((res) => {
-        console.log(res);
+        // console.log(res);
         setKnabr(res);
       }, err => { console.log(err) })
 
-    }
-  }, [walletConAddress])
+      getStake(2).then((res) => {
+        // console.log(res);
+        setUsdcStaked(res);
+        setUsdcStakedDollar(res);
+      }, err => { console.log(err) })
+
+      getPendingKnabr(2).then((res) => {
+        // console.log(res);
+        setUsdcKnabEarned(res);
+      }, err => { console.log(err) })
+    } catch (err) { console.log(err) }
+  }
 
   const [isOpen, setIsOpen] = useState(false);
   const [show, setShow] = useState(false);
@@ -171,12 +215,35 @@ const StakingRow3 = (props: any) => {
   const unStakeFn = () => {
     try {
       setLoader({ ...loader, unstakeLoad: true });
+
+      // getDefiAmount().then((res: any) => {
+      //   if (res) {
+      //     console.log(res);
+      //   }
+      // },err => { console.log(err) });
+
       withdraw(2, usdcUnStake).then((res: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
+          stateUpdate();
         }
       }, err => {
         setLoader({ ...loader, unstakeLoad: false });
+        console.log(err)
+      })
+    } catch (error) { console.log(error) }
+  }
+
+  const harvestFn = () => {
+    try {
+      setLoader({ ...loader, harvestLoad: true });
+      getHarvest(2).then((res: any) => {
+        if (res) {
+          setLoader({ ...loader, harvestLoad: false });
+          stateUpdate();
+        }
+      }, err => {
+        setLoader({ ...loader, harvestLoad: false });
         console.log(err)
       })
     } catch (error) { console.log(error) }
@@ -200,20 +267,20 @@ const StakingRow3 = (props: any) => {
               <Avatar src={USDC} alt="" />
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>USDC</AccordHeading>
-              <AccordValue>0 TVL</AccordValue>
+              <AccordHeading className={classes.padLR}>USDC</AccordHeading>
+              <AccordValue className={classes.padLR}>${tvl_usdc} TVL</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>0%</AccordHeading>
-              <AccordValue>0%(24hr)</AccordValue>
+              <AccordHeading className={classes.padLR}>0%</AccordHeading>
+              <AccordValue className={classes.padLR}>0%(24hr)</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>$0.00</AccordHeading>
-              <AccordValue>{ usdc } USDC</AccordValue>
+              <AccordHeading className={classes.padLR}>${usdc_dollar}</AccordHeading>
+              <AccordValue className={classes.padLR}>{usdc} USDC</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading>$0.00</AccordHeading>
-              <AccordValue>{ knabr } Knab R</AccordValue>
+              <AccordHeading className={classes.padLR}>{usdc_knabr_earned}</AccordHeading>
+              <AccordValue className={classes.padLR}>Knab R</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordArrIcon src={!isOpen ? UpArrow : DownArrow} alt='' />
@@ -235,8 +302,8 @@ const StakingRow3 = (props: any) => {
                     <FlexDiv>
                       <FlexColumn>
                         <Heading>USDC Balance</Heading>
-                        <Value>{ usdc }</Value>
-                        <Value>($00.00)</Value>
+                        <Value>{usdc}</Value>
+                        <Value>(${usdc_dollar})</Value>
                       </FlexColumn>
                       <CustomButton
                         size="small"
@@ -300,7 +367,7 @@ const StakingRow3 = (props: any) => {
                   <Paper className={classes.stakedDiv}>
                     <div className={classes.headStaDiv}>
                       <Heading>USDC Staked</Heading>
-                      <Value>0.0000 ($0.00)</Value>
+                      <Value>{usdc_staked} (${usdc_staked_dollar})</Value>
                     </div><br />
                     <FlexDiv>
                       <CustomInput
@@ -324,10 +391,10 @@ const StakingRow3 = (props: any) => {
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
-                      <FlexRow>
+                      {/* <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
                         Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                      </FlexRow>
+                      </FlexRow> */}
                     </div>
                   </Paper>
                   <Paper className={classes.stakedDiv2}>
@@ -336,7 +403,7 @@ const StakingRow3 = (props: any) => {
                     </div><br />
                     <FlexDiv>
                       <FlexColumn>
-                        <Value>{ knabr }</Value>
+                        <Value>{usdc_knabr_earned}</Value>
                         <Value>($0.00)</Value>
                       </FlexColumn>
                       <CustomButton
@@ -346,16 +413,17 @@ const StakingRow3 = (props: any) => {
                           padding: '8px 48px',
                           marginLeft: '12px',
                         }}
+                        onClick={harvestFn}
                       >
                         {/* Harvest */}
                         {loader.harvestLoad ? <Spinner /> : <span>Harvest</span>}
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
-                      <FlexRow>
+                      {/* <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
                         Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                      </FlexRow>
+                      </FlexRow> */}
                     </div>
                   </Paper>
                 </FlexColumn>
@@ -367,6 +435,7 @@ const StakingRow3 = (props: any) => {
       <StakeUsdcModal
         show={show}
         toggleModal={toggleModal}
+        stUpdate={stateUpdate}
       />
     </>
   );
@@ -378,4 +447,12 @@ const mapStateToProps = (state: any) => ({
   staking: state.staking
 })
 
-export default connect(mapStateToProps, { setUsdcDollar, setKnabr })(StakingRow3)
+export default connect(mapStateToProps, {
+  setTvlUsdc,
+  setUsdc,
+  setUsdcDollar,
+  setKnabr,
+  setUsdcStaked,
+  setUsdcStakedDollar,
+  setUsdcKnabEarned
+})(StakingRow3)

@@ -19,6 +19,10 @@ import {
   KNABrAddress,
   USDCAddress,
   LPTokenAddress,
+  stratabi,
+  stratAddress1,
+  stratAddress2,
+  stratAddress3
 } from './abi'
 let web3: Web3
 // import axios from 'axios'
@@ -88,7 +92,7 @@ export const getPendingTransaction = async (contractSLC: any, account: string) =
       const trans = await contractSLC.methods._transactions(pendingTransaction[0]).call({ from: account })
       return trans
     }
-  } catch (err) {}
+  } catch (err) { }
 }
 export const handleSignPendingTransactionSubmit = (contractSLC: any, account: string, transactionNumber: number) => {
   contractSLC.methods.signTransaction(transactionNumber).send({ from: account })
@@ -326,8 +330,9 @@ export const deposit = async (pid: number, amount: number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.deposit(pid, amount).send({ from: accounts[0] })
-    console.log(res)
+    const res = await farmContract.methods.deposit(pid, convertToWei(amount)).send({ from: accounts[0] })
+    return res;
+    // console.log(res)
   }
 }
 
@@ -349,7 +354,8 @@ export const gasPriceFn = async () => {
 export const handleKnabApproval = async (contractKnab: any, account: string, ApproveAmount: number) => {
   const gasPrice = await gasPriceFn()
   const res = await contractKnab.methods.approve(KNABFarmaddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
-  console.log(res)
+  return res;
+  // console.log(res)
 }
 
 export const handleUsdcApproval = async (contractUsdc: any, account: string, ApproveAmount: number) => {
@@ -366,7 +372,8 @@ export const getAssetsKNABBalance = async () => {
     const KNABContract = new web3.eth.Contract(KNABabi, KNABAddressTest)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNABBalance: any = res
-    return parseInt(KNABBalance)
+    // return parseInt(KNABBalance)
+    return convertToEther2(KNABBalance)
   }
 }
 export const getAssetsKNABrBalance = async () => {
@@ -376,7 +383,8 @@ export const getAssetsKNABrBalance = async () => {
     const KNABContract = new web3.eth.Contract(KNABabi, KNABrAddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNABrBalance: any = res
-    return parseInt(KNABrBalance)
+    // return parseInt(KNABrBalance)
+    return convertToEther2(KNABrBalance)
   }
 }
 export const getAssetsUSDCBalance = async () => {
@@ -386,7 +394,10 @@ export const getAssetsUSDCBalance = async () => {
     const KNABContract = new web3.eth.Contract(KNABabi, USDCAddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const USDCbalance: any = res
-    return parseInt(USDCbalance)
+    console.log(USDCbalance, accounts[0], 'bbb')
+    const data = USDCbalance/10**6;
+    return data;
+    // return parseInt(USDCbalance)
   }
 }
 export const getAssetsKNAB_USDCBalance = async () => {
@@ -396,7 +407,8 @@ export const getAssetsKNAB_USDCBalance = async () => {
     const KNABContract = new web3.eth.Contract(KNABabi, LPTokenAddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNAB_USDCBalance: any = res
-    return parseInt(KNAB_USDCBalance)
+    // return parseInt(KNAB_USDCBalance)
+    return convertToEther2(KNAB_USDCBalance)
   }
 }
 
@@ -417,7 +429,8 @@ export const getLpBalance = async () => {
 export const handleKnabUsdcApproval = async (contractUsdc: any, account: string, ApproveAmount: number) => {
   const gasPrice = await gasPriceFn()
   const res = await contractUsdc.methods.approve(KNABFarmaddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
-  console.log(res)
+  // console.log(res);
+  return res;
 }
 
 export const withdraw = async (pid: number, amount: number) => {
@@ -425,18 +438,20 @@ export const withdraw = async (pid: number, amount: number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.withdraw(pid, amount).send({ from: accounts[0] })
-    console.log(res)
+    const res = await farmContract.methods.withdraw(pid, convertToWei(amount)).send({ from: accounts[0] })
+    return res;
+    // console.log(res);
   }
 }
 
-export const getTvl = async (pid: number) => {
+export const getStake = async (pid: number) => {
   const web3 = await getWeb3Val()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
     const res = await farmContract.methods.stakedWantTokens(pid, accounts[0]).call()
-    return convertToEther2(res)
+    // console.log('GetStake',pid, res)
+    return convertToEther2(res);
   }
 }
 
@@ -447,5 +462,77 @@ export const getPendingKnabr = async (pid: number) => {
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
     const res = await farmContract.methods.pendingKNABR(pid, accounts[0]).call()
     return convertToEther2(res)
+  }
+}
+
+export const getTvlKnab = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const stratContract = new web3.eth.Contract(stratabi, stratAddress1)
+    const res = await stratContract.methods.wantLockedTotal().call()
+    return convertToEther2(res);
+  }
+}
+
+export const getTvlKnabUsdc = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const stratContract = new web3.eth.Contract(stratabi, stratAddress2)
+    const res = await stratContract.methods.wantLockedTotal().call()
+    return convertToEther2(res);
+  }
+}
+
+export const getTvlUsdc = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const stratContract = new web3.eth.Contract(stratabi, stratAddress3)
+    const res = await stratContract.methods.wantLockedTotal().call()
+    return convertToEther2(res);
+  }
+}
+
+export const getHarvest = async (pid: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const res = await farmContract.methods.harvestKNABR(pid).send({ from: accounts[0] })
+    return res;
+  }
+}
+
+export const getHarvestAll = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const res0 = await farmContract.methods.harvestKNABR(0).send({ from: accounts[0] })
+    const res1 = await farmContract.methods.harvestKNABR(1).send({ from: accounts[0] })
+    const res2 = await farmContract.methods.harvestKNABR(2).send({ from: accounts[0] })
+    return 1;   
+  }
+}
+
+export const withdrawLoan = async (pid: number, amount: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const res = await farmContract.methods.withdrawLoan(pid, amount).send({ from: accounts[0] })
+    console.log(res);
+  }
+}
+
+export const getDefiAmount = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const stratContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const res = await stratContract.methods.calculatePartition().call()
+    return convertToEther2(res);
   }
 }

@@ -462,7 +462,7 @@ export const withdrawUsdc = async (pid: number, amount: number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.withdraw(pid, (amount*10**6)).send({ from: accounts[0] })
+    const res = await farmContract.methods.withdraw(pid, (amount)).send({ from: accounts[0] })
     return res;
     // console.log(res);
   }
@@ -486,7 +486,7 @@ export const getStakeUsdc = async (pid: number) => {
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
     const res = await farmContract.methods.stakedWantTokens(pid, accounts[0]).call()
     // console.log('GetStake',pid, res)
-    return res/10**6;
+    return res;
   }
 }
 
@@ -557,9 +557,9 @@ export const withdrawLoan = async (pid: number, amount: number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    console.log('With draw loan', amount);
     const res = await farmContract.methods.withdrawLoan(pid, amount).send({ from: accounts[0] })
     return res;
-    // console.log(res);
   }
 }
 

@@ -151,10 +151,10 @@ const StakingRow3 = (props: any) => {
       //   setTvlUsdc(res);
       // }, err => { console.log(err) })
 
-      getStakeUsdc(4).then((res) => {
-        // console.log(res);
-        setTvlUsdc(res);
-      }, err => { console.log(err) })
+      // getStakeUsdc(5).then((res) => {
+      //   // console.log(res);
+      //   setTvlUsdc(res);
+      // }, err => { console.log(err) })
 
       getAssetsUSDCBalance().then((res) => {
         // console.log(res);
@@ -167,13 +167,13 @@ const StakingRow3 = (props: any) => {
         setKnabr(res);
       }, err => { console.log(err) })
 
-      getStakeUsdc(4).then((res) => {
+      getStakeUsdc(5).then((res) => {
         // console.log(res);
-        setUsdcStaked(res);
-        setUsdcStakedDollar(res);
+        setUsdcStaked(res/10**6);
+        setUsdcStakedDollar(res/10**6);
       }, err => { console.log(err) })
 
-      getPendingKnabr(4).then((res) => {
+      getPendingKnabr(5).then((res) => {
         // console.log(res);
         setUsdcKnabEarned(res);
       }, err => { console.log(err) })
@@ -233,11 +233,11 @@ const StakingRow3 = (props: any) => {
   const unStakeFn = () => {
     try {
       setLoader({ ...loader, unstakeLoad: true });
-
-      getStakeUsdc(3).then((res: any) => {
-        if (usdcUnStake < res) {
-          // console.log('Defi Amount', res);
-          withdrawUsdc(4, usdcUnStake).then((res1: any) => {
+      let usdcUnstake2 = usdcUnStake * 10**6;
+      getStakeUsdc(5).then((res: any) => {
+        if (usdcUnstake2 <= res) {
+          console.log('1st case');
+          withdrawUsdc(5, usdcUnstake2).then((res1: any) => {
             if (res1) {
               setLoader({ ...loader, unstakeLoad: false });
               stateUpdate();
@@ -247,12 +247,12 @@ const StakingRow3 = (props: any) => {
             setLoader({ ...loader, unstakeLoad: false });
             console.log(err)
           })
-        } else if (usdcUnStake > res) {
-          withdrawUsdc(4, (res)).then((res2: any) => {
+        } else if (usdcUnstake2 > res && res !== 0 && res !== '0') {
+          withdrawUsdc(5, (res)).then((res2: any) => {
             let temp = 0;
             if (res2) {
               temp++;
-              withdrawLoan(4, (usdcUnStake - res)).then((res3: any) => {
+              withdrawLoan(5, (usdcUnstake2 - res)).then((res3: any) => {
                 if (res3) {
                   temp++;
                   setLoader({ ...loader, unstakeLoad: false });
@@ -261,7 +261,7 @@ const StakingRow3 = (props: any) => {
                 }
               }, err => {
                 if (temp === 1) {
-                  successAlert('You have requested for' + usdcUnStake + 'but' + res + 'has been withdrawn');
+                  successAlert('You have requested for ' + usdcUnStake + 'but' + res + ' has been withdrawn');
                 }
                 setLoader({ ...loader, unstakeLoad: false });
                 console.log(err)
@@ -273,6 +273,18 @@ const StakingRow3 = (props: any) => {
             setLoader({ ...loader, unstakeLoad: false });
             console.log(err)
             errorAlert('Something went wrong , please try again')
+          })
+        } else {
+          // console.log('Third case', usdcUnstake2);
+          withdrawLoan(5, (usdcUnstake2)).then((res4: any) => {
+            if (res4) {
+              setLoader({ ...loader, unstakeLoad: false });
+              stateUpdate();
+              successAlert('Transaction completed successfully')
+            }
+          }, err => {
+            setLoader({ ...loader, unstakeLoad: false });
+            console.log(err)
           })
         }
       }, err => { console.log(err) });
@@ -316,7 +328,8 @@ const StakingRow3 = (props: any) => {
             </FlexColumn>
             <FlexColumn>
               <AccordHeading className={classes.padLR}>USDC</AccordHeading>
-              <AccordValue className={classes.padLR}>${tvl_usdc} TVL</AccordValue>
+              {/* <AccordValue className={classes.padLR}>${tvl_usdc} TVL</AccordValue> */}
+              <AccordValue className={classes.padLR}>${parseFloat(usdc_staked) + parseFloat(loan_amount)} TVL</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordHeading className={classes.padLR}>0%</AccordHeading>

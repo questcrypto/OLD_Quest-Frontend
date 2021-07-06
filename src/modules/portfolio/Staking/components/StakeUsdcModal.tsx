@@ -100,7 +100,7 @@ const StakeUsdcModal = (props: any) => {
   const confirmTransaction = async () => {
     try {
       setLoader({ ...loader, confirmTrans: true });
-      depositUsdc(4, stakeUsdcVal).then((res: any) => {
+      depositUsdc(5, stakeUsdcVal).then((res: any) => {
         if (res) {
           setLoader({ ...loader, confirmTrans: false });
           setIsConfirm(false)

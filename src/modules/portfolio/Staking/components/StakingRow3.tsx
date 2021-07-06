@@ -43,7 +43,7 @@ import {
   withdrawLoan,
   getStakeUsdc,
   getLoanAmount,
-  withdrawUsdc
+  withdrawUsdc,
 } from '../../../../modules/block-chain/BlockChainMethods'
 import Spinner from 'shared/loader-components/spinner'
 import {
@@ -146,7 +146,12 @@ const StakingRow3 = (props: any) => {
 
   const stateUpdate = () => {
     try {
-      getTvlUsdc().then((res) => {
+      // getTvlUsdc().then((res) => {
+      //   // console.log(res);
+      //   setTvlUsdc(res);
+      // }, err => { console.log(err) })
+
+      getStakeUsdc(4).then((res) => {
         // console.log(res);
         setTvlUsdc(res);
       }, err => { console.log(err) })

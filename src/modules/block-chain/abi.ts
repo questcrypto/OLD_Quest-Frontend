@@ -12,7 +12,7 @@ export const KNABrAddress = '0x9Ca398983387f3945119DfAD55AF297966A7BaBd'
 export const LPTokenAddress = '0x6950Fcb879b7907609ed6a5E5f0f60Fbc6Ecb47C'
 export const stratAddress1 = '0xA894BDF433e02D7c46122f2c2fc097b66f7e8269'
 export const stratAddress2 = '0x2B8B86DF468A8D8575eE35f3A5a117C88A9FE4D6'
-export const stratAddress3 = ''
+export const stratAddress3 = '0xce6BE1f7139d755992DcB2011EBeCf5353847234'
 
 export const slcAbi: any = [
   {
@@ -3315,13 +3315,73 @@ export const stratabi: any = [
 	{
 		"inputs": [
 			{
-				"internalType": "address[]",
-				"name": "_addresses",
-				"type": "address[]"
+				"internalType": "address",
+				"name": "_onlyGov",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_tokens",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_knabfarmaddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_pool",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_poolToken",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_wmatic",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_gauge",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_dfyn",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_weth",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_dev",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_crv",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_ss",
+				"type": "address"
 			},
 			{
 				"internalType": "uint256",
 				"name": "_minTimeToWithdraw",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_minTimeToWithdrawLoan",
 				"type": "uint256"
 			}
 		],
@@ -3366,11 +3426,17 @@ export const stratabi: any = [
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "_govAddress",
+				"name": "",
 				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
-		"name": "SetGov",
+		"name": "Recovered",
 		"type": "event"
 	},
 	{
@@ -3378,12 +3444,12 @@ export const stratabi: any = [
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "bool",
-				"name": "_onlyGov1",
-				"type": "bool"
+				"internalType": "address",
+				"name": "_govAddress",
+				"type": "address"
 			}
 		],
-		"name": "SetOnlyGov",
+		"name": "SetGov",
 		"type": "event"
 	},
 	{
@@ -3405,17 +3471,11 @@ export const stratabi: any = [
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "oldWantLockedTotal",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "newWantLockedTotal",
+				"name": "loanpercent",
 				"type": "uint256"
 			}
 		],
-		"name": "earned",
+		"name": "loanPercentChanged",
 		"type": "event"
 	},
 	{
@@ -3432,10 +3492,93 @@ export const stratabi: any = [
 				"internalType": "uint256",
 				"name": "newMinTimeToWithdraw",
 				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "oldMinTimeToWithdraw2",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "newMinTimeToWithdraw2",
+				"type": "uint256"
 			}
 		],
 		"name": "minTimeToWithdrawChanged",
 		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "oldOwner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "onlyGovChanged",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "onlyGovNominated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "staked",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "unstaked",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "DENOMINATOR",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"inputs": [],
@@ -3452,10 +3595,94 @@ export const stratabi: any = [
 	},
 	{
 		"inputs": [],
-		"name": "KNABaddress",
+		"name": "N_COINS",
 		"outputs": [
 			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "WMatic",
+		"outputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "amountLoan",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "changeDepositSlip",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num",
+				"type": "uint256"
+			}
+		],
+		"name": "changeLoanNum",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[8]",
+				"name": "_rewardTokens",
+				"type": "address[8]"
+			}
+		],
+		"name": "claimHistoricReward",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "crv",
+		"outputs": [
+			{
+				"internalType": "contract IERC20",
 				"name": "",
 				"type": "address"
 			}
@@ -3472,7 +3699,7 @@ export const stratabi: any = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "_wantAmt",
+				"name": "amount",
 				"type": "uint256"
 			}
 		],
@@ -3489,9 +3716,61 @@ export const stratabi: any = [
 	},
 	{
 		"inputs": [],
+		"name": "depositSlip",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "dev",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "dfyn",
+		"outputs": [
+			{
+				"internalType": "contract DFYN",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "earn",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "gauge",
+		"outputs": [
+			{
+				"internalType": "contract aaveGauge",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -3508,31 +3787,34 @@ export const stratabi: any = [
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "loanWallet",
+		"outputs": [
 			{
 				"internalType": "address",
-				"name": "_token",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_to",
+				"name": "",
 				"type": "address"
 			}
 		],
-		"name": "inCaseTokensGetStuck",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "minTimeToWithdraw",
+		"name": "loanpercent",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "minTimeToWithdrawLoanUL",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -3557,16 +3839,16 @@ export const stratabi: any = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "onlyGov1",
-		"outputs": [
+		"inputs": [
 			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
+				"internalType": "address",
+				"name": "_wallet",
+				"type": "address"
 			}
 		],
-		"stateMutability": "view",
+		"name": "newLoanWallet",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -3603,6 +3885,82 @@ export const stratabi: any = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			}
+		],
+		"name": "payback",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "paymentrecieved",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "pool",
+		"outputs": [
+			{
+				"internalType": "contract aavePool",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "poolToken",
+		"outputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tokenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tokenAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "recoverERC20",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "renounceOwnership",
 		"outputs": [],
@@ -3626,24 +3984,16 @@ export const stratabi: any = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "newMinTimeToWithdraw",
+				"name": "withdrawal1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "withdrawal2",
 				"type": "uint256"
 			}
 		],
-		"name": "setMinTimeToWithdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bool",
-				"name": "_onlyGov1",
-				"type": "bool"
-			}
-		],
-		"name": "setOnlyGov",
+		"name": "setMinTimeToWithdraw2",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -3656,6 +4006,38 @@ export const stratabi: any = [
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "sushiSwap",
+		"outputs": [
+			{
+				"internalType": "contract SushiSwap",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "tokens",
+		"outputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -3685,11 +4067,11 @@ export const stratabi: any = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "_user",
 				"type": "address"
 			}
 		],
-		"name": "userLastDepositedTimestamp",
+		"name": "updateLoan",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -3697,12 +4079,18 @@ export const stratabi: any = [
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "userLength",
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "userLastDepositedTimestamp",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -3734,12 +4122,12 @@ export const stratabi: any = [
 	},
 	{
 		"inputs": [],
-		"name": "wantAddress",
+		"name": "wantLockedTotal",
 		"outputs": [
 			{
-				"internalType": "address",
+				"internalType": "uint256",
 				"name": "",
-				"type": "address"
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -3747,12 +4135,12 @@ export const stratabi: any = [
 	},
 	{
 		"inputs": [],
-		"name": "wantLockedTotal",
+		"name": "weth",
 		"outputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "address",
 				"name": "",
-				"type": "uint256"
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -3767,7 +4155,12 @@ export const stratabi: any = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "_wantAmt",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "bamount",
 				"type": "uint256"
 			}
 		],
@@ -3783,7 +4176,48 @@ export const stratabi: any = [
 		"type": "function"
 	},
 	{
-		"stateMutability": "payable",
-		"type": "receive"
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw2",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdrawSlip",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			}
+		],
+		"name": "withdrawloanall",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ]
+

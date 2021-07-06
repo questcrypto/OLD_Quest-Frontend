@@ -41,6 +41,7 @@ import {
 import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi'
 import Spinner from 'shared/loader-components/spinner'
 import { setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab } from '../../../../logic/actions/staking.action';
+import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -118,7 +119,8 @@ const StakingRow1 = (props: any) => {
   const {
     user: { walletConAddress, web3Instance },
     staking: { knab, knab_dollar, knab_staked, knab_staked_dollar, knabr, knabr_earned, tvl_knab },
-    setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab
+    setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab,
+    successAlert, errorAlert
   } = props;
 
   useEffect(() => {
@@ -136,7 +138,7 @@ const StakingRow1 = (props: any) => {
       }, err => { console.log(err) })
 
       getStake(0).then((res) => {
-        console.log('Pool 1', res);
+        // console.log('Pool 1', res);
         setKnabStaked(res);
         setKnabStakedDollar(res);
       }, err => { console.log(err) })
@@ -198,13 +200,15 @@ const StakingRow1 = (props: any) => {
       const knabContract = new web3Instance.eth.Contract(KNABabi, KNABAddressTest);
       const accounts = await web3Instance.eth.getAccounts()
       handleKnabApproval(knabContract, accounts[0], knabAppValue).then((res: any) => {
-        console.log(res);
+        // console.log(res);
         if (res) {
           setLoader({ ...loader, approveLoad: false });
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, approveLoad: false });
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) {
       console.log(error)
@@ -218,10 +222,12 @@ const StakingRow1 = (props: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
           stateUpdate();
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, unstakeLoad: false });
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) { console.log(error) }
   }
@@ -233,10 +239,12 @@ const StakingRow1 = (props: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
           stateUpdate();
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, harvestLoad: false });
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) { console.log(error) }
   }
@@ -345,8 +353,8 @@ const StakingRow1 = (props: any) => {
                       </CustomButton>
                     </div>
                     <FlexColumn className={classes.knabValues}>
-                      <Value>Receive: 0.0000($0.0000)</Value>
-                      <Value>Price impact: 0.0000%</Value>
+                      <Value>Receive: 0.00($0.00)</Value>
+                      <Value>Price impact: 0.00%</Value>
                       <Value>Fee: 0.00% ~ 0.00%</Value>
                       <Value>Max Slippage: 0%</Value>
                     </FlexColumn>
@@ -446,5 +454,6 @@ export default connect(mapStateToProps, {
   setKnabStakedDollar,
   setKnabr,
   setKnabrEarned,
-  setTvlKnab
+  setTvlKnab,
+  successAlert, errorAlert
 })(StakingRow1)

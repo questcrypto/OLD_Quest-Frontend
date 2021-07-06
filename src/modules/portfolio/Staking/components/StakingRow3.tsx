@@ -39,8 +39,11 @@ import {
   getStake,
   getPendingKnabr,
   getHarvest,
-  getDefiAmount,
-  withdrawLoan
+  // getDefiAmount,
+  withdrawLoan,
+  getStakeUsdc,
+  getLoanAmount,
+  withdrawUsdc
 } from '../../../../modules/block-chain/BlockChainMethods'
 import Spinner from 'shared/loader-components/spinner'
 import {
@@ -50,9 +53,10 @@ import {
   setKnabr,
   setUsdcStaked,
   setUsdcStakedDollar,
-  setUsdcKnabEarned
+  setUsdcKnabEarned,
+  setLoanAmount
 } from '../../../../logic/actions/staking.action';
-
+import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -128,9 +132,10 @@ const StakingRow3 = (props: any) => {
 
   const classes = useStyles();
   const {
-    staking: { tvl_usdc, usdc, usdc_dollar, knabr, usdc_staked, usdc_staked_dollar, usdc_knabr_earned },
+    staking: { tvl_usdc, usdc, usdc_dollar, knabr, usdc_staked, usdc_staked_dollar, usdc_knabr_earned, loan_amount },
     user: { walletConAddress, web3Instance },
-    setTvlUsdc, setUsdc, setUsdcDollar, setKnabr, setUsdcStaked, setUsdcStakedDollar, setUsdcKnabEarned
+    setTvlUsdc, setUsdc, setUsdcDollar, setKnabr, setUsdcStaked, setUsdcStakedDollar, setUsdcKnabEarned, setLoanAmount,
+    errorAlert, successAlert,
   } = props;
 
   useEffect(() => {
@@ -157,16 +162,22 @@ const StakingRow3 = (props: any) => {
         setKnabr(res);
       }, err => { console.log(err) })
 
-      getStake(2).then((res) => {
+      getStakeUsdc(4).then((res) => {
         // console.log(res);
         setUsdcStaked(res);
         setUsdcStakedDollar(res);
       }, err => { console.log(err) })
 
-      getPendingKnabr(2).then((res) => {
+      getPendingKnabr(4).then((res) => {
         // console.log(res);
         setUsdcKnabEarned(res);
       }, err => { console.log(err) })
+
+      getLoanAmount().then((res) => {
+        // console.log('Loan Amount', res);
+        setLoanAmount(res);
+      }, err => { console.log(err) })
+
     } catch (err) { console.log(err) }
   }
 
@@ -204,10 +215,12 @@ const StakingRow3 = (props: any) => {
       handleUsdcApproval(usdcContract, accounts[0], usdcAppr).then((res: any) => {
         if (res) {
           setLoader({ ...loader, approveLoad: false });
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, approveLoad: false });
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) { console.log(error) }
   }
@@ -216,21 +229,49 @@ const StakingRow3 = (props: any) => {
     try {
       setLoader({ ...loader, unstakeLoad: true });
 
-      // getDefiAmount().then((res: any) => {
-      //   if (res) {
-      //     console.log(res);
-      //   }
-      // },err => { console.log(err) });
-
-      withdraw(2, usdcUnStake).then((res: any) => {
-        if (res) {
-          setLoader({ ...loader, unstakeLoad: false });
-          stateUpdate();
+      getStakeUsdc(3).then((res: any) => {
+        if (usdcUnStake < res) {
+          // console.log('Defi Amount', res);
+          withdrawUsdc(4, usdcUnStake).then((res1: any) => {
+            if (res1) {
+              setLoader({ ...loader, unstakeLoad: false });
+              stateUpdate();
+              successAlert('Transaction completed successfully')
+            }
+          }, err => {
+            setLoader({ ...loader, unstakeLoad: false });
+            console.log(err)
+          })
+        } else if (usdcUnStake > res) {
+          withdrawUsdc(4, (res)).then((res2: any) => {
+            let temp = 0;
+            if (res2) {
+              temp++;
+              withdrawLoan(4, (usdcUnStake - res)).then((res3: any) => {
+                if (res3) {
+                  temp++;
+                  setLoader({ ...loader, unstakeLoad: false });
+                  stateUpdate();
+                  successAlert('Transaction completed successfully')
+                }
+              }, err => {
+                if (temp === 1) {
+                  successAlert('You have requested for' + usdcUnStake + 'but' + res + 'has been withdrawn');
+                }
+                setLoader({ ...loader, unstakeLoad: false });
+                console.log(err)
+              })
+              // setLoader({ ...loader, unstakeLoad: false });
+              // stateUpdate();
+            }
+          }, err => {
+            setLoader({ ...loader, unstakeLoad: false });
+            console.log(err)
+            errorAlert('Something went wrong , please try again')
+          })
         }
-      }, err => {
-        setLoader({ ...loader, unstakeLoad: false });
-        console.log(err)
-      })
+      }, err => { console.log(err) });
+
     } catch (error) { console.log(error) }
   }
 
@@ -241,10 +282,12 @@ const StakingRow3 = (props: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
           stateUpdate();
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, harvestLoad: false });
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) { console.log(error) }
   }
@@ -353,8 +396,8 @@ const StakingRow3 = (props: any) => {
                       </CustomButton>
                     </div>
                     <FlexColumn className={classes.knabValues}>
-                      <Value>Receive: 0.0000($0.0000)</Value>
-                      <Value>Price impact: 0.0000%</Value>
+                      <Value>Receive: 0.00($0.00)</Value>
+                      <Value>Price impact: 0.00%</Value>
                       <Value>Fee: 0.00% ~ 0.11%</Value>
                       <Value>Max Slippage: 1%</Value>
                     </FlexColumn>
@@ -366,8 +409,9 @@ const StakingRow3 = (props: any) => {
                 <FlexColumn>
                   <Paper className={classes.stakedDiv}>
                     <div className={classes.headStaDiv}>
-                      <Heading>USDC Staked</Heading>
-                      <Value>{usdc_staked} (${usdc_staked_dollar})</Value>
+                      <Heading>USDC Staked (With Profit)</Heading>
+                      <Value>{parseFloat(usdc_staked) + parseFloat(loan_amount)}
+                        (${parseFloat(usdc_staked_dollar) + parseFloat(loan_amount)})</Value>
                     </div><br />
                     <FlexDiv>
                       <CustomInput
@@ -454,5 +498,7 @@ export default connect(mapStateToProps, {
   setKnabr,
   setUsdcStaked,
   setUsdcStakedDollar,
-  setUsdcKnabEarned
+  setUsdcKnabEarned,
+  setLoanAmount,
+  successAlert, errorAlert,
 })(StakingRow3)

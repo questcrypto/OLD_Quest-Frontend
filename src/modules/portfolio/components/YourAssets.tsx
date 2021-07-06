@@ -117,7 +117,7 @@ const YourAssets = (props: any) => {
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
   const [assetsKNABBalance, setAssetsKNABBalance] = useState(0)
-  const [assetsKNABrBalance, setassetsKNABrBalance] = useState(0)
+  const [assetsKNABrBalance, setassetsKNABrBalance] = useState('0')
   const [assetsUSDCBalance, setassetsUSDCBalance] = useState(0)
   const [assetsKNAB_USDCBalance, setKNAB_usdcBalance2] = useState(0)
 
@@ -135,12 +135,13 @@ const YourAssets = (props: any) => {
       balance: `${assetsKNABBalance}`,
       availableQty: commaNumber(100000000),
       price: 1,
-      holdings: { value: assetsKNABBalance / 100000000, percent: 0.0 },
+      // holdings: { value: assetsKNABBalance / 100000000, percent: 0.0 },
+      holdings: { value: (assetsKNABBalance / 100000000).toFixed(2) , percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNABr' },
       balance: `${assetsKNABrBalance}`,
-      availableQty: '0.000000',
+      availableQty: '0.00',
       price: 0.0,
       holdings: { value: `$ 0`, percent: 0.0 },
     },
@@ -149,12 +150,13 @@ const YourAssets = (props: any) => {
       balance: `${assetsUSDCBalance}`,
       availableQty: commaNumber(1243483555),
       price: 1,
-      holdings: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
+      // holdings: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
+      holdings: { value: (assetsUSDCBalance / 1243483555).toFixed(2), percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC' },
       balance: `${assetsKNAB_USDCBalance}`,
-      availableQty: '0.000000',
+      availableQty: '0.00',
       price: 0.0,
       holdings: { value: `$ 0`, percent: 0.0 },
     },
@@ -209,13 +211,13 @@ const YourAssets = (props: any) => {
     const KNABrBalance: any = await getAssetsKNABrBalance()
     const USDCBalance: any = await getAssetsUSDCBalance()
     const KNAB_USDCBalance: any = await getAssetsKNAB_USDCBalance()
-    console.log(typeof KNABBalance, typeof KNABrBalance, typeof USDCBalance, typeof KNAB_USDCBalance, '***')
+    // console.log(typeof KNABBalance, typeof KNABrBalance, typeof USDCBalance, typeof KNAB_USDCBalance, '***')
     // setAssetsKNABBalance(KNABBalance / 10 ** 18)
     // setassetsKNABrBalance(KNABrBalance / 10 ** 18)
     // setassetsUSDCBalance(USDCBalance / 10 ** 6)
     // setKNAB_usdcBalance2(KNAB_USDCBalance / 10 ** 18)
     setAssetsKNABBalance(KNABBalance)
-    setassetsKNABrBalance(KNABrBalance)
+    setassetsKNABrBalance(parseFloat(KNABrBalance).toFixed(2))
     setassetsUSDCBalance(USDCBalance)
     setKNAB_usdcBalance2(KNAB_USDCBalance)
   }

@@ -158,7 +158,8 @@ const StakingHeader = (props: any) => {
             <FlexDiv>
               <FlexColumn>
                 <Value>
-                  {knabr_earned + usdc_knabr_earned + lp_knabr_earned} KNABr
+                  {/* {knabr_earned + usdc_knabr_earned + lp_knabr_earned} KNABr */}
+                  { parseFloat(knabr_earned) + parseFloat(usdc_knabr_earned) + parseFloat(lp_knabr_earned) } KNABr
                 </Value>
                 <Value>
                   (${knabREarn['dollarValue']})

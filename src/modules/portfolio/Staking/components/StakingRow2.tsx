@@ -51,6 +51,7 @@ import {
   setLpStakedDollar,
   setLpKnabREarned
 } from '../../../../logic/actions/staking.action';
+import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -141,7 +142,8 @@ const StakingRow2 = (props: any) => {
   const {
     user: { walletConAddress, web3Instance },
     staking: { tvl_knab_usdc, lp, lp_dollar, knabr, lp_staked, lp_staked_dollar, lp_knabr_earned },
-    setTvlKnabUsdc, setLp, setLpDollar, setKnabr, setLpStaked, setLpStakedDollar, setLpKnabREarned
+    setTvlKnabUsdc, setLp, setLpDollar, setKnabr, setLpStaked, setLpStakedDollar, setLpKnabREarned, setLoanAmount,
+    errorAlert, successAlert,
   } = props;
 
   useEffect(() => {
@@ -201,10 +203,12 @@ const StakingRow2 = (props: any) => {
       handleKnabUsdcApproval(Contract, accounts[0], lp).then((res: any) => {
         if (res) {
           setLoader({ ...loader, approveLoad: false });
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, approveLoad: false });
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) {
       console.log(error)
@@ -218,10 +222,12 @@ const StakingRow2 = (props: any) => {
         if (res) {
           setLoader({ ...loader, stakeLoad: false });
           stateUpdate();
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, stakeLoad: false });
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) {
       console.log(error)
@@ -235,10 +241,12 @@ const StakingRow2 = (props: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
           stateUpdate();
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, unstakeLoad: false });
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) {
       console.log(error)
@@ -252,10 +260,12 @@ const StakingRow2 = (props: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
           stateUpdate();
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, harvestLoad: false });
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) { console.log(error) }
   }
@@ -468,5 +478,6 @@ export default connect(mapStateToProps, {
   setKnabr,
   setLpStaked,
   setLpStakedDollar,
-  setLpKnabREarned
+  setLpKnabREarned,
+  errorAlert, successAlert,
 })(StakingRow2)

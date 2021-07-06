@@ -8,7 +8,9 @@ import Spinner from 'shared/loader-components/spinner'
 import CustomInput from '../../components/shared/CustomInput'
 import KNAB from 'assets/icons/KNAB.svg'
 import USDC from 'assets/icons/USDC.svg'
-import { deposit } from '../../../../modules/block-chain/BlockChainMethods'
+import { deposit, depositUsdc } from '../../../../modules/block-chain/BlockChainMethods'
+import { connect } from 'react-redux'
+import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
 const useStyles = makeStyles((theme) => ({
   dcDiv: {
@@ -98,18 +100,20 @@ const StakeUsdcModal = (props: any) => {
   const confirmTransaction = async () => {
     try {
       setLoader({ ...loader, confirmTrans: true });
-      deposit(2, stakeUsdcVal).then((res: any) => {
+      depositUsdc(4, stakeUsdcVal).then((res: any) => {
         if (res) {
           setLoader({ ...loader, confirmTrans: false });
           setIsConfirm(false)
           toggleModal();
           stUpdate();
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, confirmTrans: false });
         setIsConfirm(false);
         toggleModal();
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) {
       console.log(error)
@@ -209,7 +213,15 @@ const StakeUsdcModal = (props: any) => {
   );
 }
 
-export default StakeUsdcModal;
+// export default StakeUsdcModal;
+const mapStateToProps = (state: any) => ({
+  user: state.user,
+  staking: state.staking
+})
+
+export default connect(mapStateToProps, {
+  successAlert, errorAlert,
+})(StakeUsdcModal)
 
 export const ModalHeaderDiv = styled.div`
   display: flex;

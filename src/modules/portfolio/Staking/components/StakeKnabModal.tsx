@@ -8,6 +8,8 @@ import Spinner from 'shared/loader-components/spinner'
 import CustomInput from '../../components/shared/CustomInput'
 import KNAB from 'assets/icons/KNAB.svg'
 import { deposit } from '../../../../modules/block-chain/BlockChainMethods'
+import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   dcDiv: {
@@ -75,7 +77,7 @@ const StakeKnabModal = (props: any) => {
 
   const classes = useStyles();
 
-  const { show, toggleModal, stUpdate } = props;
+  const { show, toggleModal, stUpdate, successAlert, errorAlert } = props;
 
   // const [show, setShow] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
@@ -103,12 +105,14 @@ const StakeKnabModal = (props: any) => {
           setIsConfirm(false)
           toggleModal();
           stUpdate();
+          successAlert('Transaction completed successfully')
         }
       }, err => {
         setLoader({ ...loader, confirmTrans: false });
         setIsConfirm(false);
         toggleModal();
         console.log(err)
+        errorAlert('Something went wrong , please try again')
       })
     } catch (error) {
       console.log(error)
@@ -208,7 +212,15 @@ const StakeKnabModal = (props: any) => {
   );
 }
 
-export default StakeKnabModal;
+// export default StakeKnabModal;
+const mapStateToProps = (state: any) => ({
+  user: state.user,
+  staking: state.staking
+})
+
+export default connect(mapStateToProps, {
+  successAlert, errorAlert,
+})(StakeKnabModal)
 
 export const ModalHeaderDiv = styled.div`
   display: flex;

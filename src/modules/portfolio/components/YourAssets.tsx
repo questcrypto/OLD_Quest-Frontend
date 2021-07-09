@@ -98,7 +98,8 @@ const useStyles = makeStyles((theme) => ({
 let tableInfo = tableData.tableData
 
 const YourAssets = (props: any) => {
-  const { loggedIn, isWalletCon, getBalance, hasAccess, handleBlocking } = props
+  const { loggedIn, isWalletCon, getBalance, hasAccess, handleBlocking,
+    staking: { knab, knabr, usdc } } = props
 
   const classes = useStyles()
   const [isWallet, setIsWallet] = useState(false)
@@ -129,29 +130,61 @@ const YourAssets = (props: any) => {
       console.log(error)
     }
   }
+  // const tableBody2 = [
+  //   {
+  //     asset: { icon: `${KnabIcon}`, name: 'KNAB' },
+  //     balance: `${assetsKNABBalance}`,
+  //     availableQty: commaNumber(100000000),
+  //     price: 1,
+  //     // holdings: { value: assetsKNABBalance / 100000000, percent: 0.0 },
+  //     holdings: { value: (assetsKNABBalance / 100000000).toFixed(2) , percent: 0.0 },
+  //   },
+  //   {
+  //     asset: { icon: `${CoinIcon}`, name: 'KNABr' },
+  //     balance: `${assetsKNABrBalance}`,
+  //     availableQty: '0.00',
+  //     price: 0.0,
+  //     holdings: { value: `$ 0`, percent: 0.0 },
+  //   },
+  //   {
+  //     asset: { icon: `${CoinIcon}`, name: 'USDC' },
+  //     balance: `${assetsUSDCBalance}`,
+  //     availableQty: commaNumber(1243483555),
+  //     price: 1,
+  //     // holdings: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
+  //     holdings: { value: (assetsUSDCBalance / 1243483555).toFixed(2), percent: 0.0 },
+  //   },
+  //   {
+  //     asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC' },
+  //     balance: `${assetsKNAB_USDCBalance}`,
+  //     availableQty: '0.00',
+  //     price: 0.0,
+  //     holdings: { value: `$ 0`, percent: 0.0 },
+  //   },
+  // ]
   const tableBody2 = [
     {
       asset: { icon: `${KnabIcon}`, name: 'KNAB' },
-      balance: `${assetsKNABBalance}`,
+      balance: `${knab}`,
       availableQty: commaNumber(100000000),
       price: 1,
       // holdings: { value: assetsKNABBalance / 100000000, percent: 0.0 },
-      holdings: { value: (assetsKNABBalance / 100000000).toFixed(2) , percent: 0.0 },
+      holdings: { value: (knab / 100000000).toFixed(2) , percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNABr' },
-      balance: `${assetsKNABrBalance}`,
+      balance: `${knabr}`,
       availableQty: '0.00',
       price: 0.0,
       holdings: { value: `$ 0`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'USDC' },
-      balance: `${assetsUSDCBalance}`,
+      balance: `${usdc}`,
       availableQty: commaNumber(1243483555),
       price: 1,
       // holdings: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
-      holdings: { value: (assetsUSDCBalance / 1243483555).toFixed(2), percent: 0.0 },
+      holdings: { value: (usdc / 1243483555).toFixed(2), percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC' },
@@ -333,6 +366,7 @@ const mapStateToProps = (state: any) => ({
   walletConnectAddress: state.user.walletConnectAddress,
   web3Instance: state.user.web3Instance,
   applicationAccess: state.user.applicationAccess,
+  staking: state.staking,
 })
 
 export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress })(YourAssets)

@@ -319,9 +319,9 @@ const Portfolio = (props: any) => {
                 <Typography variant="h4">
                   {/* {props.KNABBalance || pb.toFixed(2)} KNAB */}
 
-                  {/* {isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB */}
-                  {/* {getBalance} */}
-                  { knab } KNAB
+                  {isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB
+                  {getBalance}
+                  {/* { knab } KNAB */}
 
                   {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
                 </Typography>

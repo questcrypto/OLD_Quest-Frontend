@@ -10,10 +10,10 @@ import KNAB from 'assets/icons/KNAB.svg'
 import MoreWithCrypto from './components/MoreWithCrypto'
 import YourAssets from './components/YourAssets'
 import BuyAndConvertModal from './components/BuyAndConvertModal'
-import { getWeb3Val, buyKnab, getStableCoinBalance, handlestableCoinapproval } from '../../modules/block-chain/BlockChainMethods'
+import { getWeb3Val, buyKnab, getStableCoinBalance, handlestableCoinapproval, getUSDCBalanceBuyKnab } from '../../modules/block-chain/BlockChainMethods'
 import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../modules/block-chain/abi'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
-import { getKNABbalance } from 'logic/actions/user.actions'
+import { getKNABbalance, walletConnect, walletConnectAddress, setWeb3Instance } from 'logic/actions/user.actions'
 import { logout } from 'logic/actions/user.actions'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
@@ -39,7 +39,9 @@ const Portfolio = (props: any) => {
   const [ip, setIPAddress] = useState('')
 
   const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess, isWalletCon,
-    staking: { knab, knabr } } = props
+    walletConnect, walletConnectAddress, setWeb3Instance,
+    staking: { knab, knabr },
+    user: { web3Instance } } = props
 
   // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
   // useEffect(() => {
@@ -92,25 +94,40 @@ const Portfolio = (props: any) => {
             window.alert('Please activate Wallet first.')
             return
           }
-          setLoader(true)
-          const accounts = await web3.eth.getAccounts()
-          const contractSc = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
-          const res: any = await getKNABBalance()
-          // console.log(res, '***')
-          // const res: any = await contractSc.methods.approve(ICOAddress, fromData).send({ from: accounts[0] });
-
-          handlestableCoinapproval(contractSc, accounts[0], fromData).then(
-            (res) => {
-              if (res) {
-                setLoader(false)
-                setIsConfirm(true)
-              }
-            },
-            (err) => {
-              setLoader(false)
-              console.log(err)
+          const publicaddress = coinbase.toLowerCase()
+          if (web3Instance === '') {
+            setWeb3Instance(web3);
+            walletConnectAddress(publicaddress);
+            walletConnect(true);
+            getBalance();
+          }
+          getUSDCBalanceBuyKnab().then(async (result: any) => {
+            console.log('From Data', fromData);
+            console.log('USDC Bal', result);
+            if (fromData > result) {
+              errorAlert('Insufficent USDC balance in wallet to buy KNAB');
+              return;
             }
-          )
+            setLoader(true)
+            const accounts = await web3.eth.getAccounts()
+            const contractSc = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
+            const res: any = await getKNABBalance()
+            // console.log(res, '***')
+            // const res: any = await contractSc.methods.approve(ICOAddress, fromData).send({ from: accounts[0] });
+
+            handlestableCoinapproval(contractSc, accounts[0], fromData).then(
+              (res) => {
+                if (res) {
+                  setLoader(false)
+                  setIsConfirm(true)
+                }
+              },
+              (err) => {
+                setLoader(false)
+                console.log(err)
+              }
+            )
+          })
         }
       } else {
         alert('Please connect wallet to continue')
@@ -201,6 +218,12 @@ const Portfolio = (props: any) => {
     // hasApplcationAccess(access)
     setApplicationAccess(access)
   }
+
+  const openInNewTab = (url: string) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
+
   // const blockedCountries = [
   //   { name: 'United States of America', code: 'US' },
   //   { name: 'Albania', code: 'AL' },
@@ -353,7 +376,16 @@ const Portfolio = (props: any) => {
                     Buy KNAB Tokens
                   </CustomButton>
                   <br />
-                  <span className={classes.pfBtnhelpText}>Purchase ICO tokens from Quest Crypto</span>
+                  <span className={classes.pfBtnhelpText}>
+                    Purchase ICO tokens (
+                    <span
+                      className={classes.learnMoreText}
+                      onClick={() => openInNewTab(`https://questcrypto.app${Paths.ICOdetails}`)}
+                    >
+                      Learn More
+                    </span>
+                    )
+                  </span>
                 </div>
               </div>
             </Paper>
@@ -440,5 +472,14 @@ const mapStateToProps = (state: any) => ({
   applicationAccess: state.user.applicationAccess,
   isWalletCon: state.user.isWalletCon,
   staking: state.staking,
+  user: state.user
 })
-export default withRouter(connect(mapStateToProps, { successAlert, errorAlert, getKNABbalance, hasApplcationAccess })(Portfolio))
+export default withRouter(connect(mapStateToProps, { 
+  successAlert, 
+  errorAlert, 
+  getKNABbalance, 
+  hasApplcationAccess,
+  walletConnect,
+  walletConnectAddress,
+  setWeb3Instance, 
+})(Portfolio))

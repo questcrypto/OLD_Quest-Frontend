@@ -61,4 +61,9 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '14px',
     opacity: '0.5',
   },
+  learnMoreText: {
+    color: '#35AEBC',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+  },
 }))

@@ -10,7 +10,7 @@ import CustomInput from './shared/CustomInput'
 import CustomButton from './shared/Button'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import Spinner from 'shared/loader-components/spinner'
-import { getWeb3Val, fetchValue, fetchDetails, getAssetsUSDCBalance } from '../../../modules/block-chain/BlockChainMethods'
+import { getWeb3Val, fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import './fieldStyle.css'
@@ -123,10 +123,6 @@ const BuyAndConvertModal = (props: any) => {
   const handleChange = (e: any) => {
     try {
       setFormData({ ...formData, [e.target.id]: e.target.value })
-      console.log(getAssetsUSDCBalance())
-      getAssetsUSDCBalance().then(res => {
-        console.log('USDC', res);
-      })
     } catch (error) {
       console.log(error)
     }

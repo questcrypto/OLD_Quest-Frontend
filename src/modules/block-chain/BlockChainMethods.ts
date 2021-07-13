@@ -586,3 +586,17 @@ export const getLoanAmount = async () => {
     return res/10**6;
   }
 }
+
+export const getUSDCBalanceBuyKnab = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const KNABContract = new web3.eth.Contract(KNABabi, stableCoinContractAddress)
+    const res = await KNABContract.methods.balanceOf(accounts[0]).call()
+    const USDCbalance: any = res
+    // console.log(USDCbalance, accounts[0], 'bbb')
+    const data = USDCbalance/10**6;
+    return data;
+    // return parseInt(USDCbalance)
+  }
+}

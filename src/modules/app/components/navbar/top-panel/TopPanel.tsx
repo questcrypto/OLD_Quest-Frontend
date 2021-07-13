@@ -260,7 +260,7 @@ const TopPanel = (props: any) => {
         {!loggedIn && isWalletCon ? (
           <CustomButton
             size="large"
-            style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
+            style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 8px' }}
             onClick={() => window.location.reload()}
           >
             Disconnect Wallet

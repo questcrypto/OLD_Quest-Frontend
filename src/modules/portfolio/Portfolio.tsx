@@ -85,9 +85,14 @@ const Portfolio = (props: any) => {
       const fromData = values.from
       // if (loggedIn) {
       if (true) {
-        setLoader(true)
         const web3 = await getWeb3Val()
         if (web3) {
+          const coinbase = await web3.eth.getCoinbase()
+          if (!coinbase) {
+            window.alert('Please activate Wallet first.')
+            return
+          }
+          setLoader(true)
           const accounts = await web3.eth.getAccounts()
           const contractSc = new web3.eth.Contract(stableCoinAbi, stableCoinContractAddress)
           const res: any = await getKNABBalance()
@@ -266,7 +271,7 @@ const Portfolio = (props: any) => {
               disableRipple
               style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
             >
-              { knabr } KNABr
+              {knabr} KNABr
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
@@ -279,7 +284,7 @@ const Portfolio = (props: any) => {
               {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
               {/* {KNABbalance || pb.toFixed(3)} KNAB */}
               {/* {Number(props.KNABBalance.toFixed(3))} KNAB */}
-              { knab } KNAB
+              {knab} KNAB
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
@@ -364,7 +369,6 @@ const Portfolio = (props: any) => {
               </Typography>
             </div>
           </Paper> */}
-
             <YourAssets getBalance={getBalance} hasAccess={appAccess} handleBlocking={handleBlocking} />
           </Grid>
 

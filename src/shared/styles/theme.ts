@@ -28,8 +28,8 @@ export interface Colors {
 }
 
 export const colors: Colors = {
-  // themeBackground: '#E5E5E5',
-  themeBackground: '#FFFFFF',
+  themeBackground: '#E5E5E5',
+  // themeBackground: '#FFFFFF',
   white: '#FFFFFF',
   primary: '#1E3444',
   textPrimary: '#302E35',
@@ -141,11 +141,27 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 body {
-  background: ${colors.themeBackground} !important;
+  /* background: ${colors.themeBackground} !important; */
 }
 
 * {
   font-family: NexaRegular !important;
+}
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+  border-radius: 8px;
+}
+::-webkit-scrollbar
+{
+  width: 8px;
+  background-color: #FFFFFF;
+}
+::-webkit-scrollbar-thumb
+{
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 `

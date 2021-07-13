@@ -184,7 +184,7 @@ const LeftPanel = (props: any) => {
                 // onClick={() => handleAuction()}
               >
                 <AssessmentIcon className={classes.iconStyle} />
-                <ListItemText>Real Estate Auctions</ListItemText>
+                <ListItemText>Real&nbsp;Estate Auctions</ListItemText>
               </ListItem>
               <ListItem
                 button

@@ -116,7 +116,7 @@ const OwnerDashboard = (props: any) => {
       setPublishedLoading(false)
     }
   }
-  console.log('owner page')
+  // console.log('owner page')
   return (
     <Grid>
       <Grid container spacing={2} className={classes.headerStyle}>

@@ -1,5 +1,6 @@
 import { Paper, makeStyles, Typography, Slider, Tooltip } from '@material-ui/core'
 import { useState, useEffect } from 'react'
+import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -169,7 +170,7 @@ const YourAssets = (props: any) => {
       availableQty: commaNumber(100000000),
       price: 1,
       // holdings: { value: assetsKNABBalance / 100000000, percent: 0.0 },
-      holdings: { value: (knab / 100000000).toFixed(2) , percent: 0.0 },
+      holdings: { value: (knab / 100000000).toFixed(2), percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNABr' },
@@ -271,66 +272,68 @@ const YourAssets = (props: any) => {
           </Tooltip>
         </Typography>
 
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              {tableInfo &&
-                tableInfo.tableHeaders &&
-                tableInfo.tableHeaders.map((header: any, index: any) => {
-                  return <TableCell key={index}>{header.label}</TableCell>
-                })}
-              <TableCell>Chart</TableCell>
-            </TableRow>
-          </TableHead>
+        <TableContainer>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                {tableInfo &&
+                  tableInfo.tableHeaders &&
+                  tableInfo.tableHeaders.map((header: any, index: any) => {
+                    return <TableCell key={index}>{header.label}</TableCell>
+                  })}
+                <TableCell>Chart</TableCell>
+              </TableRow>
+            </TableHead>
 
-          <TableBody>
-            {tableInfo &&
-              tableInfo.tableBody &&
-              tableBody2.map((row: any, index) => {
-                return (
-                  <TableRow key={index}>
-                    {tableInfo.tableHeaders.map((item: any, ind) => {
-                      return (
-                        <TableCell key={ind}>
-                          {item.key === 'asset' && (
-                            <div className={classes.firstDiv}>
-                              <img src={row[item.key].icon} alt="" className={classes.iconImg} />
-                              {/* <img src={KnabIcon} alt="" className={classes.iconImg} /> */}
-                              {row[item.key].name}
-                            </div>
-                          )}
-                          {item.key === 'price' && (
-                            <div>
-                              {row[item.key]} <br />
-                              {/* <span className={classes.percentText}>+{row[item.key].percent}%</span> */}
-                            </div>
-                          )}
-                          {item.key === 'holdings' && (
-                            <div>
-                              <div>
-                                {row[item.key].value}
-                                {/* <br />
-                                <Slider value={row[item.key]} classes={{ root: classes.sliderRoot, thumb: classes.sliderThumb }} /> */}
+            <TableBody>
+              {tableInfo &&
+                tableInfo.tableBody &&
+                tableBody2.map((row: any, index) => {
+                  return (
+                    <TableRow key={index}>
+                      {tableInfo.tableHeaders.map((item: any, ind) => {
+                        return (
+                          <TableCell key={ind}>
+                            {item.key === 'asset' && (
+                              <div className={classes.firstDiv}>
+                                <img src={row[item.key].icon} alt="" className={classes.iconImg} />
+                                {/* <img src={KnabIcon} alt="" className={classes.iconImg} /> */}
+                                {row[item.key].name}
                               </div>
-                            </div>
-                          )}
-                          {item.key !== 'asset' && item.key !== 'price' && item.key !== 'holdings' && row[item.key]}
-                        </TableCell>
-                      )
-                    })}
-                    <TableCell>
-                      <img
-                        src={Chart}
-                        alt=""
-                        // onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)}
-                        onClick={() => openInNewTab(`https://questcrypto.app${Paths.tokenDetails}`)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-          </TableBody>
-        </Table>
+                            )}
+                            {item.key === 'price' && (
+                              <div>
+                                {row[item.key]} <br />
+                                {/* <span className={classes.percentText}>+{row[item.key].percent}%</span> */}
+                              </div>
+                            )}
+                            {item.key === 'holdings' && (
+                              <div>
+                                <div>
+                                  {row[item.key].value}
+                                  {/* <br />
+                                <Slider value={row[item.key]} classes={{ root: classes.sliderRoot, thumb: classes.sliderThumb }} /> */}
+                                </div>
+                              </div>
+                            )}
+                            {item.key !== 'asset' && item.key !== 'price' && item.key !== 'holdings' && row[item.key]}
+                          </TableCell>
+                        )
+                      })}
+                      <TableCell>
+                        <img
+                          src={Chart}
+                          alt=""
+                          // onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)}
+                          onClick={() => openInNewTab(`https://questcrypto.app${Paths.tokenDetails}`)}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
         <div className={classes.btnDiv}>
           <CustomButton size="large" style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}>

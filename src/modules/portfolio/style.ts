@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => ({
     // paddingRight: theme.spacing(5),
   },
   header: {
-    margin: '30px 0 10px 0',
+    // margin: '30px 0 10px 0',
     // backgroundColor: 'orange',
     // width: 'fit-content',
     display: 'flex !important',
@@ -53,7 +53,8 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     paddingTop: theme.spacing(3),
     display: 'flex',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     flexWrap: 'wrap',
   },
   pfBtnhelpText: {

@@ -3,7 +3,7 @@ import { colors } from 'shared/styles/theme'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 
 export const DrawerWrapper = styled.div`
-  position: absolute;
+  /* position: absolute; */
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -19,13 +19,15 @@ export const DrawerWrapper = styled.div`
 export const useStyles = makeStyles(() =>
   createStyles({
     drawer: {
-      width: '240px',
+      // width: '240px',
+      width: '208px'
     },
     drawerPaper: {
       '&::-webkit-scrollbar': {
         display: 'none',
       },
       background: '#FBFBFB',
+      width: 'min-content',
     },
     root: {
       height: '100vh',
@@ -71,12 +73,14 @@ export const useStyles = makeStyles(() =>
 )
 
 export const QuestLogoCont = styled.div`
-  width: 179px;
-  height: 112px;
+  /* width: 179px; */
+  /* height: 112px; */
+  width: max-content;
   box-sizing: border-box;
   padding: 30px 12px;
   img { 
-    width: 155px;
+    width: 100%;
+    /* width: 155px; */
     /* height: 48px; */
   }
 `
@@ -85,5 +89,5 @@ export const ListItemText = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: ${colors.textPrimary};
-  font-family: RobotoRegular;
+  font-family: NexaRegular;
 `

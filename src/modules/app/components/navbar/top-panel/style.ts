@@ -5,7 +5,17 @@ export const TopPanelCont = styled.div`
   display: flex;
   justify-content: flex-end;
   /* height: 80px; */
-  height: 40px;
+  height: 60px;
   align-items: center;
-  background-color:#FFFFFF;
+  /* background-color:#FFFFFF; */
+  background-color:#F6F6F6;
+  padding: 8px 16px;
+  padding-right: 36px;
+  box-sizing: border-box;
+  position: fixed;
+  width: calc(100vw - 208px);
+  z-index: 999;
+  @media (max-width: 768px) {
+     width: calc(100vw - 48px)
+  }
 `

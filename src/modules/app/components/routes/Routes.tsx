@@ -180,8 +180,8 @@ export interface RouteDefinition {
   routes?: RouteDefinition[]
 }
 
-interface Props {}
-interface RoutesProps {}
+interface Props { }
+interface RoutesProps { }
 interface StateProps {
   loggedIn: boolean
   isLoaded: boolean
@@ -209,10 +209,10 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
   const [width] = useState(window.innerWidth)
 
   useEffect(() => {
-    if (width < 990) {
+    if (width < 768) {
       props.handleDrawerClose()
     }
-    return () => {}
+    return () => { }
   }, [width])
 
   // useEffect(() => {
@@ -228,50 +228,57 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
   const routesToRender = loggedIn ? routesAfterLogin : routesBeforeLogin
   return (
     <Router history={history}>
-      <Box className={classes.root}>
-        {loggedIn && width <= 990 && (
-          <>
-            <IconButton style={{ position: 'absolute' }} onClick={() => props.handleDrawerOpen()}>
-              <MenuIcon />
-            </IconButton>
-            <LeftPanel />
-          </>
-        )}
-        <Grid container>
-          {width > 990 && (
-            <Grid item xs={2}>
-              {/* {loggedIn && (
-                <>
-                  <LeftPanel />
-                </>
-              )} */}
-              {isNav || loggedIn ? (
-                <>
-                  <LeftPanel />
-                </>
-              ) : (
-                ''
-              )}
-            </Grid>
-          )}
-          {/* <Grid item xs={loggedIn ? (width > 990 ? 10 : 12) : 12} className={classes.rightPanelStyle}> */}
-          {/* {loggedIn && <TopPanel />} */}
-          <Grid item xs={isNav || loggedIn ? (width > 990 ? 10 : 12) : 12} className={classes.rightPanelStyle}>
-            {isNav || loggedIn ? <TopPanel /> : ''}
-            <Switch>
-              {routesToRender.map((route, i) => {
-                if (authLoading) {
-                  return <Loader key={i} />
-                } else {
-                  const render = getRouteRenderWithAuth(loggedIn, route, i)
-                  const rest = { render }
-                  return isLoaded ? <Route key={i} path={route.path} exact {...rest} /> : null
-                }
-              })}
-            </Switch>
-          </Grid>
-        </Grid>
-      </Box>
+      {
+        (window.location.pathname === Paths.login) && (!loggedIn) ? <Route component={SignUp} /> :
+          <Box className={classes.root}>
+            <div className={classes.mainDiv}>
+
+              <div className={classes.leftDiv}>
+                {/* {loggedIn && width <= 990 && ( */}
+                {width <= 768 && (
+                  <>
+                    <IconButton style={{ position: 'fixed' }} onClick={() => props.handleDrawerOpen()}>
+                      <MenuIcon />
+                    </IconButton>
+                    <LeftPanel />
+                  </>
+                )}
+                {width > 768 && (
+                  (isNav || loggedIn) ? (
+                    <>
+                      <LeftPanel />
+                    </>
+                  ) : (
+                    ''
+                  )
+                )}
+              </div>
+
+              <div className={classes.rightDiv}>
+                <Grid container>
+                  <Grid item xs={isNav || loggedIn ? (width > 768 ? 12 : 12) : 12} className={classes.rightPanelStyle}>
+                    {isNav || loggedIn ? <TopPanel /> : ''}
+                    <div className={classes.contentDiv}>
+                      <Switch>
+                        {routesToRender.map((route, i) => {
+                          if (authLoading) {
+                            return <Loader key={i} />
+                          } else {
+                            const render = getRouteRenderWithAuth(loggedIn, route, i)
+                            const rest = { render }
+                            return isLoaded ? <Route key={i} path={route.path} exact {...rest} /> : null
+                          }
+                        })}
+                      </Switch>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+
+            </div>
+          </Box>
+      }
+
     </Router>
   )
 }

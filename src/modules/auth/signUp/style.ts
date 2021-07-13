@@ -16,6 +16,7 @@ export const useStyle = makeStyles(() =>
       alignItems: 'center',
       margin: '0 auto',
       flexDirection: 'column',
+      padding: '16px'
     },
     tabDivStyle: {
       flexGrow: 1,

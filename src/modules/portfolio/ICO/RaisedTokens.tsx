@@ -64,7 +64,7 @@ const RaisedTokens = (props: any) => {
     seconds: 0,
   })
   useEffect(() => {
-    let countDownDate = new Date('July 31, 2021 00:00:00').getTime()
+    let countDownDate = new Date('August 31, 2021 00:00:00').getTime()
     // Update the count down every 1 second
     let data = setInterval(function () {
       // Get today's date and time

@@ -1,5 +1,5 @@
 name: Push-to-EC2
-on: push 
+on: push  
 jobs:
   ci:
     runs-on: self-hosted

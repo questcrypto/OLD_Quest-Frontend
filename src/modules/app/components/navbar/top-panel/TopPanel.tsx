@@ -155,6 +155,7 @@ const TopPanel = (props: any) => {
   }
   const connectWallet = async () => {
     try {
+      console.log('Testing')
       setDataLoading(true)
       const web3 = await getWeb3Val()
 

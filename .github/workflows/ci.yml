@@ -1,0 +1,24 @@
+name: Push-to-EC2
+on: push
+jobs:
+  ci:
+    runs-on: self-hosted
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v1
+    - name: Deploy to my EC2 instance
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        REMOTE_HOST: "40.117.127.70"
+        REMOTE_USER: "azureuser"
+        TARGET: "/home/ubuntu/"
+    - run: pwd
+    - run: ls
+    - name: Run build
+      run: |
+        sudo docker stop questfe
+        sudo docker rm questfe
+        sudo docker rmi questfe
+        sudo docker build -t questfe .
+        sudo docker run --name questfe -d -p 3000:3000 questfe

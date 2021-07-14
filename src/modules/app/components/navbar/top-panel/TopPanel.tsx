@@ -193,12 +193,12 @@ const TopPanel = (props: any) => {
       getToken()
     }
   }
-  useEffect(() => {
-    // console.log(walletConAddress, '0000')
-    if (walletConAddress !== '' && walletConnect) {
-      setWalletAddress(walletConAddress)
-    }
-  })
+  // useEffect(() => {
+  //   // console.log(walletConAddress, '0000')
+  //   if (walletConAddress !== '' && walletConnect) {
+  //     setWalletAddress(walletConAddress)
+  //   }
+  // })
   // const setAppAccess = () => {
   //   hasApplcationAccess(false)
   // }

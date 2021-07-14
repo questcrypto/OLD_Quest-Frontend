@@ -22,14 +22,27 @@ export function* authWorker(): any {
   }
   try {
     const res = yield call(authenticateToken)
+    if (res.data.token !== null) {
     const userInfo = yield call(getUserInfo, res.data.token)
     const successData = { token: res.data.token, userInfo }
     yield put(authSuccess(successData))
+    } else {
+      yield put(authFail())
+    }
   } catch (error) {
     yield put(authFail())
   }
 }
-const authenticateToken = async () => await axios.get(`${apiBaseUrl}/auth/auth`)
+// const authenticateToken = async () => await axios.get(`${apiBaseUrl}/auth/auth`)
+const authenticateToken = async () => {
+  let payload;
+  const data = localStorage.getItem('token');
+  if (data && data.length > 0) {
+    payload = data;
+  } else { payload = null }
+  return await axios.post(`${apiBaseUrl}/auth/auth`, { token: payload })
+}
+
 /* ============== LOGIN SAGA =============== */
 
 export function* loginWatcher() {

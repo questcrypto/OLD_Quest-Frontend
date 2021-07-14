@@ -120,8 +120,10 @@ const TopPanel = (props: any) => {
         const data = async () => {
           const web3 = await getWeb3Val()
           if (web3) {
-            const coinbase = await web3.eth.getCoinbase()
-            setWalletAddress(coinbase)
+            if (isWalletCon) {
+              const coinbase = await web3.eth.getCoinbase()
+              setWalletAddress(coinbase)
+            }
           }
         }
         data()

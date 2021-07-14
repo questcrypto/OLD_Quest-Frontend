@@ -3,7 +3,7 @@ on: push
 jobs:
   ci:
     runs-on: self-hosted 
-    steps:
+    steps: 
     - name: Checkout the code
       uses: actions/checkout@v1 
     - name: Deploy to my EC2 instance 

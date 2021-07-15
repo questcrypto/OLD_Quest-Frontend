@@ -12,7 +12,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         REMOTE_HOST: "40.117.127.70"
         REMOTE_USER: "azureuser"
-        TARGET: "/home/azureuser/"
+        TARGET: "/home/azureuser/" 
     - run: pwd
     - run: ls
     - name: Run build

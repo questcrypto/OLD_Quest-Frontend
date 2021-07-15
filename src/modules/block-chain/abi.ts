@@ -14,7 +14,7 @@ export const LPTokenAddress = '0x6950Fcb879b7907609ed6a5E5f0f60Fbc6Ecb47C'
 export const stratAddress1 = '0xA894BDF433e02D7c46122f2c2fc097b66f7e8269'
 export const stratAddress2 = '0x2B8B86DF468A8D8575eE35f3A5a117C88A9FE4D6'
 export const stratAddress3 = '0x00ecA350a5fD9D5f9c87b0B34d0008cE691d6cE0'
-export const rewardsAddress = ''
+export const rewardsAddress = '0x4E1090023F05b04bb4Dfa76c8040a9EAfe7f3AE4'
 
 export const slcAbi: any = [
   {

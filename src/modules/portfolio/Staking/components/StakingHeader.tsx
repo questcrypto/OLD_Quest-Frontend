@@ -114,7 +114,7 @@ const StakingHeader = (props: any) => {
                 <Heading>KNABr Balance</Heading>
                 <Value>
                   {/* { knabRBal['value']}  */} {knabr}
-                  (${knabRBal['dollarValue']})
+                  (${0.00})
                 </Value>
               </FlexColumn>
 

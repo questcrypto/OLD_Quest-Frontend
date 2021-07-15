@@ -28,11 +28,14 @@ const Notifications = (props: any) => {
           horizontal: 'right',
         }}
       >
-        {messageType && (
+        {/* {messageType && (
           <Alert onClose={handleClose} severity={messageType}>
             {message}
           </Alert>
-        )}
+        )} */}
+        <Alert onClose={handleClose} severity={messageType || 'error'}>
+          {message}
+        </Alert>
       </Snackbar>
     </div>
   )

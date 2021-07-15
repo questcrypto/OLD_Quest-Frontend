@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
+// import axios from 'axios'
 import { logout, logout2 } from 'logic/actions/user.actions'
 import { useStyles, QuestLogoCont, ListItemText } from './style'
 import Grid from '@material-ui/core/Grid'
@@ -14,7 +14,7 @@ import AssessmentIcon from '@material-ui/icons/Assessment'
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
 import EventIcon from '@material-ui/icons/Event'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
-import QuestLogo from 'assets/images/questFullLogo.svg'
+// import QuestLogo from 'assets/images/questFullLogo.svg'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import { DrawerWrapper } from './style'
@@ -24,8 +24,8 @@ import { Close } from '@material-ui/icons'
 // import questLogo from 'assets/images/questLoginLogo.png';
 import questLogo from 'assets/images/questDashboardLogo.svg'
 import PieIcon from 'assets/icons/pieIcon.svg'
-import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
-import web3modal from 'web3modal'
+// import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
+// import web3modal from 'web3modal'
 import { hasApplcationAccess } from 'logic/actions/user.actions'
 
 import Web3 from 'web3'
@@ -33,7 +33,8 @@ import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
-  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2, isWalletCon, walletConAddress, applicationAccess } = props
+  // const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2, isWalletCon, walletConAddress, applicationAccess } = props
+  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn } = props
   const [account, setAccount] = useState('')
   const [appAccess, setApplicationAccess] = useState(true)
   const [showIPBlockingModal, setIPBlockingModal] = useState(false)

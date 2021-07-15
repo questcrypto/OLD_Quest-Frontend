@@ -32,7 +32,7 @@ const Staking = (props: any) => {
     if (walletConAddress.length > 0) {
       getAssetsKNABBalance().then(
         (res) => {
-          console.log(res)
+          // console.log(res)
           setKnab(res)
         },
         (err) => {
@@ -42,7 +42,7 @@ const Staking = (props: any) => {
 
       getAssetsKNABrBalance().then(
         (res) => {
-          console.log(res)
+          // console.log(res)
           setKnabr(res)
         },
         (err) => {

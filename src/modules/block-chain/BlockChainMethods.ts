@@ -22,7 +22,9 @@ import {
   stratabi,
   stratAddress1,
   stratAddress2,
-  stratAddress3
+  stratAddress3,
+  rewardsAddress,
+  rewardsabi
 } from './abi'
 let web3: Web3
 // import axios from 'axios'
@@ -598,5 +600,46 @@ export const getUSDCBalanceBuyKnab = async () => {
     const data = USDCbalance/10**6;
     return data;
     // return parseInt(USDCbalance)
+  }
+}
+
+export const depositKnabr = async (amount: any) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
+    const gasPrice = await gasPriceFn()
+    const res = await rewardsContract.methods.deposit(amount).send({ from: accounts[0], gasPrice })
+    return res;
+  }
+}
+
+export const claimRewards = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
+    const gasPrice = await gasPriceFn()
+    const res = await rewardsContract.methods.claimRewards().send({ from: accounts[0], gasPrice })
+    return res;
+  }
+}
+
+export const getStatus = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
+    const res = await rewardsContract.methods.getStatus().call()
+    return res;
+  }
+}
+
+export const getKnabRewards = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
+    const res = await rewardsContract.methods.getKnab().call({ from: accounts[0]})
+    return convertToEther2(res);
   }
 }

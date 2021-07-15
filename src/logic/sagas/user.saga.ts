@@ -4,9 +4,9 @@ import { apiBaseUrl } from 'services/global-constant'
 import { authSuccess, authFail, loginSuccess, loginFail } from '../actions/user.actions'
 import { AUTH_START, LOGIN_START } from '../actions/action.config'
 import { setAuthToken } from '../helpers/set-auth-token'
-import history from 'modules/app/components/history'
-import { Paths } from 'modules/app/components/routes/types'
-import { CodeOutlined, ContactSupportOutlined } from '@material-ui/icons'
+// import history from 'modules/app/components/history'
+// import { Paths } from 'modules/app/components/routes/types'
+// import { CodeOutlined, ContactSupportOutlined } from '@material-ui/icons'
 import { errorAlert } from 'logic/actions/alerts.actions'
 
 

@@ -46,7 +46,8 @@ const PreAuctionTable = (props: any) => {
       const data = {
         id: auctionDetails.id,
       }
-      const { startDate, endDate, id, minReserve, slReserve, suggestedLowestBid, propidId } = auctionDetails
+      // const { startDate, endDate, id, minReserve, slReserve, suggestedLowestBid, propidId } = auctionDetails
+      const { startDate, endDate, id, minReserve, slReserve, propidId } = auctionDetails
       await configureBlockchainAuction(startDate, endDate, id, minReserve, slReserve, propertyValue, propidId)
       await axios.post(`${apiBaseUrl}/auction/activateAuction`, data)
       refreshPreAuction()

@@ -177,7 +177,7 @@ const YourAssets = (props: any) => {
       balance: `${knabr}`,
       availableQty: '0.00',
       price: 0.0,
-      holdings: { value: `$ 0`, percent: 0.0 },
+      holdings: { value: `0.00`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'USDC' },
@@ -192,7 +192,7 @@ const YourAssets = (props: any) => {
       balance: `${assetsKNAB_USDCBalance}`,
       availableQty: '0.00',
       price: 0.0,
-      holdings: { value: `$ 0`, percent: 0.0 },
+      holdings: { value: `0.00`, percent: 0.0 },
     },
   ]
   const connectWallet = async () => {

@@ -13,7 +13,7 @@ import {
   APPLICATION_ACCESS,
   WEB3_INSTANCE,
 } from '../actions/action.config'
-import history from 'modules/app/components/history'
+// import history from 'modules/app/components/history'
 
 const initialState = {
   authLoading: false,

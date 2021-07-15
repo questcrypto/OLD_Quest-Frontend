@@ -22,7 +22,8 @@ import {
   SET_TVL_USDC,
   SET_USDC_KNAB_EARNED,
   SET_LP_KNABR_EARNED,
-  SET_LOAN_AMOUNT
+  SET_LOAN_AMOUNT,
+  SET_CONVERTED_KNAB
 } from './action.config'
 
 export const setKnab = (data: any) => {
@@ -192,6 +193,14 @@ export const setLoanAmount = (data: any) => {
     payload: data,
   }
 }
+
+export const setConvertedKnab = (data: any) => {
+  return {
+    type: SET_CONVERTED_KNAB,
+    payload: data,
+  }
+}
+
 
 
 

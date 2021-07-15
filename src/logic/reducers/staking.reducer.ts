@@ -22,7 +22,8 @@ import {
   SET_TVL_USDC,
   SET_USDC_KNAB_EARNED,
   SET_LP_KNABR_EARNED,
-  SET_LOAN_AMOUNT
+  SET_LOAN_AMOUNT,
+  SET_CONVERTED_KNAB
 } from '../actions/action.config'
 
 const initialState = {
@@ -55,7 +56,9 @@ const initialState = {
   tvl_knab_usdc: 0.0,
   tvl_usdc: 0.0,
 
-  loan_amount: 0.0
+  loan_amount: 0.0,
+
+  converted_knab: 0.0
 
 }
 
@@ -182,6 +185,11 @@ export const stakingReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loan_amount: payload
+      }
+    case SET_CONVERTED_KNAB:
+      return {
+        ...state,
+        converted_knab: payload
       }
     default:
       return state

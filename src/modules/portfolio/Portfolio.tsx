@@ -102,8 +102,8 @@ const Portfolio = (props: any) => {
             getBalance();
           }
           getUSDCBalanceBuyKnab().then(async (result: any) => {
-            console.log('From Data', fromData);
-            console.log('USDC Bal', result);
+            // console.log('From Data', fromData);
+            // console.log('USDC Bal', result);
             if (fromData > result) {
               errorAlert('Insufficent USDC balance in wallet to buy KNAB');
               return;

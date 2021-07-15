@@ -346,7 +346,7 @@ export const depositUsdc = async (pid: number, amount: number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.deposit(pid, amount * 10**6).send({ from: accounts[0] })
+    const res = await farmContract.methods.deposit(pid, amount * 10 ** 6).send({ from: accounts[0] })
     return res;
     // console.log(res)
   }
@@ -413,7 +413,7 @@ export const getAssetsUSDCBalance = async () => {
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const USDCbalance: any = res
     // console.log(USDCbalance, accounts[0], 'bbb')
-    const data = USDCbalance/10**6;
+    const data = USDCbalance / 10 ** 6;
     return data;
     // return parseInt(USDCbalance)
   }
@@ -553,7 +553,7 @@ export const getHarvestAll = async () => {
     const res0 = await farmContract.methods.harvestKNABR(0).send({ from: accounts[0] })
     const res1 = await farmContract.methods.harvestKNABR(1).send({ from: accounts[0] })
     const res2 = await farmContract.methods.harvestKNABR(2).send({ from: accounts[0] })
-    return 1;   
+    return 1;
   }
 }
 
@@ -585,7 +585,7 @@ export const getLoanAmount = async () => {
     const stratContract = new web3.eth.Contract(stratabi, stratAddress3)
     const res = await stratContract.methods.paymentrecieved(accounts[0]).call()
     // console.log(res/10**6);
-    return res/10**6;
+    return res / 10 ** 6;
   }
 }
 
@@ -597,7 +597,7 @@ export const getUSDCBalanceBuyKnab = async () => {
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const USDCbalance: any = res
     // console.log(USDCbalance, accounts[0], 'bbb')
-    const data = USDCbalance/10**6;
+    const data = USDCbalance / 10 ** 6;
     return data;
     // return parseInt(USDCbalance)
   }
@@ -609,8 +609,14 @@ export const depositKnabr = async (amount: any) => {
     const accounts = await web3.eth.getAccounts()
     const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
     const gasPrice = await gasPriceFn()
-    const res = await rewardsContract.methods.deposit(amount).send({ from: accounts[0], gasPrice })
-    return res;
+    const contractKnabr = new web3.eth.Contract(stableCoinAbi, KNABrAddress)
+    await contractKnabr.methods.approve(rewardsAddress, convertToWei(amount)).send({ from: accounts[0], gasPrice }).then((async () => {
+      const res = await rewardsContract.methods.deposit(convertToWei(amount)).send({ from: accounts[0], gasPrice })
+      console.log('deposit BlockChainMethods', res)
+      return res;
+      // return await rewardsContract.methods.deposit(convertToWei(amount)).send({ from: accounts[0], gasPrice })
+    }))
+
   }
 }
 
@@ -639,7 +645,7 @@ export const getKnabRewards = async () => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
-    const res = await rewardsContract.methods.getKnab().call({ from: accounts[0]})
+    const res = await rewardsContract.methods.getKnab().call({ from: accounts[0] })
     return convertToEther2(res);
   }
 }

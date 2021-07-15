@@ -15,11 +15,13 @@ import {
 } from '../style'
 import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
-import { setKnab, setKnabr, setKnabrEarned, setLpKnabREarned, setUsdcKnabEarned } from '../../../../logic/actions/staking.action'
+import { setKnab, setKnabDollar, setKnabr, setKnabrEarned, setLpKnabREarned, setUsdcKnabEarned, setConvertedKnab } from '../../../../logic/actions/staking.action'
 import Spinner from 'shared/loader-components/spinner'
 import {
-  getKNABBalance, getHarvestAll, getAssetsKNABrBalance, getPendingKnabr,
+  getKNABBalance, getHarvestAll, getAssetsKNABrBalance, getPendingKnabr, getKnabRewards,
+  getStatus, depositKnabr, claimRewards, getAssetsKNABBalance
 } from '../../../../modules/block-chain/BlockChainMethods'
+import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
 const StakingHeader = (props: any) => {
 
@@ -27,18 +29,21 @@ const StakingHeader = (props: any) => {
 
   const {
     setKnab,
+    setKnabDollar,
     setKnabr,
-    staking: { knab, knabr, knabr_earned, usdc_knabr_earned, lp_knabr_earned },
+    staking: { knab, knabr, knabr_earned, usdc_knabr_earned, lp_knabr_earned, converted_knab },
     walletAddress,
-    setKnabrEarned, setLpKnabREarned, setUsdcKnabEarned
+    setKnabrEarned, setLpKnabREarned, setUsdcKnabEarned, setConvertedKnab,
+    successAlert, errorAlert
   } = props;
 
-  const [knabRBal, setKnabR] = useState({ value: '0.0000', dollarValue: '0.00' })
-  const [conknabBal, setConknabBal] = useState({ value: '00.00', dollarValue: '214.261' })
-  const [knabREarn, setKnabREarn] = useState({ value: '00.00', dollarValue: '0.00' })
+  // const [knabRBal, setKnabR] = useState({ value: '0.0000', dollarValue: '0.00' })
+  // const [conknabBal, setConknabBal] = useState({ value: '00.00', dollarValue: '214.261' })
+  // const [knabREarn, setKnabREarn] = useState({ value: '00.00', dollarValue: '0.00' })
 
   const [convertValue, setConvertValue] = useState(0.00)
   const [loader, setLoader] = useState({ ctkBtn: false, harvestLoad: false });
+  const [status, setStatus] = useState('1');
 
   const handleChange = (e: any) => {
     try {
@@ -62,6 +67,11 @@ const StakingHeader = (props: any) => {
         setKnabr(res);
       }, err => { console.log(err) })
 
+      getKnabRewards().then((res) => {
+        // console.log(res);
+        setConvertedKnab(res);
+      }, err => { console.log(err) })
+
       getPendingKnabr(0).then((res) => {
         // console.log(res);
         setKnabrEarned(res);
@@ -77,13 +87,62 @@ const StakingHeader = (props: any) => {
         setUsdcKnabEarned(res);
       }, err => { console.log(err) })
 
+      getStatus().then((res) => {
+        // console.log(typeof res);
+        // console.log(res);
+        setStatus(res);
+      }, err => { console.log(err) })
+
+      getAssetsKNABBalance().then((res) => {
+        // console.log(res);
+        setKnab(res);
+        setKnabDollar(res);
+      }, err => { console.log(err) })
+
     } catch (error) { console.log(error) }
   }
 
-  const convertToKnabFn = () => {
+  const depoKnabr = () => {
     try {
-      console.log(convertValue);
-      stateUpdate();
+      // console.log(convertValue);
+      // depositKnabr(convertValue)
+      setLoader({ ...loader, ctkBtn: true });
+      depositKnabr(convertValue).then((res: any) => {
+        console.log('Deposit', res);
+        // if (res) {
+        console.log('Deposit Inside', res);
+        setLoader({ ...loader, ctkBtn: false });
+        stateUpdate();
+        successAlert('Transaction completed successfully')
+        setConvertValue(0);
+        // }
+      }, err => {
+        setLoader({ ...loader, ctkBtn: false });
+        console.log(err)
+        errorAlert('Something went wrong , please try again')
+        setConvertValue(0);
+      })
+    } catch (err) { console.log(err) }
+  }
+
+  const claimRewar = () => {
+    try {
+      // claimRewards();
+      setLoader({ ...loader, ctkBtn: true });
+      claimRewards().then((res: any) => {
+        // console.log(res);
+        if (res) {
+          setLoader({ ...loader, ctkBtn: false });
+          stateUpdate();
+          successAlert('Transaction completed successfully');
+          setConvertValue(0);
+        }
+      }, err => {
+        setLoader({ ...loader, ctkBtn: false });
+        console.log(err)
+        errorAlert('Something went wrong , please try again')
+        setConvertValue(0);
+      })
     } catch (err) { console.log(err) }
   }
 
@@ -122,7 +181,7 @@ const StakingHeader = (props: any) => {
                 <Heading>Converted KNAB Balance</Heading>
                 <Value>
                   {/* {conknabBal['value']} (~${conknabBal['dollarValue']}) */}
-                  {0.00} (~${0.00})
+                  {converted_knab} (~${1})
                 </Value>
               </FlexColumn>
             </FlexDiv><br />
@@ -134,18 +193,34 @@ const StakingHeader = (props: any) => {
                 value={convertValue}
                 onChange={handleChange}
                 adornment={' | MAX'}
+                disabled={status === '1' ? true : false}
+                style={{ backgroundColor: status === '1' ? '#F5F5F5' : '' }}
               />
-              <CustomButton
-                size="large"
-                style={{
-                  backgroundColor: '#1E3444',
-                  padding: '8px 48px',
-                  marginLeft: '12px',
-                }}
-                onClick={convertToKnabFn}
-              >
-                {loader.ctkBtn ? <Spinner /> : <span>Convert&nbsp;To&nbsp;KNAB</span>}
-              </CustomButton>
+              {
+                (status === '1') ? (
+                  <CustomButton
+                    size="large"
+                    style={{
+                      backgroundColor: '#1E3444',
+                      padding: '8px 48px',
+                      marginLeft: '12px',
+                    }}
+                    onClick={claimRewar}
+                  >
+                    {loader.ctkBtn ? <Spinner /> : <span>Claim&nbsp;KNABR</span>}
+                  </CustomButton>) : (<CustomButton
+                    size="large"
+                    style={{
+                      backgroundColor: '#1E3444',
+                      padding: '8px 48px',
+                      marginLeft: '12px',
+                    }}
+                    onClick={depoKnabr}
+                  >
+                    {loader.ctkBtn ? <Spinner /> : <span>Deposit&nbsp;KNABR</span>}
+                  </CustomButton>)
+              }
+
             </FlexDiv>
 
           </Paper>
@@ -159,10 +234,10 @@ const StakingHeader = (props: any) => {
               <FlexColumn>
                 <Value>
                   {/* {knabr_earned + usdc_knabr_earned + lp_knabr_earned} KNABr */}
-                  { parseFloat(knabr_earned) + parseFloat(usdc_knabr_earned) + parseFloat(lp_knabr_earned) } KNABr
+                  {parseFloat(knabr_earned) + parseFloat(usdc_knabr_earned) + parseFloat(lp_knabr_earned)} KNABr
                 </Value>
                 <Value>
-                  (${knabREarn['dollarValue']})
+                  (${0.00})
                 </Value>
               </FlexColumn>
               <CustomButton
@@ -211,4 +286,13 @@ const mapStateToProps = (state: any) => ({
   staking: state.staking,
   walletAddress: state.user.walletConAddress
 })
-export default connect(mapStateToProps, { setKnab, setKnabr, setKnabrEarned, setLpKnabREarned, setUsdcKnabEarned })(StakingHeader)
+export default connect(mapStateToProps, {
+  setKnab,
+  setKnabDollar,
+  setKnabr,
+  setKnabrEarned,
+  setLpKnabREarned,
+  setUsdcKnabEarned,
+  setConvertedKnab,
+  successAlert, errorAlert
+})(StakingHeader)

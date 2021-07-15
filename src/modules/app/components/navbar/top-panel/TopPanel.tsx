@@ -123,6 +123,7 @@ const TopPanel = (props: any) => {
             if (isWalletCon) {
               const coinbase = await web3.eth.getCoinbase()
               setWalletAddress(coinbase)
+              walletConnectAddress(coinbase)
             }
           }
         }
@@ -137,6 +138,7 @@ const TopPanel = (props: any) => {
       // props.logout()
       props.logout2()
       setWalletAddress('')
+      walletConnectAddress('')
       // walletConnect(false);
     })
   }
@@ -155,7 +157,6 @@ const TopPanel = (props: any) => {
   }
   const connectWallet = async () => {
     try {
-      console.log('Testing')
       setDataLoading(true)
       const web3 = await getWeb3Val()
 
@@ -238,10 +239,11 @@ const TopPanel = (props: any) => {
         {getisWallet(props.isWalletCon)}
         {
           // loggedIn && (walletAddress !== '') && (tokenDummy !== '') ?
-          walletAddress !== '' ? (
+          walletConAddress !== '' ? (
+            // walletAddress !== '' ? (
             <div className={classes.walletDiv}>
               <img src={MetaMaskIcon} alt="" />
-              <span className={classes.walletDivText}>{`${walletAddress.substring(0, 4)}...${walletAddress.substring(37, 42)}`}</span>
+              <span className={classes.walletDivText}>{`${walletConAddress.substring(0, 4)}...${walletConAddress.substring(37, 42)}`}</span>
             </div>
           ) : (
             <>
@@ -249,7 +251,7 @@ const TopPanel = (props: any) => {
                 size="large"
                 style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
                 onClick={appAccess && props.applicationAccess ? connectWallet : handleBlocking}
-                // onClick={connectWallet}
+              // onClick={connectWallet}
               >
                 {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
               </CustomButton>

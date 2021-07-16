@@ -8,7 +8,7 @@ import Spinner from 'shared/loader-components/spinner'
 import CustomInput from '../../components/shared/CustomInput'
 import KNAB from 'assets/icons/KNAB.svg'
 import USDC from 'assets/icons/USDC.svg'
-import { deposit, depositUsdc } from '../../../../modules/block-chain/BlockChainMethods'
+import { deposit, depositUsdc, getUSDCAllowance } from '../../../../modules/block-chain/BlockChainMethods'
 import { connect } from 'react-redux'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
@@ -78,21 +78,29 @@ const StakeUsdcModal = (props: any) => {
 
   const classes = useStyles();
 
-  const { show, toggleModal, stUpdate } = props;
+  const { show, toggleModal, stUpdate, successAlert, errorAlert } = props;
 
   // const [show, setShow] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
   const [loader, setLoader] = useState({ confirmTrans: false });
   const [stakeUsdcVal, setStakeUsdcVal] = useState(0.00);
-
+  const [usdcAllowance, setUsdcAllowance] = useState(0);
   useEffect(() => {
     if (!show) {
       setIsConfirm(false);
     }
+    getUSDCAllowance().then((res: any) => {
+      setUsdcAllowance(res);
+    });
   }, [show]);
 
   const stake = () => {
     try {
+      if (stakeUsdcVal > usdcAllowance) {
+        errorAlert('Insufficent balance in wallet to Stake USDC');
+        setStakeUsdcVal(0);
+        return;
+      }
       setIsConfirm(true);
     } catch (error) { console.log(error) }
   }
@@ -126,6 +134,12 @@ const StakeUsdcModal = (props: any) => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const approveMaxUsdcClick = () => {
+    try {
+      setStakeUsdcVal(usdcAllowance);
+    } catch (error) { console.log(error) }
   }
 
   return (
@@ -177,8 +191,8 @@ const StakeUsdcModal = (props: any) => {
         ) : (
           <div className={classes.modalBody}>
             <FlexColumn>
-              <Header>Total USDC Balance</Header>
-              <Value></Value>
+              <Header>Total Allowance </Header>
+              <Value>{ usdcAllowance } USDC</Value>
             </FlexColumn>
             <div>
               Stake With
@@ -195,6 +209,7 @@ const StakeUsdcModal = (props: any) => {
                 onChange={(e: any) => { setStakeUsdcVal(e.target.value) }}
                 adornment={' | MAX'}
                 style={{ minHeight: '48px' }}
+                adornmentClick={approveMaxUsdcClick}
               />
             </div>
             <div className={classes.btnDiv}>
@@ -202,6 +217,7 @@ const StakeUsdcModal = (props: any) => {
                 size="large"
                 style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}
                 onClick={stake}
+                disabled={!(stakeUsdcVal > 0)}
               >
                 Stake USDC
               </CustomButton>

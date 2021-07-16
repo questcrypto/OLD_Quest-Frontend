@@ -196,6 +196,11 @@ const StakingRow1 = (props: any) => {
 
   const ApproveKnabTokFn = async () => {
     try {
+      if (knabAppValue > knab) {
+        errorAlert('Insufficent KNAB balance in wallet to Approve KNAB');
+        setKnabAppValue(0);
+        return;
+      }
       setLoader({ ...loader, approveLoad: true });
       const knabContract = new web3Instance.eth.Contract(KNABabi, KNABAddressTest);
       const accounts = await web3Instance.eth.getAccounts()
@@ -204,11 +209,13 @@ const StakingRow1 = (props: any) => {
         if (res) {
           setLoader({ ...loader, approveLoad: false });
           successAlert('Transaction completed successfully')
+          setKnabAppValue(0);
         }
       }, err => {
         setLoader({ ...loader, approveLoad: false });
         console.log(err)
         errorAlert('Something went wrong , please try again')
+        setKnabAppValue(0);
       })
     } catch (error) {
       console.log(error)
@@ -217,17 +224,24 @@ const StakingRow1 = (props: any) => {
 
   const unStakeFn = () => {
     try {
+      if (knabUnStakeValue > knab_staked) {
+        errorAlert('Insufficent balance in wallet to Unstake');
+        setKnabUnStakeValue(0);
+        return;
+      }
       setLoader({ ...loader, unstakeLoad: true });
       withdraw(0, knabUnStakeValue).then((res: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
           stateUpdate();
           successAlert('Transaction completed successfully')
+          setKnabUnStakeValue(0);
         }
       }, err => {
         setLoader({ ...loader, unstakeLoad: false });
         console.log(err)
         errorAlert('Something went wrong , please try again')
+        setKnabUnStakeValue(0);
       })
     } catch (error) { console.log(error) }
   }
@@ -246,6 +260,18 @@ const StakingRow1 = (props: any) => {
         console.log(err)
         errorAlert('Something went wrong , please try again')
       })
+    } catch (error) { console.log(error) }
+  }
+
+  const approveMaxClickApprove = () => {
+    try {
+      setKnabAppValue(knab);
+    } catch (error) { console.log(error) }
+  }
+
+  const unstakeMaxClick = () => {
+    try {
+      setKnabUnStakeValue(knab_staked);
     } catch (error) { console.log(error) }
   }
 
@@ -312,6 +338,7 @@ const StakingRow1 = (props: any) => {
                           padding: '8px 48px',
                         }}
                         onClick={stakeFn}
+                        disabled={!(knab > 0)}
                       >
                         Stake
                       </CustomButton>
@@ -333,6 +360,7 @@ const StakingRow1 = (props: any) => {
                         value={knabAppValue}
                         onChange={(e: any) => setKnabAppValue(e.target.value)}
                         adornment={' | MAX'}
+                        adornmentClick={approveMaxClickApprove}
                       />
                     </div>
                   </div>
@@ -348,6 +376,7 @@ const StakingRow1 = (props: any) => {
                           marginRight: '12px',
                         }}
                         onClick={ApproveKnabTokFn}
+                        disabled={!(knabAppValue > 0)}
                       >
                         {loader.approveLoad ? <Spinner /> : <span>Approve&nbsp;KNAB&nbsp;Token</span>}
                       </CustomButton>
@@ -376,6 +405,7 @@ const StakingRow1 = (props: any) => {
                         value={knabUnStakeValue}
                         onChange={(e: any) => setKnabUnStakeValue(e.target.value)}
                         adornment={' | MAX'}
+                        adornmentClick={unstakeMaxClick}
                       />
                       <CustomButton
                         size="small"
@@ -385,6 +415,7 @@ const StakingRow1 = (props: any) => {
                           marginLeft: '12px',
                         }}
                         onClick={unStakeFn}
+                        disabled={!(knabUnStakeValue > 0)}
                       >
                         {/* Unstake */}
                         {loader.unstakeLoad ? <Spinner /> : <span>Unstake</span>}
@@ -414,6 +445,7 @@ const StakingRow1 = (props: any) => {
                           marginLeft: '12px',
                         }}
                         onClick={harvestFn}
+                        disabled={!(knabr_earned > 0)}
                       >
                         {/* Harvest */}
                         {loader.harvestLoad ? <Spinner /> : <span>Harvest</span>}

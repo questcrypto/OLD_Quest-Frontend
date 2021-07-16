@@ -248,6 +248,7 @@ const StakingHeader = (props: any) => {
                   marginLeft: '12px',
                 }}
                 onClick={harvestFn}
+                disabled={!(parseFloat(knabr_earned) + parseFloat(usdc_knabr_earned) + parseFloat(lp_knabr_earned) > 0)}
               >
                 {loader.harvestLoad ? <Spinner /> : 'Harvest'}
               </CustomButton>

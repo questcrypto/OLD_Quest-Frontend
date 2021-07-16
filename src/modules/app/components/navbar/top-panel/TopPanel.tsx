@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 // import { PrimaryButton } from 'shared/components/buttons'
 import { connect } from 'react-redux'
-import { logout, logout2, walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
+import { logout, logout2, walletConnect, walletConnectAddress, setChainId } from 'logic/actions/user.actions'
 import Web3 from 'web3'
 import { TopPanelCont } from './style'
 // import Notifications from './components/Notifications'
@@ -22,13 +22,26 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     border: '1px solid #C4C4C4',
     borderRadius: '5px',
-    padding: '4px 8px',
+    // padding: '4px 8px',
+    padding: '4px 12px',
   },
   walletDivText: {
     paddingLeft: '8px',
     position: 'relative',
     top: '3px',
   },
+  walletDivTag: {
+    padding: '4px 12px',
+    marginRight: '16px',
+    // backgroundColor: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)',
+    borderRadius: '5px',
+    fontSize: '18px',
+    color: '#ec9609',
+    // color: '#BA8E4D',
+    border: '1px solid'
+  },
+  walletDivTagText: {
+  }
 }))
 
 const TopPanel = (props: any) => {
@@ -48,6 +61,8 @@ const TopPanel = (props: any) => {
     walletConnectAddress,
     setWeb3Instance,
     hasApplcationAccess,
+    setChainId,
+    user: { chainId }
   } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
@@ -130,7 +145,20 @@ const TopPanel = (props: any) => {
         data()
       }
     }, 3000)
+    chainIdChecking();
   }, [walletAddress, tokenDummy, loggedIn])
+
+  const chainIdChecking = async () => {
+    try {
+      const web3 = await getWeb3Val()
+      if (web3) {
+        const chainId = await web3.eth.getChainId();
+        // console.log(chainId);
+        setChainId(chainId);
+      }
+    }
+    catch (error) { }
+  }
 
   // Event handler to handle metamask account change
   if (window.ethereum) {
@@ -139,6 +167,14 @@ const TopPanel = (props: any) => {
       props.logout2()
       setWalletAddress('')
       walletConnectAddress('')
+      // walletConnect(false);
+    })
+    window.ethereum.on('networkChanged', function () {
+      // props.logout()
+      props.logout2()
+      setWalletAddress('')
+      walletConnectAddress('')
+      setChainId('');
       // walletConnect(false);
     })
   }
@@ -159,8 +195,12 @@ const TopPanel = (props: any) => {
     try {
       setDataLoading(true)
       const web3 = await getWeb3Val()
-
       if (web3) {
+
+        // const networkId = await web3.eth.net.getId();
+        const chainId = await web3.eth.getChainId();
+        // console.log(chainId);
+        setChainId(chainId);
         const coinbase = await web3.eth.getCoinbase()
         if (!coinbase) {
           window.alert('Please activate Wallet first.')
@@ -241,10 +281,19 @@ const TopPanel = (props: any) => {
           // loggedIn && (walletAddress !== '') && (tokenDummy !== '') ?
           walletConAddress !== '' ? (
             // walletAddress !== '' ? (
-            <div className={classes.walletDiv}>
-              <img src={MetaMaskIcon} alt="" />
-              <span className={classes.walletDivText}>{`${walletConAddress.substring(0, 4)}...${walletConAddress.substring(37, 42)}`}</span>
-            </div>
+            <>
+              <div className={classes.walletDivTag}
+                style={{ color: (chainId === 80001) || (chainId === 137) ? '#ec9609' : '#bf4834' }}
+              >
+                <span className={classes.walletDivTagText}>
+                  {chainId === 80001 ? 'TESTNET' : chainId === 137 ? 'MAINNET' : 'Pls connect to Matic Network'}
+                </span>
+              </div>
+              <div className={classes.walletDiv}>
+                <img src={MetaMaskIcon} alt="" />
+                <span className={classes.walletDivText}>{`${walletConAddress.substring(0, 4)}...${walletConAddress.substring(37, 42)}`}</span>
+              </div>
+            </>
           ) : (
             <>
               <CustomButton
@@ -285,6 +334,7 @@ const mapStateToProps = (state: any) => ({
   KNABBalance: state.user.KNABBalance,
   isWalletCon: state.user.isWalletCon,
   applicationAccess: state.user.applicationAccess,
+  user: state.user,
 })
 
 export default connect(mapStateToProps, {
@@ -297,4 +347,5 @@ export default connect(mapStateToProps, {
   walletConnectAddress,
   getKNABbalance,
   setWeb3Instance,
+  setChainId
 })(TopPanel)

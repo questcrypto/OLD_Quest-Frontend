@@ -52,15 +52,18 @@ export const getWeb3Val = async () => {
 }
 
 export const convertToWei = (totalAmount: any) => {
-  web3 = new Web3(window.ethereum)
+  // web3 = new Web3(window.ethereum)
+  const web3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.chainstacklabs.com'))
   return web3.utils.toWei(totalAmount.toString(), 'ether')
 }
 export const convertToEther = (totalAmount: any) => {
-  web3 = new Web3(window.ethereum)
+  // web3 = new Web3(window.ethereum)
+  const web3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.chainstacklabs.com'))
   return parseInt(web3.utils.fromWei(totalAmount.toString(), 'ether'))
 }
 
 export const convertToEther2 = (totalAmount: any) => {
+  const web3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.chainstacklabs.com'))
   return web3.utils.fromWei(totalAmount.toString(), 'ether')
 }
 

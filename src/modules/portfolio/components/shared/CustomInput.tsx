@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px 12px',
   },
 }))
+
 // let maxValue: Number = 0;
 const CustomInput = (props: any) => {
   const classes = useStyles()
@@ -24,7 +25,10 @@ const CustomInput = (props: any) => {
       id={id || '1'}
       type={type || 'text'}
       disableUnderline={true}
-      endAdornment={<InputAdornment position="end">{adornment}</InputAdornment>}
+      endAdornment={
+        <InputAdornment position="end" style={{cursor: 'pointer'}} onClick={props.adornmentClick}>
+          {adornment}
+        </InputAdornment>}
       classes={{ root: classes.fromDivInput }}
       {...other}
     />

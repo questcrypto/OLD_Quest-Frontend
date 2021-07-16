@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { errorAlert } from 'logic/actions/alerts.actions'
-import { loginStart, walletConnect, logout } from 'logic/actions/user.actions'
+import { loginStart, walletConnect, logout, setChainId } from 'logic/actions/user.actions'
 import { useStyle } from './style'
 import Box from '@material-ui/core/Box'
 import { Formik, Form, ErrorMessage } from 'formik'
@@ -29,7 +29,7 @@ const Login = (props: any) => {
 
   const [dataLoading, setDataLoading] = useState(false)
   const classes = useStyle()
-  const { loading, loginStart, errorAlert, walletConnect, logout } = props
+  const { loading, loginStart, errorAlert, walletConnect, logout, setChainId } = props
 
   const ref = useRef<any>()
 
@@ -126,6 +126,9 @@ const Login = (props: any) => {
 
       const web3 = await getWeb3Val()
       if (web3) {
+        const chainId = await web3.eth.getChainId();
+        // console.log(chainId);
+        setChainId(chainId);
         const coinbase = await web3.eth.getCoinbase()
         if (!coinbase) {
           window.alert('Please activate Wallet first.')
@@ -260,4 +263,4 @@ const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
 })
 
-export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, walletConnect, logout })(Login))
+export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, walletConnect, logout, setChainId })(Login))

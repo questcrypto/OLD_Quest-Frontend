@@ -10,7 +10,7 @@ import CustomInput from './shared/CustomInput'
 import CustomButton from './shared/Button'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import Spinner from 'shared/loader-components/spinner'
-import { getWeb3Val, fetchValue, fetchDetails } from '../../../modules/block-chain/BlockChainMethods'
+import { getWeb3Val, fetchValue, fetchDetails, getUSDCBalanceBuyKnab } from '../../../modules/block-chain/BlockChainMethods'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import './fieldStyle.css'
@@ -229,6 +229,15 @@ const BuyAndConvertModal = (props: any) => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
   }
+
+  const approveMaxClickUsdc = () => {
+    try {
+      getUSDCBalanceBuyKnab().then((res: any) => {
+        setFormData({ ...formData, from: res })
+      })
+    } catch (error) { console.log(error) }
+  }
+
   return (
     <CustomModal show={show} toggleModal={toggleModal}>
       <div className={classes.dcDiv}>
@@ -309,7 +318,14 @@ const BuyAndConvertModal = (props: any) => {
               <Typography variant="subtitle2">From</Typography>
               <ContaInnerDiv>
                 <DropDownButton options={options1} valueChange={handleBtnChange} />
-                <CustomInput id="from" type="number" value={formData.from} onChange={handleChange} />
+                <CustomInput
+                  id="from"
+                  type="number"
+                  value={formData.from}
+                  onChange={handleChange}
+                  adornment={' | MAX'}
+                  adornmentClick={approveMaxClickUsdc}
+                />
               </ContaInnerDiv>
 
               <Typography variant="subtitle2" style={{ paddingTop: '16px' }}>

@@ -652,3 +652,25 @@ export const getKnabRewards = async () => {
     return convertToEther2(res);
   }
 }
+
+export const getKNABAllowance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const KNABContract = new web3.eth.Contract(KNABabi, KNABAddressTest)
+    const res = await KNABContract.methods.allowance(accounts[0],KNABFarmaddress).call()
+    const KNABBalance: any = res
+    return convertToEther2(KNABBalance)
+  }
+}
+
+export const getUSDCAllowance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const KNABContract = new web3.eth.Contract(KNABabi, USDCAddress)
+    const res = await KNABContract.methods.allowance(accounts[0],KNABFarmaddress).call()
+    const KNABBalance: any = res
+    return KNABBalance/ 10 ** 6
+  }
+}

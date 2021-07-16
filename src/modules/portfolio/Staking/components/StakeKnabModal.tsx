@@ -7,7 +7,7 @@ import CustomButton from '../../components/shared/Button'
 import Spinner from 'shared/loader-components/spinner'
 import CustomInput from '../../components/shared/CustomInput'
 import KNAB from 'assets/icons/KNAB.svg'
-import { deposit } from '../../../../modules/block-chain/BlockChainMethods'
+import { deposit, getKNABAllowance } from '../../../../modules/block-chain/BlockChainMethods'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import { connect } from 'react-redux'
 
@@ -83,15 +83,24 @@ const StakeKnabModal = (props: any) => {
   const [isConfirm, setIsConfirm] = useState(false);
   const [loader, setLoader] = useState({ confirmTrans: false });
   const [stakeKnabVal, setStakeKnabVal] = useState(0.00);
+  const [knabAllowance, setKnabAllowance] = useState(0);
 
   useEffect(() => {
     if (!show) {
       setIsConfirm(false);
     }
+    getKNABAllowance().then((res: any) => {
+      setKnabAllowance(res);
+    });
   }, [show]);
 
   const stake = () => {
     try {
+      if (stakeKnabVal > knabAllowance) {
+        errorAlert('Insufficent balance in wallet to Stake KNAB');
+        setStakeKnabVal(0);
+        return;
+      }
       setIsConfirm(true);
     } catch (error) { console.log(error) }
   }
@@ -125,6 +134,12 @@ const StakeKnabModal = (props: any) => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const approveMaxStakeClick = () => {
+    try {
+      setStakeKnabVal(knabAllowance);
+    } catch (error) { console.log(error)}
   }
 
   return (
@@ -176,8 +191,8 @@ const StakeKnabModal = (props: any) => {
         ) : (
           <div className={classes.modalBody}>
             <FlexColumn>
-              <Header>Total KNAB Balance</Header>
-              <Value></Value>
+              <Header>Total Allowance</Header>
+              <Value>{knabAllowance} KNAB</Value>
             </FlexColumn>
             <div>
               Stake With
@@ -194,6 +209,7 @@ const StakeKnabModal = (props: any) => {
                 onChange={(e: any) => { setStakeKnabVal(e.target.value) }}
                 adornment={' | MAX'}
                 style={{ minHeight: '48px' }}
+                adornmentClick={approveMaxStakeClick}
               />
             </div>
             <div className={classes.btnDiv}>
@@ -201,6 +217,7 @@ const StakeKnabModal = (props: any) => {
                 size="large"
                 style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}
                 onClick={stake}
+                disabled={!(stakeKnabVal > 0)}
               >
                 Stake KNAB
               </CustomButton>
@@ -238,6 +255,12 @@ export const ModalHeaderText = styled.div`
 export const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
+`;
+
+export const FlexRow = styled.div`
+  display: flex;
+  flex-direction: row;
   align-items: flex-end;
 `;
 

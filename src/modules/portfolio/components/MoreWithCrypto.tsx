@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 
 // import Web3 from 'web3'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
-import { walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
+import { walletConnect, walletConnectAddress, setChainId } from 'logic/actions/user.actions'
 import { errorAlert } from 'logic/actions/alerts.actions'
 
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +92,7 @@ const MoreWithCrypto = (props: any) => {
     setIsWallet(isWalletCon)
   }, [isWalletCon])
 
-  const { errorAlert, walletConnect, walletConnectAddress } = props
+  const { errorAlert, walletConnect, walletConnectAddress, setChainId } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
@@ -110,6 +110,9 @@ const MoreWithCrypto = (props: any) => {
       setDataLoading(true)
       const web3 = await getWeb3Val()
       if (web3) {
+        const chainId = await web3.eth.getChainId();
+        // console.log(chainId);
+        setChainId(chainId);
         const coinbase = await web3.eth.getCoinbase()
         if (!coinbase) {
           window.alert('Please activate Wallet first.')
@@ -230,4 +233,4 @@ const mapStateToProps = (state: any) => ({
   applicationAccess: state.user.applicationAccess,
 })
 
-export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress })(MoreWithCrypto)
+export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress, setChainId })(MoreWithCrypto)

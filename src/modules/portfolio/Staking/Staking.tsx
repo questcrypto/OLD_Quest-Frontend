@@ -9,7 +9,7 @@ import StakingRow3 from './components/StakingRow3'
 
 import CustomButton from '../components/shared/Button'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
-import { walletConnect, walletConnectAddress } from 'logic/actions/user.actions'
+import { walletConnect, walletConnectAddress, setChainId } from 'logic/actions/user.actions'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import { setKnab, setKnabr } from '../../../logic/actions/staking.action'
 import { handleKnabApproval, withdraw, getAssetsKNABBalance, getAssetsKNABrBalance } from '../../../modules/block-chain/BlockChainMethods'
@@ -17,7 +17,7 @@ import { handleKnabApproval, withdraw, getAssetsKNABBalance, getAssetsKNABrBalan
 const Staking = (props: any) => {
   const classes = useStyles()
 
-  const { loggedIn, isWalletCon, getBalance, walletConnect, walletConnectAddress, walletConAddress, setKnab, setKnabr } = props
+  const { loggedIn, isWalletCon, getBalance, walletConnect, walletConnectAddress, walletConAddress, setKnab, setKnabr, setChainId } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [isWallet, setIsWallet] = useState(false)
   const [show, setShow] = useState(false)
@@ -64,6 +64,9 @@ const Staking = (props: any) => {
       setDataLoading(true)
       const web3 = await getWeb3Val()
       if (web3) {
+        const chainId = await web3.eth.getChainId();
+        // console.log(chainId);
+        setChainId(chainId);
         const coinbase = await web3.eth.getCoinbase()
         if (!coinbase) {
           window.alert('Please activate Wallet first.')
@@ -130,4 +133,5 @@ export default connect(mapStateToProps, {
   walletConnectAddress,
   setKnab,
   setKnabr,
+  setChainId
 })(Staking)

@@ -12,6 +12,7 @@ import {
   KNAB_BALANCE,
   APPLICATION_ACCESS,
   WEB3_INSTANCE,
+  CHAIN_ID
 } from './action.config'
 
 export const authStart = () => {
@@ -90,6 +91,13 @@ export const hasApplcationAccess = (data: any) => {
 export const setWeb3Instance = (data: any) => {
   return {
     type: WEB3_INSTANCE,
+    payload: data,
+  }
+}
+
+export const setChainId = (data: any) => {
+  return {
+    type: CHAIN_ID,
     payload: data,
   }
 }

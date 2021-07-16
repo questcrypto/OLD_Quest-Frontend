@@ -214,6 +214,11 @@ const StakingRow3 = (props: any) => {
 
   const ApproveUsdcTokenFn = async () => {
     try {
+      if (usdcAppr > usdc) {
+        errorAlert('Insufficent USDC balance in wallet to Approve');
+        setUsdcAppr(0);
+        return;
+      }
       setLoader({ ...loader, approveLoad: true });
       const usdcContract = new web3Instance.eth.Contract(stableCoinAbi, USDCAddress);
       const accounts = await web3Instance.eth.getAccounts()
@@ -232,6 +237,11 @@ const StakingRow3 = (props: any) => {
 
   const unStakeFn = () => {
     try {
+      if (usdcUnStake > usdc_staked) {
+        errorAlert('Insufficent balance in wallet to Unstake');
+        setUsdcUnStake(0);
+        return;
+      }
       setLoader({ ...loader, unstakeLoad: true });
       let usdcUnstake2 = usdcUnStake * 10**6;
       getStakeUsdc(5).then((res: any) => {
@@ -309,6 +319,18 @@ const StakingRow3 = (props: any) => {
     } catch (error) { console.log(error) }
   }
 
+  const approveMaxUsdcClick = () => {
+    try {
+      setUsdcAppr(usdc);
+    } catch (error) { console.log(error) }
+  }
+
+  const approveMaxUnstakeClick = () => {
+    try {
+      setUsdcUnStake(usdc_staked);
+    } catch (error) { console.log(error) }
+  }
+
   return (
     <>
       <Accordion classes={{ root: classes.accordionRoot }}>
@@ -373,6 +395,7 @@ const StakingRow3 = (props: any) => {
                           padding: '8px 48px',
                         }}
                         onClick={stakeFn}
+                        disabled={!(usdc > 0)}
                       >
                         Stake
                       </CustomButton>
@@ -394,6 +417,7 @@ const StakingRow3 = (props: any) => {
                         value={usdcAppr}
                         onChange={(e: any) => { setUsdcAppr(e.target.value) }}
                         adornment={' | MAX'}
+                        adornmentClick={approveMaxUsdcClick}
                       />
                     </div>
                   </div>
@@ -409,6 +433,7 @@ const StakingRow3 = (props: any) => {
                           marginRight: '12px',
                         }}
                         onClick={ApproveUsdcTokenFn}
+                        disabled={!(usdcAppr > 0)}
                       >
                         {loader.approveLoad ? <Spinner /> : <span>Approve&nbsp;USDC&nbsp;Token</span>}
                       </CustomButton>
@@ -438,6 +463,7 @@ const StakingRow3 = (props: any) => {
                         value={usdcUnStake}
                         onChange={(e: any) => { setUsdcUnStake(e.target.value) }}
                         adornment={' | MAX'}
+                        adornmentClick={approveMaxUnstakeClick}
                       />
                       <CustomButton
                         size="small"
@@ -447,6 +473,7 @@ const StakingRow3 = (props: any) => {
                           marginLeft: '12px',
                         }}
                         onClick={unStakeFn}
+                        disabled={!(usdcUnStake > 0)}
                       >
                         {/* Unstake */}
                         {loader.unstakeLoad ? <Spinner /> : <span>Unstake</span>}
@@ -476,6 +503,7 @@ const StakingRow3 = (props: any) => {
                           marginLeft: '12px',
                         }}
                         onClick={harvestFn}
+                        disabled={!(usdc_knabr_earned > 0)}
                       >
                         {/* Harvest */}
                         {loader.harvestLoad ? <Spinner /> : <span>Harvest</span>}

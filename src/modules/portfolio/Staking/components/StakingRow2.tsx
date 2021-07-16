@@ -236,17 +236,24 @@ const StakingRow2 = (props: any) => {
 
   const unStakeFn = () => {
     try {
+      if (lpUnStackVal > lp_staked) {
+        errorAlert('Insufficent LP balance in wallet to Unstake');
+        setLpUnStackVal(0);
+        return;
+      }
       setLoader({ ...loader, unstakeLoad: true });
       withdraw(1, lpUnStackVal).then((res: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
           stateUpdate();
           successAlert('Transaction completed successfully')
+          setLpUnStackVal(0);
         }
       }, err => {
         setLoader({ ...loader, unstakeLoad: false });
         console.log(err)
         errorAlert('Something went wrong , please try again')
+        setLpUnStackVal(0);
       })
     } catch (error) {
       console.log(error)
@@ -267,6 +274,12 @@ const StakingRow2 = (props: any) => {
         console.log(err)
         errorAlert('Something went wrong , please try again')
       })
+    } catch (error) { console.log(error) }
+  }
+
+  const approveMaxLpClick = () => {
+    try {
+      setLpUnStackVal(lp_staked);
     } catch (error) { console.log(error) }
   }
 
@@ -337,6 +350,7 @@ const StakingRow2 = (props: any) => {
                         padding: '8px 48px',
                       }}
                       onClick={approveFn}
+                      disabled={!(lp > 0)}
                     >
                       {/* Approve */}
                       {loader.approveLoad ? <Spinner /> : <span>Approve</span>}
@@ -349,6 +363,7 @@ const StakingRow2 = (props: any) => {
                         marginLeft: '12px'
                       }}
                       onClick={stakeFn}
+                      disabled={!(lp > 0)}
                     >
                       {/* Stake */}
                       {loader.stakeLoad ? <Spinner /> : <span>Stake</span>}
@@ -406,6 +421,7 @@ const StakingRow2 = (props: any) => {
                       value={lpUnStackVal}
                       onChange={(e: any) => setLpUnStackVal(e.target.value)}
                       adornment={' | MAX'}
+                      adornmentClick={approveMaxLpClick}
                     />
                     <CustomButton
                       size="small"
@@ -415,6 +431,7 @@ const StakingRow2 = (props: any) => {
                         marginLeft: '12px',
                       }}
                       onClick={unStakeFn}
+                      disabled={!(lpUnStackVal > 0)}
                     >
                       {/* Unstake */}
                       {loader.unstakeLoad ? <Spinner /> : <span>Unstake</span>}
@@ -444,6 +461,7 @@ const StakingRow2 = (props: any) => {
                         marginLeft: '12px',
                       }}
                       onClick={harvestFn}
+                      disabled={!(lp_knabr_earned > 0)}
                     >
                       {/* Harvest */}
                       {loader.harvestLoad ? <Spinner /> : <span>Harvest</span>}

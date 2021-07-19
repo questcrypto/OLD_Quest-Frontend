@@ -107,6 +107,10 @@ const MoreWithCrypto = (props: any) => {
 
   const connectWallet = async () => {
     try {
+      if (!window.ethereum) {
+        window.alert('Please install MetaMask first.')
+        return
+      }
       setDataLoading(true)
       const web3 = await getWeb3Val()
       if (web3) {

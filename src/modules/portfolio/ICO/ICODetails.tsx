@@ -28,21 +28,25 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
     // backgroundColor: '#E5E5E5'
-    paddingTop: theme.spacing(7),
-    paddingRight: theme.spacing(5),
+    // paddingTop: theme.spacing(7),
+    // paddingRight: theme.spacing(5),
   },
   header: {
+    // display: 'flex',
     display: 'flex',
-    // padding: '30px',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   btnDiv: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'flex-end',
+    // width: '100%',
+    // display: 'flex',
+    // justifyContent: 'flex-end',
   },
   title: {
     fontSize: '1em',
     fontWeight: 'bold',
+    // width: '100%',
   },
   subTitle: {
     color: '##C4C4C4',
@@ -266,9 +270,9 @@ const ICODetails = (props: any) => {
               disableElevation
               disableFocusRipple
               disableRipple
-              style={{ backgroundColor: '#858585', padding: '0px 16px' }}
+              style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
-              00.00 KNABr
+              00.00&nbsp;KNABr
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
@@ -276,34 +280,34 @@ const ICODetails = (props: any) => {
               disableElevation
               disableFocusRipple
               disableRipple
-              style={{ backgroundColor: '#858585', padding: '0px 16px' }}
+              style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
-              {props.isWalletCon && applicationAccess ? Number(props.KNABBalance.toFixed(3)) : 0.0} KNAB
+              {props.isWalletCon && applicationAccess ? Number(props.KNABBalance.toFixed(3)) : 0.0}&nbsp;KNAB
               {/* {Number(props.KNABBalance.toFixed(3))} KNAB */}
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
-              style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
+              style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               onClick={appAccess && props.applicationAccess ? () => handleAuction() : handleBlocking}
             >
-              Real Estate Auctions
+              Real&nbsp;Estate&nbsp;Auctions
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
-              style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
+              style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
             >
-              Buy | Convert Quest
+              Buy&nbsp;|&nbsp;Convert&nbsp;Quest
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
-              style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
+              style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               onClick={props.applicationAccess ? openbcModal : handleBlocking}
             >
-              Buy KNAB
+              Buy&nbsp;KNAB
             </CustomButton>
           </div>
         </div>

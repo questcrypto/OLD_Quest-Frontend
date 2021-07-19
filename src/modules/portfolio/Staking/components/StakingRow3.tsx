@@ -214,7 +214,7 @@ const StakingRow3 = (props: any) => {
 
   const ApproveUsdcTokenFn = async () => {
     try {
-      if (usdcAppr > usdc) {
+      if ((usdcAppr/1) > (usdc/1)) {
         errorAlert('Insufficent USDC balance in wallet to Approve');
         setUsdcAppr(0);
         return;
@@ -237,7 +237,7 @@ const StakingRow3 = (props: any) => {
 
   const unStakeFn = () => {
     try {
-      if (usdcUnStake > usdc_staked) {
+      if ((usdcUnStake/1) > (usdc_staked/1)) {
         errorAlert('Insufficent balance in wallet to Unstake');
         setUsdcUnStake(0);
         return;

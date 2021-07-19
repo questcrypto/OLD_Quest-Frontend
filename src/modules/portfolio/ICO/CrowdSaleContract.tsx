@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { getUSDCRaised } from '../../../modules/block-chain/BlockChainMethods'
+import TableContainer from '@material-ui/core/TableContainer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,26 +76,37 @@ const CrowdSaleContract = () => {
   ]
   return (
     <div className={classes.root}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell colSpan={5} className={classes.tableHeader}>
-              Crowdsale Contract - Rewards
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={classes.thDiv}>Tranche</TableCell>
-            <TableCell className={classes.thDiv}>KNAB Sales</TableCell>
-            <TableCell className={classes.thDiv}>Ratio</TableCell>
-            <TableCell className={classes.thDiv}>Bonus KNAB</TableCell>
-            <TableCell className={classes.thDiv}>Total KNAB</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tableBodyData.map((rows, key) => {
-            if (tranche === rows.tranche) {
+      <TableContainer>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell colSpan={5} className={classes.tableHeader}>
+                Crowdsale Contract - Rewards
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className={classes.thDiv}>Tranche</TableCell>
+              <TableCell className={classes.thDiv}>KNAB Sales</TableCell>
+              <TableCell className={classes.thDiv}>Ratio</TableCell>
+              <TableCell className={classes.thDiv}>Bonus KNAB</TableCell>
+              <TableCell className={classes.thDiv}>Total KNAB</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tableBodyData.map((rows, key) => {
+              if (tranche === rows.tranche) {
+                return (
+                  <TableRow selected key={key}>
+                    <TableCell className={classes.tdDiv}>{rows.tranche}</TableCell>
+                    <TableCell className={classes.tdDiv}>{rows.sales}</TableCell>
+                    <TableCell className={classes.tdDiv}>{rows.bonusRatio}</TableCell>
+                    <TableCell className={classes.tdDiv}>{rows.bonusKNAB}</TableCell>
+                    <TableCell className={classes.tdDiv}>{rows.totalKNAB}</TableCell>
+                  </TableRow>
+                )
+              }
               return (
-                <TableRow selected key={key}>
+                <TableRow key={key}>
                   <TableCell className={classes.tdDiv}>{rows.tranche}</TableCell>
                   <TableCell className={classes.tdDiv}>{rows.sales}</TableCell>
                   <TableCell className={classes.tdDiv}>{rows.bonusRatio}</TableCell>
@@ -102,26 +114,17 @@ const CrowdSaleContract = () => {
                   <TableCell className={classes.tdDiv}>{rows.totalKNAB}</TableCell>
                 </TableRow>
               )
-            }
-            return (
-              <TableRow key={key}>
-                <TableCell className={classes.tdDiv}>{rows.tranche}</TableCell>
-                <TableCell className={classes.tdDiv}>{rows.sales}</TableCell>
-                <TableCell className={classes.tdDiv}>{rows.bonusRatio}</TableCell>
-                <TableCell className={classes.tdDiv}>{rows.bonusKNAB}</TableCell>
-                <TableCell className={classes.tdDiv}>{rows.totalKNAB}</TableCell>
-              </TableRow>
-            )
-          })}
-          <TableRow className={classes.totalDiv}>
-            <TableCell className={classes.totalDivTextSpec1}>Totals</TableCell>
-            <TableCell className={classes.totalDivText}>80,000,000</TableCell>
-            <TableCell></TableCell>
-            <TableCell className={classes.totalDivText}>20,000,000</TableCell>
-            <TableCell className={classes.totalDivTextSpec2}>100,000,000</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+            })}
+            <TableRow className={classes.totalDiv}>
+              <TableCell className={classes.totalDivTextSpec1}>Totals</TableCell>
+              <TableCell className={classes.totalDivText}>80,000,000</TableCell>
+              <TableCell></TableCell>
+              <TableCell className={classes.totalDivText}>20,000,000</TableCell>
+              <TableCell className={classes.totalDivTextSpec2}>100,000,000</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   )
 }

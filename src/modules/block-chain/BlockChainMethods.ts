@@ -33,7 +33,7 @@ let isWallectConnect: boolean = false
 export const getWeb3Val = async () => {
   // Check if MetaMask is installed
   if (!window.ethereum) {
-    window.alert('Please install MetaMask first.')
+    // window.alert('Please install MetaMask first.')
     return
   }
   if (!web3) {

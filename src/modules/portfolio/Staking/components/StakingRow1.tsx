@@ -196,7 +196,7 @@ const StakingRow1 = (props: any) => {
 
   const ApproveKnabTokFn = async () => {
     try {
-      if (knabAppValue > knab) {
+      if ((knabAppValue/1) > (knab/1)) {
         errorAlert('Insufficent KNAB balance in wallet to Approve KNAB');
         setKnabAppValue(0);
         return;
@@ -224,7 +224,7 @@ const StakingRow1 = (props: any) => {
 
   const unStakeFn = () => {
     try {
-      if (knabUnStakeValue > knab_staked) {
+      if ((knabUnStakeValue/1) > (knab_staked/1)) {
         errorAlert('Insufficent balance in wallet to Unstake');
         setKnabUnStakeValue(0);
         return;

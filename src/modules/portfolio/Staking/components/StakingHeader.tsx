@@ -108,7 +108,7 @@ const StakingHeader = (props: any) => {
       // depositKnabr(convertValue)
       setLoader({ ...loader, ctkBtn: true });
       depositKnabr(convertValue).then((res: any) => {
-        console.log('Deposit', res);
+        // console.log('Deposit', res);
         // if (res) {
         console.log('Deposit Inside', res);
         setLoader({ ...loader, ctkBtn: false });

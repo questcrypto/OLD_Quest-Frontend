@@ -236,7 +236,7 @@ const StakingRow2 = (props: any) => {
 
   const unStakeFn = () => {
     try {
-      if (lpUnStackVal > lp_staked) {
+      if ((lpUnStackVal/1) > (lp_staked/1)) {
         errorAlert('Insufficent LP balance in wallet to Unstake');
         setLpUnStackVal(0);
         return;

@@ -178,6 +178,7 @@ const TopPanel = (props: any) => {
       walletConnectAddress('')
       setChainId('');
       // walletConnect(false);
+      window.location.reload()
     })
   }
 

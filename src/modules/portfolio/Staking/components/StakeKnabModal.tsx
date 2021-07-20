@@ -77,7 +77,8 @@ const StakeKnabModal = (props: any) => {
 
   const classes = useStyles();
 
-  const { show, toggleModal, stUpdate, successAlert, errorAlert } = props;
+  const { show, toggleModal, stUpdate, successAlert, errorAlert,
+    user: { walletConAddress } } = props;
 
   // const [show, setShow] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
@@ -89,9 +90,11 @@ const StakeKnabModal = (props: any) => {
     if (!show) {
       setIsConfirm(false);
     }
-    getKNABAllowance().then((res: any) => {
-      setKnabAllowance(res);
-    });
+    if (walletConAddress.length > 0) {
+      getKNABAllowance().then((res: any) => {
+        setKnabAllowance(res);
+      });
+    }
   }, [show]);
 
   const stake = () => {
@@ -139,7 +142,7 @@ const StakeKnabModal = (props: any) => {
   const approveMaxStakeClick = () => {
     try {
       setStakeKnabVal(knabAllowance);
-    } catch (error) { console.log(error)}
+    } catch (error) { console.log(error) }
   }
 
   return (

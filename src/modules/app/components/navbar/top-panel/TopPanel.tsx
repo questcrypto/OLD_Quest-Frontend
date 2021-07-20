@@ -150,11 +150,13 @@ const TopPanel = (props: any) => {
 
   const chainIdChecking = async () => {
     try {
-      const web3 = await getWeb3Val()
-      if (web3) {
-        const chainId = await web3.eth.getChainId();
-        // console.log(chainId);
-        setChainId(chainId);
+      if (walletConAddress.length > 0) {
+        const web3 = await getWeb3Val()
+        if (web3) {
+          const chainId = await web3.eth.getChainId();
+          // console.log(chainId);
+          setChainId(chainId);
+        }
       }
     }
     catch (error) { }

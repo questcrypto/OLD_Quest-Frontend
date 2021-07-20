@@ -44,7 +44,7 @@ export const getWeb3Val = async () => {
       // with the injected provider given by MetaMask
       web3 = new Web3(window.ethereum)
     } catch (error) {
-      window.alert('You need to allow MetaMask.')
+      // window.alert('You need to allow MetaMask.')
       return
     }
   }

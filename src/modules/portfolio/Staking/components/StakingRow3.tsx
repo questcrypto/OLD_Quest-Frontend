@@ -453,8 +453,8 @@ const StakingRow3 = (props: any) => {
                   <Paper className={classes.stakedDiv}>
                     <div className={classes.headStaDiv}>
                       <Heading>USDC Staked (With Profit)</Heading>
-                      <Value>{parseFloat(usdc_staked) + parseFloat(loan_amount)}
-                        (${parseFloat(usdc_staked_dollar) + parseFloat(loan_amount)})</Value>
+                      <Value>{(parseFloat(usdc_staked) + parseFloat(loan_amount)).toFixed(2)}
+                        (${(parseFloat(usdc_staked_dollar) + parseFloat(loan_amount)).toFixed(2)})</Value>
                     </div><br />
                     <FlexDiv>
                       <CustomInput

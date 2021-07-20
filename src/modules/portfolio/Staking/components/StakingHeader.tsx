@@ -99,6 +99,10 @@ const StakingHeader = (props: any) => {
         setKnabDollar(res);
       }, err => { console.log(err) })
 
+      console.log(knabr_earned)
+      console.log(usdc_knabr_earned)
+      console.log(lp_knabr_earned)
+
     } catch (error) { console.log(error) }
   }
 
@@ -234,7 +238,7 @@ const StakingHeader = (props: any) => {
               <FlexColumn>
                 <Value>
                   {/* {knabr_earned + usdc_knabr_earned + lp_knabr_earned} KNABr */}
-                  {parseFloat(knabr_earned) + parseFloat(usdc_knabr_earned) + parseFloat(lp_knabr_earned)} KNABr
+                  {(parseFloat(knabr_earned) + parseFloat(usdc_knabr_earned) + parseFloat(lp_knabr_earned)).toFixed(2)} KNABr
                 </Value>
                 <Value>
                   (${0.00})

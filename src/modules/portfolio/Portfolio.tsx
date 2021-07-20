@@ -13,7 +13,7 @@ import BuyAndConvertModal from './components/BuyAndConvertModal'
 import { getWeb3Val, buyKnab, getStableCoinBalance, handlestableCoinapproval, getUSDCBalanceBuyKnab } from '../../modules/block-chain/BlockChainMethods'
 import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../modules/block-chain/abi'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
-import { getKNABbalance, walletConnect, walletConnectAddress, setWeb3Instance } from 'logic/actions/user.actions'
+import { getKNABbalance, walletConnect, walletConnectAddress, setWeb3Instance, setChainId } from 'logic/actions/user.actions'
 import { logout } from 'logic/actions/user.actions'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
@@ -39,7 +39,7 @@ const Portfolio = (props: any) => {
   const [ip, setIPAddress] = useState('')
 
   const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess, isWalletCon,
-    walletConnect, walletConnectAddress, setWeb3Instance,
+    walletConnect, walletConnectAddress, setWeb3Instance, setChainId,
     staking: { knab, knabr },
     user: { web3Instance } } = props
 
@@ -89,6 +89,9 @@ const Portfolio = (props: any) => {
       if (true) {
         const web3 = await getWeb3Val()
         if (web3) {
+          const chainId = await web3.eth.getChainId();
+          // console.log(chainId);
+          setChainId(chainId);
           const coinbase = await web3.eth.getCoinbase()
           if (!coinbase) {
             window.alert('Please activate Wallet first.')
@@ -474,12 +477,13 @@ const mapStateToProps = (state: any) => ({
   staking: state.staking,
   user: state.user
 })
-export default withRouter(connect(mapStateToProps, { 
-  successAlert, 
-  errorAlert, 
-  getKNABbalance, 
+export default withRouter(connect(mapStateToProps, {
+  successAlert,
+  errorAlert,
+  getKNABbalance,
   hasApplcationAccess,
   walletConnect,
   walletConnectAddress,
-  setWeb3Instance, 
+  setWeb3Instance,
+  setChainId
 })(Portfolio))

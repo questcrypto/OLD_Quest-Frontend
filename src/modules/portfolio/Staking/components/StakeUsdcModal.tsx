@@ -78,7 +78,8 @@ const StakeUsdcModal = (props: any) => {
 
   const classes = useStyles();
 
-  const { show, toggleModal, stUpdate, successAlert, errorAlert } = props;
+  const { show, toggleModal, stUpdate, successAlert, errorAlert,
+    user: { walletConAddress } } = props;
 
   // const [show, setShow] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
@@ -89,9 +90,11 @@ const StakeUsdcModal = (props: any) => {
     if (!show) {
       setIsConfirm(false);
     }
-    getUSDCAllowance().then((res: any) => {
-      setUsdcAllowance(res);
-    });
+    if (walletConAddress.length > 0) {
+      getUSDCAllowance().then((res: any) => {
+        setUsdcAllowance(res);
+      });
+    }
   }, [show]);
 
   const stake = () => {
@@ -192,7 +195,7 @@ const StakeUsdcModal = (props: any) => {
           <div className={classes.modalBody}>
             <FlexColumn>
               <Header>Total Allowance </Header>
-              <Value>{ usdcAllowance } USDC</Value>
+              <Value>{usdcAllowance} USDC</Value>
             </FlexColumn>
             <div>
               Stake With

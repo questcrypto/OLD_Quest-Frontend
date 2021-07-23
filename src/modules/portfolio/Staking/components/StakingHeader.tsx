@@ -99,9 +99,9 @@ const StakingHeader = (props: any) => {
         setKnabDollar(res);
       }, err => { console.log(err) })
 
-      console.log(knabr_earned)
-      console.log(usdc_knabr_earned)
-      console.log(lp_knabr_earned)
+      // console.log(knabr_earned)
+      // console.log(usdc_knabr_earned)
+      // console.log(lp_knabr_earned)
 
     } catch (error) { console.log(error) }
   }

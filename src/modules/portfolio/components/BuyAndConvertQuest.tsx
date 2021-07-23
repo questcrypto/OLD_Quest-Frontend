@@ -391,7 +391,7 @@ const BuyAndConvertQuest = (props: any) => {
                       value={formData.from}
                       onChange={handleChange}
                       adornment={' | MAX'}
-                      adornmentClick={() => maxClickFrom()}
+                      adornmentClick={maxClickFrom}
                     /></> :
                     <>
                       <DropDownButton options={options2} valueChange={handleBtnChange} />
@@ -401,7 +401,7 @@ const BuyAndConvertQuest = (props: any) => {
                         value={formData.from}
                         onChange={handleChange}
                         adornment={' | MAX'}
-                        adornmentClick={() => maxClickFrom()}
+                        adornmentClick={maxClickFrom}
                       />
                     </>
                 }

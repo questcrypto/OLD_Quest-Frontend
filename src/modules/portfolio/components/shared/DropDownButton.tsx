@@ -28,6 +28,8 @@ const useStyles = makeStyles(theme => ({
   root2: {
     borderLeft: 'none',
     border: '1px solid #EDEDED',
+    // display: `${(props: any) => (props.hideArrow ? 'none' : '')}`,
+    // display: 'none',
     '&:hover': {
       backgroundColor: 'transparent'
     }

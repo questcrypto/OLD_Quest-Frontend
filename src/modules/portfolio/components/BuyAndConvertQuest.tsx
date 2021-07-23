@@ -1,3 +1,4 @@
+import { connect } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { makeStyles, Typography } from '@material-ui/core'
 import styled from 'styled-components'
@@ -13,7 +14,23 @@ import USDC from 'assets/icons/USDC.svg'
 import KNAB from 'assets/icons/KNAB.svg'
 import KnabDummy from 'assets/icons/knab_dummy.svg';
 import SwapVertIcon from '@material-ui/icons/SwapVert'
-import { getUSDCBalanceBuyKnab } from '../../../modules/block-chain/BlockChainMethods'
+import {
+  getWeb3Val,
+  getAssetsUSDCBalance,
+  getQuestBalance,
+  handleUsdcApprovalQuest,
+  handleQSTApproval,
+  buyQST,
+  returnQST
+} from '../../../modules/block-chain/BlockChainMethods'
+import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
+import {
+  setChainId,
+  setWeb3Instance,
+  walletConnectAddress,
+  walletConnect,
+} from 'logic/actions/user.actions'
+import { questabi, questAddress, USDCAddress } from '../../../modules/block-chain/abi';
 
 const useStyles = makeStyles((theme) => ({
   dcDiv: {
@@ -81,7 +98,10 @@ const useStyles = makeStyles((theme) => ({
 const BuyAndConvertQuest = (props: any) => {
   const classes = useStyles()
 
-  const { show, toggleModal, onClose } = props
+  const { show, toggleModal, onClose,
+    successAlert, errorAlert,
+    setChainId, setWeb3Instance, walletConnectAddress, walletConnect,
+    user: { walletConAddress, web3Instance } } = props
 
   const [formData, setFormData] = useState({ from: 1, to: 1 });
   const [isConfirm, setIsConfirm] = useState(false);
@@ -110,23 +130,104 @@ const BuyAndConvertQuest = (props: any) => {
     }
   }
 
-  const onModalSubmit = (values: any) => {
+  const onModalSubmit = async (values: any) => {
     try {
-      // setIsConfirm(true);
-      if (isSwap) {
-        console.log('From => To (USDC=>Quest)');
-        console.log(values);
-      } else {
-        console.log('To => From (Quest=>USDC)');
-        console.log(values);
+
+      const web3 = await getWeb3Val()
+      if (web3) {
+        const chainId = await web3.eth.getChainId();
+        setChainId(chainId);
+        const coinbase = await web3.eth.getCoinbase()
+        if (!coinbase) {
+          window.alert('Please activate Wallet first.')
+          return
+        }
+        const publicaddress = coinbase.toLowerCase()
+        if (web3Instance === '') {
+          setWeb3Instance(web3);
+          walletConnectAddress(publicaddress);
+          walletConnect(true);
+        }
+
+        if (isSwap) {
+          const fromData = values.from;
+          getAssetsUSDCBalance().then(async (result: any) => {
+            if ((fromData / 1) > (result / 1)) {
+              errorAlert('Insufficent USDC balance in wallet to buy Quest');
+              return;
+            }
+            setLoader(true)
+            const accounts = await web3.eth.getAccounts()
+            const contractSc = new web3.eth.Contract(questabi, USDCAddress);
+            handleUsdcApprovalQuest(contractSc, accounts[0], fromData).then(
+              (res) => {
+                if (res) {
+                  setLoader(false)
+                  setIsConfirm(true)
+                }
+              },
+              (err) => {
+                setLoader(false)
+                console.log(err)
+              }
+            )
+          })
+        } else {
+          const fromData = values.from;
+          getQuestBalance().then(async (result: any) => {
+            if ((fromData / 1) > (result / 1)) {
+              errorAlert('Insufficent QUEST balance in wallet to convert to USDC');
+              return;
+            }
+            setLoader(true)
+            setIsConfirm(true)
+            // handleQSTApproval(fromData).then(
+            //   (res) => {
+            //     if (res) {
+            //       setLoader(false)
+            //       setIsConfirm(true)
+            //     }
+            //   },
+            //   (err) => {
+            //     setLoader(false)
+            //     console.log(err)
+            //   }
+            // )
+          })
+        }
       }
       // console.log(dropDownData);
     } catch (error) { console.log(error) }
   }
 
-  const confirmTransaction = (values: any) => {
+  const confirmTransaction = async (values: any) => {
     try {
-
+      const fromData = values.from;
+      const web3 = await getWeb3Val()
+      if (web3) {
+        setIsTransaction(true)
+        let data;
+        if (isSwap) {
+          data = buyQST(fromData)
+        } else {
+          data = returnQST(fromData)
+        }
+        data.then(
+          (res) => {
+            setIsTransaction(false)
+            toggleModal()
+            setIsConfirm(false)
+            successAlert('Transaction completed successfully')
+          },
+          (error) => {
+            setIsTransaction(false)
+            toggleModal()
+            setIsConfirm(false)
+            console.log(error)
+            errorAlert('Something went wrong , please try again')
+          }
+        )
+      }
     } catch (error) { console.log(error) }
   }
 
@@ -136,15 +237,35 @@ const BuyAndConvertQuest = (props: any) => {
     } catch (error) { console.log(error) }
   }
 
-  const maxClick = () => {
+  const maxClickFrom = () => {
     try {
-      // if (isSwap) {
-      //   getUSDCBalanceBuyKnab().then((res: any) => {
-      //     setFormData({ ...formData, from: res })
-      //   })
-      // } else {
+      if (walletConAddress.length > 0) {
+        if (isSwap) {
+          getAssetsUSDCBalance().then((res: any) => {
+            setFormData({ ...formData, from: res })
+          })
+        } else {
+          getQuestBalance().then((res: any) => {
+            setFormData({ ...formData, from: res })
+          })
+        }
+      }
+    } catch (error) { console.log(error) }
+  }
 
-      // }
+  const maxClickTo = () => {
+    try {
+      if (walletConAddress.length > 0) {
+        if (isSwap) {
+          getQuestBalance().then((res: any) => {
+            setFormData({ ...formData, to: res })
+          })
+        } else {
+          getAssetsUSDCBalance().then((res: any) => {
+            setFormData({ ...formData, to: res })
+          })
+        }
+      }
     } catch (error) { console.log(error) }
   }
 
@@ -164,6 +285,7 @@ const BuyAndConvertQuest = (props: any) => {
   const swap = () => {
     try {
       setIsSwap(!isSwap);
+      setFormData({ ...formData, from: 1, to: 1 })
     } catch (error) { console.log(error) }
   }
 
@@ -250,7 +372,7 @@ const BuyAndConvertQuest = (props: any) => {
                       value={formData.from}
                       onChange={handleChange}
                       adornment={' | MAX'}
-                      adornmentClick={maxClick}
+                      adornmentClick={() => maxClickFrom()}
                     /></> :
                     <>
                       <DropDownButton options={options2} valueChange={handleBtnChange} />
@@ -260,7 +382,7 @@ const BuyAndConvertQuest = (props: any) => {
                         value={formData.from}
                         onChange={handleChange}
                         adornment={' | MAX'}
-                        adornmentClick={maxClick}
+                        adornmentClick={() => maxClickFrom()}
                       />
                     </>
                 }
@@ -277,9 +399,9 @@ const BuyAndConvertQuest = (props: any) => {
                       type="number"
                       value={formData.to}
                       onChange={handleChange}
-                      adornment={' | MAX'}
-                      adornmentClick={maxClick}
                     />
+                    {/* adornment={' | MAX'}
+                    adornmentClick={() => maxClickTo()} */}
                   </> : <>
                     <DropDownButton options={options1} valueChange={handleBtnChange} />
                     <CustomInput
@@ -287,9 +409,9 @@ const BuyAndConvertQuest = (props: any) => {
                       type="number"
                       value={formData.to}
                       onChange={handleChange}
-                      adornment={' | MAX'}
-                      adornmentClick={maxClick}
                     />
+                    {/* adornment={' | MAX'}
+                    adornmentClick={() => maxClickTo()} */}
                   </>
                 }
 
@@ -313,7 +435,19 @@ const BuyAndConvertQuest = (props: any) => {
   )
 }
 
-export default BuyAndConvertQuest;
+// export default BuyAndConvertQuest;
+const mapStateToProps = (state: any) => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps, {
+  successAlert,
+  errorAlert,
+  setChainId,
+  setWeb3Instance,
+  walletConnectAddress,
+  walletConnect,
+})(BuyAndConvertQuest)
 
 const options1 = [{ name: 'USDC', icon: USDC, id: 'usdc_from', key: 'usdc' }]
 const options2 = [{ name: 'QUEST', icon: KnabDummy, id: 'quest_to', key: 'quest' }]

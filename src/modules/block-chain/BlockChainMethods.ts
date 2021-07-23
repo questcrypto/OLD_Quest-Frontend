@@ -712,8 +712,8 @@ export const buyQST = async (Amount: Number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const questContract = new web3.eth.Contract(questabi, questAddress)
-    console.log(typeof web3.utils.toWei(String(Amount), "Mwei"))
-    console.log(web3.utils.toWei(String(Amount), "Mwei"))
+    // console.log(typeof web3.utils.toWei(String(Amount), "Mwei"))
+    // console.log(web3.utils.toWei(String(Amount), "Mwei"))
     const res = await questContract.methods.buyQST(parseInt(web3.utils.toWei(String(Amount), "Mwei"))).send({ from: accounts[0] })
     return res;
   }
@@ -726,5 +726,15 @@ export const returnQST = async (Amount: number) => {
     const questContract = new web3.eth.Contract(questabi, questAddress)
     const res = await questContract.methods.returnQST(parseInt(web3.utils.toWei(String(Amount), "Mwei"))).send({ from: accounts[0] })
     return res
+  }
+}
+
+export const getQuestSupply = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const questContract = new web3.eth.Contract(questabi, questAddress)
+    const res = await questContract.methods.totalSupply().call()
+    const questSupply: any = convertToEther2(res)
+    return questSupply
   }
 }

@@ -21,9 +21,11 @@ import {
   handleUsdcApprovalQuest,
   handleQSTApproval,
   buyQST,
-  returnQST
+  returnQST,
+  getQuestSupply
 } from '../../../modules/block-chain/BlockChainMethods'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
+import { setUsdc, setUsdcDollar, setQuest, setQuestSupply } from 'logic/actions/staking.action'
 import {
   setChainId,
   setWeb3Instance,
@@ -101,6 +103,7 @@ const BuyAndConvertQuest = (props: any) => {
   const { show, toggleModal, onClose,
     successAlert, errorAlert,
     setChainId, setWeb3Instance, walletConnectAddress, walletConnect,
+    setUsdc, setUsdcDollar, setQuest, setQuestSupply,
     user: { walletConAddress, web3Instance } } = props
 
   const [formData, setFormData] = useState({ from: 1, to: 1 });
@@ -109,6 +112,21 @@ const BuyAndConvertQuest = (props: any) => {
   const [loader, setLoader] = useState(false);
   const [dropDownData, setDropDownData] = useState({ from: options1[0], to: options2[0] });
   const [isSwap, setIsSwap] = useState(true);
+
+  const stateUpdate = () => {
+    try {
+      getAssetsUSDCBalance().then((res) => {
+        setUsdc(res);
+        setUsdcDollar(res);
+      })
+      getQuestBalance().then((res) => {
+        setQuest(res);
+      })
+      getQuestSupply().then((res) => {
+        setQuestSupply(res);
+      })
+    } catch (error) { console.log(error) }
+  }
 
   useEffect(() => {
     setIsConfirm(false);
@@ -218,6 +236,7 @@ const BuyAndConvertQuest = (props: any) => {
             toggleModal()
             setIsConfirm(false)
             successAlert('Transaction completed successfully')
+            stateUpdate();
           },
           (error) => {
             setIsTransaction(false)
@@ -447,6 +466,10 @@ export default connect(mapStateToProps, {
   setWeb3Instance,
   walletConnectAddress,
   walletConnect,
+  setUsdc, 
+  setUsdcDollar,
+  setQuest,
+  setQuestSupply
 })(BuyAndConvertQuest)
 
 const options1 = [{ name: 'USDC', icon: USDC, id: 'usdc_from', key: 'usdc' }]

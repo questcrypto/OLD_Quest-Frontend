@@ -22,11 +22,15 @@ import {
   getAssetsKNABrBalance,
   getAssetsUSDCBalance,
   getAssetsKNAB_USDCBalance,
+  getQuestBalance,
+  getQuestSupply
 } from 'modules/block-chain/BlockChainMethods'
 import { walletConnect, walletConnectAddress, setChainId } from 'logic/actions/user.actions'
+import { setQuest, setQuestSupply } from 'logic/actions/staking.action'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import KnabIcon from 'assets/icons/KNAB.svg'
 import CoinIcon from 'assets/icons/USDC.svg'
+import KnabDummy from 'assets/icons/knab_dummy.svg';
 import { KNABAddressTest, stableCoinAbi } from 'modules/block-chain/abi'
 const commaNumber = require('comma-number')
 
@@ -100,7 +104,8 @@ let tableInfo = tableData.tableData
 
 const YourAssets = (props: any) => {
   const { loggedIn, isWalletCon, getBalance, hasAccess, handleBlocking,
-    staking: { knab, knabr, usdc } } = props
+    staking: { knab, knabr, usdc, quest, quest_supply },
+    setQuest, setQuestSupply } = props
 
   const classes = useStyles()
   const [isWallet, setIsWallet] = useState(false)
@@ -170,14 +175,14 @@ const YourAssets = (props: any) => {
       availableQty: commaNumber(100000000),
       price: `$1`,
       // holdings: { value: assetsKNABBalance / 100000000, percent: 0.0 },
-      holdings: { value: (knab / 100000000).toFixed(2), percent: 0.0 },
+      holdings: { value: `${(knab * 100 / 100000000).toFixed(2)} %`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNABr' },
       balance: `${knabr}`,
       availableQty: '0.00',
       price: `$0.0`,
-      holdings: { value: `0.00`, percent: 0.0 },
+      holdings: { value: `0.00 %`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'USDC' },
@@ -185,14 +190,21 @@ const YourAssets = (props: any) => {
       availableQty: commaNumber(1243483555),
       price: `$1`,
       // holdings: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
-      holdings: { value: (usdc / 1243483555).toFixed(2), percent: 0.0 },
+      holdings: { value: `${(usdc * 100 / 1243483555).toFixed(2)} %`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC' },
       balance: `${assetsKNAB_USDCBalance}`,
       availableQty: '0.00',
       price: `$0.0`,
-      holdings: { value: `0.00`, percent: 0.0 },
+      holdings: { value: `0.00 %`, percent: 0.0 },
+    },
+    {
+      asset: { icon: `${KnabDummy}`, name: 'QUEST' },
+      balance: `${quest}`,
+      availableQty: `${quest_supply}`,
+      price: `$1`,
+      holdings: { value: `${(quest * 100 /quest_supply).toFixed(2)} %`, percent: 0.0 },
     },
   ]
   const connectWallet = async () => {
@@ -252,6 +264,9 @@ const YourAssets = (props: any) => {
     const KNABrBalance: any = await getAssetsKNABrBalance()
     const USDCBalance: any = await getAssetsUSDCBalance()
     const KNAB_USDCBalance: any = await getAssetsKNAB_USDCBalance()
+    const questBalance: any = await getQuestBalance()
+    const questSupplyVal: any = await getQuestSupply()
+
     // console.log(typeof KNABBalance, typeof KNABrBalance, typeof USDCBalance, typeof KNAB_USDCBalance, '***')
     // setAssetsKNABBalance(KNABBalance / 10 ** 18)
     // setassetsKNABrBalance(KNABrBalance / 10 ** 18)
@@ -261,6 +276,8 @@ const YourAssets = (props: any) => {
     setassetsKNABrBalance(parseFloat(KNABrBalance).toFixed(2))
     setassetsUSDCBalance(USDCBalance)
     setKNAB_usdcBalance2(KNAB_USDCBalance)
+    setQuest(questBalance);
+    setQuestSupply(questSupplyVal);
   }
   useEffect(() => {
     if (isWalletCon) handleAssetsKNABBalance()
@@ -379,4 +396,11 @@ const mapStateToProps = (state: any) => ({
   staking: state.staking,
 })
 
-export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress, setChainId })(YourAssets)
+export default connect(mapStateToProps, {
+  errorAlert, 
+  walletConnect, 
+  walletConnectAddress, 
+  setChainId,
+  setQuest,
+  setQuestSupply
+})(YourAssets)

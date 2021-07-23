@@ -23,7 +23,9 @@ import {
   SET_USDC_KNAB_EARNED,
   SET_LP_KNABR_EARNED,
   SET_LOAN_AMOUNT,
-  SET_CONVERTED_KNAB
+  SET_CONVERTED_KNAB,
+  SET_QUEST,
+  SET_QUEST_SUPPLY
 } from '../actions/action.config'
 
 const initialState = {
@@ -58,8 +60,10 @@ const initialState = {
 
   loan_amount: 0.0,
 
-  converted_knab: 0.0
+  converted_knab: 0.0,
 
+  quest: 0.0,
+  quest_supply: 0.0
 }
 
 export const stakingReducer = (state = initialState, action: any) => {
@@ -190,6 +194,16 @@ export const stakingReducer = (state = initialState, action: any) => {
       return {
         ...state,
         converted_knab: payload
+      }
+    case SET_QUEST:
+      return {
+        ...state,
+        quest: payload
+      }
+    case SET_QUEST_SUPPLY:
+      return {
+        ...state,
+        quest_supply: payload
       }
     default:
       return state

@@ -150,10 +150,10 @@ const StakingHeader = (props: any) => {
     } catch (err) { console.log(err) }
   }
 
-  const harvestFn = () => {
+  const harvestFn = (harvest1: any, harvest2: any, harvest3: any) => {
     try {
       setLoader({ ...loader, harvestLoad: true });
-      getHarvestAll().then((res: any) => {
+      getHarvestAll(harvest1, harvest2, harvest3).then((res: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
           stateUpdate();
@@ -209,6 +209,7 @@ const StakingHeader = (props: any) => {
                       padding: '8px 48px',
                       marginLeft: '12px',
                     }}
+                    disabled={converted_knab <= 0}
                     onClick={claimRewar}
                   >
                     {loader.ctkBtn ? <Spinner /> : <span>Claim&nbsp;KNABR</span>}
@@ -219,6 +220,7 @@ const StakingHeader = (props: any) => {
                       padding: '8px 48px',
                       marginLeft: '12px',
                     }}
+                    disabled={convertValue <= 0}
                     onClick={depoKnabr}
                   >
                     {loader.ctkBtn ? <Spinner /> : <span>Deposit&nbsp;KNABR</span>}
@@ -251,7 +253,7 @@ const StakingHeader = (props: any) => {
                   padding: '8px 48px',
                   marginLeft: '12px',
                 }}
-                onClick={harvestFn}
+                onClick={() => harvestFn(parseFloat(knabr_earned), parseFloat(usdc_knabr_earned), parseFloat(lp_knabr_earned))}
                 disabled={!(parseFloat(knabr_earned) + parseFloat(usdc_knabr_earned) + parseFloat(lp_knabr_earned) > 0)}
               >
                 {loader.harvestLoad ? <Spinner /> : 'Harvest'}

@@ -6,7 +6,7 @@ import { loginStart, walletConnect, logout, setChainId } from 'logic/actions/use
 import { useStyle } from './style'
 import Box from '@material-ui/core/Box'
 import { Formik, Form, ErrorMessage } from 'formik'
-import * as Yup from 'yup'
+// import * as Yup from 'yup'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'

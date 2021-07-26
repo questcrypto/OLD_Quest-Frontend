@@ -28,14 +28,14 @@ import PieIcon from 'assets/icons/pieIcon.svg'
 // import web3modal from 'web3modal'
 import { hasApplcationAccess } from 'logic/actions/user.actions'
 
-import Web3 from 'web3'
+// import Web3 from 'web3'
 import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
   // const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2, isWalletCon, walletConAddress, applicationAccess } = props
   const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn } = props
-  const [account, setAccount] = useState('')
+  // const [account, setAccount] = useState('')
   const [appAccess, setApplicationAccess] = useState(true)
   const [showIPBlockingModal, setIPBlockingModal] = useState(false)
   // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
@@ -105,11 +105,11 @@ const LeftPanel = (props: any) => {
     }
   }
 
-  function disConnectWallet() {
-    window.location.reload()
-    // web3.eth.accounts.wallet.remove(walletConAddress)
-    // web3.eth.accounts.wallet.clear()
-  }
+  // function disConnectWallet() {
+  //   window.location.reload()
+  //   // web3.eth.accounts.wallet.remove(walletConAddress)
+  //   // web3.eth.accounts.wallet.clear()
+  // }
   // const setAppAccess = () => {
   //   hasApplcationAccess(false)
   // }

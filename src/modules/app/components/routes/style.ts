@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors, theme } from 'shared/styles/theme'
+import { colors } from 'shared/styles/theme'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(() =>

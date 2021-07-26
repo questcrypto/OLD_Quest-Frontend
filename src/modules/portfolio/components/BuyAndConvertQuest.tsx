@@ -418,6 +418,7 @@ const BuyAndConvertQuest = (props: any) => {
                       type="number"
                       value={formData.to}
                       onChange={handleChange}
+                      adornment=''
                     />
                     {/* adornment={' | MAX'}
                     adornmentClick={() => maxClickTo()} */}
@@ -428,6 +429,7 @@ const BuyAndConvertQuest = (props: any) => {
                       type="number"
                       value={formData.to}
                       onChange={handleChange}
+                      adornment=''
                     />
                     {/* adornment={' | MAX'}
                     adornmentClick={() => maxClickTo()} */}

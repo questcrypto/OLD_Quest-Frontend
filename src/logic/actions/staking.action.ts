@@ -23,7 +23,9 @@ import {
   SET_USDC_KNAB_EARNED,
   SET_LP_KNABR_EARNED,
   SET_LOAN_AMOUNT,
-  SET_CONVERTED_KNAB
+  SET_CONVERTED_KNAB,
+  SET_QUEST,
+  SET_QUEST_SUPPLY
 } from './action.config'
 
 export const setKnab = (data: any) => {
@@ -201,7 +203,19 @@ export const setConvertedKnab = (data: any) => {
   }
 }
 
+export const setQuest = (data: any) => {
+  return {
+    type: SET_QUEST,
+    payload: data,
+  }
+}
 
+export const setQuestSupply = (data: any) => {
+  return {
+    type: SET_QUEST_SUPPLY,
+    payload: data,
+  }
+}
 
 
 

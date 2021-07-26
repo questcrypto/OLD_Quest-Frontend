@@ -58,7 +58,9 @@ export const SET_LP_KNABR_EARNED = 'SET_LP_KNABR_EARNED'
 export const SET_LOAN_AMOUNT = 'SET_LOAN_AMOUNT'
 export const SET_CONVERTED_KNAB = 'SET_CONVERTED_KNAB'
 
-
-
+/* =================================== QUEST Actions ========================== */
+// Present in Staking
+export const SET_QUEST = 'SET_QUEST'
+export const SET_QUEST_SUPPLY = 'SET_QUEST_SUPPLY'
 
 

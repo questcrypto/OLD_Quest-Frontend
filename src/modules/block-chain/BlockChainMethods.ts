@@ -24,7 +24,9 @@ import {
   stratAddress2,
   stratAddress3,
   rewardsAddress,
-  rewardsabi
+  rewardsabi,
+  questabi,
+  questAddress
 } from './abi'
 let web3: Web3
 // import axios from 'axios'
@@ -672,5 +674,67 @@ export const getUSDCAllowance = async () => {
     const res = await KNABContract.methods.allowance(accounts[0],KNABFarmaddress).call()
     const KNABBalance: any = res
     return KNABBalance/ 10 ** 6
+  }
+}
+
+export const getQuestBalance = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const QuestContract = new web3.eth.Contract(questabi, questAddress)
+    const res = await QuestContract.methods.balanceOf(accounts[0]).call()
+    const QUESTbalance: any = res
+    const data = convertToEther2(QUESTbalance)
+    return data;
+  }
+}
+
+export const handleUsdcApprovalQuest = async (contractUsdc: any, account: string, ApproveAmount: number) => {
+  const gasPrice = await gasPriceFn()
+  const deci = await contractUsdc.methods.decimals().call()
+  const res = await contractUsdc.methods.approve(questAddress, ApproveAmount * (10**deci)).send({ from: account, gasPrice })
+  // const res = await contractUsdc.methods.approve(questAddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
+  return res;
+}
+
+export const handleQSTApproval = async (ApproveAmount: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const questContract = new web3.eth.Contract(questabi, questAddress)
+    const res = await questContract.methods.approve(questAddress, convertToWei(ApproveAmount)).send({ from: accounts[0] })
+    return res
+  }
+}
+
+export const buyQST = async (Amount: Number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const questContract = new web3.eth.Contract(questabi, questAddress)
+    // console.log(typeof web3.utils.toWei(String(Amount), "Mwei"))
+    // console.log(web3.utils.toWei(String(Amount), "Mwei"))
+    const res = await questContract.methods.buyQST(parseInt(web3.utils.toWei(String(Amount), "Mwei"))).send({ from: accounts[0] })
+    return res;
+  }
+} 
+
+export const returnQST = async (Amount: number) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const questContract = new web3.eth.Contract(questabi, questAddress)
+    const res = await questContract.methods.returnQST(parseInt(web3.utils.toWei(String(Amount), "Mwei"))).send({ from: accounts[0] })
+    return res
+  }
+}
+
+export const getQuestSupply = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const questContract = new web3.eth.Contract(questabi, questAddress)
+    const res = await questContract.methods.totalSupply().call()
+    const questSupply: any = convertToEther2(res)
+    return questSupply
   }
 }

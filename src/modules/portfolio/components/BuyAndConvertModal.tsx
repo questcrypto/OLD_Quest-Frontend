@@ -1,3 +1,4 @@
+import { connect } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { makeStyles, Typography, Input, InputAdornment } from '@material-ui/core'
 import styled from 'styled-components'
@@ -111,6 +112,7 @@ const BuyAndConvertModal = (props: any) => {
     rejectTransaction,
     isTransaction,
     loader,
+    user: { walletConAddress }
   } = props
 
   const [initialRender, setInitialRender] = useState(true)
@@ -232,9 +234,11 @@ const BuyAndConvertModal = (props: any) => {
 
   const approveMaxClickUsdc = () => {
     try {
-      getUSDCBalanceBuyKnab().then((res: any) => {
-        setFormData({ ...formData, from: res })
-      })
+      if (walletConAddress.length > 0) {
+        getUSDCBalanceBuyKnab().then((res: any) => {
+          setFormData({ ...formData, from: res })
+        })
+      }
     } catch (error) { console.log(error) }
   }
 
@@ -385,7 +389,13 @@ const BuyAndConvertModal = (props: any) => {
   )
 }
 
-export default BuyAndConvertModal
+// export default BuyAndConvertModal
+
+const mapStateToProps = (state: any) => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps, {})(BuyAndConvertModal)
 
 // style components
 

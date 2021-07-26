@@ -10,6 +10,7 @@ import KNAB from 'assets/icons/KNAB.svg'
 import MoreWithCrypto from './components/MoreWithCrypto'
 import YourAssets from './components/YourAssets'
 import BuyAndConvertModal from './components/BuyAndConvertModal'
+import BuyAndConvertQuest from './components/BuyAndConvertQuest'
 import { getWeb3Val, buyKnab, getStableCoinBalance, handlestableCoinapproval, getUSDCBalanceBuyKnab } from '../../modules/block-chain/BlockChainMethods'
 import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../modules/block-chain/abi'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
@@ -37,6 +38,7 @@ const Portfolio = (props: any) => {
   const [showIPBlockingModal, setIPBlockingModal] = useState(false)
   const [appAccess, setApplicationAccess] = useState(true)
   const [ip, setIPAddress] = useState('')
+  const [bqModal, setBqModal] = useState(false)
 
   const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess, isWalletCon,
     walletConnect, walletConnectAddress, setWeb3Instance, setChainId,
@@ -82,6 +84,23 @@ const Portfolio = (props: any) => {
       console.log(error)
     }
   }
+
+  const openbqModal = () => {
+    try {
+      setBqModal(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handlebqModalClose = () => {
+    try {
+      setBqModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const submitModalFn = async (values: any) => {
     try {
       const fromData = values.from
@@ -326,7 +345,8 @@ const Portfolio = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               // onClick={() => history.push(Paths.login)}
-              onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+              // onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+              onClick={props.applicationAccess ? openbqModal : handleBlocking}
             >
               Buy | Convert Quest
             </CustomButton>
@@ -362,8 +382,9 @@ const Portfolio = (props: any) => {
                   <CustomButton
                     size="large"
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                    onClick={appAccess && props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
-                  // onClick={() => history.push(Paths.login)}
+                    // onClick={appAccess && props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+                    // onClick={() => history.push(Paths.login)}
+                    onClick={appAccess && props.applicationAccess ? openbqModal : handleBlocking}
                   >
                     Buy Quest Tokens
                   </CustomButton>
@@ -443,6 +464,17 @@ const Portfolio = (props: any) => {
         ) : (
           ''
         )}
+
+        {bqModal ? (
+          <BuyAndConvertQuest
+            show={bqModal}
+            toggleModal={handlebqModalClose}
+            onClose={handlebqModalClose}
+          />
+        ) : (
+          ''
+        )}
+
       </div>
       <Staking />
       {/* </div> */}

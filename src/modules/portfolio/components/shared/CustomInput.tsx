@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 // let maxValue: Number = 0;
 const CustomInput = (props: any) => {
   const classes = useStyles()
-  const { id, type, adornment, ...other } = props
+  const { id, type, adornment, adornmentClick, ...other } = props
   // const displayMax = async () => {
   //    maxValue = await getStableCoinBalance()
   //   console.log(maxValue)
@@ -26,7 +26,7 @@ const CustomInput = (props: any) => {
       type={type || 'text'}
       disableUnderline={true}
       endAdornment={
-        <InputAdornment position="end" style={{cursor: 'pointer'}} onClick={props.adornmentClick}>
+        <InputAdornment position="end" style={{cursor: 'pointer'}} onClick={adornmentClick}>
           {adornment}
         </InputAdornment>}
       classes={{ root: classes.fromDivInput }}

@@ -21,7 +21,7 @@ import Bid from './Bid'
 import { integerNumberRegex, floatNumRegex } from 'shared/helpers/regexConstants'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { convertToEther, currentBidValue, getDaiBalance, getWeb3Val, handleDAIapproval } from 'modules/block-chain/BlockChainMethods'
+import { currentBidValue, getDaiBalance, getWeb3Val, handleDAIapproval } from 'modules/block-chain/BlockChainMethods'
 import { auctionContractAddress, daiAbi, DAIContractAddress } from 'modules/block-chain/abi'
 import { getDaiPrice } from 'shared/helpers/globalFunction'
 

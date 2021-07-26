@@ -14,8 +14,8 @@ import UpcomingProperties from './components/UpcomingProperties'
 import PassedProperties from './components/PassedProperties'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
-import { getApprovedTokens } from '../../modules/block-chain/BlockChainMethods'
-import { withRouter } from 'react-router'
+// import { getApprovedTokens } from '../../modules/block-chain/BlockChainMethods'
+// import { withRouter } from 'react-router'
 
 const Auction = (props: any) => {
   const classes = useStyles()

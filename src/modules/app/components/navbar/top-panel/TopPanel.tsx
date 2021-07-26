@@ -47,11 +47,11 @@ const useStyles = makeStyles((theme) => ({
 const TopPanel = (props: any) => {
   const classes = useStyles()
 
-  const [account, setAccount] = useState(false)
-  let web3: Web3 = new Web3(window.ethereum)
+  // const [account, setAccount] = useState(false)
+  // let web3: Web3 = new Web3(window.ethereum)
 
   const {
-    loginStart,
+    // loginStart,
     errorAlert,
     loggedIn,
     walletConnect,

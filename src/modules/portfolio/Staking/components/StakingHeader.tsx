@@ -209,6 +209,7 @@ const StakingHeader = (props: any) => {
                       padding: '8px 48px',
                       marginLeft: '12px',
                     }}
+                    disabled={converted_knab <= 0}
                     onClick={claimRewar}
                   >
                     {loader.ctkBtn ? <Spinner /> : <span>Claim&nbsp;KNABR</span>}

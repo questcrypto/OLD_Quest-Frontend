@@ -359,11 +359,11 @@ const YourAssets = (props: any) => {
           </Table>
         </TableContainer>
 
-        <div className={classes.btnDiv}>
+        {/* <div className={classes.btnDiv}>
           <CustomButton size="large" style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}>
             View More
           </CustomButton>
-        </div>
+        </div> */}
       </Paper>
 
       {show && !isWallet && (

@@ -550,14 +550,20 @@ export const getHarvest = async (pid: number) => {
   }
 }
 
-export const getHarvestAll = async () => {
+export const getHarvestAll = async (harvest1: any, harvest2: any, harvest3: any) => {
   const web3 = await getWeb3Val()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res0 = await farmContract.methods.harvestKNABR(0).send({ from: accounts[0] })
-    const res1 = await farmContract.methods.harvestKNABR(1).send({ from: accounts[0] })
-    const res2 = await farmContract.methods.harvestKNABR(2).send({ from: accounts[0] })
+    if (harvest1 > 0) {
+      const res0 = await farmContract.methods.harvestKNABR(0).send({ from: accounts[0] })
+    }
+    if (harvest2 > 0) {
+      const res1 = await farmContract.methods.harvestKNABR(1).send({ from: accounts[0] })
+    }
+    if (harvest3 > 0) {
+      const res2 = await farmContract.methods.harvestKNABR(2).send({ from: accounts[0] })
+    }
     return 1;
   }
 }

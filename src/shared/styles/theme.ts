@@ -163,5 +163,8 @@ body {
 {
   background-color: rgba(0, 0, 0, 0.7);
 }
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 `

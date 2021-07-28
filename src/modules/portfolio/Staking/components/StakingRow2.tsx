@@ -49,7 +49,8 @@ import {
   setKnabr,
   setLpStaked,
   setLpStakedDollar,
-  setLpKnabREarned
+  setLpKnabREarned,
+  accordActionFn
 } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
@@ -141,8 +142,9 @@ const StakingRow2 = (props: any) => {
   const classes = useStyles();
   const {
     user: { walletConAddress, web3Instance },
-    staking: { tvl_knab_usdc, lp, lp_dollar, knabr, lp_staked, lp_staked_dollar, lp_knabr_earned },
+    staking: { tvl_knab_usdc, lp, lp_dollar, knabr, lp_staked, lp_staked_dollar, lp_knabr_earned, accordAction },
     setTvlKnabUsdc, setLp, setLpDollar, setKnabr, setLpStaked, setLpStakedDollar, setLpKnabREarned, setLoanAmount,
+    accordActionFn,
     errorAlert, successAlert,
   } = props;
 
@@ -190,8 +192,11 @@ const StakingRow2 = (props: any) => {
 
   const handleOpen = () => {
     try {
-      if (isOpen) { setIsOpen(false) }
-      else { setIsOpen(true) }
+      // if (isOpen) { setIsOpen(false) }
+      // if (accordAction['second']) { setIsOpen(false) }
+      // else { setIsOpen(true) }
+      const temp = accordAction['second'];
+      accordActionFn({ ...accordAction, first: false, second: !temp, third: false})
     } catch { }
   }
 
@@ -284,7 +289,7 @@ const StakingRow2 = (props: any) => {
   }
 
   return (
-    <Accordion classes={{ root: classes.accordionRoot }} >
+    <Accordion classes={{ root: classes.accordionRoot }} expanded={accordAction['second']}>
       <AccordionSummary
         // expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -321,7 +326,7 @@ const StakingRow2 = (props: any) => {
             <AccordValue className={classes.padLR}>Knab R</AccordValue>
           </FlexColumn>
           <FlexColumn>
-            <AccordArrIcon src={!isOpen ? UpArrow : DownArrow} alt='' />
+            <AccordArrIcon src={!accordAction['second'] ? UpArrow : DownArrow} alt='' />
           </FlexColumn>
         </FlexDiv>
       </AccordionSummary>
@@ -499,5 +504,6 @@ export default connect(mapStateToProps, {
   setLpStaked,
   setLpStakedDollar,
   setLpKnabREarned,
+  accordActionFn,
   errorAlert, successAlert,
 })(StakingRow2)

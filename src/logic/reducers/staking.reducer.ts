@@ -25,7 +25,8 @@ import {
   SET_LOAN_AMOUNT,
   SET_CONVERTED_KNAB,
   SET_QUEST,
-  SET_QUEST_SUPPLY
+  SET_QUEST_SUPPLY,
+  ACCORD_ACTION
 } from '../actions/action.config'
 
 const initialState = {
@@ -63,12 +64,20 @@ const initialState = {
   converted_knab: 0.0,
 
   quest: 0.0,
-  quest_supply: 0.0
+  quest_supply: 0.0,
+
+  accordAction: {
+    first: false,
+    second: false,
+    third: false
+  }
 }
 
 export const stakingReducer = (state = initialState, action: any) => {
   let { type, payload } = action
-  payload = parseFloat(payload).toFixed(2)
+  if (typeof payload !== 'object') {
+    payload = parseFloat(payload).toFixed(2)
+  }
   switch (type) {
     case SET_KNAB:
       return {
@@ -204,6 +213,11 @@ export const stakingReducer = (state = initialState, action: any) => {
       return {
         ...state,
         quest_supply: payload
+      }
+    case ACCORD_ACTION:
+      return {
+        ...state,
+        accordAction: payload
       }
     default:
       return state

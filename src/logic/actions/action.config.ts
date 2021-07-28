@@ -57,6 +57,8 @@ export const SET_USDC_KNAB_EARNED = 'SET_USDC_KNAB_EARNED'
 export const SET_LP_KNABR_EARNED = 'SET_LP_KNABR_EARNED'
 export const SET_LOAN_AMOUNT = 'SET_LOAN_AMOUNT'
 export const SET_CONVERTED_KNAB = 'SET_CONVERTED_KNAB'
+// Accordion Actions
+export const ACCORD_ACTION = 'ACCORD_ACTION'
 
 /* =================================== QUEST Actions ========================== */
 // Present in Staking

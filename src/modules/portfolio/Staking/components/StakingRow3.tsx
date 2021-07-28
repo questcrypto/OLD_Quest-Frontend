@@ -54,7 +54,8 @@ import {
   setUsdcStaked,
   setUsdcStakedDollar,
   setUsdcKnabEarned,
-  setLoanAmount
+  setLoanAmount,
+  accordActionFn
 } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
@@ -132,9 +133,10 @@ const StakingRow3 = (props: any) => {
 
   const classes = useStyles();
   const {
-    staking: { tvl_usdc, usdc, usdc_dollar, knabr, usdc_staked, usdc_staked_dollar, usdc_knabr_earned, loan_amount },
+    staking: { tvl_usdc, usdc, usdc_dollar, knabr, usdc_staked, usdc_staked_dollar, usdc_knabr_earned, loan_amount, accordAction },
     user: { walletConAddress, web3Instance },
     setTvlUsdc, setUsdc, setUsdcDollar, setKnabr, setUsdcStaked, setUsdcStakedDollar, setUsdcKnabEarned, setLoanAmount,
+    accordActionFn,
     errorAlert, successAlert,
   } = props;
 
@@ -169,8 +171,8 @@ const StakingRow3 = (props: any) => {
 
       getStakeUsdc(5).then((res) => {
         // console.log(res);
-        setUsdcStaked(res/10**6);
-        setUsdcStakedDollar(res/10**6);
+        setUsdcStaked(res / 10 ** 6);
+        setUsdcStakedDollar(res / 10 ** 6);
       }, err => { console.log(err) })
 
       getPendingKnabr(5).then((res) => {
@@ -194,8 +196,11 @@ const StakingRow3 = (props: any) => {
 
   const handleOpen = () => {
     try {
-      if (isOpen) { setIsOpen(false) }
-      else { setIsOpen(true) }
+      // if (isOpen) { setIsOpen(false) }
+      // if (accordAction['third']) { setIsOpen(false) }
+      // else { setIsOpen(true) }
+      const temp = accordAction['third'];
+      accordActionFn({ ...accordAction, first: false, second: false, third: !temp})
     } catch { }
   }
 
@@ -214,7 +219,7 @@ const StakingRow3 = (props: any) => {
 
   const ApproveUsdcTokenFn = async () => {
     try {
-      if ((usdcAppr/1) > (usdc/1)) {
+      if ((usdcAppr / 1) > (usdc / 1)) {
         errorAlert('Insufficent USDC balance in wallet to Approve');
         setUsdcAppr(0);
         return;
@@ -237,13 +242,13 @@ const StakingRow3 = (props: any) => {
 
   const unStakeFn = () => {
     try {
-      if ((usdcUnStake/1) > (usdc_staked/1)) {
+      if ((usdcUnStake / 1) > (usdc_staked / 1)) {
         errorAlert('Insufficent balance in wallet to Unstake');
         setUsdcUnStake(0);
         return;
       }
       setLoader({ ...loader, unstakeLoad: true });
-      let usdcUnstake2 = usdcUnStake * 10**6;
+      let usdcUnstake2 = usdcUnStake * 10 ** 6;
       getStakeUsdc(5).then((res: any) => {
         if (usdcUnstake2 <= res) {
           console.log('1st case');
@@ -333,7 +338,7 @@ const StakingRow3 = (props: any) => {
 
   return (
     <>
-      <Accordion classes={{ root: classes.accordionRoot }}>
+      <Accordion classes={{ root: classes.accordionRoot }} expanded={accordAction['third']} >
         <AccordionSummary
           // expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -366,7 +371,7 @@ const StakingRow3 = (props: any) => {
               <AccordValue className={classes.padLR}>Knab R</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordArrIcon src={!isOpen ? UpArrow : DownArrow} alt='' />
+              <AccordArrIcon src={!accordAction['third'] ? UpArrow : DownArrow} alt='' />
             </FlexColumn>
           </FlexDiv>
         </AccordionSummary>
@@ -552,5 +557,6 @@ export default connect(mapStateToProps, {
   setUsdcStakedDollar,
   setUsdcKnabEarned,
   setLoanAmount,
+  accordActionFn,
   successAlert, errorAlert,
 })(StakingRow3)

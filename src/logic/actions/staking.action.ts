@@ -25,7 +25,8 @@ import {
   SET_LOAN_AMOUNT,
   SET_CONVERTED_KNAB,
   SET_QUEST,
-  SET_QUEST_SUPPLY
+  SET_QUEST_SUPPLY,
+  ACCORD_ACTION
 } from './action.config'
 
 export const setKnab = (data: any) => {
@@ -213,6 +214,13 @@ export const setQuest = (data: any) => {
 export const setQuestSupply = (data: any) => {
   return {
     type: SET_QUEST_SUPPLY,
+    payload: data,
+  }
+}
+
+export const accordActionFn = (data: any) => {
+  return {
+    type: ACCORD_ACTION,
     payload: data,
   }
 }

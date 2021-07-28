@@ -263,7 +263,7 @@ const StakingHeader = (props: any) => {
         </Grid>
       </Grid>
 
-      <Accordion classes={{ root: classes.accordionHeadRoot }}>
+      <Accordion classes={{ root: classes.accordionHeadRoot }} expanded={false}>
         <AccordionSummary
           // expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"

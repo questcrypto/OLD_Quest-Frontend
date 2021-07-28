@@ -40,7 +40,7 @@ import {
 } from '../../../../modules/block-chain/BlockChainMethods'
 import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi'
 import Spinner from 'shared/loader-components/spinner'
-import { setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab } from '../../../../logic/actions/staking.action';
+import { setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab, accordActionFn } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
 const useStyles = makeStyles((theme) => ({
@@ -118,8 +118,8 @@ const StakingRow1 = (props: any) => {
   const classes = useStyles();
   const {
     user: { walletConAddress, web3Instance },
-    staking: { knab, knab_dollar, knab_staked, knab_staked_dollar, knabr, knabr_earned, tvl_knab },
-    setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab,
+    staking: { knab, knab_dollar, knab_staked, knab_staked_dollar, knabr, knabr_earned, tvl_knab, accordAction },
+    setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab, accordActionFn,
     successAlert, errorAlert
   } = props;
 
@@ -183,8 +183,11 @@ const StakingRow1 = (props: any) => {
 
   const handleOpen = () => {
     try {
-      if (isOpen) { setIsOpen(false) }
-      else { setIsOpen(true) }
+      // if (isOpen) { setIsOpen(false) }
+      // if (accordAction['first']) { setIsOpen(false) }
+      // else { setIsOpen(true) }
+      const temp = accordAction['first'];
+      accordActionFn({ ...accordAction, first: !temp, second: false, third: false})
     } catch { }
   }
 
@@ -277,7 +280,7 @@ const StakingRow1 = (props: any) => {
 
   return (
     <>
-      <Accordion classes={{ root: classes.accordionRoot }}>
+      <Accordion classes={{ root: classes.accordionRoot }} expanded={accordAction['first']}>
         <AccordionSummary
           // expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -309,7 +312,7 @@ const StakingRow1 = (props: any) => {
               <AccordValue className={classes.padLR}> Knab R</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordArrIcon src={!isOpen ? UpArrow : DownArrow} alt='' />
+              <AccordArrIcon src={!accordAction['first'] ? UpArrow : DownArrow} alt='' />
             </FlexColumn>
           </FlexDiv>
         </AccordionSummary>
@@ -491,5 +494,6 @@ export default connect(mapStateToProps, {
   setKnabr,
   setKnabrEarned,
   setTvlKnab,
+  accordActionFn,
   successAlert, errorAlert
 })(StakingRow1)

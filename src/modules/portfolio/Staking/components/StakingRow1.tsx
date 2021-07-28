@@ -197,7 +197,7 @@ const StakingRow1 = (props: any) => {
   const ApproveKnabTokFn = async () => {
     try {
       if ((knabAppValue/1) > (knab/1)) {
-        errorAlert('Insufficent KNAB balance in wallet to Approve KNAB');
+        errorAlert('Insufficient KNAB balance in wallet to Approve KNAB');
         setKnabAppValue(0);
         return;
       }
@@ -382,10 +382,14 @@ const StakingRow1 = (props: any) => {
                       </CustomButton>
                     </div>
                     <FlexColumn className={classes.knabValues}>
-                      <Value>Receive: 0.00($0.00)</Value>
+                      {/* <Value>Receive: 0.00($0.00)</Value>
                       <Value>Price impact: 0.00%</Value>
                       <Value>Fee: 0.00% ~ 0.00%</Value>
-                      <Value>Max Slippage: 0%</Value>
+                      <Value>Max Slippage: 0%</Value> */}
+                      <Value>Receive: lorem</Value>
+                      <Value>Price impact: lorem</Value>
+                      <Value>Fee: lorem</Value>
+                      <Value>Max Slippage: lorem</Value>
                     </FlexColumn>
                   </div>
                 </Paper>
@@ -435,7 +439,7 @@ const StakingRow1 = (props: any) => {
                     <FlexDiv>
                       <FlexColumn>
                         <Value>{knabr_earned}</Value>
-                        <Value>($0.00)</Value>
+                        {/* <Value>($0.00)</Value> */}
                       </FlexColumn>
                       <CustomButton
                         size="small"

@@ -100,7 +100,7 @@ const StakeUsdcModal = (props: any) => {
   const stake = () => {
     try {
       if (stakeUsdcVal > usdcAllowance) {
-        errorAlert('Insufficent balance in wallet to Stake USDC');
+        errorAlert('Insufficent Allowance in wallet to Stake USDC');
         setStakeUsdcVal(0);
         return;
       }

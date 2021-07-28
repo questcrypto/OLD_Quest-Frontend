@@ -236,7 +236,7 @@ const StakingRow2 = (props: any) => {
 
   const unStakeFn = () => {
     try {
-      if ((lpUnStackVal/1) > (lp_staked/1)) {
+      if ((lpUnStackVal / 1) > (lp_staked / 1)) {
         errorAlert('Insufficent LP balance in wallet to Unstake');
         setLpUnStackVal(0);
         return;
@@ -341,7 +341,7 @@ const StakingRow2 = (props: any) => {
                     <FlexColumn>
                       <Heading>LP Balance</Heading>
                       <Value>{lp}</Value>
-                      <Value>($00.00)</Value>
+                      {/* <Value>($00.00)</Value> */}
                     </FlexColumn>
                     <CustomButton
                       size="small"
@@ -374,7 +374,7 @@ const StakingRow2 = (props: any) => {
                 <FlexColumn>
                   <div className={classes.btnCenterText}>
                     <Typography variant="subtitle2">
-                      Add/remove liquidity to the KNAB-USDT on Quick Swap to get LP tokens.
+                      Add/remove liquidity to the KNAB-USDC on Quick Swap together to get LP tokens.
                       Then stake those LP tokens on Quest Crypto to receive QC rewards.
                     </Typography>
                   </div>
@@ -412,7 +412,9 @@ const StakingRow2 = (props: any) => {
                 <Paper className={classes.stakedDiv}>
                   <div className={classes.headStaDiv}>
                     <Heading>LP Staked</Heading>
-                    <Value>{lp_staked} (${lp_staked_dollar})</Value>
+                    <Value>{lp_staked}
+                      {/* (${lp_staked_dollar}) */}
+                    </Value>
                   </div><br />
                   <FlexDiv>
                     <CustomInput
@@ -451,7 +453,7 @@ const StakingRow2 = (props: any) => {
                   <FlexDiv>
                     <FlexColumn>
                       <Value>{lp_knabr_earned}</Value>
-                      <Value>($0.00)</Value>
+                      {/* <Value>($0.00)</Value> */}
                     </FlexColumn>
                     <CustomButton
                       size="small"

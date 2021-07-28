@@ -326,11 +326,11 @@ const BuyAndConvertQuest = (props: any) => {
                   Attention !
                 </Typography>
                 <Typography variant="subtitle1" style={{ lineHeight: 2.5 }}>
-                  You are purchasing/coverting Quest Tokens.
+                  You are <b>purchasing/converting</b> Quest Tokens.
                   <br />
                   Please confirm this transaction in your MetaMask wallet.
                   <br />
-                  You can see the status of this transaction in your wallet.
+                  You can <b>check</b> the status of this transaction in your wallet.
                 </Typography>
               </div>
               <div className={classes.confirmDialogBtn}>
@@ -468,7 +468,7 @@ export default connect(mapStateToProps, {
   setWeb3Instance,
   walletConnectAddress,
   walletConnect,
-  setUsdc, 
+  setUsdc,
   setUsdcDollar,
   setQuest,
   setQuestSupply

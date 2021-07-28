@@ -363,7 +363,7 @@ const BuyAndConvertQuest = (props: any) => {
               </Typography>
               <div className={classes.swapRightDiv}>
                 <Typography variant="subtitle2" className={classes.swapRightText}>
-                  1 USDC per QUEST
+                  1 USDC PER QUEST
                 </Typography>
                 <CustomButton
                   size="small"

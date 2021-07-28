@@ -202,6 +202,8 @@ const TopPanel = (props: any) => {
       }
       setDataLoading(true)
       const web3 = await getWeb3Val()
+      console.log('Window.Ethereum', window.ethereum);
+      console.log('Web3', web3);
       if (web3) {
 
         // const networkId = await web3.eth.net.getId();

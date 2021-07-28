@@ -438,11 +438,17 @@ const StakingRow3 = (props: any) => {
                         {loader.approveLoad ? <Spinner /> : <span>Approve&nbsp;USDC&nbsp;Token</span>}
                       </CustomButton>
                     </div>
-                    <FlexColumn className={classes.knabValues}>
+                    {/* <FlexColumn className={classes.knabValues}>
                       <Value>Receive: 0.00($0.00)</Value>
                       <Value>Price impact: 0.00%</Value>
                       <Value>Fee: 0.00% ~ 0.11%</Value>
                       <Value>Max Slippage: 1%</Value>
+                    </FlexColumn> */}
+                    <FlexColumn className={classes.knabValues}>
+                      <Value>Receive: lorem</Value>
+                      <Value>Price impact: lorem</Value>
+                      <Value>Fee: lorem</Value>
+                      <Value>Max Slippage: 0.01%</Value>
                     </FlexColumn>
                   </div>
                 </Paper>

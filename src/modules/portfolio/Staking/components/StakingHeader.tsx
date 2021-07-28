@@ -177,7 +177,7 @@ const StakingHeader = (props: any) => {
                 <Heading>KNABr Balance</Heading>
                 <Value>
                   {/* { knabRBal['value']}  */} {knabr}
-                  (${0.00})
+                  {/* (${0.00}) */}
                 </Value>
               </FlexColumn>
 
@@ -243,7 +243,7 @@ const StakingHeader = (props: any) => {
                   {(parseFloat(knabr_earned) + parseFloat(usdc_knabr_earned) + parseFloat(lp_knabr_earned)).toFixed(2)} KNABr
                 </Value>
                 <Value>
-                  (${0.00})
+                  {/* (${0.00}) */}
                 </Value>
               </FlexColumn>
               <CustomButton
@@ -276,7 +276,7 @@ const StakingHeader = (props: any) => {
           <FlexDiv>
             <FlexColumn></FlexColumn>
             <FlexColumn>Token</FlexColumn>
-            <FlexColumn>Yield(APY)</FlexColumn>
+            <FlexColumn>Yield(APR)</FlexColumn>
             <FlexColumn>Current Balance</FlexColumn>
             <FlexColumn>Rewards</FlexColumn>
             <FlexColumn></FlexColumn>

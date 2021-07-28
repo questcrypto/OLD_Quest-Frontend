@@ -100,7 +100,7 @@ const StakeKnabModal = (props: any) => {
   const stake = () => {
     try {
       if (stakeKnabVal > knabAllowance) {
-        errorAlert('Insufficent balance in wallet to Stake KNAB');
+        errorAlert('Insufficient Allowance in wallet to Stake KNAB');
         setStakeKnabVal(0);
         return;
       }

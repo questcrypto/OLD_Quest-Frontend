@@ -329,7 +329,8 @@ const Portfolio = (props: any) => {
               {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
               {/* {KNABbalance || pb.toFixed(3)} KNAB */}
               {/* {Number(props.KNABBalance.toFixed(3))} KNAB */}
-              {knab} KNAB
+              {/* {knab} KNAB */}
+              {isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton

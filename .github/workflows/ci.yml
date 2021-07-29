@@ -22,6 +22,6 @@ jobs:
       run: |
         sudo docker stop questfe
         sudo docker rm questfe
-        sudo docker rmi questfe
+        sudo docker rmi -f $(sudo docker images -a -q)
         sudo docker build -t questfe .
-        sudo docker run --name questfe -d -p 3000:3000 questfe
+        sudo docker run --name questfe -d -p 3000:80 questfe

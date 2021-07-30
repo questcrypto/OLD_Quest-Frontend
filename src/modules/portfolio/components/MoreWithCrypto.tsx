@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   contentDiv: {
     display: 'flex',
-    padding: theme.spacing(2),
+    padding: theme.spacing(2.08),
   },
   contentImgDiv: {
     display: 'flex',
@@ -114,9 +114,9 @@ const MoreWithCrypto = (props: any) => {
       setDataLoading(true)
       const web3 = await getWeb3Val()
       if (web3) {
-        const chainId = await web3.eth.getChainId();
+        const chainId = await web3.eth.getChainId()
         // console.log(chainId);
-        setChainId(chainId);
+        setChainId(chainId)
         const coinbase = await web3.eth.getCoinbase()
         if (!coinbase) {
           window.alert('Please activate Wallet first.')
@@ -212,6 +212,31 @@ const MoreWithCrypto = (props: any) => {
 }
 
 const content = [
+  {
+    icon: KnabIcon,
+    title: 'Coming Soon',
+    subTitle: 'Coming Soon...',
+  },
+  {
+    icon: KnabIcon,
+    title: 'Coming Soon',
+    subTitle: 'Coming Soon...',
+  },
+  {
+    icon: KnabIcon,
+    title: 'Coming Soon',
+    subTitle: 'Coming Soon...',
+  },
+  {
+    icon: KnabIcon,
+    title: 'Coming Soon',
+    subTitle: 'Coming Soon...',
+  },
+  {
+    icon: KnabIcon,
+    title: 'Coming Soon',
+    subTitle: 'Coming Soon...',
+  },
   {
     icon: KnabIcon,
     title: 'Coming Soon',

@@ -51,13 +51,15 @@ import { loginStart, logout } from 'logic/actions/user.actions'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 import Spinner from 'shared/loader-components/spinner'
+import { Paths } from 'modules/app/components/routes/types'
+import history from 'modules/app/components/history'
 
 const SignUp = (props: any) => {
   const classes = useStyle()
 
   const ref = useRef<any>()
 
-  const { loading, loginStart, errorAlert, logout } = props
+  const { loading, loginStart, errorAlert, logout, openDrawer } = props
 
   const [dataLoading, setDataLoading] = useState(false)
   // Sign Up and Sign In Navigation
@@ -252,22 +254,20 @@ const SignUp = (props: any) => {
       setDataLoading(false)
     }
   }
-
+  console.log(openDrawer, '** login')
   return (
     <>
       <Grid container>
         <Grid item md={4} sm={12} xs={12}></Grid>
-
         <Grid item md={4} sm={12} xs={12}>
           <Box className={classes.root}>
-            {/* <LogoImage src={questLogo} alt='Quest Logo' /> */}
             <LogoImage
               src={questLogo}
               alt="Quest Logo"
+              onClick={() => window.open(Paths.portfolio, '_self')}
               // onMouseOver={e => (e.currentTarget.src = questHoverLogo)}
               // onMouseOut={e => (e.currentTarget.src = questLogo)}
             />
-
             <div className={classes.tabDivStyle}>
               <StyledTabs centered variant="standard" value={value} onChange={handleChangeTab}>
                 <StyledTab
@@ -526,16 +526,18 @@ const SignUp = (props: any) => {
   )
 }
 
-interface TabPanelProps {
-  children?: React.ReactNode
-  index: any
-  value: any
-}
+// interface TabPanelProps {
+//   children?: React.ReactNode
+//   index: any
+//   value: any
+// }
 
 // export default SignUp;
 
 const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
   loading: state.user.loading,
+  openDrawer: state.drawer.openDrawer,
 })
 
 export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, logout })(SignUp))

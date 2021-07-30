@@ -1,6 +1,6 @@
 import { Paper, makeStyles, Typography, Slider, Tooltip } from '@material-ui/core'
 import { useState, useEffect } from 'react'
-import TableContainer from '@material-ui/core/TableContainer';
+import TableContainer from '@material-ui/core/TableContainer'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -23,24 +23,28 @@ import {
   getAssetsUSDCBalance,
   getAssetsKNAB_USDCBalance,
   getQuestBalance,
-  getQuestSupply
+  getQuestSupply,
 } from 'modules/block-chain/BlockChainMethods'
 import { walletConnect, walletConnectAddress, setChainId } from 'logic/actions/user.actions'
 import { setQuest, setQuestSupply } from 'logic/actions/staking.action'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import KnabIcon from 'assets/icons/KNAB.svg'
 import CoinIcon from 'assets/icons/USDC.svg'
-import KnabDummy from 'assets/icons/knab_dummy.svg';
+import KnabDummy from 'assets/icons/knab_dummy.svg'
 import { KNABAddressTest, stableCoinAbi } from 'modules/block-chain/abi'
 const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
+  mainDiv: {
+    position: 'relative',
+  },
   root: {
     height: 'auto',
     marginTop: theme.spacing(4),
   },
   title: {
     padding: theme.spacing(2),
+    fontWeight: 'bolder',
     // marginBottom: theme.spacing(1)
   },
   table: {
@@ -78,9 +82,7 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: 'none',
     },
   },
-  mainDiv: {
-    position: 'relative',
-  },
+
   hoverBtnDiv: {
     top: '0%',
     left: '0%',
@@ -103,18 +105,22 @@ const useStyles = makeStyles((theme) => ({
 let tableInfo = tableData.tableData
 
 const YourAssets = (props: any) => {
-  const { loggedIn, isWalletCon, getBalance, hasAccess, handleBlocking,
+  const {
+    loggedIn,
+    isWalletCon,
+    getBalance,
+    hasAccess,
+    handleBlocking,
     staking: { knab, knabr, usdc, quest, quest_supply },
-    setQuest, setQuestSupply } = props
-
+    setQuest,
+    setQuestSupply,
+  } = props
   const classes = useStyles()
   const [isWallet, setIsWallet] = useState(false)
   const [show, setShow] = useState(false)
-
   // useEffect(() => {
   //   setIsWallet(loggedIn);
   // }, [loggedIn])
-
   useEffect(() => {
     setIsWallet(isWalletCon)
   }, [isWalletCon])
@@ -175,7 +181,7 @@ const YourAssets = (props: any) => {
       availableQty: commaNumber(100000000),
       price: `$1`,
       // holdings: { value: assetsKNABBalance / 100000000, percent: 0.0 },
-      holdings: { value: `${(knab * 100 / 100000000).toFixed(2)} %`, percent: 0.0 },
+      holdings: { value: `${((knab * 100) / 100000000).toFixed(2)} %`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNABr' },
@@ -190,7 +196,7 @@ const YourAssets = (props: any) => {
       availableQty: commaNumber(1243483555),
       price: `$1`,
       // holdings: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
-      holdings: { value: `${(usdc * 100 / 1243483555).toFixed(2)} %`, percent: 0.0 },
+      holdings: { value: `${((usdc * 100) / 1243483555).toFixed(2)} %`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC' },
@@ -204,7 +210,7 @@ const YourAssets = (props: any) => {
       balance: `${quest}`,
       availableQty: `${quest_supply}`,
       price: `$1`,
-      holdings: { value: `${(quest * 100 /quest_supply).toFixed(2)} %`, percent: 0.0 },
+      holdings: { value: `${((quest * 100) / quest_supply).toFixed(2)} %`, percent: 0.0 },
     },
   ]
   const connectWallet = async () => {
@@ -216,9 +222,9 @@ const YourAssets = (props: any) => {
       setDataLoading(true)
       const web3 = await getWeb3Val()
       if (web3) {
-        const chainId = await web3.eth.getChainId();
+        const chainId = await web3.eth.getChainId()
         // console.log(chainId);
-        setChainId(chainId);
+        setChainId(chainId)
         const coinbase = await web3.eth.getCoinbase()
         if (!coinbase) {
           window.alert('Please activate Wallet first.')
@@ -276,8 +282,8 @@ const YourAssets = (props: any) => {
     setassetsKNABrBalance(parseFloat(KNABrBalance).toFixed(2))
     setassetsUSDCBalance(USDCBalance)
     setKNAB_usdcBalance2(KNAB_USDCBalance)
-    setQuest(questBalance);
-    setQuestSupply(questSupplyVal);
+    setQuest(questBalance)
+    setQuestSupply(questSupplyVal)
   }
   useEffect(() => {
     if (isWalletCon) handleAssetsKNABBalance()
@@ -295,7 +301,6 @@ const YourAssets = (props: any) => {
             <img src={Question} alt="question" className={classes.questionImg} />
           </Tooltip>
         </Typography>
-
         <TableContainer>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
@@ -303,12 +308,15 @@ const YourAssets = (props: any) => {
                 {tableInfo &&
                   tableInfo.tableHeaders &&
                   tableInfo.tableHeaders.map((header: any, index: any) => {
-                    return <TableCell key={index}>{header.label}</TableCell>
+                    return (
+                      <TableCell key={index} style={{ fontWeight: 'bolder' }}>
+                        {header.label}
+                      </TableCell>
+                    )
                   })}
-                <TableCell>Chart</TableCell>
+                <TableCell style={{ fontWeight: 'bolder' }}>Chart</TableCell>
               </TableRow>
             </TableHead>
-
             <TableBody>
               {tableInfo &&
                 tableInfo.tableBody &&
@@ -344,7 +352,7 @@ const YourAssets = (props: any) => {
                           </TableCell>
                         )
                       })}
-                      <TableCell>
+                      <TableCell style={{ cursor: 'pointer' }}>
                         <img
                           src={Chart}
                           alt=""
@@ -397,10 +405,10 @@ const mapStateToProps = (state: any) => ({
 })
 
 export default connect(mapStateToProps, {
-  errorAlert, 
-  walletConnect, 
-  walletConnectAddress, 
+  errorAlert,
+  walletConnect,
+  walletConnectAddress,
   setChainId,
   setQuest,
-  setQuestSupply
+  setQuestSupply,
 })(YourAssets)

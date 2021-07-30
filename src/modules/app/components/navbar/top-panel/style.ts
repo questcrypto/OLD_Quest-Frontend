@@ -8,14 +8,16 @@ export const TopPanelCont = styled.div`
   height: 60px;
   align-items: center;
   /* background-color:#FFFFFF; */
-  background-color:#F6F6F6;
+  background-color: #f6f6f6;
   padding: 8px 16px;
   padding-right: 36px;
   box-sizing: border-box;
-  position: fixed;
+  /* position: fixed; */
+  /* position: -webkit-sticky;
+  position: sticky; */
   width: calc(100vw - 208px);
   z-index: 999;
   @media (max-width: 768px) {
-     width: calc(100vw - 48px)
+    width: calc(100vw - 48px);
   }
 `

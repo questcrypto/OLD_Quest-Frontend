@@ -20,7 +20,7 @@ export const useStyles = makeStyles(() =>
   createStyles({
     drawer: {
       // width: '240px',
-      width: '208px'
+      width: '208px',
     },
     drawerPaper: {
       '&::-webkit-scrollbar': {
@@ -78,11 +78,12 @@ export const QuestLogoCont = styled.div`
   width: max-content;
   box-sizing: border-box;
   padding: 30px 12px;
-  img { 
+  img {
     width: 100%;
     /* width: 155px; */
     /* height: 48px; */
   }
+  cursor: pointer;
 `
 export const ListItemText = styled.p`
   margin: 0;

@@ -14,11 +14,11 @@ export const useStyles = makeStyles(() =>
     rightPanelStyle: {
       // padding: '30px',
       // padding: '15px',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
     },
     mainDiv: {
       display: 'flex',
-      flexDirection: 'row'
+      flexDirection: 'row',
     },
     leftDiv: {
       '@media (max-width: 768px)': {
@@ -35,9 +35,10 @@ export const useStyles = makeStyles(() =>
       padding: '32px',
       paddingLeft: '64px',
       boxSizing: 'border-box',
-      height: '100%',
-      position: 'relative',
-      top: '60px',
+      //commented height and position because small white box was appearing in responsive view
+      // height: '100%',
+      // position: 'relative',
+      top: '10px',
       // maxWidth: '1600px',
       maxWidth: '1720px',
       margin: '0 auto',
@@ -52,7 +53,7 @@ export const useStyles = makeStyles(() =>
     },
     signUpMod: {
       padding: '16px',
-    }
+    },
   })
 )
 

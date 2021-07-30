@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   btnDiv: {
     // width: '100%',
@@ -62,47 +62,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 const ICODetails = (props: any) => {
-  const { getKNABbalance, hasApplcationAccess, errorAlert, loggedIn, successAlert, applicationAccess } = props
+  const { getKNABbalance, errorAlert, loggedIn, successAlert, applicationAccess, hasApplcationAccess } = props
   const classes = useStyles()
   const [tokensData, setTokensData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
-  const [showIPBlockingModal, setIPBlockingModal] = useState(false)
-  const [appAccess, setApplicationAccess] = useState(true)
   const [bcModal, setBcModal] = useState(false)
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [loader, setLoader] = useState(false)
 
+  const [appAccess, setApplicationAccess] = useState(true)
+  const [showIPBlockingModal, setIPBlockingModal] = useState(true)
+  const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
+
+  useEffect(() => {
+    axios
+      .get('https://ipapi.co/json/?key=55UO2jmzizMe4JbOojMgDTeczq2DA7LyLcTiLUTEg1x2grqYbr')
+      .then((response) => {
+        const isFrom = blockedCountriesCodes.includes(response.data.country_code)
+        if (isFrom) {
+          setApplicationAccess(false)
+          hasApplcationAccess(false)
+        } else {
+          hasApplcationAccess(true)
+          setApplicationAccess(true)
+        }
+      })
+      .catch((err) => console.log(err))
+  }, [props.applicationAccess])
+
+  const handleBlocking = () => {
+    try {
+      setIPBlockingModal(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const toggleIPBLockingModal = () => {
+    try {
+      setIPBlockingModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
     getKNABbalance(KNABBalance / 10 ** 18)
   }
-  // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
-
-  // useEffect(() => {
-  //   axios
-  //     // .get('https://api.ipify.org')
-  //     .get('https://ipapi.co/json/')
-  //     .then((response) => {
-  //       // console.log(response.data.country_code, '***')
-  //       const isFrom = blockedCountriesCodes.includes(response.data.country_code)
-  //       if (isFrom) {
-  //         setApplicationAccess(false)
-  //         hasApplcationAccess(false)
-  //         //@ts-ignore
-  //         // localStorage.setItem('access', false)
-  //       } else {
-  //         setApplicationAccess(true)
-  //         hasApplcationAccess(true)
-  //         //@ts-ignore
-  //         // localStorage.setItem('access', true)
-  //       }
-  //     })
-  //     .catch((err) => console.log(err))
-  // })
-  // useEffect(() => {
-  //   const appAccess = localStorage.getItem('access')
-  //   hasApplcationAccess(appAccess)
-  // }, [])
   useEffect(() => {
     getBalance()
   }, [])
@@ -120,13 +127,6 @@ const ICODetails = (props: any) => {
       }
     )
   }, [])
-  const toggleIPBLockingModal = () => {
-    try {
-      setIPBlockingModal(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
   const submitModalFn = async (values: any) => {
     try {
       const fromData = values.from
@@ -161,7 +161,6 @@ const ICODetails = (props: any) => {
       console.log(error)
     }
   }
-
   const confirmTransaction = async (values: any) => {
     try {
       const fromData = values.from
@@ -202,7 +201,6 @@ const ICODetails = (props: any) => {
       // setIsTransaction(false);
     }
   }
-
   const rejectTransaction = () => {
     try {
       setIsConfirm(false)
@@ -233,34 +231,20 @@ const ICODetails = (props: any) => {
       console.log(error)
     }
   }
-  const handleBlocking = () => {
-    try {
-      // hasApplcationAccess(false)
-      setIPBlockingModal(true)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+
+  console.log(applicationAccess, '*** applicationAccess')
   return (
     <>
-      {/* {!appAccess ? (
-        <IPBlockingModal
-          show={showIPBlockingModal}
-          toggleModal={toggleIPBLockingModal}
-          onClose={toggleIPBLockingModal}
-          // hasAccess={handleApplicationAccess}
-          hasAccess={appAccess}
-        />
-      ) : (
-        ''
-      )} */}
-      <IPBlockingModal
-        show={showIPBlockingModal}
-        toggleModal={toggleIPBLockingModal}
-        onClose={toggleIPBLockingModal}
-        // hasAccess={handleApplicationAccess}
-        hasAccess={appAccess}
-      />
+      <section>
+        {!appAccess && (
+          <IPBlockingModal
+            show={showIPBlockingModal}
+            toggleModal={toggleIPBLockingModal}
+            onClose={toggleIPBLockingModal}
+            hasAccess={appAccess}
+          />
+        )}
+      </section>
       <div className={classes.root}>
         <div className={classes.header}>
           <Typography className={classes.title}>ICO Details</Typography>
@@ -289,7 +273,8 @@ const ICODetails = (props: any) => {
             <CustomButton
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
-              onClick={appAccess && props.applicationAccess ? () => handleAuction() : handleBlocking}
+              // onClick={appAccess && props.applicationAccess ? () => handleAuction() : handleBlocking}
+              onClick={() => handleAuction()}
             >
               Real&nbsp;Estate&nbsp;Auctions
             </CustomButton>
@@ -297,7 +282,8 @@ const ICODetails = (props: any) => {
             <CustomButton
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
-              onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+              // onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+              onClick={() => history.push(Paths.login)}
             >
               Buy&nbsp;|&nbsp;Convert&nbsp;Quest
             </CustomButton>
@@ -305,7 +291,7 @@ const ICODetails = (props: any) => {
             <CustomButton
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
-              onClick={props.applicationAccess ? openbcModal : handleBlocking}
+              onClick={appAccess ? openbcModal : handleBlocking}
             >
               Buy&nbsp;KNAB
             </CustomButton>
@@ -378,8 +364,8 @@ const conversionData = {
 const mapStateToProps = (state: any) => ({
   KNABBalance: state.user.KNABBalance,
   isWalletCon: state.user.isWalletCon,
-  applicationAccess: state.user.applicationAccess,
   loggedIn: state.user.loggedIn,
   loading: state.user.loading,
+  applicationAccess: state.user.applicationAccess,
 })
 export default withRouter(connect(mapStateToProps, { hasApplcationAccess, successAlert, errorAlert, getKNABbalance })(ICODetails))

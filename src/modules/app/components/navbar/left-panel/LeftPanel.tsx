@@ -26,10 +26,10 @@ import questLogo from 'assets/images/questDashboardLogo.svg'
 import PieIcon from 'assets/icons/pieIcon.svg'
 // import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
 // import web3modal from 'web3modal'
-import { hasApplcationAccess } from 'logic/actions/user.actions'
+// import { hasApplcationAccess } from 'logic/actions/user.actions'
 
 // import Web3 from 'web3'
-import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
+// import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
 
 const LeftPanel = (props: any) => {
   const classes = useStyles()
@@ -37,7 +37,7 @@ const LeftPanel = (props: any) => {
   const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn } = props
   // const [account, setAccount] = useState('')
   const [appAccess, setApplicationAccess] = useState(true)
-  const [showIPBlockingModal, setIPBlockingModal] = useState(false)
+  // const [showIPBlockingModal, setIPBlockingModal] = useState(false)
   // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
 
   // useEffect(() => {
@@ -105,30 +105,20 @@ const LeftPanel = (props: any) => {
     }
   }
 
-  // function disConnectWallet() {
-  //   window.location.reload()
-  //   // web3.eth.accounts.wallet.remove(walletConAddress)
-  //   // web3.eth.accounts.wallet.clear()
+  // const handleBlocking = () => {
+  //   try {
+  //     setIPBlockingModal(true)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
   // }
-  // const setAppAccess = () => {
-  //   hasApplcationAccess(false)
+  // const toggleIPBLockingModal = () => {
+  //   try {
+  //     setIPBlockingModal(false)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
   // }
-  // console.log(applicationAccess, '***')
-  const handleBlocking = () => {
-    try {
-      // hasApplcationAccess(false)
-      setIPBlockingModal(true)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const toggleIPBLockingModal = () => {
-    try {
-      setIPBlockingModal(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
   return (
     //@ts-ignore
     <DrawerWrapper open={openDrawer}>
@@ -144,63 +134,39 @@ const LeftPanel = (props: any) => {
         </IconButton>
 
         <Grid className={classes.root}>
-          <QuestLogoCont>
+          <QuestLogoCont onClick={() => window.open(Paths.portfolio, '_self')}>
             {/* <img src={QuestLogo} alt="" /> */}
             <img src={questLogo} alt="" />
           </QuestLogoCont>
           <Divider className={classes.dividerStyle} />
           <List>
-            {/* {!!userInfo && loggedIn && */}
-            {/* {applicationAccess ? (
-              <>
-                <ListItem button className={classes.itemButtonStyle} onClick={() => handleProperty()}>
-                  <ApartmentIcon className={classes.iconStyle} />
-                  <ListItemText>Properties</ListItemText>
-                </ListItem>
-
-                <ListItem button className={classes.itemButtonStyle} onClick={() => handleAuction()}>
-                  <AssessmentIcon className={classes.iconStyle} />
-                  <ListItemText>Real Estate Auctions</ListItemText>
-                </ListItem>
-                <ListItem button className={classes.itemButtonStyle} onClick={() => handlePortfolio()}>
-                  <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
-                  <ListItemText>Portfolio</ListItemText>
-                </ListItem>
-              </>
-            ) : ( */}
-            <>
-              <ListItem
-                button
-                className={classes.itemButtonStyle}
-                // onClick={() => setAppAccess()}
-                onClick={props.applicationAccess ? handleProperty : handleBlocking}
-              >
-                <ApartmentIcon className={classes.iconStyle} />
-                <ListItemText>Properties</ListItemText>
-              </ListItem>
-              <ListItem
-                button
-                className={classes.itemButtonStyle}
-                onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
-                // onClick={() => handleAuction()}
-              >
-                <AssessmentIcon className={classes.iconStyle} />
-                <ListItemText>Real&nbsp;Estate Auctions</ListItemText>
-              </ListItem>
-              <ListItem
-                button
-                className={classes.itemButtonStyle}
-                onClick={props.applicationAccess ? () => handlePortfolio() : handleBlocking}
-                // onClick={() => handlePortfolio()}
-              >
-                <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
-                <ListItemText>Portfolio</ListItemText>
-              </ListItem>
-            </>
-            {/* {loggedIn && !!userInfo && userInfo.role === 2 && ( */}
-            {/* // {( */}
-            {/* // )} */}
-
+            <ListItem
+              button
+              className={classes.itemButtonStyle}
+              // onClick={props.applicationAccess ? handleProperty : handleBlocking}
+              onClick={() => handleProperty()}
+            >
+              <ApartmentIcon className={classes.iconStyle} />
+              <ListItemText>Properties</ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              className={classes.itemButtonStyle}
+              // onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
+              onClick={() => handleAuction()}
+            >
+              <AssessmentIcon className={classes.iconStyle} />
+              <ListItemText>Real&nbsp;Estate Auctions</ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              className={classes.itemButtonStyle}
+              // onClick={props.applicationAccess ? () => handlePortfolio() : handleBlocking}
+              onClick={() => handlePortfolio()}
+            >
+              <img src={PieIcon} alt="Icon" /> &nbsp;&nbsp;&nbsp;
+              <ListItemText>Portfolio</ListItemText>
+            </ListItem>
             {loggedIn && !!userInfo && userInfo.role !== 2 && (
               <>
                 <ListItem button className={classes.itemButtonStyle}>
@@ -229,24 +195,7 @@ const LeftPanel = (props: any) => {
               </ListItemText>
             </ListItem>
           </Grid> */}
-          {/* {isWalletCon ? (
-            <Grid className={classes.signOutStyle}>
-              <Divider className={classes.signOutDividerStyle} />
-              <ListItem button>
-                <CustomButton
-                  size="large"
-                  style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
-                  onClick={disConnectWallet}
-                > */}
-          {/* {dataLoading ? 'Connecting ...' : 'Connect Wallet'} */}
-          {/* Disconnect Wallet
-                </CustomButton>
-              </ListItem>
-            </Grid>
-          ) : (
-            ''
-          )} */}
-          {loggedIn ? (
+          {loggedIn && (
             <Grid className={classes.signOutStyle}>
               <Divider className={classes.signOutDividerStyle} />
               {/* <ListItem button onClick={() => logout()}> */}
@@ -255,11 +204,9 @@ const LeftPanel = (props: any) => {
                 <ListItemText>Sign Out</ListItemText>
               </ListItem>
             </Grid>
-          ) : (
-            ''
           )}
 
-          {/* {isWalletCon ? (
+          {/* {isWalletCon && (
             <Grid className={classes.signOutStyle}>
               <Divider className={classes.signOutDividerStyle} />
               <ListItem button>
@@ -272,41 +219,15 @@ const LeftPanel = (props: any) => {
                 </CustomButton>
               </ListItem>
             </Grid>
-          ) : (
-            ''
           )} */}
-
-          {/* <CustomButton
-            size="large"
-            style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
-            onClick={connectWallet}
-          >
-            {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
-          </CustomButton> */}
         </Grid>
       </Drawer>
-      <>
-        <IPBlockingModal
+      {/* <IPBlockingModal
           show={showIPBlockingModal}
           toggleModal={toggleIPBLockingModal}
           onClose={toggleIPBLockingModal}
-          // hasAccess={handleApplicationAccess}
           hasAccess={appAccess}
-        />
-        {/* <>
-          {!appAccess ? (
-            <IPBlockingModal
-              show={showIPBlockingModal}
-              toggleModal={toggleIPBLockingModal}
-              onClose={toggleIPBLockingModal}
-              // hasAccess={handleApplicationAccess}
-              hasAccess={appAccess}
-            />
-          ) : (
-            ''
-          )}
-        </> */}
-      </>
+        /> */}
     </DrawerWrapper>
   )
 }
@@ -316,7 +237,7 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   isWalletCon: state.user.isWalletCon,
   walletConAddress: state.user.walletConAddress,
-  applicationAccess: state.user.applicationAccess,
+  // applicationAccess: state.user.applicationAccess,
 })
 
-export default connect(mapStateToProps, { logout, handleDrawerClose, logout2, hasApplcationAccess })(LeftPanel)
+export default connect(mapStateToProps, { logout, handleDrawerClose, logout2 })(LeftPanel)

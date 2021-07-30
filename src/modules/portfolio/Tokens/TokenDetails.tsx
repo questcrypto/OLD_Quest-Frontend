@@ -70,35 +70,43 @@ const TokenDetails = (props: any) => {
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [loader, setLoader] = useState(false)
-  const [showIPBlockingModal, setIPBlockingModal] = useState(false)
-  const [appAccess, setApplicationAccess] = useState(true)
-  // useEffect(() => {
-  //   const appAccess = localStorage.getItem('access')
-  //   hasApplcationAccess(appAccess)
-  // }, [])
-  // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
 
-  // useEffect(() => {
-  //   axios
-  //     // .get('https://api.ipify.org')
-  //     .get('https://ipapi.co/json/')
-  //     .then((response) => {
-  //       // console.log(response.data.country_code, '***')
-  //       const isFrom = blockedCountriesCodes.includes(response.data.country_code)
-  //       if (isFrom) {
-  //         setApplicationAccess(false)
-  //         hasApplcationAccess(false)
-  //         //@ts-ignore
-  //         // localStorage.setItem('access', false)
-  //       } else {
-  //         setApplicationAccess(true)
-  //         hasApplcationAccess(true)
-  //         //@ts-ignore
-  //         // localStorage.setItem('access', true)
-  //       }
-  //     })
-  //     .catch((err) => console.log(err))
-  // })
+  const [appAccess, setApplicationAccess] = useState(true)
+  const [showIPBlockingModal, setIPBlockingModal] = useState(true)
+  const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
+
+  useEffect(() => {
+    axios
+      .get('https://ipapi.co/json/?key=55UO2jmzizMe4JbOojMgDTeczq2DA7LyLcTiLUTEg1x2grqYbr')
+      .then((response) => {
+        const isFrom = blockedCountriesCodes.includes(response.data.country_code)
+        if (isFrom) {
+          setApplicationAccess(false)
+          hasApplcationAccess(false)
+        } else {
+          hasApplcationAccess(true)
+          setApplicationAccess(true)
+        }
+      })
+      .catch((err) => console.log(err))
+  }, [props.applicationAccess])
+
+  const handleBlocking = () => {
+    try {
+      setIPBlockingModal(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const toggleIPBLockingModal = () => {
+    try {
+      setIPBlockingModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
     getKNABbalance(KNABBalance / 10 ** 18)
@@ -213,42 +221,26 @@ const TokenDetails = (props: any) => {
       console.log(error)
     }
   }
-  const handleBlocking = () => {
-    try {
-      // hasApplcationAccess(false)
 
-      setIPBlockingModal(true)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const toggleIPBLockingModal = () => {
-    try {
-      setIPBlockingModal(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
   return (
     <>
-      {/* {!appAccess ? (
-        <IPBlockingModal
-          show={showIPBlockingModal}
-          toggleModal={toggleIPBLockingModal}
-          onClose={toggleIPBLockingModal}
-          // hasAccess={handleApplicationAccess}
-          hasAccess={appAccess}
-        />
-      ) : (
-        ''
-      )} */}
-      <IPBlockingModal
+      <section>
+        {!appAccess && (
+          <IPBlockingModal
+            show={showIPBlockingModal}
+            toggleModal={toggleIPBLockingModal}
+            onClose={toggleIPBLockingModal}
+            hasAccess={appAccess}
+          />
+        )}
+      </section>
+      {/* <IPBlockingModal
         show={showIPBlockingModal}
         toggleModal={toggleIPBLockingModal}
         onClose={toggleIPBLockingModal}
         // hasAccess={handleApplicationAccess}
         hasAccess={appAccess}
-      />
+      /> */}
       <div className={classes.root}>
         <div className={classes.header}>
           <Typography className={classes.title}>Token Details</Typography>
@@ -276,7 +268,8 @@ const TokenDetails = (props: any) => {
             <CustomButton
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
-              onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
+              // onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
+              onClick={() => handleAuction()}
             >
               Real Estate Auctions
             </CustomButton>
@@ -284,7 +277,8 @@ const TokenDetails = (props: any) => {
             <CustomButton
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
-              onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+              // onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
+              onClick={() => history.push(Paths.login)}
             >
               Buy | Convert Quest
             </CustomButton>

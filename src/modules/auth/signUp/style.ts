@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-import { makeStyles, withStyles, Theme, createStyles, fade } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import { makeStyles, withStyles, Theme, createStyles, fade } from '@material-ui/core/styles'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 import { colors, GlobalStyle } from 'shared/styles/theme'
-import InputBase from '@material-ui/core/InputBase';
-import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import Tooltip from '@material-ui/core/Tooltip';
+import InputBase from '@material-ui/core/InputBase'
+import Button from '@material-ui/core/Button'
+import InputLabel from '@material-ui/core/InputLabel'
+import Tooltip from '@material-ui/core/Tooltip'
 
 export const useStyle = makeStyles(() =>
   createStyles({
@@ -16,17 +16,17 @@ export const useStyle = makeStyles(() =>
       alignItems: 'center',
       margin: '0 auto',
       flexDirection: 'column',
-      padding: '16px'
+      padding: '16px',
     },
     tabDivStyle: {
       flexGrow: 1,
       padding: '2rem 0 1.5rem 0',
-      fontFamily: 'NexaRegular'
+      fontFamily: 'NexaRegular',
     },
     tabStyle: {
       color: '#BA8E4D !important',
       fontSize: '16px',
-      fontFamily: 'NexaRegular !important'
+      fontFamily: 'NexaRegular !important',
     },
     boxStyle: {
       width: '100%',
@@ -38,19 +38,19 @@ export const useStyle = makeStyles(() =>
       boxSizing: 'border-box',
       border: '1px solid #BDBDBD',
       borderRadius: '5px',
-      fontFamily: 'NexaRegular'
+      fontFamily: 'NexaRegular',
     },
     fieldStyle: {
       paddingTop: '12px',
       paddingBottom: '4px',
-      fontFamily: 'NexaRegular'
+      fontFamily: 'NexaRegular',
     },
     signUpBtndiv: {
       paddingTop: '32px',
       paddingBottom: '12px',
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     OTPModalDiv: {
       // width: '506px',
@@ -65,7 +65,7 @@ export const useStyle = makeStyles(() =>
       justifyContent: 'flex-start',
       alignItems: 'center',
       flexDirection: 'column',
-      fontFamily: 'NexaRegular'
+      fontFamily: 'NexaRegular',
     },
     OTPModalClose: {
       display: 'flex',
@@ -74,17 +74,17 @@ export const useStyle = makeStyles(() =>
       padding: '16px',
       cursor: 'pointer',
       '& > img': {
-        width: '12px'
-      }
+        width: '12px',
+      },
     },
     OTPModalMail: {
       padding: '0px 16px',
       '& > img': {
-        width: '110px'
-      }
+        width: '110px',
+      },
     },
     OTPModalText: {
-      padding: '16px'
+      padding: '16px',
     },
     walletModalDiv: {
       // width: '507px',
@@ -99,28 +99,27 @@ export const useStyle = makeStyles(() =>
       justifyContent: 'flex-start',
       alignItems: 'center',
       flexDirection: 'column',
-      fontFamily: 'NexaRegular'
+      fontFamily: 'NexaRegular',
     },
     walletModalHeader: {
       display: 'flex',
       justifyContent: 'space-between',
       width: '100%',
       padding: '16px',
-      '& > span': {
-      },
+      '& > span': {},
       '& > img': {
         width: '12px',
         cursor: 'pointer',
-      }
+      },
     },
     walletHeadText: {
       color: '#2B2D31',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     walletBack: {
       color: '#E27625',
       fontWeight: 'bold',
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
     walletCont: {
       cursor: 'pointer',
@@ -134,21 +133,21 @@ export const useStyle = makeStyles(() =>
       border: '1px solid #F5841F',
       marginBottom: '12px',
       '&:hover': {
-        border: '1px solid #F5841F'
+        border: '1px solid #F5841F',
       },
       '& > img': {
         width: '36px',
-        height: '36px'
+        height: '36px',
       },
       '& > span': {
-        padding: '0px 8px'
+        padding: '0px 8px',
       },
     },
     tryAgainDiv: {
       display: 'flex',
       justifyContent: 'flex-end',
       width: '100%',
-      fontFamily: 'NexaRegular'
+      fontFamily: 'NexaRegular',
     },
     otpStyle: {
       borderTop: 'none',
@@ -156,13 +155,13 @@ export const useStyle = makeStyles(() =>
       borderRight: 'none',
       borderBottom: '1px solid #2B2D31',
       '&:focus-visible': {
-        outline: 'none'
-      }
+        outline: 'none',
+      },
     },
     err: {
       color: 'red',
       textAlign: 'left',
-      fontFamily: 'NexaRegular'
+      fontFamily: 'NexaRegular',
     },
     cryptoTransImageDiv: {
       height: '100%',
@@ -170,7 +169,7 @@ export const useStyle = makeStyles(() =>
       alignItems: 'flex-end',
       position: 'relative',
       // right: '5%'
-      paddingLeft: '48px'
+      paddingLeft: '48px',
     },
     cryptoTransImage: {
       width: '200px',
@@ -186,20 +185,20 @@ export const useStyle = makeStyles(() =>
       // padding: '0px 18px',
       lineHeight: '20px',
       paddingTop: '4px',
-      paddingBottom: '12px'
-    }
+      paddingBottom: '12px',
+    },
   })
 )
 
 interface StyledTabsProps {
-  value: number;
-  onChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
+  value: number
+  onChange: (event: React.ChangeEvent<{}>, newValue: number) => void
 }
 
 export const StyledTabs = withStyles({
   root: {
     maxWidth: '485px',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   indicator: {
     // backgroundColor: '#BA8E4D',
@@ -211,16 +210,15 @@ export const StyledTabs = withStyles({
     //   backgroundColor: 'orange',
     // },
   },
-
-})(Tabs);
+})(Tabs)
 // })((props: StyledTabsProps) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />)
 
 export const StyledTab = withStyles({
   root: {
     maxWidth: '245px',
-    textTransform: 'initial'
-  }
-})(Tab);
+    textTransform: 'initial',
+  },
+})(Tab)
 
 export const CustomInput = withStyles((theme: Theme) =>
   createStyles({
@@ -251,52 +249,52 @@ export const CustomInput = withStyles((theme: Theme) =>
       '&:disabled': {
         backgroundColor: '#F5F5F5',
         border: '1px solid #ced4da',
-      }
+      },
     },
-  }),
-)(InputBase);
+  })
+)(InputBase)
 
 export const CustomTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: '#1E3445',
-    fontFamily: 'NexaRegular'
+    fontFamily: 'NexaRegular',
   },
   arrow: {
-    color: '#1E3445'
-  }
-}))(Tooltip);
+    color: '#1E3445',
+  },
+}))(Tooltip)
 
 export const CustomButton = styled(Button)`
-  background-color: #0D4459;
-  color: #FFFFFF;
+  background-color: #0d4459;
+  color: #ffffff;
   box-shadow: 0px 3px 1px -2px rgba(224, 224, 224, 0.2), 0px 2px 2px rgba(224, 224, 224, 0.14), 0px 1px 5px rgba(224, 224, 224, 0.12);
   border-radius: 5px;
   padding: 6px 16px;
   font-family: NexaRegular;
   &:hover {
-    background-color: #0D4459;
-  };
+    background-color: #0d4459;
+  }
   &:disabled {
-    color: #FFFFFF;
+    color: #ffffff;
     opacity: 0.5;
   }
-`;
+`
 
 export const IcoButton = styled(Button)`
-  background-color: #BA8E4D;
+  background-color: #ba8e4d;
   border-radius: 5px;
   padding: 6px 0px;
   margin-left: 12px;
   min-width: 36px !important;
   font-family: NexaRegular;
   &:hover {
-    background-color: #BA8E4D;
-  };
+    background-color: #ba8e4d;
+  }
   &:disabled {
     /* background-color: #F5F5F5; */
     opacity: 0.4;
   }
-`;
+`
 
 export const LogoImage = styled.img`
   /* width: 150px !important; */
@@ -308,7 +306,8 @@ export const LogoImage = styled.img`
   &:hover {
     filter: drop-shadow(0.6rem 0.6rem 0.5rem rgba(186, 142, 77, 0.4));
   }
-`;
+  cursor: pointer;
+`
 
 export const LoginLogo = styled.img`
   /* width: 55px !important; */
@@ -317,23 +316,23 @@ export const LoginLogo = styled.img`
   height: 109px !important; */
   height: 78px;
   padding-bottom: 4px;
-`;
+`
 
 export const InfoIcon = styled.img`
   width: 12px;
-  cursor: pointer
-`;
+  cursor: pointer;
+`
 
 export const InpBtn = styled.img`
   width: 18px;
   height: 26px;
-`;
+`
 
 export const InpBtnWrapper = styled.div`
   display: flex;
   padding-top: 6px;
   font-family: NexaRegular;
-`;
+`
 
 export const OTPInputField = styled.input`
   padding-left: 15px;
@@ -349,17 +348,17 @@ export const OTPInputField = styled.input`
   &:focus-visible {
     outline: none;
   }
-`;
+`
 
 export const Indicator = styled.span`
-  border-top: 3px solid #BA8E4D;
+  border-top: 3px solid #ba8e4d;
   display: block;
   width: 50%;
   left: 25%;
   position: relative;
   top: 12px;
-`;
+`
 
 export const CustomLabel = styled(InputLabel)`
   font-family: NexaRegular;
-`;
+`

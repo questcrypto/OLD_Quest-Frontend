@@ -35,8 +35,9 @@ export const useStyles = makeStyles(() =>
       padding: '32px',
       paddingLeft: '64px',
       boxSizing: 'border-box',
-      height: '100%',
-      position: 'relative',
+      //commented height and position because small white box was appearing in responsive view
+      // height: '100%',
+      // position: 'relative',
       top: '10px',
       // maxWidth: '1600px',
       maxWidth: '1720px',

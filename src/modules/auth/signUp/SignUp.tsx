@@ -447,7 +447,6 @@ const SignUp = (props: any) => {
             }
           </Box>
         </Grid>
-
         <Grid item md={4} sm={12} xs={12}>
           <div className={classes.cryptoTransImageDiv}>
             <img

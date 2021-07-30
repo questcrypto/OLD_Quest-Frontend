@@ -80,7 +80,13 @@ const useStyles = makeStyles((theme) => ({
 
 const MoreWithCrypto = (props: any) => {
   const classes = useStyles()
-  const { loggedIn, isWalletCon, getBalance, hasAccess, handleBlocking } = props
+  const {
+    loggedIn,
+    isWalletCon,
+    getBalance,
+    // hasAccess,
+    // handleBlocking
+  } = props
   const [isWallet, setIsWallet] = useState(false)
   const [show, setShow] = useState(false)
 
@@ -195,10 +201,9 @@ const MoreWithCrypto = (props: any) => {
             <CustomButton
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
-              // onClick={connectWallet}
-              onClick={props.applicationAccess ? connectWallet : handleBlocking}
+              onClick={connectWallet}
+              // onClick={props.applicationAccess ? connectWallet : handleBlocking}
             >
-              {/* Connect Wallet */}
               {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
             </CustomButton>
             <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
@@ -259,7 +264,7 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   isWalletCon: state.user.isWalletCon,
   walletConnectAddress: state.user.walletConnectAddress,
-  applicationAccess: state.user.applicationAccess,
+  // applicationAccess: state.user.applicationAccess,
 })
 
 export default connect(mapStateToProps, { errorAlert, walletConnect, walletConnectAddress, setChainId })(MoreWithCrypto)

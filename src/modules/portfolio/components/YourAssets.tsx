@@ -109,8 +109,8 @@ const YourAssets = (props: any) => {
     loggedIn,
     isWalletCon,
     getBalance,
-    hasAccess,
-    handleBlocking,
+    // hasAccess,
+    // handleBlocking,
     staking: { knab, knabr, usdc, quest, quest_supply },
     setQuest,
     setQuestSupply,
@@ -379,8 +379,8 @@ const YourAssets = (props: any) => {
           <CustomButton
             size="small"
             style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
-            // onClick={connectWallet}
-            onClick={props.applicationAccess ? connectWallet : handleBlocking}
+            onClick={connectWallet}
+            // onClick={props.applicationAccess ? connectWallet : handleBlocking}
           >
             {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
           </CustomButton>
@@ -400,7 +400,7 @@ const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
   walletConnectAddress: state.user.walletConnectAddress,
   web3Instance: state.user.web3Instance,
-  applicationAccess: state.user.applicationAccess,
+  // applicationAccess: state.user.applicationAccess,
   staking: state.staking,
 })
 

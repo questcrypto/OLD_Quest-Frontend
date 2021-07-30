@@ -6,16 +6,15 @@ import Web3 from 'web3'
 import { TopPanelCont } from './style'
 // import Notifications from './components/Notifications'
 import { makeStyles } from '@material-ui/core'
-
 import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
 // import { apiBaseUrl } from 'services/global-constant'
-import axios from 'axios'
+// import axios from 'axios'
 import { getWeb3Val, getKNABBalance, getisWallet } from 'modules/block-chain/BlockChainMethods'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import { loginStart, getKNABbalance, setWeb3Instance } from 'logic/actions/user.actions'
 import MetaMaskIcon from '../../../../../assets/icons/metaMaskIcon.svg'
-import { hasApplcationAccess } from 'logic/actions/user.actions'
-import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
+// import { hasApplcationAccess } from 'logic/actions/user.actions'
+// import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
 
 const useStyles = makeStyles((theme) => ({
   walletDiv: {
@@ -38,10 +37,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '18px',
     color: '#ec9609',
     // color: '#BA8E4D',
-    border: '1px solid'
+    border: '1px solid',
   },
-  walletDivTagText: {
-  }
+  walletDivTagText: {},
 }))
 
 const TopPanel = (props: any) => {
@@ -60,40 +58,33 @@ const TopPanel = (props: any) => {
     isWalletCon,
     walletConnectAddress,
     setWeb3Instance,
-    hasApplcationAccess,
+    // hasApplcationAccess,
     setChainId,
-    user: { chainId }
+    user: { chainId },
   } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [tokenDummy, setTokenDummy] = useState('')
-  const [appAccess, setApplicationAccess] = useState(true)
-  const [showIPBlockingModal, setIPBlockingModal] = useState(true)
+  // const [appAccess, setApplicationAccess] = useState(true)
+  // const [showIPBlockingModal, setIPBlockingModal] = useState(true)
 
-  const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
+  // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
 
-  useEffect(() => {
-    axios
-      // .get('https://api.ipify.org')
-      // .get('https://ipapi.co/json/')
-      .get('https://ipapi.co/json/?key=55UO2jmzizMe4JbOojMgDTeczq2DA7LyLcTiLUTEg1x2grqYbr')
-      .then((response) => {
-        const isFrom = blockedCountriesCodes.includes(response.data.country_code)
-        if (isFrom) {
-          setApplicationAccess(false)
-          hasApplcationAccess(false)
-          //@ts-ignore
-          // localStorage.setItem('access', false)
-        } else {
-          // console.log('***')
-          hasApplcationAccess(true)
-          setApplicationAccess(true)
-          //@ts-ignore
-          // localStorage.setItem('access', true)
-        }
-      })
-      .catch((err) => console.log(err))
-  }, [props.applicationAccess])
+  // useEffect(() => {
+  //   axios
+  //     .get('https://ipapi.co/json/?key=55UO2jmzizMe4JbOojMgDTeczq2DA7LyLcTiLUTEg1x2grqYbr')
+  //     .then((response) => {
+  //       const isFrom = blockedCountriesCodes.includes(response.data.country_code)
+  //       if (isFrom) {
+  //         setApplicationAccess(false)
+  //         hasApplcationAccess(false)
+  //       } else {
+  //         hasApplcationAccess(true)
+  //         setApplicationAccess(true)
+  //       }
+  //     })
+  //     .catch((err) => console.log(err))
+  // }, [props.applicationAccess])
   // setInterval(function () {
   //   async function getProvider() {
   //     if(web3) {
@@ -145,7 +136,7 @@ const TopPanel = (props: any) => {
         data()
       }
     }, 3000)
-    chainIdChecking();
+    chainIdChecking()
   }, [walletAddress, tokenDummy, loggedIn])
 
   const chainIdChecking = async () => {
@@ -153,13 +144,12 @@ const TopPanel = (props: any) => {
       if (walletConAddress.length > 0) {
         const web3 = await getWeb3Val()
         if (web3) {
-          const chainId = await web3.eth.getChainId();
+          const chainId = await web3.eth.getChainId()
           // console.log(chainId);
-          setChainId(chainId);
+          setChainId(chainId)
         }
       }
-    }
-    catch (error) { }
+    } catch (error) {}
   }
 
   // Event handler to handle metamask account change
@@ -176,7 +166,7 @@ const TopPanel = (props: any) => {
       props.logout2()
       setWalletAddress('')
       walletConnectAddress('')
-      setChainId('');
+      setChainId('')
       // walletConnect(false);
       window.location.reload()
     })
@@ -202,14 +192,13 @@ const TopPanel = (props: any) => {
       }
       setDataLoading(true)
       const web3 = await getWeb3Val()
-      console.log('Window.Ethereum', window.ethereum);
-      console.log('Web3', web3);
+      console.log('Window.Ethereum', window.ethereum)
+      console.log('Web3', web3)
       if (web3) {
-
         // const networkId = await web3.eth.net.getId();
-        const chainId = await web3.eth.getChainId();
+        const chainId = await web3.eth.getChainId()
         // console.log(chainId);
-        setChainId(chainId);
+        setChainId(chainId)
         const coinbase = await web3.eth.getCoinbase()
         if (!coinbase) {
           window.alert('Please activate Wallet first.')
@@ -255,25 +244,24 @@ const TopPanel = (props: any) => {
   // const setAppAccess = () => {
   //   hasApplcationAccess(false)
   // }
-  const handleBlocking = () => {
-    try {
-      // hasApplcationAccess(false)
-      setIPBlockingModal(true)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const toggleIPBLockingModal = () => {
-    try {
-      setIPBlockingModal(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  // console.log(props.applicationAccess, appAccess, '***')
+  // const handleBlocking = () => {
+  //   try {
+  //     // hasApplcationAccess(false)
+  //     setIPBlockingModal(true)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+  // const toggleIPBLockingModal = () => {
+  //   try {
+  //     setIPBlockingModal(false)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
   return (
     <>
-      {!appAccess ? (
+      {/* {!appAccess && (
         <IPBlockingModal
           show={showIPBlockingModal}
           toggleModal={toggleIPBLockingModal}
@@ -281,42 +269,33 @@ const TopPanel = (props: any) => {
           // hasAccess={handleApplicationAccess}
           hasAccess={appAccess}
         />
-      ) : (
-        ''
-      )}
+      )} */}
       <TopPanelCont>
         {getisWallet(props.isWalletCon)}
-        {
-          // loggedIn && (walletAddress !== '') && (tokenDummy !== '') ?
-          walletConAddress !== '' ? (
-            // walletAddress !== '' ? (
-            <>
-              <div className={classes.walletDivTag}
-                style={{ color: (chainId === 80001) || (chainId === 137) ? '#ec9609' : '#bf4834' }}
-              >
-                <span className={classes.walletDivTagText}>
-                  {chainId === 80001 ? 'TESTNET' : chainId === 137 ? 'MAINNET' : 'Pls connect to Matic Network'}
-                </span>
-              </div>
-              <div className={classes.walletDiv}>
-                <img src={MetaMaskIcon} alt="" />
-                <span className={classes.walletDivText}>{`${walletConAddress.substring(0, 4)}...${walletConAddress.substring(37, 42)}`}</span>
-              </div>
-            </>
-          ) : (
-            <>
-              <CustomButton
-                size="large"
-                style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
-                onClick={appAccess && props.applicationAccess ? connectWallet : handleBlocking}
-              // onClick={connectWallet}
-              >
-                {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
-              </CustomButton>
-            </>
-          )
-          // <PrimaryButton>Connect Wallet</PrimaryButton>
-        }
+        {walletConAddress !== '' ? (
+          <>
+            <div className={classes.walletDivTag} style={{ color: chainId === 80001 || chainId === 137 ? '#ec9609' : '#bf4834' }}>
+              <span className={classes.walletDivTagText}>
+                {chainId === 80001 ? 'TESTNET' : chainId === 137 ? 'MAINNET' : 'Pls connect to Matic Network'}
+              </span>
+            </div>
+            <div className={classes.walletDiv}>
+              <img src={MetaMaskIcon} alt="" />
+              <span className={classes.walletDivText}>{`${walletConAddress.substring(0, 4)}...${walletConAddress.substring(37, 42)}`}</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <CustomButton
+              size="large"
+              style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px' }}
+              // onClick={appAccess && props.applicationAccess ? connectWallet : handleBlocking}
+              onClick={connectWallet}
+            >
+              {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
+            </CustomButton>
+          </>
+        )}
         {/* <Notifications /> */}
         &nbsp;&nbsp;
         {/* {isWalletCon ? ( */}
@@ -342,12 +321,12 @@ const mapStateToProps = (state: any) => ({
   walletConAddress: state.user.walletConAddress,
   KNABBalance: state.user.KNABBalance,
   isWalletCon: state.user.isWalletCon,
-  applicationAccess: state.user.applicationAccess,
+  // applicationAccess: state.user.applicationAccess,
   user: state.user,
 })
 
 export default connect(mapStateToProps, {
-  hasApplcationAccess,
+  // hasApplcationAccess,
   loginStart,
   errorAlert,
   logout,
@@ -356,5 +335,5 @@ export default connect(mapStateToProps, {
   walletConnectAddress,
   getKNABbalance,
   setWeb3Instance,
-  setChainId
+  setChainId,
 })(TopPanel)

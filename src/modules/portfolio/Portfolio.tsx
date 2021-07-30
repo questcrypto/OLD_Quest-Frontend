@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import axios from 'axios'
 import { Typography, Grid, Paper } from '@material-ui/core'
 import { useStyles } from './style'
@@ -11,7 +11,13 @@ import MoreWithCrypto from './components/MoreWithCrypto'
 import YourAssets from './components/YourAssets'
 import BuyAndConvertModal from './components/BuyAndConvertModal'
 import BuyAndConvertQuest from './components/BuyAndConvertQuest'
-import { getWeb3Val, buyKnab, getStableCoinBalance, handlestableCoinapproval, getUSDCBalanceBuyKnab } from '../../modules/block-chain/BlockChainMethods'
+import {
+  getWeb3Val,
+  buyKnab,
+  getStableCoinBalance,
+  handlestableCoinapproval,
+  getUSDCBalanceBuyKnab,
+} from '../../modules/block-chain/BlockChainMethods'
 import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../modules/block-chain/abi'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import { getKNABbalance, walletConnect, walletConnectAddress, setWeb3Instance, setChainId } from 'logic/actions/user.actions'
@@ -21,7 +27,7 @@ import { Paths } from 'modules/app/components/routes/types'
 import { getKNABBalance } from '../../modules/block-chain/BlockChainMethods'
 import IPBlockingModal from './IPBlocking/IPBlockingModal'
 import { hasApplcationAccess } from 'logic/actions/user.actions'
-import { apiBaseUrl } from 'services/global-constant'
+// import { apiBaseUrl } from 'services/global-constant'
 // import Question from '../../assets/icons/question.svg'
 // import MaticIcon from 'assets/icons/matic.svg'
 // import KnabDummy from 'assets/icons/knab_dummy.svg'
@@ -35,38 +41,60 @@ const Portfolio = (props: any) => {
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [loader, setLoader] = useState(false)
-  const [showIPBlockingModal, setIPBlockingModal] = useState(false)
-  const [appAccess, setApplicationAccess] = useState(true)
-  const [ip, setIPAddress] = useState('')
+  // const [ip, setIPAddress] = useState('')
   const [bqModal, setBqModal] = useState(false)
 
-  const { errorAlert, loggedIn, successAlert, getKNABbalance, hasApplcationAccess, isWalletCon,
-    walletConnect, walletConnectAddress, setWeb3Instance, setChainId,
-    staking: { knab, knabr },
-    user: { web3Instance } } = props
+  const [appAccess, setApplicationAccess] = useState(true)
+  const [showIPBlockingModal, setIPBlockingModal] = useState(true)
 
-  // const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
-  // useEffect(() => {
-  //   axios
-  //     // .get('https://api.ipify.org')
-  //     .get('https://ipapi.co/json/')
-  //     .then((response) => {
-  //       console.log(response.data.country_code, '***')
-  //       const isFrom = blockedCountriesCodes.includes(response.data.country_code)
-  //       if (isFrom) {
-  //         setApplicationAccess(false)
-  //         hasApplcationAccess(false)
-  //         //@ts-ignore
-  //         // localStorage.setItem('access', false)
-  //       } else {
-  //         setApplicationAccess(true)
-  //         hasApplcationAccess(true)
-  //         //@ts-ignore
-  //         // localStorage.setItem('access', true)
-  //       }
-  //     })
-  //     .catch((err) => console.log(err))
-  // })
+  const {
+    errorAlert,
+    loggedIn,
+    successAlert,
+    getKNABbalance,
+    hasApplcationAccess,
+    isWalletCon,
+    walletConnect,
+    walletConnectAddress,
+    setWeb3Instance,
+    setChainId,
+    staking: { knab, knabr },
+    user: { web3Instance },
+  } = props
+
+  const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
+
+  useEffect(() => {
+    axios
+      .get('https://ipapi.co/json/?key=55UO2jmzizMe4JbOojMgDTeczq2DA7LyLcTiLUTEg1x2grqYbr')
+      .then((response) => {
+        const isFrom = blockedCountriesCodes.includes(response.data.country_code)
+        if (isFrom) {
+          setApplicationAccess(false)
+          hasApplcationAccess(false)
+        } else {
+          hasApplcationAccess(true)
+          setApplicationAccess(true)
+        }
+      })
+      .catch((err) => console.log(err))
+  }, [props.applicationAccess])
+
+  const handleBlocking = () => {
+    try {
+      setIPBlockingModal(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const toggleIPBLockingModal = () => {
+    try {
+      setIPBlockingModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const openbcModal = () => {
     try {
@@ -108,9 +136,9 @@ const Portfolio = (props: any) => {
       if (true) {
         const web3 = await getWeb3Val()
         if (web3) {
-          const chainId = await web3.eth.getChainId();
+          const chainId = await web3.eth.getChainId()
           // console.log(chainId);
-          setChainId(chainId);
+          setChainId(chainId)
           const coinbase = await web3.eth.getCoinbase()
           if (!coinbase) {
             window.alert('Please activate Wallet first.')
@@ -118,17 +146,17 @@ const Portfolio = (props: any) => {
           }
           const publicaddress = coinbase.toLowerCase()
           if (web3Instance === '') {
-            setWeb3Instance(web3);
-            walletConnectAddress(publicaddress);
-            walletConnect(true);
-            getBalance();
+            setWeb3Instance(web3)
+            walletConnectAddress(publicaddress)
+            walletConnect(true)
+            getBalance()
           }
           getUSDCBalanceBuyKnab().then(async (result: any) => {
             // console.log('From Data', fromData);
             // console.log('USDC Bal', result);
             if (fromData > result) {
-              errorAlert('Insufficent USDC balance in wallet to buy KNAB');
-              return;
+              errorAlert('Insufficent USDC balance in wallet to buy KNAB')
+              return
             }
             setLoader(true)
             const accounts = await web3.eth.getAccounts()
@@ -216,29 +244,10 @@ const Portfolio = (props: any) => {
     }
   }
 
-  const toggleIPBLockingModal = () => {
-    try {
-      setIPBlockingModal(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const getBalance = async () => {
     const KNABBalance: any = await getKNABBalance()
     getKNABbalance(KNABBalance / 10 ** 18)
     // setPb(KNABBalance / 10 ** 18)
-  }
-  const handleBlocking = () => {
-    try {
-      setIPBlockingModal(true)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const handleApplicationAccess = (access: any) => {
-    // hasApplcationAccess(access)
-    setApplicationAccess(access)
   }
 
   const openInNewTab = (url: string) => {
@@ -246,63 +255,18 @@ const Portfolio = (props: any) => {
     if (newWindow) newWindow.opener = null
   }
 
-  // const blockedCountries = [
-  //   { name: 'United States of America', code: 'US' },
-  //   { name: 'Albania', code: 'AL' },
-  //   { name: 'Bosnia and Herzegovina', code: 'BA' },
-  //   { name: 'Belarus', code: 'BY' },
-  //   { name: 'Congo (DRC)', code: 'CD' },
-  //   { name: `Cote d'Ivoire`, code: 'CI' },
-  //   { name: 'Crimea', code: 'UA' },
-  //   { name: 'Cuba', code: 'CU' },
-  //   { name: 'Iraq', code: 'IQ' },
-  //   { name: 'Iran', code: 'IR' },
-  //   { name: 'North Korea', code: 'KP' },
-  //   { name: 'Liberia', code: 'LR' },
-  //   { name: 'Macedonia', code: 'MK' },
-  //   { name: 'Myanmar', code: 'MM' },
-  //   { name: 'Serbia', code: 'RS' },
-  //   { name: 'Sudan', code: 'SD' },
-  //   { name: 'Syria', code: 'SY' },
-  //   { name: 'Zimbabwe', code: 'ZW' },
-  // ]
-
-  // const ip2: string = '193.37.254.170' // random IP from USA
-  // useEffect(() => {
-  //   if (ip.length > 0) {
-  //     axios
-  //       .post(`${apiBaseUrl}/user/blockIp`, { ip: ip })
-  //       .then((response) => {
-  //         // console.log(response, '***')
-  //         setApplicationAccess(response.data.access)
-  //         hasApplcationAccess(response.data.access)
-  //         // hasAccess(response.data.access)
-  //       })
-  //       .catch((err) => console.log(err, '*** er'))
-  //   }
-  // })
   return (
     <>
-      <>
-        {/* {!appAccess ? (
+      <section>
+        {!appAccess && (
           <IPBlockingModal
             show={showIPBlockingModal}
             toggleModal={toggleIPBLockingModal}
             onClose={toggleIPBLockingModal}
-            // hasAccess={handleApplicationAccess}
             hasAccess={appAccess}
           />
-        ) : (
-          ''
-        )} */}
-        <IPBlockingModal
-          show={showIPBlockingModal}
-          toggleModal={toggleIPBLockingModal}
-          onClose={toggleIPBLockingModal}
-          // hasAccess={handleApplicationAccess}
-          hasAccess={appAccess}
-        />
-      </>
+        )}
+      </section>
       <div className={classes.root}>
         <div className={classes.header}>
           <Typography className={classes.title} variant="h6">
@@ -336,8 +300,8 @@ const Portfolio = (props: any) => {
             <CustomButton
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
-              // onClick={() => handleAuction()}
-              onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
+              onClick={() => handleAuction()}
+              // onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
             >
               Real Estate Auctions
             </CustomButton>
@@ -347,7 +311,8 @@ const Portfolio = (props: any) => {
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               // onClick={() => history.push(Paths.login)}
               // onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
-              onClick={props.applicationAccess ? openbqModal : handleBlocking}
+              // onClick={props.applicationAccess ? openbqModal : handleBlocking}
+              onClick={openbqModal}
             >
               Buy | Convert Quest
             </CustomButton>
@@ -370,11 +335,9 @@ const Portfolio = (props: any) => {
               <div>
                 <Typography variant="h4">
                   {/* {props.KNABBalance || pb.toFixed(2)} KNAB */}
-
                   {isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB
                   {/* {getBalance} */}
                   {/* { knab } KNAB */}
-
                   {/* <img src={Question} alt="question" style={{ position: 'relative', left: '6px', bottom: '2px' }} /> */}
                 </Typography>
               </div>
@@ -385,7 +348,8 @@ const Portfolio = (props: any) => {
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
                     // onClick={appAccess && props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
                     // onClick={() => history.push(Paths.login)}
-                    onClick={appAccess && props.applicationAccess ? openbqModal : handleBlocking}
+                    // onClick={appAccess && props.applicationAccess ? openbqModal : handleBlocking}
+                    onClick={openbqModal}
                   >
                     Buy Quest Tokens
                   </CustomButton>
@@ -396,17 +360,16 @@ const Portfolio = (props: any) => {
                   <CustomButton
                     size="large"
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                    onClick={props.applicationAccess ? openbcModal : handleBlocking}
+                    onClick={props.applicationAccess && appAccess ? openbcModal : handleBlocking}
+                    // onClick={openbcModal}
                   >
                     Buy KNAB Tokens
                   </CustomButton>
                   <br />
                   <span className={classes.pfBtnhelpText}>
                     Purchase ICO tokens (
-                    <span
-                      className={classes.learnMoreText}
-                      onClick={() => openInNewTab(`https://questcrypto.app${Paths.ICOdetails}`)}
-                    >
+                    <span className={classes.learnMoreText} onClick={() => openInNewTab(`https://questcrypto.app${Paths.ICOdetails}`)}>
+                      {/* <span className={classes.learnMoreText} onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}> */}
                       Learn More
                     </span>
                     )
@@ -426,11 +389,13 @@ const Portfolio = (props: any) => {
               </Typography>
             </div>
           </Paper> */}
-            <YourAssets getBalance={getBalance} hasAccess={appAccess} handleBlocking={handleBlocking} />
+            {/* <YourAssets getBalance={getBalance} hasAccess={appAccess} handleBlocking={handleBlocking} /> */}
+            <YourAssets getBalance={getBalance} />
           </Grid>
 
           <Grid item md={5} xs={12}>
-            <MoreWithCrypto getBalance={getBalance} hasAccess={appAccess} handleBlocking={handleBlocking} />
+            {/* <MoreWithCrypto getBalance={getBalance} hasAccess={appAccess} handleBlocking={handleBlocking} /> */}
+            <MoreWithCrypto getBalance={getBalance} />
           </Grid>
         </Grid>
 
@@ -466,16 +431,7 @@ const Portfolio = (props: any) => {
           ''
         )}
 
-        {bqModal ? (
-          <BuyAndConvertQuest
-            show={bqModal}
-            toggleModal={handlebqModalClose}
-            onClose={handlebqModalClose}
-          />
-        ) : (
-          ''
-        )}
-
+        {bqModal ? <BuyAndConvertQuest show={bqModal} toggleModal={handlebqModalClose} onClose={handlebqModalClose} /> : ''}
       </div>
       <Staking />
       {/* </div> */}
@@ -508,15 +464,17 @@ const mapStateToProps = (state: any) => ({
   applicationAccess: state.user.applicationAccess,
   isWalletCon: state.user.isWalletCon,
   staking: state.staking,
-  user: state.user
+  user: state.user,
 })
-export default withRouter(connect(mapStateToProps, {
-  successAlert,
-  errorAlert,
-  getKNABbalance,
-  hasApplcationAccess,
-  walletConnect,
-  walletConnectAddress,
-  setWeb3Instance,
-  setChainId
-})(Portfolio))
+export default withRouter(
+  connect(mapStateToProps, {
+    successAlert,
+    errorAlert,
+    getKNABbalance,
+    walletConnect,
+    walletConnectAddress,
+    setWeb3Instance,
+    setChainId,
+    hasApplcationAccess,
+  })(Portfolio)
+)

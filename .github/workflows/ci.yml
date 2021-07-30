@@ -20,8 +20,8 @@ jobs:
     - run: ls
     - name: Run build
       run: |
-        sudo docker stop questfe
-        sudo docker rm questfe
+        sudo docker stop $(sudo docker ps -q)
+        sudo docker rm $(sudo docker ps -a -q)
         sudo docker rmi -f $(sudo docker images -a -q)
         sudo docker build -t questfe .
         sudo docker run --name questfe -d -p 3000:80 questfe

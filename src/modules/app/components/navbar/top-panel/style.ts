@@ -8,7 +8,7 @@ export const TopPanelCont = styled.div`
   height: 60px;
   align-items: center;
   /* background-color:#FFFFFF; */
-  background-color: #f6f6f6;
+  background-color: #fbfbfb;
   padding: 8px 16px;
   padding-right: 36px;
   box-sizing: border-box;

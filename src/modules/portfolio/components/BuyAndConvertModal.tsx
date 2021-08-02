@@ -302,7 +302,7 @@ const BuyAndConvertModal = (props: any) => {
                   {/* { (formData.from > 0 || formData.to > 0) ?
                     `${swapDivValue} ${dropDownData.to.name} per ${dropDownData.from.name}` : ''
                   } */}
-                  1 USDC per KNAB
+                  1 USDC PER KNAB
                 </Typography>
                 {/* <CustomButton
                   size="small"

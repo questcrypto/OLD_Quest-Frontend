@@ -142,6 +142,7 @@ export const GlobalStyle = createGlobalStyle`
 
 body {
   /* background: ${colors.themeBackground} !important; */
+  overflow-x: hidden;
 }
 
 * {

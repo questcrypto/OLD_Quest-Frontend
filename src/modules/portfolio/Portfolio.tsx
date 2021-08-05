@@ -45,7 +45,8 @@ const Portfolio = (props: any) => {
   const [bqModal, setBqModal] = useState(false)
 
   const [appAccess, setApplicationAccess] = useState(true)
-  const [showIPBlockingModal, setIPBlockingModal] = useState(true)
+  // const [showIPBlockingModal, setIPBlockingModal] = useState(true)
+  const [showIPBlockingModal, setIPBlockingModal] = useState(false)
 
   const {
     errorAlert,
@@ -258,14 +259,14 @@ const Portfolio = (props: any) => {
   return (
     <>
       <section>
-        {!appAccess && (
-          <IPBlockingModal
-            show={showIPBlockingModal}
-            toggleModal={toggleIPBLockingModal}
-            onClose={toggleIPBLockingModal}
-            hasAccess={appAccess}
-          />
-        )}
+        {/* {!appAccess && ( */}
+        <IPBlockingModal
+          show={showIPBlockingModal}
+          toggleModal={toggleIPBLockingModal}
+          onClose={toggleIPBLockingModal}
+          hasAccess={appAccess}
+        />
+        {/* )} */}
       </section>
       <div className={classes.root}>
         <div className={classes.header}>
@@ -321,7 +322,7 @@ const Portfolio = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               // onClick={openbcModal}
-              onClick={props.applicationAccess ? openbcModal : handleBlocking}
+              onClick={appAccess ? openbcModal : handleBlocking}
             >
               {/* Buy | Convert KNAB */}
               Buy KNAB
@@ -360,7 +361,8 @@ const Portfolio = (props: any) => {
                   <CustomButton
                     size="large"
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
-                    onClick={props.applicationAccess && appAccess ? openbcModal : handleBlocking}
+                    // onClick={props.applicationAccess && appAccess ? openbcModal : handleBlocking}
+                    onClick={appAccess ? openbcModal : handleBlocking}
                     // onClick={openbcModal}
                   >
                     Buy KNAB Tokens

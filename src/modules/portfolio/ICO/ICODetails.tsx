@@ -71,7 +71,8 @@ const ICODetails = (props: any) => {
   const [loader, setLoader] = useState(false)
 
   const [appAccess, setApplicationAccess] = useState(true)
-  const [showIPBlockingModal, setIPBlockingModal] = useState(true)
+  // const [showIPBlockingModal, setIPBlockingModal] = useState(true)
+  const [showIPBlockingModal, setIPBlockingModal] = useState(false)
   const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
 
   useEffect(() => {
@@ -236,14 +237,14 @@ const ICODetails = (props: any) => {
   return (
     <>
       <section>
-        {!appAccess && (
-          <IPBlockingModal
-            show={showIPBlockingModal}
-            toggleModal={toggleIPBLockingModal}
-            onClose={toggleIPBLockingModal}
-            hasAccess={appAccess}
-          />
-        )}
+        {/* {!appAccess && ( */}
+        <IPBlockingModal
+          show={showIPBlockingModal}
+          toggleModal={toggleIPBLockingModal}
+          onClose={toggleIPBLockingModal}
+          hasAccess={appAccess}
+        />
+        {/* )} */}
       </section>
       <div className={classes.root}>
         <div className={classes.header}>

@@ -32,6 +32,8 @@ let web3: Web3
 // import axios from 'axios'
 
 let isWallectConnect: boolean = false
+let quickNode = process.env.REACT_APP_QUICK_NODE_HTTP;
+
 export const getWeb3Val = async () => {
   // Check if MetaMask is installed
   if (!window.ethereum) {
@@ -295,7 +297,8 @@ export const handlestableCoinapproval = async (contractStableCoin: any, account:
 
 export const fetchValue = async (amount: number) => {
   // const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
-  const web3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.chainstacklabs.com'))
+  // const web3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.chainstacklabs.com'))
+  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.KnabAmount(convertToWei(amount)).call()
   return convertToEther2(res)
@@ -303,7 +306,8 @@ export const fetchValue = async (amount: number) => {
 
 export const fetchDetails = async () => {
   // const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
-  const web3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.chainstacklabs.com'))
+  // const web3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.chainstacklabs.com'))
+  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   const IcoContract = new web3.eth.Contract(ICOabi, ICOAddress)
   const res = await IcoContract.methods.details().call()
   return { tokensSold: convertToEther2(res['0']), tokensLeft: convertToEther2(res['1']) }
@@ -323,7 +327,8 @@ export const getKNABBalance = async () => {
 export const getUSDCRaised = async () => {
   // const web3 = await getWeb3Val()
   // const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.matic.network'))
-  const web3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.chainstacklabs.com'))
+  // const web3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.chainstacklabs.com'))
+  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const ICOContract = new web3.eth.Contract(ICOabi, ICOAddress)
@@ -666,7 +671,7 @@ export const getKNABAllowance = async () => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const KNABContract = new web3.eth.Contract(KNABabi, KNABAddressTest)
-    const res = await KNABContract.methods.allowance(accounts[0],KNABFarmaddress).call()
+    const res = await KNABContract.methods.allowance(accounts[0], KNABFarmaddress).call()
     const KNABBalance: any = res
     return convertToEther2(KNABBalance)
   }
@@ -677,9 +682,9 @@ export const getUSDCAllowance = async () => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const KNABContract = new web3.eth.Contract(KNABabi, USDCAddress)
-    const res = await KNABContract.methods.allowance(accounts[0],KNABFarmaddress).call()
+    const res = await KNABContract.methods.allowance(accounts[0], KNABFarmaddress).call()
     const KNABBalance: any = res
-    return KNABBalance/ 10 ** 6
+    return KNABBalance / 10 ** 6
   }
 }
 
@@ -698,7 +703,7 @@ export const getQuestBalance = async () => {
 export const handleUsdcApprovalQuest = async (contractUsdc: any, account: string, ApproveAmount: number) => {
   const gasPrice = await gasPriceFn()
   const deci = await contractUsdc.methods.decimals().call()
-  const res = await contractUsdc.methods.approve(questAddress, ApproveAmount * (10**deci)).send({ from: account, gasPrice })
+  const res = await contractUsdc.methods.approve(questAddress, ApproveAmount * (10 ** deci)).send({ from: account, gasPrice })
   // const res = await contractUsdc.methods.approve(questAddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
   return res;
 }
@@ -723,7 +728,7 @@ export const buyQST = async (Amount: Number) => {
     const res = await questContract.methods.buyQST(parseInt(web3.utils.toWei(String(Amount), "Mwei"))).send({ from: accounts[0] })
     return res;
   }
-} 
+}
 
 export const returnQST = async (Amount: number) => {
   const web3 = await getWeb3Val()

@@ -32,7 +32,8 @@ let web3: Web3
 // import axios from 'axios'
 
 let isWallectConnect: boolean = false
-let quickNode = process.env.REACT_APP_QUICK_NODE_HTTP;
+// let quickNode = process.env.REACT_APP_QUICK_NODE_HTTP;
+let quickNode = 'https://matic-mumbai.chainstacklabs.com/';
 
 export const getWeb3Val = async () => {
   // Check if MetaMask is installed
@@ -277,13 +278,13 @@ export const getStableCoinBalance = async () => {
   return 0
 }
 
-export const buyKnab = async (amount: number) => {
+export const buyKnab = async (amount: number, referral: any) => {
   const web3 = await getWeb3Val()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const ICOinstance = new web3.eth.Contract(ICOabi, ICOAddress)
     const gasPrice = await gasPriceFn()
-    const res: any = await ICOinstance.methods.buy(convertToWei(amount)).send({ from: accounts[0], gasPrice })
+    const res: any = await ICOinstance.methods.buy(convertToWei(amount), referral).send({ from: accounts[0], gasPrice })
     return res
   }
 }

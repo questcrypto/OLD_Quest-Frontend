@@ -15,4 +15,5 @@ export enum Paths {
   login = '/login',
   tokenDetails = '/tokenDetails',
   ICOdetails = '/ICOdetails',
+  referral = '/referral'
 }

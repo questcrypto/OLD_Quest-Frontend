@@ -196,7 +196,13 @@ const Portfolio = (props: any) => {
       if (web3) {
         setIsTransaction(true)
         // const res2: any = await contractSc.methods.approve(accounts[0], 0);
-        const data = buyKnab(fromData)
+        // Checking if it is a referral link
+        const url = window.location.href;
+        let referralId: any = '';
+        if (url.includes('referral')) {
+          referralId = url.split('/').pop();
+        }
+        const data = buyKnab(fromData, referralId)
         data.then(
           (res) => {
             // console.log(res);
@@ -302,7 +308,7 @@ const Portfolio = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
               onClick={() => handleAuction()}
-              // onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
+            // onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
             >
               Real Estate Auctions
             </CustomButton>
@@ -363,7 +369,7 @@ const Portfolio = (props: any) => {
                     style={{ backgroundColor: '#1E3444', padding: '8px 62px' }}
                     // onClick={props.applicationAccess && appAccess ? openbcModal : handleBlocking}
                     onClick={appAccess ? openbcModal : handleBlocking}
-                    // onClick={openbcModal}
+                  // onClick={openbcModal}
                   >
                     Buy KNAB Tokens
                   </CustomButton>

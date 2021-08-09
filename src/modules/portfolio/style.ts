@@ -51,7 +51,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   pfBtnDiv: {
     width: '100%',
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(4.5),
     display: 'flex',
     // justifyContent: 'space-between',
     justifyContent: 'space-evenly',

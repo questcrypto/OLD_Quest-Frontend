@@ -332,7 +332,7 @@ const StakingRow1 = (props: any) => {
                       <FlexColumn>
                         <Heading>KNAB Balance</Heading>
                         <Value>{knab}</Value>
-                        <Value>($ {knab_dollar})</Value>
+                        <Value>(${knab_dollar})</Value>
                       </FlexColumn>
                       <CustomButton
                         size="small"
@@ -403,7 +403,7 @@ const StakingRow1 = (props: any) => {
                   <Paper className={classes.stakedDiv}>
                     <div className={classes.headStaDiv}>
                       <Heading>KNAB Staked</Heading>
-                      <Value>{knab_staked} ($ {knab_staked_dollar})</Value>
+                      <Value>{knab_staked} (${knab_staked_dollar})</Value>
                     </div><br />
                     <FlexDiv>
                       <CustomInput

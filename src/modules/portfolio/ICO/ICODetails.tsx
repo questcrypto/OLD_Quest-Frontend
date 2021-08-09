@@ -170,7 +170,12 @@ const ICODetails = (props: any) => {
       if (web3) {
         setIsTransaction(true)
         // const res2: any = await contractSc.methods.approve(accounts[0], 0);
-        const data = buyKnab(fromData)
+        const url = window.location.href;
+        let referralId: any = '';
+        if (url.includes('referral')) {
+          referralId = url.split('/').pop();
+        }
+        const data = buyKnab(fromData, referralId);
         data.then(
           (res) => {
             // console.log(res);

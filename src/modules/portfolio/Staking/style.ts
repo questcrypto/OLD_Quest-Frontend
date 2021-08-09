@@ -14,6 +14,7 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     background: '#858585',
     color: '#FFFFFF',
+    opacity: '0.8'
   },
   hoverBtnTxt: {
     // color: '#FFFFFF'

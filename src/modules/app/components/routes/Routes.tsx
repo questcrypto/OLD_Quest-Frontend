@@ -170,6 +170,41 @@ export const routes: RouteDefinition[] = [
     redirect: Paths.ICOdetails,
     title: '',
   },
+  {
+    path: Paths.referral,
+    component: Portfolio,
+    protected: false,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.referral + '/:id',
+    component: Portfolio,
+    protected: false,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.portfolio + '/referral' + '/:id',
+    component: Portfolio,
+    protected: false,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
+    path: Paths.tokenDetails + '/referral' + '/:id',
+    component: TokenDetails,
+    protected: false,
+    redirect: Paths.tokenDetails,
+    title: '',
+  },
+  {
+    path: Paths.ICOdetails + '/referral' + '/:id',
+    component: ICODetails,
+    protected: false,
+    redirect: Paths.ICOdetails,
+    title: '',
+  },
 ].concat(notFoundRoute as any) // Ensure that notFound is the last route
 
 export interface RouteDefinition {

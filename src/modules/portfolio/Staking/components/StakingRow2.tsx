@@ -69,7 +69,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   balMainDiv: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    height: '100%',
+    boxSizing: 'border-box'
   },
   head: {
     borderBottom: '1px solid #E4E4E4',
@@ -305,7 +307,7 @@ const StakingRow2 = (props: any) => {
             {/* <img src={KNAB} alt="" />  */}
             {/* <img src={USDC} alt="" /> */}
             <AvatarGroup max={2}>
-              <Avatar alt="" src={KNAB} />
+              <Avatar alt="" src={KNAB} style={{ background: '#FFF' }} />
               <Avatar alt="" src={USDC} />
             </AvatarGroup>
           </FlexRow>

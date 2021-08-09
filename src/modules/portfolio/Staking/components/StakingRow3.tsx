@@ -103,7 +103,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
   },
   knabValues: {
-    fontSize: '14px'
+    fontSize: '14px',
+    textAlign: 'right'
   },
   stakedDiv: {
     padding: theme.spacing(2)

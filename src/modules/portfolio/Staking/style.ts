@@ -12,9 +12,13 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    background: '#858585',
+    // background: '#858585',
+    // background: 'rgba(133, 133, 133, 0.85)',
     color: '#FFFFFF',
-    opacity: '0.8'
+    '&:hover': {
+      background: 'rgba(133, 133, 133, 0.85)',
+      transition: 'background 1s linear'
+    }
   },
   hoverBtnTxt: {
     // color: '#FFFFFF'

@@ -13,24 +13,38 @@ const useStyles = makeStyles((theme) => ({
       border: '2px solid #E6BA73',
     },
   },
+  headerFlex: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   header: {
     display: 'flex',
     padding: '30px',
     fontSize: '0.8em',
-    fontWeight: 'bold',
-    color: '#C4C4C4',
+    paddingBottom: '0px',
+    // fontWeight: 'bold',
+    // color: '#C4C4C4',
   },
   rightHeader: {
     display: 'flex',
     padding: '30px',
-    marginLeft: '170px',
+    // marginLeft: '170px',
     fontSize: '0.8em',
+    paddingBottom: '0px',
+    // fontWeight: 'bold',
+    // color: '#C4C4C4',
+  },
+  label: {
+    color: '#858585'
+  },
+  value: {
+    color: '#000',
     fontWeight: 'bold',
-    color: '#C4C4C4',
   },
   detailsSubtitle: {
-    fontSize: '1em',
-    fontWeight: 'bold',
+    fontSize: '1.5rem',
+    // fontWeight: 'bold',
+    color: '#D4A863'
   },
   title: {
     color: '#C4C4C4',
@@ -50,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
   },
   nestedSubTitle: {
     fontSize: '0.7em',
-    color: '#C4C4C4',
+    // color: '#C4C4C4',
+    color: '#1E3444'
   },
 }))
 
@@ -104,12 +119,18 @@ const RaisedTokens = (props: any) => {
   return (
     <div className={classes.mainDiv}>
       <Paper className={classes.root} style={{ opacity: 1 }}>
-        <Grid container>
+        <Grid container className={classes.headerFlex}>
           <Grid item>
-            <Typography className={classes.header}>Raised : {raisedTokens} USDC</Typography>
+            <Typography className={classes.header}>
+              <span className={classes.label}>Raised - </span>
+              <span className={classes.value}>&nbsp;{raisedTokens} USDC</span>
+            </Typography>
           </Grid>
           <Grid item>
-            <Typography className={classes.rightHeader}>Target : 80 Million USDC</Typography>
+            <Typography className={classes.rightHeader}>
+              <span className={classes.label}>Target - </span> 
+              <span className={classes.value}>&nbsp;80 Million USDC</span>
+            </Typography>
           </Grid>
         </Grid>
         <Tooltip title={raisedTokens} enterDelay={200} leaveDelay={100}>

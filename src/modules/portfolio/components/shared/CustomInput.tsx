@@ -8,8 +8,11 @@ const useStyles = makeStyles((theme) => ({
     },
     width: '100%',
     border: '1px solid #EDEDED',
-    padding: '0px 12px',
+    padding: '0px 12px'
   },
+  input: {
+    height: '100%',
+  }
 }))
 
 // let maxValue: Number = 0;
@@ -29,7 +32,7 @@ const CustomInput = (props: any) => {
         <InputAdornment position="end" style={{cursor: 'pointer'}} onClick={adornmentClick}>
           {adornment}
         </InputAdornment>}
-      classes={{ root: classes.fromDivInput }}
+      classes={{ root: classes.fromDivInput, input: classes.input }}
       {...other}
     />
   )

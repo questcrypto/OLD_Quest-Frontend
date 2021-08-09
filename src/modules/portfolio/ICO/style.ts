@@ -5,12 +5,12 @@ import { Slider } from '@material-ui/core'
 
 export const SliderWrap = styled.div`
   background: rgba(245, 245, 245, 0.15);
-  border: 1px solid rgba(48, 46, 53, 0.15);
+  /* border: 1px solid rgba(48, 46, 53, 0.15); */
   padding: 5px 12px;
   box-sizing: border-box;
   border-radius: 5px;
   box-sizing: border-box;
-  margin-left: 30px;
+  margin-left: 24px;
   margin-right: 30px;
   margin-bottom: 4px;
 `

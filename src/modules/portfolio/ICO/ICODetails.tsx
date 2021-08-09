@@ -238,6 +238,12 @@ const ICODetails = (props: any) => {
     }
   }
 
+  const backFn = () => {
+    try {
+      history.push(Paths.root)
+    } catch (error) { console.log(error) }
+  }
+
   console.log(applicationAccess, '*** applicationAccess')
   return (
     <>
@@ -306,12 +312,24 @@ const ICODetails = (props: any) => {
         <br />
 
         <Paper>
-          <br />
           <Grid container spacing={2} className={classes.paper}>
+            <Grid item md={12} xs={12} style={{ paddingBottom: '30px'}}>
+              <CustomButton
+                size="small"
+                disableElevation
+                disableFocusRipple
+                disableRipple
+                style={{ backgroundColor: '#C4C4C4', padding: '4px 16px', 
+                         color: '#000', borderRadius: '5px' }}
+                onClick={backFn}
+              >
+                Back
+              </CustomButton>
+            </Grid>
             <Grid item md={5} xs={12}>
               <ICOHoldings
                 knabBalance={props.isWalletCon ? props.KNABBalance : 0}
-                // knabBalance={props.KNABBalance}
+              // knabBalance={props.KNABBalance}
               />
             </Grid>
             <Grid item md={7} xs={12}>

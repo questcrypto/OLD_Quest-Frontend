@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     padding: '30px',
     fontSize: '0.8em',
-    paddingBottom: '0px',
+    paddingBottom: '21.5px',
     // fontWeight: 'bold',
     // color: '#C4C4C4',
   },

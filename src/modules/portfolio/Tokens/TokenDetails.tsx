@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
     // backgroundColor: '#E5E5E5'
-    paddingTop: theme.spacing(7),
+    paddingTop: theme.spacing(2),
     paddingRight: theme.spacing(5),
   },
   header: {
@@ -226,6 +226,11 @@ const TokenDetails = (props: any) => {
       console.log(error)
     }
   }
+  const backFn = () => {
+    try {
+      history.push(Paths.root)
+    } catch (error) { console.log(error) }
+  }
 
   return (
     <>
@@ -248,14 +253,14 @@ const TokenDetails = (props: any) => {
       /> */}
       <div className={classes.root}>
         <div className={classes.header}>
-          <Typography className={classes.title}>Token Details</Typography>
+          <Typography className={classes.title}>Token&nbsp;Details</Typography>
           <div className={classes.btnDiv}>
             <CustomButton
               size="small"
               disableElevation
               disableFocusRipple
               disableRipple
-              style={{ backgroundColor: '#858585', padding: '0px 16px' }}
+              style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
               00.00 KNABr
             </CustomButton>
@@ -265,14 +270,14 @@ const TokenDetails = (props: any) => {
               disableElevation
               disableFocusRipple
               disableRipple
-              style={{ backgroundColor: '#858585', padding: '0px 16px' }}
+              style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
               {props.isWalletCon ? props.KNABBalance : 0} KNAB
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
-              style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
+              style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               // onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
               onClick={() => handleAuction()}
             >
@@ -281,7 +286,7 @@ const TokenDetails = (props: any) => {
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
-              style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
+              style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               // onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
               onClick={() => history.push(Paths.login)}
             >
@@ -290,7 +295,7 @@ const TokenDetails = (props: any) => {
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
-              style={{ backgroundColor: '#1E3444', padding: '0px 16px' }}
+              style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               onClick={applicationAccess ? openbcModal : handleBlocking}
             >
               Buy KNAB
@@ -300,11 +305,26 @@ const TokenDetails = (props: any) => {
         <br />
         <Paper>
           <br />
-          <Grid container spacing={2} className={classes.paper}>
+          <Grid container spacing={4} className={classes.paper}>
+            <Grid item md={12} xs={12} style={{ paddingBottom: '24px', paddingTop: '0px' }}>
+              <CustomButton
+                size="small"
+                disableElevation
+                disableFocusRipple
+                disableRipple
+                style={{
+                  backgroundColor: '#C4C4C4', padding: '4px 16px',
+                  color: '#000', borderRadius: '5px'
+                }}
+                onClick={backFn}
+              >
+                Back
+              </CustomButton>
+            </Grid>
             <Grid item md={5} xs={12}>
               <KnabCard />
             </Grid>
-            <Grid item md={7} xs={12}>
+            <Grid item md={5} xs={12}>
               {/* <TokenCard /> */}
               <KnabrCard />
             </Grid>

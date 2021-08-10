@@ -12,12 +12,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     // padding: `${theme.spacing(4)}px ${theme.spacing(14)}px`,
     // paddingTop: theme.spacing(2),
+    width: '99.9%'
   },
   table: {
     // minWidth: 650,
     // border: '1px solid #C4C4C4',
     borderRadius: '10px',
-    width: 1140,
+    // width: 1140,
   },
   tableHeader: {
     fontSize: '24px',

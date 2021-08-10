@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#C4C4C4',
     marginLeft: '3px',
     marginRight: '3px',
+    position: 'relative',
+    top: '2px'
   },
   arrowText: {
     color: '#C4C4C4',
@@ -56,8 +58,10 @@ const useStyles = makeStyles((theme) => ({
   },
   line: {
     height: '1px',
-    width: '100%',
+    width: '80%',
     backgroundColor: '#DEDEDE',
+    position: 'relative',
+    left: '5%'
   },
   contentDiv: {
     display: 'flex',
@@ -71,9 +75,15 @@ const useStyles = makeStyles((theme) => ({
   contentTextDiv: {},
   secondLineText: {},
   warningText: {
-    color: '#C4C4C4',
-    marginBottom: '2px',
+    // color: '#C4C4C4',
+    // marginBottom: '2px',
+    color: '#858585',
+    padding: '16px',
+    paddingBottom: '16px',
   },
+  iconImg: {
+    height: '7vh'
+  }
 }))
 
 const KnabrCard = (props: any) => {
@@ -86,7 +96,7 @@ const KnabrCard = (props: any) => {
           <div>
             <div className={classes.contentDiv}>
               <div className={classes.contentImgDiv}>
-                <img src={KnabIcon} alt="" />
+                <img src={KnabIcon} alt="" className={classes.iconImg}/>
               </div>
               <div className={classes.contentTextDiv}>
                 <Typography>KNABr</Typography>
@@ -99,7 +109,7 @@ const KnabrCard = (props: any) => {
                 </Typography>
               </div>
             </div>
-            <Grid container spacing={4} style={{ padding: '38px 0px' }}>
+            <Grid container spacing={4} style={{ padding: '24px 0px' }}>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Grid item md={4} xs={12}>
                 Available Qty.
@@ -115,7 +125,8 @@ const KnabrCard = (props: any) => {
                 +3.57%
               </Grid>
             </Grid>
-            <hr />
+            {/* <hr /> */}
+            <div className={classes.line}></div>
             <Typography variant="subtitle2" className={classes.warningText}>
               <img src={Exclamation} alt="" className={classes.exclamationImage} /> This is subject to market variations for field.
             </Typography>

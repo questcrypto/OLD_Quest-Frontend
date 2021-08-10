@@ -313,7 +313,7 @@ const ICODetails = (props: any) => {
 
         <Paper>
           <Grid container spacing={2} className={classes.paper}>
-            <Grid item md={12} xs={12} style={{ paddingBottom: '30px'}}>
+            <Grid item md={12} xs={12} style={{ paddingBottom: '24px', paddingTop: '0px'}}>
               <CustomButton
                 size="small"
                 disableElevation

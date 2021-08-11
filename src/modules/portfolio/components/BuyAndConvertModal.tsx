@@ -329,6 +329,7 @@ const BuyAndConvertModal = (props: any) => {
                   onChange={handleChange}
                   adornment={' | MAX'}
                   adornmentClick={approveMaxClickUsdc}
+                  style={{ borderLeft: 'none'}}
                 />
               </ContaInnerDiv>
 
@@ -337,7 +338,7 @@ const BuyAndConvertModal = (props: any) => {
               </Typography>
               <ContaInnerDiv>
                 <DropDownButton options={options2} valueChange={handleBtnChange} />
-                <CustomInput id="to" type="text" value={formData.to} onChange={handleChange} adornment="" readOnly />
+                <CustomInput id="to" type="text" value={formData.to} onChange={handleChange} adornment="" readOnly style={{ borderLeft: 'none'}} />
               </ContaInnerDiv>
             </ContaDiv>
             {/* {(formData.from > 0 || formData.to > 0) ? '': '' */}

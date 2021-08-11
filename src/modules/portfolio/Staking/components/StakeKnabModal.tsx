@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   KnabIc: {
     display: 'flex',
     border: '1px solid #EDEDED',
+    borderRight: 'none',
     alignItems: 'center',
     padding: theme.spacing(1),
     '& $img': {
@@ -70,6 +71,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
     display: 'flex',
     justifyContent: 'center'
+  },
+  hr: {
+    height: '24px',
+    color: '#EDEDED',
+    opacity: '0.5'
   }
 }));
 
@@ -203,7 +209,8 @@ const StakeKnabModal = (props: any) => {
             <div className={classes.knabInput}>
               <div className={classes.KnabIc}>
                 <img src={KNAB} alt="" />
-                <span>KNAB</span>
+                <span>KNAB&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <hr className={classes.hr} />
               </div>
               <CustomInput
                 id="knab"
@@ -211,7 +218,7 @@ const StakeKnabModal = (props: any) => {
                 value={stakeKnabVal}
                 onChange={(e: any) => { setStakeKnabVal(e.target.value) }}
                 adornment={' | MAX'}
-                style={{ minHeight: '48px' }}
+                style={{ minHeight: '48px', borderLeft: 'none' }}
                 adornmentClick={approveMaxStakeClick}
               />
             </div>

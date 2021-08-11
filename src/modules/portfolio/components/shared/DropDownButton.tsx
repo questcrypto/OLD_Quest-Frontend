@@ -27,12 +27,18 @@ const useStyles = makeStyles(theme => ({
   },
   root2: {
     borderLeft: 'none',
+    borderRight: 'none',
     border: '1px solid #EDEDED',
     // display: `${(props: any) => (props.hideArrow ? 'none' : '')}`,
     // display: 'none',
     '&:hover': {
       backgroundColor: 'transparent'
     }
+  },
+  hr: {
+    height: '24px',
+    color: '#EDEDED',
+    opacity: '0.5'
   }
 }));
 
@@ -101,7 +107,7 @@ const DropDownButton = (props: any) => {
             classes={{ root: classes.root2 }}
             onClick={handleToggle}
           >
-            <ArrowDropDownIcon />
+            <ArrowDropDownIcon />&nbsp;&nbsp;<hr className={classes.hr} />
           </Button>
         </ButtonGroup>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal style={{ zIndex: 9 }}>

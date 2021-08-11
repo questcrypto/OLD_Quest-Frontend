@@ -719,14 +719,14 @@ export const handleQSTApproval = async (ApproveAmount: number) => {
   }
 }
 
-export const buyQST = async (Amount: Number) => {
+export const buyQST = async (Amount: Number, referral: any) => {
   const web3 = await getWeb3Val()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const questContract = new web3.eth.Contract(questabi, questAddress)
     // console.log(typeof web3.utils.toWei(String(Amount), "Mwei"))
     // console.log(web3.utils.toWei(String(Amount), "Mwei"))
-    const res = await questContract.methods.buyQST(parseInt(web3.utils.toWei(String(Amount), "Mwei"))).send({ from: accounts[0] })
+    const res = await questContract.methods.buyQST(parseInt(web3.utils.toWei(String(Amount), "Mwei")), referral).send({ from: accounts[0] })
     return res;
   }
 }

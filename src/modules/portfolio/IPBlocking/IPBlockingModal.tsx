@@ -5,7 +5,7 @@ import CustomButton from '../components/shared/Button'
 
 const useStyles = makeStyles((theme) => ({
   bcDiv: {
-    minWidth: '464px',
+    minWidth: '650px',
   },
   modalBody: {
     padding: theme.spacing(4),
@@ -26,23 +26,34 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing(4),
+    padding: '32px 0px',
   },
   confirmDialogText: {
-    color: '#858585',
+    color: '#293854',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+    fontSize: '1.2rem'
+  },
+  link: {
+    color: 'rgb(230, 186, 115)'
   },
   confirmDialogBtn: {
-    width: '100%',
+    width: '90%',
     display: 'flex',
     justifyContent: 'center',
-    marginTop: '32px',
+    marginTop: '16px',
     marginBottom: '16px',
   },
+  hr: {
+    width: '100%',
+  },
+  body: {
+    padding: '0px 48px',
+    paddingBottom: '16px'
+  }
 }))
 
 const IPBlockingModal = (props: any) => {
@@ -54,14 +65,14 @@ const IPBlockingModal = (props: any) => {
       <div className={classes.bcDiv}>
         <div className={classes.confirmDialog}>
           <div className={classes.confirmDialogText}>
-            <Typography variant="subtitle1" style={{ lineHeight: 2.5 }}>
-              It seems you are accessing <a href="https://questcrypto.app">https://questcrypto.app</a> <br />
+            <Typography variant="subtitle1" style={{ lineHeight: 2 }}>
+              It seems you are accessing <a className={classes.link} href="https://questcrypto.app">https://questcrypto.app</a> <br />
               from an IP address belonging to one of <br />
               the following countries:
             </Typography>
           </div>
           <hr />
-          <Grid container spacing={2}>
+          <Grid container spacing={4} className={classes.body}>
             <Grid item md={8} xs={12}>
               <Typography>United States of America</Typography>
               <Typography>Albania</Typography>
@@ -84,6 +95,7 @@ const IPBlockingModal = (props: any) => {
               <Typography>Zimbabwe</Typography>
             </Grid>
           </Grid>
+          <hr className={classes.hr} />
           <div className={classes.confirmDialogBtn}>
             <CustomButton size="large" style={{ backgroundColor: '#1E3444', padding: '8px 24px', width: '100%' }} onClick={onClose}>
               I ACKNOWLEGDGE

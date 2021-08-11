@@ -224,9 +224,14 @@ const BuyAndConvertQuest = (props: any) => {
       const web3 = await getWeb3Val()
       if (web3) {
         setIsTransaction(true)
+        const url = window.location.href;
+        let referralId: any = '';
+        if (url.includes('referral')) {
+          referralId = url.split('/').pop();
+        }
         let data;
         if (isSwap) {
-          data = buyQST(fromData)
+          data = buyQST(fromData, referralId)
         } else {
           data = returnQST(fromData)
         }
@@ -392,6 +397,7 @@ const BuyAndConvertQuest = (props: any) => {
                       onChange={handleChange}
                       adornment={' | MAX'}
                       adornmentClick={maxClickFrom}
+                      style={{ borderLeft: 'none'}}
                     /></> :
                     <>
                       <DropDownButton options={options2} valueChange={handleBtnChange} />
@@ -402,6 +408,7 @@ const BuyAndConvertQuest = (props: any) => {
                         onChange={handleChange}
                         adornment={' | MAX'}
                         adornmentClick={maxClickFrom}
+                        style={{ borderLeft: 'none'}}
                       />
                     </>
                 }
@@ -419,6 +426,7 @@ const BuyAndConvertQuest = (props: any) => {
                       value={formData.to}
                       onChange={handleChange}
                       adornment=''
+                      style={{ borderLeft: 'none'}}
                     />
                     {/* adornment={' | MAX'}
                     adornmentClick={() => maxClickTo()} */}
@@ -430,6 +438,7 @@ const BuyAndConvertQuest = (props: any) => {
                       value={formData.to}
                       onChange={handleChange}
                       adornment=''
+                      style={{ borderLeft: 'none'}}
                     />
                     {/* adornment={' | MAX'}
                     adornmentClick={() => maxClickTo()} */}

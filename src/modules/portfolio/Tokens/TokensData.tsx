@@ -11,23 +11,35 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     height: 'auto',
+    padding: '16px 40px',
+    paddingRight: '0px'
   },
   title: {
-    color: '#C4C4C4',
-    fontSize: '0.8em',
+    color: '#858585',
+    fontSize: '1em',
+    borderBottom: '1px solid #F5F5F5',
+    padding: '8px 0px'
   },
   subTitle: {
-    color: '##C4C4C4',
-    fontWeight: 'bold',
+    color: '#000000',
+    // fontWeight: 'bold',
     fontSize: '1em',
+    textAlign: 'right',
+    borderBottom: '1px solid #F5F5F5',
+    marginRight: '54px',
+    padding: '8px 0px'
   },
   content: {
     marginTop: '5px',
   },
+  icoGrid: {
+    textAlign: 'center',
+    marginTop: '12px'
+  },
   icoBtn: {
     background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)',
     padding: '4px 24px',
-    marginLeft: '40px',
+    // marginLeft: '40px',
   },
 }))
 const TokensData = (props: any) => {
@@ -62,60 +74,56 @@ const TokensData = (props: any) => {
     <>
       <div className={classes.mainDiv}>
         <Paper className={classes.root} style={{ opacity: 1 }}>
-          <Grid container spacing={4}>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Grid item md={2} xs={12}>
+          <Grid container>
+            <Grid item md={3} xs={12}>
               <Typography className={classes.title}>KNAB Tokens for sale.</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>10 Million</Typography>
             </Grid>
-            <Grid item md={2} xs={12}>
+            <Grid item md={3} xs={12}>
               <Typography className={classes.title}>KNAB Tokens Remaining</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>{tokensData.tokensLeft}</Typography>
             </Grid>
           </Grid>
-          <Grid container spacing={4} className={classes.content}>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Grid item md={2} xs={12}>
+          <Grid container className={classes.content}>
+            <Grid item md={3} xs={12}>
               <Typography className={classes.title}>ICO Price.</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>$ 1</Typography>
             </Grid>
-            <Grid item md={2} xs={12}>
+            <Grid item md={3} xs={12}>
               <Typography className={classes.title}>% Of Total Supply</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>10%</Typography>
             </Grid>
           </Grid>
-          <Grid container spacing={4} className={classes.content}>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Grid item md={2} xs={12}>
+          <Grid container className={classes.content}>
+            <Grid item md={3} xs={12}>
               <Typography className={classes.title}>Fund Raising Goal.</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>80 Million USDC</Typography>
             </Grid>
-            <Grid item md={2} xs={12}>
+            <Grid item md={3} xs={12}>
               <Typography className={classes.title}>APY</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>4.12%</Typography>
             </Grid>
           </Grid>
-          <Grid container spacing={4} className={classes.content}>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Grid item md={2} xs={12}>
+          <Grid container className={classes.content}>
+            <Grid item md={3} xs={12}>
               <Typography className={classes.title}>Total Market Cap</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
               <Typography className={classes.subTitle}>{raisedTokens}</Typography>
             </Grid>
-            <Grid item md={5} xs={12}>
+            <Grid item md={6} xs={12} className={classes.icoGrid}>
               <CustomButton size="large" className={classes.icoBtn} onClick={() => handlePopup()}>
                 Full ICO Details
               </CustomButton>

@@ -285,7 +285,7 @@ const Portfolio = (props: any) => {
               disableElevation
               disableFocusRipple
               disableRipple
-              style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
+              style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
               {knabr} KNABr
             </CustomButton>
@@ -295,7 +295,7 @@ const Portfolio = (props: any) => {
               disableElevation
               disableFocusRipple
               disableRipple
-              style={{ backgroundColor: '#858585', padding: '4px 16px', margin: '0 0 10px 0' }}
+              style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
               {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
               {/* {KNABbalance || pb.toFixed(3)} KNAB */}
@@ -306,7 +306,7 @@ const Portfolio = (props: any) => {
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
-              style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
+              style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               onClick={() => handleAuction()}
             // onClick={props.applicationAccess ? () => handleAuction() : handleBlocking}
             >
@@ -315,7 +315,7 @@ const Portfolio = (props: any) => {
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
-              style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
+              style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               // onClick={() => history.push(Paths.login)}
               // onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
               // onClick={props.applicationAccess ? openbqModal : handleBlocking}
@@ -326,7 +326,7 @@ const Portfolio = (props: any) => {
             &nbsp;&nbsp;&nbsp;
             <CustomButton
               size="small"
-              style={{ backgroundColor: '#1E3444', padding: '4px 16px', margin: '0 0 10px 0' }}
+              style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               // onClick={openbcModal}
               onClick={appAccess ? openbcModal : handleBlocking}
             >

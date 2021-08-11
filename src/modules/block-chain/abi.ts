@@ -5,7 +5,7 @@
 
 // Testing for referral
 export const stableCoinContractAddress = '0xA986d9F095493870A0278E174Ed52A84E3a96a01'
-export const ICOAddress = '0x1Add8081481510A77d880BB3dA72D41061B46A23'
+export const ICOAddress = '0xc7415814196ed50385a9A63c376Eb25BEbaD769e'
 export const KNABaddress = '0xBF9C621211B7b1716446f591748b266B035EB33f'
 
 export const SLFContractAddress = '0x8c9Ba9aEeBEb1F0F15a430964438809102099e69'
@@ -21,7 +21,7 @@ export const stratAddress1 = '0xA894BDF433e02D7c46122f2c2fc097b66f7e8269'
 export const stratAddress2 = '0x2B8B86DF468A8D8575eE35f3A5a117C88A9FE4D6'
 export const stratAddress3 = '0x00ecA350a5fD9D5f9c87b0B34d0008cE691d6cE0'
 export const rewardsAddress = '0x818B021b598b1d1E469344e7cda5eF2E8f68ed9e'
-export const questAddress = '0x6002C8058efBaFC89c3257B26140c46c2ddf7c79'
+export const questAddress = '0x9ba8158472404a9e49Fd7395A47D826C45afC9C0'
 
 export const slcAbi: any = [
   {
@@ -4416,6 +4416,16 @@ export const questabi: any = [
 				"internalType": "address",
 				"name": "sca",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_index",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_tokenTracker",
+				"type": "address"
 			}
 		],
 		"stateMutability": "nonpayable",
@@ -4544,6 +4554,11 @@ export const questabi: any = [
 				"internalType": "uint256",
 				"name": "amount",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "refId",
+				"type": "string"
 			}
 		],
 		"name": "buyQST",
@@ -4614,6 +4629,19 @@ export const questabi: any = [
 	},
 	{
 		"inputs": [],
+		"name": "index",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "name",
 		"outputs": [
 			{
@@ -4659,22 +4687,22 @@ export const questabi: any = [
 				"type": "uint256"
 			}
 		],
-		"name": "takeQST",
+		"name": "takeSC",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "tokentracker",
+		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
-		"name": "takeSC",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{

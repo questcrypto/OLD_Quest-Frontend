@@ -22,6 +22,8 @@ import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import USDC from 'assets/icons/USDC.svg'
 import KNAB from 'assets/icons/KNAB.svg'
 import IPBlockingModal from '../IPBlocking/IPBlockingModal'
+import BuyAndConvertQuest from '../components/BuyAndConvertQuest'
+
 const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
@@ -69,6 +71,7 @@ const ICODetails = (props: any) => {
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [loader, setLoader] = useState(false)
+  const [bqModal, setBqModal] = useState(false)
 
   const [appAccess, setApplicationAccess] = useState(true)
   // const [showIPBlockingModal, setIPBlockingModal] = useState(true)
@@ -244,6 +247,22 @@ const ICODetails = (props: any) => {
     } catch (error) { console.log(error) }
   }
 
+  const openbqModal = () => {
+    try {
+      setBqModal(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handlebqModalClose = () => {
+    try {
+      setBqModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   console.log(applicationAccess, '*** applicationAccess')
   return (
     <>
@@ -295,7 +314,8 @@ const ICODetails = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               // onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
-              onClick={() => history.push(Paths.login)}
+              // onClick={() => history.push(Paths.login)}
+              onClick={openbqModal}
             >
               Buy&nbsp;|&nbsp;Convert&nbsp;Quest
             </CustomButton>
@@ -313,14 +333,16 @@ const ICODetails = (props: any) => {
 
         <Paper>
           <Grid container spacing={2} className={classes.paper}>
-            <Grid item md={12} xs={12} style={{ paddingBottom: '24px', paddingTop: '0px'}}>
+            <Grid item md={12} xs={12} style={{ paddingBottom: '24px', paddingTop: '0px' }}>
               <CustomButton
                 size="small"
                 disableElevation
                 disableFocusRipple
                 disableRipple
-                style={{ backgroundColor: '#C4C4C4', padding: '4px 16px', 
-                         color: '#000', borderRadius: '5px' }}
+                style={{
+                  backgroundColor: '#C4C4C4', padding: '4px 16px',
+                  color: '#000', borderRadius: '5px'
+                }}
                 onClick={backFn}
               >
                 Back
@@ -367,6 +389,12 @@ const ICODetails = (props: any) => {
         ) : (
           ''
         )}
+        {bqModal ? 
+          <BuyAndConvertQuest 
+            show={bqModal} 
+            toggleModal={handlebqModalClose} 
+            onClose={handlebqModalClose} 
+          /> : ''}
       </div>
     </>
   )

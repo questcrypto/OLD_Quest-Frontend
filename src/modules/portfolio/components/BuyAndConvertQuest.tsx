@@ -224,6 +224,11 @@ const BuyAndConvertQuest = (props: any) => {
       const web3 = await getWeb3Val()
       if (web3) {
         setIsTransaction(true)
+        // const url = window.location.href;
+        // let referralId: any = '';
+        // if (url.includes('referral')) {
+        //   referralId = url.split('/').pop();
+        // }
         let data;
         if (isSwap) {
           data = buyQST(fromData)

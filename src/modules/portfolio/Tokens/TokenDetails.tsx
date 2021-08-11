@@ -22,6 +22,7 @@ import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import USDC from 'assets/icons/USDC.svg'
 import KNAB from 'assets/icons/KNAB.svg'
 import IPBlockingModal from '../IPBlocking/IPBlockingModal'
+import BuyAndConvertQuest from '../components/BuyAndConvertQuest'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,6 +71,7 @@ const TokenDetails = (props: any) => {
   const [isConfirm, setIsConfirm] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [loader, setLoader] = useState(false)
+  const [bqModal, setBqModal] = useState(false)
 
   const [appAccess, setApplicationAccess] = useState(true)
   const [showIPBlockingModal, setIPBlockingModal] = useState(true)
@@ -232,6 +234,22 @@ const TokenDetails = (props: any) => {
     } catch (error) { console.log(error) }
   }
 
+  const openbqModal = () => {
+    try {
+      setBqModal(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handlebqModalClose = () => {
+    try {
+      setBqModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <section>
@@ -288,7 +306,8 @@ const TokenDetails = (props: any) => {
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
               // onClick={props.applicationAccess ? () => history.push(Paths.login) : handleBlocking}
-              onClick={() => history.push(Paths.login)}
+              // onClick={() => history.push(Paths.login)}
+              onClick={openbqModal}
             >
               Buy | Convert Quest
             </CustomButton>
@@ -360,6 +379,12 @@ const TokenDetails = (props: any) => {
         ) : (
           ''
         )}
+        {bqModal ?
+          <BuyAndConvertQuest
+            show={bqModal}
+            toggleModal={handlebqModalClose}
+            onClose={handlebqModalClose}
+          /> : ''}
       </div>
     </>
   )

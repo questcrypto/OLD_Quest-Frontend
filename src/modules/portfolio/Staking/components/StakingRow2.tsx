@@ -447,10 +447,10 @@ const StakingRow2 = (props: any) => {
                     </CustomButton>
                   </FlexDiv><br />
                   <div className={classes.stakInfoText}>
-                    {/* <FlexRow>
+                    <FlexRow>
                       <img src={Info} alt="" className={classes.infoImg} />
                       Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                    </FlexRow> */}
+                    </FlexRow>
                   </div>
                 </Paper>
                 <Paper className={classes.stakedDiv2}>
@@ -477,10 +477,10 @@ const StakingRow2 = (props: any) => {
                     </CustomButton>
                   </FlexDiv><br />
                   <div className={classes.stakInfoText}>
-                    {/* <FlexRow>
+                    <FlexRow>
                       <img src={Info} alt="" className={classes.infoImg} />
                       Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                    </FlexRow> */}
+                    </FlexRow>
                   </div>
                 </Paper>
               </FlexColumn>

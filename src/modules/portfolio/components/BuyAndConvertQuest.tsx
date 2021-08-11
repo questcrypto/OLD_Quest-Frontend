@@ -392,6 +392,7 @@ const BuyAndConvertQuest = (props: any) => {
                       onChange={handleChange}
                       adornment={' | MAX'}
                       adornmentClick={maxClickFrom}
+                      style={{ borderLeft: 'none'}}
                     /></> :
                     <>
                       <DropDownButton options={options2} valueChange={handleBtnChange} />
@@ -402,6 +403,7 @@ const BuyAndConvertQuest = (props: any) => {
                         onChange={handleChange}
                         adornment={' | MAX'}
                         adornmentClick={maxClickFrom}
+                        style={{ borderLeft: 'none'}}
                       />
                     </>
                 }
@@ -419,6 +421,7 @@ const BuyAndConvertQuest = (props: any) => {
                       value={formData.to}
                       onChange={handleChange}
                       adornment=''
+                      style={{ borderLeft: 'none'}}
                     />
                     {/* adornment={' | MAX'}
                     adornmentClick={() => maxClickTo()} */}
@@ -430,6 +433,7 @@ const BuyAndConvertQuest = (props: any) => {
                       value={formData.to}
                       onChange={handleChange}
                       adornment=''
+                      style={{ borderLeft: 'none'}}
                     />
                     {/* adornment={' | MAX'}
                     adornmentClick={() => maxClickTo()} */}

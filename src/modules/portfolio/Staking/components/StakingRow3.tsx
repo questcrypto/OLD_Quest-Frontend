@@ -74,7 +74,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   balMainDiv: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    height: '100%',
+    boxSizing: 'border-box'
   },
   head: {
     borderBottom: '1px solid #E4E4E4',
@@ -92,8 +94,9 @@ const useStyles = makeStyles((theme) => ({
   KnabIc: {
     display: 'flex',
     border: '1px solid #EDEDED',
+    borderRight: 'none',
     alignItems: 'center',
-    padding: theme.spacing(1),
+    padding: '4px 8px',
     '& $img': {
       paddingRight: theme.spacing(1)
     }
@@ -127,6 +130,11 @@ const useStyles = makeStyles((theme) => ({
   },
   padLR: {
     paddingRight: '16px'
+  },
+  hr: {
+    height: '24px',
+    color: '#EDEDED',
+    opacity: '0.5'
   }
 }));
 
@@ -415,7 +423,8 @@ const StakingRow3 = (props: any) => {
                     <div className={classes.knabInput}>
                       <div className={classes.KnabIc}>
                         <img src={USDC} alt="" />
-                        <span>USDC</span>
+                        <span>USDC&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <hr className={classes.hr}/>
                       </div>
                       <CustomInput
                         id="knab"
@@ -424,6 +433,7 @@ const StakingRow3 = (props: any) => {
                         onChange={(e: any) => { setUsdcAppr(e.target.value) }}
                         adornment={' | MAX'}
                         adornmentClick={approveMaxUsdcClick}
+                        style={{ borderLeft: 'none'}}
                       />
                     </div>
                   </div>
@@ -492,10 +502,10 @@ const StakingRow3 = (props: any) => {
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
-                      {/* <FlexRow>
+                      <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
                         Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                      </FlexRow> */}
+                      </FlexRow>
                     </div>
                   </Paper>
                   <Paper className={classes.stakedDiv2}>
@@ -522,10 +532,10 @@ const StakingRow3 = (props: any) => {
                       </CustomButton>
                     </FlexDiv><br />
                     <div className={classes.stakInfoText}>
-                      {/* <FlexRow>
+                      <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
                         Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
-                      </FlexRow> */}
+                      </FlexRow>
                     </div>
                   </Paper>
                 </FlexColumn>

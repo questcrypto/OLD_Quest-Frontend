@@ -5,6 +5,7 @@ COPY yarn.lock ./
 RUN yarn
 RUN yarn add recharts
 RUN yarn add react-ga
+RUN yarn add ga-4-react
 COPY . ./
 RUN yarn build
 EXPOSE 3000

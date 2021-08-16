@@ -18,7 +18,8 @@ import {
   AccordValue,
   AccordArrIcon,
   Heading,
-  Value
+  Value,
+  CustomTooltip
 } from '../style'
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KNAB from 'assets/icons/KNAB.svg'
@@ -27,6 +28,7 @@ import DownArrow from 'assets/icons/DownArrowAccord.svg'
 import CustomInput from '../../components/shared/CustomInput'
 import CustomButton from '../../components/shared/Button'
 import Info from 'assets/images/info.svg'
+import Question from 'assets/icons/question.svg'
 import StakeKnabModal from './StakeKnabModal'
 import {
   handleKnabApproval,
@@ -112,6 +114,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-top',
     paddingRight: theme.spacing(1)
   },
+  questionImg: {
+    padding: '0px 4px',
+    width: '15px',
+    position: 'relative',
+    top: '2px',
+    cursor: 'pointer'
+  },
   padLR: {
     paddingRight: '16px'
   },
@@ -196,7 +205,7 @@ const StakingRow1 = (props: any) => {
       // if (accordAction['first']) { setIsOpen(false) }
       // else { setIsOpen(true) }
       const temp = accordAction['first'];
-      accordActionFn({ ...accordAction, first: !temp, second: false, third: false})
+      accordActionFn({ ...accordAction, first: !temp, second: false, third: false })
     } catch { }
   }
 
@@ -208,7 +217,7 @@ const StakingRow1 = (props: any) => {
 
   const ApproveKnabTokFn = async () => {
     try {
-      if ((knabAppValue/1) > (knab/1)) {
+      if ((knabAppValue / 1) > (knab / 1)) {
         errorAlert('Insufficient KNAB balance in wallet to Approve KNAB');
         setKnabAppValue(0);
         return;
@@ -236,7 +245,7 @@ const StakingRow1 = (props: any) => {
 
   const unStakeFn = () => {
     try {
-      if ((knabUnStakeValue/1) > (knab_staked/1)) {
+      if ((knabUnStakeValue / 1) > (knab_staked / 1)) {
         errorAlert('Insufficent balance in wallet to Unstake');
         setKnabUnStakeValue(0);
         return;
@@ -339,21 +348,34 @@ const StakingRow1 = (props: any) => {
                   <div className={classes.head}>
                     <FlexDiv>
                       <FlexColumn>
-                        <Heading>KNAB Balance</Heading>
+                        <Heading>
+                          KNAB Balance
+                          <CustomTooltip
+                            title="For more info refer to assets table"
+                            arrow>
+                            <img src={Question} alt="" className={classes.questionImg} />
+                          </CustomTooltip>
+                        </Heading>
                         <Value>{knab}</Value>
                         <Value>(${knab_dollar})</Value>
                       </FlexColumn>
-                      <CustomButton
-                        size="small"
-                        style={{
-                          backgroundColor: '#1E3444',
-                          padding: '8px 48px',
-                        }}
-                        onClick={stakeFn}
-                        disabled={!(knab > 0)}
-                      >
-                        Stake
-                      </CustomButton>
+                      <CustomTooltip
+                        title="User has to approve tokens before staking"
+                        arrow>
+                        <div>
+                          <CustomButton
+                            size="small"
+                            style={{
+                              backgroundColor: '#1E3444',
+                              padding: '8px 48px',
+                            }}
+                            onClick={stakeFn}
+                            disabled={!(knab > 0)}
+                          >
+                            Stake
+                          </CustomButton>
+                        </div>
+                      </CustomTooltip>
                     </FlexDiv>
                   </div>
 
@@ -365,7 +387,7 @@ const StakingRow1 = (props: any) => {
                       <div className={classes.KnabIc}>
                         <img src={KNAB} alt="" />
                         <span>KNAB&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <hr className={classes.hr}/>
+                        <hr className={classes.hr} />
                       </div>
                       <CustomInput
                         id="knab"
@@ -374,7 +396,7 @@ const StakingRow1 = (props: any) => {
                         onChange={(e: any) => setKnabAppValue(e.target.value)}
                         adornment={' | MAX'}
                         adornmentClick={approveMaxClickApprove}
-                        style={{ borderLeft: 'none'}}
+                        style={{ borderLeft: 'none' }}
                       />
                     </div>
                   </div>
@@ -413,7 +435,14 @@ const StakingRow1 = (props: any) => {
                 <FlexColumn>
                   <Paper className={classes.stakedDiv}>
                     <div className={classes.headStaDiv}>
-                      <Heading>KNAB Staked</Heading>
+                      <Heading>
+                        KNAB Staked
+                        {/* <CustomTooltip 
+                          title="info" 
+                          arrow>
+                          <img src={Question} alt="" className={classes.questionImg} />
+                        </CustomTooltip> */}
+                      </Heading>
                       <Value>{knab_staked} (${knab_staked_dollar})</Value>
                     </div><br />
                     <FlexDiv>
@@ -442,13 +471,20 @@ const StakingRow1 = (props: any) => {
                     <div className={classes.stakInfoText}>
                       <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
-                        Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
+                        User has to wait for 5 mins to unstake the staked amount
                       </FlexRow>
                     </div>
                   </Paper>
                   <Paper className={classes.stakedDiv2}>
                     <div className={classes.headStaDiv}>
-                      <Heading>KNABr Earned</Heading>
+                      <Heading>
+                        KNABr Earned
+                        {/* <CustomTooltip 
+                          title="info" 
+                          arrow>
+                          <img src={Question} alt="" className={classes.questionImg} />
+                        </CustomTooltip> */}
+                      </Heading>
                     </div><br />
                     <FlexDiv>
                       <FlexColumn>
@@ -472,7 +508,7 @@ const StakingRow1 = (props: any) => {
                     <div className={classes.stakInfoText}>
                       <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
-                        Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
+                        KNAB receipt tokens(KNABr) rewards for QC staking which are convertable to KNAB
                       </FlexRow>
                     </div>
                   </Paper>

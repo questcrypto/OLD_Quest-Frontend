@@ -637,13 +637,13 @@ export const depositKnabr = async (amount: any) => {
   }
 }
 
-export const claimRewards = async () => {
+export const claimRewards = async (amount: any) => {
   const web3 = await getWeb3Val()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
     const gasPrice = await gasPriceFn()
-    const res = await rewardsContract.methods.claimRewards().send({ from: accounts[0], gasPrice })
+    const res = await rewardsContract.methods.claimRewards(convertToWei(amount)).send({ from: accounts[0], gasPrice })
     return res;
   }
 }
@@ -654,6 +654,16 @@ export const getStatus = async () => {
     const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
     const res = await rewardsContract.methods.getStatus().call()
     return res;
+  }
+}
+
+export const getKnabDeposited = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
+    const res = await rewardsContract.methods.userDeposit(accounts[0]).call({ from: accounts[0] })
+    return convertToEther2(res);
   }
 }
 

@@ -19,7 +19,8 @@ import {
   AccordValue,
   AccordArrIcon,
   Heading,
-  Value
+  Value,
+  CustomTooltip
 } from '../style'
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KNAB from 'assets/icons/KNAB.svg'
@@ -53,6 +54,7 @@ import {
   accordActionFn
 } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
+import Question from 'assets/icons/question.svg'
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -136,7 +138,14 @@ const useStyles = makeStyles((theme) => ({
   },
   padLR: {
     paddingRight: '16px'
-  }
+  },
+  questionImg: {
+    padding: '0px 4px',
+    width: '15px',
+    position: 'relative',
+    top: '2px',
+    cursor: 'pointer'
+  },
 }));
 
 const StakingRow2 = (props: any) => {
@@ -198,7 +207,7 @@ const StakingRow2 = (props: any) => {
       // if (accordAction['second']) { setIsOpen(false) }
       // else { setIsOpen(true) }
       const temp = accordAction['second'];
-      accordActionFn({ ...accordAction, first: false, second: !temp, third: false})
+      accordActionFn({ ...accordAction, first: false, second: !temp, third: false })
     } catch { }
   }
 
@@ -346,7 +355,14 @@ const StakingRow2 = (props: any) => {
                 <div className={classes.head}>
                   <FlexDiv>
                     <FlexColumn>
-                      <Heading>LP Balance</Heading>
+                      <Heading>
+                        LP Balance
+                        <CustomTooltip
+                          title="For more info refer to assets table"
+                          arrow>
+                          <img src={Question} alt="" className={classes.questionImg} />
+                        </CustomTooltip>
+                      </Heading>
                       <Value>{lp}</Value>
                       {/* <Value>($00.00)</Value> */}
                     </FlexColumn>
@@ -362,19 +378,25 @@ const StakingRow2 = (props: any) => {
                       {/* Approve */}
                       {loader.approveLoad ? <Spinner /> : <span>Approve</span>}
                     </CustomButton>
-                    <CustomButton
-                      size="small"
-                      style={{
-                        backgroundColor: '#375A74',
-                        padding: '8px 48px',
-                        marginLeft: '12px'
-                      }}
-                      onClick={stakeFn}
-                      disabled={!(lp > 0)}
-                    >
-                      {/* Stake */}
-                      {loader.stakeLoad ? <Spinner /> : <span>Stake</span>}
-                    </CustomButton>
+                    <CustomTooltip
+                      title="User has to approve tokens before staking"
+                      arrow>
+                      <div>
+                        <CustomButton
+                          size="small"
+                          style={{
+                            backgroundColor: '#375A74',
+                            padding: '8px 48px',
+                            marginLeft: '12px'
+                          }}
+                          onClick={stakeFn}
+                          disabled={!(lp > 0)}
+                        >
+                          {/* Stake */}
+                          {loader.stakeLoad ? <Spinner /> : <span>Stake</span>}
+                        </CustomButton>
+                      </div>
+                    </CustomTooltip>
                   </FlexDiv>
                 </div>
 
@@ -418,7 +440,14 @@ const StakingRow2 = (props: any) => {
               <FlexColumn>
                 <Paper className={classes.stakedDiv}>
                   <div className={classes.headStaDiv}>
-                    <Heading>LP Staked</Heading>
+                    <Heading>
+                      LP Staked
+                      {/* <CustomTooltip
+                        title="info"
+                        arrow>
+                        <img src={Question} alt="" className={classes.questionImg} />
+                      </CustomTooltip> */}
+                    </Heading>
                     <Value>{lp_staked}
                       {/* (${lp_staked_dollar}) */}
                     </Value>
@@ -449,13 +478,20 @@ const StakingRow2 = (props: any) => {
                   <div className={classes.stakInfoText}>
                     <FlexRow>
                       <img src={Info} alt="" className={classes.infoImg} />
-                      Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
+                      User has to wait for 5 mins to unstake the staked amount
                     </FlexRow>
                   </div>
                 </Paper>
                 <Paper className={classes.stakedDiv2}>
                   <div className={classes.headStaDiv}>
-                    <Heading>KNABr Earned</Heading>
+                    <Heading>
+                      KNABr Earned
+                      {/* <CustomTooltip
+                        title="info"
+                        arrow>
+                        <img src={Question} alt="" className={classes.questionImg} />
+                      </CustomTooltip> */}
+                    </Heading>
                   </div><br />
                   <FlexDiv>
                     <FlexColumn>
@@ -479,7 +515,7 @@ const StakingRow2 = (props: any) => {
                   <div className={classes.stakInfoText}>
                     <FlexRow>
                       <img src={Info} alt="" className={classes.infoImg} />
-                      Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
+                      KNAB receipt tokens(KNABr) rewards for QC staking which are convertable to KNAB
                     </FlexRow>
                   </div>
                 </Paper>

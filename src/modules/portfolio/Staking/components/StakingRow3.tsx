@@ -18,7 +18,8 @@ import {
   AccordValue,
   AccordArrIcon,
   Heading,
-  Value
+  Value,
+  CustomTooltip
 } from '../style'
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KNAB from 'assets/icons/KNAB.svg'
@@ -58,6 +59,7 @@ import {
   accordActionFn
 } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
+import Question from 'assets/icons/question.svg'
 
 const useStyles = makeStyles((theme) => ({
   accordionRoot: {
@@ -135,7 +137,14 @@ const useStyles = makeStyles((theme) => ({
     height: '24px',
     color: '#EDEDED',
     opacity: '0.5'
-  }
+  },
+  questionImg: {
+    padding: '0px 4px',
+    width: '15px',
+    position: 'relative',
+    top: '2px',
+    cursor: 'pointer'
+  },
 }));
 
 const StakingRow3 = (props: any) => {
@@ -209,7 +218,7 @@ const StakingRow3 = (props: any) => {
       // if (accordAction['third']) { setIsOpen(false) }
       // else { setIsOpen(true) }
       const temp = accordAction['third'];
-      accordActionFn({ ...accordAction, first: false, second: false, third: !temp})
+      accordActionFn({ ...accordAction, first: false, second: false, third: !temp })
     } catch { }
   }
 
@@ -398,21 +407,34 @@ const StakingRow3 = (props: any) => {
                   <div className={classes.head}>
                     <FlexDiv>
                       <FlexColumn>
-                        <Heading>USDC Balance</Heading>
+                        <Heading>
+                          USDC Balance
+                          <CustomTooltip
+                            title="For more info refer to assets table"
+                            arrow>
+                            <img src={Question} alt="" className={classes.questionImg} />
+                          </CustomTooltip>
+                        </Heading>
                         <Value>{usdc}</Value>
                         <Value>(${usdc_dollar})</Value>
                       </FlexColumn>
-                      <CustomButton
-                        size="small"
-                        style={{
-                          backgroundColor: '#1E3444',
-                          padding: '8px 48px',
-                        }}
-                        onClick={stakeFn}
-                        disabled={!(usdc > 0)}
-                      >
-                        Stake
-                      </CustomButton>
+                      <CustomTooltip
+                        title="User has to approve tokens before staking"
+                        arrow>
+                        <div>
+                          <CustomButton
+                            size="small"
+                            style={{
+                              backgroundColor: '#1E3444',
+                              padding: '8px 48px',
+                            }}
+                            onClick={stakeFn}
+                            disabled={!(usdc > 0)}
+                          >
+                            Stake
+                          </CustomButton>
+                        </div>
+                      </CustomTooltip>
                     </FlexDiv>
                   </div>
 
@@ -424,7 +446,7 @@ const StakingRow3 = (props: any) => {
                       <div className={classes.KnabIc}>
                         <img src={USDC} alt="" />
                         <span>USDC&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <hr className={classes.hr}/>
+                        <hr className={classes.hr} />
                       </div>
                       <CustomInput
                         id="knab"
@@ -433,7 +455,7 @@ const StakingRow3 = (props: any) => {
                         onChange={(e: any) => { setUsdcAppr(e.target.value) }}
                         adornment={' | MAX'}
                         adornmentClick={approveMaxUsdcClick}
-                        style={{ borderLeft: 'none'}}
+                        style={{ borderLeft: 'none' }}
                       />
                     </div>
                   </div>
@@ -474,7 +496,14 @@ const StakingRow3 = (props: any) => {
                 <FlexColumn>
                   <Paper className={classes.stakedDiv}>
                     <div className={classes.headStaDiv}>
-                      <Heading>USDC Staked (With Profit)</Heading>
+                      <Heading>
+                        USDC Staked (With Profit)
+                        <CustomTooltip
+                          title="info"
+                          arrow>
+                          <img src={Question} alt="" className={classes.questionImg} />
+                        </CustomTooltip>
+                      </Heading>
                       <Value>{(parseFloat(usdc_staked) + parseFloat(loan_amount)).toFixed(2)}
                         (${(parseFloat(usdc_staked_dollar) + parseFloat(loan_amount)).toFixed(2)})</Value>
                     </div><br />
@@ -510,7 +539,14 @@ const StakingRow3 = (props: any) => {
                   </Paper>
                   <Paper className={classes.stakedDiv2}>
                     <div className={classes.headStaDiv}>
-                      <Heading>KNABr Earned</Heading>
+                      <Heading>
+                        KNABr Earned
+                        {/* <CustomTooltip
+                          title="info"
+                          arrow>
+                          <img src={Question} alt="" className={classes.questionImg} />
+                        </CustomTooltip> */}
+                      </Heading>
                     </div><br />
                     <FlexDiv>
                       <FlexColumn>
@@ -534,7 +570,7 @@ const StakingRow3 = (props: any) => {
                     <div className={classes.stakInfoText}>
                       <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
-                        Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
+                        KNAB receipt tokens(KNABr) rewards for QC staking which are convertable to KNAB
                       </FlexRow>
                     </div>
                   </Paper>

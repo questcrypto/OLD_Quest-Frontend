@@ -24,6 +24,7 @@ import {
   SET_LP_KNABR_EARNED,
   SET_LOAN_AMOUNT,
   SET_CONVERTED_KNAB,
+  SET_DEPOSITED_KNAB,
   SET_QUEST,
   SET_QUEST_SUPPLY,
   ACCORD_ACTION
@@ -62,6 +63,7 @@ const initialState = {
   loan_amount: 0.0,
 
   converted_knab: 0.0,
+  deposited_knab: 0.0,
 
   quest: 0.0,
   quest_supply: 0.0,
@@ -203,6 +205,11 @@ export const stakingReducer = (state = initialState, action: any) => {
       return {
         ...state,
         converted_knab: payload
+      }
+    case SET_DEPOSITED_KNAB:
+      return {
+        ...state,
+        deposited_knab: payload
       }
     case SET_QUEST:
       return {

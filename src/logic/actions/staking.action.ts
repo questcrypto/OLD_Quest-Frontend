@@ -24,6 +24,7 @@ import {
   SET_LP_KNABR_EARNED,
   SET_LOAN_AMOUNT,
   SET_CONVERTED_KNAB,
+  SET_DEPOSITED_KNAB,
   SET_QUEST,
   SET_QUEST_SUPPLY,
   ACCORD_ACTION
@@ -200,6 +201,13 @@ export const setLoanAmount = (data: any) => {
 export const setConvertedKnab = (data: any) => {
   return {
     type: SET_CONVERTED_KNAB,
+    payload: data,
+  }
+}
+
+export const setDepositedKnab = (data: any) => {
+  return {
+    type: SET_DEPOSITED_KNAB,
     payload: data,
   }
 }

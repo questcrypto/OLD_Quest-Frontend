@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core'
+import { makeStyles, withStyles, Theme, Tooltip } from '@material-ui/core'
 import styled from 'styled-components'
 
 export const useStyles = makeStyles((theme) => ({
@@ -54,6 +54,17 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
 }))
+
+export const CustomTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#878787',
+    fontFamily: 'NexaRegular',
+    color: '#FFF'
+  },
+  arrow: {
+    color: '#C4C4C4',
+  },
+}))(Tooltip)
 
 export const FlexDiv = styled.div`
   width: 100%;

@@ -16,13 +16,14 @@ import { logout } from 'logic/actions/user.actions'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import BuyAndConvertModal from '../components/BuyAndConvertModal'
-import { getWeb3Val, buyKnab, handlestableCoinapproval } from '../../../modules/block-chain/BlockChainMethods'
+import { getWeb3Val, buyKnab, handlestableCoinapproval, getAssetsKNABrBalance } from '../../../modules/block-chain/BlockChainMethods'
 import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../../modules/block-chain/abi'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import USDC from 'assets/icons/USDC.svg'
 import KNAB from 'assets/icons/KNAB.svg'
 import IPBlockingModal from '../IPBlocking/IPBlockingModal'
 import BuyAndConvertQuest from '../components/BuyAndConvertQuest'
+import { setKnabr } from 'logic/actions/staking.action'
 
 const commaNumber = require('comma-number')
 
@@ -64,7 +65,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 const ICODetails = (props: any) => {
-  const { getKNABbalance, errorAlert, loggedIn, successAlert, applicationAccess, hasApplcationAccess } = props
+  const { getKNABbalance, errorAlert, loggedIn, successAlert, applicationAccess, hasApplcationAccess,
+    staking: { knab, knabr },
+    setKnabr } = props
   const classes = useStyles()
   const [tokensData, setTokensData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
   const [bcModal, setBcModal] = useState(false)
@@ -115,7 +118,11 @@ const ICODetails = (props: any) => {
     getKNABbalance(KNABBalance / 10 ** 18)
   }
   useEffect(() => {
-    getBalance()
+    getBalance();
+    getAssetsKNABrBalance().then((res) => {
+      // console.log(res);
+      setKnabr(res);
+    }, err => { console.log(err) })
   }, [])
   useEffect(() => {
     fetchDetails().then(
@@ -287,7 +294,7 @@ const ICODetails = (props: any) => {
               disableRipple
               style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
-              00.00&nbsp;KNABr
+              {props.isWalletCon? knabr: 0 }&nbsp;KNABr
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
@@ -389,11 +396,11 @@ const ICODetails = (props: any) => {
         ) : (
           ''
         )}
-        {bqModal ? 
-          <BuyAndConvertQuest 
-            show={bqModal} 
-            toggleModal={handlebqModalClose} 
-            onClose={handlebqModalClose} 
+        {bqModal ?
+          <BuyAndConvertQuest
+            show={bqModal}
+            toggleModal={handlebqModalClose}
+            onClose={handlebqModalClose}
           /> : ''}
       </div>
     </>
@@ -419,5 +426,12 @@ const mapStateToProps = (state: any) => ({
   loggedIn: state.user.loggedIn,
   loading: state.user.loading,
   applicationAccess: state.user.applicationAccess,
+  staking: state.staking,
 })
-export default withRouter(connect(mapStateToProps, { hasApplcationAccess, successAlert, errorAlert, getKNABbalance })(ICODetails))
+export default withRouter(connect(mapStateToProps, { 
+  hasApplcationAccess, 
+  successAlert, 
+  errorAlert, 
+  getKNABbalance,
+  setKnabr
+ })(ICODetails))

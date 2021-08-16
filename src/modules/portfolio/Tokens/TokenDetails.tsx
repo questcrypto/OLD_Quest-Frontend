@@ -16,13 +16,14 @@ import { logout } from 'logic/actions/user.actions'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
 import BuyAndConvertModal from '../components/BuyAndConvertModal'
-import { getWeb3Val, buyKnab, handlestableCoinapproval } from '../../../modules/block-chain/BlockChainMethods'
+import { getWeb3Val, buyKnab, handlestableCoinapproval, getAssetsKNABrBalance } from '../../../modules/block-chain/BlockChainMethods'
 import { stableCoinAbi, stableCoinContractAddress, ICOAddress } from '../../../modules/block-chain/abi'
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import USDC from 'assets/icons/USDC.svg'
 import KNAB from 'assets/icons/KNAB.svg'
 import IPBlockingModal from '../IPBlocking/IPBlockingModal'
 import BuyAndConvertQuest from '../components/BuyAndConvertQuest'
+import { setKnabr } from 'logic/actions/staking.action'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,6 +67,8 @@ const TokenDetails = (props: any) => {
     errorAlert,
     successAlert,
     applicationAccess,
+    staking: { knab, knabr },
+    setKnabr 
   } = props
   const [bcModal, setBcModal] = useState(false)
   const [isConfirm, setIsConfirm] = useState(false)
@@ -115,7 +118,11 @@ const TokenDetails = (props: any) => {
   }
 
   useEffect(() => {
-    getBalance()
+    getBalance();
+    getAssetsKNABrBalance().then((res) => {
+      // console.log(res);
+      setKnabr(res);
+    }, err => { console.log(err) })
   }, [])
   const submitModalFn = async (values: any) => {
     try {
@@ -280,7 +287,7 @@ const TokenDetails = (props: any) => {
               disableRipple
               style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
-              00.00 KNABr
+              {props.isWalletCon? knabr: 0 }&nbsp;KNABr
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
@@ -290,7 +297,7 @@ const TokenDetails = (props: any) => {
               disableRipple
               style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
-              {props.isWalletCon ? props.KNABBalance : 0} KNAB
+              {props.isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB
             </CustomButton>
             &nbsp;&nbsp;&nbsp;
             <CustomButton
@@ -409,5 +416,12 @@ const mapStateToProps = (state: any) => ({
   applicationAccess: state.user.applicationAccess,
   loggedIn: state.user.loggedIn,
   loading: state.user.loading,
+  staking: state.staking,
 })
-export default withRouter(connect(mapStateToProps, { hasApplcationAccess, successAlert, errorAlert, getKNABbalance })(TokenDetails))
+export default withRouter(connect(mapStateToProps, { 
+  hasApplcationAccess, 
+  successAlert, 
+  errorAlert, 
+  getKNABbalance,
+  setKnabr 
+})(TokenDetails))

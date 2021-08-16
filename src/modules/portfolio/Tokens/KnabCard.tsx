@@ -114,7 +114,7 @@ const KnabCard = (props: any) => {
               <div className={classes.contentTextDiv}>
                 <Typography>KNAB</Typography>
                 <Typography className={classes.secondLineText} variant="h5">
-                  {props.isWalletCon ? props.KNABBalance : 0} &nbsp;
+                  {props.isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} &nbsp;
                   <span className={classes.arrowText}>
                     <img src={triangle} alt="" className={classes.arrowImage} />
                     0.0%
@@ -127,15 +127,15 @@ const KnabCard = (props: any) => {
               <Grid item md={4} xs={12}>
                 Available Qty.
                 <br />
-                0.00000000
+                100,000,000
               </Grid>
               <Grid item md={3} xs={12}>
                 Price <br />
-                $56872.30
+                $100,000,000
               </Grid>
               <Grid item md={2} xs={12}>
                 Yield <br />
-                +3.57%
+                +0.00%
               </Grid>
             </Grid>
             {/* <hr /> */}

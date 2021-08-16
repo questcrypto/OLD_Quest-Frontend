@@ -1,7 +1,12 @@
+import { useEffect } from 'react';
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
 import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
 import KnabIcon from 'assets/icons/KNAB.svg'
 import Exclamation from 'assets/images/exclamation.png'
 import triangle from 'assets/images/upArrow.png'
+import { getAssetsKNABrBalance } from '../../../modules/block-chain/BlockChainMethods'
+import { setKnabr } from 'logic/actions/staking.action'
 
 const useStyles = makeStyles((theme) => ({
   mainDiv: {
@@ -88,6 +93,16 @@ const useStyles = makeStyles((theme) => ({
 
 const KnabrCard = (props: any) => {
   const classes = useStyles()
+  const {
+    staking: { knab, knabr}, 
+    setKnabr 
+  } = props;
+  useEffect(() => {
+    getAssetsKNABrBalance().then((res) => {
+      // console.log(res);
+      setKnabr(res);
+    }, err => { console.log(err) })
+  },[])
 
   return (
     <>
@@ -101,7 +116,8 @@ const KnabrCard = (props: any) => {
               <div className={classes.contentTextDiv}>
                 <Typography>KNABr</Typography>
                 <Typography className={classes.secondLineText} variant="h5">
-                  $6.76 &nbsp;
+                  {/* $6.76 &nbsp; */}
+                  {props.isWalletCon? knabr: 0 }&nbsp;
                   <span className={classes.arrowText}>
                     <img src={triangle} alt="" className={classes.arrowImage} />
                     0.0%
@@ -114,15 +130,15 @@ const KnabrCard = (props: any) => {
               <Grid item md={4} xs={12}>
                 Available Qty.
                 <br />
-                0.00000000
+                0.00
               </Grid>
               <Grid item md={3} xs={12}>
                 Price <br />
-                $56872.30
+                $0.00
               </Grid>
               <Grid item md={2} xs={12}>
                 Yield <br />
-                +3.57%
+                +0.00%
               </Grid>
             </Grid>
             {/* <hr /> */}
@@ -137,4 +153,11 @@ const KnabrCard = (props: any) => {
   )
 }
 
-export default KnabrCard
+// export default KnabrCard
+const mapStateToProps = (state: any) => ({
+  isWalletCon: state.user.isWalletCon,
+  staking: state.staking,
+})
+export default withRouter(connect(mapStateToProps, { 
+  setKnabr 
+})(KnabrCard))

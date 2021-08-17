@@ -483,10 +483,10 @@ const StakingRow3 = (props: any) => {
                       <Value>Max Slippage: 1%</Value>
                     </FlexColumn> */}
                     <FlexColumn className={classes.knabValues}>
-                      <Value>Receive: lorem</Value>
-                      <Value>Price impact: lorem</Value>
-                      <Value>Fee: lorem</Value>
-                      <Value>Max Slippage: 0.01%</Value>
+                      <Value>Receive: NA</Value>
+                      <Value>Price impact: NA</Value>
+                      <Value>Fee: &nbsp;&nbsp;&nbsp;0</Value>
+                      <Value>Max Slippage: NA</Value>
                     </FlexColumn>
                   </div>
                 </Paper>
@@ -498,11 +498,11 @@ const StakingRow3 = (props: any) => {
                     <div className={classes.headStaDiv}>
                       <Heading>
                         USDC Staked (With Profit)
-                        <CustomTooltip
+                        {/* <CustomTooltip
                           title="info"
                           arrow>
                           <img src={Question} alt="" className={classes.questionImg} />
-                        </CustomTooltip>
+                        </CustomTooltip> */}
                       </Heading>
                       <Value>{(parseFloat(usdc_staked) + parseFloat(loan_amount)).toFixed(2)}
                         (${(parseFloat(usdc_staked_dollar) + parseFloat(loan_amount)).toFixed(2)})</Value>
@@ -533,7 +533,7 @@ const StakingRow3 = (props: any) => {
                     <div className={classes.stakInfoText}>
                       <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
-                        Lorem ipsum dolor sit amet, adipiscing elit sed do eiusmod Yield 10.71%
+                        User has to wait for 5 mins to unstake the staked amount
                       </FlexRow>
                     </div>
                   </Paper>

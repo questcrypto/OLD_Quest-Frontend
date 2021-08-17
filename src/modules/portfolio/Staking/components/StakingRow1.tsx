@@ -422,10 +422,10 @@ const StakingRow1 = (props: any) => {
                       <Value>Price impact: 0.00%</Value>
                       <Value>Fee: 0.00% ~ 0.00%</Value>
                       <Value>Max Slippage: 0%</Value> */}
-                      <Value>Receive: lorem</Value>
-                      <Value>Price impact: lorem</Value>
-                      <Value>Fee: lorem</Value>
-                      <Value>Max Slippage: lorem</Value>
+                      <Value>Receive: NA</Value>
+                      <Value>Price impact: NA</Value>
+                      <Value>Fee: &nbsp;&nbsp;&nbsp;0</Value>
+                      <Value>Max Slippage: NA</Value>
                     </FlexColumn>
                   </div>
                 </Paper>

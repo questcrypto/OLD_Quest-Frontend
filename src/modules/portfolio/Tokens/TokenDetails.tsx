@@ -68,7 +68,8 @@ const TokenDetails = (props: any) => {
     successAlert,
     applicationAccess,
     staking: { knab, knabr },
-    setKnabr 
+    setKnabr,
+    logout 
   } = props
   const [bcModal, setBcModal] = useState(false)
   const [isConfirm, setIsConfirm] = useState(false)
@@ -423,5 +424,6 @@ export default withRouter(connect(mapStateToProps, {
   successAlert, 
   errorAlert, 
   getKNABbalance,
-  setKnabr 
+  setKnabr,
+  logout 
 })(TokenDetails))

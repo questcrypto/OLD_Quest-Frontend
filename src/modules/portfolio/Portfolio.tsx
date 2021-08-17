@@ -61,6 +61,7 @@ const Portfolio = (props: any) => {
     setChainId,
     staking: { knab, knabr },
     user: { web3Instance },
+    logout
   } = props
 
   const blockedCountriesCodes = ['US', 'AL', 'BA', 'BY', 'CD', 'CI', 'UA', 'CU', 'IQ', 'IR', 'KP', 'LR', 'MK', 'MM', 'RS', 'SD', 'SY', 'ZW']
@@ -484,5 +485,6 @@ export default withRouter(
     setWeb3Instance,
     setChainId,
     hasApplcationAccess,
+    logout
   })(Portfolio)
 )

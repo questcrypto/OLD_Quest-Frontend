@@ -67,7 +67,8 @@ const useStyles = makeStyles((theme) => ({
 const ICODetails = (props: any) => {
   const { getKNABbalance, errorAlert, loggedIn, successAlert, applicationAccess, hasApplcationAccess,
     staking: { knab, knabr },
-    setKnabr } = props
+    setKnabr,
+    logout } = props
   const classes = useStyles()
   const [tokensData, setTokensData] = useState({ bonusRatio: 0, tokensSold: '0', tokensLeft: '0' })
   const [bcModal, setBcModal] = useState(false)
@@ -433,5 +434,6 @@ export default withRouter(connect(mapStateToProps, {
   successAlert, 
   errorAlert, 
   getKNABbalance,
-  setKnabr
+  setKnabr,
+  logout
  })(ICODetails))

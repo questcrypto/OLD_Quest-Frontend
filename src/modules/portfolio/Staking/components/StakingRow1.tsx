@@ -479,11 +479,11 @@ const StakingRow1 = (props: any) => {
                     <div className={classes.headStaDiv}>
                       <Heading>
                         KNABr Earned
-                        {/* <CustomTooltip 
-                          title="info" 
+                        <CustomTooltip 
+                          title="KNAB receipt tokens(KNABr) rewards for QC staking which are convertable to KNAB" 
                           arrow>
                           <img src={Question} alt="" className={classes.questionImg} />
-                        </CustomTooltip> */}
+                        </CustomTooltip>
                       </Heading>
                     </div><br />
                     <FlexDiv>
@@ -508,7 +508,7 @@ const StakingRow1 = (props: any) => {
                     <div className={classes.stakInfoText}>
                       <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
-                        KNAB receipt tokens(KNABr) rewards for QC staking which are convertable to KNAB
+                        KNABr earned are automatically harvested when u stake more KNAB
                       </FlexRow>
                     </div>
                   </Paper>

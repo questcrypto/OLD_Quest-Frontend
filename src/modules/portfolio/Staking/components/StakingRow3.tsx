@@ -44,6 +44,7 @@ import {
   withdrawLoan,
   getStakeUsdc,
   getLoanAmount,
+  getLoanAmount2,
   withdrawUsdc,
 } from '../../../../modules/block-chain/BlockChainMethods'
 import Spinner from 'shared/loader-components/spinner'
@@ -145,6 +146,10 @@ const useStyles = makeStyles((theme) => ({
     top: '2px',
     cursor: 'pointer'
   },
+  loanDiv: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
 }));
 
 const StakingRow3 = (props: any) => {
@@ -157,6 +162,7 @@ const StakingRow3 = (props: any) => {
     accordActionFn,
     errorAlert, successAlert,
   } = props;
+  const [isWithdraw, setIsWithdraw] = useState(true);
 
   useEffect(() => {
     if (walletConAddress.length > 0) {
@@ -200,7 +206,17 @@ const StakingRow3 = (props: any) => {
 
       getLoanAmount().then((res) => {
         // console.log('Loan Amount', res);
-        setLoanAmount(res);
+        if (res === 0) {
+          // console.log('Loan amount is zero')
+          getLoanAmount2().then((res) => {
+            // console.log('Loan Amount 2', res);
+            setIsWithdraw(false);
+            setLoanAmount(res);
+           });
+        } else {
+          setLoanAmount(res);
+          setIsWithdraw(true);
+        }
       }, err => { console.log(err) })
 
     } catch (err) { console.log(err) }
@@ -350,7 +366,11 @@ const StakingRow3 = (props: any) => {
 
   const approveMaxUnstakeClick = () => {
     try {
-      setUsdcUnStake(usdc_staked);
+      if (isWithdraw) {
+        setUsdcUnStake(parseFloat(usdc_staked) + parseFloat(loan_amount));
+      } else {
+        setUsdcUnStake(parseFloat(usdc_staked));
+      }
     } catch (error) { console.log(error) }
   }
 
@@ -374,7 +394,7 @@ const StakingRow3 = (props: any) => {
             <FlexColumn>
               <AccordHeading className={classes.padLR}>USDC</AccordHeading>
               {/* <AccordValue className={classes.padLR}>${tvl_usdc} TVL</AccordValue> */}
-              <AccordValue className={classes.padLR}>${parseFloat(usdc_staked) + parseFloat(loan_amount)} TVL</AccordValue>
+              <AccordValue className={classes.padLR}>${(parseFloat(usdc_staked) + parseFloat(loan_amount)).toFixed(2)} TVL</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordHeading className={classes.padLR}>0%</AccordHeading>
@@ -496,16 +516,63 @@ const StakingRow3 = (props: any) => {
                 <FlexColumn>
                   <Paper className={classes.stakedDiv}>
                     <div className={classes.headStaDiv}>
-                      <Heading>
-                        USDC Staked (With Profit)
-                        {/* <CustomTooltip
+
+                      {/* <Heading>
+                        USDC Staked (With Profit) */}
+                      {/* <CustomTooltip
                           title="info"
                           arrow>
                           <img src={Question} alt="" className={classes.questionImg} />
                         </CustomTooltip> */}
-                      </Heading>
+                      {/* </Heading>
                       <Value>{(parseFloat(usdc_staked) + parseFloat(loan_amount)).toFixed(2)}
-                        (${(parseFloat(usdc_staked_dollar) + parseFloat(loan_amount)).toFixed(2)})</Value>
+                        (${(parseFloat(usdc_staked_dollar) + parseFloat(loan_amount)).toFixed(2)})</Value> */}
+
+                      <Heading>
+                        USDC Staked :
+                      </Heading>
+                      <div className={classes.loanDiv}>
+                        <div>
+                          <Heading>
+                            Total
+                            <CustomTooltip
+                              title="Total Staked Value"
+                              arrow>
+                              <img src={Question} alt="" className={classes.questionImg} />
+                            </CustomTooltip>
+                          </Heading>
+                          <Value>{(parseFloat(usdc_staked) + parseFloat(loan_amount)).toFixed(2)}</Value>
+                        </div>
+                        <div>
+                          <Heading>
+                            Defi
+                            <CustomTooltip
+                              title="User has to wait for 5 mins to unstake the Defi amount (70% of total stake)"
+                              arrow>
+                              <img src={Question} alt="" className={classes.questionImg} />
+                            </CustomTooltip>
+                          </Heading>
+                          <Value>{parseFloat(usdc_staked).toFixed(2)}</Value>
+                        </div>
+                        <div>
+                          <Heading>
+                            Loan
+                            <CustomTooltip
+                              title="User has to wait for 10 mins/when loan is paid to unstake the loan amount (30% of total stake)"
+                              arrow>
+                              <img src={Question} alt="" className={classes.questionImg} />
+                            </CustomTooltip>
+                          </Heading>
+                          <Value style={{ color: isWithdraw? 'green' : 'red' }}>
+                            {parseFloat(loan_amount).toFixed(2)}
+                            <CustomTooltip
+                              title="Red indicates user can't unstake, Green indicates user can unstake"
+                              arrow>
+                              <img src={Question} alt="" className={classes.questionImg} />
+                            </CustomTooltip>
+                          </Value>
+                        </div>
+                      </div>
                     </div><br />
                     <FlexDiv>
                       <CustomInput
@@ -530,22 +597,22 @@ const StakingRow3 = (props: any) => {
                         {loader.unstakeLoad ? <Spinner /> : <span>Unstake</span>}
                       </CustomButton>
                     </FlexDiv><br />
-                    <div className={classes.stakInfoText}>
+                    {/* <div className={classes.stakInfoText}>
                       <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
                         User has to wait for 5 mins to unstake the staked amount
                       </FlexRow>
-                    </div>
+                    </div> */}
                   </Paper>
                   <Paper className={classes.stakedDiv2}>
                     <div className={classes.headStaDiv}>
                       <Heading>
                         KNABr Earned
-                        {/* <CustomTooltip
-                          title="info"
+                        <CustomTooltip
+                          title="KNAB receipt tokens(KNABr) rewards for QC staking which are convertable to KNAB"
                           arrow>
                           <img src={Question} alt="" className={classes.questionImg} />
-                        </CustomTooltip> */}
+                        </CustomTooltip>
                       </Heading>
                     </div><br />
                     <FlexDiv>
@@ -570,7 +637,7 @@ const StakingRow3 = (props: any) => {
                     <div className={classes.stakInfoText}>
                       <FlexRow>
                         <img src={Info} alt="" className={classes.infoImg} />
-                        KNAB receipt tokens(KNABr) rewards for QC staking which are convertable to KNAB
+                        KNABr earned are automatically harvested when u stake more USDC
                       </FlexRow>
                     </div>
                   </Paper>

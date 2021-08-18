@@ -606,6 +606,18 @@ export const getLoanAmount = async () => {
   }
 }
 
+export const getLoanAmount2 = async () => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const stratContract = new web3.eth.Contract(stratabi, stratAddress3)
+    const res = await stratContract.methods.amountLoan(accounts[0]).call()
+    // console.log(res/10**6);
+    return res / 10 ** 6;
+  }
+}
+
+
 export const getUSDCBalanceBuyKnab = async () => {
   const web3 = await getWeb3Val()
   if (web3) {

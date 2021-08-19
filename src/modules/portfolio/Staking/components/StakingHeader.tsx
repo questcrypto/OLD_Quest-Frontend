@@ -190,7 +190,7 @@ const StakingHeader = (props: any) => {
         <Grid item md={4} xs={12}>
           <Paper className={classes.rowDiv}>
 
-            <FlexDiv>
+            <FlexDiv className={classes.flexStart}>
               <FlexColumn>
                 <Heading>KNABr Balance</Heading>
                 <Value>
@@ -267,7 +267,7 @@ const StakingHeader = (props: any) => {
         <Grid item md={4} xs={12}>
           <Paper className={classes.rowDiv}>
 
-            <FlexDiv>
+            <FlexDiv className={classes.flexStart}>
               <FlexColumn>
                 <Heading>KNABr Balance</Heading>
                 <Value>

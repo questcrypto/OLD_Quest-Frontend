@@ -53,6 +53,9 @@ export const useStyles = makeStyles((theme) => ({
       backgroundColor: '#FFFFFF',
     },
   },
+  flexStart: {
+    alignItems: 'flex-start !important',
+  }
 }))
 
 export const CustomTooltip = withStyles((theme: Theme) => ({

@@ -49,7 +49,11 @@ const useStyles = makeStyles((theme) => ({
   accordionRoot: {
     // marginTop: '28px',
     paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4)
+    paddingRight: theme.spacing(4),
+    '@media (max-width: 450px)': {
+      paddingLeft: 0,
+      paddingRight: 0
+    }
   },
   accordionSummary: {},
   expandIcon: {},
@@ -57,7 +61,11 @@ const useStyles = makeStyles((theme) => ({
   mainDiv: {
     backgroundColor: '#F8F8F9',
     padding: theme.spacing(3),
-    width: '100%'
+    width: '100%',
+    '@media (max-width: 450px)': {
+      width: '-webkit-fill-available',
+      padding: theme.spacing(1)
+    }
   },
   balMainDiv: {
     padding: theme.spacing(2),
@@ -69,13 +77,21 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
   },
+  headResponsive: {
+    '@media (max-width: 450px)': {
+      flexDirection: 'column',
+    }
+  },
   centerDiv: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
   },
   knabInput: {
     paddingTop: theme.spacing(2),
-    display: 'flex'
+    display: 'flex',
+    '@media (max-width: 450px)': {
+      display: 'block',
+    }
   },
   KnabIc: {
     display: 'flex',
@@ -90,6 +106,9 @@ const useStyles = makeStyles((theme) => ({
   knabBtnDiv: {
     display: 'flex',
     flexDirection: 'row',
+    '@media (max-width: 450px)': {
+      flexDirection: 'column'
+    }
   },
   knabValues: {
     fontSize: '14px',
@@ -128,6 +147,11 @@ const useStyles = makeStyles((theme) => ({
     height: '24px',
     color: '#EDEDED',
     opacity: '0.5'
+  },
+  divResp1: {
+    '@media (max-width: 450px)': {
+      flexDirection: 'column'
+    }
   }
 }));
 
@@ -346,7 +370,7 @@ const StakingRow1 = (props: any) => {
                 <Paper className={classes.balMainDiv}>
 
                   <div className={classes.head}>
-                    <FlexDiv>
+                    <FlexDiv className={classes.headResponsive}>
                       <FlexColumn>
                         <Heading>
                           KNAB Balance
@@ -410,6 +434,7 @@ const StakingRow1 = (props: any) => {
                           backgroundColor: '#1E3444',
                           padding: '8px 48px',
                           marginRight: '12px',
+                          maxWidth: '100%'
                         }}
                         onClick={ApproveKnabTokFn}
                         disabled={!(knabAppValue > 0)}
@@ -445,7 +470,7 @@ const StakingRow1 = (props: any) => {
                       </Heading>
                       <Value>{knab_staked} (${knab_staked_dollar})</Value>
                     </div><br />
-                    <FlexDiv>
+                    <FlexDiv className={classes.divResp1}>
                       <CustomInput
                         id="knabStake"
                         type="number"
@@ -460,6 +485,7 @@ const StakingRow1 = (props: any) => {
                           backgroundColor: '#1E3444',
                           padding: '8px 48px',
                           marginLeft: '12px',
+                          maxWidth: '100%'
                         }}
                         onClick={unStakeFn}
                         disabled={!(knabUnStakeValue > 0)}
@@ -479,14 +505,14 @@ const StakingRow1 = (props: any) => {
                     <div className={classes.headStaDiv}>
                       <Heading>
                         KNABr Earned
-                        <CustomTooltip 
-                          title="KNAB receipt tokens(KNABr) rewards for QC staking which are convertable to KNAB" 
+                        <CustomTooltip
+                          title="KNAB receipt tokens(KNABr) rewards for QC staking which are convertable to KNAB"
                           arrow>
                           <img src={Question} alt="" className={classes.questionImg} />
                         </CustomTooltip>
                       </Heading>
                     </div><br />
-                    <FlexDiv>
+                    <FlexDiv className={classes.divResp1}>
                       <FlexColumn>
                         <Value>{knabr_earned}</Value>
                         {/* <Value>($0.00)</Value> */}
@@ -497,6 +523,7 @@ const StakingRow1 = (props: any) => {
                           backgroundColor: '#1E3444',
                           padding: '8px 48px',
                           marginLeft: '12px',
+                          maxWidth: '100%'
                         }}
                         onClick={harvestFn}
                         disabled={!(knabr_earned > 0)}

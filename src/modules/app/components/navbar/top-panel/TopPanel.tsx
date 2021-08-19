@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     // padding: '4px 8px',
     padding: '4px 12px',
+    '@media (max-width: 450px)' : {
+      marginTop: '20px'
+    }
   },
   walletDivText: {
     paddingLeft: '8px',

@@ -20,4 +20,8 @@ export const TopPanelCont = styled.div`
   @media (max-width: 768px) {
     width: calc(100vw - 48px);
   }
+  @media (max-width: 450px) {
+    height: auto;
+    flex-direction: column;
+  }
 `

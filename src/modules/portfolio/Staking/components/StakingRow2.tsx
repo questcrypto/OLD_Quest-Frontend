@@ -60,7 +60,11 @@ const useStyles = makeStyles((theme) => ({
   accordionRoot: {
     marginTop: '28px',
     paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4)
+    paddingRight: theme.spacing(4),
+    '@media (max-width: 450px)' :{
+      paddingLeft: 0,
+      paddingRight: 0
+    }
   },
   accordionSummary: {},
   expandIcon: {},
@@ -68,7 +72,11 @@ const useStyles = makeStyles((theme) => ({
   mainDiv: {
     backgroundColor: '#F8F8F9',
     padding: theme.spacing(3),
-    width: '100%'
+    width: '100%',
+    '@media (max-width: 450px)': {
+      width: '-webkit-fill-available',
+      padding: theme.spacing(1)
+    }
   },
   balMainDiv: {
     padding: theme.spacing(2),
@@ -79,6 +87,11 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: '1px solid #E4E4E4',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+  },
+  headResponsive: {
+    '@media (max-width: 450px)': {
+      flexDirection: 'column',
+    }
   },
   btnCenterText: {
     display: 'flex',
@@ -99,7 +112,10 @@ const useStyles = makeStyles((theme) => ({
   },
   knabInput: {
     paddingTop: theme.spacing(2),
-    display: 'flex'
+    display: 'flex',
+    '@media (max-width: 450px)': {
+      display: 'block',
+    }
   },
   KnabIc: {
     display: 'flex',
@@ -146,6 +162,11 @@ const useStyles = makeStyles((theme) => ({
     top: '2px',
     cursor: 'pointer'
   },
+  divResp1: {
+    '@media (max-width: 450px)': {
+      flexDirection: 'column'
+    }
+  }
 }));
 
 const StakingRow2 = (props: any) => {
@@ -353,7 +374,7 @@ const StakingRow2 = (props: any) => {
               <Paper className={classes.balMainDiv}>
 
                 <div className={classes.head}>
-                  <FlexDiv>
+                  <FlexDiv className={classes.headResponsive}>
                     <FlexColumn>
                       <Heading>
                         LP Balance
@@ -452,7 +473,7 @@ const StakingRow2 = (props: any) => {
                       {/* (${lp_staked_dollar}) */}
                     </Value>
                   </div><br />
-                  <FlexDiv>
+                  <FlexDiv className={classes.divResp1}>
                     <CustomInput
                       id="knabStake"
                       type="number"
@@ -493,7 +514,7 @@ const StakingRow2 = (props: any) => {
                       </CustomTooltip>
                     </Heading>
                   </div><br />
-                  <FlexDiv>
+                  <FlexDiv className={classes.divResp1}>
                     <FlexColumn>
                       <Value>{lp_knabr_earned}</Value>
                       {/* <Value>($0.00)</Value> */}

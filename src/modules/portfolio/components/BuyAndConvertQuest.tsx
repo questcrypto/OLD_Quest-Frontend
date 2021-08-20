@@ -32,7 +32,7 @@ import {
   walletConnectAddress,
   walletConnect,
 } from 'logic/actions/user.actions'
-import { questabi, questAddress, USDCAddress } from '../../../modules/block-chain/abi';
+import { questabi, questAddress, USDCAddress, stableCoinContractAddress } from '../../../modules/block-chain/abi';
 
 const useStyles = makeStyles((theme) => ({
   dcDiv: {
@@ -176,7 +176,8 @@ const BuyAndConvertQuest = (props: any) => {
             }
             setLoader(true)
             const accounts = await web3.eth.getAccounts()
-            const contractSc = new web3.eth.Contract(questabi, USDCAddress);
+            // const contractSc = new web3.eth.Contract(questabi, USDCAddress);
+            const contractSc = new web3.eth.Contract(questabi, stableCoinContractAddress);
             handleUsdcApprovalQuest(contractSc, accounts[0], fromData).then(
               (res) => {
                 if (res) {

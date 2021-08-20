@@ -1,12 +1,13 @@
 // Main Net
-// export const stableCoinContractAddress = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-// export const ICOAddress = '0xE96342fb23254A8940aE305D7920ABc930E27257'
-// export const KNABaddress = '0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8'
+export const stableCoinContractAddress = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
+export const ICOAddress = '0x466dCdd58f41C2799053159CF48bC1f1DD7ab1F1'
+export const KNABaddress = '0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8'
+export const questAddress = '0x4FA9cBA33c8eCC7C1244B387B6ea5574016811D7'
 
 // Testing for referral
-export const stableCoinContractAddress = '0xA986d9F095493870A0278E174Ed52A84E3a96a01'
-export const ICOAddress = '0xc7415814196ed50385a9A63c376Eb25BEbaD769e'
-export const KNABaddress = '0xBF9C621211B7b1716446f591748b266B035EB33f'
+// export const stableCoinContractAddress = '0xA986d9F095493870A0278E174Ed52A84E3a96a01'
+// export const ICOAddress = '0xc7415814196ed50385a9A63c376Eb25BEbaD769e'
+// export const KNABaddress = '0xBF9C621211B7b1716446f591748b266B035EB33f'
 
 export const SLFContractAddress = '0x8c9Ba9aEeBEb1F0F15a430964438809102099e69'
 export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
@@ -21,7 +22,7 @@ export const stratAddress1 = '0xA894BDF433e02D7c46122f2c2fc097b66f7e8269'
 export const stratAddress2 = '0x2B8B86DF468A8D8575eE35f3A5a117C88A9FE4D6'
 export const stratAddress3 = '0x00ecA350a5fD9D5f9c87b0B34d0008cE691d6cE0'
 export const rewardsAddress = '0xEf7De2Cc37e107d64e8AD7B6Ffba95710c110B1B'
-export const questAddress = '0x9ba8158472404a9e49Fd7395A47D826C45afC9C0'
+// export const questAddress = '0x9ba8158472404a9e49Fd7395A47D826C45afC9C0'
 
 export const slcAbi: any = [
   {

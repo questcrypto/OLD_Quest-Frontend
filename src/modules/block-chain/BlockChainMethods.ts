@@ -32,8 +32,8 @@ let web3: Web3
 // import axios from 'axios'
 
 let isWallectConnect: boolean = false
-// let quickNode = process.env.REACT_APP_QUICK_NODE_HTTP;
-let quickNode = 'https://matic-mumbai.chainstacklabs.com/';
+let quickNode = process.env.REACT_APP_QUICK_NODE_HTTP;
+// let quickNode = 'https://matic-mumbai.chainstacklabs.com/';
 
 export const getWeb3Val = async () => {
   // Check if MetaMask is installed
@@ -420,7 +420,8 @@ export const getAssetsUSDCBalance = async () => {
   const web3 = await getWeb3Val()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const KNABContract = new web3.eth.Contract(KNABabi, USDCAddress)
+    // const KNABContract = new web3.eth.Contract(KNABabi, USDCAddress)
+    const KNABContract = new web3.eth.Contract(KNABabi, stableCoinContractAddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const USDCbalance: any = res
     // console.log(USDCbalance, accounts[0], 'bbb')
@@ -713,9 +714,10 @@ export const getUSDCAllowance = async () => {
 
 export const getQuestBalance = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const QuestContract = new web3.eth.Contract(questabi, questAddress)
+    const QuestContract = new web32.eth.Contract(questabi, questAddress)
     const res = await QuestContract.methods.balanceOf(accounts[0]).call()
     const QUESTbalance: any = res
     const data = convertToEther2(QUESTbalance)
@@ -764,7 +766,8 @@ export const returnQST = async (Amount: number) => {
 }
 
 export const getQuestSupply = async () => {
-  const web3 = await getWeb3Val()
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const questContract = new web3.eth.Contract(questabi, questAddress)
     const res = await questContract.methods.totalSupply().call()

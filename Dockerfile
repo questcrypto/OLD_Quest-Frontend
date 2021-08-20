@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY yarn.lock ./
 RUN yarn
-RUN yarn add recharts && yarn add react-ga && add ga-4-react
+RUN yarn add recharts && yarn add react-ga && yarn add ga-4-react
 COPY . ./
 RUN yarn build
 EXPOSE 3000

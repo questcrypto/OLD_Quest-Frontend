@@ -20,6 +20,7 @@ jobs:
     - run: ls
     - name: Run build
       run: |
+        sudo cp ~/.env ./
         sudo docker stop $(sudo docker ps -q) || true
         sudo docker rm $(sudo docker ps -a -q) || true
         sudo docker rmi -f $(sudo docker images -a -q) || true

@@ -27,7 +27,9 @@
 import { createBrowserHistory } from "history";
 import GA4React from "ga-4-react";
 
-const ga4react = new GA4React('G-9WWD66Z78C');
+// const ga4react = new GA4React('G-9WWD66Z78C');
+const ga4react = new GA4React('G-4RGMB9PRGT');
+
 const history = createBrowserHistory();
 
 ga4react.initialize().then((ga4) => {

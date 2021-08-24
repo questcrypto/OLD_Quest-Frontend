@@ -66,5 +66,9 @@ export const ACCORD_ACTION = 'ACCORD_ACTION'
 // Present in Staking
 export const SET_QUEST = 'SET_QUEST'
 export const SET_QUEST_SUPPLY = 'SET_QUEST_SUPPLY'
+// Your Assets Table
+export const SET_KNAB_SUPPLY = 'SET_KNAB_SUPPLY'
+export const SET_USDC_SUPPLY = 'SET_USDC_SUPPLY'
+
 
 

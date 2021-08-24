@@ -27,7 +27,9 @@ import {
   SET_DEPOSITED_KNAB,
   SET_QUEST,
   SET_QUEST_SUPPLY,
-  ACCORD_ACTION
+  ACCORD_ACTION,
+  SET_KNAB_SUPPLY,
+  SET_USDC_SUPPLY
 } from '../actions/action.config'
 
 const initialState = {
@@ -72,13 +74,17 @@ const initialState = {
     first: false,
     second: false,
     third: false
-  }
+  },
+
+  knab_supply: 100000000,
+  usdc_supply: 1243483555
+
 }
 
 export const stakingReducer = (state = initialState, action: any) => {
   let { type, payload } = action
   if (typeof payload !== 'object') {
-    payload = parseFloat(payload).toFixed(2)
+    payload = parseFloat(payload).toFixed(3)
   }
   switch (type) {
     case SET_KNAB:
@@ -225,6 +231,16 @@ export const stakingReducer = (state = initialState, action: any) => {
       return {
         ...state,
         accordAction: payload
+      }
+    case SET_KNAB_SUPPLY:
+      return {
+        ...state,
+        knab_supply: payload
+      }
+    case SET_USDC_SUPPLY:
+      return {
+        ...state,
+        usdc_supply: payload
       }
     default:
       return state

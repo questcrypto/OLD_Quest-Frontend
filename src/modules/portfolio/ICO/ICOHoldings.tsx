@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     height: 'auto',
+    cursor: 'pointer',
     '&:hover': {
       border: '2px solid #E6BA73',
     },
@@ -70,11 +71,12 @@ const ICOHoldings = (props: any) => {
   })
   return (
     <>
-      <div className={classes.mainDiv}>
+      <div className={classes.mainDiv} >
         <Paper
           className={classes.root}
           style={{ opacity: 1 }}
           // onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)}
+          onClick={() => openInNewTab(`https://polygonscan.com/`)}
         >
           <Typography className={classes.header}>ICO Holdings</Typography>
           <Grid container>

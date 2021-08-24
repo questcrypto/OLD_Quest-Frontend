@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     height: 'auto',
+    cursor: 'pointer',
+    '&:hover': {
+      border: '2px solid #E6BA73',
+    },
   },
   arrowImage: {
     height: 12,
@@ -94,30 +98,36 @@ const useStyles = makeStyles((theme) => ({
 const KnabrCard = (props: any) => {
   const classes = useStyles()
   const {
-    staking: { knab, knabr}, 
-    setKnabr 
+    staking: { knab, knabr },
+    setKnabr
   } = props;
   useEffect(() => {
     getAssetsKNABrBalance().then((res) => {
       // console.log(res);
       setKnabr(res);
     }, err => { console.log(err) })
-  },[])
+  }, [])
 
+  const openInNewTab = (url: string) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
+  
   return (
     <>
       <div className={classes.mainDiv}>
-        <Paper className={classes.root} style={{ opacity: 1 }}>
+        <Paper className={classes.root} style={{ opacity: 1 }}
+          onClick={() => openInNewTab(`https://polygonscan.com/`)}>
           <div>
             <div className={classes.contentDiv}>
               <div className={classes.contentImgDiv}>
-                <img src={KnabIcon} alt="" className={classes.iconImg}/>
+                <img src={KnabIcon} alt="" className={classes.iconImg} />
               </div>
               <div className={classes.contentTextDiv}>
                 <Typography>KNABr</Typography>
                 <Typography className={classes.secondLineText} variant="h5">
                   {/* $6.76 &nbsp; */}
-                  {props.isWalletCon? knabr: 0 }&nbsp;
+                  {props.isWalletCon ? knabr : 0}&nbsp;
                   <span className={classes.arrowText}>
                     <img src={triangle} alt="" className={classes.arrowImage} />
                     0.0%
@@ -158,6 +168,6 @@ const mapStateToProps = (state: any) => ({
   isWalletCon: state.user.isWalletCon,
   staking: state.staking,
 })
-export default withRouter(connect(mapStateToProps, { 
-  setKnabr 
+export default withRouter(connect(mapStateToProps, {
+  setKnabr
 })(KnabrCard))

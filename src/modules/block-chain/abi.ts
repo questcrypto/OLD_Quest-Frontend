@@ -3,6 +3,8 @@ export const stableCoinContractAddress = '0x2791bca1f2de4661ed88a30c99a7a9449aa8
 export const ICOAddress = '0x466dCdd58f41C2799053159CF48bC1f1DD7ab1F1'
 export const KNABaddress = '0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8'
 export const questAddress = '0x4FA9cBA33c8eCC7C1244B387B6ea5574016811D7'
+export const KNABAddressTest = '0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8'
+// export const KNABrAddress = ''
 
 // Testing for referral
 // export const stableCoinContractAddress = '0xA986d9F095493870A0278E174Ed52A84E3a96a01'
@@ -14,7 +16,7 @@ export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
 export const auctionContractAddress = '0x8482cf391ABAc8Fed36Cba191cCDA486BA119341'
 export const treasuryAddress = '0x9ec6df50fcF77637996AFFa60b43121F8B4F27c6'
 export const KNABFarmaddress = '0xdC5aF93fc4BA825ebdE6Ec7BBa5154f986Ca993F'
-export const KNABAddressTest = '0xBF9C621211B7b1716446f591748b266B035EB33f'
+// export const KNABAddressTest = '0xBF9C621211B7b1716446f591748b266B035EB33f'
 export const USDCAddress = '0xA986d9F095493870A0278E174Ed52A84E3a96a01'
 export const KNABrAddress = '0x9Ca398983387f3945119DfAD55AF297966A7BaBd'
 export const LPTokenAddress = '0x6950Fcb879b7907609ed6a5E5f0f60Fbc6Ecb47C'

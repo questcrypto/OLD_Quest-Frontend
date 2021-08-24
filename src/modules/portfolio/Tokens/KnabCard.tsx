@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     height: 'auto',
+    cursor: 'pointer',
+    '&:hover': {
+      border: '2px solid #E6BA73',
+    },
   },
   arrowImage: {
     height: 12,
@@ -99,13 +103,19 @@ const KnabCard = (props: any) => {
     getKNABbalance(KNABBalance / 10 ** 18)
   }
 
+  const openInNewTab = (url: string) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
+
   useEffect(() => {
     getBalance()
   }, [])
   return (
     <>
       <div className={classes.mainDiv}>
-        <Paper className={classes.root} style={{ opacity: 1 }}>
+        <Paper className={classes.root} style={{ opacity: 1 }}
+          onClick={() => openInNewTab(`https://polygonscan.com/`)}>
           <div>
             <div className={classes.contentDiv}>
               <div className={classes.contentImgDiv}>

@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     height: 'auto',
+    cursor: 'pointer',
     '&:hover': {
       border: '2px solid #E6BA73',
     },
@@ -78,6 +79,10 @@ const RaisedTokens = (props: any) => {
     minutes: 0,
     seconds: 0,
   })
+  const openInNewTab = (url: string) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
   useEffect(() => {
     let countDownDate = new Date('August 31, 2021 00:00:00').getTime()
     // Update the count down every 1 second
@@ -118,7 +123,8 @@ const RaisedTokens = (props: any) => {
   }, [])
   return (
     <div className={classes.mainDiv}>
-      <Paper className={classes.root} style={{ opacity: 1 }}>
+      <Paper className={classes.root} style={{ opacity: 1 }}
+        onClick={() => openInNewTab(`https://polygonscan.com/`)}>
         <Grid container className={classes.headerFlex}>
           <Grid item>
             <Typography className={classes.header}>
@@ -128,7 +134,7 @@ const RaisedTokens = (props: any) => {
           </Grid>
           <Grid item>
             <Typography className={classes.rightHeader}>
-              <span className={classes.label}>Target - </span> 
+              <span className={classes.label}>Target - </span>
               <span className={classes.value}>&nbsp;80 Million USDC</span>
             </Typography>
           </Grid>

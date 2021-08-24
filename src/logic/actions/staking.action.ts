@@ -27,7 +27,9 @@ import {
   SET_DEPOSITED_KNAB,
   SET_QUEST,
   SET_QUEST_SUPPLY,
-  ACCORD_ACTION
+  ACCORD_ACTION,
+  SET_KNAB_SUPPLY,
+  SET_USDC_SUPPLY
 } from './action.config'
 
 export const setKnab = (data: any) => {
@@ -233,6 +235,19 @@ export const accordActionFn = (data: any) => {
   }
 }
 
+export const setKnabSupply = (data: any) => {
+  return {
+    type: SET_KNAB_SUPPLY,
+    payload: data,
+  }
+}
+
+export const setUsdcSupply = (data: any) => {
+  return {
+    type: SET_USDC_SUPPLY,
+    payload: data,
+  }
+}
 
 
 

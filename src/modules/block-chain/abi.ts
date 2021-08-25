@@ -4,26 +4,44 @@ export const ICOAddress = '0x466dCdd58f41C2799053159CF48bC1f1DD7ab1F1'
 export const KNABaddress = '0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8'
 export const questAddress = '0x4FA9cBA33c8eCC7C1244B387B6ea5574016811D7'
 export const KNABAddressTest = '0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8'
-// export const KNABrAddress = ''
+
+export const KNABFarmaddress = '0xF774D6e4E781E1582DEcedd0638Ef1de88d3625B'
+export const USDCAddress = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
+export const KNABrAddress = '0x7b6F828E0Dfa3701aE28E76f4c278e3E6454CD2d'
+export const LPTokenAddress = '0x2BfCd8825654Af2Efe1c9f5eD00e68cb2C69F74d'
+export const LPTokenAddress2 = '0xdE1530276A3eBA2C0AA1f46903D9b1D541cb693F'
+export const stratAddress1 = '0x780cdd92519d5a20ee6964F7fd29aAB26B6c0B8d'
+export const stratAddress2 = '0x3A4C5D055Bf45ff9c761380E8fba6628148C6e11'
+export const stratAddress3 = '0x1E8AA3D8380662F925B99AD418cac657dbB63F3e'
+export const stratAddress43 = '0x57a9090088e838754cE0C7fACDA9Fec3B2133667'
+export const rewardsAddress = ''
+
+// KNABRFARM = 0xF774D6e4E781E1582DEcedd0638Ef1de88d3625B
+// KNABPOOL = 0x780cdd92519d5a20ee6964F7fd29aAB26B6c0B8d
+// Quickswap = 0x3A4C5D055Bf45ff9c761380E8fba6628148C6e11
+// // Sushiswap = 0x57a9090088e838754cE0C7fACDA9Fec3B2133667
+// aaveProtocol = 0x1E8AA3D8380662F925B99AD418cac657dbB63F3e
+// 0x2BfCd8825654Af2Efe1c9f5eD00e68cb2C69F74d - lp Q
 
 // Testing for referral
 // export const stableCoinContractAddress = '0xA986d9F095493870A0278E174Ed52A84E3a96a01'
 // export const ICOAddress = '0xc7415814196ed50385a9A63c376Eb25BEbaD769e'
 // export const KNABaddress = '0xBF9C621211B7b1716446f591748b266B035EB33f'
 
+// Test Net
 export const SLFContractAddress = '0x8c9Ba9aEeBEb1F0F15a430964438809102099e69'
 export const DAIContractAddress = '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735'
 export const auctionContractAddress = '0x8482cf391ABAc8Fed36Cba191cCDA486BA119341'
 export const treasuryAddress = '0x9ec6df50fcF77637996AFFa60b43121F8B4F27c6'
-export const KNABFarmaddress = '0xdC5aF93fc4BA825ebdE6Ec7BBa5154f986Ca993F'
+// export const KNABFarmaddress = '0xdC5aF93fc4BA825ebdE6Ec7BBa5154f986Ca993F'
 // export const KNABAddressTest = '0xBF9C621211B7b1716446f591748b266B035EB33f'
-export const USDCAddress = '0xA986d9F095493870A0278E174Ed52A84E3a96a01'
-export const KNABrAddress = '0x9Ca398983387f3945119DfAD55AF297966A7BaBd'
-export const LPTokenAddress = '0x6950Fcb879b7907609ed6a5E5f0f60Fbc6Ecb47C'
-export const stratAddress1 = '0xA894BDF433e02D7c46122f2c2fc097b66f7e8269'
-export const stratAddress2 = '0x2B8B86DF468A8D8575eE35f3A5a117C88A9FE4D6'
-export const stratAddress3 = '0x00ecA350a5fD9D5f9c87b0B34d0008cE691d6cE0'
-export const rewardsAddress = '0xEf7De2Cc37e107d64e8AD7B6Ffba95710c110B1B'
+// export const USDCAddress = '0xA986d9F095493870A0278E174Ed52A84E3a96a01'
+// export const KNABrAddress = '0x9Ca398983387f3945119DfAD55AF297966A7BaBd'
+// export const LPTokenAddress = '0x6950Fcb879b7907609ed6a5E5f0f60Fbc6Ecb47C'
+// export const stratAddress1 = '0xA894BDF433e02D7c46122f2c2fc097b66f7e8269'
+// export const stratAddress2 = '0x2B8B86DF468A8D8575eE35f3A5a117C88A9FE4D6'
+// export const stratAddress3 = '0x00ecA350a5fD9D5f9c87b0B34d0008cE691d6cE0'
+// export const rewardsAddress = '0xEf7De2Cc37e107d64e8AD7B6Ffba95710c110B1B'
 // export const questAddress = '0x9ba8158472404a9e49Fd7395A47D826C45afC9C0'
 
 export const slcAbi: any = [

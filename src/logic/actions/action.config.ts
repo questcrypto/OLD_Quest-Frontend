@@ -69,6 +69,15 @@ export const SET_QUEST_SUPPLY = 'SET_QUEST_SUPPLY'
 // Your Assets Table
 export const SET_KNAB_SUPPLY = 'SET_KNAB_SUPPLY'
 export const SET_USDC_SUPPLY = 'SET_USDC_SUPPLY'
+export const SET_KNABR_SUPPLY = 'SET_KNABR_SUPPLY'
+export const SET_LP_SUPPLY = 'SET_LP_SUPPLY'
 
+// StakingRow43
+export const SET_TVL_KNAB_USDC2 = 'SET_TVL_KNAB_USDC2'
+export const SET_LP2 = 'SET_LP2'
+export const SET_LP_DOLLAR2 = 'SET_LP_DOLLAR2'
+export const SET_LP_STAKED2 = 'SET_LP_STAKED2'
+export const SET_LP_STAKED_DOLLAR2 = 'SET_LP_STAKED_DOLLAR2'
+export const SET_LP_KNABR_EARNED2 = 'SET_LP_KNABR_EARNED2'
 
 

@@ -26,7 +26,9 @@ import {
   rewardsAddress,
   rewardsabi,
   questabi,
-  questAddress
+  questAddress,
+  LPTokenAddress2,
+  stratAddress43
 } from './abi'
 let web3: Web3
 // import axios from 'axios'
@@ -316,9 +318,10 @@ export const fetchDetails = async () => {
 
 export const getKNABBalance = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const KNABContract = new web3.eth.Contract(KNABabi, KNABaddress)
+    const KNABContract = new web32.eth.Contract(KNABabi, KNABaddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNABBalance: any = res
     return parseInt(KNABBalance)
@@ -396,9 +399,10 @@ export const handleUsdcApproval = async (contractUsdc: any, account: string, App
 
 export const getAssetsKNABBalance = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const KNABContract = new web3.eth.Contract(KNABabi, KNABAddressTest)
+    const KNABContract = new web32.eth.Contract(KNABabi, KNABAddressTest)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNABBalance: any = res
     // return parseInt(KNABBalance)
@@ -407,9 +411,10 @@ export const getAssetsKNABBalance = async () => {
 }
 export const getAssetsKNABrBalance = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const KNABContract = new web3.eth.Contract(KNABabi, KNABrAddress)
+    const KNABContract = new web32.eth.Contract(KNABabi, KNABrAddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNABrBalance: any = res
     // return parseInt(KNABrBalance)
@@ -418,10 +423,11 @@ export const getAssetsKNABrBalance = async () => {
 }
 export const getAssetsUSDCBalance = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     // const KNABContract = new web3.eth.Contract(KNABabi, USDCAddress)
-    const KNABContract = new web3.eth.Contract(KNABabi, stableCoinContractAddress)
+    const KNABContract = new web32.eth.Contract(KNABabi, stableCoinContractAddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const USDCbalance: any = res
     // console.log(USDCbalance, accounts[0], 'bbb')
@@ -432,9 +438,10 @@ export const getAssetsUSDCBalance = async () => {
 }
 export const getAssetsKNAB_USDCBalance = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const KNABContract = new web3.eth.Contract(KNABabi, LPTokenAddress)
+    const KNABContract = new web32.eth.Contract(KNABabi, LPTokenAddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const KNAB_USDCBalance: any = res
     // return parseInt(KNAB_USDCBalance)
@@ -444,9 +451,10 @@ export const getAssetsKNAB_USDCBalance = async () => {
 
 export const getLpBalance = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const lpContract = new web3.eth.Contract(stableCoinAbi, LPTokenAddress)
+    const lpContract = new web32.eth.Contract(stableCoinAbi, LPTokenAddress)
     // const deci = await lpContract.methods.decimals().call()
     const res = await lpContract.methods.balanceOf(accounts[0]).call()
     // const lpBalance: any = res / 10 ** 6
@@ -487,9 +495,10 @@ export const withdrawUsdc = async (pid: number, amount: number) => {
 
 export const getStake = async (pid: number) => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const farmContract = new web32.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
     const res = await farmContract.methods.stakedWantTokens(pid, accounts[0]).call()
     // console.log('GetStake',pid, res)
     return convertToEther2(res);
@@ -498,9 +507,10 @@ export const getStake = async (pid: number) => {
 
 export const getStakeUsdc = async (pid: number) => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const farmContract = new web32.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
     const res = await farmContract.methods.stakedWantTokens(pid, accounts[0]).call()
     // console.log('GetStake',pid, res)
     return res;
@@ -509,9 +519,10 @@ export const getStakeUsdc = async (pid: number) => {
 
 export const getPendingKnabr = async (pid: number) => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const farmContract = new web32.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
     const res = await farmContract.methods.pendingKNABR(pid, accounts[0]).call()
     return convertToEther2(res)
   }
@@ -519,9 +530,10 @@ export const getPendingKnabr = async (pid: number) => {
 
 export const getTvlKnab = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const stratContract = new web3.eth.Contract(stratabi, stratAddress1)
+    const stratContract = new web32.eth.Contract(stratabi, stratAddress1)
     const res = await stratContract.methods.wantLockedTotal().call()
     return convertToEther2(res);
   }
@@ -529,9 +541,10 @@ export const getTvlKnab = async () => {
 
 export const getTvlKnabUsdc = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const stratContract = new web3.eth.Contract(stratabi, stratAddress2)
+    const stratContract = new web32.eth.Contract(stratabi, stratAddress2)
     const res = await stratContract.methods.wantLockedTotal().call()
     return convertToEther2(res);
   }
@@ -539,9 +552,10 @@ export const getTvlKnabUsdc = async () => {
 
 export const getTvlUsdc = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const stratContract = new web3.eth.Contract(stratabi, stratAddress3)
+    const stratContract = new web32.eth.Contract(stratabi, stratAddress3)
     const res = await stratContract.methods.wantLockedTotal().call()
     return convertToEther2(res);
   }
@@ -598,9 +612,10 @@ export const withdrawLoan = async (pid: number, amount: number) => {
 
 export const getLoanAmount = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const stratContract = new web3.eth.Contract(stratabi, stratAddress3)
+    const stratContract = new web32.eth.Contract(stratabi, stratAddress3)
     const res = await stratContract.methods.paymentrecieved(accounts[0]).call()
     // console.log(res/10**6);
     return res / 10 ** 6;
@@ -609,9 +624,10 @@ export const getLoanAmount = async () => {
 
 export const getLoanAmount2 = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const stratContract = new web3.eth.Contract(stratabi, stratAddress3)
+    const stratContract = new web32.eth.Contract(stratabi, stratAddress3)
     const res = await stratContract.methods.amountLoan(accounts[0]).call()
     // console.log(res/10**6);
     return res / 10 ** 6;
@@ -621,9 +637,10 @@ export const getLoanAmount2 = async () => {
 
 export const getUSDCBalanceBuyKnab = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const KNABContract = new web3.eth.Contract(KNABabi, stableCoinContractAddress)
+    const KNABContract = new web32.eth.Contract(KNABabi, stableCoinContractAddress)
     const res = await KNABContract.methods.balanceOf(accounts[0]).call()
     const USDCbalance: any = res
     // console.log(USDCbalance, accounts[0], 'bbb')
@@ -663,8 +680,9 @@ export const claimRewards = async (amount: any) => {
 
 export const getStatus = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
-    const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
+    const rewardsContract = new web32.eth.Contract(rewardsabi, rewardsAddress)
     const res = await rewardsContract.methods.getStatus().call()
     return res;
   }
@@ -672,9 +690,10 @@ export const getStatus = async () => {
 
 export const getKnabDeposited = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
+    const rewardsContract = new web32.eth.Contract(rewardsabi, rewardsAddress)
     const res = await rewardsContract.methods.userDeposit(accounts[0]).call({ from: accounts[0] })
     return convertToEther2(res);
   }
@@ -682,9 +701,10 @@ export const getKnabDeposited = async () => {
 
 export const getKnabRewards = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const rewardsContract = new web3.eth.Contract(rewardsabi, rewardsAddress)
+    const rewardsContract = new web32.eth.Contract(rewardsabi, rewardsAddress)
     const res = await rewardsContract.methods.getKnab().call({ from: accounts[0] })
     return convertToEther2(res);
   }
@@ -692,9 +712,10 @@ export const getKnabRewards = async () => {
 
 export const getKNABAllowance = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const KNABContract = new web3.eth.Contract(KNABabi, KNABAddressTest)
+    const KNABContract = new web32.eth.Contract(KNABabi, KNABAddressTest)
     const res = await KNABContract.methods.allowance(accounts[0], KNABFarmaddress).call()
     const KNABBalance: any = res
     return convertToEther2(KNABBalance)
@@ -703,9 +724,10 @@ export const getKNABAllowance = async () => {
 
 export const getUSDCAllowance = async () => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
-    const KNABContract = new web3.eth.Contract(KNABabi, USDCAddress)
+    const KNABContract = new web32.eth.Contract(KNABabi, USDCAddress)
     const res = await KNABContract.methods.allowance(accounts[0], KNABFarmaddress).call()
     const KNABBalance: any = res
     return KNABBalance / 10 ** 6
@@ -775,3 +797,67 @@ export const getQuestSupply = async () => {
     return questSupply
   }
 }
+
+export const getKnabrSupply = async () => {
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+  if (web3) {
+    const questContract = new web3.eth.Contract(questabi, KNABrAddress)
+    const res = await questContract.methods.totalSupply().call()
+    const knabrSupply: any = convertToEther2(res)
+    return knabrSupply
+  }
+}
+
+export const getUsdcSupply = async () => {
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+  if (web3) {
+    const questContract = new web3.eth.Contract(questabi, USDCAddress)
+    const res = await questContract.methods.totalSupply().call()
+    const usdcSupply: any = web3.utils.fromWei(res, "mwei")
+    return usdcSupply
+  }
+}
+
+export const getLpSupply = async () => {
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+  if (web3) {
+    const questContract = new web3.eth.Contract(questabi, LPTokenAddress)
+    const res = await questContract.methods.totalSupply().call()
+    const lpSupply: any = convertToEther2(res)
+    return lpSupply
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Staking Row43 Methods
+
+export const getLpBalance2 = async () => {
+  const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const lpContract = new web32.eth.Contract(stableCoinAbi, LPTokenAddress2)
+    // const deci = await lpContract.methods.decimals().call()
+    const res = await lpContract.methods.balanceOf(accounts[0]).call()
+    // const lpBalance: any = res / 10 ** 6
+    const lpBalance: any = convertToEther2(res)
+    return lpBalance
+  }
+  return 0
+}
+
+export const getTvlKnabUsdc2 = async () => {
+  const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const stratContract = new web32.eth.Contract(stratabi, stratAddress43)
+    const res = await stratContract.methods.wantLockedTotal().call()
+    return convertToEther2(res);
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////

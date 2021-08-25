@@ -35,22 +35,22 @@ import {
   handleKnabUsdcApproval,
   deposit,
   withdraw,
-  getLpBalance,
+  getLpBalance2,
   getAssetsKNABrBalance,
-  getTvlKnabUsdc,
+  getTvlKnabUsdc2,
   getStake,
   getPendingKnabr,
   getHarvest
 } from '../../../../modules/block-chain/BlockChainMethods'
 import { LPTokenAddress, KNABabi } from '../../../../modules/block-chain/abi';
 import {
-  setTvlKnabUsdc,
-  setLp,
-  setLpDollar,
+  setTvlKnabUsdc2,
+  setLp2,
+  setLpDollar2,
   setKnabr,
-  setLpStaked,
-  setLpStakedDollar,
-  setLpKnabREarned,
+  setLpStaked2,
+  setLpStakedDollar2,
+  setLpKnabREarned2,
   accordActionFn
 } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
@@ -169,16 +169,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const StakingRow2 = (props: any) => {
+const StakingRow43 = (props: any) => {
 
-  const addLiquidityUrl = 'https://quickswap.exchange/#/add/0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174';
-  const removeLiquidityUrl = 'https://quickswap.exchange/#/pool';
+  const addLiquidityUrl = 'https://app.sushi.com/add/0xE1f186285252FE4d3b0D5Aa161F58320Cb5057B8/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174';
+  const removeLiquidityUrl = 'https://app.sushi.com/pool';
 
   const classes = useStyles();
   const {
     user: { walletConAddress, web3Instance },
-    staking: { tvl_knab_usdc, lp, lp_dollar, knabr, lp_staked, lp_staked_dollar, lp_knabr_earned, accordAction },
-    setTvlKnabUsdc, setLp, setLpDollar, setKnabr, setLpStaked, setLpStakedDollar, setLpKnabREarned, setLoanAmount,
+    staking: { tvl_knab_usdc2, lp2, lp_dollar2, knabr, lp_staked2, lp_staked_dollar2, lp_knabr_earned2, accordAction },
+    setTvlKnabUsdc2, setLp2, setLpDollar2, setKnabr, setLpStaked2, setLpStakedDollar2, setLpKnabREarned2, setLoanAmount,
     accordActionFn,
     errorAlert, successAlert,
   } = props;
@@ -191,15 +191,15 @@ const StakingRow2 = (props: any) => {
 
   const stateUpdate = () => {
     try {
-      getTvlKnabUsdc().then((res) => {
+      getTvlKnabUsdc2().then((res) => {
         // console.log(res);
-        setTvlKnabUsdc(res);
+        setTvlKnabUsdc2(res);
       }, err => { console.log(err) })
 
-      getLpBalance().then((res) => {
+      getLpBalance2().then((res) => {
         // console.log(res);
-        setLp(res);
-        setLpDollar(res);
+        setLp2(res);
+        setLpDollar2(res);
       }, err => { console.log(err) })
 
       getAssetsKNABrBalance().then((res) => {
@@ -207,15 +207,15 @@ const StakingRow2 = (props: any) => {
         setKnabr(res);
       }, err => { console.log(err) })
 
-      getStake(1).then((res) => {
+      getStake(2).then((res) => {
         // console.log(res);
-        setLpStaked(res);
-        setLpStakedDollar(res);
+        setLpStaked2(res);
+        setLpStakedDollar2(res);
       }, err => { console.log(err) })
 
-      getPendingKnabr(1).then((res) => {
+      getPendingKnabr(2).then((res) => {
         // console.log(res);
-        setLpKnabREarned(res);
+        setLpKnabREarned2(res);
       }, err => { console.log(err) })
     } catch (err) { console.log(err) }
   }
@@ -230,8 +230,8 @@ const StakingRow2 = (props: any) => {
       // if (isOpen) { setIsOpen(false) }
       // if (accordAction['second']) { setIsOpen(false) }
       // else { setIsOpen(true) }
-      const temp = accordAction['second'];
-      accordActionFn({ ...accordAction, first: false, second: !temp, third: false, four_three: false })
+      const temp = accordAction['four_three'];
+      accordActionFn({ ...accordAction, first: false, second: false, third: false, four_three: !temp })
     } catch { }
   }
 
@@ -240,7 +240,7 @@ const StakingRow2 = (props: any) => {
       setLoader({ ...loader, approveLoad: true });
       const Contract = new web3Instance.eth.Contract(KNABabi, LPTokenAddress);
       const accounts = await web3Instance.eth.getAccounts()
-      handleKnabUsdcApproval(Contract, accounts[0], lp).then((res: any) => {
+      handleKnabUsdcApproval(Contract, accounts[0], lp2).then((res: any) => {
         if (res) {
           setLoader({ ...loader, approveLoad: false });
           successAlert('Transaction completed successfully')
@@ -258,7 +258,7 @@ const StakingRow2 = (props: any) => {
   const stakeFn = async () => {
     try {
       setLoader({ ...loader, stakeLoad: true });
-      deposit(1, lp).then((res: any) => {
+      deposit(2, lp2).then((res: any) => {
         if (res) {
           setLoader({ ...loader, stakeLoad: false });
           stateUpdate();
@@ -276,13 +276,13 @@ const StakingRow2 = (props: any) => {
 
   const unStakeFn = () => {
     try {
-      if ((lpUnStackVal / 1) > (lp_staked / 1)) {
+      if ((lpUnStackVal / 1) > (lp_staked2 / 1)) {
         errorAlert('Insufficent LP balance in wallet to Unstake');
         setLpUnStackVal(0);
         return;
       }
       setLoader({ ...loader, unstakeLoad: true });
-      withdraw(1, lpUnStackVal).then((res: any) => {
+      withdraw(2, lpUnStackVal).then((res: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
           stateUpdate();
@@ -303,7 +303,7 @@ const StakingRow2 = (props: any) => {
   const harvestFn = () => {
     try {
       setLoader({ ...loader, harvestLoad: true });
-      getHarvest(1).then((res: any) => {
+      getHarvest(2).then((res: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
           stateUpdate();
@@ -319,7 +319,7 @@ const StakingRow2 = (props: any) => {
 
   const approveMaxLpClick = () => {
     try {
-      setLpUnStackVal(lp_staked);
+      setLpUnStackVal(lp_staked2);
     } catch (error) { console.log(error) }
   }
 
@@ -329,7 +329,7 @@ const StakingRow2 = (props: any) => {
   }
 
   return (
-    <Accordion classes={{ root: classes.accordionRoot }} expanded={accordAction['second']}>
+    <Accordion classes={{ root: classes.accordionRoot }} expanded={accordAction['four_three']}>
       <AccordionSummary
         // expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -350,19 +350,19 @@ const StakingRow2 = (props: any) => {
             </AvatarGroup>
           </FlexRow>
           <FlexColumn>
-            <AccordHeading className={classes.padLR}>KNAB-USDC(Q)</AccordHeading>
-            <AccordValue className={classes.padLR}>${tvl_knab_usdc} TVL</AccordValue>
+            <AccordHeading className={classes.padLR}>KNAB-USDC(S)</AccordHeading>
+            <AccordValue className={classes.padLR}>${tvl_knab_usdc2} TVL</AccordValue>
           </FlexColumn>
           <FlexColumn>
             <AccordHeading className={classes.padLR}>0%</AccordHeading>
             <AccordValue className={classes.padLR}>0%(24hr)</AccordValue>
           </FlexColumn>
           <FlexColumn>
-            <AccordHeading className={classes.padLR}>${lp_dollar}</AccordHeading>
-            <AccordValue className={classes.padLR}>{lp} LP</AccordValue>
+            <AccordHeading className={classes.padLR}>${lp_dollar2}</AccordHeading>
+            <AccordValue className={classes.padLR}>{lp2} LP</AccordValue>
           </FlexColumn>
           <FlexColumn>
-            <AccordHeading className={classes.padLR}>{lp_knabr_earned}</AccordHeading>
+            <AccordHeading className={classes.padLR}>{lp_knabr_earned2}</AccordHeading>
             <AccordValue className={classes.padLR}>Knab R</AccordValue>
           </FlexColumn>
           <FlexColumn>
@@ -392,7 +392,7 @@ const StakingRow2 = (props: any) => {
                           <img src={Question} alt="" className={classes.questionImg} />
                         </CustomTooltip>
                       </Heading>
-                      <Value>{lp}</Value>
+                      <Value>{lp2}</Value>
                       {/* <Value>($00.00)</Value> */}
                     </FlexColumn>
                     <CustomButton
@@ -402,7 +402,7 @@ const StakingRow2 = (props: any) => {
                         padding: '8px 48px',
                       }}
                       onClick={approveFn}
-                      disabled={!(lp > 0)}
+                      disabled={!(lp2 > 0)}
                     >
                       {/* Approve */}
                       {loader.approveLoad ? <Spinner /> : <span>Approve</span>}
@@ -419,7 +419,7 @@ const StakingRow2 = (props: any) => {
                             marginLeft: '12px'
                           }}
                           onClick={stakeFn}
-                          disabled={!(lp > 0)}
+                          disabled={!(lp2 > 0)}
                         >
                           {/* Stake */}
                           {loader.stakeLoad ? <Spinner /> : <span>Stake</span>}
@@ -446,7 +446,7 @@ const StakingRow2 = (props: any) => {
                       }}
                       onClick={() => openInNewTab(`${addLiquidityUrl}`)}
                     >
-                      Add Liquidity on Quick Swap
+                      Add Liquidity on Sushi Swap
                     </CustomButton>
                   </div>
                   <div className={classes.btnCenter}>
@@ -459,7 +459,7 @@ const StakingRow2 = (props: any) => {
                       }}
                       onClick={() => openInNewTab(`${removeLiquidityUrl}`)}
                     >
-                      Remove Liquidity on Quick Swap
+                      Remove Liquidity on Sushi Swap
                     </CustomButton>
                   </div>
                 </FlexColumn>
@@ -479,7 +479,7 @@ const StakingRow2 = (props: any) => {
                         <img src={Question} alt="" className={classes.questionImg} />
                       </CustomTooltip> */}
                     </Heading>
-                    <Value>{lp_staked}
+                    <Value>{lp_staked2}
                       {/* (${lp_staked_dollar}) */}
                     </Value>
                   </div><br />
@@ -526,7 +526,7 @@ const StakingRow2 = (props: any) => {
                   </div><br />
                   <FlexDiv className={classes.divResp1}>
                     <FlexColumn>
-                      <Value>{lp_knabr_earned}</Value>
+                      <Value>{lp_knabr_earned2}</Value>
                       {/* <Value>($0.00)</Value> */}
                     </FlexColumn>
                     <CustomButton
@@ -537,7 +537,7 @@ const StakingRow2 = (props: any) => {
                         marginLeft: '12px',
                       }}
                       onClick={harvestFn}
-                      disabled={!(lp_knabr_earned > 0)}
+                      disabled={!(lp_knabr_earned2 > 0)}
                     >
                       {/* Harvest */}
                       {loader.harvestLoad ? <Spinner /> : <span>Harvest</span>}
@@ -566,13 +566,13 @@ const mapStateToProps = (state: any) => ({
 })
 
 export default connect(mapStateToProps, {
-  setTvlKnabUsdc,
-  setLp,
-  setLpDollar,
+  setTvlKnabUsdc2,
+  setLp2,
+  setLpDollar2,
   setKnabr,
-  setLpStaked,
-  setLpStakedDollar,
-  setLpKnabREarned,
+  setLpStaked2,
+  setLpStakedDollar2,
+  setLpKnabREarned2,
   accordActionFn,
   errorAlert, successAlert,
-})(StakingRow2)
+})(StakingRow43)

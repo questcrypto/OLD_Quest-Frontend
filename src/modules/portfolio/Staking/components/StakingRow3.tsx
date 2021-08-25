@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '28px',
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
-    '@media (max-width: 450px)' :{
+    '@media (max-width: 450px)': {
       paddingLeft: 0,
       paddingRight: 0
     }
@@ -204,7 +204,7 @@ const StakingRow3 = (props: any) => {
       //   setTvlUsdc(res);
       // }, err => { console.log(err) })
 
-      // getStakeUsdc(5).then((res) => {
+      // getStakeUsdc(3).then((res) => {
       //   // console.log(res);
       //   setTvlUsdc(res);
       // }, err => { console.log(err) })
@@ -220,13 +220,13 @@ const StakingRow3 = (props: any) => {
         setKnabr(res);
       }, err => { console.log(err) })
 
-      getStakeUsdc(5).then((res) => {
+      getStakeUsdc(3).then((res) => {
         // console.log(res);
         setUsdcStaked(res / 10 ** 6);
         setUsdcStakedDollar(res / 10 ** 6);
       }, err => { console.log(err) })
 
-      getPendingKnabr(5).then((res) => {
+      getPendingKnabr(3).then((res) => {
         // console.log(res);
         setUsdcKnabEarned(res);
       }, err => { console.log(err) })
@@ -239,7 +239,7 @@ const StakingRow3 = (props: any) => {
             // console.log('Loan Amount 2', res);
             setIsWithdraw(false);
             setLoanAmount(res);
-           });
+          });
         } else {
           setLoanAmount(res);
           setIsWithdraw(true);
@@ -261,7 +261,7 @@ const StakingRow3 = (props: any) => {
       // if (accordAction['third']) { setIsOpen(false) }
       // else { setIsOpen(true) }
       const temp = accordAction['third'];
-      accordActionFn({ ...accordAction, first: false, second: false, third: !temp })
+      accordActionFn({ ...accordAction, first: false, second: false, third: !temp, four_three: false })
     } catch { }
   }
 
@@ -292,11 +292,13 @@ const StakingRow3 = (props: any) => {
         if (res) {
           setLoader({ ...loader, approveLoad: false });
           successAlert('Transaction completed successfully')
+          setUsdcAppr(0);
         }
       }, err => {
         setLoader({ ...loader, approveLoad: false });
         console.log(err)
         errorAlert('Something went wrong , please try again')
+        setUsdcAppr(0);
       })
     } catch (error) { console.log(error) }
   }
@@ -310,30 +312,32 @@ const StakingRow3 = (props: any) => {
       }
       setLoader({ ...loader, unstakeLoad: true });
       let usdcUnstake2 = usdcUnStake * 10 ** 6;
-      getStakeUsdc(5).then((res: any) => {
+      getStakeUsdc(3).then((res: any) => {
         if (usdcUnstake2 <= res) {
           console.log('1st case');
-          withdrawUsdc(5, usdcUnstake2).then((res1: any) => {
+          withdrawUsdc(3, usdcUnstake2).then((res1: any) => {
             if (res1) {
               setLoader({ ...loader, unstakeLoad: false });
               stateUpdate();
               successAlert('Transaction completed successfully')
+              setUsdcUnStake(0);
             }
           }, err => {
             setLoader({ ...loader, unstakeLoad: false });
             console.log(err)
           })
         } else if (usdcUnstake2 > res && res !== 0 && res !== '0') {
-          withdrawUsdc(5, (res)).then((res2: any) => {
+          withdrawUsdc(3, (res)).then((res2: any) => {
             let temp = 0;
             if (res2) {
               temp++;
-              withdrawLoan(5, (usdcUnstake2 - res)).then((res3: any) => {
+              withdrawLoan(3, (usdcUnstake2 - res)).then((res3: any) => {
                 if (res3) {
                   temp++;
                   setLoader({ ...loader, unstakeLoad: false });
                   stateUpdate();
                   successAlert('Transaction completed successfully')
+                  setUsdcUnStake(0);
                 }
               }, err => {
                 if (temp === 1) {
@@ -352,11 +356,12 @@ const StakingRow3 = (props: any) => {
           })
         } else {
           // console.log('Third case', usdcUnstake2);
-          withdrawLoan(5, (usdcUnstake2)).then((res4: any) => {
+          withdrawLoan(3, (usdcUnstake2)).then((res4: any) => {
             if (res4) {
               setLoader({ ...loader, unstakeLoad: false });
               stateUpdate();
               successAlert('Transaction completed successfully')
+              setUsdcUnStake(0);
             }
           }, err => {
             setLoader({ ...loader, unstakeLoad: false });
@@ -592,7 +597,7 @@ const StakingRow3 = (props: any) => {
                               <img src={Question} alt="" className={classes.questionImg} />
                             </CustomTooltip>
                           </Heading>
-                          <Value style={{ color: isWithdraw? 'green' : 'red' }}>
+                          <Value style={{ color: isWithdraw ? 'green' : 'red' }}>
                             {parseFloat(loan_amount).toFixed(2)}
                             <CustomTooltip
                               title="Red indicates user can't unstake, Green indicates user can unstake"

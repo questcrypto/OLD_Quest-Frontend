@@ -29,7 +29,15 @@ import {
   SET_QUEST_SUPPLY,
   ACCORD_ACTION,
   SET_KNAB_SUPPLY,
-  SET_USDC_SUPPLY
+  SET_USDC_SUPPLY,
+  SET_KNABR_SUPPLY,
+  SET_LP_SUPPLY,
+  SET_TVL_KNAB_USDC2,
+  SET_LP2,
+  SET_LP_DOLLAR2,
+  SET_LP_STAKED2,
+  SET_LP_STAKED_DOLLAR2,
+  SET_LP_KNABR_EARNED2
 } from './action.config'
 
 export const setKnab = (data: any) => {
@@ -249,5 +257,60 @@ export const setUsdcSupply = (data: any) => {
   }
 }
 
+export const setKnabrSupply = (data: any) => {
+  return {
+    type: SET_KNABR_SUPPLY,
+    payload: data,
+  }
+}
 
+export const setLpSupply = (data: any) => {
+  return {
+    type: SET_LP_SUPPLY,
+    payload: data,
+  }
+}
+
+// Staking Row43
+export const setTvlKnabUsdc2 = (data: any) => {
+  return {
+    type: SET_TVL_KNAB_USDC2,
+    payload: data,
+  }
+}
+
+export const setLp2 = (data: any) => {
+  return {
+    type: SET_LP2,
+    payload: data,
+  }
+}
+
+export const setLpDollar2 = (data: any) => {
+  return {
+    type: SET_LP_DOLLAR2,
+    payload: data,
+  }
+}
+
+export const setLpStaked2 = (data: any) => {
+  return {
+    type: SET_LP_STAKED2,
+    payload: data,
+  }
+}
+
+export const setLpStakedDollar2 = (data: any) => {
+  return {
+    type: SET_LP_STAKED_DOLLAR2,
+    payload: data,
+  }
+}
+
+export const setLpKnabREarned2 = (data: any) => {
+  return {
+    type: SET_LP_KNABR_EARNED2,
+    payload: data,
+  }
+}
 

@@ -186,7 +186,6 @@ const StakingRow1 = (props: any) => {
       }, err => { console.log(err) })
 
       getAssetsKNABrBalance().then((res) => {
-        // console.log(res);
         setKnabr(res);
       }, err => { console.log(err) })
 
@@ -229,7 +228,7 @@ const StakingRow1 = (props: any) => {
       // if (accordAction['first']) { setIsOpen(false) }
       // else { setIsOpen(true) }
       const temp = accordAction['first'];
-      accordActionFn({ ...accordAction, first: !temp, second: false, third: false })
+      accordActionFn({ ...accordAction, first: !temp, second: false, third: false, four_three: false })
     } catch { }
   }
 

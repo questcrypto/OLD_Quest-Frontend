@@ -29,7 +29,15 @@ import {
   SET_QUEST_SUPPLY,
   ACCORD_ACTION,
   SET_KNAB_SUPPLY,
-  SET_USDC_SUPPLY
+  SET_USDC_SUPPLY,
+  SET_KNABR_SUPPLY,
+  SET_LP_SUPPLY,
+  SET_TVL_KNAB_USDC2,
+  SET_LP2,
+  SET_LP_DOLLAR2,
+  SET_LP_STAKED2,
+  SET_LP_STAKED_DOLLAR2,
+  SET_LP_KNABR_EARNED2
 } from '../actions/action.config'
 
 const initialState = {
@@ -73,11 +81,21 @@ const initialState = {
   accordAction: {
     first: false,
     second: false,
-    third: false
+    third: false,
+    four_three: false
   },
 
   knab_supply: 100000000,
-  usdc_supply: 1243483555
+  usdc_supply: 0.0,
+  knabr_supply: 0.0,
+  lp_supply: 0.0,
+
+  tvl_knab_usdc2: 0.0,
+  lp2: 0.0,
+  lp_dollar2: 0.0,
+  lp_staked2: 0.0,
+  lp_staked_dollar2: 0.0,
+  lp_knabr_earned2: 0.0,
 
 }
 
@@ -241,6 +259,47 @@ export const stakingReducer = (state = initialState, action: any) => {
       return {
         ...state,
         usdc_supply: payload
+      }
+    case SET_KNABR_SUPPLY:
+      return {
+        ...state,
+        knabr_supply: payload
+      }
+    case SET_LP_SUPPLY:
+      return {
+        ...state,
+        lp_supply: payload
+      }
+
+    case SET_TVL_KNAB_USDC2:
+      return {
+        ...state,
+        tvl_knab_usdc2: payload
+      }
+    case SET_LP2:
+      return {
+        ...state,
+        lp2: payload
+      }
+    case SET_LP_DOLLAR2:
+      return {
+        ...state,
+        lp_dollar2: payload
+      }
+    case SET_LP_STAKED2:
+      return {
+        ...state,
+        lp_staked2: payload
+      }
+    case SET_LP_STAKED_DOLLAR2:
+      return {
+        ...state,
+        lp_staked_dollar2: payload
+      }
+    case SET_LP_KNABR_EARNED2:
+      return {
+        ...state,
+        lp_knabr_earned2: payload
       }
     default:
       return state

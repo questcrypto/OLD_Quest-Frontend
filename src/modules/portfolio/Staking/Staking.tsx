@@ -6,6 +6,7 @@ import StakingHeader from './components/StakingHeader'
 import StakingRow1 from './components/StakingRow1'
 import StakingRow2 from './components/StakingRow2'
 import StakingRow3 from './components/StakingRow3'
+import StakingRow43 from './components/StakingRow43'
 
 import CustomButton from '../components/shared/Button'
 import { getWeb3Val } from 'modules/block-chain/BlockChainMethods'
@@ -104,6 +105,7 @@ const Staking = (props: any) => {
           <StakingHeader />
           <StakingRow1 />
           <StakingRow2 />
+          <StakingRow43 />
           <StakingRow3 />
         </div>
       </Paper>

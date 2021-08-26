@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     // justifyContent: 'space-between',
     alignItems: 'center',
+    cursor: 'pointer',
   },
   iconImg: {
     paddingRight: '6px',
@@ -113,6 +114,8 @@ const useStyles = makeStyles((theme) => ({
 let tableInfo = tableData.tableData
 
 const YourAssets = (props: any) => {
+
+  const polygonScanLink = 'https://polygonscan.com/'
   const {
     loggedIn,
     isWalletCon,
@@ -360,7 +363,9 @@ const YourAssets = (props: any) => {
                         return (
                           <TableCell key={ind}>
                             {item.key === 'asset' && (
-                              <div className={classes.firstDiv}>
+                              <div 
+                                className={classes.firstDiv}
+                                onClick={() => openInNewTab(`${polygonScanLink}`)}>
                                 <img src={row[item.key].icon} alt="" className={classes.iconImg} />
                                 {/* <img src={KnabIcon} alt="" className={classes.iconImg} /> */}
                                 {row[item.key].name}

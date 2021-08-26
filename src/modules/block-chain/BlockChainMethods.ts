@@ -28,7 +28,9 @@ import {
   questabi,
   questAddress,
   LPTokenAddress2,
-  stratAddress43
+  stratAddress43,
+  aaveAddress,
+  aaveabi
 } from './abi'
 let web3: Web3
 // import axios from 'axios'
@@ -484,10 +486,15 @@ export const withdraw = async (pid: number, amount: number) => {
 
 export const withdrawUsdc = async (pid: number, amount: number) => {
   const web3 = await getWeb3Val()
+  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
+
+    const aaveContract = new web32.eth.Contract(aaveabi, aaveAddress)
+    const res1 = await aaveContract.methods.calc_token_amount([0, amount, 0], false ).call()
+
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.withdraw(pid, (amount)).send({ from: accounts[0] })
+    const res = await farmContract.methods.withdraw2(pid, (amount), (res1 + 0.001 *res1) ).send({ from: accounts[0] })
     return res;
     // console.log(res);
   }

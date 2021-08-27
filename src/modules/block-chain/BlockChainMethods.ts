@@ -867,4 +867,15 @@ export const getTvlKnabUsdc2 = async () => {
   }
 }
 
+export const getLp2Supply = async () => {
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+  if (web3) {
+    const questContract = new web3.eth.Contract(questabi, LPTokenAddress2)
+    const res = await questContract.methods.totalSupply().call()
+    const lpSupply2: any = convertToEther2(res)
+    return lpSupply2
+  }
+}
+
 /////////////////////////////////////////////////////////////////////////////

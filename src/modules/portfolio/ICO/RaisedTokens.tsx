@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Paper, makeStyles, Typography, Grid, Tooltip } from '@material-ui/core'
 import { StyledSlider, SliderWrap } from './style'
 import { getUSDCRaised } from '../../../modules/block-chain/BlockChainMethods'
+import { USDCAddress } from 'modules/block-chain/abi'
 
 const useStyles = makeStyles((theme) => ({
   mainDiv: {
@@ -71,6 +72,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const RaisedTokens = (props: any) => {
+
+  const polygonScanLink = 'https://polygonscan.com/';
+  const polygonUsdcUrl = polygonScanLink + 'token/' + USDCAddress;
+  
   const classes = useStyles()
   const [raisedTokens, setRaisedTokens] = useState(0)
   const [time, setTime] = useState({
@@ -124,7 +129,7 @@ const RaisedTokens = (props: any) => {
   return (
     <div className={classes.mainDiv}>
       <Paper className={classes.root} style={{ opacity: 1 }}
-        onClick={() => openInNewTab(`https://polygonscan.com/`)}>
+        onClick={() => openInNewTab(`${polygonUsdcUrl}`)}>
         <Grid container className={classes.headerFlex}>
           <Grid item>
             <Typography className={classes.header}>

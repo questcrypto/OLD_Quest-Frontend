@@ -7,6 +7,7 @@ import Exclamation from 'assets/images/exclamation.png'
 import triangle from 'assets/images/upArrow.png'
 import { getKNABbalance } from 'logic/actions/user.actions'
 import { getKNABBalance } from '../../../modules/block-chain/BlockChainMethods'
+import { KNABaddress } from 'modules/block-chain/abi'
 
 const useStyles = makeStyles((theme) => ({
   mainDiv: {
@@ -96,6 +97,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const KnabCard = (props: any) => {
+
+  const polygonScanLink = 'https://polygonscan.com/';
+  const polygonKnabUrl = polygonScanLink + 'token/' + KNABaddress;
+
   const { getKNABbalance } = props
   const classes = useStyles()
   const getBalance = async () => {
@@ -115,7 +120,7 @@ const KnabCard = (props: any) => {
     <>
       <div className={classes.mainDiv}>
         <Paper className={classes.root} style={{ opacity: 1 }}
-          onClick={() => openInNewTab(`https://polygonscan.com/`)}>
+          onClick={() => openInNewTab(`${polygonKnabUrl}`)}>
           <div>
             <div className={classes.contentDiv}>
               <div className={classes.contentImgDiv}>

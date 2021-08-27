@@ -262,6 +262,11 @@ const content = [
     title: 'Coming Soon',
     subTitle: 'Coming Soon...',
   },
+  {
+    icon: KnabIcon,
+    title: 'Coming Soon',
+    subTitle: 'Coming Soon...',
+  },
 ]
 
 // export default MoreWithCrypto;

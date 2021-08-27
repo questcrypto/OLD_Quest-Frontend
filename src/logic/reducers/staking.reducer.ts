@@ -37,7 +37,8 @@ import {
   SET_LP_DOLLAR2,
   SET_LP_STAKED2,
   SET_LP_STAKED_DOLLAR2,
-  SET_LP_KNABR_EARNED2
+  SET_LP_KNABR_EARNED2,
+  SET_LP2_SUPPLY
 } from '../actions/action.config'
 
 const initialState = {
@@ -96,7 +97,7 @@ const initialState = {
   lp_staked2: 0.0,
   lp_staked_dollar2: 0.0,
   lp_knabr_earned2: 0.0,
-
+  lp2_supply: 0.0
 }
 
 export const stakingReducer = (state = initialState, action: any) => {
@@ -300,6 +301,11 @@ export const stakingReducer = (state = initialState, action: any) => {
       return {
         ...state,
         lp_knabr_earned2: payload
+      }
+    case SET_LP2_SUPPLY:
+      return {
+        ...state,
+        lp2_supply: payload
       }
     default:
       return state

@@ -3,6 +3,7 @@ import { Paper, makeStyles, Typography, Grid } from '@material-ui/core'
 import { getStableCoinBalance } from '../../../modules/block-chain/BlockChainMethods'
 import { Paths } from 'modules/app/components/routes/types'
 import KnabIcon from 'assets/icons/KNAB.svg'
+import { KNABaddress } from 'modules/block-chain/abi'
 
 const useStyles = makeStyles((theme) => ({
   mainDiv: {
@@ -55,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ICOHoldings = (props: any) => {
+
+  const polygonScanLink = 'https://polygonscan.com/';
+  const polygonKnabUrl = polygonScanLink + 'token/' + KNABaddress;
+
   const classes = useStyles()
   const [availableUSDC, setUSDC] = useState(0)
 
@@ -76,7 +81,7 @@ const ICOHoldings = (props: any) => {
           className={classes.root}
           style={{ opacity: 1 }}
           // onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)}
-          onClick={() => openInNewTab(`https://polygonscan.com/`)}
+          onClick={() => openInNewTab(`${polygonKnabUrl}`)}
         >
           <Typography className={classes.header}>ICO Holdings</Typography>
           <Grid container>

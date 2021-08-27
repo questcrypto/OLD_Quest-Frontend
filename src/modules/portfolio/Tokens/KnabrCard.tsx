@@ -7,6 +7,7 @@ import Exclamation from 'assets/images/exclamation.png'
 import triangle from 'assets/images/upArrow.png'
 import { getAssetsKNABrBalance } from '../../../modules/block-chain/BlockChainMethods'
 import { setKnabr } from 'logic/actions/staking.action'
+import { KNABrAddress } from 'modules/block-chain/abi'
 
 const useStyles = makeStyles((theme) => ({
   mainDiv: {
@@ -96,6 +97,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const KnabrCard = (props: any) => {
+
+  const polygonScanLink = 'https://polygonscan.com/';
+  const polygonKnabrUrl = polygonScanLink + 'token/' + KNABrAddress;
+
   const classes = useStyles()
   const {
     staking: { knab, knabr },
@@ -117,7 +122,7 @@ const KnabrCard = (props: any) => {
     <>
       <div className={classes.mainDiv}>
         <Paper className={classes.root} style={{ opacity: 1 }}
-          onClick={() => openInNewTab(`https://polygonscan.com/`)}>
+          onClick={() => openInNewTab(`${polygonKnabrUrl}`)}>
           <div>
             <div className={classes.contentDiv}>
               <div className={classes.contentImgDiv}>

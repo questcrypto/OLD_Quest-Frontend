@@ -1,4 +1,5 @@
-import { Paper, makeStyles, Typography, Slider, Tooltip } from '@material-ui/core'
+import { Paper, makeStyles, Typography, Slider, Tooltip, Avatar } from '@material-ui/core'
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import { useState, useEffect } from 'react'
 import TableContainer from '@material-ui/core/TableContainer'
 import Table from '@material-ui/core/Table'
@@ -26,15 +27,25 @@ import {
   getQuestSupply,
   getKnabrSupply,
   getUsdcSupply,
-  getLpSupply
+  getLpSupply,
+  getLp2Supply
 } from 'modules/block-chain/BlockChainMethods'
 import { walletConnect, walletConnectAddress, setChainId } from 'logic/actions/user.actions'
-import { setQuest, setQuestSupply, setKnabSupply, setUsdcSupply, setKnabrSupply, setLpSupply } from 'logic/actions/staking.action'
+import { setQuest, setQuestSupply, setKnabSupply, setUsdcSupply, setKnabrSupply, setLpSupply, setLp2Supply } from 'logic/actions/staking.action'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import KnabIcon from 'assets/icons/KNAB.svg'
 import CoinIcon from 'assets/icons/USDC.svg'
 import KnabDummy from 'assets/icons/knab_dummy.svg'
-import { KNABAddressTest, stableCoinAbi } from 'modules/block-chain/abi'
+import {
+  KNABAddressTest,
+  stableCoinAbi,
+  KNABaddress,
+  KNABrAddress,
+  USDCAddress,
+  LPTokenAddress,
+  LPTokenAddress2,
+  questAddress
+} from 'modules/block-chain/abi'
 const commaNumber = require('comma-number')
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +78,17 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   iconImg: {
+    paddingRight: '6px',
+  },
+  avatarImg: {
+    width: '35px',
+    height: '35px',
+    border: 'none'
+  },
+  avatarImg2: {
+    width: '35px',
+    height: '35px',
+    border: 'none',
     paddingRight: '6px',
   },
   btnDiv: {
@@ -122,13 +144,14 @@ const YourAssets = (props: any) => {
     getBalance,
     // hasAccess,
     // handleBlocking,
-    staking: { knab, knabr, usdc, quest, quest_supply, knab_supply, usdc_supply, knabr_supply, lp_supply },
+    staking: { knab, knabr, usdc, quest, quest_supply, knab_supply, usdc_supply, knabr_supply, lp_supply, lp, lp2, lp2_supply },
     setQuest,
     setQuestSupply,
     setKnabSupply,
     setUsdcSupply,
     setKnabrSupply,
-    setLpSupply
+    setLpSupply,
+    setLp2Supply
   } = props
   const classes = useStyles()
   const [isWallet, setIsWallet] = useState(false)
@@ -157,6 +180,10 @@ const YourAssets = (props: any) => {
 
     getLpSupply().then((res) => {
       setLpSupply(res);
+    })
+
+    getLp2Supply().then((res) => {
+      setLp2Supply(res);
     })
 
   }, [isWalletCon])
@@ -224,7 +251,7 @@ const YourAssets = (props: any) => {
       balance: `${knabr}`,
       availableQty: commaNumber(knabr_supply),
       price: `$0.0`,
-      holdings: { value: `${knabr_supply > 0  ? ((knabr * 100) / knabr_supply).toFixed(3) : '0.00'} % `, percent: 0.0 },
+      holdings: { value: `${knabr_supply > 0 ? ((knabr * 100) / knabr_supply).toFixed(3) : '0.00'} % `, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'USDC' },
@@ -232,21 +259,30 @@ const YourAssets = (props: any) => {
       availableQty: commaNumber(usdc_supply),
       price: `$1`,
       // holdings: { value: assetsUSDCBalance / 1243483555, percent: 0.0 },
-      holdings: { value: `${usdc_supply > 0? ((usdc * 100) / usdc_supply).toFixed(3): '0.00'} %`, percent: 0.0 },
+      holdings: { value: `${usdc_supply > 0 ? ((usdc * 100) / usdc_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
     },
     {
-      asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC' },
-      balance: `${assetsKNAB_USDCBalance}`,
+      asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC(Q)' },
+      // balance: `${assetsKNAB_USDCBalance}`,
+      balance: `${lp}`,
       availableQty: commaNumber(lp_supply),
       price: `$0.0`,
-      holdings: { value: `${lp_supply > 0 ? ((assetsKNAB_USDCBalance * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
+      holdings: { value: `${lp_supply > 0 ? ((lp * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
+    },
+    {
+      asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC(S)' },
+      // balance: `${assetsKNAB_USDCBalance}`,
+      balance: `${lp2}`,
+      availableQty: commaNumber(lp2_supply),
+      price: `$0.0`,
+      holdings: { value: `${lp2_supply > 0 ? ((lp2 * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
     },
     {
       asset: { icon: `${KnabDummy}`, name: 'QUEST' },
       balance: `${quest}`,
       availableQty: `${quest_supply}`,
       price: `$1`,
-      holdings: { value: `${quest_supply > 0? ((quest * 100) / quest_supply).toFixed(3): '0.00'} %`, percent: 0.0 },
+      holdings: { value: `${quest_supply > 0 ? ((quest * 100) / quest_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
     },
   ]
   const connectWallet = async () => {
@@ -328,6 +364,34 @@ const YourAssets = (props: any) => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
   }
+
+  const openInNewTab2 = (url: string, asset: any) => {
+    console.log(asset);
+    let finalUrl;
+    switch (asset) {
+      case 'KNAB':
+        finalUrl = url + 'token/' + KNABaddress;
+        break;
+      case 'KNABr':
+        finalUrl = url + 'token/' + KNABrAddress;
+        break;
+      case 'USDC':
+        finalUrl = url + 'token/' + USDCAddress;
+        break;
+      case 'KNAB-USDC(Q)':
+        finalUrl = url + 'token/' + LPTokenAddress;
+        break;
+      case 'KNAB-USDC(S)':
+        finalUrl = url + 'token/' + LPTokenAddress2;
+        break;
+      case 'QUEST':
+        finalUrl = url + 'token/' + questAddress;
+        break;
+    }
+    const newWindow = window.open(finalUrl, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
+
   return (
     <div className={classes.mainDiv}>
       <Paper className={classes.root} style={{ opacity: isWallet ? 1 : 0.4 }} onMouseOver={() => setShow(true)}>
@@ -363,10 +427,18 @@ const YourAssets = (props: any) => {
                         return (
                           <TableCell key={ind}>
                             {item.key === 'asset' && (
-                              <div 
+                              <div
                                 className={classes.firstDiv}
-                                onClick={() => openInNewTab(`${polygonScanLink}`)}>
-                                <img src={row[item.key].icon} alt="" className={classes.iconImg} />
+                                onClick={() => openInNewTab2(`${polygonScanLink}`, row[item.key].name)}>
+                                {row[item.key].name === 'KNAB-USDC(Q)' || row[item.key].name === 'KNAB-USDC(S)' ? 
+                                  <AvatarGroup max={2}>
+                                    <Avatar alt="" src={KnabIcon} style={{ background: '#FFF' }} className={classes.avatarImg} />
+                                    <Avatar alt="" src={CoinIcon} className={classes.avatarImg2} />
+                                  </AvatarGroup> :
+                                  <img src={row[item.key].icon} alt="" className={classes.iconImg} />
+                                }
+
+
                                 {/* <img src={KnabIcon} alt="" className={classes.iconImg} /> */}
                                 {row[item.key].name}
                               </div>
@@ -452,5 +524,6 @@ export default connect(mapStateToProps, {
   setKnabSupply,
   setUsdcSupply,
   setKnabrSupply,
-  setLpSupply
+  setLpSupply,
+  setLp2Supply
 })(YourAssets)

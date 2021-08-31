@@ -14,7 +14,7 @@ export const stratAddress1 = '0x780cdd92519d5a20ee6964F7fd29aAB26B6c0B8d'
 export const stratAddress2 = '0x3A4C5D055Bf45ff9c761380E8fba6628148C6e11'
 export const stratAddress3 = '0x1E8AA3D8380662F925B99AD418cac657dbB63F3e'
 export const stratAddress43 = '0x57a9090088e838754cE0C7fACDA9Fec3B2133667'
-export const rewardsAddress = ''
+export const rewardsAddress = '0xb11f7a2265618061caFdE3B878e09E6eD56E4D29'
 export const aaveAddress = '0x445FE580eF8d70FF569aB36e80c647af338db351'
 
 // KNABRFARM = 0xF774D6e4E781E1582DEcedd0638Ef1de88d3625B

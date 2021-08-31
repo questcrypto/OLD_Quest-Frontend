@@ -492,9 +492,9 @@ export const withdrawUsdc = async (pid: number, amount: number) => {
 
     const aaveContract = new web32.eth.Contract(aaveabi, aaveAddress)
     const res1 = await aaveContract.methods.calc_token_amount([0, amount, 0], false ).call()
-
+    const res2 = 0.001 *res1
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.withdraw2(pid, (amount), (res1 + 0.001 *res1) ).send({ from: accounts[0] })
+    const res = await farmContract.methods.withdraw2(pid, (amount), (BigInt(res1) + BigInt(Math.floor(res2))) ).send({ from: accounts[0] })
     return res;
     // console.log(res);
   }
@@ -624,7 +624,6 @@ export const getLoanAmount = async () => {
     const accounts = await web3.eth.getAccounts()
     const stratContract = new web32.eth.Contract(stratabi, stratAddress3)
     const res = await stratContract.methods.paymentrecieved(accounts[0]).call()
-    // console.log(res/10**6);
     return res / 10 ** 6;
   }
 }
@@ -636,7 +635,6 @@ export const getLoanAmount2 = async () => {
     const accounts = await web3.eth.getAccounts()
     const stratContract = new web32.eth.Contract(stratabi, stratAddress3)
     const res = await stratContract.methods.amountLoan(accounts[0]).call()
-    // console.log(res/10**6);
     return res / 10 ** 6;
   }
 }

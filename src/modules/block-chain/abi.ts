@@ -3333,6 +3333,29 @@ export const KnabrFarmAbi: any = [
 				"internalType": "uint256",
 				"name": "_pid",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_wantAmt",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "bamount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw2",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_pid",
+				"type": "uint256"
 			}
 		],
 		"name": "withdrawAll",

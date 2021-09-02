@@ -351,15 +351,36 @@ const StakingRow43 = (props: any) => {
           </FlexRow>
           <FlexColumn>
             <AccordHeading className={classes.padLR}>KNAB-USDC(S)</AccordHeading>
-            <AccordValue className={classes.padLR}>${tvl_knab_usdc2} TVL</AccordValue>
+            <AccordValue className={classes.padLR}>
+              ${tvl_knab_usdc2 * 10 ** 4} TVL
+              <CustomTooltip
+                title="Multiplied by 10000"
+                arrow>
+                <img src={Question} alt="" className={classes.questionImg} />
+              </CustomTooltip>
+            </AccordValue>
           </FlexColumn>
           <FlexColumn>
             <AccordHeading className={classes.padLR}>0%</AccordHeading>
             <AccordValue className={classes.padLR}>0%(24hr)</AccordValue>
           </FlexColumn>
           <FlexColumn>
-            <AccordHeading className={classes.padLR}>${lp_dollar2}</AccordHeading>
-            <AccordValue className={classes.padLR}>{lp2} LP</AccordValue>
+            <AccordHeading className={classes.padLR}>
+              ${lp_dollar2 * 10 ** 4}
+              <CustomTooltip
+                title="Multiplied by 10000"
+                arrow>
+                <img src={Question} alt="" className={classes.questionImg} />
+              </CustomTooltip>
+            </AccordHeading>
+            <AccordValue className={classes.padLR}>
+              {lp2 * 10 ** 4} LP
+              <CustomTooltip
+                title="Multiplied by 10000"
+                arrow>
+                <img src={Question} alt="" className={classes.questionImg} />
+              </CustomTooltip>
+            </AccordValue>
           </FlexColumn>
           <FlexColumn>
             <AccordHeading className={classes.padLR}>{lp_knabr_earned2}</AccordHeading>
@@ -392,7 +413,14 @@ const StakingRow43 = (props: any) => {
                           <img src={Question} alt="" className={classes.questionImg} />
                         </CustomTooltip>
                       </Heading>
-                      <Value>{lp2}</Value>
+                      <Value>
+                        {lp2 * 10 ** 4}
+                        <CustomTooltip
+                          title="Multiplied by 10000"
+                          arrow>
+                          <img src={Question} alt="" className={classes.questionImg} />
+                        </CustomTooltip>
+                      </Value>
                       {/* <Value>($00.00)</Value> */}
                     </FlexColumn>
                     <CustomButton
@@ -479,7 +507,13 @@ const StakingRow43 = (props: any) => {
                         <img src={Question} alt="" className={classes.questionImg} />
                       </CustomTooltip> */}
                     </Heading>
-                    <Value>{lp_staked2}
+                    <Value>
+                      {lp_staked2 * 10 ** 4}
+                      <CustomTooltip
+                        title="Multiplied by 10000"
+                        arrow>
+                        <img src={Question} alt="" className={classes.questionImg} />
+                      </CustomTooltip>
                       {/* (${lp_staked_dollar}) */}
                     </Value>
                   </div><br />

@@ -103,148 +103,148 @@ const initialState = {
 export const stakingReducer = (state = initialState, action: any) => {
   let { type, payload } = action
   if (typeof payload !== 'object') {
-    payload = parseFloat(payload).toFixed(3)
+    // payload = parseFloat(payload).toFixed(3)
   }
   switch (type) {
     case SET_KNAB:
       return {
         ...state,
-        knab: payload
+        knab: parseFloat(payload).toFixed(3)
       }
     case SET_KNAB_DOLLAR:
       return {
         ...state,
-        knab_dollar: payload
+        knab_dollar: parseFloat(payload).toFixed(3)
       }
     case SET_KNAB_CONVERTED:
       return {
         ...state,
-        knab_converted: payload
+        knab_converted: parseFloat(payload).toFixed(3)
       }
     case SET_KNAB_CONVERTED_DOLLAR:
       return {
         ...state,
-        knab_converted_dollar: payload
+        knab_converted_dollar: parseFloat(payload).toFixed(3)
       }
     case SET_KNAB_STAKED:
       return {
         ...state,
-        knab_staked: payload
+        knab_staked: parseFloat(payload).toFixed(3)
       }
     case SET_KNAB_STAKED_DOLLAR:
       return {
         ...state,
-        knab_staked_dollar: payload
+        knab_staked_dollar: parseFloat(payload).toFixed(3)
       }
     case SET_KNABR:
       return {
         ...state,
-        knabr: payload
+        knabr: parseFloat(payload).toFixed(3)
       }
     case SET_KNABR_DOLLAR:
       return {
         ...state,
-        knabr_dollar: payload
+        knabr_dollar: parseFloat(payload).toFixed(3)
       }
     case SET_KNABR_EARNED:
       return {
         ...state,
-        knabr_earned: payload
+        knabr_earned: parseFloat(payload).toFixed(3)
       }
     case SET_KNABR_EARNED_DOLLAR:
       return {
         ...state,
-        knabr_earned_dollar: payload
+        knabr_earned_dollar: parseFloat(payload).toFixed(3)
       }
     case SET_USDC:
       return {
         ...state,
-        usdc: payload
+        usdc: parseFloat(payload).toFixed(3)
       }
     case SET_USDC_DOLLAR:
       return {
         ...state,
-        usdc_dollar: payload
+        usdc_dollar: parseFloat(payload).toFixed(3)
       }
     case SET_USDC_STAKED:
       return {
         ...state,
-        usdc_staked: payload
+        usdc_staked: parseFloat(payload).toFixed(3)
       }
     case SET_USDC_STAKED_DOLLAR:
       return {
         ...state,
-        usdc_staked_dollar: payload
+        usdc_staked_dollar: parseFloat(payload).toFixed(3)
       }
     case SET_USDC_KNAB_EARNED:
       return {
         ...state,
-        usdc_knabr_earned: payload
+        usdc_knabr_earned: parseFloat(payload).toFixed(3)
       }
     case SET_LP:
       return {
         ...state,
-        lp: payload
+        lp: parseFloat(payload).toFixed(7)
       }
     case SET_LP_DOLLAR:
       return {
         ...state,
-        lp_dollar: payload
+        lp_dollar: parseFloat(payload).toFixed(7)
       }
     case SET_LP_STAKED:
       return {
         ...state,
-        lp_staked: payload
+        lp_staked: parseFloat(payload).toFixed(7)
       }
     case SET_LP_STAKED_DOLLAR:
       return {
         ...state,
-        lp_staked_dollar: payload
+        lp_staked_dollar: parseFloat(payload).toFixed(7)
       }
     case SET_LP_KNABR_EARNED:
       return {
         ...state,
-        lp_knabr_earned: payload
+        lp_knabr_earned: parseFloat(payload).toFixed(3)
       }
     case SET_TVL_KNAB:
       return {
         ...state,
-        tvl_knab: payload
+        tvl_knab: parseFloat(payload).toFixed(3)
       }
     case SET_TVL_KNAB_USDC:
       return {
         ...state,
-        tvl_knab_usdc: payload
+        tvl_knab_usdc: parseFloat(payload).toFixed(7)
       }
     case SET_TVL_USDC:
       return {
         ...state,
-        tvl_usdc: payload
+        tvl_usdc: parseFloat(payload).toFixed(3)
       }
     case SET_LOAN_AMOUNT:
       return {
         ...state,
-        loan_amount: payload
+        loan_amount: parseFloat(payload).toFixed(3)
       }
     case SET_CONVERTED_KNAB:
       return {
         ...state,
-        converted_knab: payload
+        converted_knab: parseFloat(payload).toFixed(3)
       }
     case SET_DEPOSITED_KNAB:
       return {
         ...state,
-        deposited_knab: payload
+        deposited_knab: parseFloat(payload).toFixed(3)
       }
     case SET_QUEST:
       return {
         ...state,
-        quest: payload
+        quest: parseFloat(payload).toFixed(3)
       }
     case SET_QUEST_SUPPLY:
       return {
         ...state,
-        quest_supply: payload
+        quest_supply: parseFloat(payload).toFixed(3)
       }
     case ACCORD_ACTION:
       return {
@@ -254,58 +254,58 @@ export const stakingReducer = (state = initialState, action: any) => {
     case SET_KNAB_SUPPLY:
       return {
         ...state,
-        knab_supply: payload
+        knab_supply: parseFloat(payload).toFixed(3)
       }
     case SET_USDC_SUPPLY:
       return {
         ...state,
-        usdc_supply: payload
+        usdc_supply: parseFloat(payload).toFixed(3)
       }
     case SET_KNABR_SUPPLY:
       return {
         ...state,
-        knabr_supply: payload
+        knabr_supply: parseFloat(payload).toFixed(3)
       }
     case SET_LP_SUPPLY:
       return {
         ...state,
-        lp_supply: payload
+        lp_supply: parseFloat(payload).toFixed(3)
       }
 
     case SET_TVL_KNAB_USDC2:
       return {
         ...state,
-        tvl_knab_usdc2: payload
+        tvl_knab_usdc2: parseFloat(payload).toFixed(7)
       }
     case SET_LP2:
       return {
         ...state,
-        lp2: payload
+        lp2: parseFloat(payload).toFixed(7)
       }
     case SET_LP_DOLLAR2:
       return {
         ...state,
-        lp_dollar2: payload
+        lp_dollar2: parseFloat(payload).toFixed(7)
       }
     case SET_LP_STAKED2:
       return {
         ...state,
-        lp_staked2: payload
+        lp_staked2: parseFloat(payload).toFixed(7)
       }
     case SET_LP_STAKED_DOLLAR2:
       return {
         ...state,
-        lp_staked_dollar2: payload
+        lp_staked_dollar2: parseFloat(payload).toFixed(7)
       }
     case SET_LP_KNABR_EARNED2:
       return {
         ...state,
-        lp_knabr_earned2: payload
+        lp_knabr_earned2: parseFloat(payload).toFixed(3)
       }
     case SET_LP2_SUPPLY:
       return {
         ...state,
-        lp2_supply: payload
+        lp2_supply: parseFloat(payload).toFixed(3)
       }
     default:
       return state

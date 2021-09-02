@@ -1,4 +1,4 @@
-import { Paper, makeStyles, Typography, Slider, Tooltip, Avatar } from '@material-ui/core'
+import { Paper, makeStyles, Typography, Slider, Tooltip, Avatar, withStyles, Theme } from '@material-ui/core'
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import { useState, useEffect } from 'react'
 import TableContainer from '@material-ui/core/TableContainer'
@@ -264,7 +264,7 @@ const YourAssets = (props: any) => {
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC(Q)' },
       // balance: `${assetsKNAB_USDCBalance}`,
-      balance: `${lp}`,
+      balance: `${lp * 10 ** 4}`,
       availableQty: commaNumber(lp_supply),
       price: `$0.0`,
       holdings: { value: `${lp_supply > 0 ? ((lp * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
@@ -272,7 +272,7 @@ const YourAssets = (props: any) => {
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC(S)' },
       // balance: `${assetsKNAB_USDCBalance}`,
-      balance: `${lp2}`,
+      balance: `${lp2 * 10 ** 4}`,
       availableQty: commaNumber(lp2_supply),
       price: `$0.0`,
       holdings: { value: `${lp2_supply > 0 ? ((lp2 * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
@@ -430,7 +430,7 @@ const YourAssets = (props: any) => {
                               <div
                                 className={classes.firstDiv}
                                 onClick={() => openInNewTab2(`${polygonScanLink}`, row[item.key].name)}>
-                                {row[item.key].name === 'KNAB-USDC(Q)' || row[item.key].name === 'KNAB-USDC(S)' ? 
+                                {row[item.key].name === 'KNAB-USDC(Q)' || row[item.key].name === 'KNAB-USDC(S)' ?
                                   <AvatarGroup max={2}>
                                     <Avatar alt="" src={KnabIcon} style={{ background: '#FFF' }} className={classes.avatarImg} />
                                     <Avatar alt="" src={CoinIcon} className={classes.avatarImg2} />
@@ -458,48 +458,66 @@ const YourAssets = (props: any) => {
                                 </div>
                               </div>
                             )}
-                            {item.key !== 'asset' && item.key !== 'price' && item.key !== 'holdings' && row[item.key]}
-                          </TableCell>
+                            {item.key === 'balance' && (
+                              <span>
+                                {index === 3 || index === 4 ?
+                                  <span>
+                                  {row[item.key]}
+                                  <CustomTooltip
+                                      title="Multiplied by 10000"
+                                      arrow>
+                                    <img src={Question} alt="" className={classes.questionImg} />
+                                  </CustomTooltip> 
+                                  </span>
+                                  : row[item.key]
+                                }
+                              </span>
                         )
-                      })}
-                      <TableCell style={{ cursor: 'pointer' }}>
-                        <img
-                          src={Chart}
-                          alt=""
-                          // onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)}
-                          onClick={() => openInNewTab(`https://questcrypto.app${Paths.tokenDetails}`)}
-                        />
-                      </TableCell>
-                    </TableRow>
+                      }
+                            { item.key !== 'asset' && item.key !== 'price' && item.key !== 'holdings' && item.key !== 'balance' && row[item.key] }
+                          </TableCell>
                   )
+                })}
+              <TableCell style={{ cursor: 'pointer' }}>
+                <img
+                  src={Chart}
+                  alt=""
+                  // onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)}
+                  onClick={() => openInNewTab(`https://questcrypto.app${Paths.tokenDetails}`)}
+                />
+              </TableCell>
+                    </TableRow>
+            )
                 })}
             </TableBody>
           </Table>
         </TableContainer>
 
-        {/* <div className={classes.btnDiv}>
+      {/* <div className={classes.btnDiv}>
           <CustomButton size="large" style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}>
             View More
           </CustomButton>
         </div> */}
       </Paper>
 
-      {show && !isWallet && (
-        <div className={classes.hoverBtnDiv} onMouseOut={() => setShow(false)}>
-          <CustomButton
-            size="small"
-            style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
-            onClick={connectWallet}
-          // onClick={props.applicationAccess ? connectWallet : handleBlocking}
-          >
-            {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
-          </CustomButton>
-          <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
-            For Accessing Complete Features
-          </Typography>
-        </div>
-      )}
-    </div>
+      {
+    show && !isWallet && (
+      <div className={classes.hoverBtnDiv} onMouseOut={() => setShow(false)}>
+        <CustomButton
+          size="small"
+          style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
+          onClick={connectWallet}
+        // onClick={props.applicationAccess ? connectWallet : handleBlocking}
+        >
+          {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
+        </CustomButton>
+        <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
+          For Accessing Complete Features
+        </Typography>
+      </div>
+    )
+  }
+    </div >
   )
 }
 
@@ -527,3 +545,14 @@ export default connect(mapStateToProps, {
   setLpSupply,
   setLp2Supply
 })(YourAssets)
+
+const CustomTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#878787',
+    fontFamily: 'NexaRegular',
+    color: '#FFF'
+  },
+  arrow: {
+    color: '#C4C4C4',
+  },
+}))(Tooltip)

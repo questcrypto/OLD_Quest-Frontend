@@ -12,7 +12,7 @@ import PropertyCards from 'shared/components/property-cards'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 
-const OwnerDashboard = (props: any) => {
+const GeneralUserDashboard = (props: any) => {
   const classes = useStyles()
   const [activeTab, setActiveTab] = useState('published')
   const [newPropertiesList, setNewPropertiesList] = useState<any>([])
@@ -34,8 +34,8 @@ const OwnerDashboard = (props: any) => {
     const getPropertiesList = async () => {
       try {
         setNewPropertyLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${userInfo.publicaddress}`)
-        // const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
+        // const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${userInfo.publicaddress}`)
+        const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
         setNewPropertiesList(res.data)
       } catch (error) {
         setNewPropertiesList([])
@@ -46,8 +46,8 @@ const OwnerDashboard = (props: any) => {
     const getApproveProperties = async () => {
       try {
         setApprovedLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyOwner/${userInfo.publicaddress}`)
-        // const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyHOA`)
+        // const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyOwner/${userInfo.publicaddress}`)
+        const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyHOA`)
         setApprovedProperties(res.data)
       } catch (error) {
         setApprovedProperties([])
@@ -58,8 +58,8 @@ const OwnerDashboard = (props: any) => {
     const getPublishedProperties = async () => {
       try {
         setPublishedLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
-        // const res = await axios.get(`${apiBaseUrl}/properties/GetAllPublishedProperties`)
+        // const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
+        const res = await axios.get(`${apiBaseUrl}/properties/GetAllPublishedProperties`)
         setPublishedProperties(res.data)
       } catch (error) {
         setPublishedProperties([])
@@ -70,8 +70,8 @@ const OwnerDashboard = (props: any) => {
     const getPreAuctionProperties = async () => {
       try {
         setPreAuctionLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/ListofNewAuction/${userInfo.publicaddress}`)
-        // const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
+        // const res = await axios.get(`${apiBaseUrl}/auction/ListofNewAuction/${userInfo.publicaddress}`)
+        const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
         setPreAuctionProperties(res.data)
       } catch (error) {
         setPreAuctionProperties([])
@@ -82,8 +82,8 @@ const OwnerDashboard = (props: any) => {
     const getOnAuctionProperties = async () => {
       try {
         setOnAuctionLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/myListOfActiveAuction/${userInfo.publicaddress}`)
-        // const res = await axios.get(`${apiBaseUrl}/auction/listOfAllActiveAuction`)
+        // const res = await axios.get(`${apiBaseUrl}/auction/myListOfActiveAuction/${userInfo.publicaddress}`)
+        const res = await axios.get(`${apiBaseUrl}/auction/listOfAllActiveAuction`)
         setOnAuctionProperties(res.data)
       } catch (error) {
         setOnAuctionProperties([])
@@ -94,8 +94,8 @@ const OwnerDashboard = (props: any) => {
     const getPostAuctionProperties = async () => {
       try {
         setPostAuctionLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/getPostAuctionListUser/${userInfo.publicaddress}`)
-        // const res = await axios.get(`${apiBaseUrl}/auction/getPostAuctionList`)
+        // const res = await axios.get(`${apiBaseUrl}/auction/getPostAuctionListUser/${userInfo.publicaddress}`)
+        const res = await axios.get(`${apiBaseUrl}/auction/getPostAuctionList`)
         setPostAuctionProperties(res.data)
       } catch (error) {
         setPostAuctionProperties([])
@@ -110,7 +110,6 @@ const OwnerDashboard = (props: any) => {
     getOnAuctionProperties()
     getPostAuctionProperties()
   }, [userInfo])
-
 
   const refreshPublishedPropertiesList = async () => {
     try {
@@ -176,4 +175,4 @@ const OwnerDashboard = (props: any) => {
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
 })
-export default connect(mapStateToProps)(OwnerDashboard)
+export default connect(mapStateToProps)(GeneralUserDashboard)

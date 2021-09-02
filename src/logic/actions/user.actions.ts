@@ -12,7 +12,9 @@ import {
   KNAB_BALANCE,
   APPLICATION_ACCESS,
   WEB3_INSTANCE,
-  CHAIN_ID
+  CHAIN_ID,
+  OPEN_LOGIN_MODAL,
+  CLOSE_LOGIN_MODAL
 } from './action.config'
 
 export const authStart = () => {
@@ -99,5 +101,17 @@ export const setChainId = (data: any) => {
   return {
     type: CHAIN_ID,
     payload: data,
+  }
+}
+
+export const openLoginModal = () => {
+  return {
+    type: OPEN_LOGIN_MODAL,
+  }
+}
+
+export const closeLoginModal = () => {
+  return {
+    type: CLOSE_LOGIN_MODAL,
   }
 }

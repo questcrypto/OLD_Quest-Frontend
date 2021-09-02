@@ -12,7 +12,9 @@ import {
   KNAB_BALANCE,
   APPLICATION_ACCESS,
   WEB3_INSTANCE,
-  CHAIN_ID
+  CHAIN_ID,
+  OPEN_LOGIN_MODAL,
+  CLOSE_LOGIN_MODAL,
 } from '../actions/action.config'
 // import history from 'modules/app/components/history'
 
@@ -28,7 +30,8 @@ const initialState = {
   KNABBalance: 0.0,
   applicationAccess: false,
   web3Instance: '',
-  chainId: 0
+  chainId: 0,
+  loginModal: false
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -117,6 +120,16 @@ export const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         chainId: payload,
+      }
+    case OPEN_LOGIN_MODAL:
+      return {
+        ...state,
+        loginModal: true
+      }
+    case CLOSE_LOGIN_MODAL:
+      return {
+        ...state,
+        loginModal: false
       }
     default:
       return state

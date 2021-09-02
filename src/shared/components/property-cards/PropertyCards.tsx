@@ -25,9 +25,11 @@ const PropertyCards = (props: any) => {
 
   const getImg = (imgData: any) => {
     const imgArr: any = []
-    for (const item of imgData) {
-      if (item.type === 0) {
-        imgArr.push(item)
+    if (imgData) {
+      for (const item of imgData) {
+        if (item.type === 0) {
+          imgArr.push(item)
+        }
       }
     }
     const imgUrl = `${apiBaseUrl}/${imgArr[0]?.filename}`

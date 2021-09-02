@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import { theme, GlobalStyle } from 'shared/styles/theme'

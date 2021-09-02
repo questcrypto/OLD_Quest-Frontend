@@ -20,6 +20,8 @@ import Wallet from '../signUp/components'
 import metaMaskIcon from 'assets/images/metamask.jpg'
 import loadingIcon from 'assets/icons/loading.svg'
 import { setTimeout } from 'timers'
+import { closeLoginModal } from 'logic/actions/user.actions'
+import history from 'modules/app/components/history'
 
 const Login = (props: any) => {
   const initialValues = {
@@ -29,7 +31,7 @@ const Login = (props: any) => {
 
   const [dataLoading, setDataLoading] = useState(false)
   const classes = useStyle()
-  const { loading, loginStart, errorAlert, walletConnect, logout, setChainId } = props
+  const { loading, loginStart, errorAlert, walletConnect, logout, setChainId, closeLoginModal } = props
 
   const ref = useRef<any>()
 
@@ -89,6 +91,8 @@ const Login = (props: any) => {
         const loginData = { publicaddress, signature }
         loginStart(loginData)
         walletConnect(true)
+        closeLoginModal();
+        history.push('/')
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
@@ -263,4 +267,4 @@ const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
 })
 
-export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, walletConnect, logout, setChainId })(Login))
+export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, walletConnect, logout, setChainId, closeLoginModal })(Login))

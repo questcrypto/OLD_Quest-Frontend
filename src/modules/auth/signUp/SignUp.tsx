@@ -53,13 +53,14 @@ import axios from 'axios'
 import Spinner from 'shared/loader-components/spinner'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
+import { closeLoginModal } from 'logic/actions/user.actions'
 
 const SignUp = (props: any) => {
   const classes = useStyle()
 
   const ref = useRef<any>()
 
-  const { loading, loginStart, errorAlert, logout, openDrawer } = props
+  const { loading, loginStart, errorAlert, logout, openDrawer, closeLoginModal } = props
 
   const [dataLoading, setDataLoading] = useState(false)
   // Sign Up and Sign In Navigation
@@ -117,9 +118,9 @@ const SignUp = (props: any) => {
       const result = await axios.post(`${apiBaseUrl}/user/checkEmail`, inputJson)
       // console.log('result', result.data);
       setShowOTPModal(true)
-      const Otp = await axios.get(`${apiBaseUrl}/user/getPassCode/${formData.email}`)
+      // const Otp = await axios.get(`${apiBaseUrl}/user/getPassCode/${formData.email}`)
       // const actualOtp = 123456;
-      setActualOtp(Otp.data)
+      // setActualOtp(Otp.data)
       // console.log(Otp.data);
     } catch (error) {
       // console.log(error);
@@ -224,7 +225,7 @@ const SignUp = (props: any) => {
         // console.log(publicaddress);
         let signatureData: any = ''
         // const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
-        const data: any = { email: values.email, publicaddress, name: values.userName }
+        const data: any = { email: values.email, publicaddress, name: values.userName, otp: values.otp }
         const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
         signatureData = { publicaddress: signUpRes.data.publicaddress, nonce: signUpRes.data.nonce }
         // if (!!result && result.data && result.data.length === 0) {
@@ -241,6 +242,7 @@ const SignUp = (props: any) => {
         )
         const loginData = { publicaddress, signature }
         loginStart(loginData)
+        closeLoginModal();
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
@@ -254,12 +256,12 @@ const SignUp = (props: any) => {
       setDataLoading(false)
     }
   }
-  console.log(openDrawer, '** login')
+  // console.log(openDrawer, '** login')
   return (
     <>
       <Grid container>
-        <Grid item md={4} sm={12} xs={12}></Grid>
-        <Grid item md={4} sm={12} xs={12}>
+        {/* <Grid item md={4} sm={12} xs={12}></Grid> */}
+        <Grid item md={12} sm={12} xs={12}>
           <Box className={classes.root}>
             <LogoImage
               src={questLogo}
@@ -317,8 +319,8 @@ const SignUp = (props: any) => {
                   otp: Yup.number()
                     // .min(99999, 'OTP is not long enough')
                     .max(999999, 'OTP is not more than 6 digits')
-                    .required('OTP is required')
-                    .equals([actualOtp], 'Pls enter correct OTP'),
+                    .required('OTP is required'),
+                    // .equals([actualOtp], 'Pls enter correct OTP'),
                   walletAddress: Yup.string().required('Wallet Address is required'),
                 })}
                 onSubmit={(values, { setSubmitting }) => {
@@ -447,7 +449,7 @@ const SignUp = (props: any) => {
             }
           </Box>
         </Grid>
-        <Grid item md={4} sm={12} xs={12}>
+        {/* <Grid item md={12} sm={12} xs={12}>
           <div className={classes.cryptoTransImageDiv}>
             <img
               src={cryptoImage}
@@ -456,7 +458,7 @@ const SignUp = (props: any) => {
               onMouseOut={(e) => (e.currentTarget.src = cryptoImage)}
             />
           </div>
-        </Grid>
+        </Grid> */}
       </Grid>
       {/* Modals */}
 
@@ -539,4 +541,4 @@ const mapStateToProps = (state: any) => ({
   openDrawer: state.drawer.openDrawer,
 })
 
-export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, logout })(SignUp))
+export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, logout, closeLoginModal })(SignUp))

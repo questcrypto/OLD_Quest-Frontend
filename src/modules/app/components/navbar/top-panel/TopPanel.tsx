@@ -15,6 +15,7 @@ import { loginStart, getKNABbalance, setWeb3Instance } from 'logic/actions/user.
 import MetaMaskIcon from '../../../../../assets/icons/metaMaskIcon.svg'
 // import { hasApplcationAccess } from 'logic/actions/user.actions'
 // import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
+import { openLoginModal, closeLoginModal } from 'logic/actions/user.actions'
 
 const useStyles = makeStyles((theme) => ({
   walletDiv: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     // padding: '4px 8px',
     padding: '4px 12px',
-    '@media (max-width: 450px)' : {
+    '@media (max-width: 450px)': {
       marginTop: '20px'
     }
   },
@@ -64,6 +65,7 @@ const TopPanel = (props: any) => {
     // hasApplcationAccess,
     setChainId,
     user: { chainId },
+    openLoginModal
   } = props
   const [dataLoading, setDataLoading] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
@@ -152,7 +154,7 @@ const TopPanel = (props: any) => {
           setChainId(chainId)
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   // Event handler to handle metamask account change
@@ -236,6 +238,11 @@ const TopPanel = (props: any) => {
       getToken()
     }
   }
+  const signInFn = () => {
+    try {
+      openLoginModal();
+    } catch (error) { console.log(error) }
+  }
   // useEffect(() => {
   //   // console.log(walletConAddress, '0000')
   //   if (walletConAddress !== '' && walletConnect) {
@@ -272,6 +279,15 @@ const TopPanel = (props: any) => {
         />
       )} */}
       <TopPanelCont>
+        {
+          !loggedIn ? <CustomButton
+            size="large"
+            style={{ background: 'linear-gradient(180deg, #E6BA73 0%, #BA8E4D 100%)', padding: '4px 24px', marginRight: '8px' }}
+            onClick={signInFn}
+          >
+            {'Sign In'}
+          </CustomButton> : ''
+        }
         {getisWallet(props.isWalletCon)}
         {walletConAddress !== '' ? (
           <>
@@ -337,4 +353,5 @@ export default connect(mapStateToProps, {
   getKNABbalance,
   setWeb3Instance,
   setChainId,
+  openLoginModal
 })(TopPanel)

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 // import axios from 'axios'
 import { logout, logout2 } from 'logic/actions/user.actions'
@@ -30,11 +30,31 @@ import PieIcon from 'assets/icons/pieIcon.svg'
 
 // import Web3 from 'web3'
 // import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
+import CustomModal from 'shared/custom-modal'
+import SignUpModal from 'shared/components/signup-modal'
+import { openLoginModal, closeLoginModal } from 'logic/actions/user.actions'
 
 const LeftPanel = (props: any) => {
+
+  const [show, setShow] = useState(true)
+
+  const toggleModal = () => {
+    try {
+      // setShow(false)
+      closeLoginModal();
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    // openLoginModal()
+  }, [])
+
   const classes = useStyles()
   // const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, logout2, isWalletCon, walletConAddress, applicationAccess } = props
-  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn } = props
+  const { userInfo, logout, openDrawer, handleDrawerClose, loggedIn, openLoginModal, closeLoginModal,
+    user: { loginModal } } = props
   // const [account, setAccount] = useState('')
   const [appAccess, setApplicationAccess] = useState(true)
   // const [showIPBlockingModal, setIPBlockingModal] = useState(false)
@@ -63,25 +83,37 @@ const LeftPanel = (props: any) => {
   // })
   const handleProperty = () => {
     if (loggedIn) {
-      history.push(Paths.dashboard)
+      history.push(Paths.root)
     } else {
-      logout(false)
-      history.push(Paths.login)
+      history.push(Paths.dashboard)
     }
+    // if (loggedIn) {
+    //   history.push(Paths.dashboard)
+    // } else {
+    //   logout(false)
+    //   history.push(Paths.login)
+    // }
   }
   const handleAuction = () => {
+
+    if (loggedIn) {
+      history.push(Paths.auction)
+    } else {
+      openLoginModal();
+    }
+
+    // if (loggedIn) {
+    //   history.push(Paths.auction)
+    // } else {
+    //   logout(false)
+    //   history.push(Paths.login)
+    // }
     // if (loggedIn && !!userInfo && userInfo.role === 2) {
     // history.push(Paths.auction)
     // } else {
     //   logout(false)
     // history.push(Paths.login)
     // }
-    if (loggedIn) {
-      history.push(Paths.auction)
-    } else {
-      logout(false)
-      history.push(Paths.login)
-    }
   }
 
   const handlePortfolio = () => {
@@ -99,10 +131,17 @@ const LeftPanel = (props: any) => {
       setTimeout(() => {
         // history.push('/login')
         history.push('/')
+        window.location.reload();
       }, 100)
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const signInFn = () => {
+    try {
+      openLoginModal();
+    } catch (error) { console.log(error) }
   }
 
   // const handleBlocking = () => {
@@ -205,6 +244,15 @@ const LeftPanel = (props: any) => {
               </ListItem>
             </Grid>
           )}
+          {/* {!loggedIn && (
+            <Grid className={classes.signOutStyle}>
+              <Divider className={classes.signOutDividerStyle} />
+              <ListItem button onClick={signInFn}>
+                <PowerSettingsNewIcon className={classes.iconStyle} />
+                <ListItemText>Sign In</ListItemText>
+              </ListItem>
+            </Grid>
+          )} */}
 
           {/* {isWalletCon && (
             <Grid className={classes.signOutStyle}>
@@ -228,6 +276,16 @@ const LeftPanel = (props: any) => {
           onClose={toggleIPBLockingModal}
           hasAccess={appAccess}
         /> */}
+      <CustomModal
+        // show={show}
+        // toggleModal={toggleModal}
+        show={loginModal}
+        toggleModal={toggleModal}
+      >
+        <SignUpModal
+          toggle={toggleModal}
+        />
+      </CustomModal>
     </DrawerWrapper>
   )
 }
@@ -238,6 +296,7 @@ const mapStateToProps = (state: any) => ({
   isWalletCon: state.user.isWalletCon,
   walletConAddress: state.user.walletConAddress,
   // applicationAccess: state.user.applicationAccess,
+  user: state.user
 })
 
-export default connect(mapStateToProps, { logout, handleDrawerClose, logout2 })(LeftPanel)
+export default connect(mapStateToProps, { logout, handleDrawerClose, logout2, openLoginModal, closeLoginModal, })(LeftPanel)

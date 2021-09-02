@@ -88,7 +88,7 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.dashboard,
     component: Dashboard,
-    protected: true,
+    protected: false,
     redirect: Paths.root,
     title: '',
   },
@@ -279,20 +279,21 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
                   </>
                 )}
                 {width > 768 && (
-                  (isNav || loggedIn) ? (
+                  // (isNav || loggedIn) ? (
                     <>
                       <LeftPanel />
                     </>
-                  ) : (
-                    ''
-                  )
+                  // ) : (
+                  //   ''
+                  // )
                 )}
               </div>
 
               <div className={classes.rightDiv}>
                 <Grid container>
                   <Grid item xs={isNav || loggedIn ? (width > 768 ? 12 : 12) : 12} className={classes.rightPanelStyle}>
-                    {isNav || loggedIn ? <TopPanel /> : ''}
+                    {/* {isNav || loggedIn ? <TopPanel /> : ''} */}
+                    { <TopPanel /> }
                     <div className={classes.contentDiv}>
                       <Switch>
                         {routesToRender.map((route, i) => {

@@ -21,6 +21,7 @@ import UpgradeBidDetails from 'modules/auction-details/UpgradeBidDetails'
 import LeftPanel from 'modules/app/components/navbar/left-panel/LeftPanel'
 import TopPanel from 'modules/app/components/navbar/top-panel/TopPanel'
 import OwnerPropertyDetails from 'modules/owner/owner-property-details'
+import GeneralUserPropertyDetails from 'modules/general-user/general-user-property-details'
 import { handleDrawerOpen, handleDrawerClose } from 'logic/actions/drawer.open'
 import { IconButton } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -115,6 +116,13 @@ export const routes: RouteDefinition[] = [
     title: '',
   },
   {
+    path: Paths.generalUserPropertyDetails + '/:propertyId',
+    component: GeneralUserPropertyDetails,
+    protected: false,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
     path: Paths.editPropertyForm + '/:propertyId',
     component: EditPropertyForm,
     protected: true,
@@ -143,9 +151,16 @@ export const routes: RouteDefinition[] = [
     title: '',
   },
   {
+    path: Paths.auction,
+    component: Auction,
+    protected: false,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
     path: Paths.auctionDetails + '/:auctionId',
     component: AuctionDetails,
-    protected: true,
+    protected: false,
     redirect: Paths.root,
     title: '',
   },

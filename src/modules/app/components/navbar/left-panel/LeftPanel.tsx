@@ -95,12 +95,13 @@ const LeftPanel = (props: any) => {
     // }
   }
   const handleAuction = () => {
+    history.push(Paths.auction)
 
-    if (loggedIn) {
-      history.push(Paths.auction)
-    } else {
-      openLoginModal();
-    }
+    // if (loggedIn) {
+    //   history.push(Paths.auction)
+    // } else {
+    //   openLoginModal();
+    // }
 
     // if (loggedIn) {
     //   history.push(Paths.auction)

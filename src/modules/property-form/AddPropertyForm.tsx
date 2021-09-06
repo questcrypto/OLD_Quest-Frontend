@@ -295,12 +295,19 @@ const AddPropertyForm = (props: any) => {
                 <Grid item xs={10} container direction="column">
                   <Grid item className={classes.formGroup}>
                     <FormTitle>T.I.M.E contract</FormTitle>
+
+                    <MoneyInputField label="Taxes" name="Taxes" dollarPrefix acceptDecimals />
+                    <ErrorMessage component={err} name="Taxes" />
+
                     <MoneyInputField label="Insurance" name="Insurance" dollarPrefix acceptDecimals />
                     <ErrorMessage component={err} name="Insurance" />
                     <MoneyInputField label="Maintenance" name="Maintenance" dollarPrefix acceptDecimals />
                     <ErrorMessage component={err} name="Maintenance" />
-                    <MoneyInputField label="HOA fees" name="HOAFees" dollarPrefix acceptDecimals />
-                    <ErrorMessage component={err} name="HOAFees" />
+                    {/* <MoneyInputField label="HOA fees" name="HOAFees" dollarPrefix acceptDecimals />
+                    <ErrorMessage component={err} name="HOAFees" /> */}
+
+                    <MoneyInputField label="Expenses" name="Expenses" dollarPrefix acceptDecimals />
+                    <ErrorMessage component={err} name="Expenses" />
                   </Grid>
                   <Divider className={classes.dividerStyle} />
                 </Grid>

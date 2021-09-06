@@ -11,16 +11,21 @@ import AuctionReview from 'modules/owner/owner-property-details/components/Aucti
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
+import { openLoginModal } from 'logic/actions/user.actions'
 
 const PropertyCards = (props: any) => {
   const classes = useStyles()
-  const { list, dataLoading, errorAlert, refresh } = props
+  const { list, dataLoading, errorAlert, refresh, loggedIn, openLoginModal } = props
 
   const [showAuctionModal, setShowAuctionModal] = useState(false)
   const [modalAuctionDetails, setModalAuctionDetails] = useState({ auctionDetails: {}, currentValue: 0 })
 
   const handleDetails = (id: any) => {
-    history.push(`${Paths.ownerPropertyDetails}/${id}`)
+    if (loggedIn) {
+      history.push(`${Paths.ownerPropertyDetails}/${id}`)
+    } else {
+      history.push(`${Paths.generalUserPropertyDetails}/${id}`)
+    }
   }
 
   const getImg = (imgData: any) => {
@@ -79,9 +84,11 @@ const PropertyCards = (props: any) => {
                         Property Details
                       </Button>
                     ) : (
+                      loggedIn ?
                       <Button onClick={() => handleOpenModal(auctionDetails, currentValue)} className={classes.addPropertyBtnStyle}>
                         Review Auction
-                      </Button>
+                      </Button> 
+                      : ''
                     )}
                   </CardActions>
                 </StyledCard>
@@ -108,4 +115,8 @@ const PropertyCards = (props: any) => {
   )
 }
 
-export default connect(null, errorAlert)(PropertyCards)
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
+})
+
+export default connect(mapStateToProps, errorAlert)(PropertyCards)

@@ -31,15 +31,22 @@ const Auction = (props: any) => {
   const [passedLoading, setPassedLoading] = useState(false)
   const [approvedTokens, setApprovedTokens] = useState(0)
 
-  const { userInfo, errorAlert } = props
+  const { userInfo, errorAlert, loggedIn } = props
 
   useEffect(() => {
     const getOnGoingProperties = async () => {
       try {
         setOnGoingLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/NonParticipatedAuctions/${userInfo.publicaddress}`)
-        setOnGoingGlobal(res.data)
-        setOnGoingProperties(res.data)
+        if (loggedIn) {
+          const res = await axios.get(`${apiBaseUrl}/auction/NonParticipatedAuctions/${userInfo.publicaddress}`)
+          setOnGoingGlobal(res.data)
+          setOnGoingProperties(res.data)
+        } else {
+          const res = await axios.get(`${apiBaseUrl}/auction/AllonGoingAuctionList`)
+          setOnGoingGlobal(res.data)
+          setOnGoingProperties(res.data)
+        }
+
       } catch (error) {
         setOnGoingProperties([])
       } finally {
@@ -71,8 +78,13 @@ const Auction = (props: any) => {
     const getPassedProperties = async () => {
       try {
         setOnGoingLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction/${userInfo.publicaddress}`)
-        setPassedProperties(res.data)
+        if (loggedIn) {
+          const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction/${userInfo.publicaddress}`)
+          setPassedProperties(res.data)
+        } else {
+          const res = await axios.get(`${apiBaseUrl}/auction/getAllEndAuctionList`)
+          setPassedProperties(res.data)
+        }
       } catch (error) {
         setPassedProperties([])
       } finally {
@@ -110,7 +122,7 @@ const Auction = (props: any) => {
     try {
       const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction/${userInfo.publicaddress}`)
       setPassedProperties(res.data)
-    } catch (error) {}
+    } catch (error) { }
   }
   return (
     <Box className={classes.root}>
@@ -156,5 +168,6 @@ const Auction = (props: any) => {
 
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
+  loggedIn: state.user.loggedIn
 })
 export default connect(mapStateToProps, { errorAlert })(Auction)

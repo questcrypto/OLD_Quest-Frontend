@@ -28,9 +28,11 @@ export const initialValues = {
   JrHigh: '',
   HighSchool: '',
 
+  Taxes: '',
   Insurance: '',
   Maintenance: '',
-  HOAFees: '',
+  // HOAFees: '',
+  Expenses: '',
 
   FloorDetails: [
     {
@@ -108,7 +110,10 @@ export const propertyFormSchema = Yup.object().shape({
 
   Insurance: Yup.number().required('This field is required'),
   Maintenance: Yup.number().required('This field is required'),
-  HOAFees: Yup.number().required('This field is required'),
+  // HOAFees: Yup.number().required('This field is required'),
+  Taxes: Yup.number().required('This field is required'),
+  Expenses: Yup.number().required('This field is required'),
+
 
   FloorDetails: Yup.array().of(
     Yup.object().shape({

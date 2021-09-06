@@ -46,7 +46,7 @@ const GeneralUserPropertyDetails = (props: any) => {
   const [imageList, setImageList] = useState<any>([])
   const [docList, setDocList] = useState<any>([])
   const [selectImg, setSelectImg] = useState('')
-  const { userInfo } = props
+  const { userInfo, loggedIn } = props
 
   useEffect(() => {
     const propertyId = props.match.params.propertyId
@@ -97,9 +97,11 @@ const GeneralUserPropertyDetails = (props: any) => {
             <HeaderTitle>{propertyInfo?.propertyDetails ? propertyInfo.propertyDetails.PropertyName : ''}</HeaderTitle>
           </Grid>
           <Grid item>
-            <PrimaryButton variant="contained" onClick={() => handleEditProperty()}>
-              REVIEW PROPERTY
-            </PrimaryButton>
+            {
+              loggedIn ? <PrimaryButton variant="contained" onClick={() => handleEditProperty()}>
+                REVIEW PROPERTY
+              </PrimaryButton> : ''
+            }
           </Grid>
         </Grid>
       </HeaderContainer>
@@ -223,5 +225,6 @@ const GeneralUserPropertyDetails = (props: any) => {
 }
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
+  loggedIn: state.user.loggedIn,
 })
 export default withRouter(connect(mapStateToProps)(GeneralUserPropertyDetails))

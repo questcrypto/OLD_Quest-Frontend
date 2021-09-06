@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { cardStyle, StyledLinearProgress, Title, CardBoldText, CardLightText, NoDataContainer } from './style'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
@@ -13,7 +14,7 @@ import { apiBaseUrl } from 'services/global-constant'
 import EmptyPage from 'shared/empty-page'
 
 const OnGoingProperties = (props: any) => {
-  const { dataLoading, data } = props
+  const { dataLoading, data, loggedIn } = props
   const classes = cardStyle()
 
   const handleAuctionDetails = (id: string) => {
@@ -21,7 +22,11 @@ const OnGoingProperties = (props: any) => {
   }
 
   const handlePropertyDetails = (id: string) => {
-    history.push(`${Paths.ownerPropertyDetails}/${id}`)
+    if (loggedIn) {
+      history.push(`${Paths.ownerPropertyDetails}/${id}`)
+    } else {
+      history.push(`${Paths.generalUserPropertyDetails}/${id}`)
+    }
   }
 
   const getRemainingDays = (endDate: Date) => {
@@ -132,4 +137,10 @@ const OnGoingProperties = (props: any) => {
     </div>
   )
 }
-export default OnGoingProperties
+
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn
+})
+export default connect(mapStateToProps, {})(OnGoingProperties)
+
+// export default OnGoingProperties

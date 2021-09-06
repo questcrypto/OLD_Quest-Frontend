@@ -78,13 +78,13 @@ const Auction = (props: any) => {
     const getPassedProperties = async () => {
       try {
         setOnGoingLoading(true)
-        if (loggedIn) {
-          const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction/${userInfo.publicaddress}`)
-          setPassedProperties(res.data)
-        } else {
-          const res = await axios.get(`${apiBaseUrl}/auction/getAllEndAuctionList`)
-          setPassedProperties(res.data)
-        }
+        // if (loggedIn) {
+        const res = await axios.get(`${apiBaseUrl}/auction/getDetailsOfParticipatedCompletedAuction/${userInfo.publicaddress}`)
+        setPassedProperties(res.data)
+        // } else {
+        //   const res = await axios.get(`${apiBaseUrl}/auction/getAllEndAuctionList`)
+        //   setPassedProperties(res.data)
+        // }
       } catch (error) {
         setPassedProperties([])
       } finally {

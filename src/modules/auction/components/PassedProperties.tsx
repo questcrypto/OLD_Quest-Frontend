@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { WinLossText } from 'shared/styles/styled'
 import { PassedPropertyCont, cardStyle, Title, CardBoldText, CardLightText, NoDataContainer } from './style'
 import Grid from '@material-ui/core/Grid'
@@ -14,13 +15,20 @@ import { apiBaseUrl } from 'services/global-constant'
 import EmptyPage from 'shared/empty-page'
 import TokenClaim from './TokenClaim'
 import USDCClaim from './USDCClaim'
+import { openLoginModal } from 'logic/actions/user.actions'
 
 const PassedProperties = (props: any) => {
   const [showTokenClaim, setShowTokenClaim] = useState(false)
   const [showUsdClaim, setShowUsdClaim] = useState(false)
   const [claimData, setClaimData] = useState<any>({})
-  const { dataLoading, data, setActiveTab, updatePassedProp, errorAlert } = props
+  const { dataLoading, data, setActiveTab, updatePassedProp, errorAlert, loggedIn, openLoginModal } = props
   const classes = cardStyle()
+
+  useEffect(() => {
+    if (!loggedIn) {
+      openLoginModal();
+    }
+  }, [])
 
   const handlePropertyDetails = (id: string) => {
     history.push(`${Paths.ownerPropertyDetails}/${id}`)
@@ -165,4 +173,10 @@ const PassedProperties = (props: any) => {
     </div>
   )
 }
-export default PassedProperties
+
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
+})
+
+export default connect(mapStateToProps, { openLoginModal })(PassedProperties)
+// export default PassedProperties

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import { cardStyle, StyledLinearProgress, Title, CardBoldText, CardLightText, UpgradeBidTxt, NoDataContainer } from './style'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -11,9 +12,17 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
 import EmptyPage from 'shared/empty-page'
+import { openLoginModal } from 'logic/actions/user.actions'
 
 const ParticipateProperties = (props: any) => {
-  const { data, dataLoading } = props
+
+  useEffect(() => {
+    if (!loggedIn) {
+      openLoginModal();
+    }
+  }, [])
+
+  const { data, dataLoading, loggedIn, openLoginModal } = props
   const classes = cardStyle()
 
   const handleAuctionDetails = (id: string) => {
@@ -128,4 +137,10 @@ const ParticipateProperties = (props: any) => {
     </div>
   )
 }
-export default ParticipateProperties
+
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
+})
+
+export default connect(mapStateToProps, { openLoginModal })(ParticipateProperties)
+// export default ParticipateProperties

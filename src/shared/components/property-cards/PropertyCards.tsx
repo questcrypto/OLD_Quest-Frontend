@@ -83,13 +83,15 @@ const PropertyCards = (props: any) => {
                       <Button onClick={() => handleDetails(id)} className={classes.addPropertyBtnStyle}>
                         Property Details
                       </Button>
-                    ) : (
-                      loggedIn ?
+                    ) : 
+                    // (
+                    //   loggedIn ?
                       <Button onClick={() => handleOpenModal(auctionDetails, currentValue)} className={classes.addPropertyBtnStyle}>
                         Review Auction
                       </Button> 
-                      : ''
-                    )}
+                    //   : ''
+                    // )
+                    }
                   </CardActions>
                 </StyledCard>
               )

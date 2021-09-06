@@ -13,16 +13,16 @@ export const Landscaping = [
 
 export const auctionTabList = [
   {
-    label: 'Participating',
-    value: 'participating',
-  },
-  {
     label: 'Ongoing',
     value: 'ongoing',
   },
   {
     label: 'Upcoming',
     value: 'upcoming',
+  },
+  {
+    label: 'Participating',
+    value: 'participating',
   },
   {
     label: 'Passed',
@@ -58,16 +58,12 @@ export const treasuryTabList = [
 
 export const propertyTabList = [
   {
-    label: 'New',
-    value: 'new',
+    label: 'Published',
+    value: 'published',
   },
   {
     label: 'Approved',
     value: 'approved',
-  },
-  {
-    label: 'Published',
-    value: 'published',
   },
   {
     label: 'Pre-Auction',
@@ -80,6 +76,10 @@ export const propertyTabList = [
   {
     label: 'Post-Auction',
     value: 'postAuction',
+  },
+  {
+    label: 'New',
+    value: 'new',
   },
 ]
 

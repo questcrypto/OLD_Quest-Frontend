@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import { auctionConfigStyle, HeaderCont, TitleText } from './style'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
@@ -21,7 +22,7 @@ const AuctionReview = (props: any) => {
   const classes = auctionConfigStyle()
   const [agreeLoading, setAgreeLoading] = useState(false)
   const [disagreeLoading, setDisagreeLoading] = useState(false)
-  const { setShowAuctionModal, auctionDetails, projectedValue, errorAlert, refresh } = props
+  const { setShowAuctionModal, auctionDetails, projectedValue, errorAlert, refresh, loggedIn } = props
 
   const handleAuctionRejection = async (e: any, { changeNote }: any) => {
     e.preventDefault()
@@ -75,7 +76,7 @@ const AuctionReview = (props: any) => {
         <Box className={classes.rootAuctionStyle}>
           <TitleText>SUCCESS- AUCTION CONFIGURED</TitleText>
           <br />
-          <p> YOUR PROPERTY WILL BE AUCTIONED ON {formatDateString(auctionDetails?.startDate)} </p>
+          <p> THIS PROPERTY WILL BE AUCTIONED ON {formatDateString(auctionDetails?.startDate)} </p>
           <b>Contact for support:</b>
           <Box marginTop="5px">
             <span>admin@questcrypto.com</span>
@@ -142,13 +143,13 @@ const AuctionReview = (props: any) => {
                           <PrimaryButton
                             className={classes.btnStyle}
                             variant="contained"
-                            disabled={agreeLoading || disagreeLoading}
+                            disabled={agreeLoading || disagreeLoading || !loggedIn}
                             onClick={(e: any) => handleAuctionRejection(e, fields.values)}
                           >
                             {disagreeLoading ? <Spinner /> : 'I DO NOT AGREE'}
                           </PrimaryButton>
                           <PrimaryButton
-                            disabled={agreeLoading || disagreeLoading}
+                            disabled={agreeLoading || disagreeLoading || !loggedIn}
                             onClick={(e: any) => handleAuctionApproval(e, fields.values)}
                             variant="contained"
                           >
@@ -173,4 +174,10 @@ const AuctionReview = (props: any) => {
     </Box>
   )
 }
-export default AuctionReview
+
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
+})
+
+export default connect(mapStateToProps, {})(AuctionReview)
+// export default AuctionReview

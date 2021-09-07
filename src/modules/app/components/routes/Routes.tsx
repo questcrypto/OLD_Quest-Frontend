@@ -165,6 +165,13 @@ export const routes: RouteDefinition[] = [
     title: '',
   },
   {
+    path: Paths.auctionDetails + '/:auctionId',
+    component: AuctionDetails,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
+  {
     path: Paths.upgradeBid + '/:auctionId',
     component: UpgradeBidDetails,
     protected: true,

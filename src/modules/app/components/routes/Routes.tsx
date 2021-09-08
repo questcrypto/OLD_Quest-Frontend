@@ -93,6 +93,13 @@ export const routes: RouteDefinition[] = [
     redirect: Paths.root,
     title: '',
   },
+  {
+    path: Paths.dashboard,
+    component: Dashboard,
+    protected: true,
+    redirect: Paths.root,
+    title: '',
+  },
 
   {
     path: Paths.addPropertyForm,

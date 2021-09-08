@@ -92,7 +92,9 @@ const Login = (props: any) => {
         loginStart(loginData)
         walletConnect(true)
         closeLoginModal();
-        history.push('/')
+        // console.log(props.location.pathname);
+        // history.push('/')
+        history.push(props.location.pathname)
       }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {

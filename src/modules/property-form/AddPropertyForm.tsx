@@ -71,7 +71,7 @@ const AddPropertyForm = (props: any) => {
   const [showDocError, setShowDocError] = useState(false)
   const [permission, setPermission] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { errorAlert } = props
+  const { errorAlert, loggedIn } = props
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -105,7 +105,12 @@ const AddPropertyForm = (props: any) => {
         setLoading(true)
         await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
         // history.push(Paths.root)
-        history.push(Paths.dashboard)
+        // history.push(Paths.dashboard)
+        if (loggedIn) {
+          history.push(Paths.root)
+        } else {
+          history.push(Paths.dashboard)
+        }
       } catch (error) {
         if (!!error && error.response && error.response.data.message) {
           errorAlert(error.response.data.message)
@@ -553,5 +558,6 @@ const AddPropertyForm = (props: any) => {
 
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
+  loggedIn: state.user.loggedIn,
 })
 export default connect(mapStateToProps, { errorAlert })(AddPropertyForm)

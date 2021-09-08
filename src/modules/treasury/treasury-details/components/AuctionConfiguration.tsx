@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
+import { Paths } from 'modules/app/components/routes/types'
 
 import MoneyInputField from 'shared/components/money-input-field'
 
@@ -30,7 +31,7 @@ const initialValues = {
 const AuctionConfiguration = (props: any) => {
   const classes = auctionConfigStyle()
   const [loading, setLoading] = useState(false)
-  const { propId, publicAddress, setShowAuctionModal, errorAlert } = props
+  const { propId, publicAddress, setShowAuctionModal, errorAlert, loggedIn } = props
 
   const handleSubmit = async (values: any) => {
     const endDate = new Date(values.startDate)
@@ -51,7 +52,12 @@ const AuctionConfiguration = (props: any) => {
       setLoading(true)
       await axios.post(`${apiBaseUrl}/auction/ConfigureAuction`, data)
 
-      history.push('/dashboard')
+      // history.push('/dashboard')
+      if (loggedIn) {
+        history.push(Paths.root)
+      } else {
+        history.push(Paths.dashboard)
+      }
     } catch (error) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
@@ -118,4 +124,7 @@ const AuctionConfiguration = (props: any) => {
   )
 }
 
-export default connect(null, { errorAlert })(AuctionConfiguration)
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
+})
+export default connect(mapStateToProps, { errorAlert })(AuctionConfiguration)

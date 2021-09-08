@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 import { Error } from 'shared/styles/styled'
 import { auctionBidStyle, LightText, BoldText, Title, CurrentBidInfo, StyledSlider, SliderWrap, ShareLinkCont, MakeBidCont } from './style'
 import Box from '@material-ui/core/Box'
@@ -24,6 +25,7 @@ import { apiBaseUrl } from 'services/global-constant'
 import { currentBidValue, getDaiBalance, getWeb3Val, handleDAIapproval } from 'modules/block-chain/BlockChainMethods'
 import { auctionContractAddress, daiAbi, DAIContractAddress } from 'modules/block-chain/abi'
 import { getDaiPrice } from 'shared/helpers/globalFunction'
+import { openLoginModal } from 'logic/actions/user.actions'
 
 const valuetext = (value: number) => {
   return `${value}%`
@@ -52,6 +54,8 @@ const AuctionBid = (props: any) => {
     errorAlert,
     approvedTokens,
     refreshApprovedTokensValue,
+    loggedIn,
+    openLoginModal
   } = props
 
   let sliderDefaultValue = (myBidDetails[0]?.currentAllotment / totalToken!) * 100
@@ -248,23 +252,33 @@ const AuctionBid = (props: any) => {
               <TextInputField name="total" label="Total" value={getTotalValue()} isDisabled />
             </Grid>
             <Grid item>
-              <Grid container>
-                <Grid item>
-                  <PrimaryButton disabled={tokenError || suggMinBidError || isTokensApproved} onClick={() => handleApproveTokens()}>
-                    {approvalLoading ? <Spinner /> : 'Approval'}
-                  </PrimaryButton>
-                </Grid>
 
-                <Grid item>
-                  <PrimaryButton
-                    style={{ marginLeft: '15px' }}
-                    disabled={tokenError || minBidError || suggMinBidError || !isTokensApproved || currentBidTokens === token * bidValue}
-                    onClick={() => handleMakeBid()}
-                  >
-                    {makeBidLoading ? <Spinner /> : currentBidTokens === 0 ? 'MAKE BID' : 'Upgrade Bid'}
+              {loggedIn ?
+                <Grid container>
+                  <Grid item>
+                    <PrimaryButton disabled={tokenError || suggMinBidError || isTokensApproved} onClick={() => handleApproveTokens()}>
+                      {approvalLoading ? <Spinner /> : 'Approval'}
+                    </PrimaryButton>
+                  </Grid>
+
+                  <Grid item>
+                    <PrimaryButton
+                      style={{ marginLeft: '15px' }}
+                      disabled={tokenError || minBidError || suggMinBidError || !isTokensApproved || currentBidTokens === token * bidValue}
+                      onClick={() => handleMakeBid()}
+                    >
+                      {makeBidLoading ? <Spinner /> : currentBidTokens === 0 ? 'MAKE BID' : 'Upgrade Bid'}
+                    </PrimaryButton>
+                  </Grid>
+                </Grid>
+                :
+                <Grid container>
+                  <PrimaryButton onClick={() => openLoginModal()}>
+                    {'Login to Bid'}
                   </PrimaryButton>
                 </Grid>
-              </Grid>
+              }
+
             </Grid>
           </Grid>
           <LightText style={{ marginTop: '10px' }}>Current Allowance = {approvedTokens}</LightText>
@@ -320,4 +334,9 @@ const AuctionBid = (props: any) => {
     </Box>
   )
 }
-export default AuctionBid
+// export default AuctionBid
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
+})
+export default connect(mapStateToProps, { openLoginModal })(AuctionBid)
+

@@ -24,14 +24,15 @@ const PassedProperties = (props: any) => {
   const { dataLoading, data, setActiveTab, updatePassedProp, errorAlert, loggedIn, openLoginModal } = props
   const classes = cardStyle()
 
-  useEffect(() => {
-    if (!loggedIn) {
-      openLoginModal();
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!loggedIn) {
+  //     openLoginModal();
+  //   }
+  // }, [])
 
   const handlePropertyDetails = (id: string) => {
-    history.push(`${Paths.ownerPropertyDetails}/${id}`)
+    // history.push(`${Paths.ownerPropertyDetails}/${id}`)
+    history.push(`${Paths.generalUserPropertyDetails}/${id}`)
   }
 
   const getImg = (imgData: any) => {
@@ -86,7 +87,7 @@ const PassedProperties = (props: any) => {
             <Grid container className={classes.btnContStyle}>
               <Grid item>
                 <Title>{PropertyDetails.propertyDetails.PropertyName}</Title>
-                <CardLightText>{auctionDetail[0].propidId}</CardLightText>
+                {/* <CardLightText>{auctionDetail[0].propidId}</CardLightText> */}
               </Grid>
             </Grid>
             {bidDetails[0].currentAllotment > 0 ? (
@@ -107,9 +108,11 @@ const PassedProperties = (props: any) => {
           <CardActions disableSpacing>
             <Grid container spacing={2} className={classes.btnContStyle}>
               <Grid item xs={12} sm={6}>
-                <PrimaryButton fullWidth className={classes.btnStyle} onClick={() => handleClaim(item)}>
-                  CLAIM TOKENS
-                </PrimaryButton>
+                {
+                  loggedIn ? <PrimaryButton fullWidth className={classes.btnStyle} onClick={() => handleClaim(item)}>
+                    CLAIM TOKENS
+                  </PrimaryButton> : ''
+                }
               </Grid>
               <Grid item xs={12} sm={6}>
                 <SecondaryButton

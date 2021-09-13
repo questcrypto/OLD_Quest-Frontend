@@ -173,7 +173,7 @@ export const saveBlockchainBid = async (auctionId: string, totalAmount: any, add
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
-    const res = await auctionContract.methods.saveBid(auctionId, convertToWei(totalAmount), address, DaiAddress).send({ from: accounts[0] })
+    const res = await auctionContract.methods.saveBid(auctionId, totalAmount* 10**6, address, DaiAddress).send({ from: accounts[0] })
     return res
   }
 }
@@ -235,7 +235,8 @@ export const getApprovedTokens = async () => {
 }
 
 export const handleDAIapproval = async (contractDai: any, account: string, user: any, ApproveAmount: any) => {
-  const res = await contractDai.methods.approve(user, convertToWei(ApproveAmount)).send({ from: account })
+  // const res = await contractDai.methods.approve(user, convertToWei(ApproveAmount)).send({ from: account })
+  const res = await contractDai.methods.approve(user, ApproveAmount * 10 ** 6).send({ from: account })
   return res
 }
 

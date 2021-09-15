@@ -176,6 +176,7 @@ const Portfolio = (props: any) => {
               },
               (err) => {
                 setLoader(false)
+                setIsConfirm(false)
                 console.log(err)
               }
             )

@@ -375,7 +375,8 @@ export const gasPriceFn = async () => {
   const gasFee2 = await fetch('https://gasstation-mainnet.matic.network')
     .then((response) => response.json())
     .then((json) => {
-      gasPrice = json['fast'] * 10 ** 9
+      gasPrice = json.fast * (10 ** 9)
+
       if (gasPrice > desiredFee) {
         gasPrice = desiredFee
       }

@@ -89,6 +89,15 @@ export const ItemRight = styled.div`
 `;
 
 export const Noti = styled.div`
-  padding-bottom: 12px;
-  font-size: 0.95rem;
+  padding-bottom: 8px;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  color: 'green'
+`;
+
+export const DoneIcon = styled.div`
+  display: flex;
+  align-items: center;
+  padding-right: 12px;
 `;

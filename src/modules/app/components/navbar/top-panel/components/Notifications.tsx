@@ -12,7 +12,8 @@ import {
   ItemIcon,
   ItemLeft,
   ItemRight,
-  Noti
+  Noti,
+  DoneIcon
 } from './style';
 import {
   Button,
@@ -32,6 +33,7 @@ import AuctionUpdateIcon from 'assets/icons/auctionUpdate.svg';
 import AuctionEndIcon from 'assets/icons/auctionEnd.svg';
 import * as jsonData from 'assets/jsons/notifications.json';
 import { setNotifications } from 'logic/actions/user.actions';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 const Notifications = (props: any) => {
 
@@ -137,7 +139,13 @@ const Notifications = (props: any) => {
                           return (
                             <>
                               <Noti>
-                                {item.message} <br />
+                                <DoneIcon>
+                                  <DoneAllIcon />
+                                </DoneIcon>
+                                <div>
+                                  {item.message}
+                                </div> 
+                                <br />
                               </Noti>
                             </>
                           )

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { connect } from 'react-redux'
 import {
   NotificationDiv,
   NotifyInnerDiv,
@@ -10,7 +11,8 @@ import {
   Item,
   ItemIcon,
   ItemLeft,
-  ItemRight
+  ItemRight,
+  Noti
 } from './style';
 import {
   Button,
@@ -29,12 +31,26 @@ import NewPropertyIcon from 'assets/icons/newProperty.svg';
 import AuctionUpdateIcon from 'assets/icons/auctionUpdate.svg';
 import AuctionEndIcon from 'assets/icons/auctionEnd.svg';
 import * as jsonData from 'assets/jsons/notifications.json';
+import { setNotifications } from 'logic/actions/user.actions';
 
 const Notifications = (props: any) => {
 
   // Notification
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
+
+  const { loggedIn, user: { notifications }, setNotifications } = props
+
+  useEffect(() => {
+    if (loggedIn) {
+      const data = async () => {
+        // const res = await axios.get(`${apiBaseUrl}/emails/getNotification`)
+        const res = await axios.get(`https://api.questcrypto.app/emails/getNotication`)
+        setNotifications(res.data);
+      }
+      data();
+    }
+  }, [loggedIn])
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -91,7 +107,7 @@ const Notifications = (props: any) => {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          <Badge badgeContent={notifyCount} color="error">
+          <Badge badgeContent={notifications.length} color="error">
             <img src={NotificationIcon} />
           </Badge>
         </CustomBtn>
@@ -99,7 +115,7 @@ const Notifications = (props: any) => {
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}
-            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
             >
               <NotifyInnerDiv>
                 <Paper>
@@ -116,55 +132,17 @@ const Notifications = (props: any) => {
                       <img src={CloseIcon} alt='close' onClick={handleClose} />
                     </CloseIconDiv>
                     <ScrollDiv>
-                      <Title style={{ paddingTop: '0px'}}>Today</Title>
-                      {notifiData && notifiData.today && notifiData.today.map((item: any, i: any) => {
-                        return (
-                          <>
-                            <Item key={i}>
-                              <ItemIcon>
-                                <img src={getIcon(item.type)} alt='icon' />
-                              </ItemIcon>
-                              <ItemLeft>{item.name}</ItemLeft>
-                              <ItemRight>{item.time}</ItemRight>
-                            </Item>
-                          </>
-                        );
-                      })}
-                      {/* <br /> */}
-                      <Title>Yesterday</Title>
-                      {notifiData && notifiData.yesterday && notifiData.yesterday.map((item: any, i: any) => {
-                        return (
-                          <>
-                            <Item key={i}>
-                              <ItemIcon>
-                                <img src={getIcon(item.type)} alt='icon' />
-                              </ItemIcon>
-                              <ItemLeft>{item.name}</ItemLeft>
-                              <ItemRight>{item.time}</ItemRight>
-                            </Item>
-                          </>
-                        );
-                      })}
-                      {/* <br /> */}
-                      {notifiData && notifiData.old && notifiData.old.map((item: any, i: any) => {
-                        return (
-                          <>
-                            <Title>{item.date}</Title>
-                            {item.subItems.map((subItem: any, ind: any) => {
-                              return (
-                                <Item key={ind}>
-                                  <ItemIcon>
-                                    <img src={getIcon(subItem.type)} alt='icon' />
-                                  </ItemIcon>
-                                  <ItemLeft>{subItem.name}</ItemLeft>
-                                  <ItemRight>{subItem.time}</ItemRight>
-                                </Item>
-                              );
-                            })}
-                            {/* <br /> */}
-                          </>
-                        );
-                      })}
+                      {
+                        notifications.map((item: any) => {
+                          return (
+                            <>
+                              <Noti>
+                                {item.message} <br />
+                              </Noti>
+                            </>
+                          )
+                        })
+                      }
                     </ScrollDiv>
                   </ContentDiv>
                 </Paper>
@@ -177,7 +155,14 @@ const Notifications = (props: any) => {
   );
 }
 
-export default Notifications;
+// export default Notifications;
+
+const mapStateToProps = (state: any) => ({
+  loggedIn: state.user.loggedIn,
+  user: state.user,
+})
+
+export default connect(mapStateToProps, { setNotifications })(Notifications)
 
 // const Content = (props: any) => {
 //   const { title, index, icon, name, time } = props;

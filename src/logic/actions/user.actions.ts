@@ -14,7 +14,8 @@ import {
   WEB3_INSTANCE,
   CHAIN_ID,
   OPEN_LOGIN_MODAL,
-  CLOSE_LOGIN_MODAL
+  CLOSE_LOGIN_MODAL,
+  NOTIFICATIONS
 } from './action.config'
 
 export const authStart = () => {
@@ -113,5 +114,12 @@ export const openLoginModal = () => {
 export const closeLoginModal = () => {
   return {
     type: CLOSE_LOGIN_MODAL,
+  }
+}
+
+export const setNotifications = (data: any) => {
+  return {
+    type: NOTIFICATIONS,
+    payload: data,
   }
 }

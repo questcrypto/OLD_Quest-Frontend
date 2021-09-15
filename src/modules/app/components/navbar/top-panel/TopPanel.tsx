@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { logout, logout2, walletConnect, walletConnectAddress, setChainId } from 'logic/actions/user.actions'
 import Web3 from 'web3'
 import { TopPanelCont } from './style'
-// import Notifications from './components/Notifications'
+import Notifications from './components/Notifications'
 import { makeStyles } from '@material-ui/core'
 import CustomButton from '../../../../../modules/portfolio/components/shared/Button'
 // import { apiBaseUrl } from 'services/global-constant'
@@ -16,6 +16,8 @@ import MetaMaskIcon from '../../../../../assets/icons/metaMaskIcon.svg'
 // import { hasApplcationAccess } from 'logic/actions/user.actions'
 // import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
 import { openLoginModal, closeLoginModal } from 'logic/actions/user.actions'
+import axios from 'axios'
+import { apiBaseUrl } from 'services/global-constant'
 
 const useStyles = makeStyles((theme) => ({
   walletDiv: {
@@ -313,7 +315,9 @@ const TopPanel = (props: any) => {
             </CustomButton>
           </>
         )}
-        {/* <Notifications /> */}
+        {
+          loggedIn ? <Notifications /> : ''
+        }
         &nbsp;&nbsp;
         {/* {isWalletCon ? ( */}
         {!loggedIn && isWalletCon ? (

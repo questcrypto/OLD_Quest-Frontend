@@ -15,6 +15,7 @@ import {
   CHAIN_ID,
   OPEN_LOGIN_MODAL,
   CLOSE_LOGIN_MODAL,
+  NOTIFICATIONS,
 } from '../actions/action.config'
 // import history from 'modules/app/components/history'
 
@@ -31,7 +32,8 @@ const initialState = {
   applicationAccess: false,
   web3Instance: '',
   chainId: 0,
-  loginModal: false
+  loginModal: false,
+  notifications: []
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -130,6 +132,11 @@ export const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loginModal: false
+      }
+    case NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: payload,
       }
     default:
       return state

@@ -19,6 +19,7 @@ export const KNAB_BALANCE = 'KNAB_BALANCE'
 export const APPLICATION_ACCESS = 'APPLICATION_ACCESS'
 export const WEB3_INSTANCE = 'WEB3_INSTANCE'
 export const CHAIN_ID = 'CHAIN_ID'
+export const NOTIFICATIONS = 'NOTIFICATIONS'
 
 
 /* =================================== LOGIN Actions ========================== */

@@ -18,6 +18,7 @@ import { saveBlockchainBid } from 'modules/block-chain/BlockChainMethods'
 import { err } from 'shared/styles/styled'
 import * as Yup from 'yup'
 import { connect } from 'react-redux'
+import { setNotifications } from 'logic/actions/user.actions';
 
 export const bidFormSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('This field is required'),
@@ -39,6 +40,7 @@ const Bid = (props: any) => {
     email,
     errorAlert,
     daiPrice,
+    setNotifications
   } = props
 
   const handleSubmit = async (values: any) => {
@@ -58,8 +60,12 @@ const Bid = (props: any) => {
 
       if (currentBidAmount > 0) {
         await axios.post(`${apiBaseUrl}/auction/upgradeBid`, dataVal)
+        const res = await axios.get(`https://api.questcrypto.app/emails/getNotication`)
+        setNotifications(res.data);
       } else {
         await axios.post(`${apiBaseUrl}/auction/makeBid`, dataVal)
+        const res = await axios.get(`https://api.questcrypto.app/emails/getNotication`)
+        setNotifications(res.data);
       }
       history.push(Paths.auction)
     } catch (error) {
@@ -133,4 +139,4 @@ const mapStateToProps: any = (state: any) => {
   }
 }
 
-export default connect(mapStateToProps)(Bid)
+export default connect(mapStateToProps, { setNotifications })(Bid)

@@ -8,7 +8,8 @@ export const NotificationDiv = styled.div`
 export const NotifyInnerDiv = styled.div`
   position: relative;
   width: 325px;
-  height: 310px;
+  /* height: 310px; */
+  height: auto;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.22);
   /* right: 300px; */
 `;
@@ -84,5 +85,10 @@ export const ItemRight = styled.div`
   justify-content: flex-end;
   flex-grow: 1;
   color: #BABABA;
+  font-size: 0.95rem;
+`;
+
+export const Noti = styled.div`
+  padding-bottom: 12px;
   font-size: 0.95rem;
 `;

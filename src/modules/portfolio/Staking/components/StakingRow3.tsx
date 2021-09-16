@@ -205,8 +205,8 @@ const StakingRow3 = (props: any) => {
     try {
 
       getAllocation(3).then((res: any) => {
-        // setAprU(res * 100);
-        setAprU(0);
+        setAprU(res * 100);
+        // setAprU(0);
       })
 
       getTvlUsdc().then((res) => {
@@ -416,6 +416,11 @@ const StakingRow3 = (props: any) => {
     } catch (error) { console.log(error) }
   }
 
+  const openInNewTab = (url: string) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
+
   return (
     <>
       <Accordion classes={{ root: classes.accordionRoot }} expanded={accordAction['third']} >
@@ -439,7 +444,14 @@ const StakingRow3 = (props: any) => {
               {/* <AccordValue className={classes.padLR}>${(parseFloat(usdc_staked) + parseFloat(loan_amount)).toFixed(2)} TVL</AccordValue> */}
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading className={classes.padLR}>{apr_u}%</AccordHeading>
+              <AccordHeading className={classes.padLR}>
+                {apr_u}%
+                <CustomTooltip
+                  title={'For Detailed APY on Integrated Defi Protocol click here'}
+                  arrow>
+                  <img src={Question} alt="" className={classes.questionImg} onClick={() => openInNewTab('https://polygon.curve.fi/pools?see=0x1E8AA3D8380662F925B99AD418cac657dbB63F3e')} />
+                </CustomTooltip>
+              </AccordHeading>
               <AccordValue className={classes.padLR}>{apr_u}%(24hr)</AccordValue>
             </FlexColumn>
             <FlexColumn>

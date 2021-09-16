@@ -196,8 +196,8 @@ const StakingRow2 = (props: any) => {
     try {
 
       getAllocation(1).then((res: any) => {
-        // setAprQ( res * 100);
-        setAprQ(0);
+        setAprQ( res * 100);
+        // setAprQ(0);
       })
 
       getTvlKnabUsdc().then((res) => {
@@ -375,7 +375,8 @@ const StakingRow2 = (props: any) => {
           </FlexColumn>
           <FlexColumn>
             <AccordHeading className={classes.padLR}>
-              ${lp_dollar * 10 ** 4}
+              {/* ${lp_dollar * 10 ** 4} */}
+              {(lp / (10 ** 14)).toFixed(3)}
               <CustomTooltip
                 title="Multiplied by 10000"
                 arrow>
@@ -383,7 +384,7 @@ const StakingRow2 = (props: any) => {
               </CustomTooltip>
             </AccordHeading>
             <AccordValue className={classes.padLR}>
-              {lp * 10 ** 4} LP
+              {(lp / (10 ** 14)).toFixed(3)} LP
               <CustomTooltip
                 title="Multiplied by 10000"
                 arrow>
@@ -423,7 +424,7 @@ const StakingRow2 = (props: any) => {
                         </CustomTooltip>
                       </Heading>
                       <Value>
-                        {lp * 10 ** 4}
+                        {(lp / (10 ** 14)).toFixed(3)}
                         <CustomTooltip
                           title="Multiplied by 10000"
                           arrow>
@@ -516,7 +517,7 @@ const StakingRow2 = (props: any) => {
                         <img src={Question} alt="" className={classes.questionImg} />
                       </CustomTooltip> */}
                     </Heading>
-                    <Value>{lp_staked * 10**4}
+                    <Value>{lp_staked * 10 ** 4}
                       <CustomTooltip
                         title="Multiplied by 10000"
                         arrow>

@@ -352,7 +352,12 @@ export const deposit = async (pid: number, amount: number) => {
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.deposit(pid, convertToWei(amount)).send({ from: accounts[0] })
+    let res;
+    if ((pid === 2) || (pid === 1)) {
+      res = await farmContract.methods.deposit(pid, Math.floor(amount)).send({ from: accounts[0] })
+    } else {
+      res = await farmContract.methods.deposit(pid, convertToWei(amount)).send({ from: accounts[0] })
+    }
     return res;
     // console.log(res)
   }
@@ -462,15 +467,16 @@ export const getLpBalance = async () => {
     // const deci = await lpContract.methods.decimals().call()
     const res = await lpContract.methods.balanceOf(accounts[0]).call()
     // const lpBalance: any = res / 10 ** 6
-    const lpBalance: any = convertToEther2(res)
-    return lpBalance
+    // const lpBalance: any = convertToEther2(res)
+    // return lpBalance
+    return res;
   }
   return 0
 }
 
 export const handleKnabUsdcApproval = async (contractUsdc: any, account: string, ApproveAmount: number) => {
   const gasPrice = await gasPriceFn()
-  const res = await contractUsdc.methods.approve(KNABFarmaddress, convertToWei(ApproveAmount)).send({ from: account, gasPrice })
+  const res = await contractUsdc.methods.approve(KNABFarmaddress, Math.floor(ApproveAmount)).send({ from: account, gasPrice })
   // console.log(res);
   return res;
 }
@@ -566,7 +572,9 @@ export const getTvlUsdc = async () => {
     const accounts = await web3.eth.getAccounts()
     const stratContract = new web32.eth.Contract(stratabi, stratAddress3)
     const res = await stratContract.methods.wantLockedTotal().call()
-    return convertToEther2(res);
+    // return convertToEther2(res);
+    return res/(10 ** 6);
+
   }
 }
 
@@ -850,8 +858,9 @@ export const getLpBalance2 = async () => {
     // const deci = await lpContract.methods.decimals().call()
     const res = await lpContract.methods.balanceOf(accounts[0]).call()
     // const lpBalance: any = res / 10 ** 6
-    const lpBalance: any = convertToEther2(res)
-    return lpBalance
+    // const lpBalance: any = convertToEther2(res)
+    // return lpBalance
+    return res;
   }
   return 0
 }

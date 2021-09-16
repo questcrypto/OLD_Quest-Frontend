@@ -177,8 +177,8 @@ const StakingRow1 = (props: any) => {
     try {
 
       getAllocation(0).then((res: any) => {
-        // setAprK( res * 100);
-        setAprK(0);
+        setAprK( res * 100);
+        // setAprK(0);
       })
 
       getAssetsKNABBalance().then((res) => {

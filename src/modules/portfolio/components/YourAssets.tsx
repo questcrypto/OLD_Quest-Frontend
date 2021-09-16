@@ -264,18 +264,24 @@ const YourAssets = (props: any) => {
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC(Q)' },
       // balance: `${assetsKNAB_USDCBalance}`,
-      balance: `${lp * 10 ** 4}`,
+
+      // balance: `${lp * 10 ** 4}`,
+      balance: `${(lp / 10 ** 14).toFixed(3)}`,
       availableQty: commaNumber(lp_supply * (10 ** 4)),
       price: `$0.0`,
-      holdings: { value: `${lp_supply > 0 ? ((lp * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
+      // holdings: { value: `${lp_supply > 0 ? ((lp * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
+      holdings: { value: `${lp_supply > 0 ? (((lp/10**14) * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC(S)' },
       // balance: `${assetsKNAB_USDCBalance}`,
-      balance: `${lp2 * 10 ** 4}`,
+
+      // balance: `${lp2 * 10 ** 4}`,
+      balance: `${(lp2 / 10 ** 14).toFixed(3)}`,
       availableQty: commaNumber(lp2_supply * (10 ** 4)),
       price: `$0.0`,
-      holdings: { value: `${lp2_supply > 0 ? ((lp2 * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
+      // holdings: { value: `${lp2_supply > 0 ? ((lp2 * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
+      holdings: { value: `${lp2_supply > 0 ? (((lp2/10**14) * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
     },
     {
       asset: { icon: `${KnabDummy}`, name: 'QUEST' },

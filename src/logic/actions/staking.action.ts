@@ -38,7 +38,11 @@ import {
   SET_LP_STAKED2,
   SET_LP_STAKED_DOLLAR2,
   SET_LP_KNABR_EARNED2,
-  SET_LP2_SUPPLY
+  SET_LP2_SUPPLY,
+  SET_APR_K,
+  SET_APR_Q,
+  SET_APR_S,
+  SET_APR_U
 } from './action.config'
 
 export const setKnab = (data: any) => {
@@ -318,6 +322,34 @@ export const setLpKnabREarned2 = (data: any) => {
 export const setLp2Supply = (data: any) => {
   return {
     type: SET_LP2_SUPPLY,
+    payload: data,
+  }
+}
+
+export const setAprK = (data: any) => {
+  return {
+    type: SET_APR_K,
+    payload: data,
+  }
+}
+
+export const setAprQ = (data: any) => {
+  return {
+    type: SET_APR_Q,
+    payload: data,
+  }
+}
+
+export const setAprS = (data: any) => {
+  return {
+    type: SET_APR_S,
+    payload: data,
+  }
+}
+
+export const setAprU = (data: any) => {
+  return {
+    type: SET_APR_U,
     payload: data,
   }
 }

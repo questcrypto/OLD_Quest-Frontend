@@ -878,4 +878,15 @@ export const getLp2Supply = async () => {
   }
 }
 
+export const getAllocation = async (pid: any) => {
+  const web3 = await getWeb3Val()
+  if (web3) {
+    const accounts = await web3.eth.getAccounts()
+    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+    const totalAlloc = await farmContract.methods.totalAllocPoint().call()
+    const alloc = await farmContract.methods.poolInfo(pid).call()
+    return alloc[1] / totalAlloc; 
+  }
+}
+
 /////////////////////////////////////////////////////////////////////////////

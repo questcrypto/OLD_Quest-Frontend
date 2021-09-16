@@ -40,7 +40,8 @@ import {
   getTvlKnabUsdc,
   getStake,
   getPendingKnabr,
-  getHarvest
+  getHarvest,
+  getAllocation
 } from '../../../../modules/block-chain/BlockChainMethods'
 import { LPTokenAddress, KNABabi } from '../../../../modules/block-chain/abi';
 import {
@@ -51,7 +52,8 @@ import {
   setLpStaked,
   setLpStakedDollar,
   setLpKnabREarned,
-  accordActionFn
+  accordActionFn,
+  setAprQ
 } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import Question from 'assets/icons/question.svg'
@@ -177,10 +179,11 @@ const StakingRow2 = (props: any) => {
   const classes = useStyles();
   const {
     user: { walletConAddress, web3Instance },
-    staking: { tvl_knab_usdc, lp, lp_dollar, knabr, lp_staked, lp_staked_dollar, lp_knabr_earned, accordAction },
+    staking: { tvl_knab_usdc, lp, lp_dollar, knabr, lp_staked, lp_staked_dollar, lp_knabr_earned, accordAction, apr_q },
     setTvlKnabUsdc, setLp, setLpDollar, setKnabr, setLpStaked, setLpStakedDollar, setLpKnabREarned, setLoanAmount,
     accordActionFn,
     errorAlert, successAlert,
+    setAprQ
   } = props;
 
   useEffect(() => {
@@ -191,6 +194,12 @@ const StakingRow2 = (props: any) => {
 
   const stateUpdate = () => {
     try {
+
+      getAllocation(1).then((res: any) => {
+        // setAprQ( res * 100);
+        setAprQ(0);
+      })
+
       getTvlKnabUsdc().then((res) => {
         // console.log(res);
         setTvlKnabUsdc(res);
@@ -361,8 +370,8 @@ const StakingRow2 = (props: any) => {
             </AccordValue>
           </FlexColumn>
           <FlexColumn>
-            <AccordHeading className={classes.padLR}>0%</AccordHeading>
-            <AccordValue className={classes.padLR}>0%(24hr)</AccordValue>
+            <AccordHeading className={classes.padLR}>{apr_q}%</AccordHeading>
+            <AccordValue className={classes.padLR}>{apr_q}%(24hr)</AccordValue>
           </FlexColumn>
           <FlexColumn>
             <AccordHeading className={classes.padLR}>
@@ -608,4 +617,5 @@ export default connect(mapStateToProps, {
   setLpKnabREarned,
   accordActionFn,
   errorAlert, successAlert,
+  setAprQ
 })(StakingRow2)

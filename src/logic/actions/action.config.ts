@@ -60,6 +60,12 @@ export const SET_LOAN_AMOUNT = 'SET_LOAN_AMOUNT'
 export const SET_CONVERTED_KNAB = 'SET_CONVERTED_KNAB'
 export const SET_DEPOSITED_KNAB = 'SET_DEPOSITED_KNAB'
 
+export const SET_APR_K = 'SET_APR_K'
+export const SET_APR_Q = 'SET_APR_Q'
+export const SET_APR_S = 'SET_APR_S'
+export const SET_APR_U = 'SET_APR_U'
+
+
 // Accordion Actions
 export const ACCORD_ACTION = 'ACCORD_ACTION'
 

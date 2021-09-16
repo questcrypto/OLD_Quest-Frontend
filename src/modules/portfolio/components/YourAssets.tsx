@@ -265,7 +265,7 @@ const YourAssets = (props: any) => {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC(Q)' },
       // balance: `${assetsKNAB_USDCBalance}`,
       balance: `${lp * 10 ** 4}`,
-      availableQty: commaNumber(lp_supply),
+      availableQty: commaNumber(lp_supply * (10 ** 4)),
       price: `$0.0`,
       holdings: { value: `${lp_supply > 0 ? ((lp * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
     },
@@ -273,7 +273,7 @@ const YourAssets = (props: any) => {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC(S)' },
       // balance: `${assetsKNAB_USDCBalance}`,
       balance: `${lp2 * 10 ** 4}`,
-      availableQty: commaNumber(lp2_supply),
+      availableQty: commaNumber(lp2_supply * (10 ** 4)),
       price: `$0.0`,
       holdings: { value: `${lp2_supply > 0 ? ((lp2 * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
     },
@@ -462,38 +462,54 @@ const YourAssets = (props: any) => {
                               <span>
                                 {index === 3 || index === 4 ?
                                   <span>
-                                  {row[item.key]}
-                                  <CustomTooltip
+                                    {row[item.key]}
+                                    <CustomTooltip
                                       title="Multiplied by 10000"
                                       arrow>
-                                    <img src={Question} alt="" className={classes.questionImg} />
-                                  </CustomTooltip> 
+                                      <img src={Question} alt="" className={classes.questionImg} />
+                                    </CustomTooltip>
                                   </span>
                                   : row[item.key]
                                 }
                               </span>
-                        )
-                      }
-                            { item.key !== 'asset' && item.key !== 'price' && item.key !== 'holdings' && item.key !== 'balance' && row[item.key] }
+                            )
+                            }
+                            {item.key === 'availableQty' && (
+                              <span>
+                                {index === 3 || index === 4 ?
+                                  <span>
+                                    {row[item.key]}
+                                    <CustomTooltip
+                                      title="Multiplied by 10000"
+                                      arrow>
+                                      <img src={Question} alt="" className={classes.questionImg} />
+                                    </CustomTooltip>
+                                  </span>
+                                  : row[item.key]
+                                }
+                              </span>
+                            )
+                            }
+                            {item.key !== 'asset' && item.key !== 'price' && item.key !== 'holdings' && item.key !== 'balance'&& item.key !== 'availableQty' && row[item.key]}
                           </TableCell>
-                  )
-                })}
-              <TableCell style={{ cursor: 'pointer' }}>
-                <img
-                  src={Chart}
-                  alt=""
-                  // onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)}
-                  onClick={() => openInNewTab(`https://questcrypto.app${Paths.tokenDetails}`)}
-                />
-              </TableCell>
+                        )
+                      })}
+                      <TableCell style={{ cursor: 'pointer' }}>
+                        <img
+                          src={Chart}
+                          alt=""
+                          // onClick={() => openInNewTab(`http://localhost:3000${Paths.tokenDetails}`)}
+                          onClick={() => openInNewTab(`https://questcrypto.app${Paths.tokenDetails}`)}
+                        />
+                      </TableCell>
                     </TableRow>
-            )
+                  )
                 })}
             </TableBody>
           </Table>
         </TableContainer>
 
-      {/* <div className={classes.btnDiv}>
+        {/* <div className={classes.btnDiv}>
           <CustomButton size="large" style={{ backgroundColor: '#1E3444', padding: '8px 24px' }}>
             View More
           </CustomButton>
@@ -501,22 +517,22 @@ const YourAssets = (props: any) => {
       </Paper>
 
       {
-    show && !isWallet && (
-      <div className={classes.hoverBtnDiv} onMouseOut={() => setShow(false)}>
-        <CustomButton
-          size="small"
-          style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
-          onClick={connectWallet}
-        // onClick={props.applicationAccess ? connectWallet : handleBlocking}
-        >
-          {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
-        </CustomButton>
-        <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
-          For Accessing Complete Features
-        </Typography>
-      </div>
-    )
-  }
+        show && !isWallet && (
+          <div className={classes.hoverBtnDiv} onMouseOut={() => setShow(false)}>
+            <CustomButton
+              size="small"
+              style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
+              onClick={connectWallet}
+            // onClick={props.applicationAccess ? connectWallet : handleBlocking}
+            >
+              {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
+            </CustomButton>
+            <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
+              For Accessing Complete Features
+            </Typography>
+          </div>
+        )
+      }
     </div >
   )
 }

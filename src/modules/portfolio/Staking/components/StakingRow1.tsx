@@ -38,11 +38,12 @@ import {
   getStake,
   getPendingKnabr,
   getTvlKnab,
-  getHarvest
+  getHarvest,
+  getAllocation
 } from '../../../../modules/block-chain/BlockChainMethods'
 import { KNABAddressTest, KNABabi } from '../../../../modules/block-chain/abi'
 import Spinner from 'shared/loader-components/spinner'
-import { setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab, accordActionFn } from '../../../../logic/actions/staking.action';
+import { setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab, accordActionFn, setAprK } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 
 const useStyles = makeStyles((theme) => ({
@@ -160,9 +161,10 @@ const StakingRow1 = (props: any) => {
   const classes = useStyles();
   const {
     user: { walletConAddress, web3Instance },
-    staking: { knab, knab_dollar, knab_staked, knab_staked_dollar, knabr, knabr_earned, tvl_knab, accordAction },
+    staking: { knab, knab_dollar, knab_staked, knab_staked_dollar, knabr, knabr_earned, tvl_knab, accordAction, apr_k },
     setKnab, setKnabDollar, setKnabStaked, setKnabStakedDollar, setKnabr, setKnabrEarned, setTvlKnab, accordActionFn,
-    successAlert, errorAlert
+    successAlert, errorAlert,
+    setAprK
   } = props;
 
   useEffect(() => {
@@ -173,6 +175,12 @@ const StakingRow1 = (props: any) => {
 
   const stateUpdate = () => {
     try {
+
+      getAllocation(0).then((res: any) => {
+        // setAprK( res * 100);
+        setAprK(0);
+      })
+
       getAssetsKNABBalance().then((res) => {
         // console.log(res);
         setKnab(res);
@@ -341,8 +349,8 @@ const StakingRow1 = (props: any) => {
               <AccordValue className={classes.padLR}>${tvl_knab} TVL</AccordValue>
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading className={classes.padLR}>0%</AccordHeading>
-              <AccordValue className={classes.padLR}>0%(24hr)</AccordValue>
+              <AccordHeading className={classes.padLR}>{apr_k}%</AccordHeading>
+              <AccordValue className={classes.padLR}>{apr_k}%(24hr)</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordHeading className={classes.padLR}>${knab_dollar}</AccordHeading>
@@ -568,5 +576,6 @@ export default connect(mapStateToProps, {
   setKnabrEarned,
   setTvlKnab,
   accordActionFn,
-  successAlert, errorAlert
+  successAlert, errorAlert,
+  setAprK
 })(StakingRow1)

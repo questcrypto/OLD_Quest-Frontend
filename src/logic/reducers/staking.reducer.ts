@@ -38,7 +38,11 @@ import {
   SET_LP_STAKED2,
   SET_LP_STAKED_DOLLAR2,
   SET_LP_KNABR_EARNED2,
-  SET_LP2_SUPPLY
+  SET_LP2_SUPPLY,
+  SET_APR_K,
+  SET_APR_Q,
+  SET_APR_S,
+  SET_APR_U
 } from '../actions/action.config'
 
 const initialState = {
@@ -97,7 +101,13 @@ const initialState = {
   lp_staked2: 0.0,
   lp_staked_dollar2: 0.0,
   lp_knabr_earned2: 0.0,
-  lp2_supply: 0.0
+  lp2_supply: 0.0,
+
+  apr_k: 0.0,
+  apr_q: 0.0,
+  apr_s: 0.0,
+  apr_u: 0.0,
+
 }
 
 export const stakingReducer = (state = initialState, action: any) => {
@@ -306,6 +316,26 @@ export const stakingReducer = (state = initialState, action: any) => {
       return {
         ...state,
         lp2_supply: parseFloat(payload).toFixed(3)
+      }
+    case SET_APR_K:
+      return {
+        ...state,
+        apr_k: parseFloat(payload).toFixed(3)
+      }
+      case SET_APR_Q:
+      return {
+        ...state,
+        apr_q: parseFloat(payload).toFixed(3)
+      }
+      case SET_APR_S:
+      return {
+        ...state,
+        apr_s: parseFloat(payload).toFixed(3)
+      }
+      case SET_APR_U:
+      return {
+        ...state,
+        apr_u: parseFloat(payload).toFixed(3)
       }
     default:
       return state

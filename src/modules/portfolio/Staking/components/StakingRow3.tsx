@@ -46,6 +46,7 @@ import {
   getLoanAmount,
   getLoanAmount2,
   withdrawUsdc,
+  getAllocation
 } from '../../../../modules/block-chain/BlockChainMethods'
 import Spinner from 'shared/loader-components/spinner'
 import {
@@ -57,7 +58,8 @@ import {
   setUsdcStakedDollar,
   setUsdcKnabEarned,
   setLoanAmount,
-  accordActionFn
+  accordActionFn,
+  setAprU
 } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import Question from 'assets/icons/question.svg'
@@ -183,11 +185,13 @@ const StakingRow3 = (props: any) => {
 
   const classes = useStyles();
   const {
-    staking: { tvl_usdc, usdc, usdc_dollar, knabr, usdc_staked, usdc_staked_dollar, usdc_knabr_earned, loan_amount, accordAction },
+    staking: { tvl_usdc, usdc, usdc_dollar, knabr, usdc_staked, usdc_staked_dollar, usdc_knabr_earned, loan_amount, accordAction,
+      apr_u },
     user: { walletConAddress, web3Instance },
     setTvlUsdc, setUsdc, setUsdcDollar, setKnabr, setUsdcStaked, setUsdcStakedDollar, setUsdcKnabEarned, setLoanAmount,
     accordActionFn,
     errorAlert, successAlert,
+    setAprU
   } = props;
   const [isWithdraw, setIsWithdraw] = useState(true);
 
@@ -199,10 +203,16 @@ const StakingRow3 = (props: any) => {
 
   const stateUpdate = () => {
     try {
-      // getTvlUsdc().then((res) => {
-      //   // console.log(res);
-      //   setTvlUsdc(res);
-      // }, err => { console.log(err) })
+
+      getAllocation(3).then((res: any) => {
+        // setAprU(res * 100);
+        setAprU(0);
+      })
+
+      getTvlUsdc().then((res) => {
+        console.log(res);
+        setTvlUsdc(res);
+      }, err => { console.log(err) })
 
       // getStakeUsdc(3).then((res) => {
       //   // console.log(res);
@@ -425,12 +435,12 @@ const StakingRow3 = (props: any) => {
             </FlexColumn>
             <FlexColumn>
               <AccordHeading className={classes.padLR}>USDC</AccordHeading>
-              {/* <AccordValue className={classes.padLR}>${tvl_usdc} TVL</AccordValue> */}
-              <AccordValue className={classes.padLR}>${(parseFloat(usdc_staked) + parseFloat(loan_amount)).toFixed(2)} TVL</AccordValue>
+              <AccordValue className={classes.padLR}>${tvl_usdc} TVL</AccordValue>
+              {/* <AccordValue className={classes.padLR}>${(parseFloat(usdc_staked) + parseFloat(loan_amount)).toFixed(2)} TVL</AccordValue> */}
             </FlexColumn>
             <FlexColumn>
-              <AccordHeading className={classes.padLR}>0%</AccordHeading>
-              <AccordValue className={classes.padLR}>0%(24hr)</AccordValue>
+              <AccordHeading className={classes.padLR}>{apr_u}%</AccordHeading>
+              <AccordValue className={classes.padLR}>{apr_u}%(24hr)</AccordValue>
             </FlexColumn>
             <FlexColumn>
               <AccordHeading className={classes.padLR}>${usdc_dollar}</AccordHeading>
@@ -707,4 +717,5 @@ export default connect(mapStateToProps, {
   setLoanAmount,
   accordActionFn,
   successAlert, errorAlert,
+  setAprU
 })(StakingRow3)

@@ -40,7 +40,8 @@ import {
   getTvlKnabUsdc2,
   getStake,
   getPendingKnabr,
-  getHarvest
+  getHarvest,
+  getAllocation
 } from '../../../../modules/block-chain/BlockChainMethods'
 import { LPTokenAddress, KNABabi } from '../../../../modules/block-chain/abi';
 import {
@@ -51,7 +52,8 @@ import {
   setLpStaked2,
   setLpStakedDollar2,
   setLpKnabREarned2,
-  accordActionFn
+  accordActionFn,
+  setAprS
 } from '../../../../logic/actions/staking.action';
 import { successAlert, errorAlert } from 'logic/actions/alerts.actions'
 import Question from 'assets/icons/question.svg'
@@ -177,10 +179,11 @@ const StakingRow43 = (props: any) => {
   const classes = useStyles();
   const {
     user: { walletConAddress, web3Instance },
-    staking: { tvl_knab_usdc2, lp2, lp_dollar2, knabr, lp_staked2, lp_staked_dollar2, lp_knabr_earned2, accordAction },
+    staking: { tvl_knab_usdc2, lp2, lp_dollar2, knabr, lp_staked2, lp_staked_dollar2, lp_knabr_earned2, accordAction, apr_s },
     setTvlKnabUsdc2, setLp2, setLpDollar2, setKnabr, setLpStaked2, setLpStakedDollar2, setLpKnabREarned2, setLoanAmount,
     accordActionFn,
     errorAlert, successAlert,
+    setAprS
   } = props;
 
   useEffect(() => {
@@ -191,6 +194,12 @@ const StakingRow43 = (props: any) => {
 
   const stateUpdate = () => {
     try {
+
+      getAllocation(2).then((res: any) => {
+        // setAprS(res * 100);
+        setAprS(0);
+      })
+
       getTvlKnabUsdc2().then((res) => {
         // console.log(res);
         setTvlKnabUsdc2(res);
@@ -361,8 +370,8 @@ const StakingRow43 = (props: any) => {
             </AccordValue>
           </FlexColumn>
           <FlexColumn>
-            <AccordHeading className={classes.padLR}>0%</AccordHeading>
-            <AccordValue className={classes.padLR}>0%(24hr)</AccordValue>
+            <AccordHeading className={classes.padLR}>{apr_s}%</AccordHeading>
+            <AccordValue className={classes.padLR}>{apr_s}%(24hr)</AccordValue>
           </FlexColumn>
           <FlexColumn>
             <AccordHeading className={classes.padLR}>
@@ -609,4 +618,5 @@ export default connect(mapStateToProps, {
   setLpKnabREarned2,
   accordActionFn,
   errorAlert, successAlert,
+  setAprS
 })(StakingRow43)

@@ -113,7 +113,8 @@ export const handleSignPendingTransactionSubmit = (contractSLC: any, account: st
 }
 
 export const handleEndAuction = async (contractSLC: any, account: string, auctionID: string, propId: string) => {
-  const res = await contractSLC.methods.EndAuction(auctionID, propId).send({ from: account })
+  const gasPrice = await gasPriceFn()
+  const res = await contractSLC.methods.EndAuction(auctionID, propId).send({ from: account, gasPrice })
   return res
 }
 
@@ -130,6 +131,7 @@ export const configureBlockchainAuction = async (
 
   if (web3) {
     const accounts = await web3.eth.getAccounts()
+    const gasPrice = await gasPriceFn()
 
     const SLFInstance = new web3.eth.Contract(selfAbi, SLFContractAddress)
     const SLCAddress = await SLFInstance.methods.PROPERTY_ERC20_ADDRESS(propId).call()
@@ -147,7 +149,7 @@ export const configureBlockchainAuction = async (
         convertToWei(propertyValue),
         propId
       )
-      .send({ from: accounts[0] })
+      .send({ from: accounts[0], gasPrice })
     return res
   }
 }
@@ -169,11 +171,11 @@ export const currentBidValue = async (auctionId: any) => {
 
 export const saveBlockchainBid = async (auctionId: string, totalAmount: any, address: string, DaiAddress: any) => {
   const web3 = await getWeb3Val()
-
+  const gasPrice = await gasPriceFn()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
-    const res = await auctionContract.methods.saveBid(auctionId, totalAmount* 10**6, address, DaiAddress).send({ from: accounts[0] })
+    const res = await auctionContract.methods.saveBid(auctionId, totalAmount* 10**6, address, DaiAddress).send({ from: accounts[0], gasPrice })
     return res
   }
 }
@@ -199,10 +201,10 @@ export const handleStoreDaiClaimAmount = async (
   DaiClaimAmount: any
 ) => {
   DaiClaimAmount = DaiClaimAmount.map((el: any) => convertToWei(el))
-
+  const gasPrice = await gasPriceFn()
   const res = await contractAuction.methods
     .StoreBidTokenClaimAmount(auctionID, DaiClaimersArray, DaiClaimAmount, DAIContractAddress)
-    .send({ from: account })
+    .send({ from: account, gasPrice })
   return res
 }
 export const handleStoreWinTokenAmount = async (
@@ -213,8 +215,9 @@ export const handleStoreWinTokenAmount = async (
   BidAmount: any
 ) => {
   BidAmount = BidAmount.map((el: any) => convertToWei(el))
+  const gasPrice = await gasPriceFn()
 
-  const res = await contractSLC.methods.STORE_AUCTION_TOKENS_TO_BE_GIVEN(auctionID, BiddersArray, BidAmount).send({ from: account })
+  const res = await contractSLC.methods.STORE_AUCTION_TOKENS_TO_BE_GIVEN(auctionID, BiddersArray, BidAmount).send({ from: account, gasPrice })
   return res
 }
 
@@ -236,17 +239,20 @@ export const getApprovedTokens = async () => {
 
 export const handleDAIapproval = async (contractDai: any, account: string, user: any, ApproveAmount: any) => {
   // const res = await contractDai.methods.approve(user, convertToWei(ApproveAmount)).send({ from: account })
-  const res = await contractDai.methods.approve(user, ApproveAmount * 10 ** 6).send({ from: account })
+  const gasPrice = await gasPriceFn()
+  const res = await contractDai.methods.approve(user, ApproveAmount * 10 ** 6).send({ from: account, gasPrice })
   return res
 }
 
 export const handleAuctionWinTokenClaim = async (contractSLC: any, account: string, auctionID: any, TreasuryAddress: any) => {
-  const res = await contractSLC.methods.GET_AUCTION_WIN_SLC(auctionID, TreasuryAddress).send({ from: account })
+  const gasPrice = await gasPriceFn()
+  const res = await contractSLC.methods.GET_AUCTION_WIN_SLC(auctionID, TreasuryAddress).send({ from: account, gasPrice })
   return res
 }
 
 export const handleDAITokenClaim = async (contractAuction: any, account: string, auctionID: any, TreasuryAddress: any) => {
-  const res = await contractAuction.methods.claimBidTokensback(auctionID, TreasuryAddress, DAIContractAddress).send({ from: account })
+  const gasPrice = await gasPriceFn()
+  const res = await contractAuction.methods.claimBidTokensback(auctionID, TreasuryAddress, DAIContractAddress).send({ from: account, gasPrice })
   return res
 }
 
@@ -349,14 +355,15 @@ export const getisWallet = (walletCon: boolean) => (isWallectConnect = walletCon
 
 export const deposit = async (pid: number, amount: number) => {
   const web3 = await getWeb3Val()
+  const gasPrice = await gasPriceFn()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
     let res;
     if ((pid === 2) || (pid === 1)) {
-      res = await farmContract.methods.deposit(pid, Math.floor(amount)).send({ from: accounts[0] })
+      res = await farmContract.methods.deposit(pid, Math.floor(amount)).send({ from: accounts[0], gasPrice })
     } else {
-      res = await farmContract.methods.deposit(pid, convertToWei(amount)).send({ from: accounts[0] })
+      res = await farmContract.methods.deposit(pid, convertToWei(amount)).send({ from: accounts[0], gasPrice })
     }
     return res;
     // console.log(res)
@@ -365,10 +372,11 @@ export const deposit = async (pid: number, amount: number) => {
 
 export const depositUsdc = async (pid: number, amount: number) => {
   const web3 = await getWeb3Val()
+  const gasPrice = await gasPriceFn()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.deposit(pid, amount * 10 ** 6).send({ from: accounts[0] })
+    const res = await farmContract.methods.deposit(pid, amount * 10 ** 6).send({ from: accounts[0], gasPrice })
     return res;
     // console.log(res)
   }
@@ -483,10 +491,11 @@ export const handleKnabUsdcApproval = async (contractUsdc: any, account: string,
 
 export const withdraw = async (pid: number, amount: number) => {
   const web3 = await getWeb3Val()
+  const gasPrice = await gasPriceFn()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.withdraw(pid, convertToWei(amount)).send({ from: accounts[0] })
+    const res = await farmContract.methods.withdraw(pid, convertToWei(amount)).send({ from: accounts[0], gasPrice })
     return res;
     // console.log(res);
   }
@@ -495,6 +504,7 @@ export const withdraw = async (pid: number, amount: number) => {
 export const withdrawUsdc = async (pid: number, amount: number) => {
   const web3 = await getWeb3Val()
   const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+  const gasPrice = await gasPriceFn()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
 
@@ -502,7 +512,7 @@ export const withdrawUsdc = async (pid: number, amount: number) => {
     const res1 = await aaveContract.methods.calc_token_amount([0, amount, 0], false ).call()
     const res2 = 0.001 *res1
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.withdraw2(pid, (amount), (BigInt(res1) + BigInt(Math.floor(res2))) ).send({ from: accounts[0] })
+    const res = await farmContract.methods.withdraw2(pid, (amount), (BigInt(res1) + BigInt(Math.floor(res2))) ).send({ from: accounts[0], gasPrice })
     return res;
     // console.log(res);
   }
@@ -580,27 +590,29 @@ export const getTvlUsdc = async () => {
 
 export const getHarvest = async (pid: number) => {
   const web3 = await getWeb3Val()
+  const gasPrice = await gasPriceFn()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.harvestKNABR(pid).send({ from: accounts[0] })
+    const res = await farmContract.methods.harvestKNABR(pid).send({ from: accounts[0], gasPrice })
     return res;
   }
 }
 
 export const getHarvestAll = async (harvest1: any, harvest2: any, harvest3: any) => {
   const web3 = await getWeb3Val()
+  const gasPrice = await gasPriceFn()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
     if (harvest1 > 0) {
-      const res0 = await farmContract.methods.harvestKNABR(0).send({ from: accounts[0] })
+      const res0 = await farmContract.methods.harvestKNABR(0).send({ from: accounts[0], gasPrice })
     }
     if (harvest2 > 0) {
-      const res1 = await farmContract.methods.harvestKNABR(1).send({ from: accounts[0] })
+      const res1 = await farmContract.methods.harvestKNABR(1).send({ from: accounts[0], gasPrice })
     }
     if (harvest3 > 0) {
-      const res2 = await farmContract.methods.harvestKNABR(2).send({ from: accounts[0] })
+      const res2 = await farmContract.methods.harvestKNABR(2).send({ from: accounts[0], gasPrice })
     }
     return 1;
   }
@@ -608,11 +620,12 @@ export const getHarvestAll = async (harvest1: any, harvest2: any, harvest3: any)
 
 export const withdrawLoan = async (pid: number, amount: number) => {
   const web3 = await getWeb3Val()
+  const gasPrice = await gasPriceFn()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
     console.log('With draw loan', amount);
-    const res = await farmContract.methods.withdrawLoan(pid, amount).send({ from: accounts[0] })
+    const res = await farmContract.methods.withdrawLoan(pid, amount).send({ from: accounts[0], gasPrice })
     return res;
   }
 }
@@ -794,10 +807,11 @@ export const buyQST = async (Amount: Number, referral: any) => {
 
 export const returnQST = async (Amount: number) => {
   const web3 = await getWeb3Val()
+  const gasPrice = await gasPriceFn()
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const questContract = new web3.eth.Contract(questabi, questAddress)
-    const res = await questContract.methods.returnQST(parseInt(web3.utils.toWei(String(Amount), "Mwei"))).send({ from: accounts[0] })
+    const res = await questContract.methods.returnQST(parseInt(web3.utils.toWei(String(Amount), "Mwei"))).send({ from: accounts[0], gasPrice })
     return res
   }
 }
@@ -888,7 +902,8 @@ export const getLp2Supply = async () => {
 }
 
 export const getAllocation = async (pid: any) => {
-  const web3 = await getWeb3Val()
+  // const web3 = await getWeb3Val()
+  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)

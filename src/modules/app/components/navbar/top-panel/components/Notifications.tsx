@@ -13,6 +13,7 @@ import {
   ItemLeft,
   ItemRight,
   Noti,
+  Noti2,
   DoneIcon
 } from './style';
 import {
@@ -109,7 +110,7 @@ const Notifications = (props: any) => {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          <Badge badgeContent={notifications.length} color="error">
+          <Badge badgeContent={notifications.length > 0 ? notifications.length : '0'} color="error">
             <img src={NotificationIcon} />
           </Badge>
         </CustomBtn>
@@ -144,12 +145,17 @@ const Notifications = (props: any) => {
                                 </DoneIcon>
                                 <div>
                                   {item.message}
-                                </div> 
+                                </div>
                                 <br />
                               </Noti>
                             </>
                           )
                         })
+                      }
+                      {
+                        notifications.length === 0 ? <>
+                          <Noti2>No Notifications</Noti2>
+                        </> : ''
                       }
                     </ScrollDiv>
                   </ContentDiv>

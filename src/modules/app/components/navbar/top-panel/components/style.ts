@@ -93,7 +93,11 @@ export const Noti = styled.div`
   font-size: 0.8rem;
   display: flex;
   justify-content: center;
-  color: 'green'
+`;
+
+export const Noti2 = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export const DoneIcon = styled.div`

@@ -101,3 +101,4 @@ export const treasuryDetailsTabList = [
     value: 'transactions',
   },
 ]
+

@@ -12,6 +12,8 @@ import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { apiBaseUrl } from 'services/global-constant'
 import { openLoginModal } from 'logic/actions/user.actions'
+import Grid from '@material-ui/core/Grid'
+import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
 
 const PropertyCards = (props: any) => {
   const classes = useStyles()
@@ -79,7 +81,7 @@ const PropertyCards = (props: any) => {
                     </div>
                   </CardContent>
                   <CardActions className={classes.actions}>
-                    {!auctionDetails ? (
+                    {/* {!auctionDetails ? (
                       <Button onClick={() => handleDetails(id)} className={classes.addPropertyBtnStyle}>
                         Property Details
                       </Button>
@@ -91,7 +93,15 @@ const PropertyCards = (props: any) => {
                       </Button> 
                     //   : ''
                     // )
-                    }
+                    } */}
+
+                    <PrimaryButton onClick={() => handleOpenModal(auctionDetails, currentValue)} className={classes.addPropertyBtnStyle}>
+                      Review Auction
+                    </PrimaryButton>
+                    <SecondaryButton onClick={() => handleDetails(id)} className={classes.addPropertyBtnStyle}>
+                      Property Details
+                    </SecondaryButton>
+
                   </CardActions>
                 </StyledCard>
               )

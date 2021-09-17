@@ -14,7 +14,8 @@ import axios from 'axios'
 
 const GeneralUserDashboard = (props: any) => {
   const classes = useStyles()
-  const [activeTab, setActiveTab] = useState('published')
+  // const [activeTab, setActiveTab] = useState('published')
+  const [activeTab, setActiveTab] = useState('All')
   const [newPropertiesList, setNewPropertiesList] = useState<any>([])
   const [newPropertyLoading, setNewPropertyLoading] = useState(false)
   const [approvedProperties, setApprovedProperties] = useState<any>([])
@@ -157,6 +158,7 @@ const GeneralUserDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
+            {activeTab === 'All' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
             {activeTab === 'new' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
             {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
             {activeTab === 'published' && (

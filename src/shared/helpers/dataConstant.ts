@@ -58,6 +58,10 @@ export const treasuryTabList = [
 
 export const propertyTabList = [
   {
+    label: 'All',
+    value: 'All',
+  },
+  {
     label: 'Published',
     value: 'published',
   },

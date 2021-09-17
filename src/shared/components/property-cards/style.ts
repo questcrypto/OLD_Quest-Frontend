@@ -29,9 +29,11 @@ export const useStyles = makeStyles({
     alignItems: 'start',
   },
   actions: {
-    padding: '16px 37.5px',
+    // padding: '16px 37.5px',
     display: 'flex',
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
+    padding: '16px 12px',
+    justifyContent: 'space-between'
   },
   photo: {
     width: '100%',
@@ -53,8 +55,8 @@ export const useStyles = makeStyles({
   },
   addPropertyBtnStyle: {
     height: '36px',
-    color: `${colors.white} !important`,
-    backgroundColor: `${colors.primary} !important`,
+    // color: `${colors.white} !important`,
+    // backgroundColor: `${colors.primary} !important`,
     fontSize: '12px',
     padding: '6px 16px',
     whiteSpace: 'nowrap',
@@ -63,10 +65,17 @@ export const useStyles = makeStyles({
     fontFamily: 'RobotoBold',
     borderRadius: '2px',
     '&:hover': {
-      backgroundColor: `${colors.primary} !important`,
+      // backgroundColor: `${colors.primary} !important`,
     },
   },
   photoWrap: {},
+  btnContStyle: {
+    marginBottom: '10px',
+  },
+  btnStyle: {
+    fontSize: '12px !important',
+    height: '31px',
+  },
 })
 
 export const StyledCard = styled<any>(Card)`

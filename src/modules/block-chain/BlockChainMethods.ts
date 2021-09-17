@@ -200,7 +200,7 @@ export const handleStoreDaiClaimAmount = async (
   DaiClaimersArray: any,
   DaiClaimAmount: any
 ) => {
-  DaiClaimAmount = DaiClaimAmount.map((el: any) => convertToWei(el))
+  DaiClaimAmount = DaiClaimAmount.map((el: any) => (el * 10**6))
   const gasPrice = await gasPriceFn()
   const res = await contractAuction.methods
     .StoreBidTokenClaimAmount(auctionID, DaiClaimersArray, DaiClaimAmount, DAIContractAddress)
@@ -214,7 +214,7 @@ export const handleStoreWinTokenAmount = async (
   BiddersArray: any,
   BidAmount: any
 ) => {
-  BidAmount = BidAmount.map((el: any) => convertToWei(el))
+  BidAmount = BidAmount.map((el: any) => (el * 10**6))
   const gasPrice = await gasPriceFn()
 
   const res = await contractSLC.methods.STORE_AUCTION_TOKENS_TO_BE_GIVEN(auctionID, BiddersArray, BidAmount).send({ from: account, gasPrice })

@@ -43,7 +43,7 @@ import {
   getHarvest,
   getAllocation
 } from '../../../../modules/block-chain/BlockChainMethods'
-import { LPTokenAddress, KNABabi } from '../../../../modules/block-chain/abi';
+import { LPTokenAddress2, KNABabi } from '../../../../modules/block-chain/abi';
 import {
   setTvlKnabUsdc2,
   setLp2,
@@ -195,7 +195,7 @@ const StakingRow43 = (props: any) => {
   const stateUpdate = () => {
     try {
 
-      getAllocation(2).then((res: any) => {
+      getAllocation(1).then((res: any) => {
         setAprS(res * 100);
         // setAprS(0);
       })
@@ -216,13 +216,13 @@ const StakingRow43 = (props: any) => {
         setKnabr(res);
       }, err => { console.log(err) })
 
-      getStake(2).then((res) => {
+      getStake(1).then((res) => {
         // console.log(res);
         setLpStaked2(res);
         setLpStakedDollar2(res);
       }, err => { console.log(err) })
 
-      getPendingKnabr(2).then((res) => {
+      getPendingKnabr(1).then((res) => {
         // console.log(res);
         setLpKnabREarned2(res);
       }, err => { console.log(err) })
@@ -247,7 +247,7 @@ const StakingRow43 = (props: any) => {
   const approveFn = async () => {
     try {
       setLoader({ ...loader, approveLoad: true });
-      const Contract = new web3Instance.eth.Contract(KNABabi, LPTokenAddress);
+      const Contract = new web3Instance.eth.Contract(KNABabi, LPTokenAddress2);
       const accounts = await web3Instance.eth.getAccounts()
       handleKnabUsdcApproval(Contract, accounts[0], lp2).then((res: any) => {
         if (res) {
@@ -267,7 +267,7 @@ const StakingRow43 = (props: any) => {
   const stakeFn = async () => {
     try {
       setLoader({ ...loader, stakeLoad: true });
-      deposit(2, lp2).then((res: any) => {
+      deposit(1, lp2).then((res: any) => {
         if (res) {
           setLoader({ ...loader, stakeLoad: false });
           stateUpdate();
@@ -291,7 +291,7 @@ const StakingRow43 = (props: any) => {
         return;
       }
       setLoader({ ...loader, unstakeLoad: true });
-      withdraw(2, lpUnStackVal).then((res: any) => {
+      withdraw(1, lpUnStackVal).then((res: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
           stateUpdate();
@@ -312,7 +312,7 @@ const StakingRow43 = (props: any) => {
   const harvestFn = () => {
     try {
       setLoader({ ...loader, harvestLoad: true });
-      getHarvest(2).then((res: any) => {
+      getHarvest(1).then((res: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
           stateUpdate();

@@ -195,7 +195,7 @@ const StakingRow2 = (props: any) => {
   const stateUpdate = () => {
     try {
 
-      getAllocation(1).then((res: any) => {
+      getAllocation(2).then((res: any) => {
         setAprQ( res * 100);
         // setAprQ(0);
       })
@@ -216,13 +216,13 @@ const StakingRow2 = (props: any) => {
         setKnabr(res);
       }, err => { console.log(err) })
 
-      getStake(1).then((res) => {
+      getStake(2).then((res) => {
         // console.log(res);
         setLpStaked(res);
         setLpStakedDollar(res);
       }, err => { console.log(err) })
 
-      getPendingKnabr(1).then((res) => {
+      getPendingKnabr(2).then((res) => {
         // console.log(res);
         setLpKnabREarned(res);
       }, err => { console.log(err) })
@@ -267,7 +267,7 @@ const StakingRow2 = (props: any) => {
   const stakeFn = async () => {
     try {
       setLoader({ ...loader, stakeLoad: true });
-      deposit(1, lp).then((res: any) => {
+      deposit(2, lp).then((res: any) => {
         if (res) {
           setLoader({ ...loader, stakeLoad: false });
           stateUpdate();
@@ -291,7 +291,7 @@ const StakingRow2 = (props: any) => {
         return;
       }
       setLoader({ ...loader, unstakeLoad: true });
-      withdraw(1, lpUnStackVal).then((res: any) => {
+      withdraw(2, lpUnStackVal).then((res: any) => {
         if (res) {
           setLoader({ ...loader, unstakeLoad: false });
           stateUpdate();
@@ -312,7 +312,7 @@ const StakingRow2 = (props: any) => {
   const harvestFn = () => {
     try {
       setLoader({ ...loader, harvestLoad: true });
-      getHarvest(1).then((res: any) => {
+      getHarvest(2).then((res: any) => {
         if (res) {
           setLoader({ ...loader, harvestLoad: false });
           stateUpdate();

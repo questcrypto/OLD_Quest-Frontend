@@ -42,7 +42,7 @@ const PostAuctionTable = (props: any) => {
   const classes = useStyles()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const { data, dataLoading, errorAlert } = props
+  const { data, dataLoading, errorAlert, btn } = props
   const [loading, setLoading] = useState(false)
   const [selectedId, setSelectedId] = useState('')
 
@@ -57,14 +57,16 @@ const PostAuctionTable = (props: any) => {
         <TableCell>{getPropertyType(PropertyDetails.PropertyType)}</TableCell>
         <TableCell>Approved</TableCell>
         <TableCell>${parseFloat(PropertyDetails.CurrentValue).toFixed(2)}</TableCell>
-        <TableCell>
+        {
+          btn ? <TableCell>
             <PrimaryButton
               onClick={() => endAuction(AuctionDetail[0].id, AuctionDetail[0].propidId)}
-              // disabled={AuctionDetail[0].status !== 2 || loading}
+            // disabled={AuctionDetail[0].status !== 2 || loading}
             >
               {selectedId === AuctionDetail[0].id && loading ? <Spinner /> : 'End Auction'}
             </PrimaryButton>
-          </TableCell>
+          </TableCell> : ''
+        }
       </TableRow>
     )
   }
@@ -110,22 +112,22 @@ const PostAuctionTable = (props: any) => {
         //   })
         //   await handleDAIapproval(daiContract, accounts[0], auctionContractAddress, sum)
         // } else {
-          const res: any = await axios.post(`${apiBaseUrl}/auction/EndAuction`, { auctionID, auctionStatus: false })
-          // res.data.Claimers_Amount_Array[0] *= 10**6 
-          // console.log(res.data.Claimers_Amount_Array)
-          await handleStoreDaiClaimAmount(
-            auctionContract,
-            accounts[0],
-            auctionID,
-            res.data.Claimers_Address_Array,
-            res.data.Claimers_Amount_Array
-          )
-          const arr: [] = res.data.Claimers_Amount_Array
-          let sum = 0
-          arr.forEach((element) => {
-            sum += element
-          })
-          await handleDAIapproval(daiContract, accounts[0], auctionContractAddress, sum)
+        const res: any = await axios.post(`${apiBaseUrl}/auction/EndAuction`, { auctionID, auctionStatus: false })
+        // res.data.Claimers_Amount_Array[0] *= 10**6 
+        // console.log(res.data.Claimers_Amount_Array)
+        await handleStoreDaiClaimAmount(
+          auctionContract,
+          accounts[0],
+          auctionID,
+          res.data.Claimers_Address_Array,
+          res.data.Claimers_Amount_Array
+        )
+        const arr: [] = res.data.Claimers_Amount_Array
+        let sum = 0
+        arr.forEach((element) => {
+          sum += element
+        })
+        await handleDAIapproval(daiContract, accounts[0], auctionContractAddress, sum)
         // }
       }
     } catch (error) {
@@ -153,6 +155,9 @@ const PostAuctionTable = (props: any) => {
                 <TableCell>TYPE</TableCell>
                 <TableCell>STATUS</TableCell>
                 <TableCell>VALUE</TableCell>
+                {
+                  btn ? <TableCell>Action</TableCell> : ''
+                }
               </TableRow>
             </TableHead>
             {!!data && data.length > 0 && (

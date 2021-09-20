@@ -28,10 +28,24 @@ const OwnerDashboard = (props: any) => {
   const [onAuctionLoading, setOnAuctionLoading] = useState(false)
   const [postAuctionProperties, setPostAuctionProperties] = useState<any>([])
   const [postAuctionLoading, setPostAuctionLoading] = useState(false)
+  const [allPropertiesList, setAllPropertiesList] = useState<any>([])
 
   const { userInfo } = props
 
   useEffect(() => {
+
+    const getAllPropertiesList = async () => {
+      try {
+        setNewPropertyLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
+        setAllPropertiesList(res.data)
+      } catch (error) {
+        setAllPropertiesList([])
+      } finally {
+        setNewPropertyLoading(false)
+      }
+    }
+
     const getPropertiesList = async () => {
       try {
         setNewPropertyLoading(true)
@@ -110,6 +124,7 @@ const OwnerDashboard = (props: any) => {
     getPreAuctionProperties()
     getOnAuctionProperties()
     getPostAuctionProperties()
+    getAllPropertiesList()
   }, [userInfo])
 
 

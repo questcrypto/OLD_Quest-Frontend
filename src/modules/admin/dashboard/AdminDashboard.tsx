@@ -20,6 +20,7 @@ import history from 'modules/app/components/history'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
+import PropertyCards from 'shared/components/property-cards'
 
 const AdminDashboard = (props: any) => {
   const classes = useStyles()
@@ -36,8 +37,22 @@ const AdminDashboard = (props: any) => {
   const [onAuctionLoading, setOnAuctionLoading] = useState(false)
   const [postAuctionProperties, setPostAuctionProperties] = useState<any>([])
   const [postAuctionLoading, setPostAuctionLoading] = useState(false)
+  const [allPropertiesList, setAllPropertiesList] = useState<any>([])
 
   useEffect(() => {
+
+    const getAllPropertiesList = async () => {
+      try {
+        setNewPropertyLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
+        setAllPropertiesList(res.data)
+      } catch (error) {
+        setAllPropertiesList([])
+      } finally {
+        setNewPropertyLoading(false)
+      }
+    }
+
     const getNewPropertiesList = async () => {
       try {
         setNewPropertyLoading(true)
@@ -110,6 +125,7 @@ const AdminDashboard = (props: any) => {
     getPreAuctionProperties()
     getOnAuctionProperties()
     getPostAuctionProperties()
+    getAllPropertiesList()
   }, [])
 
   const handleAddProperty = () => {
@@ -120,13 +136,13 @@ const AdminDashboard = (props: any) => {
     try {
       const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyHOA`)
       setApprovedProperties(res.data)
-    } catch (error) {}
+    } catch (error) { }
   }
   const updatePublishedProperty = async () => {
     try {
       const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedProperty`)
       setPublishedProperties(res.data)
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const updateApprove = () => {
@@ -167,6 +183,8 @@ const AdminDashboard = (props: any) => {
         </Grid>
       </Grid>
       <div>
+        {/* {activeTab === 'All' && <PropertyCards list={allPropertiesList} dataLoading={newPropertyLoading} />} */}
+        {activeTab === 'All' && <NewPropertyTable data={allPropertiesList} dataLoading={newPropertyLoading} />}
         {activeTab === 'new' && <NewPropertyTable data={newPropertiesList} dataLoading={newPropertyLoading} />}
         {activeTab === 'approved' && (
           <ApprovePropertyTable
@@ -180,7 +198,7 @@ const AdminDashboard = (props: any) => {
         {activeTab === 'published' && <PublishedPropertyTable data={publishedProperties} dataLoading={publishedLoading} />}
         {activeTab === 'preAuction' && <PreAuctionTable data={preAuctionProperties} dataLoading={preAuctionLoading} />}
         {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
-        {activeTab === 'postAuction' && <PostAuctionTable data={postAuctionProperties} dataLoading={postAuctionLoading} />}
+        {activeTab === 'postAuction' && <PostAuctionTable data={postAuctionProperties} dataLoading={postAuctionLoading} btn={false} />}
       </div>
     </Grid>
   )

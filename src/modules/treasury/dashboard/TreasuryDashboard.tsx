@@ -10,6 +10,7 @@ import { treasuryTabList } from 'shared/helpers/dataConstant'
 import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
+import PropertyCards from 'shared/components/property-cards'
 
 const TreasuryDashboard = (props: any) => {
   const classes = useStyles()
@@ -27,8 +28,23 @@ const TreasuryDashboard = (props: any) => {
   const [endAuctionProperties, setEndAuctionProperties] = useState<any>([])
   const [endAuctionLoading, setEndAuctionLoading] = useState(false)
   const { userInfo } = props
+  const [allPropertiesList, setAllPropertiesList] = useState<any>([])
+  const [newPropertyLoading, setNewPropertyLoading] = useState(false)
 
   useEffect(() => {
+
+    const getAllPropertiesList = async () => {
+      try {
+        setNewPropertyLoading(true)
+        const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
+        setAllPropertiesList(res.data)
+      } catch (error) {
+        setAllPropertiesList([])
+      } finally {
+        setNewPropertyLoading(false)
+      }
+    }
+
     const getPublishedProperties = async () => {
       try {
         setPublishedLoading(true)
@@ -105,20 +121,21 @@ const TreasuryDashboard = (props: any) => {
     getOnAuctionProperties()
     getEndAuctionProperties()
     getPostAuctionProperties()
+    getAllPropertiesList()
   }, [userInfo])
 
   const updateOnAuction = async () => {
     try {
       const res = await axios.get(`${apiBaseUrl}/auction/listOfAllActiveAuction`)
       setOnAuctionProperties(res.data)
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const updatePreAuction = async () => {
     try {
       const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
       setPreAuctionProperties(res.data)
-    } catch (error) {}
+    } catch (error) { }
   }
 
   return (
@@ -151,6 +168,8 @@ const TreasuryDashboard = (props: any) => {
         </Grid>
       </Grid>
       <div>
+        {/* {activeTab === 'All' && <PropertyCards list={allPropertiesList} dataLoading={newPropertyLoading} />} */}
+        {/* {activeTab === 'All' && <NewPropertyTable data={allPropertiesList} dataLoading={newPropertyLoading} />} */}
         {activeTab === 'published' && (
           <PublishedPropertyTable type="treasuryAdmin" data={publishedProperties} dataLoading={publishedLoading} />
         )}
@@ -164,7 +183,7 @@ const TreasuryDashboard = (props: any) => {
           />
         )}
         {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}
-        {activeTab === 'postAuction' && <PostAuctionTable data={postAuctionProperties} dataLoading={postAuctionLoading} />}
+        {activeTab === 'postAuction' && <PostAuctionTable data={postAuctionProperties} dataLoading={postAuctionLoading} btn={true} />}
         {/* {activeTab === 'tokenToMint' && <TokenToMintTable data={tokenToMintData} dataLoading={transactionLoading} />} */}
         {activeTab === 'endAuction' && <EndAuctionTable data={endAuctionProperties} dataLoading={endAuctionLoading} />}
       </div>

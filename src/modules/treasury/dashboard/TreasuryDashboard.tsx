@@ -169,7 +169,7 @@ const TreasuryDashboard = (props: any) => {
       </Grid>
       <div>
         {/* {activeTab === 'All' && <PropertyCards list={allPropertiesList} dataLoading={newPropertyLoading} />} */}
-        {/* {activeTab === 'All' && <NewPropertyTable data={allPropertiesList} dataLoading={newPropertyLoading} />} */}
+        {activeTab === 'All' && <PublishedPropertyTable data={allPropertiesList} dataLoading={newPropertyLoading} />}
         {activeTab === 'published' && (
           <PublishedPropertyTable type="treasuryAdmin" data={publishedProperties} dataLoading={publishedLoading} />
         )}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { auctionConfigStyle, HeaderCont, TitleText } from './style'
 import { Formik, Form, ErrorMessage } from 'formik'
@@ -22,7 +22,26 @@ const AuctionReview = (props: any) => {
   const classes = auctionConfigStyle()
   const [agreeLoading, setAgreeLoading] = useState(false)
   const [disagreeLoading, setDisagreeLoading] = useState(false)
-  const { setShowAuctionModal, auctionDetails, projectedValue, errorAlert, refresh, loggedIn } = props
+  const { setShowAuctionModal, auctionDetails, projectedValue, errorAlert, refresh, loggedIn, userInfo, id } = props
+  const [show, setShow] = useState(true)
+
+  useEffect(() => {
+    const checking = async () => {
+      const res: any = await axios.get(`${apiBaseUrl}/properties/GetProperty/${userInfo.publicaddress}`)
+      let idList: any = [];
+      res.data.map((item: any, index: any) => {
+        idList.push(item.id)
+      })
+      if (idList.includes(id)) {
+        setShow(true)
+      } else {
+        setShow(false)
+      }
+    }
+    if (loggedIn) {
+      checking();
+    }
+  }, [id])
 
   const handleAuctionRejection = async (e: any, { changeNote }: any) => {
     e.preventDefault()
@@ -143,13 +162,13 @@ const AuctionReview = (props: any) => {
                           <PrimaryButton
                             className={classes.btnStyle}
                             variant="contained"
-                            disabled={agreeLoading || disagreeLoading || !loggedIn}
+                            disabled={agreeLoading || disagreeLoading || !loggedIn || !show}
                             onClick={(e: any) => handleAuctionRejection(e, fields.values)}
                           >
                             {disagreeLoading ? <Spinner /> : 'I DO NOT AGREE'}
                           </PrimaryButton>
                           <PrimaryButton
-                            disabled={agreeLoading || disagreeLoading || !loggedIn}
+                            disabled={agreeLoading || disagreeLoading || !loggedIn || !show}
                             onClick={(e: any) => handleAuctionApproval(e, fields.values)}
                             variant="contained"
                           >

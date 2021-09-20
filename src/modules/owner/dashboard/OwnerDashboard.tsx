@@ -174,15 +174,15 @@ const OwnerDashboard = (props: any) => {
           <ComponentLoader />
         ) : (
           <div>
-            {activeTab === 'All' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
-            {activeTab === 'new' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
-            {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
+            {activeTab === 'All' && <PropertyCards list={allPropertiesList} dataLoading={newPropertyLoading} userInfo={userInfo} />}
+            {activeTab === 'new' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} userInfo={userInfo} />}
+            {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} userInfo={userInfo} />}
             {activeTab === 'published' && (
-              <PropertyCards refresh={refreshPublishedPropertiesList} list={publishedProperties} dataLoading={publishedLoading} />
+              <PropertyCards refresh={refreshPublishedPropertiesList} list={publishedProperties} dataLoading={publishedLoading} userInfo={userInfo} />
             )}
-            {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} dataLoading={preAuctionLoading} />}
-            {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} dataLoading={onAuctionLoading} />}
-            {activeTab === 'postAuction' && <PropertyCards list={postAuctionProperties} dataLoading={postAuctionLoading} />}
+            {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} dataLoading={preAuctionLoading} userInfo={userInfo} />}
+            {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} dataLoading={onAuctionLoading} userInfo={userInfo} />}
+            {activeTab === 'postAuction' && <PropertyCards list={postAuctionProperties} dataLoading={postAuctionLoading} userInfo={userInfo} />}
           </div>
         )}
       </div>

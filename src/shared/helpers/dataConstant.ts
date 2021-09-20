@@ -31,6 +31,10 @@ export const auctionTabList = [
 ]
 export const treasuryTabList = [
   {
+    label: 'All',
+    value: 'All',
+  },
+  {
     label: 'Published',
     value: 'published',
   },

@@ -14,15 +14,17 @@ import { apiBaseUrl } from 'services/global-constant'
 import { openLoginModal } from 'logic/actions/user.actions'
 import Grid from '@material-ui/core/Grid'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
+import axios from 'axios'
 
 const PropertyCards = (props: any) => {
   const classes = useStyles()
-  const { list, dataLoading, errorAlert, refresh, loggedIn, openLoginModal } = props
+  const { list, dataLoading, errorAlert, refresh, loggedIn, openLoginModal, userInfo } = props
 
   const [showAuctionModal, setShowAuctionModal] = useState(false)
   const [modalAuctionDetails, setModalAuctionDetails] = useState({ auctionDetails: {}, currentValue: 0 })
+  const [id, setId] = useState('')
 
-  const handleDetails = (id: any) => {
+  const handleDetails = async (id: any) => {
     if (loggedIn) {
       history.push(`${Paths.ownerPropertyDetails}/${id}`)
     } else {
@@ -43,9 +45,10 @@ const PropertyCards = (props: any) => {
     return imgUrl
   }
 
-  const handleOpenModal = (auctionDetails: any, currentValue: any) => {
+  const handleOpenModal = (auctionDetails: any, currentValue: any, id: any) => {
     setModalAuctionDetails({ auctionDetails, currentValue })
     setShowAuctionModal(true)
+    setId(id);
   }
 
   return (
@@ -95,7 +98,7 @@ const PropertyCards = (props: any) => {
                     // )
                     } */}
 
-                    <PrimaryButton onClick={() => handleOpenModal(auctionDetails, currentValue)} className={classes.addPropertyBtnStyle}>
+                    <PrimaryButton onClick={() => handleOpenModal(auctionDetails, currentValue, id)} className={classes.addPropertyBtnStyle}>
                       Review Auction
                     </PrimaryButton>
                     <SecondaryButton onClick={() => handleDetails(id)} className={classes.addPropertyBtnStyle}>
@@ -119,6 +122,8 @@ const PropertyCards = (props: any) => {
               auctionDetails={modalAuctionDetails.auctionDetails}
               setShowAuctionModal={setShowAuctionModal}
               errorAlert={errorAlert}
+              userInfo={userInfo}
+              id={id}
             />
           </CustomModal>
         </div>

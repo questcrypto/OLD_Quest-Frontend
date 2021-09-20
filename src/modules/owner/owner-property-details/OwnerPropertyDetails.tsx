@@ -46,7 +46,8 @@ const OwnerPropertyDetails = (props: any) => {
   const [imageList, setImageList] = useState<any>([])
   const [docList, setDocList] = useState<any>([])
   const [selectImg, setSelectImg] = useState('')
-  const { userInfo } = props
+  const [show, setShow] = useState(true)
+  const { userInfo, loggedIn } = props
 
   useEffect(() => {
     const propertyId = props.match.params.propertyId
@@ -78,6 +79,24 @@ const OwnerPropertyDetails = (props: any) => {
     getPropertyDetails()
   }, [props.match.params.propertyId])
 
+  useEffect(() => {
+    const checking = async (id: any) => {
+      const res: any = await axios.get(`${apiBaseUrl}/properties/GetProperty/${userInfo.publicaddress}`)
+      let idList: any = [];
+      res.data.map((item: any, index: any) => {
+        idList.push(item.id)
+      })
+      if (idList.includes(id)) {
+        setShow(true)
+      } else {
+        setShow(false)
+      }
+    }
+    if (loggedIn) {
+      checking(props.match.params.propertyId);
+    }
+  }, [])
+
   const handleEditProperty = () => {
     if (!!userInfo && userInfo.role === 1) {
       history.push(`${Paths.editPropertyForm}/${props.match.params.propertyId}`)
@@ -97,9 +116,11 @@ const OwnerPropertyDetails = (props: any) => {
             <HeaderTitle>{propertyInfo?.propertyDetails ? propertyInfo.propertyDetails.PropertyName : ''}</HeaderTitle>
           </Grid>
           <Grid item>
-            <PrimaryButton variant="contained" onClick={() => handleEditProperty()}>
-              REVIEW PROPERTY
-            </PrimaryButton>
+            {
+              show ? <PrimaryButton variant="contained" onClick={() => handleEditProperty()}>
+                REVIEW PROPERTY
+              </PrimaryButton> : ''
+            }
           </Grid>
         </Grid>
       </HeaderContainer>
@@ -223,5 +244,6 @@ const OwnerPropertyDetails = (props: any) => {
 }
 const mapStateToProps = (state: any) => ({
   userInfo: state.user.userInfo,
+  loggedIn: state.user.loggedIn,
 })
 export default withRouter(connect(mapStateToProps)(OwnerPropertyDetails))

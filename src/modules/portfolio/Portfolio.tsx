@@ -68,7 +68,8 @@ const Portfolio = (props: any) => {
 
   useEffect(() => {
     axios
-      .get('https://ipapi.co/json/?key=55UO2jmzizMe4JbOojMgDTeczq2DA7LyLcTiLUTEg1x2grqYbr')
+      // .get('https://ipapi.co/json/?key=55UO2jmzizMe4JbOojMgDTeczq2DA7LyLcTiLUTEg1x2grqYbr')
+      .get('https://ipapi.co/json/')
       .then((response) => {
         const isFrom = blockedCountriesCodes.includes(response.data.country_code)
         if (isFrom) {

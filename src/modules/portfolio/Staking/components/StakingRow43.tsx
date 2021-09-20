@@ -361,7 +361,7 @@ const StakingRow43 = (props: any) => {
           <FlexColumn>
             <AccordHeading className={classes.padLR}>KNAB-USDC(S)</AccordHeading>
             <AccordValue className={classes.padLR}>
-              ${tvl_knab_usdc2 * 10 ** 4} TVL
+              ${(tvl_knab_usdc2 * 10 ** 4).toFixed(3)} TVL
               <CustomTooltip
                 title="Multiplied by 10000"
                 arrow>

@@ -37,6 +37,7 @@ const GeneralUserDashboard = (props: any) => {
         setNewPropertyLoading(true)
         // const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${userInfo.publicaddress}`)
         const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
+        // const res = await axios.get(`${apiBaseUrl}/properties/Getallproperties`)
         setNewPropertiesList(res.data)
       } catch (error) {
         setNewPropertiesList([])
@@ -159,7 +160,7 @@ const GeneralUserDashboard = (props: any) => {
         ) : (
           <div>
             {activeTab === 'All' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
-            {activeTab === 'new' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
+            {activeTab === 'new' && <PropertyCards list={[]} dataLoading={newPropertyLoading} />}
             {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
             {activeTab === 'published' && (
               <PropertyCards refresh={refreshPublishedPropertiesList} list={publishedProperties} dataLoading={publishedLoading} />

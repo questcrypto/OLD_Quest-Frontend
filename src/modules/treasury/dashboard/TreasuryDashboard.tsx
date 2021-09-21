@@ -36,7 +36,8 @@ const TreasuryDashboard = (props: any) => {
     const getAllPropertiesList = async () => {
       try {
         setNewPropertyLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
+        // const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
+        const res = await axios.get(`${apiBaseUrl}/properties/Getallproperties`)
         setAllPropertiesList(res.data)
       } catch (error) {
         setAllPropertiesList([])

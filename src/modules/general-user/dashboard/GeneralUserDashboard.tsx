@@ -36,8 +36,8 @@ const GeneralUserDashboard = (props: any) => {
       try {
         setNewPropertyLoading(true)
         // const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${userInfo.publicaddress}`)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
-        // const res = await axios.get(`${apiBaseUrl}/properties/Getallproperties`)
+        // const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
+        const res = await axios.get(`${apiBaseUrl}/properties/Getallproperties`)
         setNewPropertiesList(res.data)
       } catch (error) {
         setNewPropertiesList([])

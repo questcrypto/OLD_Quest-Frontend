@@ -279,7 +279,7 @@ export const stakingReducer = (state = initialState, action: any) => {
     case SET_LP_SUPPLY:
       return {
         ...state,
-        lp_supply: parseFloat(payload).toFixed(3)
+        lp_supply: parseFloat(payload).toFixed(9)
       }
 
     case SET_TVL_KNAB_USDC2:
@@ -315,7 +315,7 @@ export const stakingReducer = (state = initialState, action: any) => {
     case SET_LP2_SUPPLY:
       return {
         ...state,
-        lp2_supply: parseFloat(payload).toFixed(3)
+        lp2_supply: parseFloat(payload).toFixed(9)
       }
     case SET_APR_K:
       return {

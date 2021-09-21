@@ -267,7 +267,7 @@ const YourAssets = (props: any) => {
 
       // balance: `${lp * 10 ** 4}`,
       balance: `${(lp / 10 ** 14).toFixed(3)}`,
-      availableQty: commaNumber(lp_supply * (10 ** 4)),
+      availableQty: commaNumber((lp_supply * (10 ** 4)).toFixed(3)),
       price: `$0.0`,
       // holdings: { value: `${lp_supply > 0 ? ((lp * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
       holdings: { value: `${lp_supply > 0 ? (((lp/10**14) * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
@@ -278,7 +278,7 @@ const YourAssets = (props: any) => {
 
       // balance: `${lp2 * 10 ** 4}`,
       balance: `${(lp2 / 10 ** 14).toFixed(3)}`,
-      availableQty: commaNumber(lp2_supply * (10 ** 4)),
+      availableQty: commaNumber((lp2_supply * (10 ** 4)).toFixed(3)),
       price: `$0.0`,
       // holdings: { value: `${lp2_supply > 0 ? ((lp2 * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
       holdings: { value: `${lp2_supply > 0 ? (((lp2/10**14) * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },

@@ -35,7 +35,16 @@ const AuctionReview = (props: any) => {
       if (idList.includes(id)) {
         setShow(true)
       } else {
-        setShow(false)
+        const res: any = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
+        let idList: any = [];
+        res.data.map((item: any, index: any) => {
+          idList.push(item.id)
+        })
+        if (idList.includes(id)) {
+          setShow(true)
+        } else {
+          setShow(false)
+        }
       }
     }
     if (loggedIn) {

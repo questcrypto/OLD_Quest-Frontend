@@ -1,0 +1,93 @@
+{
+  "tableData": {
+    "tableHeaders": [
+      {
+        "key": "asset",
+        "label": "Asset"
+      },
+      {
+        "key": "balance",
+        "label": "Balance"
+      },
+      {
+        "key": "availableQty",
+        "label": "Available Qty."
+      },
+      {
+        "key": "price",
+        "label": "Price"
+      },
+      {
+        "key": "holdings",
+        "label": "Holdings"
+      }
+    ],
+    "tableBody": [
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "KNAB"
+        },
+        "balance": "$0",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 0.0,
+          "percent": 0.0
+        },
+        "holdings": 0.0
+      },
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "KNABr"
+        },
+        "balance": "$0",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 0.0,
+          "percent": 0.0
+        },
+        "holdings": 0.0
+      },
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "USDC"
+        },
+        "balance": "$0",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 0.0,
+          "percent": 0.0
+        },
+        "holdings": 0.0
+      },
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "KNAB - USDC"
+        },
+        "balance": "$0",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 0.0,
+          "percent": 0.0
+        },
+        "holdings": 0.0
+      },
+      {
+        "asset": {
+          "icon": "KnabDummy",
+          "name": "KNAB - USDC"
+        },
+        "balance": "$0",
+        "availableQty": "0.000000",
+        "price": {
+          "value": 0.0,
+          "percent": 0.0
+        },
+        "holdings": 0.0
+      }
+    ]
+  }
+}

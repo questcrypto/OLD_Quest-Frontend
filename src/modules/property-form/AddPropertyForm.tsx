@@ -130,7 +130,7 @@ const AddPropertyForm = (props: any) => {
     const nftCid = (await ipfs.files.add(Buffer.from(JSON.stringify(values))))[0].hash
     console.log(nftCid, '<--nftCid-->')
     const _baseURI = 'ipfs://' + nftCid
-    const _managingCompany = ''
+    const _managingCompany = '0x7286603DBbF612bA88337693E531176A4Db63321'
     const _rightToManagementURI = 'ipfs://'
     const _rightToEquityURI = 'ipfs://'
     const _rightToControlURI = 'ipfs://'

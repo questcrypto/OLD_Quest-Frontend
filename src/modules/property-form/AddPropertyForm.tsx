@@ -96,8 +96,8 @@ const AddPropertyForm = (props: any) => {
     const contractInstance = new web3.eth.Contract(ERC1155FACTORYABI, ERC1155FactoryAddress)
     const receipt = await contractInstance.methods.deployQuestCryptoAsset(
       _baseURI,
-      _managingCompany,
       TREASURY_ADMIN,
+      _managingCompany,
       _rightToManagementURI,
       _rightToEquityURI,
       _rightToControlURI,

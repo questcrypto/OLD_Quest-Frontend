@@ -104,7 +104,7 @@ export const routes: RouteDefinition[] = [
   {
     path: Paths.addPropertyForm,
     component: AddPropertyForm,
-    protected: false,
+    protected: true,
     redirect: Paths.root,
     title: '',
   },

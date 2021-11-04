@@ -57,9 +57,13 @@ import { Paths } from 'modules/app/components/routes/types'
 import { apiBaseUrl } from 'services/global-constant'
 import moment from 'moment'
 import axios from 'axios'
+import Web3 from 'web3'
+import { ERC1155FACTORYABI } from './FACTORY_ABI'
 const IPFS = require('ipfs-api')
 const Buffer = require('buffer').Buffer
-
+const ERC1155FactoryAddress = '0xb9d17d6550526fdd9fa933344f425925660c71bf'
+const HOA_ADMIN = '0x7286603DBbF612bA88337693E531176A4Db63321'
+const TREASURY_ADMIN = '0x9ec6df50fcF77637996AFFa60b43121F8B4F27c6'
 const AddPropertyForm = (props: any) => {
   const classes = useStyle()
   const classes01 = useStyle01()
@@ -78,6 +82,30 @@ const AddPropertyForm = (props: any) => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  const pushToBlockchain = async (
+    _baseURI: any,
+    _managingCompany: any,
+    _rightToManagementURI: any,
+    _rightToEquityURI: any,
+    _rightToControlURI: any,
+    _rightToResidencyURI: any,
+    _rightToSubsurfaceURI: any
+  ) => {
+    const web3 = new Web3(window.ethereum)
+    const contractInstance = new web3.eth.Contract(ERC1155FACTORYABI, ERC1155FactoryAddress)
+    const receipt = await contractInstance.methods.deployQuestCryptoAsset(
+      _baseURI,
+      _managingCompany,
+      TREASURY_ADMIN,
+      _rightToManagementURI,
+      _rightToEquityURI,
+      _rightToControlURI,
+      _rightToResidencyURI,
+      _rightToSubsurfaceURI
+    )
+    return receipt
+  }
 
   const getFileData = () => {
     const filesArr: any = []
@@ -99,6 +127,23 @@ const AddPropertyForm = (props: any) => {
     })
     const nftCid = (await ipfs.files.add(Buffer.from(JSON.stringify(values))))[0].hash
     console.log(nftCid, '<--nftCid-->')
+    const _baseURI = 'ipfs://' + nftCid
+    const _managingCompany = ''
+    const _rightToManagementURI = 'ipfs://'
+    const _rightToEquityURI = 'ipfs://'
+    const _rightToControlURI = 'ipfs://'
+    const _rightToResidencyURI = 'ipfs://'
+    const _rightToSubsurfaceURI = 'ipfs://'
+    const receipt = await pushToBlockchain(
+      _baseURI,
+      _managingCompany,
+      _rightToManagementURI,
+      _rightToEquityURI,
+      _rightToControlURI,
+      _rightToResidencyURI,
+      _rightToSubsurfaceURI
+    )
+    console.log(receipt)
     if (imageList.length > 0 && documentList.length > 0) {
       const formData = new FormData()
       const dataFiles = getFileData()

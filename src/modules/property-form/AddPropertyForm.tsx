@@ -103,7 +103,9 @@ const AddPropertyForm = (props: any) => {
       _rightToControlURI,
       _rightToResidencyURI,
       _rightToSubsurfaceURI
-    )
+    ).send({
+      from:HOA_ADMIN
+    })
     return receipt
   }
 

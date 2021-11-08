@@ -94,18 +94,20 @@ const AddPropertyForm = (props: any) => {
   ) => {
     const web3 = new Web3(window.ethereum)
     const contractInstance = new web3.eth.Contract(ERC1155FACTORYABI, ERC1155FactoryAddress)
-    const receipt = await contractInstance.methods.deployQuestCryptoAsset(
-      _baseURI,
-      TREASURY_ADMIN,
-      _managingCompany,
-      _rightToManagementURI,
-      _rightToEquityURI,
-      _rightToControlURI,
-      _rightToResidencyURI,
-      _rightToSubsurfaceURI
-    ).send({
-      from:HOA_ADMIN
-    })
+    const receipt = await contractInstance.methods
+      .deployQuestCryptoAsset(
+        _baseURI,
+        TREASURY_ADMIN,
+        _managingCompany,
+        _rightToManagementURI,
+        _rightToEquityURI,
+        _rightToControlURI,
+        _rightToResidencyURI,
+        _rightToSubsurfaceURI
+      )
+      .send({
+        from: HOA_ADMIN,
+      })
     return receipt
   }
 
@@ -139,11 +141,11 @@ const AddPropertyForm = (props: any) => {
     const receipt = await pushToBlockchain(
       _baseURI,
       _managingCompany,
-      _rightToManagementURI,
-      _rightToEquityURI,
-      _rightToControlURI,
-      _rightToResidencyURI,
-      _rightToSubsurfaceURI
+      Buffer.from(_rightToManagementURI),
+      Buffer.from(_rightToEquityURI),
+      Buffer.from(_rightToControlURI),
+      Buffer.from(_rightToResidencyURI),
+      Buffer.from(_rightToSubsurfaceURI)
     )
     console.log(receipt)
     if (imageList.length > 0 && documentList.length > 0) {

@@ -11,6 +11,15 @@ import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
 import PropertyCards from 'shared/components/property-cards'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
+import {
+  getApproveProperties,
+  getOnAuctionProperties,
+  getPostAuctionProperties,
+  getPreAuctionProperties,
+  getPublishedProperties,
+  getAllPropertiesList
+} from 'logic/api/propertiesService'
+import { refreshPublishedPropertiesList } from 'logic/api/ownerPropertiesServices'
 
 const GeneralUserDashboard = (props: any) => {
   const classes = useStyles()
@@ -32,98 +41,14 @@ const GeneralUserDashboard = (props: any) => {
   const { userInfo } = props
 
   useEffect(() => {
-    const getPropertiesList = async () => {
-      try {
-        setNewPropertyLoading(true)
-        // const res = await axios.get(`${apiBaseUrl}/properties/GetProperty/${userInfo.publicaddress}`)
-        // const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
-        const res = await axios.get(`${apiBaseUrl}/properties/Getallproperties`)
-        setNewPropertiesList(res.data)
-      } catch (error) {
-        setNewPropertiesList([])
-      } finally {
-        setNewPropertyLoading(false)
-      }
-    }
-    const getApproveProperties = async () => {
-      try {
-        setApprovedLoading(true)
-        // const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyOwner/${userInfo.publicaddress}`)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetApprovedPropertyHOA`)
-        setApprovedProperties(res.data)
-      } catch (error) {
-        setApprovedProperties([])
-      } finally {
-        setApprovedLoading(false)
-      }
-    }
-    const getPublishedProperties = async () => {
-      try {
-        setPublishedLoading(true)
-        // const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetAllPublishedProperties`)
-        setPublishedProperties(res.data)
-      } catch (error) {
-        setPublishedProperties([])
-      } finally {
-        setPublishedLoading(false)
-      }
-    }
-    const getPreAuctionProperties = async () => {
-      try {
-        setPreAuctionLoading(true)
-        // const res = await axios.get(`${apiBaseUrl}/auction/ListofNewAuction/${userInfo.publicaddress}`)
-        const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
-        setPreAuctionProperties(res.data)
-      } catch (error) {
-        setPreAuctionProperties([])
-      } finally {
-        setPreAuctionLoading(false)
-      }
-    }
-    const getOnAuctionProperties = async () => {
-      try {
-        setOnAuctionLoading(true)
-        // const res = await axios.get(`${apiBaseUrl}/auction/myListOfActiveAuction/${userInfo.publicaddress}`)
-        const res = await axios.get(`${apiBaseUrl}/auction/listOfAllActiveAuction`)
-        setOnAuctionProperties(res.data)
-      } catch (error) {
-        setOnAuctionProperties([])
-      } finally {
-        setOnAuctionLoading(false)
-      }
-    }
-    const getPostAuctionProperties = async () => {
-      try {
-        setPostAuctionLoading(true)
-        // const res = await axios.get(`${apiBaseUrl}/auction/getPostAuctionListUser/${userInfo.publicaddress}`)
-        const res = await axios.get(`${apiBaseUrl}/auction/getPostAuctionList`)
-        setPostAuctionProperties(res.data)
-      } catch (error) {
-        setPostAuctionProperties([])
-      } finally {
-        setPostAuctionLoading(false)
-      }
-    }
-    getPropertiesList()
-    getApproveProperties()
-    getPublishedProperties()
-    getPreAuctionProperties()
-    getOnAuctionProperties()
-    getPostAuctionProperties()
+    getAllPropertiesList(setNewPropertiesList, setNewPropertiesList);
+    getApproveProperties(setApprovedLoading, setApprovedProperties);
+    getPublishedProperties(setPublishedLoading, setPublishedProperties);
+    getPreAuctionProperties(setPreAuctionLoading, setPreAuctionProperties);
+    getOnAuctionProperties(setOnAuctionLoading, setOnAuctionProperties);
+    getPostAuctionProperties(setPostAuctionLoading, setPostAuctionProperties);
   }, [userInfo])
 
-  const refreshPublishedPropertiesList = async () => {
-    try {
-      setPublishedLoading(true)
-      const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedPropertyOwner/${userInfo.publicaddress}`)
-      setPublishedProperties(res.data)
-    } catch (error) {
-      setPublishedProperties([])
-    } finally {
-      setPublishedLoading(false)
-    }
-  }
   // console.log('owner page')
   return (
     <Grid>
@@ -163,7 +88,7 @@ const GeneralUserDashboard = (props: any) => {
             {activeTab === 'new' && <PropertyCards list={[]} dataLoading={newPropertyLoading} />}
             {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
             {activeTab === 'published' && (
-              <PropertyCards refresh={refreshPublishedPropertiesList} list={publishedProperties} dataLoading={publishedLoading} />
+              <PropertyCards refresh={() => refreshPublishedPropertiesList(setPublishedLoading, setPublishedProperties, userInfo)} list={publishedProperties} dataLoading={publishedLoading} />
             )}
             {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} dataLoading={preAuctionLoading} />}
             {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} dataLoading={onAuctionLoading} />}

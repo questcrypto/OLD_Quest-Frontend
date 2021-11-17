@@ -11,6 +11,16 @@ import axios from 'axios'
 import { apiBaseUrl } from 'services/global-constant'
 import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
 import PropertyCards from 'shared/components/property-cards'
+import {
+  getAllPropertiesList,
+  getEndAuctionProperties,
+  getOnAuctionProperties,
+  getPostAuctionProperties,
+  getPreAuctionProperties,
+  getPublishedProperties,
+  updateOnAuction,
+  updatePreAuction
+} from 'logic/api/propertiesService'
 
 const TreasuryDashboard = (props: any) => {
   const classes = useStyles()
@@ -32,32 +42,6 @@ const TreasuryDashboard = (props: any) => {
   const [newPropertyLoading, setNewPropertyLoading] = useState(false)
 
   useEffect(() => {
-
-    const getAllPropertiesList = async () => {
-      try {
-        setNewPropertyLoading(true)
-        // const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
-        const res = await axios.get(`${apiBaseUrl}/properties/Getallproperties`)
-        setAllPropertiesList(res.data)
-      } catch (error) {
-        setAllPropertiesList([])
-      } finally {
-        setNewPropertyLoading(false)
-      }
-    }
-
-    const getPublishedProperties = async () => {
-      try {
-        setPublishedLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetPublishedProperty`)
-        setPublishedProperties(res.data)
-      } catch (error) {
-        setPublishedProperties([])
-      } finally {
-        setPublishedLoading(false)
-      }
-    }
-
     // const getTokenToMintData = async () => {
     //   try {
     //     setTransactionLoading(true)
@@ -72,72 +56,16 @@ const TreasuryDashboard = (props: any) => {
     //   }
     // }
 
-    const getPreAuctionProperties = async () => {
-      try {
-        setPreAuctionLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
-        setPreAuctionProperties(res.data)
-      } catch (error) {
-        setPreAuctionProperties([])
-      } finally {
-        setPreAuctionLoading(false)
-      }
-    }
-    const getOnAuctionProperties = async () => {
-      try {
-        setOnAuctionLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/listOfAllActiveAuction`)
-        setOnAuctionProperties(res.data)
-      } catch (error) {
-      } finally {
-        setOnAuctionLoading(false)
-      }
-    }
-    const getPostAuctionProperties = async () => {
-      try {
-        setPostAuctionLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/getPostAuctionList`)
-        setPostAuctionProperties(res.data)
-      } catch (error) {
-        setPostAuctionProperties([])
-      } finally {
-        setPostAuctionLoading(false)
-      }
-    }
-    const getEndAuctionProperties = async () => {
-      try {
-        setEndAuctionLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/auction/getlistofendauction`)
-        setEndAuctionProperties(res.data)
-      } catch (error) {
-        setEndAuctionProperties([])
-      } finally {
-        setEndAuctionLoading(false)
-      }
-    }
+    // getTokenToMintData() ---
 
-    getPublishedProperties()
-    // getTokenToMintData()
-    getPreAuctionProperties()
-    getOnAuctionProperties()
-    getEndAuctionProperties()
-    getPostAuctionProperties()
-    getAllPropertiesList()
+    getEndAuctionProperties(setEndAuctionLoading, setEndAuctionProperties)
+    getPublishedProperties(setPublishedLoading, setPublishedProperties)
+    getPreAuctionProperties(setPreAuctionLoading, setPreAuctionProperties)
+    getOnAuctionProperties(setOnAuctionLoading, setOnAuctionProperties)
+    getPostAuctionProperties(setPostAuctionLoading, setPostAuctionProperties)
+    getAllPropertiesList(setNewPropertyLoading, setAllPropertiesList)
+
   }, [userInfo])
-
-  const updateOnAuction = async () => {
-    try {
-      const res = await axios.get(`${apiBaseUrl}/auction/listOfAllActiveAuction`)
-      setOnAuctionProperties(res.data)
-    } catch (error) { }
-  }
-
-  const updatePreAuction = async () => {
-    try {
-      const res = await axios.get(`${apiBaseUrl}/auction/listOfAllNewAuction`)
-      setPreAuctionProperties(res.data)
-    } catch (error) { }
-  }
 
   return (
     <Grid>
@@ -179,8 +107,8 @@ const TreasuryDashboard = (props: any) => {
             data={preAuctionProperties}
             dataLoading={preAuctionLoading}
             type="treasuryAdmin"
-            refreshPreAuction={updatePreAuction}
-            refreshOnAuction={updateOnAuction}
+            refreshPreAuction={() => updatePreAuction(setPreAuctionProperties)}
+            refreshOnAuction={() => updateOnAuction(setOnAuctionProperties)}
           />
         )}
         {activeTab === 'onAuction' && <OnAuctionTable data={onAuctionProperties} dataLoading={onAuctionLoading} />}

@@ -54,10 +54,11 @@ export const getWeb3Val = async () => {
       web3 = new Web3(window.ethereum)
     } catch (error) {
       window.alert('You need to allow MetaMask.')
-      return
+      return false
     }
   }
   return web3
+  
 }
 
 export const convertToWei = (totalAmount: any) => {
@@ -77,8 +78,8 @@ export const convertToEther2 = (totalAmount: any) => {
 }
 
 export const getPublicAddress = async () => {
-  const web3: Web3 = new Web3(window.ethereum)
   try {
+    const web3: Web3 = new Web3(window.ethereum)
     const coinbase = await web3.eth.getCoinbase()
     if (!coinbase) {
       window.alert('Please activate MetaMask first.')
@@ -175,7 +176,7 @@ export const saveBlockchainBid = async (auctionId: string, totalAmount: any, add
   if (web3) {
     const accounts = await web3.eth.getAccounts()
     const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
-    const res = await auctionContract.methods.saveBid(auctionId, totalAmount* 10**6, address, DaiAddress).send({ from: accounts[0], gasPrice })
+    const res = await auctionContract.methods.saveBid(auctionId, totalAmount * 10 ** 6, address, DaiAddress).send({ from: accounts[0], gasPrice })
     return res
   }
 }
@@ -200,7 +201,7 @@ export const handleStoreDaiClaimAmount = async (
   DaiClaimersArray: any,
   DaiClaimAmount: any
 ) => {
-  DaiClaimAmount = DaiClaimAmount.map((el: any) => (el * 10**6))
+  DaiClaimAmount = DaiClaimAmount.map((el: any) => (el * 10 ** 6))
   const gasPrice = await gasPriceFn()
   const res = await contractAuction.methods
     .StoreBidTokenClaimAmount(auctionID, DaiClaimersArray, DaiClaimAmount, DAIContractAddress)
@@ -214,7 +215,7 @@ export const handleStoreWinTokenAmount = async (
   BiddersArray: any,
   BidAmount: any
 ) => {
-  BidAmount = BidAmount.map((el: any) => (el * 10**6))
+  BidAmount = BidAmount.map((el: any) => (el * 10 ** 6))
   const gasPrice = await gasPriceFn()
 
   const res = await contractSLC.methods.STORE_AUCTION_TOKENS_TO_BE_GIVEN(auctionID, BiddersArray, BidAmount).send({ from: account, gasPrice })
@@ -509,10 +510,10 @@ export const withdrawUsdc = async (pid: number, amount: number) => {
     const accounts = await web3.eth.getAccounts()
 
     const aaveContract = new web32.eth.Contract(aaveabi, aaveAddress)
-    const res1 = await aaveContract.methods.calc_token_amount([0, amount, 0], false ).call()
-    const res2 = 0.001 *res1
+    const res1 = await aaveContract.methods.calc_token_amount([0, amount, 0], false).call()
+    const res2 = 0.001 * res1
     const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const res = await farmContract.methods.withdraw2(pid, (amount), (BigInt(res1) + BigInt(Math.floor(res2))) ).send({ from: accounts[0], gasPrice })
+    const res = await farmContract.methods.withdraw2(pid, (amount), (BigInt(res1) + BigInt(Math.floor(res2)))).send({ from: accounts[0], gasPrice })
     return res;
     // console.log(res);
   }
@@ -583,7 +584,7 @@ export const getTvlUsdc = async () => {
     const stratContract = new web32.eth.Contract(stratabi, stratAddress3)
     const res = await stratContract.methods.wantLockedTotal().call()
     // return convertToEther2(res);
-    return res/(10 ** 6);
+    return res / (10 ** 6);
 
   }
 }
@@ -763,15 +764,23 @@ export const getUSDCAllowance = async () => {
 }
 
 export const getQuestBalance = async () => {
-  const web3 = await getWeb3Val()
-  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
-  if (web3) {
-    const accounts = await web3.eth.getAccounts()
-    const QuestContract = new web32.eth.Contract(questabi, questAddress)
-    const res = await QuestContract.methods.balanceOf(accounts[0]).call()
-    const QUESTbalance: any = res
-    const data = convertToEther2(QUESTbalance)
-    return data;
+  if (quickNode) {
+    try {
+      const web3 = await getWeb3Val()
+      const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+      if (web3) {
+        const accounts = await web3.eth.getAccounts()
+        const QuestContract = new web32.eth.Contract(questabi, questAddress)
+        const res = await QuestContract.methods.balanceOf(accounts[0]).call()
+        const QUESTbalance: any = res
+        const data = convertToEther2(QUESTbalance)
+        return data;
+      }
+    } catch (error) {
+      console.log(error);
+      return
+
+    }
   }
 }
 
@@ -818,45 +827,71 @@ export const returnQST = async (Amount: number) => {
 
 export const getQuestSupply = async () => {
   // const web3 = await getWeb3Val()
-  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
-  if (web3) {
-    const questContract = new web3.eth.Contract(questabi, questAddress)
-    const res = await questContract.methods.totalSupply().call()
-    const questSupply: any = convertToEther2(res)
-    return questSupply
+  if (quickNode) {
+    try {
+      const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)));
+      if (web3) {
+        const questContract = new web3.eth.Contract(questabi, questAddress)
+        const res = await questContract.methods.totalSupply().call()
+        const questSupply: any = convertToEther2(res)
+        return questSupply
+      }
+    } catch (error) {
+      return
+    }
   }
 }
 
 export const getKnabrSupply = async () => {
   // const web3 = await getWeb3Val()
-  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
-  if (web3) {
-    const questContract = new web3.eth.Contract(questabi, KNABrAddress)
-    const res = await questContract.methods.totalSupply().call()
-    const knabrSupply: any = convertToEther2(res)
-    return knabrSupply
+  if (quickNode) {
+    try {
+      const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+      if (web3) {
+        const questContract = new web3.eth.Contract(questabi, KNABrAddress)
+        const res = await questContract.methods.totalSupply().call()
+        const knabrSupply: any = convertToEther2(res)
+        return knabrSupply
+      }
+    } catch (error) {
+      return
+    }
   }
 }
 
 export const getUsdcSupply = async () => {
   // const web3 = await getWeb3Val()
-  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
-  if (web3) {
-    const questContract = new web3.eth.Contract(questabi, USDCAddress)
-    const res = await questContract.methods.totalSupply().call()
-    const usdcSupply: any = web3.utils.fromWei(res, "mwei")
-    return usdcSupply
+  if (quickNode) {
+
+    try {
+      const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+      if (web3) {
+        const questContract = new web3.eth.Contract(questabi, USDCAddress)
+        const res = await questContract.methods.totalSupply().call()
+        const usdcSupply: any = web3.utils.fromWei(res, "mwei")
+        return usdcSupply
+      }
+    } catch (error) {
+      return
+    }
   }
 }
 
 export const getLpSupply = async () => {
   // const web3 = await getWeb3Val()
-  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
-  if (web3) {
-    const questContract = new web3.eth.Contract(questabi, LPTokenAddress)
-    const res = await questContract.methods.totalSupply().call()
-    const lpSupply: any = convertToEther2(res)
-    return lpSupply
+  if (quickNode) {
+
+    try {
+      const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+      if (web3) {
+        const questContract = new web3.eth.Contract(questabi, LPTokenAddress)
+        const res = await questContract.methods.totalSupply().call()
+        const lpSupply: any = convertToEther2(res)
+        return lpSupply
+      }
+    } catch (error) {
+      return
+    }
   }
 }
 
@@ -864,52 +899,71 @@ export const getLpSupply = async () => {
 // Staking Row43 Methods
 
 export const getLpBalance2 = async () => {
-  const web3 = await getWeb3Val()
-  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
-  if (web3) {
-    const accounts = await web3.eth.getAccounts()
-    const lpContract = new web32.eth.Contract(stableCoinAbi, LPTokenAddress2)
-    // const deci = await lpContract.methods.decimals().call()
-    const res = await lpContract.methods.balanceOf(accounts[0]).call()
-    // const lpBalance: any = res / 10 ** 6
-    // const lpBalance: any = convertToEther2(res)
-    // return lpBalance
-    return res;
+  try {
+    const web3 = await getWeb3Val()
+    const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+    if (web3) {
+      const accounts = await web3.eth.getAccounts()
+      const lpContract = new web32.eth.Contract(stableCoinAbi, LPTokenAddress2)
+      // const deci = await lpContract.methods.decimals().call()
+      const res = await lpContract.methods.balanceOf(accounts[0]).call()
+      // const lpBalance: any = res / 10 ** 6
+      // const lpBalance: any = convertToEther2(res)
+      // return lpBalance
+      return res;
+    }
+  } catch (error) {
+    return
   }
   return 0
 }
 
 export const getTvlKnabUsdc2 = async () => {
-  const web3 = await getWeb3Val()
-  const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
-  if (web3) {
-    const accounts = await web3.eth.getAccounts()
-    const stratContract = new web32.eth.Contract(stratabi, stratAddress43)
-    const res = await stratContract.methods.wantLockedTotal().call()
-    return convertToEther2(res);
+  try {
+    const web3 = await getWeb3Val()
+    const web32 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+    if (web3) {
+      const accounts = await web3.eth.getAccounts()
+      const stratContract = new web32.eth.Contract(stratabi, stratAddress43)
+      const res = await stratContract.methods.wantLockedTotal().call()
+      return convertToEther2(res);
+    }
+  } catch (error) {
+    return
   }
 }
 
 export const getLp2Supply = async () => {
   // const web3 = await getWeb3Val()
-  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
-  if (web3) {
-    const questContract = new web3.eth.Contract(questabi, LPTokenAddress2)
-    const res = await questContract.methods.totalSupply().call()
-    const lpSupply2: any = convertToEther2(res)
-    return lpSupply2
+  if (quickNode) {
+
+    try {
+      const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+      if (web3) {
+        const questContract = new web3.eth.Contract(questabi, LPTokenAddress2)
+        const res = await questContract.methods.totalSupply().call()
+        const lpSupply2: any = convertToEther2(res)
+        return lpSupply2
+      }
+    } catch (error) {
+      return
+    }
   }
 }
 
 export const getAllocation = async (pid: any) => {
   // const web3 = await getWeb3Val()
-  const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
-  if (web3) {
-    const accounts = await web3.eth.getAccounts()
-    const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
-    const totalAlloc = await farmContract.methods.totalAllocPoint().call()
-    const alloc = await farmContract.methods.poolInfo(pid).call()
-    return alloc[1] / totalAlloc; 
+  try {
+    const web3 = new Web3(new Web3.providers.HttpProvider(String(quickNode)))
+    if (web3) {
+      const accounts = await web3.eth.getAccounts()
+      const farmContract = new web3.eth.Contract(KnabrFarmAbi, KNABFarmaddress)
+      const totalAlloc = await farmContract.methods.totalAllocPoint().call()
+      const alloc = await farmContract.methods.poolInfo(pid).call()
+      return alloc[1] / totalAlloc;
+    }
+  } catch (error) {
+    return
   }
 }
 

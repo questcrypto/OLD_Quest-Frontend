@@ -69,23 +69,21 @@ export const initialValues = {
 }
 
 export const propertyFormSchema = Yup.object().shape({
-  Fname: Yup.string().matches(/[a-zA-Z]$/, 'Must be an alphabet').required('This field is required'),
-  Lname: Yup.string().matches(/[a-zA-Z]$/, 'Must be an alphabet').required('This field is required'),
-  Email: Yup.string()
-    .min(3, 'emailNotLongEnough')
-    .max(100)
-    .email('invalid Email')
-    .matches(
-      // eslint-disable-next-line no-useless-escape
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      'Must be a Valid Email'
-    ).required('This field is required'),
+  Fname: Yup.string()
+    .matches(/[a-zA-Z]$/, 'Must be an alphabet')
+    .required('This field is required'),
+  Lname: Yup.string()
+    .matches(/[a-zA-Z]$/, 'Must be an alphabet')
+    .required('This field is required'),
+  Email: Yup.string().min(3, 'emailNotLongEnough').max(100).email('invalid Email').required('This field is required'),
   PublicAddress: Yup.string()
     .matches(/^0x[a-fA-F0-9]{1,40}$/, 'Must be a Valid Public Key')
     .required('Wallet public key is required'),
 
   PropertyType: Yup.string().required('This field is required'),
-  PropertyName: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet').required('This field is required'),
+  PropertyName: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
   CurrentValue: Yup.number().integer().required('This field is required'),
   Comments: Yup.string().required('This field is required'),
   YearBuilt: Yup.date().max(new Date(Date.now()), 'date must be equal or less than current date ').required('Date is required'),
@@ -114,7 +112,6 @@ export const propertyFormSchema = Yup.object().shape({
   Taxes: Yup.number().required('This field is required'),
   Expenses: Yup.number().required('This field is required'),
 
-
   FloorDetails: Yup.array().of(
     Yup.object().shape({
       SquareFoot: Yup.number().integer().required('This field is required'),
@@ -125,12 +122,24 @@ export const propertyFormSchema = Yup.object().shape({
       Bath: Yup.number().integer().required('This field is required'),
     })
   ),
-  Heating: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet').required('This field is required'),
-  AC: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet').required('This field is required'),
-  Roof: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet').required('This field is required'),
-  Floor: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet').required('This field is required'),
-  WindowCovering: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet').required('This field is required'),
-  PoolFeature: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet').required('This field is required'),
+  Heating: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
+  AC: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
+  Roof: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
+  Floor: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
+  WindowCovering: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
+  PoolFeature: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
 
   Style: Yup.string().required('This field is required'),
   Deck: Yup.string().required('This field is required'),
@@ -142,6 +151,10 @@ export const propertyFormSchema = Yup.object().shape({
   Basement: Yup.string().required('This field is required'),
   Driveway: Yup.string().required('This field is required'),
   Water: Yup.string().required('This field is required'),
-  WaterShare: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet').required('This field is required'),
-  Spa: Yup.string().matches(/[a-zA-Z ]$/, 'Must be an alphabet').required('This field is required'),
+  WaterShare: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
+  Spa: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
 })

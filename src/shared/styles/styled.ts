@@ -12,7 +12,7 @@ export const Error = styled.p`
   color: red;
 `
 export const err = styled.p`
-  color: red;
+  color: red !important;
   font-size: 12px;
   margin: -10px 0 1rem 5px;
   font-family: RobotoRegular;

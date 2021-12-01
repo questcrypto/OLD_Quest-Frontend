@@ -121,7 +121,31 @@ export const fieldSetStyle = {
   minWidth: 0,
 }
 
-export const PropertyFormWrapper = styled.div``
+export const PropertyFormWrapper = styled.div`
+  flex:1
+`
+export const FormWrapperRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+export const SideSectionWrapper = styled.div`
+  flex-basis: 370px;
+  padding-left: 30px
+`
+export const SectionListHeading = styled.h3`
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 12px;
+  margin: 0 0 20px;
+`
+
+export const SelectionDescription = styled.span`
+  display: block;
+  font-size: 16px;
+  color: #828282;
+  margin: 3px 0 0;
+`
+
 export const FormHeader = styled.div`
   margin-bottom: 20px;
 `
@@ -145,7 +169,7 @@ export const HeaderTitle = styled.h2`
 export const PropertyFormCont = styled.div`
   box-sizing: border-box;
   width: 100%;
-  max-width: 736px;
+  // max-width: 700px;
   background: ${colors.paperBackground};
   padding: 30px 50px;
   border-radius: 4px;

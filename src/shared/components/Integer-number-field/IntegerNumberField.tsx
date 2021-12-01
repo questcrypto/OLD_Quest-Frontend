@@ -4,6 +4,8 @@ import { integerNumberRegex } from 'shared/helpers/regexConstants'
 import TextField from '@material-ui/core/TextField'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { colors } from 'shared/styles/theme'
+import { TextWrappper } from '../styles'
+import Icon from '../chatIcon/Icon'
 
 const textFieldStyle = makeStyles(() =>
   createStyles({
@@ -46,22 +48,25 @@ const IntegerNumberField = (props: Props) => {
     <Field name={name}>
       {({ field, form }: any) => {
         return (
-          <TextField
-            variant="outlined"
-            fullWidth
-            id={name}
-            label={label}
-            name={name}
-            value={field.value}
-            autoComplete={name}
-            autoFocus
-            onChange={(e: any) => {
-              handleNumberInput(e, form, field)
-            }}
-            onBlur={handleBlur}
-            type="text"
-            className={classes.root}
-          />
+          <TextWrappper>
+            <TextField
+              variant="outlined"
+              fullWidth
+              id={name}
+              label={label}
+              name={name}
+              value={field.value}
+              autoComplete={name}
+              autoFocus
+              onChange={(e: any) => {
+                handleNumberInput(e, form, field)
+              }}
+              onBlur={handleBlur}
+              type="text"
+              className={classes.root}
+            />
+            <Icon />
+          </TextWrappper>
         )
       }}
     </Field>

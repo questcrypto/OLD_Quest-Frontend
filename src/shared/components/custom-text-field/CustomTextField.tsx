@@ -3,6 +3,8 @@ import { Field } from 'formik'
 import TextField from '@material-ui/core/TextField'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { colors } from 'shared/styles/theme'
+import { TextWrappper } from '../styles'
+import Icon from '../chatIcon/Icon'
 
 const textFieldStyle = makeStyles(() =>
   createStyles({
@@ -35,21 +37,24 @@ const CustomTextField = (props: Props) => {
         }
 
         return (
-          <TextField
-            variant="outlined"
-            fullWidth
-            id={name}
-            label={label}
-            name={name}
-            value={field.value}
-            autoComplete={name}
-            autoFocus
-            onChange={handleChange}
-            onBlur={handleBlur}
-            type={!!type ? type : 'text'}
-            className={classes.root}
-            disabled={isDisabled}
-          />
+          <TextWrappper>
+            <TextField
+              variant="outlined"
+              fullWidth
+              id={name}
+              label={label}
+              name={name}
+              value={field.value}
+              autoComplete={name}
+              autoFocus
+              onChange={handleChange}
+              onBlur={handleBlur}
+              type={!!type ? type : 'text'}
+              className={classes.root}
+              disabled={isDisabled}
+            />
+            <Icon/>
+          </TextWrappper>
         )
       }}
     </Field>

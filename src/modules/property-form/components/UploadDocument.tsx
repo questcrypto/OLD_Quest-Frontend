@@ -22,24 +22,42 @@ const documentUploadSchema = Yup.object().shape({
 const UploadDocument = (props: any) => {
   const [files, setFiles] = useState<any>([])
   const [showFileError, setShowFileError] = useState(false)
-  const { documentList, setDocumentList, documentData, setDocumentData, setShowDocModal } = props
+  const {
+    formName,
+    documentList,
+    setDocumentList,
+    documentData,
+    setDocumentData,
+    setShowDocModal,
+    setuploadPropertyDocStatus,
+    setrightOfEquityStatus,
+  } = props
   const classes = useStyle()
 
   const handleSubmit = (values: any) => {
     if (files.length > 0) {
       const docData = [...documentData]
+      const typeName = `${formName}`
       const newDocData = {
-        Name: values.name,
-        Description: values.description,
-        OriginalName: files[0].file.name,
+        [typeName]: {
+          data: {
+            Name: values.name,
+            Description: values.description,
+            OriginalName: files[0].file.name,
+          },
+          file: files[0].file,
+        },
       }
-      docData.push(newDocData)
-      setDocumentData([...docData])
+      
+      docData.push(newDocData[typeName])
       const newDocList = [...documentList]
-      newDocList.push(files[0].file)
+      newDocList.push(newDocData)
+      setDocumentData([...docData])
       setDocumentList([...newDocList])
-      setShowDocModal(false)
       setFiles([])
+      setShowDocModal(false)
+      setuploadPropertyDocStatus(false)
+      setrightOfEquityStatus(false)
     } else {
       setShowFileError(true)
     }
@@ -61,7 +79,7 @@ const UploadDocument = (props: any) => {
         onSubmit={(values, { setSubmitting, resetForm }) => {
           handleSubmit(values)
           setSubmitting(false)
-          resetForm()
+          resetForm({})
         }}
       >
         {() => (
@@ -80,7 +98,7 @@ const UploadDocument = (props: any) => {
             </ModalHeader>
             <DropzoneAreaBase
               filesLimit={1}
-              acceptedFiles={['application/pdf']}
+              acceptedFiles={['application/pdf', 'image/jpeg', 'image/png', 'image/jpg']}
               fileObjects={files}
               showFileNames
               onAdd={handleAdd}

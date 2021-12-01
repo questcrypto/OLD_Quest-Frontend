@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { colors } from 'shared/styles/theme'
 import NumberFormat from 'react-number-format'
+import { TextWrappper } from '../styles'
+import Icon from '../chatIcon/Icon'
 
 const textFieldStyle = makeStyles(() =>
   createStyles({
@@ -48,26 +50,29 @@ const IntegerNumberField = (props: Props) => {
     <Field name={name}>
       {({ field, form }: any) => {
         return (
-          <NumberFormat
-            thousandSeparator={true}
-            customInput={TextField}
-            prefix={dollarPrefix ? '$ ' : ''}
-            decimalScale={acceptDecimals ? 2 : 0}
-            inputmode="numeric"
-            variant="outlined"
-            fullWidth
-            id={name}
-            label={label}
-            name={name}
-            autoComplete={name}
-            autoFocus
-            onBlur={handleBlur}
-            className={classes.root}
-            value={field.value}
-            onValueChange={(values: any) => {
-              handleNumberInput(values.value, form, field)
-            }}
-          />
+          <TextWrappper>
+            <NumberFormat
+              thousandSeparator={true}
+              customInput={TextField}
+              prefix={dollarPrefix ? '$ ' : ''}
+              decimalScale={acceptDecimals ? 2 : 0}
+              inputmode="numeric"
+              variant="outlined"
+              fullWidth
+              id={name}
+              label={label}
+              name={name}
+              autoComplete={name}
+              autoFocus
+              onBlur={handleBlur}
+              className={classes.root}
+              value={field.value}
+              onValueChange={(values: any) => {
+                handleNumberInput(values.value, form, field)
+              }}
+            />
+            <Icon />
+          </TextWrappper>
         )
       }}
     </Field>

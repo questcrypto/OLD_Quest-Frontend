@@ -4,6 +4,8 @@ import { Field } from 'formik'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import { colors } from 'shared/styles/theme'
+import { TextWrappper } from '../styles'
+import Icon from '../chatIcon/Icon'
 
 interface Props {
   name: string
@@ -35,28 +37,31 @@ const FieldSelect = (props: Props) => {
           form.setFieldValue(field.name, fieldVal)
         }
         return (
-          <TextField
-            select
-            variant="outlined"
-            value={field.value}
-            onChange={handleChange}
-            inputProps={{ name, id: name }}
-            fullWidth
-            label={label}
-            className={classes.root}
-            disabled={isDisabled}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {options.map((item: any, k: any) => {
-              return (
-                <MenuItem key={k} value={item.value}>
-                  {item.label}
-                </MenuItem>
-              )
-            })}
-          </TextField>
+          <TextWrappper>
+            <TextField
+              select
+              variant="outlined"
+              value={field.value}
+              onChange={handleChange}
+              inputProps={{ name, id: name }}
+              fullWidth
+              label={label}
+              className={classes.root}
+              disabled={isDisabled}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {options.map((item: any, k: any) => {
+                return (
+                  <MenuItem key={k} value={item.value}>
+                    {item.label}
+                  </MenuItem>
+                )
+              })}
+            </TextField>
+            <Icon />
+          </TextWrappper>
         )
       }}
     </Field>

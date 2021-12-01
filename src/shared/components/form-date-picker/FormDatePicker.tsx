@@ -3,7 +3,8 @@ import { Field } from 'formik'
 import TextField from '@material-ui/core/TextField'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { colors } from 'shared/styles/theme'
-
+import { TextWrappper } from '../styles'
+import Icon from '../chatIcon/Icon'
 
 const textFieldStyle = makeStyles(() =>
   createStyles({
@@ -34,23 +35,26 @@ const FormDatePicker = (props: Props) => {
           form.setFieldValue(field.name, fieldVal)
         }
         return (
-          <TextField
-            variant="outlined"
-            fullWidth
-            id={name}
-            label={label}
-            name={name}
-            value={field.value}
-            autoComplete={name}
-            autoFocus
-            onChange={handleChange}
-            type="date"
-            className={classes.root}
-            InputLabelProps={{ shrink: true }}
-            inputProps={{
-              max: !!maxDate && maxDate
-            }}
-          />
+          <TextWrappper>
+            <TextField
+              variant="outlined"
+              fullWidth
+              id={name}
+              label={label}
+              name={name}
+              value={field.value}
+              autoComplete={name}
+              autoFocus
+              onChange={handleChange}
+              type="date"
+              className={classes.root}
+              InputLabelProps={{ shrink: true }}
+              inputProps={{
+                max: !!maxDate && maxDate
+              }}
+            />
+            <Icon />
+          </TextWrappper>
         )
       }}
     </Field>

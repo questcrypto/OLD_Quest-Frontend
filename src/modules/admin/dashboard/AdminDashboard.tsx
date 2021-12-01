@@ -62,7 +62,10 @@ const AdminDashboard = (props: any) => {
   }, [])
 
   const handleAddProperty = () => {
-    history.push(Paths.addPropertyForm)
+    history.push({
+      pathname: Paths.addPropertyForm,
+      state: { detail: 'some_value' }
+  });
   }
 
   const updateApprove = () => {

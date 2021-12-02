@@ -1,9 +1,8 @@
 import { Divider, Grid } from '@material-ui/core'
 import { ErrorMessage } from 'formik'
-import React from 'react'
 import CustomTextField from 'shared/components/custom-text-field'
 import { FormTitle, FormTitleNumber, useStyle } from '../style'
-import { err, Error } from 'shared/styles/styled'
+import { err } from 'shared/styles/styled'
 import IntegerNumberField from 'shared/components/Integer-number-field'
 
 const AddressSection = () => {

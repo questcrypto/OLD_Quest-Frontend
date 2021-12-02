@@ -68,11 +68,11 @@ const AddPropertyForm = (props: any) => {
   const [showDocError, setShowDocError] = useState(false)
   const [permission, setPermission] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState<any>()
+  const [propertyDocumentList, setPropertyDocumentList] = useState<any>()
   const { errorAlert, loggedIn } = props
   const topRef = useRef<any>(null)
   const elRefs = useRef(new Array(16))
-  var filterObj: any = {
+  let propertyDocumentsObj: any = {
     rightofequity: [],
     uploadpropertydocument: [],
     rightofmaintenance: [],
@@ -120,7 +120,6 @@ const AddPropertyForm = (props: any) => {
       filesArr.push(item)
     }
     for (const item of documentList) {
-      console.log(item)
       filesArr.push(item)
     }
     return filesArr
@@ -129,27 +128,30 @@ const AddPropertyForm = (props: any) => {
   useEffect(() => {
     documentList?.forEach((obj: any) => {
       if (obj.rightofequity !== undefined) {
-        filterObj.rightofequity.indexOf(obj.rightofequity) == -1 && filterObj.rightofequity.push(obj?.rightofequity)
+        propertyDocumentsObj.rightofequity.indexOf(obj.rightofequity) == -1 && propertyDocumentsObj.rightofequity.push(obj?.rightofequity)
       }
       if (obj.uploadpropertydocument !== undefined) {
-        filterObj.uploadpropertydocument.indexOf(obj.uploadpropertydocument) == -1 &&
-          filterObj.uploadpropertydocument.push(obj?.uploadpropertydocument)
+        propertyDocumentsObj.uploadpropertydocument.indexOf(obj.uploadpropertydocument) == -1 &&
+          propertyDocumentsObj.uploadpropertydocument.push(obj?.uploadpropertydocument)
       }
       if (obj.rightofmaintenance !== undefined) {
-        filterObj.rightofmaintenance.indexOf(obj.rightofmaintenance) == -1 && filterObj.rightofmaintenance.push(obj?.rightofmaintenance)
+        propertyDocumentsObj.rightofmaintenance.indexOf(obj.rightofmaintenance) == -1 &&
+          propertyDocumentsObj.rightofmaintenance.push(obj?.rightofmaintenance)
       }
       if (obj.rightofpossesion !== undefined) {
-        filterObj.rightofpossesion.indexOf(obj.rightofpossesion) == -1 && filterObj.rightofpossesion.push(obj?.rightofpossesion)
+        propertyDocumentsObj.rightofpossesion.indexOf(obj.rightofpossesion) == -1 &&
+          propertyDocumentsObj.rightofpossesion.push(obj?.rightofpossesion)
       }
       if (obj.rightofsale !== undefined) {
-        filterObj.rightofsale.indexOf(obj.rightofsale) == -1 && filterObj.rightofsale.push(obj?.rightofsale)
+        propertyDocumentsObj.rightofsale.indexOf(obj.rightofsale) == -1 && propertyDocumentsObj.rightofsale.push(obj?.rightofsale)
       }
       if (obj.rightofgovernace !== undefined) {
-        filterObj.rightofgovernace.indexOf(obj.rightofgovernace) == -1 && filterObj.rightofgovernace.push(obj?.rightofgovernace)
+        propertyDocumentsObj.rightofgovernace.indexOf(obj.rightofgovernace) == -1 &&
+          propertyDocumentsObj.rightofgovernace.push(obj?.rightofgovernace)
       }
     })
-    console.log(filterObj, 'calling filterObj')
-    setData(filterObj)
+    console.log(propertyDocumentsObj, 'calling propertyDocumentsObj')
+    setPropertyDocumentList(propertyDocumentsObj)
   }, [documentList.length])
 
   const handleSubmit = async (values: any) => {
@@ -166,14 +168,13 @@ const AddPropertyForm = (props: any) => {
       file.onloadend = async function () {
         const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
         const url = 'https://ipfs.io/ipfs/' + nftCid
-        console.log(url)
         item.file = url
       }
     })
 
-    console.log(imageList,"imagelist");
-   
-    data?.rightofequity.map(async (item: any) => {
+    console.log(imageList, 'imagelist')
+
+    propertyDocumentList?.rightofequity.map(async (item: any) => {
       const file = new FileReader()
       file.readAsArrayBuffer(item.file)
       file.onloadend = async function () {
@@ -183,7 +184,7 @@ const AddPropertyForm = (props: any) => {
       }
     })
 
-    data?.rightofmaintenance.map((item: any) => {
+    propertyDocumentList?.rightofmaintenance.map((item: any) => {
       const file = new FileReader()
       file.readAsArrayBuffer(item.file)
       file.onloadend = async function () {
@@ -193,7 +194,7 @@ const AddPropertyForm = (props: any) => {
       }
     })
 
-    data?.rightofgovernace.map((item: any) => {
+    propertyDocumentList?.rightofgovernace.map((item: any) => {
       const file = new FileReader()
       file.readAsArrayBuffer(item.file)
       file.onloadend = async function () {
@@ -203,31 +204,27 @@ const AddPropertyForm = (props: any) => {
       }
     })
 
-    data?.rightofpossesion.map((item: any) => {
+    propertyDocumentList?.rightofpossesion.map((item: any) => {
       const file = new FileReader()
       file.readAsArrayBuffer(item.file)
       file.onloadend = async function () {
         const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
         const url = 'https://ipfs.io/ipfs/' + nftCid
-        console.log(url)
         item.file = url
       }
     })
 
-    data?.rightofsale.map((item: any) => {
+    propertyDocumentList?.rightofsale.map((item: any) => {
       const file = new FileReader()
-      console.log(item, 'item')
       file.readAsArrayBuffer(item.file)
       file.onloadend = async function () {
         const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
-        console.log(nftCid, 'nftCid')
         const url = 'https://ipfs.io/ipfs/' + nftCid
-        console.log(url, 'calling url')
         item.file = url
       }
     })
 
-    data?.uploadpropertydocument.map((item: any) => {
+    propertyDocumentList?.uploadpropertydocument.map((item: any) => {
       const file = new FileReader()
       file.readAsArrayBuffer(item.file)
       file.onloadend = async function () {
@@ -236,7 +233,8 @@ const AddPropertyForm = (props: any) => {
         item.file = url
       }
     })
-    console.log('documentlist', data)
+    console.log('documentlist', propertyDocumentList)
+
     const nftCid = (await ipfs.files.add(Buffer.from(JSON.stringify(values))))[0].hash
     console.log(nftCid, '<--nftCid-- calling>')
     const _baseURI = 'https://ipfs.io/ipfs/' + nftCid
@@ -313,9 +311,7 @@ const AddPropertyForm = (props: any) => {
             initialValues={initialValues}
             validationSchema={propertyFormSchema}
             onSubmit={(values, { setSubmitting }) => {
-              console.log(values)
               handleSubmit(values)
-              console.log('form is submitted prince')
               setSubmitting(false)
             }}
           >

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { err, Error } from 'shared/styles/styled'
 import { useStyle, UploadDataWrapper, ModalHeader, CloseModalBtnCont, DocFormWrapper, UploadDocBtnGroup } from './style'
 import { Formik, Form, ErrorMessage } from 'formik'

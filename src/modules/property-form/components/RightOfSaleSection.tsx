@@ -37,11 +37,9 @@ const RightOfSaleSection = (props: any) => {
   }
 
   const handleDeleteFile = (type: string, index: number) => {
-    
-      const newDocList: any = [...documentList]
-      newDocList.splice(index, 1)
-      setDocumentList([...newDocList])
-    
+    const newDocList: any = [...documentList]
+    newDocList.splice(index, 1)
+    setDocumentList([...newDocList])
   }
 
   const renderSelectedFileName = (fileList: any, type: string) => {

@@ -51,11 +51,9 @@ const RightOfPosessionSection = (props: any) => {
   }
 
   const handleDeleteFile = (type: string, index: number) => {
-    
-      const newDocList: any = [...documentList]
-      newDocList.splice(index, 1)
-      setDocumentList([...newDocList])
-    
+    const newDocList: any = [...documentList]
+    newDocList.splice(index, 1)
+    setDocumentList([...newDocList])
   }
 
   const renderSelectedFileName = (fileList: any, type: string) => {
@@ -83,8 +81,11 @@ const RightOfPosessionSection = (props: any) => {
         <FormTitleNumber>14</FormTitleNumber>
       </Grid>
       <Grid item xs={10} container direction="column">
-        <FormTitle>Right of Possession /Occupancy (Permanent) (NFT)</FormTitle>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing eits</p>
+        <FormTitle>Right of Occupancy (NFT)</FormTitle>
+        <p>
+          Representing possession and enjoyment of property. This right assumes all existing and future covenants with the HOA and/or
+          managing entity.
+        </p>
         <Grid
           container
           spacing={3}

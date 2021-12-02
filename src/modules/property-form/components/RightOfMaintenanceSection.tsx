@@ -87,7 +87,7 @@ const RightOfMaintenanceSection = (props: any) => {
       </Grid>
       <Grid item xs={10} container direction="column">
         <FormTitle>Right of Maintenance (NFT)</FormTitle>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing eits</p>
+        <p>Reserved for HOA to control, govern, delegate, and covenant ALL property rights, aspects, and responsiblities.</p>
         <Grid
           container
           spacing={3}

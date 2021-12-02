@@ -13,13 +13,12 @@ const RightOfGovernance = (props: any) => {
   const { setFormName, setShowDocModal, documentList, setDocumentList, showDocError } = props
   const [checkName, setCheckName] = useState('')
   const [imageData, setImageData] = useState<any>([])
- 
 
   useEffect(() => {
     const data = documentList?.filter((item: any) => {
       if (item.rightofgovernace !== undefined && item.rightofgovernace.file.type === 'image/jpeg') {
         return item
-      } 
+      }
     })
     setImageData(data)
   }, [documentList?.length])
@@ -38,9 +37,9 @@ const RightOfGovernance = (props: any) => {
   }
 
   const handleDeleteFile = (type: string, index: number) => {
-      const newDocList: any = [...documentList]
-      newDocList.splice(index, 1)
-      setDocumentList([...newDocList])
+    const newDocList: any = [...documentList]
+    newDocList.splice(index, 1)
+    setDocumentList([...newDocList])
   }
 
   const renderSelectedFileName = (fileList: any, type: string) => {
@@ -49,7 +48,7 @@ const RightOfGovernance = (props: any) => {
         return (
           <Grid key={k} container spacing={1} className={classes.fileNameStyle}>
             <Grid item xs={1}>
-            <img src={item?.rightofgovernace?.file?.type === 'image/jpeg' ? ImageIcon : FileIcon} alt="" />
+              <img src={item?.rightofgovernace?.file?.type === 'image/jpeg' ? ImageIcon : FileIcon} alt="" />
             </Grid>
             <Grid item xs={10}>
               <DocText>{item.rightofgovernace.file.name}</DocText>
@@ -68,8 +67,10 @@ const RightOfGovernance = (props: any) => {
         <FormTitleNumber>13</FormTitleNumber>
       </Grid>
       <Grid item xs={10} container direction="column">
-        <FormTitle>Right of Governance / Control (NFT)</FormTitle>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing eits</p>
+        <FormTitle>Right of Governance (NFT)</FormTitle>
+        <p>
+          Respresentation of Governance / control factors affecting nominal value of fractionalized NFTs. Superseded by Right of Management.
+        </p>
         <Grid
           container
           spacing={3}

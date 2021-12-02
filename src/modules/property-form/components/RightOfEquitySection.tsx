@@ -1,14 +1,5 @@
-import  { useEffect, useState } from 'react'
-import {
-  DocText,
-  FileContainer,
-  FormSubTitle,
-  FormTitle,
-  FormTitleNumber,
-  SelectedFileImgCont,
-  useStyle,
-  useStyle01,
-} from '../style'
+import { useEffect, useState } from 'react'
+import { DocText, FileContainer, FormSubTitle, FormTitle, FormTitleNumber, SelectedFileImgCont, useStyle, useStyle01 } from '../style'
 import { Divider, Grid, Paper } from '@material-ui/core'
 import ImageIcon from 'assets/icons/imgIcon.svg'
 import FileIcon from 'assets/icons/fileIcon.svg'
@@ -25,7 +16,7 @@ const RightOfEquitySection = (props: any) => {
 
   useEffect(() => {
     const data = documentList?.filter((item: any) => {
-      if ( item.rightofequity !== undefined && item.rightofequity.file.type === 'image/jpeg') {
+      if (item.rightofequity !== undefined && item.rightofequity.file.type === 'image/jpeg') {
         return item
       }
     })
@@ -46,9 +37,9 @@ const RightOfEquitySection = (props: any) => {
   }
 
   const handleDeleteFile = (type: string, index: number) => {
-      const newDocList: any = [...documentList]
-      newDocList.splice(index, 1)
-      setDocumentList([...newDocList])
+    const newDocList: any = [...documentList]
+    newDocList.splice(index, 1)
+    setDocumentList([...newDocList])
   }
 
   const renderSelectedFileName = (fileList: any, type: string) => {
@@ -80,7 +71,7 @@ const RightOfEquitySection = (props: any) => {
       </Grid>
       <Grid item xs={10} container direction="column">
         <FormTitle>Right of Equity (NFT)</FormTitle>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing eits</p>
+        <p>Tokenized Representation of...</p>
         <Grid container spacing={3}>
           <Grid
             item

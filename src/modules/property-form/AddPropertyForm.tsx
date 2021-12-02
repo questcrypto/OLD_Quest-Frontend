@@ -155,7 +155,6 @@ const AddPropertyForm = (props: any) => {
   }, [documentList.length])
 
   const handleSubmit = async (values: any) => {
-    // console.log(values, '<--values-->')
     const ipfs = new IPFS({
       host: 'ipfs.infura.io',
       port: 5001,
@@ -235,20 +234,80 @@ const AddPropertyForm = (props: any) => {
     })
     console.log('documentlist', propertyDocumentList)
 
+    let rightOfEquity = {
+      name: 'Right of Equity (NFT)',
+      description: 'Tokenized Representation of...',
+      documents: propertyDocumentList.rightofequity
+    }
+    let rightOfMaintenance = {
+      name: 'Right of Maintenance (NFT)',
+      description: 'Reserved for HOA to control, govern, delegate, and covenant ALL property rights, aspects, and responsiblities.',
+      documents: propertyDocumentList.rightofmaintenance
+    }
+
+    let rightOfPossesion = {
+      name: "Right of Occupancy (NFT)",
+      description: "Representing possession and enjoyment of property. This right assumes all existing and future covenants with the HOA and/or managing entity.",
+      documents: propertyDocumentList.rightofpossesion
+    }
+
+    let rightOfSale = {
+      name: "Right of Sale / Transfer (Disposition) (NFT)",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing eits",
+      documents: propertyDocumentList.rightofsale
+    }
+
+    let rightOfGovernance = {
+      name: "Right of Governance (NFT)",
+      description: "Respresentation of Governance / control factors affecting nominal value of fractionalized NFTs. Superseded by Right of Management.",
+      documents: propertyDocumentList.rightofgovernace
+    }
+
+    // let propertyDocumentsObj: any = {
+    //   rightofequity: [],
+    //   uploadpropertydocument: [],
+    //   rightofmaintenance: [],
+    //   rightofpossesion: [],
+    //   rightofsale: [],
+    //   rightofgovernace: [],
+    // }
+
+    let _rightsInformation: any = {
+      rightOfEquity,
+      rightOfMaintenance,
+      rightOfPossesion,
+      rightOfSale,
+      rightOfGovernance,
+
+    }
+
+    values.rightsInformation = _rightsInformation
+
     const nftCid = (await ipfs.files.add(Buffer.from(JSON.stringify(values))))[0].hash
+    const nftCidEquity = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfEquity))))[0].hash
+    const nftCidMaintenance = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfMaintenance))))[0].hash
+    const nftCidPossesion = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfPossesion))))[0].hash
+    const nftCidSale = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfSale))))[0].hash
+    const nftCidGovernance = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfGovernance))))[0].hash
+
+    console.log(nftCid, nftCidEquity, nftCidMaintenance,nftCidPossesion, nftCidSale, nftCidGovernance, "<--line293-->")
+    
     console.log(nftCid, '<--nftCid-- calling>')
     const _baseURI = 'https://ipfs.io/ipfs/' + nftCid
     console.log(_baseURI, '<--_baseURI-- prince>')
     const _managingCompany = '0x7286603DBbF612bA88337693E531176A4Db63321'
-    const _rightToManagementURI = 'https://ipfs.io/ipfs/'
-    const _rightToEquityURI = 'https://ipfs.io/ipfs/'
+    const _rightToMaintenanceURI = nftCidMaintenance
+    const _rightToEquityURI = nftCidEquity
+    const _rightToPossesionURI = nftCidPossesion
+    const _rightToSaleURI = nftCidSale
+    const _baseURIGovernance = nftCidGovernance
     const _rightToControlURI = 'https://ipfs.io/ipfs/'
     const _rightToResidencyURI = 'https://ipfs.io/ipfs/'
     const _rightToSubsurfaceURI = 'https://ipfs.io/ipfs/'
     const receipt = await pushToBlockchain(
       _baseURI,
       _managingCompany,
-      Buffer.from(_rightToManagementURI),
+      Buffer.from(_rightToMaintenanceURI),
       Buffer.from(_rightToEquityURI),
       Buffer.from(_rightToControlURI),
       Buffer.from(_rightToResidencyURI),
@@ -309,7 +368,7 @@ const AddPropertyForm = (props: any) => {
         <PropertyFormCont>
           <Formik
             initialValues={initialValues}
-            validationSchema={propertyFormSchema}
+            // validationSchema={propertyFormSchema}
             onSubmit={(values, { setSubmitting }) => {
               handleSubmit(values)
               setSubmitting(false)

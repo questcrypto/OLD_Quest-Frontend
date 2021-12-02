@@ -127,22 +127,23 @@ const GeneralUserDashboard = (props: any) => {
   // console.log('owner page')
   return (
     <Grid>
-      <Grid container spacing={2} className={classes.headerStyle}>
+      {/* <Grid container spacing={2} className={classes.headerStyle}>
         <Grid item xs={12} md={6}>
           <HeaderTitle>Properties</HeaderTitle>
         </Grid>
         <PropertiesOnboard />
-      </Grid>
-
+      </Grid> */}
+      <Grid className={classes.filterSection}>
       <Grid container spacing={3} className={classes.tabStyle}>
-        <Grid item xs={12} md={8}>
+        {/* <Grid item xs={12} md={8}>
           <TabComponent tabOptions={propertyTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
-        </Grid>
-        <Grid item xs={12} md={4}>
+        </Grid> */}
+        <Grid className={classes.filterSearch}>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
+
             <InputBase
               placeholder="Search…"
               classes={{
@@ -152,7 +153,22 @@ const GeneralUserDashboard = (props: any) => {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
+          <select name="all" className={classes.selectAll}>
+              <option value="volvo">All</option>
+              <option value="saab">Saab</option>
+              <option value="opel">Opel</option>
+              <option value="audi">Audi</option>
+          </select>
         </Grid>
+        <Grid className={classes.filterIcon}>
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.2686 5.09473H1.73145V6.24902H13.2686V5.09473Z" fill="#8C8C8C" />
+              <path d="M10.6729 8.75098H4.32715V9.90528H10.6729V8.75098Z" fill="#8C8C8C" />
+              <path d="M8.94433 12.4043H6.05859V13.5586H8.94433V12.4043Z" fill="#8C8C8C" />
+              <path d="M15 1.44141H0V2.5957H15V1.44141Z" fill="#8C8C8C" />
+            </svg> <span className={classes.filterText}>Filter</span>
+        </Grid>
+      </Grid>
       </Grid>
       <div>
         {newPropertyLoading ? (

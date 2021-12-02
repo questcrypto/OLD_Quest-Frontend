@@ -10,7 +10,8 @@ export const useStyles = makeStyles((theme) =>
       marginBottom: '50px',
     },
     tabStyle: {
-      marginBottom: '20px',
+      // marginBottom: '20px',
+      margin: '0px',
     },
     search: {
       position: 'relative',
@@ -25,6 +26,8 @@ export const useStyles = makeStyles((theme) =>
         width: 'auto',
       },
       border: '1px solid #E0E0E0',
+      marginRight: '25px',
+      maxWidth: '226px',
     },
     searchIcon: {
       padding: theme.spacing(0, 2),
@@ -35,6 +38,30 @@ export const useStyles = makeStyles((theme) =>
       alignItems: 'center',
       justifyContent: 'center',
     },
+    filterSearch: {
+      flex: '1',
+      display: 'flex',
+      flexDirection: 'row',
+    },
+    filterIcon: {
+      marginRight: '30px',
+      fontSize: '14px',
+      color: '#000000',
+      padding: '9px 0',
+    
+    },
+    selectAll: {
+      width: '100%',
+      padding: '0 10px',
+      fontSize: '14px',
+      color: '#000',
+      border: '1px solid #DCDADA',
+      maxWidth: '226px',
+      background: '#ffffff',
+    },
+    filterText: {
+      marginLeft: '10px',
+    },
     inputRoot: {
       color: colors.textPrimary,
     },
@@ -43,9 +70,15 @@ export const useStyles = makeStyles((theme) =>
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
       width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '20ch',
-      },
+      // [theme.breakpoints.up('md')]: {
+      //   width: '226px',
+      // },
+    },
+    filterSection : {
+      padding: '25px 10.5px',
+      background: '#fff',
+      margin: '0 -17px 50px -63px',
+
     },
     progressStyle: {
       display: 'flex',

@@ -237,30 +237,32 @@ const AddPropertyForm = (props: any) => {
     let rightOfEquity = {
       name: 'Right of Equity (NFT)',
       description: 'Tokenized Representation of...',
-      documents: propertyDocumentList.rightofequity
+      documents: propertyDocumentList.rightofequity,
     }
     let rightOfMaintenance = {
       name: 'Right of Maintenance (NFT)',
       description: 'Reserved for HOA to control, govern, delegate, and covenant ALL property rights, aspects, and responsiblities.',
-      documents: propertyDocumentList.rightofmaintenance
+      documents: propertyDocumentList.rightofmaintenance,
     }
 
     let rightOfPossesion = {
-      name: "Right of Occupancy (NFT)",
-      description: "Representing possession and enjoyment of property. This right assumes all existing and future covenants with the HOA and/or managing entity.",
-      documents: propertyDocumentList.rightofpossesion
+      name: 'Right of Occupancy (NFT)',
+      description:
+        'Representing possession and enjoyment of property. This right assumes all existing and future covenants with the HOA and/or managing entity.',
+      documents: propertyDocumentList.rightofpossesion,
     }
 
     let rightOfSale = {
-      name: "Right of Sale / Transfer (Disposition) (NFT)",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing eits",
-      documents: propertyDocumentList.rightofsale
+      name: 'Right of Sale / Transfer (Disposition) (NFT)',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing eits',
+      documents: propertyDocumentList.rightofsale,
     }
 
     let rightOfGovernance = {
-      name: "Right of Governance (NFT)",
-      description: "Respresentation of Governance / control factors affecting nominal value of fractionalized NFTs. Superseded by Right of Management.",
-      documents: propertyDocumentList.rightofgovernace
+      name: 'Right of Governance (NFT)',
+      description:
+        'Respresentation of Governance / control factors affecting nominal value of fractionalized NFTs. Superseded by Right of Management.',
+      documents: propertyDocumentList.rightofgovernace,
     }
 
     // let propertyDocumentsObj: any = {
@@ -278,20 +280,19 @@ const AddPropertyForm = (props: any) => {
       rightOfPossesion,
       rightOfSale,
       rightOfGovernance,
-
     }
 
     values.rightsInformation = _rightsInformation
 
-    const nftCid = (await ipfs.files.add(Buffer.from(JSON.stringify(values))))[0].hash
-    const nftCidEquity = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfEquity))))[0].hash
-    const nftCidMaintenance = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfMaintenance))))[0].hash
-    const nftCidPossesion = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfPossesion))))[0].hash
-    const nftCidSale = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfSale))))[0].hash
-    const nftCidGovernance = (await ipfs.files.add(Buffer.from(JSON.stringify(rightOfGovernance))))[0].hash
+    const nftCid = (await ipfs.add(Buffer.from(JSON.stringify(values))))[0].hash
+    const nftCidEquity = (await ipfs.add(Buffer.from(JSON.stringify(rightOfEquity))))[0].hash
+    const nftCidMaintenance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfMaintenance))))[0].hash
+    const nftCidPossesion = (await ipfs.add(Buffer.from(JSON.stringify(rightOfPossesion))))[0].hash
+    const nftCidSale = (await ipfs.add(Buffer.from(JSON.stringify(rightOfSale))))[0].hash
+    const nftCidGovernance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfGovernance))))[0].hash
 
-    console.log(nftCid, nftCidEquity, nftCidMaintenance,nftCidPossesion, nftCidSale, nftCidGovernance, "<--line293-->")
-    
+    console.log(nftCid, nftCidEquity, nftCidMaintenance, nftCidPossesion, nftCidSale, nftCidGovernance, '<--line293-->')
+
     console.log(nftCid, '<--nftCid-- calling>')
     const _baseURI = 'https://ipfs.io/ipfs/' + nftCid
     console.log(_baseURI, '<--_baseURI-- prince>')

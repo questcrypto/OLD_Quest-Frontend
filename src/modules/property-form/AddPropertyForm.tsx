@@ -284,6 +284,8 @@ const AddPropertyForm = (props: any) => {
 
     values.rightsInformation = _rightsInformation
 
+    console.log(values.rightsInformation, 'values.rightsInformation')
+
     const nftCid = (await ipfs.add(Buffer.from(JSON.stringify(values))))[0].hash
     const nftCidEquity = (await ipfs.add(Buffer.from(JSON.stringify(rightOfEquity))))[0].hash
     const nftCidMaintenance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfMaintenance))))[0].hash

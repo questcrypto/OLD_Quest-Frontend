@@ -42,13 +42,16 @@ export const useStyles = makeStyles((theme) =>
       flex: '1',
       display: 'flex',
       flexDirection: 'row',
+      cursor:"pointer"
     },
     filterIcon: {
       marginRight: '30px',
       fontSize: '14px',
       color: '#000000',
       padding: '9px 0',
-    
+      cursor:"pointer",
+      position: 'relative',
+      zIndex: 111,
     },
     selectAll: {
       width: '100%',
@@ -75,7 +78,7 @@ export const useStyles = makeStyles((theme) =>
       // },
     },
     filterSection : {
-      padding: '25px 10.5px',
+      padding: '12px 25px',
       background: '#fff',
       margin: '0 -17px 50px -63px',
 

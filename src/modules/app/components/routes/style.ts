@@ -32,9 +32,9 @@ export const useStyles = makeStyles(() =>
       },
     },
     contentDiv: {
-      padding: '32px',
+      paddingRight: '30px',
       paddingLeft: '64px',
-      paddingTop: '54px',
+      paddingTop: '1px',
       boxSizing: 'border-box',
       //commented height and position because small white box was appearing in responsive view
       // height: '100%',

@@ -14,8 +14,8 @@ import { apiBaseUrl } from 'services/global-constant'
 import { openLoginModal } from 'logic/actions/user.actions'
 import Grid from '@material-ui/core/Grid'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
+import questLogo from 'assets/images/questDashboardLogo.svg'
 import axios from 'axios'
-import './PropertyCard.css'
 import { cardStyle } from './propertyCardStyle'
 
 const PropertyCards = (props: any) => {
@@ -79,7 +79,7 @@ const PropertyCards = (props: any) => {
                 <StyledCard isLast={isLast} key={i} className={classes.cardWrapper}>
                   <CardContent className={classes.content }>
                     <ImageWrap>
-                      <img src={getImg(docs)} alt="property img" />
+                      <img src={getImg(docs)} alt="Property Image"/>
                     </ImageWrap>
                     <div className={cardstyle.infoRow}>
                       <div className={cardstyle.infoWrap}>

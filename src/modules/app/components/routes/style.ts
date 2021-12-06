@@ -30,6 +30,7 @@ export const useStyles = makeStyles(() =>
       '@media (max-width: 768px)': {
         width: 'calc(100vw - 48px)',
       },
+      
     },
     contentDiv: {
       paddingRight: '30px',

@@ -81,7 +81,9 @@ export const useStyles = makeStyles((theme) =>
       padding: '12px 25px',
       background: '#fff',
       margin: '0 -17px 50px -63px',
-
+      position: 'sticky',
+      top: '61px',
+      zIndex:1,
     },
     progressStyle: {
       display: 'flex',

@@ -30,8 +30,9 @@ const GeneralUserDashboard = (props: any) => {
   const [onAuctionLoading, setOnAuctionLoading] = useState(false)
   const [postAuctionProperties, setPostAuctionProperties] = useState<any>([])
   const [postAuctionLoading, setPostAuctionLoading] = useState(false)
-  const [showFilterSideBar , setShowFilterSideBar] = useState(false)
-
+  const [showFilterSideBar, setShowFilterSideBar] = useState(false)
+  const [showButtonName, setShowButtonName] = useState<any>([])
+  const [showPropertyList , setShowPropertyList] =useState<any>([])
   const { userInfo } = props
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const GeneralUserDashboard = (props: any) => {
         // const res = await axios.get(`${apiBaseUrl}/properties/GetAllProperty`)
         const res = await axios.get(`${apiBaseUrl}/properties/Getallproperties`)
         setNewPropertiesList(res.data)
+        setShowPropertyList(res.data)
       } catch (error) {
         setNewPropertiesList([])
       } finally {
@@ -130,11 +132,24 @@ const GeneralUserDashboard = (props: any) => {
 
   //handlefiltersidebar
   const showFilterSidebar = () => {
-   if(showFilterSideBar===true){
-     setShowFilterSideBar(false);
-   }else{
-     setShowFilterSideBar(true)
-   }
+    if (showFilterSideBar === true) {
+      setShowFilterSideBar(false)
+    } else {
+      setShowFilterSideBar(true)
+    }
+  }
+
+  const handleSearch = (event: any) => {
+    const searchWord = event.target.value
+    const searchData = newPropertiesList?.filter((value: any) => {
+      return value.PropertyName.toLowerCase().includes(searchWord.toLowerCase())
+    })
+    console.log(searchData)
+    if (searchWord === '') {
+      setNewPropertiesList(showPropertyList)
+    } else {
+      setNewPropertiesList([...searchData])
+    }
   }
 
   return (
@@ -155,7 +170,6 @@ const GeneralUserDashboard = (props: any) => {
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
-
               <InputBase
                 placeholder="Search…"
                 classes={{
@@ -163,6 +177,9 @@ const GeneralUserDashboard = (props: any) => {
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={(event: any) => {
+                  handleSearch(event)
+                }}
               />
             </div>
             <select name="all" className={classes.selectAll}>
@@ -173,7 +190,13 @@ const GeneralUserDashboard = (props: any) => {
               ))}
             </select>
           </Grid>
-          <Grid className={classes.filterIcon} onClick={()=>{showFilterSidebar();console.log("clicked")}}>
+          <Grid
+            className={classes.filterIcon}
+            onClick={() => {
+              showFilterSidebar()
+              console.log('clicked')
+            }}
+          >
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M13.2686 5.09473H1.73145V6.24902H13.2686V5.09473Z" fill="#8C8C8C" />
               <path d="M10.6729 8.75098H4.32715V9.90528H10.6729V8.75098Z" fill="#8C8C8C" />
@@ -185,29 +208,33 @@ const GeneralUserDashboard = (props: any) => {
         </Grid>
       </Grid>
       <div>
-         <FilterButton/>
-       {newPropertyLoading ? (
+        <FilterButton showButtonName={showButtonName} setShowButtonName={setShowButtonName} />
+        {newPropertyLoading ? (
           <ComponentLoader />
         ) : (
           <>
-          <div>
-            {activeTab === 'All' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
-            {activeTab === 'new' && <PropertyCards list={[]} dataLoading={newPropertyLoading} />}
-            {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
-            {activeTab === 'published' && (
-              <PropertyCards refresh={refreshPublishedPropertiesList} list={publishedProperties} dataLoading={publishedLoading} />
-            )}
-            {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} dataLoading={preAuctionLoading} />}
-            {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} dataLoading={onAuctionLoading} />}
-            {activeTab === 'postAuction' && <PropertyCards list={postAuctionProperties} dataLoading={postAuctionLoading} />}
-          </div>
+            <div>
+              {activeTab === 'All' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
+              {activeTab === 'new' && <PropertyCards list={[]} dataLoading={newPropertyLoading} />}
+              {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
+              {activeTab === 'published' && (
+                <PropertyCards refresh={refreshPublishedPropertiesList} list={publishedProperties} dataLoading={publishedLoading} />
+              )}
+              {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} dataLoading={preAuctionLoading} />}
+              {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} dataLoading={onAuctionLoading} />}
+              {activeTab === 'postAuction' && <PropertyCards list={postAuctionProperties} dataLoading={postAuctionLoading} />}
+            </div>
           </>
         )}
       </div>
       <div>
-        {
-          showFilterSideBar ? <FilterSideBar/> : null
-        }
+        {showFilterSideBar ? (
+          <FilterSideBar
+            setShowFilterSideBar={setShowFilterSideBar}
+            showButtonName={showButtonName}
+            setShowButtonName={setShowButtonName}
+          />
+        ) : null}
       </div>
     </Grid>
   )

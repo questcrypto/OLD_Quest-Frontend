@@ -17,7 +17,7 @@ import ComponentLoader from 'shared/loader-components/component-loader'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Divider from '@material-ui/core/Divider'
-import { Box } from '@material-ui/core'
+import { Box, Tab } from '@material-ui/core'
 import Features from 'modules/property-features/Features'
 import RentalFacts from 'modules/property-features/RentalFacts'
 import axios from 'axios'
@@ -36,6 +36,7 @@ import MailIcon from '@material-ui/icons/Mail'
 import TabComponent from 'shared/tab-component'
 import DocumentsTable from 'modules/treasury/treasury-details/components/DocumentsTable'
 import { treasuryDetailsTabList } from 'shared/helpers/dataConstant'
+import { TabContext, TabList, TabPanel } from '@material-ui/lab'
 
 const GeneralUserPropertyDetails = (props: any) => {
   const classes = useStyles()
@@ -86,6 +87,17 @@ const GeneralUserPropertyDetails = (props: any) => {
     }
   }
 
+  const [value, setValue] = useState<any>('1');
+  const [factAndFeatureTab, setFactAndFeatureTab] = useState<any>('1');
+
+  const handleChange = (event:any, newValue:any) => {
+    setValue(newValue);
+  };
+
+  const factAndFeatureTabChange= (event:any, newValue:any) => {
+    setFactAndFeatureTab(newValue);
+  };
+
   return (
     <Box>
       <HeaderContainer>
@@ -127,88 +139,75 @@ const GeneralUserPropertyDetails = (props: any) => {
                         `}
                     </InfoLightTxt>
                   </Grid>
-                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                  <Grid item>
-                    <InfoLightTxt>Onboarding date</InfoLightTxt>
-                    <InfoBoldTxt>{formatExtendedDateString(propertyInfo.propertyDetails.CreatedAt)}</InfoBoldTxt>
-                  </Grid>
-                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                  <Grid item>
-                    <InfoLightTxt>Status</InfoLightTxt>
-                    <InfoBoldTxt>Published</InfoBoldTxt>
-                  </Grid>
-                  <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                  <Grid item>
-                    <InfoLightTxt>Estimated value</InfoLightTxt>
-                    <InfoBoldTxt>{currencyString(propertyInfo.propertyDetails.CurrentValue)}</InfoBoldTxt>
-                  </Grid>
-                  <Grid item>
-                    <ExpandIconButton
-                      expandStatus={expanded}
-                      onClick={() => {
-                        setExpanded(!expanded)
-                      }}
-                    >
-                      <IconButton>
-                        <ExpandMoreIcon />
-                      </IconButton>
-                    </ExpandIconButton>
-                  </Grid>
                 </Grid>
-                <Collapse in={expanded} timeout="auto">
-                  <Grid container direction="column">
-                    <Accordion className={classes.accordionStyle}>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
-                        aria-controls="panel2a-content"
-                        id="feature-header"
-                      >
-                        <FeatureHeading>Features</FeatureHeading>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Features data={propertyInfo.propertyDetails} />
-                      </AccordionDetails>
-                    </Accordion>
-
-                    <Accordion className={classes.accordionStyle}>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon className={classes.expandIconStyle} />}
-                        aria-controls="panel1a-content"
-                        id="rental-fact-header"
-                      >
-                        <FeatureHeading style={{ marginTop: '18px' }}>Rental facts and features</FeatureHeading>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <RentalFacts data={propertyInfo.propertyDetails} />
-                      </AccordionDetails>
-                    </Accordion>
-                  </Grid>
-                </Collapse>
-
-                <Grid container spacing={2} className={classes.treasuryOwnersContStyle}>
-                  <Grid item>
-                    <Paper className={classes.treasuryOwnersPaper} elevation={0}>
-                      <TreasuryOwnerCont>
-                        <div>
-                          <InfoLightTxt>Owner</InfoLightTxt>
-                          <InfoBoldTxt>{getFullName(propertyInfo.propertyDetails.Fname, propertyInfo.propertyDetails.Lname)}</InfoBoldTxt>
-                        </div>
-                        {/* <MailIcon /> */}
-                      </TreasuryOwnerCont>
-                    </Paper>
-                  </Grid>
-                  <Grid item>
-                    <Paper className={classes.treasuryOwnersPaper} elevation={0}>
-                      <TreasuryOwnerCont>
-                        <div>
-                          <InfoLightTxt>HOA Admin</InfoLightTxt>
-                          <InfoBoldTxt>{'HOA Admin'}</InfoBoldTxt>
-                        </div>
-                        {/* <MailIcon /> */}
-                      </TreasuryOwnerCont>
-                    </Paper>
-                  </Grid>
-                </Grid>
+                <TabContext value={value}>
+                  <Box >
+                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                      <Tab label="Property Details" value="1" />
+                      <Tab label="Facts and Features" value="2" />
+                      <Tab label="Buy Tokens" value="3" />
+                    </TabList>
+                  </Box>
+                  <TabPanel value="1">
+                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                    <Grid item>
+                      <InfoLightTxt>Onboarding date</InfoLightTxt>
+                      <InfoBoldTxt>{formatExtendedDateString(propertyInfo.propertyDetails.CreatedAt)}</InfoBoldTxt>
+                    </Grid>
+                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                    <Grid item>
+                      <InfoLightTxt>Status</InfoLightTxt>
+                      <InfoBoldTxt>Published</InfoBoldTxt>
+                    </Grid>
+                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
+                    <Grid item>
+                     <InfoLightTxt>Estimated value</InfoLightTxt>
+                     <InfoBoldTxt>{currencyString(propertyInfo.propertyDetails.CurrentValue)}</InfoBoldTxt>
+                    </Grid>
+                    <TreasuryOwnerCont>
+                      <div>
+                      <InfoLightTxt>Owner</InfoLightTxt>
+                      <InfoBoldTxt>{getFullName(propertyInfo.propertyDetails.Fname, propertyInfo.propertyDetails.Lname)}</InfoBoldTxt>
+                      </div>
+                  
+                    </TreasuryOwnerCont>
+                    <TreasuryOwnerCont>
+                    <div>
+                    <InfoLightTxt>HOA Admin</InfoLightTxt>
+                    <InfoBoldTxt>{'HOA Admin'}</InfoBoldTxt>
+                    </div>
+                    
+                    </TreasuryOwnerCont>
+                  </TabPanel>
+                  <TabPanel value="2">
+                    <TabContext value={factAndFeatureTab}>
+                      <Box>
+                        <TabList onChange={factAndFeatureTabChange} aria-label="lab API tabs example">
+                          <Tab label="Features" value="1" />
+                          <Tab label="Facts" value="2" />
+                        
+                        </TabList>
+                      </Box>
+                      <TabPanel value="1">
+                        
+                        
+                       
+                          <Features data={propertyInfo.propertyDetails} />
+                       
+                      </TabPanel>
+                      <TabPanel value="2">
+                        
+                          
+                      
+                        
+                          <RentalFacts data={propertyInfo.propertyDetails} />
+                        
+                      </TabPanel>
+                     
+                    </TabContext>
+                  </TabPanel>
+                  <TabPanel value="3"></TabPanel>
+                </TabContext>
               </Paper>
               <TabComponent tabOptions={treasuryDetailsTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
               <DocumentsTable data={docList} />

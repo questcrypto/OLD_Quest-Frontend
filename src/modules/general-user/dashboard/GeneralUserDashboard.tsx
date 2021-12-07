@@ -30,7 +30,7 @@ const GeneralUserDashboard = (props: any) => {
   const [onAuctionLoading, setOnAuctionLoading] = useState(false)
   const [postAuctionProperties, setPostAuctionProperties] = useState<any>([])
   const [postAuctionLoading, setPostAuctionLoading] = useState(false)
-  const [showFilterSideBar, setShowFilterSideBar] = useState(false)
+  const [showFilterSideBar, setShowFilterSideBar] = useState(true)
   const [showButtonName, setShowButtonName] = useState<any>([])
   const [showPropertyList , setShowPropertyList] =useState<any>([])
   const { userInfo } = props

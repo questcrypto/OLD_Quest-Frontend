@@ -171,110 +171,72 @@ const AddPropertyForm = (props: any) => {
       }
     })
 
-    console.log(imageList, 'imagelist')
-
-    propertyDocumentList?.rightofequity.map(async (item: any) => {
-      const file = new FileReader()
-      file.readAsArrayBuffer(item.file)
-      file.onloadend = async function () {
-        const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
-        const url = 'https://ipfs.io/ipfs/' + nftCid
-        item.file = url
-      }
+    const uploadToIPFS = (item: any, type: string) => {
+      return new Promise((resolve) => {
+        const file = new FileReader()
+        file.readAsArrayBuffer(item.file)
+        file.onloadend = async function () {
+          const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
+          const url = 'https://ipfs.io/ipfs/' + nftCid
+          item.hash = url
+          resolve(item)
+        }
+      }).then((result: any) => {
+        return { [type]: result }
+      })
+    }
+    const rightofequity = propertyDocumentList?.rightofequity.map(async (item: any) => {
+      return uploadToIPFS(item, 'rightofequity')
+    })
+    const rightofmaintenance = propertyDocumentList?.rightofmaintenance.map((item: any) => {
+      return uploadToIPFS(item, 'rightofmaintenance')
+    })
+    const rightofgovernace = propertyDocumentList?.rightofgovernace.map((item: any) => {
+      return uploadToIPFS(item, 'rightofgovernace')
+    })
+    const rightofsale = propertyDocumentList?.rightofsale.map((item: any) => {
+      return uploadToIPFS(item, 'rightofsale')
+    })
+    const rightofpossesions = propertyDocumentList?.rightofpossesion.map((item: any) => {
+      return uploadToIPFS(item, 'rightofpossesion')
+    })
+    const uploadpropertydocument = propertyDocumentList?.uploadpropertydocument.map((item: any) => {
+      return uploadToIPFS(item, 'uploadpropertydocument')
     })
 
-    propertyDocumentList?.rightofmaintenance.map((item: any) => {
-      const file = new FileReader()
-      file.readAsArrayBuffer(item.file)
-      file.onloadend = async function () {
-        const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
-        const url = 'https://ipfs.io/ipfs/' + nftCid
-        item.file = url
-      }
-    })
-
-    propertyDocumentList?.rightofgovernace.map((item: any) => {
-      const file = new FileReader()
-      file.readAsArrayBuffer(item.file)
-      file.onloadend = async function () {
-        const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
-        const url = 'https://ipfs.io/ipfs/' + nftCid
-        item.file = url
-      }
-    })
-
-    propertyDocumentList?.rightofpossesion.map((item: any) => {
-      const file = new FileReader()
-      file.readAsArrayBuffer(item.file)
-      file.onloadend = async function () {
-        const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
-        const url = 'https://ipfs.io/ipfs/' + nftCid
-        item.file = url
-      }
-    })
-
-    propertyDocumentList?.rightofsale.map((item: any) => {
-      const file = new FileReader()
-      file.readAsArrayBuffer(item.file)
-      file.onloadend = async function () {
-        const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
-        const url = 'https://ipfs.io/ipfs/' + nftCid
-        item.file = url
-      }
-    })
-
-    propertyDocumentList?.uploadpropertydocument.map((item: any) => {
-      const file = new FileReader()
-      file.readAsArrayBuffer(item.file)
-      file.onloadend = async function () {
-        const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
-        const url = 'https://ipfs.io/ipfs/' + nftCid
-        item.file = url
-      }
-    })
-    console.log('documentlist', propertyDocumentList)
-
-    let rightOfEquity = {
+    const rightOfEquity = {
       name: 'Right of Equity (NFT)',
       description: 'Tokenized Representation of...',
-      documents: propertyDocumentList.rightofequity,
-    }
-    let rightOfMaintenance = {
-      name: 'Right of Maintenance (NFT)',
-      description: 'Reserved for HOA to control, govern, delegate, and covenant ALL property rights, aspects, and responsiblities.',
-      documents: propertyDocumentList.rightofmaintenance,
+      documents: [],
     }
 
-    let rightOfPossesion = {
+    const rightOfMaintenance = {
+      name: 'Right of Maintenance (NFT)',
+      description: 'Reserved for HOA to control, govern, delegate, and covenant ALL property rights, aspects, and responsiblities.',
+      documents: [],
+    }
+
+    const rightOfPossesion = {
       name: 'Right of Occupancy (NFT)',
       description:
         'Representing possession and enjoyment of property. This right assumes all existing and future covenants with the HOA and/or managing entity.',
-      documents: propertyDocumentList.rightofpossesion,
+      documents: [],
     }
 
-    let rightOfSale = {
+    const rightOfSale = {
       name: 'Right of Sale / Transfer (Disposition) (NFT)',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing eits',
-      documents: propertyDocumentList.rightofsale,
+      documents: [],
     }
 
-    let rightOfGovernance = {
+    const rightOfGovernance = {
       name: 'Right of Governance (NFT)',
       description:
         'Respresentation of Governance / control factors affecting nominal value of fractionalized NFTs. Superseded by Right of Management.',
-      documents: propertyDocumentList.rightofgovernace,
+      documents: [],
     }
 
-    // let propertyDocumentsObj: any = {
-    //   rightofequity: [],
-    //   uploadpropertydocument: [],
-    //   rightofmaintenance: [],
-    //   rightofpossesion: [],
-    //   rightofsale: [],
-    //   rightofgovernace: [],
-    // }
-
-    let _rightsInformation: any = {
+    const _rightsInformation: any = {
       rightOfEquity,
       rightOfMaintenance,
       rightOfPossesion,
@@ -282,81 +244,110 @@ const AddPropertyForm = (props: any) => {
       rightOfGovernance,
     }
 
-    values.rightsInformation = _rightsInformation
-
-    console.log(values.rightsInformation, 'values.rightsInformation')
-
-    const nftCid = (await ipfs.add(Buffer.from(JSON.stringify(values))))[0].hash
-    const nftCidEquity = (await ipfs.add(Buffer.from(JSON.stringify(rightOfEquity))))[0].hash
-    const nftCidMaintenance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfMaintenance))))[0].hash
-    const nftCidPossesion = (await ipfs.add(Buffer.from(JSON.stringify(rightOfPossesion))))[0].hash
-    const nftCidSale = (await ipfs.add(Buffer.from(JSON.stringify(rightOfSale))))[0].hash
-    const nftCidGovernance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfGovernance))))[0].hash
-
-    console.log(nftCid, nftCidEquity, nftCidMaintenance, nftCidPossesion, nftCidSale, nftCidGovernance, '<--line293-->')
-
-    console.log(nftCid, '<--nftCid-- calling>')
-    const _baseURI = 'https://ipfs.io/ipfs/' + nftCid
-    console.log(_baseURI, '<--_baseURI-- prince>')
-    const _managingCompany = '0x7286603DBbF612bA88337693E531176A4Db63321'
-    const _rightToMaintenanceURI = nftCidMaintenance
-    const _rightToEquityURI = nftCidEquity
-    const _rightToPossesionURI = nftCidPossesion
-    const _rightToSaleURI = nftCidSale
-    const _baseURIGovernance = nftCidGovernance
-    const _rightToControlURI = 'https://ipfs.io/ipfs/'
-    const _rightToResidencyURI = 'https://ipfs.io/ipfs/'
-    const _rightToSubsurfaceURI = 'https://ipfs.io/ipfs/'
-    const receipt = await pushToBlockchain(
-      _baseURI,
-      _managingCompany,
-      Buffer.from(_rightToMaintenanceURI),
-      Buffer.from(_rightToEquityURI),
-      Buffer.from(_rightToControlURI),
-      Buffer.from(_rightToResidencyURI),
-      Buffer.from(_rightToSubsurfaceURI)
-    )
-    console.log(receipt)
-    if (imageList.length > 0 && documentList.length > 0) {
-      const formData = new FormData()
-      const dataFiles = getFileData()
-      for (const item of dataFiles) {
-        formData.append('file', item)
-      }
-      const data = { ...values }
-      delete data.FloorDetails
-      Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
-      formData.append('PropertyImages', JSON.stringify(imageData))
-      formData.append('PropertyDocs', JSON.stringify(documentData))
-      formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
-      console.log(formData, '<--formData--> calling')
-      try {
-        setLoading(true)
-        await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
-        // history.push(Paths.root)
-        // history.push(Paths.dashboard)
-        if (loggedIn) {
-          history.push(Paths.root)
-        } else {
-          history.push(Paths.dashboard)
+    let nftCid
+    await Promise.all([...rightofsale, ...rightofpossesions, ...rightofequity, ...rightofmaintenance, ...rightofgovernace]).then(async function (
+      results
+    ) {
+      console.log(results, 'prince')
+      results?.forEach((obj: any) => {
+        if (obj.rightofequity !== undefined) {
+          _rightsInformation.rightOfEquity.documents.indexOf(obj.rightofequity) == -1 && _rightsInformation.rightOfEquity.documents.push(obj?.rightofequity)
         }
-      } catch (error: any) {
-        if (!!error && error.response && error.response.data.message) {
-          errorAlert(error.response.data.message)
-        } else {
-          errorAlert('Something went wrong , please try again')
+        if (obj.uploadpropertydocument !== undefined) {
+          _rightsInformation.uploadpropertydocument.documents.indexOf(obj.uploadpropertydocument) == -1 &&
+            _rightsInformation.uploadpropertydocument.documents.push(obj?.uploadpropertydocument)
         }
-      } finally {
-        setLoading(false)
+        if (obj.rightofmaintenance !== undefined) {
+          _rightsInformation.rightOfMaintenance.documents.indexOf(obj.rightofmaintenance) == -1 &&
+            _rightsInformation.rightOfMaintenance.documents.push(obj?.rightofmaintenance)
+        }
+        if (obj.rightofpossesion !== undefined) {
+          _rightsInformation.rightOfPossesion.documents.indexOf(obj.rightofpossesion) == -1 &&
+            _rightsInformation.rightOfPossesion.documents.push(obj?.rightofpossesion)
+        }
+        if (obj.rightofsale !== undefined) {
+          _rightsInformation.rightOfSale.documents.indexOf(obj.rightofsale) == -1 && _rightsInformation.rightOfSale.documents.push(obj?.rightofsale)
+        }
+        if (obj.rightofgovernace !== undefined) {
+          _rightsInformation.rightOfGovernance.documents.indexOf(obj.rightofgovernace) == -1 &&
+            _rightsInformation.rightOfGovernance.documents.push(obj?.rightofgovernace)
+        }
+      })
+
+      values.rightofInformation = _rightsInformation
+      nftCid = (await ipfs.add(Buffer.from(JSON.stringify(values))))[0].hash
+      // Aarhan You can put your code here
+      const nftCidEquity = (await ipfs.add(Buffer.from(JSON.stringify(rightOfEquity))))[0].hash
+      const nftCidMaintenance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfMaintenance))))[0].hash
+      const nftCidPossesion = (await ipfs.add(Buffer.from(JSON.stringify(rightOfPossesion))))[0].hash
+      const nftCidSale = (await ipfs.add(Buffer.from(JSON.stringify(rightOfSale))))[0].hash
+      const nftCidGovernance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfGovernance))))[0].hash
+  
+      console.log(nftCid, nftCidEquity, nftCidMaintenance, nftCidPossesion, nftCidSale, nftCidGovernance, '<--line293-->')
+  
+      console.log(nftCid, '<--nftCid-- calling>')
+      const _baseURI = 'https://ipfs.io/ipfs/' + nftCid
+      console.log(_baseURI, '<--_baseURI-- prince>')
+      const _managingCompany = '0x7286603DBbF612bA88337693E531176A4Db63321'
+      const _rightToMaintenanceURI = nftCidMaintenance
+      const _rightToEquityURI = nftCidEquity
+      const _rightToPossesionURI = nftCidPossesion
+      const _rightToSaleURI = nftCidSale
+      const _baseURIGovernance = nftCidGovernance
+      const _rightToControlURI = 'https://ipfs.io/ipfs/'
+      const _rightToResidencyURI = 'https://ipfs.io/ipfs/'
+      const _rightToSubsurfaceURI = 'https://ipfs.io/ipfs/'
+      const receipt = await pushToBlockchain(
+        _baseURI,
+        _managingCompany,
+        Buffer.from(_rightToMaintenanceURI),
+        Buffer.from(_rightToEquityURI),
+        Buffer.from(_rightToControlURI),
+        Buffer.from(_rightToResidencyURI),
+        Buffer.from(_rightToSubsurfaceURI)
+      )
+      console.log(receipt)
+      if (imageList.length > 0 && documentList.length > 0) {
+        const formData = new FormData()
+        const dataFiles = getFileData()
+        for (const item of dataFiles) {
+          formData.append('file', item)
+        }
+        const data = { ...values }
+        delete data.FloorDetails
+        Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
+        formData.append('PropertyImages', JSON.stringify(imageData))
+        formData.append('PropertyDocs', JSON.stringify(documentData))
+        formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
+        console.log(formData, '<--formData--> calling')
+        try {
+          setLoading(true)
+          await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
+          // history.push(Paths.root)
+          // history.push(Paths.dashboard)
+          if (loggedIn) {
+            history.push(Paths.root)
+          } else {
+            history.push(Paths.dashboard)
+          }
+        } catch (error: any) {
+          if (!!error && error.response && error.response.data.message) {
+            errorAlert(error.response.data.message)
+          } else {
+            errorAlert('Something went wrong , please try again')
+          }
+        } finally {
+          setLoading(false)
+        }
+      } else {
+        if (imageList.length === 0) {
+          setShowImgError(true)
+        }
+        if (documentList.length === 0) {
+          setShowDocError(true)
+        }
       }
-    } else {
-      if (imageList.length === 0) {
-        setShowImgError(true)
-      }
-      if (documentList.length === 0) {
-        setShowDocError(true)
-      }
-    }
+    })
   }
 
   return (

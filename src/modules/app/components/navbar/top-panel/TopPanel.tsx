@@ -17,7 +17,6 @@ import MetaMaskIcon from '../../../../../assets/icons/metaMaskIcon.svg'
 // import IPBlockingModal from 'modules/portfolio/IPBlocking/IPBlockingModal'
 import { openLoginModal, closeLoginModal } from 'logic/actions/user.actions'
 import axios from 'axios'
-import { useWeb3Context } from 'web3-react';
 import { apiBaseUrl } from 'services/global-constant'
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +53,6 @@ const TopPanel = (props: any) => {
 
   // const [account, setAccount] = useState(false)
   // let web3: Web3 = new Web3(window.ethereum)
-  const context = useWeb3Context()
 
   const {
     // loginStart,
@@ -147,26 +145,6 @@ const TopPanel = (props: any) => {
     }, 3000)
     chainIdChecking()
   }, [walletAddress, tokenDummy, loggedIn])
-
-  // useEffect(() => {
-  //   context.setFirstValidConnector(['MetaMask', 'Infura']);
-  //   if (!context.active && !context.error) {
-  //     try{
-  //     const address = window.ethereum.enable().then((res: any) => {
-  //       console.log(res, "addressaddressaddress");
-  //     })
-  //     return
-  //   }catch(error){
-  //     console.log(error);
-  //     return
-  //   }
-  //   } else if (context.error) {
-  //     //error
-  //     console.log(context.error)
-  //   } else {    
-  //     // success
-  //   }
-  // }, [])
 
   const chainIdChecking = async () => {
     try {

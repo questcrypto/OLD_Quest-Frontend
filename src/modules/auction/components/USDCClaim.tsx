@@ -20,7 +20,7 @@ const USDCClaim = (props: any) => {
         const auctionContract = new web3.eth.Contract(auctionAbi, auctionContractAddress)
         await handleDAITokenClaim(auctionContract, accounts[0], claimData.auctionId, treasuryAddress)
       }
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else {

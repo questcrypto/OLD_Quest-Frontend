@@ -184,7 +184,7 @@ const TokenDetails = (props: any) => {
             successAlert('Transaction completed successfully')
             getBalance()
           },
-          (error) => {
+          (error :any) => {
             setIsTransaction(false)
             setBcModal(false)
             setIsConfirm(false)

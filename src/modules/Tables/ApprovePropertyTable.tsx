@@ -37,7 +37,7 @@ const ApprovePropertyTable = (props: any) => {
       await axios.post(`${apiBaseUrl}/properties/ApproveByHOAAdmin`, approvedData)
       updateApprove()
       setActiveTab('published')
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else {

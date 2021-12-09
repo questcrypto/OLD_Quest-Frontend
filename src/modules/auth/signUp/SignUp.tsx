@@ -122,7 +122,7 @@ const SignUp = (props: any) => {
       // const actualOtp = 123456;
       // setActualOtp(Otp.data)
       // console.log(Otp.data);
-    } catch (error) {
+    } catch (error :any) {
       // console.log(error);
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
@@ -244,7 +244,7 @@ const SignUp = (props: any) => {
         loginStart(loginData)
         closeLoginModal();
       }
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else if (!!error.message) {

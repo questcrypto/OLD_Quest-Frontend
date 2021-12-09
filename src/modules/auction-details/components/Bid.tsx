@@ -68,7 +68,7 @@ const Bid = (props: any) => {
         setNotifications(res.data);
       }
       history.push(Paths.auction)
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else {

@@ -52,7 +52,7 @@ const PreAuctionTable = (props: any) => {
       await axios.post(`${apiBaseUrl}/auction/activateAuction`, data)
       refreshPreAuction()
       refreshOnAuction()
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else {

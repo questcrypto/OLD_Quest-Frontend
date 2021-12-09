@@ -23,7 +23,7 @@ const TokenClaim = (props: any) => {
         const slcContract = new web3.eth.Contract(slcAbi, SLCAddress)
         await handleAuctionWinTokenClaim(slcContract, accounts[0], claimData.auctionId, treasuryAddress)
       }
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else {

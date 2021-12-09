@@ -64,7 +64,7 @@ const AuctionReview = (props: any) => {
       }
       await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
       setShowAuctionModal(false)
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else {
@@ -87,7 +87,7 @@ const AuctionReview = (props: any) => {
       await axios.post(`${apiBaseUrl}/auction/OwnersAction`, data)
       setShowAuctionModal(false)
       refresh()
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else {

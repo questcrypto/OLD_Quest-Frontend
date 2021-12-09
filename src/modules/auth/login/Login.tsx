@@ -96,7 +96,7 @@ const Login = (props: any) => {
         // history.push('/')
         history.push(props.location.pathname)
       }
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else if (!!error.message) {

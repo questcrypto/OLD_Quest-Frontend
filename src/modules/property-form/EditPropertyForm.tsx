@@ -199,7 +199,7 @@ const EditPropertyForm = (props: any) => {
       setLoading(true)
       await axios.post(`${apiBaseUrl}/properties/UpdateProperty`, values)
       history.push(Paths.root)
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else {
@@ -215,7 +215,7 @@ const EditPropertyForm = (props: any) => {
       setLoading(true)
       await axios.post(`${apiBaseUrl}/properties/ApproveByPropertyOwner`, data)
       history.push(Paths.root)
-    } catch (error) {
+    } catch (error :any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else {
@@ -289,7 +289,7 @@ const EditPropertyForm = (props: any) => {
         }
 
         await axios.post(`${apiBaseUrl}/properties/AddComment`, commentData)
-      } catch (error) {
+      } catch (error :any) {
         if (!!error && error.response && error.response.data.message) {
           errorAlert(error.response.data.message)
         } else {

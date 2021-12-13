@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#FFFFFF',
     '&:hover': {
       background: 'rgba(133, 133, 133, 0.85)',
-      transition: 'background 1s linear'
-    }
+      transition: 'background 1s linear',
+    },
   },
   hoverBtnTxt: {
     // color: '#FFFFFF'
@@ -140,7 +140,7 @@ const MoreWithCrypto = (props: any) => {
         getBalance()
         // getBalance()
       }
-    } catch (error :any) {
+    } catch (error: any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else if (!!error.message) {

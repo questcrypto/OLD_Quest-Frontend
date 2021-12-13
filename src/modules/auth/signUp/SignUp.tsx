@@ -122,7 +122,7 @@ const SignUp = (props: any) => {
       // const actualOtp = 123456;
       // setActualOtp(Otp.data)
       // console.log(Otp.data);
-    } catch (error :any) {
+    } catch (error: any) {
       // console.log(error);
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
@@ -242,9 +242,9 @@ const SignUp = (props: any) => {
         )
         const loginData = { publicaddress, signature }
         loginStart(loginData)
-        closeLoginModal();
+        closeLoginModal()
       }
-    } catch (error :any) {
+    } catch (error: any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else if (!!error.message) {
@@ -320,7 +320,7 @@ const SignUp = (props: any) => {
                     // .min(99999, 'OTP is not long enough')
                     .max(999999, 'OTP is not more than 6 digits')
                     .required('OTP is required'),
-                    // .equals([actualOtp], 'Pls enter correct OTP'),
+                  // .equals([actualOtp], 'Pls enter correct OTP'),
                   walletAddress: Yup.string().required('Wallet Address is required'),
                 })}
                 onSubmit={(values, { setSubmitting }) => {

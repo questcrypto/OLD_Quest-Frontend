@@ -11,14 +11,12 @@ const UploadPropertyImageSection = (props: any) => {
 
   const renderSelectedFileImage = (fileList: any) => {
     return fileList.map((item: any, k: number) => {
-     
-        const objectURL = URL.createObjectURL(item)
-        return (
-          <FileContainer key={k}>
-            <img src={objectURL} alt="" />
-          </FileContainer>
-        )
-    
+      const objectURL = URL.createObjectURL(item)
+      return (
+        <FileContainer key={k}>
+          <img src={objectURL} alt="" />
+        </FileContainer>
+      )
     })
   }
 
@@ -29,7 +27,6 @@ const UploadPropertyImageSection = (props: any) => {
       </Grid>
       <Grid item xs={10} container direction="column">
         <FormTitle>Upload property images</FormTitle>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing eits</p>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <Paper

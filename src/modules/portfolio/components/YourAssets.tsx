@@ -1,5 +1,5 @@
 import { Paper, makeStyles, Typography, Slider, Tooltip, Avatar, withStyles, Theme } from '@material-ui/core'
-import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import AvatarGroup from '@material-ui/lab/AvatarGroup'
 import { useState, useEffect } from 'react'
 import TableContainer from '@material-ui/core/TableContainer'
 import Table from '@material-ui/core/Table'
@@ -28,10 +28,18 @@ import {
   getKnabrSupply,
   getUsdcSupply,
   getLpSupply,
-  getLp2Supply
+  getLp2Supply,
 } from 'modules/block-chain/BlockChainMethods'
 import { walletConnect, walletConnectAddress, setChainId } from 'logic/actions/user.actions'
-import { setQuest, setQuestSupply, setKnabSupply, setUsdcSupply, setKnabrSupply, setLpSupply, setLp2Supply } from 'logic/actions/staking.action'
+import {
+  setQuest,
+  setQuestSupply,
+  setKnabSupply,
+  setUsdcSupply,
+  setKnabrSupply,
+  setLpSupply,
+  setLp2Supply,
+} from 'logic/actions/staking.action'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import KnabIcon from 'assets/icons/KNAB.svg'
 import CoinIcon from 'assets/icons/USDC.svg'
@@ -44,7 +52,7 @@ import {
   USDCAddress,
   LPTokenAddress,
   LPTokenAddress2,
-  questAddress
+  questAddress,
 } from 'modules/block-chain/abi'
 const commaNumber = require('comma-number')
 
@@ -83,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
   avatarImg: {
     width: '35px',
     height: '35px',
-    border: 'none'
+    border: 'none',
   },
   avatarImg2: {
     width: '35px',
@@ -124,8 +132,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#FFFFFF',
     '&:hover': {
       background: 'rgba(133, 133, 133, 0.85)',
-      transition: 'background 1s linear'
-    }
+      transition: 'background 1s linear',
+    },
   },
   hoverBtnTxt: {
     position: 'relative',
@@ -136,7 +144,6 @@ const useStyles = makeStyles((theme) => ({
 let tableInfo = tableData.tableData
 
 const YourAssets = (props: any) => {
-
   const polygonScanLink = 'https://polygonscan.com/'
   const {
     loggedIn,
@@ -151,7 +158,7 @@ const YourAssets = (props: any) => {
     setUsdcSupply,
     setKnabrSupply,
     setLpSupply,
-    setLp2Supply
+    setLp2Supply,
   } = props
   const classes = useStyles()
   const [isWallet, setIsWallet] = useState(false)
@@ -160,7 +167,7 @@ const YourAssets = (props: any) => {
   //   setIsWallet(loggedIn);
   // }, [loggedIn])
   useEffect(() => {
-    setIsWallet(isWalletCon);
+    setIsWallet(isWalletCon)
 
     getQuestBalance().then((res) => {
       setQuest(res)
@@ -171,21 +178,20 @@ const YourAssets = (props: any) => {
     })
 
     getKnabrSupply().then((res) => {
-      setKnabrSupply(res);
+      setKnabrSupply(res)
     })
 
     getUsdcSupply().then((res) => {
-      setUsdcSupply(res);
+      setUsdcSupply(res)
     })
 
     getLpSupply().then((res) => {
-      setLpSupply(res);
+      setLpSupply(res)
     })
 
     getLp2Supply().then((res) => {
-      setLp2Supply(res);
+      setLp2Supply(res)
     })
-
   }, [isWalletCon])
 
   const { errorAlert, walletConnect, walletConnectAddress, setChainId } = props
@@ -267,10 +273,10 @@ const YourAssets = (props: any) => {
 
       // balance: `${lp * 10 ** 4}`,
       balance: `${(lp / 10 ** 14).toFixed(3)}`,
-      availableQty: commaNumber((lp_supply * (10 ** 4)).toFixed(3)),
+      availableQty: commaNumber((lp_supply * 10 ** 4).toFixed(3)),
       price: `$0.0`,
       // holdings: { value: `${lp_supply > 0 ? ((lp * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
-      holdings: { value: `${lp_supply > 0 ? (((lp/10**14) * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
+      holdings: { value: `${lp_supply > 0 ? (((lp / 10 ** 14) * 100) / lp_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
     },
     {
       asset: { icon: `${CoinIcon}`, name: 'KNAB-USDC(S)' },
@@ -278,10 +284,10 @@ const YourAssets = (props: any) => {
 
       // balance: `${lp2 * 10 ** 4}`,
       balance: `${(lp2 / 10 ** 14).toFixed(3)}`,
-      availableQty: commaNumber((lp2_supply * (10 ** 4)).toFixed(3)),
+      availableQty: commaNumber((lp2_supply * 10 ** 4).toFixed(3)),
       price: `$0.0`,
       // holdings: { value: `${lp2_supply > 0 ? ((lp2 * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
-      holdings: { value: `${lp2_supply > 0 ? (((lp2/10**14) * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
+      holdings: { value: `${lp2_supply > 0 ? (((lp2 / 10 ** 14) * 100) / lp2_supply).toFixed(3) : '0.00'} %`, percent: 0.0 },
     },
     {
       asset: { icon: `${KnabDummy}`, name: 'QUEST' },
@@ -314,7 +320,7 @@ const YourAssets = (props: any) => {
         walletConnect(true)
         getBalance()
       }
-    } catch (error :any) {
+    } catch (error: any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else if (!!error.message) {
@@ -372,27 +378,27 @@ const YourAssets = (props: any) => {
   }
 
   const openInNewTab2 = (url: string, asset: any) => {
-    console.log(asset);
-    let finalUrl;
+    console.log(asset)
+    let finalUrl
     switch (asset) {
       case 'KNAB':
-        finalUrl = url + 'token/' + KNABaddress;
-        break;
+        finalUrl = url + 'token/' + KNABaddress
+        break
       case 'KNABr':
-        finalUrl = url + 'token/' + KNABrAddress;
-        break;
+        finalUrl = url + 'token/' + KNABrAddress
+        break
       case 'USDC':
-        finalUrl = url + 'token/' + USDCAddress;
-        break;
+        finalUrl = url + 'token/' + USDCAddress
+        break
       case 'KNAB-USDC(Q)':
-        finalUrl = url + 'token/' + LPTokenAddress;
-        break;
+        finalUrl = url + 'token/' + LPTokenAddress
+        break
       case 'KNAB-USDC(S)':
-        finalUrl = url + 'token/' + LPTokenAddress2;
-        break;
+        finalUrl = url + 'token/' + LPTokenAddress2
+        break
       case 'QUEST':
-        finalUrl = url + 'token/' + questAddress;
-        break;
+        finalUrl = url + 'token/' + questAddress
+        break
     }
     const newWindow = window.open(finalUrl, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
@@ -433,17 +439,15 @@ const YourAssets = (props: any) => {
                         return (
                           <TableCell key={ind}>
                             {item.key === 'asset' && (
-                              <div
-                                className={classes.firstDiv}
-                                onClick={() => openInNewTab2(`${polygonScanLink}`, row[item.key].name)}>
-                                {row[item.key].name === 'KNAB-USDC(Q)' || row[item.key].name === 'KNAB-USDC(S)' ?
+                              <div className={classes.firstDiv} onClick={() => openInNewTab2(`${polygonScanLink}`, row[item.key].name)}>
+                                {row[item.key].name === 'KNAB-USDC(Q)' || row[item.key].name === 'KNAB-USDC(S)' ? (
                                   <AvatarGroup max={2}>
                                     <Avatar alt="" src={KnabIcon} style={{ background: '#FFF' }} className={classes.avatarImg} />
                                     <Avatar alt="" src={CoinIcon} className={classes.avatarImg2} />
-                                  </AvatarGroup> :
+                                  </AvatarGroup>
+                                ) : (
                                   <img src={row[item.key].icon} alt="" className={classes.iconImg} />
-                                }
-
+                                )}
 
                                 {/* <img src={KnabIcon} alt="" className={classes.iconImg} /> */}
                                 {row[item.key].name}
@@ -466,37 +470,38 @@ const YourAssets = (props: any) => {
                             )}
                             {item.key === 'balance' && (
                               <span>
-                                {index === 3 || index === 4 ?
+                                {index === 3 || index === 4 ? (
                                   <span>
                                     {row[item.key]}
-                                    <CustomTooltip
-                                      title="Multiplied by 10000"
-                                      arrow>
+                                    <CustomTooltip title="Multiplied by 10000" arrow>
                                       <img src={Question} alt="" className={classes.questionImg} />
                                     </CustomTooltip>
                                   </span>
-                                  : row[item.key]
-                                }
+                                ) : (
+                                  row[item.key]
+                                )}
                               </span>
-                            )
-                            }
+                            )}
                             {item.key === 'availableQty' && (
                               <span>
-                                {index === 3 || index === 4 ?
+                                {index === 3 || index === 4 ? (
                                   <span>
                                     {row[item.key]}
-                                    <CustomTooltip
-                                      title="Multiplied by 10000"
-                                      arrow>
+                                    <CustomTooltip title="Multiplied by 10000" arrow>
                                       <img src={Question} alt="" className={classes.questionImg} />
                                     </CustomTooltip>
                                   </span>
-                                  : row[item.key]
-                                }
+                                ) : (
+                                  row[item.key]
+                                )}
                               </span>
-                            )
-                            }
-                            {item.key !== 'asset' && item.key !== 'price' && item.key !== 'holdings' && item.key !== 'balance'&& item.key !== 'availableQty' && row[item.key]}
+                            )}
+                            {item.key !== 'asset' &&
+                              item.key !== 'price' &&
+                              item.key !== 'holdings' &&
+                              item.key !== 'balance' &&
+                              item.key !== 'availableQty' &&
+                              row[item.key]}
                           </TableCell>
                         )
                       })}
@@ -522,24 +527,22 @@ const YourAssets = (props: any) => {
         </div> */}
       </Paper>
 
-      {
-        show && !isWallet && (
-          <div className={classes.hoverBtnDiv} onMouseOut={() => setShow(false)}>
-            <CustomButton
-              size="small"
-              style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
-              onClick={connectWallet}
+      {show && !isWallet && (
+        <div className={classes.hoverBtnDiv} onMouseOut={() => setShow(false)}>
+          <CustomButton
+            size="small"
+            style={{ backgroundColor: '#1E3444', padding: '8px 48px' }}
+            onClick={connectWallet}
             // onClick={props.applicationAccess ? connectWallet : handleBlocking}
-            >
-              {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
-            </CustomButton>
-            <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
-              For Accessing Complete Features
-            </Typography>
-          </div>
-        )
-      }
-    </div >
+          >
+            {dataLoading ? 'Connecting ...' : 'Connect Wallet'}
+          </CustomButton>
+          <Typography variant="subtitle2" className={classes.hoverBtnTxt}>
+            For Accessing Complete Features
+          </Typography>
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -565,14 +568,14 @@ export default connect(mapStateToProps, {
   setUsdcSupply,
   setKnabrSupply,
   setLpSupply,
-  setLp2Supply
+  setLp2Supply,
 })(YourAssets)
 
 const CustomTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: '#878787',
     fontFamily: 'NexaRegular',
-    color: '#FFF'
+    color: '#FFF',
   },
   arrow: {
     color: '#C4C4C4',

@@ -10,7 +10,7 @@ import ComponentLoader from 'shared/loader-components/component-loader'
 import AuctionReview from 'modules/owner/owner-property-details/components/AuctionReview'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
-import { apiBaseUrl } from 'services/global-constant'
+import { apiBaseUrl, imageBaseUrl } from 'services/global-constant'
 import { openLoginModal } from 'logic/actions/user.actions'
 import Grid from '@material-ui/core/Grid'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
@@ -41,7 +41,7 @@ const PropertyCards = (props: any) => {
         }
       }
     }
-    const imgUrl = `${apiBaseUrl}/${imgArr[0]?.filename}`
+    const imgUrl = `${imageBaseUrl}/${imgArr[0]?.filename}`
     return imgUrl
   }
 

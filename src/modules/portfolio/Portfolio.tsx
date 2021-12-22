@@ -34,6 +34,7 @@ import { hasApplcationAccess } from 'logic/actions/user.actions'
 import Staking from './Staking/Staking'
 
 const Portfolio = (props: any) => {
+  console.log('Portfolio')
   const classes = useStyles()
 
   // const [pb, setPb] = useState(0)

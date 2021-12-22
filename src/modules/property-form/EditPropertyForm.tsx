@@ -66,7 +66,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import MoneyInputField from 'shared/components/money-input-field'
 import history from 'modules/app/components/history'
 import { Paths } from 'modules/app/components/routes/types'
-import { apiBaseUrl } from 'services/global-constant'
+import { apiBaseUrl, imageBaseUrl } from 'services/global-constant'
 import axios from 'axios'
 
 const EditPropertyForm = (props: any) => {
@@ -233,7 +233,7 @@ const EditPropertyForm = (props: any) => {
     return fileList.map((item: any, k: number) => {
       return (
         <UpLoadedDocImages key={k}>
-          <img src={item.type === 0 ? `${apiBaseUrl}/${item.filename}` : FileIcon} alt="" />
+          <img src={item.type === 0 ? `${imageBaseUrl}/${item.filename}` : FileIcon} alt="" />
           <p>{item.Name}</p>
         </UpLoadedDocImages>
       )

@@ -30,7 +30,7 @@ import FileIcon from 'assets/icons/fileIcon.svg'
 import Features from 'modules/property-features/Features'
 import RentalFacts from 'modules/property-features/RentalFacts'
 import axios from 'axios'
-import { apiBaseUrl } from 'services/global-constant'
+import { apiBaseUrl, imageBaseUrl } from 'services/global-constant'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 
@@ -91,7 +91,7 @@ const PropertyDetails = (props: any) => {
       return (
         <Box key={index}>
           <Paper className={classes.docPaperStyle}>
-            <img className="doc-img" src={`${apiBaseUrl}/${item.filename}`} alt="" onClick={() => setSelectImg(item.filename)} />
+            <img className="doc-img" src={`${imageBaseUrl}/${item.filename}`} alt="" onClick={() => setSelectImg(item.filename)} />
           </Paper>
           <DocName>{item.Name}</DocName>
         </Box>

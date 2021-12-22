@@ -22,6 +22,7 @@ import {
 import { refreshPublishedPropertiesList } from 'logic/api/ownerPropertiesServices'
 
 const GeneralUserDashboard = (props: any) => {
+  console.log('GeneralUserDashboard');
   const classes = useStyles()
   // const [activeTab, setActiveTab] = useState('published')
   const [activeTab, setActiveTab] = useState('All')

@@ -268,6 +268,7 @@ function getRouteRenderWithAuth(loggedIn: boolean, route: RouteDefinition, i: nu
 }
 
 const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (props) => {
+  console.log("routes RouteDefinition");
   const { isLoaded, loggedIn, authLoading, isNav } = props
 
   const [width] = useState(window.innerWidth)
@@ -290,6 +291,7 @@ const Routes: React.FC<Props & RoutesProps & StateProps & DrawerProps & any> = (
   const routesBeforeLogin = routes.filter((each) => !each.protected)
   const routesAfterLogin = routes.filter((each) => each.protected)
   const routesToRender = loggedIn ? routesAfterLogin : routesBeforeLogin
+  console.log('routesToRender ', routesToRender)
   return (
     <Router history={history}>
       {window.location.pathname === Paths.login && !loggedIn ? (

@@ -37,7 +37,7 @@ import {
 import CustomModal from 'shared/custom-modal'
 import AuctionStats from './AuctionStats'
 import axios from 'axios'
-import { apiBaseUrl } from 'services/global-constant'
+import { apiBaseUrl, imageBaseUrl } from 'services/global-constant'
 
 const EndAuctionTable = (props: any) => {
   const classes = useStyles()
@@ -125,7 +125,7 @@ const EndAuctionTable = (props: any) => {
         imgArr.push(item)
       }
     }
-    const imgUrl = `${apiBaseUrl}/${imgArr[0].filename}`
+    const imgUrl = `${imageBaseUrl}/${imgArr[0].filename}`
     return imgUrl
   }
   const handleAuctionStatus = async (auctionId: string, imgData: any) => {

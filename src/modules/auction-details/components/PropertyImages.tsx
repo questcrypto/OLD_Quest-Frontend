@@ -1,7 +1,7 @@
 import React from 'react'
 import { imagesStyle, AboutPropertyTxt } from './style'
 import Box from '@material-ui/core/Box'
-import { apiBaseUrl } from 'services/global-constant'
+import { apiBaseUrl, imageBaseUrl } from 'services/global-constant'
 import { GridList, GridListTile } from '@material-ui/core'
 
 const PropertyImages = (props: any) => {
@@ -19,7 +19,7 @@ const PropertyImages = (props: any) => {
           <GridListTile key={k} className={classes.imgOnHoverStyle}>
             <img
               className={classes.smallImgStyle}
-              src={`${apiBaseUrl}/${item.filename}`}
+              src={`${imageBaseUrl}/${item.filename}`}
               alt=""
               onClick={() => {
                 handleImage(item)
@@ -32,7 +32,7 @@ const PropertyImages = (props: any) => {
   }
   return (
     <Box overflow="hidden">
-      <img className={classes.imgStyle} src={`${apiBaseUrl}/${selectedImg.filename}`} alt="" />
+      <img className={classes.imgStyle} src={`${imageBaseUrl}/${selectedImg.filename}`} alt="" />
       <GridList className={classes.smallImgCont}>{renderSmallImages()}</GridList>
       <AboutPropertyTxt>
         {propertyText

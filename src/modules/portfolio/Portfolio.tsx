@@ -283,7 +283,7 @@ const Portfolio = (props: any) => {
             Portfolio
           </Typography>
           <div className={classes.btnDiv}>
-            <CustomButton
+            {/* <CustomButton
               size="small"
               disableElevation
               disableFocusRipple
@@ -291,22 +291,22 @@ const Portfolio = (props: any) => {
               style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
             >
               {knabr} KNABr
-            </CustomButton>
-            &nbsp;&nbsp;&nbsp;
-            <CustomButton
+            </CustomButton> */}
+            {/* &nbsp;&nbsp;&nbsp; */}
+            {/* <CustomButton
               size="small"
               disableElevation
               disableFocusRipple
               disableRipple
               style={{ backgroundColor: '#858585', padding: '8px 16px', margin: '0 0 10px 0' }}
-            >
+            > */}
               {/* {props.KNABBalance || pb.toFixed(3)} KNAB */}
               {/* {KNABbalance || pb.toFixed(3)} KNAB */}
               {/* {Number(props.KNABBalance.toFixed(3))} KNAB */}
               {/* {knab} KNAB */}
-              {isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB
-            </CustomButton>
-            &nbsp;&nbsp;&nbsp;
+              {/* {isWalletCon ? Number(props.KNABBalance.toFixed(3)) : 0} KNAB
+            </CustomButton> */}
+            {/* &nbsp;&nbsp;&nbsp; */}
             <CustomButton
               size="small"
               style={{ backgroundColor: '#1E3444', padding: '8px 16px', margin: '0 0 10px 0' }}
@@ -378,7 +378,7 @@ const Portfolio = (props: any) => {
                   </CustomButton>
                   <br />
                   <span className={classes.pfBtnhelpText}>
-                    Purchase ICO tokens (
+                    Purchase tokens (
                     <span className={classes.learnMoreText} onClick={() => openInNewTab(`https://questcrypto.app${Paths.ICOdetails}`)}>
                       {/* <span className={classes.learnMoreText} onClick={() => openInNewTab(`http://localhost:3000${Paths.ICOdetails}`)}> */}
                       Learn More

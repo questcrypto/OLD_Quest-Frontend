@@ -280,7 +280,7 @@ const SignUp = (props: any) => {
                     <>
                       <span style={{ color: value == 0 ? '#BA8E4D' : '#2B2D31' }}>Sign Up</span>
                       <span className={classes.tabText}>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing.
+                        {/* Lorem ipsum dolor sit, amet consectetur adipisicing. */}
                         {value === 0 ? <Indicator /> : ''}
                       </span>
                     </>
@@ -294,7 +294,7 @@ const SignUp = (props: any) => {
                     <>
                       <span style={{ color: value == 1 ? '#BA8E4D' : '#2B2D31' }}>Sign In</span>
                       <span className={classes.tabText}>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing.
+                        {/* Lorem ipsum dolor sit, amet consectetur adipisicing. */}
                         {value === 1 ? <Indicator /> : ''}
                       </span>
                     </>

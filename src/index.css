@@ -37,7 +37,7 @@ code {
 }
 .rightSectionWrapper {
   position: sticky;
-  top: 0px;
+  top: 13px;
   cursor: pointer;
 }
 .MuiFormControl-root.MuiTextField-root.makeStyles-root-85.MuiFormControl-fullWidth {

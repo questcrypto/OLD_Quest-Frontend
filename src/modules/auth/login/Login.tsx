@@ -1,6 +1,4 @@
 import React, { useRef, useState } from 'react'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import { loginStart, walletConnect, logout, setChainId } from 'logic/actions/user.actions'
 import { useStyle } from './style'
@@ -22,6 +20,8 @@ import loadingIcon from 'assets/icons/loading.svg'
 import { setTimeout } from 'timers'
 import { closeLoginModal } from 'logic/actions/user.actions'
 import history from 'modules/app/components/history'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 const Login = (props: any) => {
   const initialValues = {
@@ -71,10 +71,10 @@ const Login = (props: any) => {
           return
         }
         const publicaddress = coinbase.toLowerCase()
-        // console.log(publicaddress);
+        console.log(publicaddress)
         let signatureData: any = ''
-        const result = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
-        // console.log('Result', result);
+        const result: any = await axios.get(`${apiBaseUrl}/user/GetNonce/${publicaddress}`)
+        console.log('Result', result)
         // if (!!result && result.data && result.data.length === 0) {
         //   const data: any = { email: values.email, publicaddress }
         //   const signUpRes: any = await axios.post(`${apiBaseUrl}/user/signUp`, data)
@@ -91,12 +91,12 @@ const Login = (props: any) => {
         const loginData = { publicaddress, signature }
         loginStart(loginData)
         walletConnect(true)
-        closeLoginModal();
+        closeLoginModal()
         // console.log(props.location.pathname);
         // history.push('/')
         history.push(props.location.pathname)
       }
-    } catch (error :any) {
+    } catch (error: any) {
       if (!!error && error.response && error.response.data.message) {
         errorAlert(error.response.data.message)
       } else if (!!error.message) {
@@ -129,12 +129,11 @@ const Login = (props: any) => {
       setLoadingWallet(true)
       setWalletSelected({ icon: item.icon, label: item.label })
       // console.log('Selected Wallet', walletSelected);
-
       const web3 = await getWeb3Val()
       if (web3) {
-        const chainId = await web3.eth.getChainId();
+        const chainId = await web3.eth.getChainId()
         // console.log(chainId);
-        setChainId(chainId);
+        setChainId(chainId)
         const coinbase = await web3.eth.getCoinbase()
         if (!coinbase) {
           window.alert('Please activate Wallet first.')
@@ -267,6 +266,6 @@ const Login = (props: any) => {
 
 const mapStateToProps = (state: any) => ({
   loading: state.user.loading,
-})
+});
 
-export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, walletConnect, logout, setChainId, closeLoginModal })(Login))
+export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, walletConnect, logout, setChainId, closeLoginModal})(Login));

@@ -121,10 +121,10 @@ const RightOfPosessionSection = (props: any) => {
           </Grid>
         </Grid>
         <Grid item className={classes.formGroup}>
-          <CustomTextField label="Number of fractional tokens needed to be minted" name="NumberOfFractional" />
-          <ErrorMessage component={err} name="NumberOfFractional" />
-          <CustomTextField label="Listing price of each fractional token" name="ListingPriceFractional" />
-          <ErrorMessage component={err} name="ListingPriceFractional" />
+          <CustomTextField label="Number of fractional tokens needed to be minted" name="rightofpossesionNumberOfFractional" />
+          <ErrorMessage component={err} name="rightofpossesionNumberOfFractional" />
+          <CustomTextField label="Listing price of each fractional token" name="rightofpossesionListingPriceFractional" />
+          <ErrorMessage component={err} name="rightofpossesionListingPriceFractional" />
           <Divider className={classes.dividerStyle} />
         </Grid>
       </Grid>

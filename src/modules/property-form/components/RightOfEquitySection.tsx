@@ -108,10 +108,10 @@ const RightOfEquitySection = (props: any) => {
           </Grid>
         </Grid>
         <Grid item className={classes.formGroup}>
-          <CustomTextField label="Number of fractional tokens needed to be minted" name="NumberOfFractional" />
-          <ErrorMessage component={err} name="NumberOfFractional" />
-          <CustomTextField label="Listing price of each fractional token" name="ListingPriceFractional" />
-          <ErrorMessage component={err} name="ListingPriceFractional" />
+          <CustomTextField label="Number of fractional tokens needed to be minted" name="rightofEquityNumberOfFractional" />
+          <ErrorMessage component={err} name="rightofEquityNumberOfFractional" />
+          <CustomTextField label="Listing price of each fractional token" name="rightofEquityListingPriceFractional" />
+          <ErrorMessage component={err} name="rightofEquityListingPriceFractional" />
           <Divider className={classes.dividerStyle} />
         </Grid>
       </Grid>

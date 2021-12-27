@@ -541,4 +541,4 @@ const mapStateToProps = (state: any) => ({
   openDrawer: state.drawer.openDrawer,
 })
 
-export default withRouter(connect(mapStateToProps, { loginStart, errorAlert, logout, closeLoginModal })(SignUp))
+export default withRouter(connect<any>(mapStateToProps, { loginStart, errorAlert, logout, closeLoginModal })(SignUp));

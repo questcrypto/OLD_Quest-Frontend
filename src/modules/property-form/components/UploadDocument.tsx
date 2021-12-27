@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { err, Error } from 'shared/styles/styled'
 import { useStyle, UploadDataWrapper, ModalHeader, CloseModalBtnCont, DocFormWrapper, UploadDocBtnGroup } from './style'
-import { Formik, Form, ErrorMessage } from 'formik'
+import { Formik, Form, ErrorMessage, useFormik } from 'formik'
 import * as Yup from 'yup'
 import Typography from '@material-ui/core/Typography'
 import { PrimaryButton, SecondaryButton } from 'shared/components/buttons'
@@ -9,9 +9,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import { DropzoneAreaBase } from 'material-ui-dropzone'
 import CustomTextField from 'shared/components/custom-text-field'
 
-const initialValues = {
+const initialValues: any = {
   name: '',
-  tag: '',
   description: '',
 }
 const documentUploadSchema = Yup.object().shape({
@@ -29,12 +28,11 @@ const UploadDocument = (props: any) => {
     documentData,
     setDocumentData,
     setShowDocModal,
-    setuploadPropertyDocStatus,
-    setrightOfEquityStatus,
   } = props
   const classes = useStyle()
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: any , resetForm:any) => {
+    console.log(values, 'formik submit ')
     if (files.length > 0) {
       const docData = [...documentData]
       const typeName = `${formName}`
@@ -48,16 +46,16 @@ const UploadDocument = (props: any) => {
           file: files[0].file,
         },
       }
-      
+
       docData.push(newDocData[typeName])
       const newDocList = [...documentList]
       newDocList.push(newDocData)
       setDocumentData([...docData])
       setDocumentList([...newDocList])
       setFiles([])
+      resetForm();      
       setShowDocModal(false)
-      setuploadPropertyDocStatus(false)
-      setrightOfEquityStatus(false)
+      setShowFileError(false)
     } else {
       setShowFileError(true)
     }
@@ -71,15 +69,15 @@ const UploadDocument = (props: any) => {
     setFiles(files.filter((f: any) => f !== deleted))
   }
 
+
   return (
     <UploadDataWrapper>
       <Formik
         initialValues={initialValues}
         validationSchema={documentUploadSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          handleSubmit(values)
-          setSubmitting(false)
-          resetForm({})
+        onSubmit={(values: any, {resetForm}) => {
+          handleSubmit(values ,resetForm);
+          resetForm()
         }}
       >
         {() => (
@@ -109,7 +107,6 @@ const UploadDocument = (props: any) => {
             <DocFormWrapper>
               <CustomTextField label="Name" name="name" />
               <ErrorMessage component={err} name="name" />
-
               <CustomTextField label="Description" name="description" />
               <ErrorMessage component={err} name="description" />
               <UploadDocBtnGroup>

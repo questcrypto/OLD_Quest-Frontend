@@ -35,7 +35,6 @@ const CustomTextField = (props: Props) => {
           const fieldVal: any = event.target.value
           form.setFieldValue(field.name, fieldVal)
         }
-
         return (
           <TextWrappper>
             <TextField

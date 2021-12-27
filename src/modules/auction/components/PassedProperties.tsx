@@ -11,7 +11,7 @@ import CustomModal from 'shared/custom-modal'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
-import { apiBaseUrl } from 'services/global-constant'
+import { apiBaseUrl, imageBaseUrl } from 'services/global-constant'
 import EmptyPage from 'shared/empty-page'
 import TokenClaim from './TokenClaim'
 import USDCClaim from './USDCClaim'
@@ -42,7 +42,7 @@ const PassedProperties = (props: any) => {
         imgArr.push(item)
       }
     }
-    const imgUrl = `${apiBaseUrl}/${imgArr[0].filename}`
+    const imgUrl = `${imageBaseUrl}/${imgArr[0].filename}`
     return imgUrl
   }
 

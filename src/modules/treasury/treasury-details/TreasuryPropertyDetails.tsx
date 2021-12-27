@@ -37,7 +37,7 @@ import { treasuryDetailsTabList } from 'shared/helpers/dataConstant'
 import { SLFContractAddress, selfAbi } from 'modules/block-chain/abi'
 import { getWeb3Val, handlePropertyDetailsSubmit } from 'modules/block-chain/BlockChainMethods'
 import axios from 'axios'
-import { apiBaseUrl } from 'services/global-constant'
+import { apiBaseUrl, imageBaseUrl } from 'services/global-constant'
 import { formatExtendedDateString } from 'shared/helpers/globalFunction'
 
 const TreasuryPropertyDetails = (props: any) => {
@@ -165,7 +165,7 @@ const TreasuryPropertyDetails = (props: any) => {
               <Paper className={classes.treasuryPaper} elevation={1}>
                 <Grid container className={classes.infoContStyle} spacing={2}>
                   <Grid item>
-                    <img src={`${apiBaseUrl}/${imageList[0].filename}`} alt="" />
+                    <img src={`${imageBaseUrl}/${imageList[0].filename}`} alt="" />
                   </Grid>
                   <Grid item>
                     <InfoBoldTxt>{propertyInfo.propertyDetails.Address1}</InfoBoldTxt>

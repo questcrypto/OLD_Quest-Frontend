@@ -7,6 +7,7 @@ import GeneralUserDashboard from 'modules/general-user'
 
 const Dashboard = (props: any) => {
   const { userInfo } = props
+  console.log('userInfo');
   useEffect(() => {
     console.log(userInfo);
   }, [])

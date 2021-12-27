@@ -21,7 +21,7 @@ import { Box } from '@material-ui/core'
 import Features from 'modules/property-features/Features'
 import RentalFacts from 'modules/property-features/RentalFacts'
 import axios from 'axios'
-import { apiBaseUrl } from 'services/global-constant'
+import { apiBaseUrl, imageBaseUrl } from 'services/global-constant'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { PrimaryButton } from 'shared/components/buttons'
@@ -114,7 +114,7 @@ const GeneralUserPropertyDetails = (props: any) => {
               <Paper className={classes.treasuryPaper} elevation={1}>
                 <Grid container className={classes.infoContStyle} spacing={2}>
                   <Grid item>
-                    <img src={`${apiBaseUrl}/${selectImg}`} alt="" />
+                    <img src={`${imageBaseUrl}/${selectImg}`} alt="" />
                   </Grid>
                   <Grid item>
                     <InfoBoldTxt>{propertyInfo.propertyDetails.Address1!}</InfoBoldTxt>

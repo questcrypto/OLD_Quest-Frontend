@@ -47,7 +47,6 @@ const UploadPropertyDocumentSection = (props: any) => {
       </Grid>
       <Grid item xs={10} container direction="column">
         <FormTitle>Upload property documents</FormTitle>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing eits</p>
         <Grid container spacing={3}>
           <Grid
             item

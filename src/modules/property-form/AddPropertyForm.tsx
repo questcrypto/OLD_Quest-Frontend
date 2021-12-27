@@ -1,4 +1,4 @@
-import React , { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { errorAlert } from 'logic/actions/alerts.actions'
 import { Formik, Form } from 'formik'
@@ -290,8 +290,8 @@ const AddPropertyForm = (props: any) => {
         const _rightToResidencyURI = 'https://ipfs.io/ipfs/'
         const _rightToSubsurfaceURI = 'https://ipfs.io/ipfs/'
 
-        const receipt = await pushToBlockchain(_baseURI, TREASURY_ADMIN, 0x10, PROPERTY_OWNER)
-        console.log(receipt)
+        // const receipt = await pushToBlockchain(_baseURI, TREASURY_ADMIN, 0x10, PROPERTY_OWNER)
+        // console.log(receipt)
         if (imageList.length > 0 && documentList.length > 0) {
           const formData = new FormData()
           const dataFiles = getFileData()
@@ -357,22 +357,22 @@ const AddPropertyForm = (props: any) => {
           >
             {({ values, handleBlur, isValid }: any) => (
               <Form className="formwrapper">
-                <Grid container ref={(el:any) => (elRefs.current[1] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[1] = el)}>
                   <OwnerDetailsSection />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[2] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[2] = el)}>
                   <PropertyInfoSection />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[3] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[3] = el)}>
                   <AddressSection />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[4] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[4] = el)}>
                   <LocalitySection />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[5] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[5] = el)}>
                   <TimeContractSection />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[6] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[6] = el)}>
                   <UploadPropertyImageSection
                     imageList={imageList}
                     setImageList={setImageList}
@@ -385,7 +385,7 @@ const AddPropertyForm = (props: any) => {
                     formName={formName}
                   />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[7] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[7] = el)}>
                   <UploadPropertyDocumentSection
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}
@@ -397,16 +397,16 @@ const AddPropertyForm = (props: any) => {
                     formName={formName}
                   />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[8] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[8] = el)}>
                   <FloorConfigSection values={values} />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[9] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[9] = el)}>
                   <AmentiesSection />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[10] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[10] = el)}>
                   <MoreDetailsSection />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[11] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[11] = el)}>
                   <RightOfEquitySection
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}
@@ -418,7 +418,7 @@ const AddPropertyForm = (props: any) => {
                     formName={formName}
                   />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[12] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[12] = el)}>
                   <RightOfMaintenanceSection
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}
@@ -430,7 +430,7 @@ const AddPropertyForm = (props: any) => {
                     formName={formName}
                   />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[13] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[13] = el)}>
                   <RightOfGovernance
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}
@@ -442,7 +442,7 @@ const AddPropertyForm = (props: any) => {
                     formName={formName}
                   />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[14] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[14] = el)}>
                   <RightOfPosessionSection
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}
@@ -454,7 +454,7 @@ const AddPropertyForm = (props: any) => {
                     formName={formName}
                   />
                 </Grid>
-                <Grid container ref={(el:any) => (elRefs.current[15] = el)}>
+                <Grid container ref={(el: any) => (elRefs.current[15] = el)}>
                   <RightOfSaleSection
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}

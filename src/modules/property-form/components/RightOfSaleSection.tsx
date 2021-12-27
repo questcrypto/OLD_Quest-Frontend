@@ -68,7 +68,6 @@ const RightOfSaleSection = (props: any) => {
       </Grid>
       <Grid item xs={10} container direction="column">
         <FormTitle>Right of Sale / Transfer (Disposition) (NFT)</FormTitle>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing eits</p>
         <Grid
           container
           spacing={3}

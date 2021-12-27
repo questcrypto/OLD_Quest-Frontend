@@ -82,10 +82,10 @@ const RightOfPosessionSection = (props: any) => {
       </Grid>
       <Grid item xs={10} container direction="column">
         <FormTitle>Right of Occupancy (NFT)</FormTitle>
-        <p>
+        {/* <p>
           Representing possession and enjoyment of property. This right assumes all existing and future covenants with the HOA and/or
           managing entity.
-        </p>
+        </p> */}
         <Grid
           container
           spacing={3}

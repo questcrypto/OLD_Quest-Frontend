@@ -304,6 +304,7 @@ const AddPropertyForm = (props: any) => {
           formData.append('PropertyImages', JSON.stringify(imageData))
           formData.append('PropertyDocs', JSON.stringify(documentData))
           formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
+          // formData.append('IPFSHash', nftCid);
           console.log(formData, '<--formData--> calling')
           try {
             setLoading(true)
@@ -466,7 +467,7 @@ const AddPropertyForm = (props: any) => {
                   />
                 </Grid>
                 <SubmitContainer>
-                  <CheckBoxCont>
+                  {/* <CheckBoxCont>
                     <Checkbox
                       color="default"
                       inputProps={{ 'aria-label': 'checkbox with default color' }}
@@ -474,7 +475,7 @@ const AddPropertyForm = (props: any) => {
                       onChange={(e: any) => setPermission(e.target.checked)}
                     />
                     <CheckBoxText>I take full responsibility of the above information</CheckBoxText>
-                  </CheckBoxCont>
+                  </CheckBoxCont> */}
                   <FormButtonGroup>
                     <PrimaryButton
                       type="submit"
@@ -482,9 +483,19 @@ const AddPropertyForm = (props: any) => {
                       classes={{
                         root: classes.saveAndReviewStyle,
                       }}
-                      disabled={!permission}
+                      // disabled={!permission}
                     >
-                      {loading ? <Spinner /> : 'Save & Send for review'}
+                      {loading ? <Spinner /> : 'Save As Draft'}
+                    </PrimaryButton>
+                    <PrimaryButton
+                      type="submit"
+                      variant="contained"
+                      classes={{
+                        root: classes.saveAndReviewStyle,
+                      }}
+                      // disabled={!permission}
+                    >
+                      {loading ? <Spinner /> : 'Save & Publish'}
                     </PrimaryButton>
                   </FormButtonGroup>
                 </SubmitContainer>

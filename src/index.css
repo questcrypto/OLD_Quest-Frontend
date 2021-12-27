@@ -31,14 +31,14 @@ code {
 }
 
 .title-container h4 {
-  margin: 0 0px 19px 0px;
-  font-size: 14px;
-  line-height: 16px;
+  margin: 0 0px 8px 0px;
+  font-size: 12px;
 }
 .rightSectionWrapper {
   position: sticky;
   top: 13px;
   cursor: pointer;
+  /* width: 350px; */
 }
 .MuiFormControl-root.MuiTextField-root.makeStyles-root-85.MuiFormControl-fullWidth {
   margin-bottom: 15px;
@@ -54,6 +54,9 @@ code {
   transform: translate(14px, -6px) scale(1)!important;
   padding: 0 4px!important;
   background: #fff!important;
+}
+ .infoIcon{
+  background: transparent !important;
 }
 .photo-progress h4 {
   font-size: 16px;
@@ -132,19 +135,19 @@ margin: 7px 0 2px;
 .rightSection .MuiGrid-grid-xs-10 {
   max-width: none;
   flex: 1;
-  padding-left: 10px;
+  padding-left: 20px;
 }
 .rightSection .fODOSz {
   width: 30px;
   height: 30px;
 }
-.rightSectionWrapper .MuiGrid-container:hover h4 {
+
+.rightSectionWrapper .MuiGrid-container:hover h4{
   color: #EB5757 !important;
 }
 .rightSectionWrapper .MuiGrid-container:hover .fODOSz {
   background: #EB5757 !important;
 }
-
 .ownerdetails{
   font-size: 18px !important;
   line-height: 18px !important;

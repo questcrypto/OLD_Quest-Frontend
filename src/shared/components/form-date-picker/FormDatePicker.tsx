@@ -53,7 +53,7 @@ const FormDatePicker = (props: Props) => {
                 max: !!maxDate && maxDate
               }}
             />
-            <Icon />
+           
           </TextWrappper>
         )
       }}

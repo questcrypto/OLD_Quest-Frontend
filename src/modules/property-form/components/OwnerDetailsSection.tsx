@@ -14,13 +14,13 @@ const OwnerDetailsSection = () => {
       <Grid item xs={10} container direction="column">
         <Grid item className={classes.formGroup}>
           <FormTitle className="ownerdetails">Owner details</FormTitle>
-          <CustomTextField label="First name" name="Fname" />
+          <CustomTextField label="First name" name="Fname"/>
           <ErrorMessage component={err} name="Fname" />
           <CustomTextField label="Last name" name="Lname" />
           <ErrorMessage component={err} name="Lname" />
           <CustomTextField label="Email Address" type="email" name="Email" />
           <ErrorMessage component={err} name="Email" />
-          <CustomTextField label="Wallet public key" name="PublicAddress" />
+          <CustomTextField label="Wallet public key" name="PublicAddress" showTooltip = {true}/>
           <ErrorMessage component={err} name="PublicAddress" />
         </Grid>
         <Divider className={classes.dividerStyle} />

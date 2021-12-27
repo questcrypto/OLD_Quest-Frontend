@@ -31,7 +31,7 @@ const FloorConfigSection = (props: any) => {
   }
 
   return (
-    <div>
+    <>
       <Grid item xs={2} className={classes.titleNumberStyle}>
         <FormTitleNumber>8</FormTitleNumber>
       </Grid>
@@ -90,7 +90,7 @@ const FloorConfigSection = (props: any) => {
         </Grid>
         <Divider className={classes.dividerStyle} />
       </Grid>
-    </div>
+    </>
   )
 }
 

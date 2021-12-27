@@ -20,8 +20,8 @@ const PropertyInfoSection = () => {
       <Grid item xs={10} container direction="column">
         <Grid item className={classes.formGroup}>
           <FormTitle>Property info</FormTitle>
-          <FieldSelect label="Type of property" name="PropertyType" options={propertyType} />
-          <ErrorMessage component={err} name="PropertyType" />
+          <FieldSelect label="Type of property" name="PropertyType" options={propertyType}/>
+          <ErrorMessage component={err} name="PropertyType"/>
           <CustomTextField label="Property name" name="PropertyName" />
           <ErrorMessage component={err} name="PropertyName" />
           <MoneyInputField label="Property current value" name="CurrentValue" acceptDecimals dollarPrefix />

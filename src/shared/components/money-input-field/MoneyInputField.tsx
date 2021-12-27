@@ -71,7 +71,7 @@ const IntegerNumberField = (props: Props) => {
                 handleNumberInput(values.value, form, field)
               }}
             />
-            <Icon />
+            {/* <Icon /> */}
           </TextWrappper>
         )
       }}

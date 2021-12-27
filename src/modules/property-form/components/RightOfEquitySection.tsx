@@ -71,7 +71,6 @@ const RightOfEquitySection = (props: any) => {
       </Grid>
       <Grid item xs={10} container direction="column">
         <FormTitle>Right of Equity (NFT)</FormTitle>
-        <p>Tokenized Representation of...</p>
         <Grid container spacing={3}>
           <Grid
             item

@@ -65,7 +65,7 @@ const IntegerNumberField = (props: Props) => {
               type="text"
               className={classes.root}
             />
-            <Icon />
+            {/* <Icon /> */}
           </TextWrappper>
         )
       }}

@@ -68,9 +68,6 @@ const RightOfGovernance = (props: any) => {
       </Grid>
       <Grid item xs={10} container direction="column">
         <FormTitle>Right of Governance (NFT)</FormTitle>
-        <p>
-          Respresentation of Governance / control factors affecting nominal value of fractionalized NFTs. Superseded by Right of Management.
-        </p>
         <Grid
           container
           spacing={3}

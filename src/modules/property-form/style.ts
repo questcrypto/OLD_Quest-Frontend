@@ -40,6 +40,7 @@ export const useStyle = makeStyles(() =>
       border: '1px dashed #BDBDBD',
       backgroundColor: '#F3F3F3 !important',
       borderRadius: '4px',
+      marginBottom: '20px',
     },
     fileNameStyle: {
       marginBottom: '16px',
@@ -51,6 +52,7 @@ export const useStyle = makeStyles(() =>
     },
     saveAndReviewStyle: {
       minWidth: '200px',
+      marginLeft: '20px',
     },
     accordionStyle: {
       width: '100%',
@@ -176,16 +178,19 @@ export const PropertyFormCont = styled.div`
 `
 export const FormTitleNumber = styled.div`
   background: ${colors.primary};
-  font-size: 16px;
+  font-size: 12px;
   color: ${colors.white};
   font-family: RobotoBold;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  &:hover{
+    background: #EB5757 !important;
+  }
 `
 export const FormTitle = styled.h4`
   font-size: 20px;

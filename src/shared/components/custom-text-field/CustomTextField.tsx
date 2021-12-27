@@ -1,10 +1,12 @@
 import React from 'react'
 import { Field } from 'formik'
 import TextField from '@material-ui/core/TextField'
+import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@material-ui/core/IconButton'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { colors } from 'shared/styles/theme'
 import { TextWrappper } from '../styles'
-import Icon from '../chatIcon/Icon'
+import Icon from '../chatIcon/infoIcon'
 
 const textFieldStyle = makeStyles(() =>
   createStyles({
@@ -17,17 +19,41 @@ const textFieldStyle = makeStyles(() =>
   })
 )
 
+const useStyles = makeStyles(theme => ({
+  customTooltip: {
+    backgroundColor: '#fff',
+    border:'1px solid #222',
+    color:'#222',
+    position:'absolute',
+    bottom:'50px',
+    left:'-30px',
+    minWidth:'100px'
+  },
+  customArrow: {
+    fontSize: 20,
+    color: "#222",
+    position:'absolute',
+    bottom:'-15px !important',
+    left:'55px !important',
+    top:'unset !important',
+    transform: 'rotate(180deg) !important',
+  },
+}));
+
 interface Props {
   name: string
   label?: string
   type?: string
   isDisabled?: boolean
   handleBlur?: any
+  showTooltip?: boolean
+  toolTipText?: string
 }
 
 const CustomTextField = (props: Props) => {
   const { name, label, type, isDisabled, handleBlur } = props
   const classes = textFieldStyle()
+  const styles = useStyles()
   return (
     <Field name={name}>
       {({ field, form }: any) => {
@@ -52,7 +78,16 @@ const CustomTextField = (props: Props) => {
               className={classes.root}
               disabled={isDisabled}
             />
-            <Icon/>
+            {props?.showTooltip && (
+              <Tooltip arrow title="For more details please visit website"  classes={{
+                tooltip: styles.customTooltip,
+                arrow: styles.customArrow
+              }}>
+                  <IconButton className='infoIcon'>
+                    <Icon />
+                  </IconButton>
+              </Tooltip>
+            )}
           </TextWrappper>
         )
       }}

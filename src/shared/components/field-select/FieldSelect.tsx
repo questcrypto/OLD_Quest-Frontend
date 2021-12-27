@@ -60,7 +60,6 @@ const FieldSelect = (props: Props) => {
                 )
               })}
             </TextField>
-            <Icon />
           </TextWrappper>
         )
       }}

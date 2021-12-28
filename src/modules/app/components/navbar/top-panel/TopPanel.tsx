@@ -46,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid',
   },
   walletDivTagText: {},
+  topHeader : {
+    position: 'sticky',
+      top: '0',
+  }
 }))
 
 const TopPanel = (props: any) => {
@@ -280,7 +284,7 @@ const TopPanel = (props: any) => {
           hasAccess={appAccess}
         />
       )} */}
-      <TopPanelCont>
+      <TopPanelCont className={classes.topHeader}>
         {
           !loggedIn ? <CustomButton
             size="large"

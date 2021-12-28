@@ -25,6 +25,7 @@ export interface Colors {
   greenColor: string
   darkRed: string
   gold: string
+  cardbordercolor:string
 }
 
 export const colors: Colors = {
@@ -43,6 +44,7 @@ export const colors: Colors = {
   greenColor: '#219653',
   darkRed: '#bf4834',
   gold: '#E1B56F',
+  cardbordercolor: "#DCDADA",
 }
 
 export interface ThemeStarter {

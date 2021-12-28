@@ -53,6 +53,15 @@ export const useStyles = makeStyles({
     opacity: 0.87,
     fontFamily: 'RobotoRegular',
   },
+  cardWrapper: {
+    border: `1px solid ${colors.cardbordercolor}`,
+    boxShadow: 'none',
+   
+      "&:hover" :{
+        boxShadow: '0 2px 4px rgb(0 0 0 / 25%)',
+      
+    }
+  },
   addPropertyBtnStyle: {
     height: '36px',
     // color: `${colors.white} !important`,
@@ -76,6 +85,7 @@ export const useStyles = makeStyles({
     fontSize: '12px !important',
     height: '31px',
   },
+  
 })
 
 export const StyledCard = styled<any>(Card)`

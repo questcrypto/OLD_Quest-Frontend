@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 
 export const TopPanelCont = styled.div`
   padding-right: 10px;
@@ -25,3 +26,4 @@ export const TopPanelCont = styled.div`
     flex-direction: column;
   }
 `
+

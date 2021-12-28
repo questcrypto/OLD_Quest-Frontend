@@ -37,6 +37,11 @@ import TabComponent from 'shared/tab-component'
 import DocumentsTable from 'modules/treasury/treasury-details/components/DocumentsTable'
 import { treasuryDetailsTabList } from 'shared/helpers/dataConstant'
 import { TabContext, TabList, TabPanel } from '@material-ui/lab'
+import demoImage from '../../../assets/images/metamask.jpg'
+import Slider from 'react-slick'
+import FormFeatures from 'modules/property-features/FormFeatures'
+import TokenHolderTable from 'modules/treasury/treasury-details/components/TokenHolderTable'
+import TransactionTable from 'modules/treasury/treasury-details/components/TransactionTable'
 
 const GeneralUserPropertyDetails = (props: any) => {
   const classes = useStyles()
@@ -47,8 +52,31 @@ const GeneralUserPropertyDetails = (props: any) => {
   const [imageList, setImageList] = useState<any>([])
   const [docList, setDocList] = useState<any>([])
   const [selectImg, setSelectImg] = useState('')
+  const [image, setImage] = useState()
   const { userInfo, loggedIn } = props
 
+  const settings: any = {
+    dots: false,
+    infinite: false,
+    speed: 800,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    loop: false,
+    responsive: [
+      {
+        breakpoint: 1365,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+    ],
+  }
   useEffect(() => {
     const propertyId = props.match.params.propertyId
     const getPropertyDetails = async () => {
@@ -87,16 +115,26 @@ const GeneralUserPropertyDetails = (props: any) => {
     }
   }
 
-  const [value, setValue] = useState<any>('1');
-  const [factAndFeatureTab, setFactAndFeatureTab] = useState<any>('1');
+  const [value, setValue] = useState<any>('1')
+  const [factAndFeatureTab, setFactAndFeatureTab] = useState<any>('1')
+  const [buyTokenTab, setFeaturBuyTokenTab] = useState<any>('1')
 
-  const handleChange = (event:any, newValue:any) => {
-    setValue(newValue);
-  };
+  const handleChange = (event: any, newValue: any) => {
+    setValue(newValue)
+  }
 
-  const factAndFeatureTabChange= (event:any, newValue:any) => {
-    setFactAndFeatureTab(newValue);
-  };
+  const factAndFeatureTabChange = (event: any, newValue: any) => {
+    setFactAndFeatureTab(newValue)
+  }
+
+  const buyTokenTabChange = (event: any, newValue: any) => {
+    setFeaturBuyTokenTab(newValue)
+  }
+
+  const changeImage = (src: any) => {
+    console.log(src)
+    setImage(src)
+  }
 
   return (
     <Box>
@@ -109,11 +147,13 @@ const GeneralUserPropertyDetails = (props: any) => {
             <HeaderTitle>{propertyInfo?.propertyDetails ? propertyInfo.propertyDetails.PropertyName : ''}</HeaderTitle>
           </Grid>
           <Grid item>
-            {
-              loggedIn ? <PrimaryButton variant="contained" onClick={() => handleEditProperty()}>
+            {loggedIn ? (
+              <PrimaryButton variant="contained" onClick={() => handleEditProperty()}>
                 REVIEW PROPERTY
-              </PrimaryButton> : ''
-            }
+              </PrimaryButton>
+            ) : (
+              ''
+            )}
           </Grid>
         </Grid>
       </HeaderContainer>
@@ -123,94 +163,128 @@ const GeneralUserPropertyDetails = (props: any) => {
         <div>
           {!!propertyInfo && Object.values(propertyInfo).length > 0 ? (
             <div>
-              <Paper className={classes.treasuryPaper} elevation={1}>
-                <Grid container className={classes.infoContStyle} spacing={2}>
-                  <Grid item>
-                    <img src={`${imageBaseUrl}/${selectImg}`} alt="" />
-                  </Grid>
-                  <Grid item>
-                    <InfoBoldTxt>{propertyInfo.propertyDetails.Address1!}</InfoBoldTxt>
-                    <InfoLightTxt>
-                      {`${propertyInfo.propertyDetails.Address2!},
-                          ${propertyInfo.propertyDetails.State!},
-                          ${propertyInfo.propertyDetails.City!},
-                          ${propertyInfo.propertyDetails.Country!} 
-                          ${propertyInfo.propertyDetails.PostalCode!}
-                        `}
-                    </InfoLightTxt>
-                  </Grid>
-                </Grid>
-                <TabContext value={value}>
-                  <Box >
-                    <TabList onChange={handleChange} aria-label="lab API tabs example">
-                      <Tab label="Property Details" value="1" />
-                      <Tab label="Facts and Features" value="2" />
-                      <Tab label="Buy Tokens" value="3" />
-                    </TabList>
-                  </Box>
-                  <TabPanel value="1">
-                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                    <Grid item>
-                      <InfoLightTxt>Onboarding date</InfoLightTxt>
-                      <InfoBoldTxt>{formatExtendedDateString(propertyInfo.propertyDetails.CreatedAt)}</InfoBoldTxt>
-                    </Grid>
-                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                    <Grid item>
-                      <InfoLightTxt>Status</InfoLightTxt>
-                      <InfoBoldTxt>Published</InfoBoldTxt>
-                    </Grid>
-                    <Divider orientation="vertical" className={classes.verticalDividerStyle} />
-                    <Grid item>
-                     <InfoLightTxt>Estimated value</InfoLightTxt>
-                     <InfoBoldTxt>{currencyString(propertyInfo.propertyDetails.CurrentValue)}</InfoBoldTxt>
-                    </Grid>
-                    <TreasuryOwnerCont>
-                      <div>
-                      <InfoLightTxt>Owner</InfoLightTxt>
-                      <InfoBoldTxt>{getFullName(propertyInfo.propertyDetails.Fname, propertyInfo.propertyDetails.Lname)}</InfoBoldTxt>
-                      </div>
-                  
-                    </TreasuryOwnerCont>
-                    <TreasuryOwnerCont>
-                    <div>
-                    <InfoLightTxt>HOA Admin</InfoLightTxt>
-                    <InfoBoldTxt>{'HOA Admin'}</InfoBoldTxt>
+              <>
+                <Grid className={classes.infoContStyle} spacing={2}>
+                  <Grid item className={classes.infoContSlider}>
+                    <div className={classes.infoItemImages}>
+                      <img src={demoImage} alt="" />
                     </div>
-                    
-                    </TreasuryOwnerCont>
-                  </TabPanel>
-                  <TabPanel value="2">
-                    <TabContext value={factAndFeatureTab}>
+                    <div>
+                      <Slider {...settings}>
+                        <div className={classes.activeItem}>
+                          <img src={demoImage} alt="" />{' '}
+                        </div>
+                        <div onClick={(e: any) => changeImage(e.target.src)}>
+                          <img src={demoImage} alt="" />{' '}
+                        </div>
+                        <div>
+                          <img src={demoImage} alt="" />{' '}
+                        </div>
+                        <div>
+                          <img src={demoImage} alt="" />{' '}
+                        </div>
+                      </Slider>
+                    </div>
+                  </Grid>
+
+                  <Grid item className={classes.rightSection}>
+                    <TabContext value={value}>
                       <Box>
-                        <TabList onChange={factAndFeatureTabChange} aria-label="lab API tabs example">
-                          <Tab label="Features" value="1" />
-                          <Tab label="Facts" value="2" />
-                        
+                        <TabList className={classes.TabListRow} onChange={handleChange} aria-label="lab API tabs example">
+                          <Tab label="Property Details" value="1" />
+                          <Tab label="Facts and Features" value="2" />
+                          <Tab label="Buy Tokens" value="3" />
                         </TabList>
                       </Box>
-                      <TabPanel value="1">
-                        
-                        
-                       
-                          <Features data={propertyInfo.propertyDetails} />
-                       
+                      <TabPanel className={classes.tadWrapper} value="1">
+                        <div className={classes.topHeading}>
+                          <InfoBoldTxt>{propertyInfo.propertyDetails.Address1!}</InfoBoldTxt>
+                          <InfoLightTxt>
+                            {`${propertyInfo.propertyDetails.Address2!},
+                                ${propertyInfo.propertyDetails.State!},
+                                ${propertyInfo.propertyDetails.City!},
+                                ${propertyInfo.propertyDetails.Country!} 
+                                ${propertyInfo.propertyDetails.PostalCode!}
+                              `}
+                          </InfoLightTxt>
+                        </div>
+                        <div className={classes.tadListingRow}>
+                          <Grid item>
+                            <InfoLightTxt>Onboarding date</InfoLightTxt>
+                            <InfoBoldTxt>{formatExtendedDateString(propertyInfo.propertyDetails.CreatedAt)}</InfoBoldTxt>
+                          </Grid>
+                          <Grid item>
+                            <InfoLightTxt>Status</InfoLightTxt>
+                            <InfoBoldTxt>Published</InfoBoldTxt>
+                          </Grid>
+                          <Grid item>
+                            <InfoLightTxt>Estimated value</InfoLightTxt>
+                            <InfoBoldTxt>{currencyString(propertyInfo.propertyDetails.CurrentValue)}</InfoBoldTxt>
+                          </Grid>
+                        </div>
+                        <TreasuryOwnerCont className={classes.ownerCont}>
+                          <InfoLightTxt>Owner</InfoLightTxt>
+                          <InfoBoldTxt>{getFullName(propertyInfo.propertyDetails.Fname, propertyInfo.propertyDetails.Lname)}</InfoBoldTxt>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                              d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"
+                              fill="black"
+                              fill-opacity="0.54"
+                            />
+                          </svg>
+                        </TreasuryOwnerCont>
+                        {/* <TreasuryOwnerCont>
+                          <div>
+                            <InfoLightTxt>HOA Admin</InfoLightTxt>
+                            <InfoBoldTxt>{'HOA Admin'}</InfoBoldTxt>
+                          </div>
+                        </TreasuryOwnerCont> */}
                       </TabPanel>
-                      <TabPanel value="2">
-                        
-                          
-                      
-                        
-                          <RentalFacts data={propertyInfo.propertyDetails} />
-                        
+                      <TabPanel className={classes.tadWrapper} value="2">
+                        <TabContext value={factAndFeatureTab}>
+                          <TabList onChange={factAndFeatureTabChange} className={classes.innerTab} aria-label="lab API tabs example">
+                            <Tab label="Features" value="1" />
+                            <Tab label="Facts" value="2" />
+                          </TabList>
+                          <TabPanel value="1">
+                            <Features data={propertyInfo.propertyDetails} />
+                          </TabPanel>
+                          <TabPanel value="2">
+                            <RentalFacts data={propertyInfo.propertyDetails} />
+                          </TabPanel>
+                        </TabContext>
                       </TabPanel>
-                     
+                      <TabPanel className={classes.tadWrapper} value="3">
+                        <TabContext value={buyTokenTab}>
+                          <TabList onChange={buyTokenTabChange} className={classes.innerTab} aria-label="lab API tabs example">
+                            <Tab label="Equity" value="1" />
+                            <Tab label="Governance" value="2" />
+                            <Tab label="Income" value="3" />
+                          </TabList>
+                          <TabPanel className={classes.mainWrapper} value="1">
+                            <FormFeatures />
+                          </TabPanel>
+                          <TabPanel value="2">
+                            <FormFeatures />{' '}
+                          </TabPanel>
+                          <TabPanel value="3">
+                            <FormFeatures />{' '}
+                          </TabPanel>
+                        </TabContext>
+                      </TabPanel>
                     </TabContext>
-                  </TabPanel>
-                  <TabPanel value="3"></TabPanel>
-                </TabContext>
-              </Paper>
+                  </Grid>
+                </Grid>
+              </>
               <TabComponent tabOptions={treasuryDetailsTabList} activeTab={activeTab} setActiveTab={setActiveTab} />
-              <DocumentsTable data={docList} />
+              {console.log(activeTab)}
+              {activeTab == 'documents' ? (
+                <DocumentsTable data={docList} />
+              ) : activeTab == 'tokenHolders' ? (
+                <TokenHolderTable data={docList} />
+              ) : (
+                <TransactionTable data={docList} />
+              )}
             </div>
           ) : (
             <NoDetailsAvailable>

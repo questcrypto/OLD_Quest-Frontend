@@ -40,7 +40,7 @@ const GeneralUserDashboard = (props: any) => {
   const [onAuctionLoading, setOnAuctionLoading] = useState(false)
   const [postAuctionProperties, setPostAuctionProperties] = useState<any>([])
   const [postAuctionLoading, setPostAuctionLoading] = useState(false)
-  const [showFilterSideBar, setShowFilterSideBar] = useState(true)
+  const [showFilterSideBar, setShowFilterSideBar] = useState(false)
   const [showButtonName, setShowButtonName] = useState<any>([])
   const [showPropertyList , setShowPropertyList] =useState<any>([])
   const { userInfo } = props
@@ -114,7 +114,7 @@ const GeneralUserDashboard = (props: any) => {
               ))}
             </select>
           </Grid>
-          <Grid
+          {/* <Grid
             className={classes.filterIcon}
             onClick={() => {
               showFilterSidebar()
@@ -128,7 +128,7 @@ const GeneralUserDashboard = (props: any) => {
               <path d="M15 1.44141H0V2.5957H15V1.44141Z" fill="#8C8C8C" />
             </svg>{' '}
             <span className={classes.filterText}>Filter</span>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
       <div>

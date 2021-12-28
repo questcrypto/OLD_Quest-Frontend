@@ -9,8 +9,8 @@ const Features = (props: any) => {
   const { data } = props
 
   return (
-    <Grid container spacing={6}>
-      <Grid item xs={12} md={6}>
+    <Grid >
+      <Grid >
         <FeatureInfo>
           <FeatureName>
             <span>Type</span>
@@ -60,7 +60,7 @@ const Features = (props: any) => {
           <FeatureValue>{data.Carpot}</FeatureValue>
         </FeatureInfo>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid>
         <FeatureInfo>
           <FeatureName>
             <span>Parking Space</span>

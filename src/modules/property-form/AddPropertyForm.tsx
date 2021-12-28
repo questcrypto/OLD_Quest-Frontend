@@ -151,17 +151,25 @@ const AddPropertyForm = (props: any) => {
       protocol: 'https',
     })
 
-    imageList.map((item: any) => {
-      const file = new FileReader()
-      file.readAsArrayBuffer(item)
-      file.onloadend = async function () {
-        const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
-        const url = 'https://ipfs.io/ipfs/' + nftCid
-        item.file = url
-      }
+    const imagelist  =   imageList.map((item: any ,type: string) => {
+      console.log(item , "item");
+      
+      return new Promise((resolve)=>{
+        const file = new FileReader()
+        file.readAsArrayBuffer(item)
+        file.onloadend = async function () {
+          const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
+          const url = 'https://ipfs.io/ipfs/' + nftCid
+          item.hash = url
+          resolve(url)
+        }
+      }).then((result: any) => {
+        return { [type]: result }
+      })
     })
 
     const uploadToIPFS = (item: any, type: string) => {
+      
       return new Promise((resolve) => {
         const file = new FileReader()
         file.readAsArrayBuffer(item.file)
@@ -175,6 +183,7 @@ const AddPropertyForm = (props: any) => {
         return { [type]: result }
       })
     }
+  
     const rightofequity = propertyDocumentList?.rightofequity.map(async (item: any) => {
       return uploadToIPFS(item, 'rightofequity')
     })
@@ -226,16 +235,31 @@ const AddPropertyForm = (props: any) => {
       documents: [],
     }
 
+    const propertyImages = {
+      name: 'Property Images',
+      images: [],
+    }
+
+    const propertyDocuments = {
+      name: 'Property Documents',
+      documents: [],
+    }
+
+    const _propertyFiles: any = {
+      propertyImages,
+      propertyDocuments
+    }
+
     const _rightsInformation: any = {
       rightOfEquity,
       rightOfMaintenance,
       rightOfPossesion,
       rightOfSale,
-      rightOfGovernance,
+      rightOfGovernance
     }
 
     let nftCid
-    await Promise.all([...rightofsale, ...rightofpossesions, ...rightofequity, ...rightofmaintenance, ...rightofgovernace]).then(
+    await Promise.all([...rightofsale, ...rightofpossesions, ...rightofequity, ...rightofmaintenance, ...rightofgovernace, ...imagelist, ...uploadpropertydocument]).then(
       async function (results) {
         console.log(results, 'prince')
         results?.forEach((obj: any) => {
@@ -243,10 +267,10 @@ const AddPropertyForm = (props: any) => {
             _rightsInformation.rightOfEquity.documents.indexOf(obj.rightofequity) == -1 &&
               _rightsInformation.rightOfEquity.documents.push(obj?.rightofequity)
           }
-          if (obj.uploadpropertydocument !== undefined) {
-            _rightsInformation.uploadpropertydocument.documents.indexOf(obj.uploadpropertydocument) == -1 &&
-              _rightsInformation.uploadpropertydocument.documents.push(obj?.uploadpropertydocument)
-          }
+          // if (obj.uploadpropertydocument !== undefined) {
+          //   _rightsInformation.uploadpropertydocument.documents.indexOf(obj.uploadpropertydocument) == -1 &&
+          //     _rightsInformation.uploadpropertydocument.documents.push(obj?.uploadpropertydocument)
+          // }
           if (obj.rightofmaintenance !== undefined) {
             _rightsInformation.rightOfMaintenance.documents.indexOf(obj.rightofmaintenance) == -1 &&
               _rightsInformation.rightOfMaintenance.documents.push(obj?.rightofmaintenance)
@@ -263,9 +287,21 @@ const AddPropertyForm = (props: any) => {
             _rightsInformation.rightOfGovernance.documents.indexOf(obj.rightofgovernace) == -1 &&
               _rightsInformation.rightOfGovernance.documents.push(obj?.rightofgovernace)
           }
+
+          if (obj.imageList !== undefined) {
+            _propertyFiles.propertyImages.images.indexOf(obj.imageList) == -1 &&
+              _propertyFiles.propertyImages.images.push(obj?.imageList)
+          }
+
+          if (obj.uploadpropertydocument !== undefined) {
+            _propertyFiles.propertyDocuments.documents.indexOf(obj.uploadpropertydocument) == -1 &&
+              _propertyFiles.propertyDocuments.documents.push(obj?.uploadpropertydocument)
+          }
+
         })
 
         values.rightofInformation = _rightsInformation
+        values.propertyFiles = _propertyFiles
         nftCid = (await ipfs.add(Buffer.from(JSON.stringify(values))))[0].hash
         console.log(nftCid, 'nftCid')
         // Aarhan You can put your code here

@@ -4,5 +4,5 @@
 // export const apiBaseUrl = 'https://questcrypto.app'
 // export const apiBaseUrl = 'https://questapi.rapidinnovation.dev'
 // export const apiBaseUrl = 'https://api.questcrypto.app'
-export const apiBaseUrl = process.env.API_BASE_URL || 'http://104.42.61.233:5000';
+export const apiBaseUrl = process.env.API_BASE_URL || 'https://api.questcrypto.app';
 export const imageBaseUrl = process.env.IMAGE_BASE_URL || 'https://api.questcrypto.app';

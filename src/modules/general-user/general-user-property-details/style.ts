@@ -18,10 +18,17 @@ export const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
       maxHeight: '385px',
     },
+    infoItemImages : {
+      border: '1px solid rgb(30 52 68 / 20%)',
+      borderRadius: '5px',
+      overflow : 'radius',
+      marginBottom: '20px',
+    },
     infoContStyle: {
       position: 'relative',
-      alignItems: 'center',
       marginBottom: '20px',
+      display: 'flex',
+      flexDirection: 'row',
       '& img': {
         width: '93px',
         height: '74px',
@@ -30,6 +37,34 @@ export const useStyles = makeStyles((theme: Theme) =>
     verticalDividerStyle: {
       height: '29px',
       margin: '0 30px !important',
+    },
+    infoContSlider: {
+      flex:1,
+      maxWidth: '50%',
+      padding: '22px !important',
+      background: '#fff',
+      borderRadius: '4px',
+      '& img': {
+        width :'100%',
+        height: 'auto',
+      },
+      '& slick-slide':{
+        padding: '4px',
+        boxSizing: 'border-box',
+        border: '1px solid transparent',
+        cursor: 'pointer',
+        opacity: 0.87,
+        '& img': {
+          width: '100%',
+        },
+        
+      },
+      
+    },
+    activeItem: {
+      border: '1px solid #333',
+      boxSizing: 'border-box',
+      cursor:'pointer'
     },
     accordionStyle: {
       boxShadow: 'none',
@@ -76,6 +111,95 @@ export const useStyles = makeStyles((theme: Theme) =>
     dividerStyle: {
       margin: '50px 0 !important',
     },
+    rightSection: {
+      paddingLeft:'37px',
+      flex: '1',
+      '& button': {
+        padding:'0',
+        minWidth: 'auto',
+        textTransform: 'capitalize',
+        fontSize: '16px',
+        color: '#302E35',
+        fontWeight: 400,
+      },
+    },
+    TabListRow : {
+      '& div' : {
+        '& div' : {
+          display: 'flex',
+          justifyContent: 'space-between',
+        },
+      },
+      
+    },
+    topHeading: {
+      '& h2' : {
+        fontWeight: 700,
+        fontSize: '30px',
+        lineHeight: '36px',
+        color: '#302E35',
+      },
+      '& p' : {
+        fontWeight: 400,
+        fontSize: '14px',
+        lineHeight: '17px',
+        color: '#302E35',
+      },
+    },
+    tadWrapper : {
+      background: '#ffffff',
+      boxShadow: '0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.14), 0px 1px 8px rgba(0, 0, 0, 0.12)',
+      borderRadius: '4px',
+      marginTop: '12px',
+      height: 'calc(100% - 110px)',
+      overflowY: 'auto',
+      maxHeight: '533px',
+    },
+    tadListingRow: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      margin: '28px 0 48px'
+    },
+    mainWrapper : {
+      background:' #F5F5F5',
+      border: '1px solid #E0E0E0',
+      marginTop: '50px',
+      paddingBottom: 0,
+    },
+    ownerCont: {
+      background: '#FAFAFA',
+      border: '1px solid #F2F2F2',
+      boxSizing: 'border-box',
+      borderRadius: '2px',
+      maxWidth: '240px' ,
+      flexDirection: 'column',
+      alignItems: 'flex-start !important',
+      padding: '10px',
+      position: 'relative',
+      '& svg ' : {
+        position: 'absolute',
+        right: '17px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+      }
+    },
+    innerTab: {
+      display:'flex',
+      flexDirection: 'row',
+      margin: '-24px -24px 0',
+      '& button': {
+        textTransform: 'capitalize',
+        fontSize: '16px',
+        color: '#1E3444',
+        fontWeight: 400,
+        flex: '1',
+        background: '#DDDADA',
+      },
+      
+    },
+    selectedTab: {
+      background: '#F5E6B9  !important',
+    }
   })
 )
 

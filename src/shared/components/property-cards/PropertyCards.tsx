@@ -67,7 +67,7 @@ const PropertyCards = (props: any) => {
               let id = p.id
               const auctionDetails = p.auctionDetails
               const currentValue = p.CurrentValue
-              console.log(p, "Prince");
+              // console.log(p, "Prince");
               const isLast = i === list.length - 1 ? true : false
               if (p.PropertyDetails) {
                 const details = p.PropertyDetails

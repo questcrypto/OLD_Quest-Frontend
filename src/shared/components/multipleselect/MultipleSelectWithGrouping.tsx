@@ -75,7 +75,7 @@ const MultipleSelectWithGrouping = (props: any) => {
               {!props?.showTooltip && (
                 <IconButton className="infoIcon">
                   <span className="tooltiptext">
-                    For more details please visit<a href={props?.link}>Website</a>
+                    For more details please visit<a href={props?.link} target='_blank'>Website</a>
                   </span>
                   <Icon />
                 </IconButton>

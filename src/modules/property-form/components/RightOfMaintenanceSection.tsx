@@ -86,7 +86,7 @@ const RightOfMaintenanceSection = (props: any) => {
         <FormTitleNumber>11</FormTitleNumber>
       </Grid>
       <Grid item xs={10} container direction="column">
-        <FormTitle>Right of Management </FormTitle>
+        <FormTitle>Right of Management (NFT)</FormTitle>
         <Grid
           container
           spacing={3}

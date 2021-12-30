@@ -65,7 +65,7 @@ const CustomOptionGroup = (props: any, children: any) => {
               {!props?.showTooltip && (
                
                   <IconButton className="infoIcon">
-                    <span className="tooltiptext">For more details please visit<a href="https://metamask.zendesk.com/hc/en-us/articles/360015488791-How-to-View-Account-Details">Website</a></span>
+                    <span className="tooltiptext">For more details please visit<a href="https://metamask.zendesk.com/hc/en-us/articles/360015488791-How-to-View-Account-Details" target='_blank'>Website</a></span>
                     <Icon />
                   </IconButton>
                 

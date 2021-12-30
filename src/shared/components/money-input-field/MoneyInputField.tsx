@@ -105,7 +105,7 @@ const IntegerNumberField = (props: any) => {
             {!props?.showTooltip && (
               <IconButton className="infoIcon">
                 <span className="tooltiptext">
-                  For more details please visit<a href={link}>Website</a>
+                  For more details please visit<a href={link} target='_blank'>Website</a>
                 </span>
                 <Icons />
               </IconButton>

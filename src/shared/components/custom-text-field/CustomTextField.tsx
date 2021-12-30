@@ -94,7 +94,7 @@ const CustomTextField = (props: Props) => {
             {!props?.showTooltip && (
               <IconButton className="infoIcon">
                 <span className="tooltiptext">
-                  For more details please visit<a href={link}>Website</a>
+                  For more details please visit<a href={link} target='_blank'>Website</a>
                 </span>
                 <Icon />
               </IconButton>

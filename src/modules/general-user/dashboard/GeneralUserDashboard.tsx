@@ -54,6 +54,13 @@ const GeneralUserDashboard = (props: any) => {
     getPostAuctionProperties(setPostAuctionLoading, setPostAuctionProperties)
   }, [userInfo])
 
+  useEffect(()=>{
+   console.log(publishedProperties,"publishedProperties");
+   console.log(approvedProperties,"approvedProperties");
+   console.log(publishedProperties,"publishedProperties");
+   console.log(onAuctionProperties,"onAuctionProperties");
+   console.log(postAuctionProperties,"postAuctionProperties");
+  })
   //handlefiltersidebar
   const showFilterSidebar = () => {
     if (showFilterSideBar === true) {

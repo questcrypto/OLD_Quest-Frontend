@@ -74,7 +74,7 @@ const GeneralUserPropertyDetails = (props: any) => {
       try {
         setDataLoading(true)
         const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
-        if (!!res && res.data) {
+      if (!!res && res.data) {
           const images = []
           const docs = []
           setPropertyInfo(res.data)
@@ -98,11 +98,6 @@ const GeneralUserPropertyDetails = (props: any) => {
     getPropertyDetails()
   }, [props.match.params.propertyId])
 
-  useEffect(()=>{
-    console.log(demoImage );
-    
-  })
-
   const handleEditProperty = () => {
     if (!!userInfo && userInfo.role === 1) {
       history.push(`${Paths.editPropertyForm}/${props.match.params.propertyId}`)
@@ -110,7 +105,6 @@ const GeneralUserPropertyDetails = (props: any) => {
       history.push(`${Paths.viewPropertyForm}/${props.match.params.propertyId}`)
     }
   }
-
   const [value, setValue] = useState<any>('1')
   const [factAndFeatureTab, setFactAndFeatureTab] = useState<any>('1')
   const [buyTokenTab, setFeaturBuyTokenTab] = useState<any>('1')
@@ -131,6 +125,8 @@ const GeneralUserPropertyDetails = (props: any) => {
     console.log(src)
     setImage(src)
   }
+
+
 
   // const fetchProperties = async()=>{
   //   const response = fetch('https://ipfs.io/ipfs/QmVNkMHuWsP4Awo3zxyRh2H2efCwwwUsjZMS2bzEoWcbrH');

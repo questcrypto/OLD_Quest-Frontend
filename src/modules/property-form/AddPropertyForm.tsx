@@ -326,6 +326,7 @@ const AddPropertyForm = (props: any) => {
         const data = { ...values }
         delete data.FloorDetails
         Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
+        formData.append('NftCid', nftCid);
         formData.append('PropertyImages', JSON.stringify(imageData))
         formData.append('PropertyDocs', JSON.stringify(documentData))
         formData.append('FloorDetails', JSON.stringify(values.FloorDetails))

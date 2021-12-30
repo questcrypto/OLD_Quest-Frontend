@@ -17,14 +17,14 @@ import {
   getPostAuctionProperties,
   getPreAuctionProperties,
   getPublishedProperties,
-  getAllPropertiesList
+  getAllPropertiesList,
 } from 'logic/api/propertiesService'
 import { refreshPublishedPropertiesList } from 'logic/api/ownerPropertiesServices'
 import FilterSideBar from 'modules/app/components/filtersidebar/FilterSideBar'
 import FilterButton from 'modules/app/components/filterbuttons/FilterButton'
 
 const GeneralUserDashboard = (props: any) => {
-  console.log('GeneralUserDashboard');
+  console.log('GeneralUserDashboard')
   const classes = useStyles()
   // const [activeTab, setActiveTab] = useState('published')
   const [activeTab, setActiveTab] = useState('All')
@@ -42,16 +42,16 @@ const GeneralUserDashboard = (props: any) => {
   const [postAuctionLoading, setPostAuctionLoading] = useState(false)
   const [showFilterSideBar, setShowFilterSideBar] = useState(false)
   const [showButtonName, setShowButtonName] = useState<any>([])
-  const [showPropertyList , setShowPropertyList] =useState<any>([])
+  const [showPropertyList, setShowPropertyList] = useState<any>([])
   const { userInfo } = props
 
   useEffect(() => {
-    getAllPropertiesList(setNewPropertiesList, setNewPropertiesList);
-    getApproveProperties(setApprovedLoading, setApprovedProperties);
-    getPublishedProperties(setPublishedLoading, setPublishedProperties);
-    getPreAuctionProperties(setPreAuctionLoading, setPreAuctionProperties);
-    getOnAuctionProperties(setOnAuctionLoading, setOnAuctionProperties);
-    getPostAuctionProperties(setPostAuctionLoading, setPostAuctionProperties);
+    getAllPropertiesList(setNewPropertiesList, setNewPropertiesList)
+    getApproveProperties(setApprovedLoading, setApprovedProperties)
+    getPublishedProperties(setPublishedLoading, setPublishedProperties)
+    getPreAuctionProperties(setPreAuctionLoading, setPreAuctionProperties)
+    getOnAuctionProperties(setOnAuctionLoading, setOnAuctionProperties)
+    getPostAuctionProperties(setPostAuctionLoading, setPostAuctionProperties)
   }, [userInfo])
 
   //handlefiltersidebar
@@ -142,7 +142,11 @@ const GeneralUserDashboard = (props: any) => {
               {activeTab === 'new' && <PropertyCards list={[]} dataLoading={newPropertyLoading} />}
               {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
               {activeTab === 'published' && (
-                <PropertyCards refresh={() => refreshPublishedPropertiesList(setPublishedLoading, setPublishedProperties, userInfo)} list={publishedProperties} dataLoading={publishedLoading} />
+                <PropertyCards
+                  refresh={() => refreshPublishedPropertiesList(setPublishedLoading, setPublishedProperties, userInfo)}
+                  list={publishedProperties}
+                  dataLoading={publishedLoading}
+                />
               )}
               {activeTab === 'preAuction' && <PropertyCards list={preAuctionProperties} dataLoading={preAuctionLoading} />}
               {activeTab === 'onAuction' && <PropertyCards list={onAuctionProperties} dataLoading={onAuctionLoading} />}

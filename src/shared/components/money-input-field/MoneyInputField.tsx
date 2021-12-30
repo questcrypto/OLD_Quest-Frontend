@@ -6,6 +6,35 @@ import { colors } from 'shared/styles/theme'
 import NumberFormat from 'react-number-format'
 import { TextWrappper } from '../styles'
 import Icon from '../chatIcon/Icon'
+import { IconButton, Tooltip } from '@material-ui/core'
+import Icons from '../chatIcon/infoIcon'
+
+const useStyles = makeStyles((theme) => ({
+  customTooltip: {
+    backgroundColor: '#ffffff',
+    border: '1px solid #F1EDED',
+    position: 'absolute',
+    bottom: '50px',
+    left: '-100px',
+    minWidth: '165px',
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
+    borderRadius: '5px',
+    fontSize: '14px',
+    lineHeight: '17px',
+    color: '#8C8C8C',
+    padding: '8px 15px',
+  },
+  customArrow: {
+    fontSize: 20,
+    color: '#ffffff',
+    textShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
+    position: 'absolute',
+    bottom: '-15px !important',
+    left: '85px !important',
+    top: 'unset !important',
+    transform: 'rotate(180deg) !important',
+  },
+}))
 
 const textFieldStyle = makeStyles(() =>
   createStyles({
@@ -24,11 +53,13 @@ interface Props {
   handleBlur?: any
   acceptDecimals?: boolean
   dollarPrefix?: boolean
+  link?: string
 }
 
-const IntegerNumberField = (props: Props) => {
+const IntegerNumberField = (props: any) => {
   const classes = textFieldStyle()
-  const { name, label, maxLength, handleBlur, acceptDecimals, dollarPrefix } = props
+  const styles = useStyles()
+  const { name, label, maxLength, handleBlur, acceptDecimals, dollarPrefix, link } = props
 
   const handleNumberInput = (value: any, form: any, field: any) => {
     // const { value } = e.target
@@ -71,7 +102,14 @@ const IntegerNumberField = (props: Props) => {
                 handleNumberInput(values.value, form, field)
               }}
             />
-            {/* <Icon /> */}
+            {!props?.showTooltip && (
+              <IconButton className="infoIcon">
+                <span className="tooltiptext">
+                  For more details please visit<a href={link}>Website</a>
+                </span>
+                <Icons />
+              </IconButton>
+            )}
           </TextWrappper>
         )
       }}

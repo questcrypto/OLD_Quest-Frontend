@@ -105,9 +105,9 @@ const UploadDocument = (props: any) => {
             />
             {showFileError && files.length === 0 && <Error>Document is required</Error>}
             <DocFormWrapper>
-              <CustomTextField label="Name" name="name" />
+              <CustomTextField label="Name" name="name" showTooltip = {true}/>
               <ErrorMessage component={err} name="name" />
-              <CustomTextField label="Description" name="description" />
+              <CustomTextField label="Description" name="description" showTooltip = {true}/>
               <ErrorMessage component={err} name="description" />
               <UploadDocBtnGroup>
                 <SecondaryButton type="button" onClick={() => setShowDocModal(false)}>

@@ -5,7 +5,10 @@ import { ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
 import CustomTextField from 'shared/components/custom-text-field'
 import FieldSelect from 'shared/components/field-select'
-import { Landscaping } from 'shared/helpers/dataConstant'
+import { BoolValue, FloorValues, Landscaping, PoolValues, RoofValues, Size, WaterFeature, WindowValues } from 'shared/helpers/dataConstant'
+import MultipleSelect from 'shared/components/multipleselect/MultipleSelect'
+import CustomOptionGroup from 'shared/components/custom-optiongroup/CustomOptionGroup'
+import MultipleSelectWithGrouping from 'shared/components/multipleselect/MultipleSelectWithGrouping'
 
 const AmentiesSection = () => {
   const classes = useStyle()
@@ -18,19 +21,20 @@ const AmentiesSection = () => {
       <Grid item xs={10} container direction="column">
         <Grid item className={classes.formGroup}>
           <FormTitle>Amenities</FormTitle>
-          <CustomTextField label="Heating" name="Heating" />
+          <FieldSelect label="Heating" name="Heating" options={BoolValue} showTooltip = {true}/>
           <ErrorMessage component={err} name="Heating" />
-          <CustomTextField label="AC" name="AC" />
+          <FieldSelect label="AC" name="AC" options={BoolValue} showTooltip = {true}/>
           <ErrorMessage component={err} name="AC" />
-          <CustomTextField label="Roof" name="Roof" />
+          <FieldSelect label="Roof" name="Roof" options={RoofValues} showTooltip = {true}/>
           <ErrorMessage component={err} name="Roof" />
-          <CustomTextField label="Floor" name="Floor" />
+          <CustomOptionGroup label="Floor" name="Floor" options={FloorValues} showTooltip = {true}/>
           <ErrorMessage component={err} name="Floor" />
-          <CustomTextField label="Window Covering" name="WindowCovering" />
+          <MultipleSelectWithGrouping label="Window Covering" name="WindowCovering" options={WindowValues} showTooltip = {true}/>
           <ErrorMessage component={err} name="WindowCovering" />
-          <FieldSelect label="Pool" name="Pool" options={Landscaping} />
+          <CustomOptionGroup label="Pool" name="Pool" options={PoolValues} showTooltip = {true}/>
           <ErrorMessage component={err} name="Pool" />
-          <CustomTextField label="Pool Feature" name="PoolFeature" />
+          <MultipleSelectWithGrouping label="Size" name="Size" options={Size} showTooltip = {true}/>
+          <MultipleSelect label="Pool Feature" name="PoolFeature" options={WaterFeature} showTooltip = {true}/>
           <ErrorMessage component={err} name="PoolFeature" />
         </Grid>
         <Divider className={classes.dividerStyle} />

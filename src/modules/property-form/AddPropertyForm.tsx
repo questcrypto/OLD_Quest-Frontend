@@ -140,7 +140,6 @@ const AddPropertyForm = (props: any) => {
           propertyDocumentsObj.rightofgovernace.push(obj?.rightofgovernace)
       }
     })
-    console.log(propertyDocumentsObj, 'calling propertyDocumentsObj')
     setPropertyDocumentList(propertyDocumentsObj)
   }, [documentList.length])
 
@@ -151,25 +150,11 @@ const AddPropertyForm = (props: any) => {
       protocol: 'https',
     })
 
-    const imagelist  =   imageList.map((item: any ,type: string) => {
-      console.log(item , "item");
-      
-      return new Promise((resolve)=>{
-        const file = new FileReader()
-        file.readAsArrayBuffer(item)
-        file.onloadend = async function () {
-          const nftCid = (await ipfs.files.add(Buffer.from(file.result)))[0].hash
-          const url = 'https://ipfs.io/ipfs/' + nftCid
-          item.hash = url
-          resolve(url)
-        }
-      }).then((result: any) => {
-        return { [type]: result }
-      })
+    const imagesToUpload: any = []
+    imageList.forEach((element: any) => {
+      imagesToUpload.push({ file: element })
     })
-
     const uploadToIPFS = (item: any, type: string) => {
-      
       return new Promise((resolve) => {
         const file = new FileReader()
         file.readAsArrayBuffer(item.file)
@@ -183,7 +168,7 @@ const AddPropertyForm = (props: any) => {
         return { [type]: result }
       })
     }
-  
+
     const rightofequity = propertyDocumentList?.rightofequity.map(async (item: any) => {
       return uploadToIPFS(item, 'rightofequity')
     })
@@ -201,6 +186,9 @@ const AddPropertyForm = (props: any) => {
     })
     const uploadpropertydocument = propertyDocumentList?.uploadpropertydocument.map((item: any) => {
       return uploadToIPFS(item, 'uploadpropertydocument')
+    })
+    const imagesToUploadList = imagesToUpload?.map((item: any) => {
+      return uploadToIPFS(item, 'imagesToUploadList')
     })
 
     const rightOfEquity = {
@@ -247,7 +235,7 @@ const AddPropertyForm = (props: any) => {
 
     const _propertyFiles: any = {
       propertyImages,
-      propertyDocuments
+      propertyDocuments,
     }
 
     const _rightsInformation: any = {
@@ -255,122 +243,122 @@ const AddPropertyForm = (props: any) => {
       rightOfMaintenance,
       rightOfPossesion,
       rightOfSale,
-      rightOfGovernance
+      rightOfGovernance,
     }
 
     let nftCid
-    await Promise.all([...rightofsale, ...rightofpossesions, ...rightofequity, ...rightofmaintenance, ...rightofgovernace, ...imagelist, ...uploadpropertydocument]).then(
-      async function (results) {
-        console.log(results, 'prince')
-        results?.forEach((obj: any) => {
-          if (obj.rightofequity !== undefined) {
-            _rightsInformation.rightOfEquity.documents.indexOf(obj.rightofequity) == -1 &&
-              _rightsInformation.rightOfEquity.documents.push(obj?.rightofequity)
-          }
-          // if (obj.uploadpropertydocument !== undefined) {
-          //   _rightsInformation.uploadpropertydocument.documents.indexOf(obj.uploadpropertydocument) == -1 &&
-          //     _rightsInformation.uploadpropertydocument.documents.push(obj?.uploadpropertydocument)
-          // }
-          if (obj.rightofmaintenance !== undefined) {
-            _rightsInformation.rightOfMaintenance.documents.indexOf(obj.rightofmaintenance) == -1 &&
-              _rightsInformation.rightOfMaintenance.documents.push(obj?.rightofmaintenance)
-          }
-          if (obj.rightofpossesion !== undefined) {
-            _rightsInformation.rightOfPossesion.documents.indexOf(obj.rightofpossesion) == -1 &&
-              _rightsInformation.rightOfPossesion.documents.push(obj?.rightofpossesion)
-          }
-          if (obj.rightofsale !== undefined) {
-            _rightsInformation.rightOfSale.documents.indexOf(obj.rightofsale) == -1 &&
-              _rightsInformation.rightOfSale.documents.push(obj?.rightofsale)
-          }
-          if (obj.rightofgovernace !== undefined) {
-            _rightsInformation.rightOfGovernance.documents.indexOf(obj.rightofgovernace) == -1 &&
-              _rightsInformation.rightOfGovernance.documents.push(obj?.rightofgovernace)
-          }
+    await Promise.all([
+      ...rightofsale,
+      ...rightofpossesions,
+      ...rightofequity,
+      ...rightofmaintenance,
+      ...rightofgovernace,
+      ...imagesToUploadList,
+      ...uploadpropertydocument,
+    ]).then(async function (results) {
+      console.log(results, 'prince')
+      results?.forEach((obj: any) => {
+        if (obj.rightofequity !== undefined) {
+          _rightsInformation.rightOfEquity.documents.indexOf(obj.rightofequity) == -1 &&
+            _rightsInformation.rightOfEquity.documents.push(obj?.rightofequity)
+        }
+        if (obj.rightofmaintenance !== undefined) {
+          _rightsInformation.rightOfMaintenance.documents.indexOf(obj.rightofmaintenance) == -1 &&
+            _rightsInformation.rightOfMaintenance.documents.push(obj?.rightofmaintenance)
+        }
+        if (obj.rightofpossesion !== undefined) {
+          _rightsInformation.rightOfPossesion.documents.indexOf(obj.rightofpossesion) == -1 &&
+            _rightsInformation.rightOfPossesion.documents.push(obj?.rightofpossesion)
+        }
+        if (obj.rightofsale !== undefined) {
+          _rightsInformation.rightOfSale.documents.indexOf(obj.rightofsale) == -1 &&
+            _rightsInformation.rightOfSale.documents.push(obj?.rightofsale)
+        }
+        if (obj.rightofgovernace !== undefined) {
+          _rightsInformation.rightOfGovernance.documents.indexOf(obj.rightofgovernace) == -1 &&
+            _rightsInformation.rightOfGovernance.documents.push(obj?.rightofgovernace)
+        }
 
-          if (obj.imageList !== undefined) {
-            _propertyFiles.propertyImages.images.indexOf(obj.imageList) == -1 &&
-              _propertyFiles.propertyImages.images.push(obj?.imageList)
-          }
+        if (obj.imagesToUploadList !== undefined) {
+          _propertyFiles.propertyImages.images.indexOf(obj.imagesToUploadList) == -1 &&
+            _propertyFiles.propertyImages.images.push(obj?.imagesToUploadList)
+        }
 
-          if (obj.uploadpropertydocument !== undefined) {
-            _propertyFiles.propertyDocuments.documents.indexOf(obj.uploadpropertydocument) == -1 &&
-              _propertyFiles.propertyDocuments.documents.push(obj?.uploadpropertydocument)
-          }
+        if (obj.uploadpropertydocument !== undefined) {
+          _propertyFiles.propertyDocuments.documents.indexOf(obj.uploadpropertydocument) == -1 &&
+            _propertyFiles.propertyDocuments.documents.push(obj?.uploadpropertydocument)
+        }
+      })
 
-        })
+      values.rightofInformation = _rightsInformation
+      values.propertyFiles = _propertyFiles
+      nftCid = (await ipfs.add(Buffer.from(JSON.stringify(values))))[0].hash
+      console.log(nftCid, 'nftCid')
+      // Aarhan You can put your code here
+      // const nftCidEquity = (await ipfs.add(Buffer.from(JSON.stringify(rightOfEquity))))[0].hash
+      // const nftCidMaintenance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfMaintenance))))[0].hash
+      // const nftCidPossesion = (await ipfs.add(Buffer.from(JSON.stringify(rightOfPossesion))))[0].hash
+      // const nftCidSale = (await ipfs.add(Buffer.from(JSON.stringify(rightOfSale))))[0].hash
+      // const nftCidGovernance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfGovernance))))[0].hash
+      // console.log(nftCid, nftCidEquity, nftCidMaintenance, nftCidPossesion, nftCidSale, nftCidGovernance, '<--line293-->')
 
-        values.rightofInformation = _rightsInformation
-        values.propertyFiles = _propertyFiles
-        nftCid = (await ipfs.add(Buffer.from(JSON.stringify(values))))[0].hash
-        console.log(nftCid, 'nftCid')
-        // Aarhan You can put your code here
-        const nftCidEquity = (await ipfs.add(Buffer.from(JSON.stringify(rightOfEquity))))[0].hash
-        const nftCidMaintenance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfMaintenance))))[0].hash
-        const nftCidPossesion = (await ipfs.add(Buffer.from(JSON.stringify(rightOfPossesion))))[0].hash
-        const nftCidSale = (await ipfs.add(Buffer.from(JSON.stringify(rightOfSale))))[0].hash
-        const nftCidGovernance = (await ipfs.add(Buffer.from(JSON.stringify(rightOfGovernance))))[0].hash
+      console.log(nftCid, '<--nftCid-- calling>')
+      const _baseURI = 'https://ipfs.io/ipfs/' + nftCid
+      console.log(_baseURI, '<--_baseURI-- prince>')
+      const _managingCompany = '0x7286603DBbF612bA88337693E531176A4Db63321'
+      // const _rightToMaintenanceURI = nftCidMaintenance
+      // const _rightToEquityURI = nftCidEquity
+      // const _rightToPossesionURI = nftCidPossesion
+      // const _rightToSaleURI = nftCidSale
+      // const _baseURIGovernance = nftCidGovernance
+      const _rightToControlURI = 'https://ipfs.io/ipfs/'
+      const _rightToResidencyURI = 'https://ipfs.io/ipfs/'
+      const _rightToSubsurfaceURI = 'https://ipfs.io/ipfs/'
 
-        console.log(nftCid, nftCidEquity, nftCidMaintenance, nftCidPossesion, nftCidSale, nftCidGovernance, '<--line293-->')
-
-        console.log(nftCid, '<--nftCid-- calling>')
-        const _baseURI = 'https://ipfs.io/ipfs/' + nftCid
-        console.log(_baseURI, '<--_baseURI-- prince>')
-        const _managingCompany = '0x7286603DBbF612bA88337693E531176A4Db63321'
-        const _rightToMaintenanceURI = nftCidMaintenance
-        const _rightToEquityURI = nftCidEquity
-        const _rightToPossesionURI = nftCidPossesion
-        const _rightToSaleURI = nftCidSale
-        const _baseURIGovernance = nftCidGovernance
-        const _rightToControlURI = 'https://ipfs.io/ipfs/'
-        const _rightToResidencyURI = 'https://ipfs.io/ipfs/'
-        const _rightToSubsurfaceURI = 'https://ipfs.io/ipfs/'
-
-        // const receipt = await pushToBlockchain(_baseURI, TREASURY_ADMIN, 0x10, PROPERTY_OWNER)
-        // console.log(receipt)
-        if (imageList.length > 0 && documentList.length > 0) {
-          const formData = new FormData()
-          const dataFiles = getFileData()
-          for (const item of dataFiles) {
-            formData.append('file', item)
+      // const receipt = await pushToBlockchain(_baseURI, TREASURY_ADMIN, 0x10, PROPERTY_OWNER)
+      // console.log(receipt)
+      if (imageList.length > 0 && documentList.length > 0) {
+        const formData = new FormData()
+        const dataFiles = getFileData()
+        for (const item of dataFiles) {
+          formData.append('file', item)
+        }
+        const data = { ...values }
+        delete data.FloorDetails
+        Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
+        formData.append('PropertyImages', JSON.stringify(imageData))
+        formData.append('PropertyDocs', JSON.stringify(documentData))
+        formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
+        // formData.append('IPFSHash', nftCid);
+        console.log(formData, '<--formData--> calling')
+        try {
+          setLoading(true)
+          await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
+          // history.push(Paths.root)
+          // history.push(Paths.dashboard)
+          if (loggedIn) {
+            history.push(Paths.root)
+          } else {
+            history.push(Paths.dashboard)
           }
-          const data = { ...values }
-          delete data.FloorDetails
-          Object.keys(data).forEach((key: any) => formData.append(key, data[key]))
-          formData.append('PropertyImages', JSON.stringify(imageData))
-          formData.append('PropertyDocs', JSON.stringify(documentData))
-          formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
-          // formData.append('IPFSHash', nftCid);
-          console.log(formData, '<--formData--> calling')
-          try {
-            setLoading(true)
-            await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
-            // history.push(Paths.root)
-            // history.push(Paths.dashboard)
-            if (loggedIn) {
-              history.push(Paths.root)
-            } else {
-              history.push(Paths.dashboard)
-            }
-          } catch (error: any) {
-            if (!!error && error.response && error.response.data.message) {
-              errorAlert(error.response.data.message)
-            } else {
-              errorAlert('Something went wrong , please try again')
-            }
-          } finally {
-            setLoading(false)
+        } catch (error: any) {
+          if (!!error && error.response && error.response.data.message) {
+            errorAlert(error.response.data.message)
+          } else {
+            errorAlert('Something went wrong , please try again')
           }
-        } else {
-          if (imageList.length === 0) {
-            setShowImgError(true)
-          }
-          if (documentList.length === 0) {
-            setShowDocError(true)
-          }
+        } finally {
+          setLoading(false)
+        }
+      } else {
+        if (imageList.length === 0) {
+          setShowImgError(true)
+        }
+        if (documentList.length === 0) {
+          setShowDocError(true)
         }
       }
-    )
+    })
   }
 
   return (
@@ -443,18 +431,6 @@ const AddPropertyForm = (props: any) => {
                   <MoreDetailsSection />
                 </Grid>
                 <Grid container ref={(el: any) => (elRefs.current[11] = el)}>
-                  <RightOfEquitySection
-                    showDocModal={showDocModal}
-                    setShowDocModal={setShowDocModal}
-                    documentList={documentList}
-                    setDocumentList={setDocumentList}
-                    showDocError={showDocError}
-                    setShowDocError={setShowDocError}
-                    setFormName={setFormName}
-                    formName={formName}
-                  />
-                </Grid>
-                <Grid container ref={(el: any) => (elRefs.current[12] = el)}>
                   <RightOfMaintenanceSection
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}
@@ -466,8 +442,21 @@ const AddPropertyForm = (props: any) => {
                     formName={formName}
                   />
                 </Grid>
+                <Grid container ref={(el: any) => (elRefs.current[12] = el)}>
+              
+                   <RightOfPosessionSection
+                    showDocModal={showDocModal}
+                    setShowDocModal={setShowDocModal}
+                    documentList={documentList}
+                    setDocumentList={setDocumentList}
+                    showDocError={showDocError}
+                    setShowDocError={setShowDocError}
+                    setFormName={setFormName}
+                    formName={formName}
+                  />
+                </Grid>
                 <Grid container ref={(el: any) => (elRefs.current[13] = el)}>
-                  <RightOfGovernance
+                  <RightOfEquitySection
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}
                     documentList={documentList}
@@ -479,7 +468,7 @@ const AddPropertyForm = (props: any) => {
                   />
                 </Grid>
                 <Grid container ref={(el: any) => (elRefs.current[14] = el)}>
-                  <RightOfPosessionSection
+                <RightOfSaleSection
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}
                     documentList={documentList}
@@ -491,7 +480,7 @@ const AddPropertyForm = (props: any) => {
                   />
                 </Grid>
                 <Grid container ref={(el: any) => (elRefs.current[15] = el)}>
-                  <RightOfSaleSection
+                  <RightOfGovernance
                     showDocModal={showDocModal}
                     setShowDocModal={setShowDocModal}
                     documentList={documentList}

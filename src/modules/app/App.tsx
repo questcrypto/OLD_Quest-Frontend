@@ -7,7 +7,7 @@ import Routes from './components/routes/Routes'
 import Notifications from 'shared/notifications'
 
 const App = (props: any) => {
-  console.log("App mapStateToProps");
+  // console.log("App mapStateToProps");
   const { authStart } = props
 
   useEffect(() => {

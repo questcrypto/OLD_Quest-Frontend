@@ -6,6 +6,35 @@ import TextField from '@material-ui/core/TextField'
 import { colors } from 'shared/styles/theme'
 import { TextWrappper } from '../styles'
 import Icon from '../chatIcon/Icon'
+import { IconButton, Tooltip } from '@material-ui/core'
+import Icons from '../chatIcon/infoIcon'
+
+const useStyless = makeStyles(theme => ({
+  customTooltip: {
+    backgroundColor: '#ffffff',
+    border:'1px solid #F1EDED',
+    position:'absolute',
+    bottom:'50px',
+    left:'-100px',
+    minWidth:'165px',
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
+    borderRadius: '5px',
+    fontSize: '14px',
+    lineHeight: '17px',
+    color: '#8C8C8C',
+    padding: '8px 15px',
+  },
+  customArrow: {
+    fontSize: 20,
+    color: "#ffffff",
+    textShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
+    position:'absolute',
+    bottom:'-15px !important',
+    left:'85px !important',
+    top:'unset !important',
+    transform: 'rotate(180deg) !important',
+  },
+}));
 
 interface Props {
   name: string
@@ -25,8 +54,9 @@ const useStyles = makeStyles(() =>
   })
 )
 
-const FieldSelect = (props: Props) => {
+const FieldSelect = (props: any) => {
   const classes = useStyles()
+  const styles= useStyless()
   const { name, label, options, isDisabled } = props
 
   return (
@@ -52,7 +82,8 @@ const FieldSelect = (props: Props) => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {options.map((item: any, k: any) => {
+              {options?.map((item: any, k: any) => {
+    
                 return (
                   <MenuItem key={k} value={item.value}>
                     {item.label}
@@ -60,6 +91,14 @@ const FieldSelect = (props: Props) => {
                 )
               })}
             </TextField>
+            {!props?.showTooltip && (
+              <IconButton className="infoIcon">
+              <span className="tooltiptext">
+                For more details please visit<a href={props?.link}>Website</a>
+              </span>
+              <Icon />
+            </IconButton>
+            )}
           </TextWrappper>
         )
       }}
@@ -67,3 +106,4 @@ const FieldSelect = (props: Props) => {
   )
 }
 export default FieldSelect
+                 

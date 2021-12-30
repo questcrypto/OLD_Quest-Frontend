@@ -78,10 +78,10 @@ const RightOfPosessionSection = (props: any) => {
   return (
     <>
       <Grid item xs={2} className={classes.titleNumberStyle}>
-        <FormTitleNumber>14</FormTitleNumber>
+        <FormTitleNumber>12</FormTitleNumber>
       </Grid>
       <Grid item xs={10} container direction="column">
-        <FormTitle>Right of Occupancy (NFT)</FormTitle>
+        <FormTitle>Right of Income </FormTitle>
         {/* <p>
           Representing possession and enjoyment of property. This right assumes all existing and future covenants with the HOA and/or
           managing entity.
@@ -99,7 +99,7 @@ const RightOfPosessionSection = (props: any) => {
               elevation={1}
               onClick={() => setShowDocModal(true)}
               classes={{
-                root: classes.uploadDataStyle,
+                root: classes.uploadDocumentStyle,
               }}
             >
               Add property document

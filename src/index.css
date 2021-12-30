@@ -46,6 +46,9 @@ code {
 .MuiOutlinedInput-notchedOutline {
   border-color: #BDBDBD !important;
 }
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #1E3444 !important ;
+}
 .MuiInputLabel-root.Mui-focused {
   color: #1E3444 !important ;
   font-size: 16px !important;
@@ -57,6 +60,8 @@ code {
 }
  .infoIcon{
   background: transparent !important;
+  position: absolute!important;
+  right: -52px;
 }
 .photo-progress h4 {
   font-size: 16px;
@@ -92,6 +97,7 @@ code {
   font-size: 16px;
   color: #828282;
   line-height: 16px;
+  word-break: break-all;
 }
 .progressline {
   height: 2px;
@@ -141,12 +147,17 @@ margin: 7px 0 2px;
   width: 30px;
   height: 30px;
 }
-
+.rightSectionWrapper > div {
+  margin-bottom: 10px;
+}
 .rightSectionWrapper .MuiGrid-container:hover h4{
   color: #EB5757 !important;
 }
 .rightSectionWrapper .MuiGrid-container:hover .fODOSz {
   background: #EB5757 !important;
+}
+.fjtKJY .MuiOutlinedInput-notchedOutline:focus {
+  border: 1px solid #1E3444 ;
 }
 .ownerdetails{
   font-size: 18px !important;
@@ -175,4 +186,119 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1)!important;
 }
 .MuiTabs-indicator {
   background-color: #1E3444!important;
+}
+.groupselect.MuiInputLabel-formControl {
+  transform: translate(20px, 34px) scale(1);
+}
+.groupselect-options select {
+  padding: 17px 16px;
+border: 1px solid #BDBDBD;
+border-radius: 5px;
+margin-bottom: 20px;
+}
+.groupselect.MuiInputLabel-shrink {
+  transform: translate(13px, 8.5px) scale(1);
+  transform-origin: top left;
+  background: #fff;
+  z-index: 111;
+  padding: 0 9px;
+  font-size: 1rem !important;
+}
+
+.groupselect-options.MuiInput-underline::after , .groupselect-options.MuiInput-underline::before {
+  display: none;
+}
+.groupselect-options .MuiSelect-icon {
+  top: calc(50% - 22px);
+  color: rgba(0, 0, 0, 0.54);
+  right: 7px;
+  position: absolute;
+  pointer-events: none;
+}
+
+::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+    color: transparent;
+}
+.MuiFormControl-fullWidth label {
+  max-width: 350px;
+  overflow: hidden;
+  max-height: 18px;
+}
+.multiple-select {
+  width: 100%;
+  margin-bottom: 20px !important;
+}
+.multiple-select .MuiInputLabel-formControl {
+  transform: translate(10px, 24px) scale(1);
+  padding: 0 10px;
+  background: #ffffff;
+}
+.multiple-select .MuiInputLabel-shrink {
+  transform: translate(10px, -9.5px) scale(1);
+  z-index: 1;
+}
+.multiple-select svg {
+  right: 7px;
+}
+.options-select {
+  width: 100%;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.infoIcon svg {
+  width: 20px;
+  height: 32px;
+}
+.infoIcon .tooltiptext {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  background : #ffffff;
+  border-bottom: 1px solid #F1EDED;
+  border-left: 1px solid #F1EDED;
+  min-width: 165px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 17px;
+  color: #8C8C8C;
+  padding: 8px 15px;
+  text-align: left;
+  bottom: 60px;
+  z-index: 11111;
+  
+}
+.infoIcon .tooltiptext:after {
+  content: "";
+  display:block;
+  background: #FFFFFF;
+  border-bottom: 1px solid #F1EDED;
+  border-left: 1px solid #F1EDED;
+  box-sizing: border-box;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.15);
+  transform: rotate(-45deg);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  width: 17px;
+  height: 17px;
+  margin: auto;
+  z-index: -1111;
+}
+.infoIcon .tooltiptext a {
+  color: #8C8C8C;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+
+.infoIcon:hover .tooltiptext {
+  visibility: visible;
 }

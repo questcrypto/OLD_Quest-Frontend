@@ -6,7 +6,8 @@ import { ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
 import CustomTextField from 'shared/components/custom-text-field'
 import FieldSelect from 'shared/components/field-select'
-import { Landscaping } from 'shared/helpers/dataConstant'
+import { DeckFeature, Landscaping, PatioValue, StyleFeature } from 'shared/helpers/dataConstant'
+import MultipleSelect from 'shared/components/multipleselect/MultipleSelect'
 
 const MoreDetailsSection = () => {
   const classes = useStyle()
@@ -19,29 +20,29 @@ const MoreDetailsSection = () => {
       <Grid item xs={10} container direction="column">
         <Grid item className={classes.formGroup}>
           <FormTitle>More Details</FormTitle>
-          <CustomTextField label="Style" name="Style" />
+          <MultipleSelect label="Style" name="Style" options={StyleFeature} showTooltip = {true}/>
           <ErrorMessage component={err} name="Style" />
-          <FieldSelect label="Deck" name="Deck" options={Landscaping} />
+          <MultipleSelect label="Deck" name="Deck" options={DeckFeature} showTooltip = {true}/>
           <ErrorMessage component={err} name="Deck" />
-          <FieldSelect label="Patio" name="Patio" options={Landscaping} />
+          <MultipleSelect label="Patio" name="Patio" options={PatioValue} showTooltip = {true}/>
           <ErrorMessage component={err} name="Patio" />
-          <CustomTextField label="Garage" name="Garage" />
+          <CustomTextField label="Garage" name="Garage" showTooltip = {true}/>
           <ErrorMessage component={err} name="Garage" />
-          <FieldSelect label="Carpot" name="Carpot" options={Landscaping} />
+          <FieldSelect label="Carpot" name="Carpot" options={Landscaping} showTooltip = {true}/>
           <ErrorMessage component={err} name="Carpot" />
           <IntegerNumberField label="Parking Space" name="ParkingSpace" />
           <ErrorMessage component={err} name="ParkingSpace" />
           <IntegerNumberField label="Fin Bsmt" name="FinBasmt" />
           <ErrorMessage component={err} name="FinBasmt" />
-          <CustomTextField label="Basement" name="Basement" />
+          <CustomTextField label="Basement" name="Basement" showTooltip = {true}/>
           <ErrorMessage component={err} name="Basement" />
-          <FieldSelect label="Driveway" name="Driveway" options={Landscaping} />
+          <FieldSelect label="Driveway" name="Driveway" options={Landscaping} showTooltip = {true}/>
           <ErrorMessage component={err} name="Driveway" />
-          <CustomTextField label="Water" name="Water" />
+          <CustomTextField label="Water" name="Water" showTooltip = {true}/>
           <ErrorMessage component={err} name="Water" />
-          <CustomTextField label="Water Shares" name="WaterShare" />
+          <CustomTextField label="Water Shares" name="WaterShare" showTooltip = {true}/>
           <ErrorMessage component={err} name="WaterShare" />
-          <CustomTextField label="Spa" name="Spa" />
+          <CustomTextField label="Spa" name="Spa" showTooltip = {true} />
           <ErrorMessage component={err} name="Spa" />
         </Grid>
         <Divider className={classes.dividerStyle} />

@@ -7,10 +7,21 @@ import FieldSelect from 'shared/components/field-select'
 import MoneyInputField from 'shared/components/money-input-field'
 import FormDatePicker from 'shared/components/form-date-picker'
 import moment from 'moment'
-import { Landscaping, propertyType } from 'shared/helpers/dataConstant'
+import {zoning , lotFacts, propertyType, Landscaping } from 'shared/helpers/dataConstant'
+import CustomOptionGroup from 'shared/components/custom-optiongroup/CustomOptionGroup'
+import MultipleSelect from 'shared/components/multipleselect/MultipleSelect'
+import { useEffect, useState } from 'react'
 
 const PropertyInfoSection = () => {
   const classes = useStyle()
+  const [years, setYears] = useState<any>([])
+  useEffect(()=>{
+    const y = [];
+    for(let i = 1900; i <= new Date().getFullYear(); i++) {
+      y.push({label : i.toString() , value:i.toString()});
+    }
+    setYears(y);
+  },[])
 
   return (
     <>
@@ -20,7 +31,7 @@ const PropertyInfoSection = () => {
       <Grid item xs={10} container direction="column">
         <Grid item className={classes.formGroup}>
           <FormTitle>Property info</FormTitle>
-          <FieldSelect label="Type of property" name="PropertyType" options={propertyType}/>
+          <CustomOptionGroup options={propertyType} label="Type of property"></CustomOptionGroup>
           <ErrorMessage component={err} name="PropertyType"/>
           <CustomTextField label="Property name" name="PropertyName" />
           <ErrorMessage component={err} name="PropertyName" />
@@ -28,13 +39,13 @@ const PropertyInfoSection = () => {
           <ErrorMessage component={err} name="CurrentValue" />
           <CustomTextField label="Comments" name="Comments" />
           <ErrorMessage component={err} name="Comments" />
-          <FormDatePicker label="Year built" name="YearBuilt" maxDate={moment(new Date()).format('YYYY-MM-DD')} />
+          <FieldSelect label="Year built" name="YearBuilt" options={years} />
           <ErrorMessage component={err} name="YearBuilt" />
-          <CustomTextField label="Zoning" name="Zoning" />
+          <FieldSelect label="Zoning" name="Zoning" options={zoning}/>
           <ErrorMessage component={err} name="Zoning" />
-          <FieldSelect label="Landscaping" name="Landscaping" options={Landscaping} />
+          <MultipleSelect label="Landscaping" name="Landscaping" options={Landscaping} />
           <ErrorMessage component={err} name="Landscaping" />
-          <MoneyInputField label="Lot Facts" name="Lotfacts" acceptDecimals />
+          <FieldSelect label="Lot Facts" name="Lotfacts" options={lotFacts} />
           <ErrorMessage component={err} name="Lotfacts" />
         </Grid>
         <Divider className={classes.dividerStyle} />

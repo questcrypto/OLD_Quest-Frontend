@@ -16,7 +16,7 @@ export const sideBarOptionData = [
   },
   {
     number: 4,
-    name: 'Locality / Neighbourhood insights',
+    name: 'Neighbourhood',
     ref: 'localityInsightRef',
   },
   {
@@ -51,27 +51,27 @@ export const sideBarOptionData = [
   },
   {
     number: 11,
-    name: 'Right of Equity (NFT)',
+    name: 'Right of Management ',
     ref: 'rightOfEquityRef',
   },
   {
     number: 12,
-    name: 'Right of Maintenance (NFT)',
+    name: 'Right of Income ',
     ref: 'rightOfMaintenanceRef',
   },
   {
     number: 13,
-    name: 'Right of Governance / Control (NFT)',
+    name: 'Right of Equity',
     ref: 'rightOfGovernenceRef',
   },
   {
     number: 14,
-    name: 'Right of Possession /Occupancy (NFT)',
+    name: 'Right of Occupancy',
     ref: 'rightOfPossesionRef',
   },
   {
     number: 15,
-    name: 'Right of Sale / Transfer (NFT)',
+    name: 'Right of Governance',
     ref: 'rightOfSaleRef',
   },
 ]

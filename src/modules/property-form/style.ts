@@ -27,19 +27,19 @@ export const useStyle = makeStyles(() =>
       maxWidth: '70px',
     },
     dividerStyle: {
-      margin: '45px -86px 45px 0 !important',
+      margin: '16px -81px 33px 0 !important',
     },
     uploadDataStyle: {
-      minWidth: 200,
-      maxHeight: 240,
-      minHeight: 240,
+      maxWidth: 76,
+      maxHeight: 76,
+      minHeight: 76,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       cursor: 'pointer',
       border: '1px dashed #BDBDBD',
       backgroundColor: '#F3F3F3 !important',
-      borderRadius: '4px',
+      borderRadius: '5px',
       marginBottom: '20px',
     },
     fileNameStyle: {
@@ -79,6 +79,24 @@ export const useStyle = makeStyles(() =>
     docImgStyle: {
       marginRight: '24px',
     },
+    formwrapper: {
+      '& h4 ': {
+        
+      }
+    },
+    uploadDocumentStyle:{
+      maxWidth: 227,
+      maxHeight: 239,
+      minHeight: 239,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      border: '1px dashed #BDBDBD',
+      backgroundColor: '#F3F3F3 !important',
+      borderRadius: '5px',
+      marginBottom: '20px',
+    }
   })
 )
 
@@ -178,11 +196,11 @@ export const PropertyFormCont = styled.div`
 `
 export const FormTitleNumber = styled.div`
   background: ${colors.primary};
-  font-size: 12px;
+  font-size: 16px;
   color: ${colors.white};
   font-family: RobotoBold;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -197,7 +215,7 @@ export const FormTitle = styled.h4`
   line-height: 24px;
   color: ${colors.textPrimary};
   font-family: RobotoBold;
-  margin: 0 20px 30px 0;
+  margin: 0 20px 47px 0;
 `
 export const FormSubTitle = styled.p`
   font-size: 16px;
@@ -213,16 +231,22 @@ export const SelectedFileCont = styled.div`
   grid-template-rows: 1fr 1fr;
 `
 export const SelectedFileImgCont = styled.div`
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   grid-template-columns: repeat(3, 1fr);
   max-height: 300px;
   grid-gap: 10px;
 `
 export const FileContainer = styled.div`
   box-sizing: border-box;
+  width: 76px;
+  height: 69px;
+  border-radius: 5px;
+  overflow: hidden;
+
   img {
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: 100%;
   }
 `
 

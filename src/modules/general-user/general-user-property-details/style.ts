@@ -79,6 +79,9 @@ export const useStyles = makeStyles((theme: Theme) =>
     treasuryOwnersContStyle: {
       marginTop: '30px',
     },
+    pointers:{
+      cursor:'pointer'
+    },
     treasuryOwnersPaper: {
       padding: '10px',
       width: '100%',

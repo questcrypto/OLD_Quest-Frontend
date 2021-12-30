@@ -61,7 +61,7 @@ const UploadPropertyDocumentSection = (props: any) => {
               elevation={1}
               onClick={() => setShowDocModal(true)}
               classes={{
-                root: classes.uploadDataStyle,
+                root: classes.uploadDocumentStyle,
               }}
             >
               Add property document

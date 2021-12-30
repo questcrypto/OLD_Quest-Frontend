@@ -64,7 +64,7 @@ const RightOfGovernance = (props: any) => {
   return (
     <>
       <Grid item xs={2} className={classes.titleNumberStyle}>
-        <FormTitleNumber>13</FormTitleNumber>
+        <FormTitleNumber>15</FormTitleNumber>
       </Grid>
       <Grid item xs={10} container direction="column">
         <FormTitle>Right of Governance (NFT)</FormTitle>
@@ -81,7 +81,7 @@ const RightOfGovernance = (props: any) => {
               elevation={1}
               onClick={() => setShowDocModal(true)}
               classes={{
-                root: classes.uploadDataStyle,
+                root: classes.uploadDocumentStyle,
               }}
             >
               Add property document

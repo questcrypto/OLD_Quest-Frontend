@@ -12,7 +12,7 @@ export const initialValues = {
   Comments: '',
   YearBuilt: '',
   Zoning: '',
-  Landscaping: '',
+  Landscaping: [],
   Lotfacts: '',
 
   Address1: '',
@@ -50,13 +50,14 @@ export const initialValues = {
   AC: '',
   Roof: '',
   Floor: '',
-  WindowCovering: '',
+  WindowCovering: [],
   Pool: '',
-  PoolFeature: '',
+  Size:[],
+  PoolFeature: [],
 
-  Style: '',
-  Deck: '',
-  Patio: '',
+  Style: [],
+  Deck: [],
+  Patio: [],
   Garage: '',
   Carpot: '',
   ParkingSpace: '',
@@ -138,6 +139,9 @@ export const propertyFormSchema = Yup.object().shape({
     .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
     .required('This field is required'),
   PoolFeature: Yup.string()
+    .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
+    .required('This field is required'),
+    Size: Yup.string()
     .matches(/[a-zA-Z ]$/, 'Must be an alphabet')
     .required('This field is required'),
 

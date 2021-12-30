@@ -7,37 +7,28 @@ import {
   NoDetailsAvailable,
   HeaderPath,
   HeaderTitle,
-  FeatureHeading,
   InfoBoldTxt,
   InfoLightTxt,
-  ExpandIconButton,
   TreasuryOwnerCont,
 } from './style'
 import ComponentLoader from 'shared/loader-components/component-loader'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import Divider from '@material-ui/core/Divider'
 import { Box, Tab } from '@material-ui/core'
 import Features from 'modules/property-features/Features'
 import RentalFacts from 'modules/property-features/RentalFacts'
 import axios from 'axios'
-import { apiBaseUrl, imageBaseUrl } from 'services/global-constant'
+import { apiBaseUrl } from 'services/global-constant'
 import { Paths } from 'modules/app/components/routes/types'
 import history from 'modules/app/components/history'
 import { PrimaryButton } from 'shared/components/buttons'
 import { formatExtendedDateString, getFullName, currencyString } from 'shared/helpers/globalFunction'
-import Collapse from '@material-ui/core/Collapse'
-import IconButton from '@material-ui/core/IconButton'
-import Accordion from '@material-ui/core/Accordion'
-import AccordionDetails from '@material-ui/core/AccordionDetails'
-import AccordionSummary from '@material-ui/core/AccordionSummary'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import MailIcon from '@material-ui/icons/Mail'
 import TabComponent from 'shared/tab-component'
 import DocumentsTable from 'modules/treasury/treasury-details/components/DocumentsTable'
 import { treasuryDetailsTabList } from 'shared/helpers/dataConstant'
 import { TabContext, TabList, TabPanel } from '@material-ui/lab'
 import demoImage from '../../../assets/images/metamask.jpg'
+import signUpActive from '../../../assets/images/signUpActive.png'
+import upArrow from '../../../assets/images/upArrow.png'
 import Slider from 'react-slick'
 import FormFeatures from 'modules/property-features/FormFeatures'
 import TokenHolderTable from 'modules/treasury/treasury-details/components/TokenHolderTable'
@@ -52,7 +43,7 @@ const GeneralUserPropertyDetails = (props: any) => {
   const [imageList, setImageList] = useState<any>([])
   const [docList, setDocList] = useState<any>([])
   const [selectImg, setSelectImg] = useState('')
-  const [image, setImage] = useState()
+  const [image, setImage] = useState<any>('')
   const { userInfo, loggedIn } = props
 
   const settings: any = {
@@ -107,6 +98,11 @@ const GeneralUserPropertyDetails = (props: any) => {
     getPropertyDetails()
   }, [props.match.params.propertyId])
 
+  useEffect(()=>{
+    console.log(demoImage );
+    
+  })
+
   const handleEditProperty = () => {
     if (!!userInfo && userInfo.role === 1) {
       history.push(`${Paths.editPropertyForm}/${props.match.params.propertyId}`)
@@ -135,6 +131,19 @@ const GeneralUserPropertyDetails = (props: any) => {
     console.log(src)
     setImage(src)
   }
+
+  // const fetchProperties = async()=>{
+  //   const response = fetch('https://ipfs.io/ipfs/QmVNkMHuWsP4Awo3zxyRh2H2efCwwwUsjZMS2bzEoWcbrH');
+  //   return (await response).json()
+  // }
+
+  // useEffect(()=>{
+  //   (async()=>{
+  //     const response = await fetchProperties()
+  //     console.log(response);
+      
+  //   })()
+  // },[])
 
   return (
     <Box>
@@ -167,20 +176,24 @@ const GeneralUserPropertyDetails = (props: any) => {
                 <Grid className={classes.infoContStyle} spacing={2}>
                   <Grid item className={classes.infoContSlider}>
                     <div className={classes.infoItemImages}>
-                      <img src={demoImage} alt="" />
+                      <img src={image ? image : demoImage} alt="" />
                     </div>
-                    <div>
+                    <div className={classes.pointers}>
                       <Slider {...settings}>
                         <div className={classes.activeItem}>
                           <img src={demoImage} alt="" />{' '}
                         </div>
+                        
+                        <div onClick={(e: any) => changeImage(e.target.src)}>
+                          <img src={signUpActive} alt="" />{' '}
+                        </div>
+                        <div onClick={(e: any) => changeImage(e.target.src)}>
+                          <img src={upArrow} alt="" />{' '}
+                        </div>
                         <div onClick={(e: any) => changeImage(e.target.src)}>
                           <img src={demoImage} alt="" />{' '}
                         </div>
-                        <div>
-                          <img src={demoImage} alt="" />{' '}
-                        </div>
-                        <div>
+                        <div onClick={(e: any) => changeImage(e.target.src)}>
                           <img src={demoImage} alt="" />{' '}
                         </div>
                       </Slider>

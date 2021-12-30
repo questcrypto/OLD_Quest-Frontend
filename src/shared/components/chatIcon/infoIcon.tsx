@@ -1,16 +1,12 @@
-import { TextIcon } from './styles'
-
+import { TextIcon , UseStyle} from './styles'
 
 export default function infoIcon() {
+    const classes = UseStyle()
     return(
-        <TextIcon>
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
-                 <path d="M12 3A9 9 0 1 0 12 21A9 9 0 1 0 12 3Z" opacity=".3"/>
-                 <path d="M13,17h-2v-6h2V17z M13,9h-2V7h2V9z"/>
-                 <path fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2" 
-                 d="M12 3A9 9 0 1 0 12 21A9 9 0 1 0 12 3Z"/>
-             </svg>
+        <TextIcon className={classes.infoIcon}>
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V9H11V15ZM11 7H9V5H11V7Z" fill="black" fill-opacity="0.54"/>
+                </svg>
         </TextIcon>
-        
     )
 }

@@ -95,15 +95,15 @@ const UploadImage = (props: any) => {
             <DocFormWrapper>
               <NameTagCont>
                 <div>
-                  <CustomTextField label="Name" name="name" />
+                  <CustomTextField label="Name" name="name" showTooltip = {true}/>
                   <ErrorMessage component={err} name="name" />
                 </div>
                 <div>
-                  <CustomTextField label="Tag" name="tag" />
+                  <CustomTextField label="Tag" name="tag" showTooltip = {true}/>
                   <ErrorMessage component={err} name="tag" />
                 </div>
               </NameTagCont>
-              <CustomTextField label="Description" name="description" />
+              <CustomTextField label="Description" name="description" showTooltip = {true}/>
               <ErrorMessage component={err} name="description" />
               <UploadDocBtnGroup>
                 <SecondaryButton type="button" onClick={() => setShowImgModal(false)}>

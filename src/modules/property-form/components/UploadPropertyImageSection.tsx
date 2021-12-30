@@ -28,6 +28,9 @@ const UploadPropertyImageSection = (props: any) => {
       <Grid item xs={10} container direction="column">
         <FormTitle>Upload property images</FormTitle>
         <Grid container spacing={3}>
+        <Grid item xs={12} sm={12}>
+          <SelectedFileImgCont >{renderSelectedFileImage(imageList)}</SelectedFileImgCont>
+        </Grid>
           <Grid item xs={12} sm={6}>
             <Paper
               elevation={1}
@@ -36,14 +39,16 @@ const UploadPropertyImageSection = (props: any) => {
                 root: classes.uploadDataStyle,
               }}
             >
-              Add property image
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+<path d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z" fill="black" fill-opacity="0.54"/>
+</svg>
             </Paper>
             {showImgError && imageList.length === 0 && <Error>At least one Image is required</Error>}
           </Grid>
           <Grid item xs={12} sm={6} className="photo-progress">
             {!!imageList && imageList.length > 0 && (
               <div>
-                <h4>Uploading</h4>
+                {/* <h4>Uploading df</h4> */}
                 {imageList?.map((image: any) => (
                   <div className="photo-progress-row">
                     <div className="photo-icon">
@@ -61,7 +66,7 @@ const UploadPropertyImageSection = (props: any) => {
                     </div>
                   </div>
                 ))}
-                <SelectedFileImgCont>{renderSelectedFileImage(imageList)}</SelectedFileImgCont>
+                
               </div>
             )}
             {/* <h4>Uploading</h4>

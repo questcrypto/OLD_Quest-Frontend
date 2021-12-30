@@ -64,10 +64,10 @@ const RightOfSaleSection = (props: any) => {
   return (
     <>
       <Grid item xs={2} className={classes.titleNumberStyle}>
-        <FormTitleNumber>15</FormTitleNumber>
+        <FormTitleNumber>14</FormTitleNumber>
       </Grid>
       <Grid item xs={10} container direction="column">
-        <FormTitle>Right of Sale / Transfer (Disposition) (NFT)</FormTitle>
+        <FormTitle>Right of Occupancy</FormTitle>
         <Grid
           container
           spacing={3}
@@ -81,7 +81,7 @@ const RightOfSaleSection = (props: any) => {
               elevation={1}
               onClick={() => setShowDocModal(true)}
               classes={{
-                root: classes.uploadDataStyle,
+                root: classes.uploadDocumentStyle,
               }}
             >
               Add property document

@@ -52,6 +52,7 @@ const FormDatePicker = (props: Props) => {
               inputProps={{
                 max: !!maxDate && maxDate
               }}
+              placeholder='Year Built'
             />
            
           </TextWrappper>

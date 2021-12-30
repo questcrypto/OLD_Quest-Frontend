@@ -15,30 +15,42 @@ const textFieldStyle = makeStyles(() =>
       lineHeight: '26px',
       color: '#1E3444',
       backgroundColor: colors.white,
+      '& label': {
+        transform: 'translate(20px, 20px) scale(1)',
+      },
+      '& input': {
+        padding: '18.5px 20px',
+      },
     },
   })
 )
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   customTooltip: {
-    backgroundColor: '#fff',
-    border:'1px solid #222',
-    color:'#222',
-    position:'absolute',
-    bottom:'50px',
-    left:'-30px',
-    minWidth:'100px'
+    backgroundColor: '#ffffff',
+    border: '1px solid #F1EDED',
+    position: 'absolute',
+    bottom: '30px',
+    left: '-100px',
+    minWidth: '165px',
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
+    borderRadius: '5px',
+    fontSize: '14px',
+    lineHeight: '17px',
+    color: '#8C8C8C',
+    padding: '8px 15px',
   },
   customArrow: {
     fontSize: 20,
-    color: "#222",
-    position:'absolute',
-    bottom:'-15px !important',
-    left:'55px !important',
-    top:'unset !important',
+    color: '#ffffff',
+    textShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
+    position: 'absolute',
+    bottom: '-15px !important',
+    left: '85px !important',
+    top: 'unset !important',
     transform: 'rotate(180deg) !important',
   },
-}));
+}))
 
 interface Props {
   name: string
@@ -48,10 +60,11 @@ interface Props {
   handleBlur?: any
   showTooltip?: boolean
   toolTipText?: string
+  link?: string
 }
 
 const CustomTextField = (props: Props) => {
-  const { name, label, type, isDisabled, handleBlur } = props
+  const { name, label, type, isDisabled, handleBlur, link } = props
   const classes = textFieldStyle()
   const styles = useStyles()
   return (
@@ -78,15 +91,13 @@ const CustomTextField = (props: Props) => {
               className={classes.root}
               disabled={isDisabled}
             />
-            {props?.showTooltip && (
-              <Tooltip arrow title="For more details please visit website"  classes={{
-                tooltip: styles.customTooltip,
-                arrow: styles.customArrow
-              }}>
-                  <IconButton className='infoIcon'>
-                    <Icon />
-                  </IconButton>
-              </Tooltip>
+            {!props?.showTooltip && (
+              <IconButton className="infoIcon">
+                <span className="tooltiptext">
+                  For more details please visit<a href={link}>Website</a>
+                </span>
+                <Icon />
+              </IconButton>
             )}
           </TextWrappper>
         )

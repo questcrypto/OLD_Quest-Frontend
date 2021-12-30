@@ -19,6 +19,8 @@ import { ErrorMessage } from 'formik'
 import { err } from 'shared/styles/styled'
 import AddIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
+import FieldSelect from 'shared/components/field-select'
+import { BoolValue, RoomConstants } from 'shared/helpers/dataConstant'
 
 const FloorConfigSection = (props: any) => {
   const classes = useStyle()
@@ -53,25 +55,15 @@ const FloorConfigSection = (props: any) => {
                           <IntegerNumberField label="Square Foot" name={`FloorDetails[${index}].SquareFoot`} />
                         </FloorFieldMsgBox>
                         <ErrorMessage component={err} name={`FloorDetails[${index}].SquareFoot`} />
-                        <FloorFieldMsgBox>
-                          <IntegerNumberField label="Bedroom" name={`FloorDetails[${index}].Bedroom`} />
-                        </FloorFieldMsgBox>
+                        <FieldSelect label="Bedroom" name={`FloorDetails[${index}].Bedroom`} options={RoomConstants} showTooltip = {true}/>
                         <ErrorMessage component={err} name={`FloorDetails[${index}].Bedroom`} />
-                        <FloorFieldMsgBox>
-                          <IntegerNumberField label="Family" name={`FloorDetails[${index}].family`} />
-                        </FloorFieldMsgBox>
+                        <FieldSelect label="Family" name={`FloorDetails[${index}].family`} options={BoolValue} showTooltip = {true}/>
                         <ErrorMessage component={err} name={`FloorDetails[${index}].family`} />
-                        <FloorFieldMsgBox>
-                          <IntegerNumberField label="Kitchen" name={`FloorDetails[${index}].kitchen`} />
-                        </FloorFieldMsgBox>
+                        <FieldSelect label="Kitchen" name={`FloorDetails[${index}].kitchen`} options={BoolValue} showTooltip = {true}/>
                         <ErrorMessage component={err} name={`FloorDetails[${index}].kitchen`} />
-                        <FloorFieldMsgBox>
-                          <IntegerNumberField label="Laundary" name={`FloorDetails[${index}].Laundary`} />
-                        </FloorFieldMsgBox>
+                        <FieldSelect label="Laundary" name={`FloorDetails[${index}].Laundary`} options={BoolValue} showTooltip = {true}/>
                         <ErrorMessage component={err} name={`FloorDetails[${index}].Laundary`} />
-                        <FloorFieldMsgBox>
-                          <IntegerNumberField label="Bath" name={`FloorDetails[${index}].Bath`} />
-                        </FloorFieldMsgBox>
+                        <FieldSelect label="Bathrooms" name={`FloorDetails[${index}].Bath`} options={RoomConstants} showTooltip = {true}/>
                         <ErrorMessage component={err} name={`FloorDetails[${index}].Bath`} />
                       </AccordionDetails>
                     </Accordion>

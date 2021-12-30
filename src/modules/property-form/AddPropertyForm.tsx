@@ -51,7 +51,8 @@ const IPFS = require('ipfs-api')
 const Buffer = require('buffer').Buffer
 const ERC1155FactoryAddress = '0x7c1B75068b7C20c4ff29933d82D8feaAaE7917B0'
 const HOA_ADMIN = '0x7286603DBbF612bA88337693E531176A4Db63321'
-const TREASURY_ADMIN = '0xa9F5A89196534656d83EF2324f2C8705748290B3'
+const UPGRADER = "0x7286603DBbF612bA88337693E531176A4Db63321"
+const TREASURY_ADMIN = '0x7286603DBbF612bA88337693E531176A4Db63321'
 const PROPERTY_OWNER = '0xa9F5A89196534656d83EF2324f2C8705748290B3'
 const QUEST_FACTORY_ADDRESS = '0xacCc6efa277D21Fd2427915eC1F1c17043Aee305'
 const contractName = "QuestCrypto"
@@ -86,15 +87,25 @@ const AddPropertyForm = (props: any) => {
     rightofgovernace: [],
   }
 
+  const [baseURIState, setBaseURIState] = useState([])
+
   // Use this method call. Pass Ref in this method
   const executeScroll = (scrollRef: any) => {
     scrollToRef(elRefs.current[scrollRef])
   }
   // Use this method call. Pass Ref in this method
-  const pushPropertToBlockchain = async(_baseURI: any, UpgraderAddress: any, DefaultAdmin: any, treasuryAddress: any) => {
+  const pushPropertToBlockchain = async(_baseURI: any, UpgraderAddress: any, DefaultAdmin: any, treasuryAddress: any, __contractName: any, __description: any) => {
     const web3 = new Web3(window.ethereum)
     const factoryContractInstance = new web3.eth.Contract(QUESTFACTORYABI, QUEST_FACTORY_ADDRESS)
-    await factoryContractInstance.methods.deployPropertyContract(treasuryAddress, UpgraderAddress, DefaultAdmin, _baseURI, contractName, description).send() 
+    await factoryContractInstance.methods.deployPropertyContract(treasuryAddress, UpgraderAddress, DefaultAdmin, _baseURI, __contractName, __description).send({ from: HOA_ADMIN}) 
+  }
+  const triggerFunc = async() => {
+    const __baseURI = "https://ipfs.io/ipfs/QmdoAWg91kryPL8HS1zYHzzySUSvCeGRDr4P2vgeSe49PS";
+    const receipt = await pushPropertToBlockchain(__baseURI, UPGRADER, HOA_ADMIN, TREASURY_ADMIN, contractName, description)
+    console.log(receipt)
+  }
+  const triggerFunc2 = async() => {
+    fetchPropertiesFromBlockchain() 
   }
   //Fetch The Properties
   const fetchPropertiesFromBlockchain = async() => {
@@ -102,13 +113,15 @@ const AddPropertyForm = (props: any) => {
     const web3 = new Web3(window.ethereum)
     const factoryContractInstance = new web3.eth.Contract(QUESTFACTORYABI, QUEST_FACTORY_ADDRESS)
     const lengthOfProxyArray = await factoryContractInstance.methods.getProxyLength().call()
+    console.log(lengthOfProxyArray, "<---lengthOfProxyArray--->")
     for(let i = 0; i< lengthOfProxyArray; i++){
-      const propertyAddress = await factoryContractInstance.methods.proxies.call(i)
+      const propertyAddress = await factoryContractInstance.methods.proxies(i).call()
+      console.log(propertyAddress)
       const propertyContractInstance = new web3.eth.Contract(QUESTPROPERTYABI, propertyAddress)
-      const baseURI = await propertyContractInstance.methods.uri().call(1)
+      const baseURI = await propertyContractInstance.methods.uri(1).call()
       baseURIS.push(baseURI)
     }
-    return baseURIS
+    console.log(baseURIS)
   }
 
   const pushToBlockchain = async (_baseURI: any, TREASURY_ADMIN: any, _parentHash: any, PROPERTY_OWNER: any) => {
@@ -521,6 +534,26 @@ const AddPropertyForm = (props: any) => {
                       // disabled={!permission}
                     >
                       {loading ? <Spinner /> : 'Save & Publish'}
+                    </PrimaryButton>
+                    <PrimaryButton
+                      variant="contained"
+                      classes={{
+                        root: classes.saveAndReviewStyle,
+                      }}
+                      onClick={() => {triggerFunc()}}
+                      // disabled={!permission}
+                    >
+                      {loading ? <Spinner /> : 'Save Proprty Test'}
+                    </PrimaryButton>
+                    <PrimaryButton
+                      variant="contained"
+                      classes={{
+                        root: classes.saveAndReviewStyle,
+                      }}
+                      onClick={() => {triggerFunc2()}}
+                      // disabled={!permission}
+                    >
+                      {loading ? <Spinner /> : 'Check proxy URIS'}
                     </PrimaryButton>
                   </FormButtonGroup>
                 </SubmitContainer>

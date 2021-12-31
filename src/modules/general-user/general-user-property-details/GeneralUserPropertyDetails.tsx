@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { withRouter } from 'react-router'
+import { useParams, withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import {
   useStyles,
@@ -35,6 +35,7 @@ import TokenHolderTable from 'modules/treasury/treasury-details/components/Token
 import TransactionTable from 'modules/treasury/treasury-details/components/TransactionTable'
 
 const GeneralUserPropertyDetails = (props: any) => {
+  const params = useParams()
   const classes = useStyles()
   const [dataLoading, setDataLoading] = useState(false)
   const [expanded, setExpanded] = useState(false)
@@ -45,6 +46,7 @@ const GeneralUserPropertyDetails = (props: any) => {
   const [selectImg, setSelectImg] = useState('')
   const [image, setImage] = useState<any>('')
   const { userInfo, loggedIn } = props
+  console.log(params)
 
   const settings: any = {
     dots: false,
@@ -70,11 +72,15 @@ const GeneralUserPropertyDetails = (props: any) => {
   }
   useEffect(() => {
     const propertyId = props.match.params.propertyId
+    console.log(params)
+    console.log(propertyId)
     const getPropertyDetails = async () => {
       try {
         setDataLoading(true)
-        const res = await axios.get(`${apiBaseUrl}/properties/GetSingleProperty/${propertyId}`)
-      if (!!res && res.data) {
+        const res = await axios.get(`https://ipfs.io/ipfs/${propertyId}`)
+        console.log(res, 'res')
+
+        if (!!res && res.data) {
           const images = []
           const docs = []
           setPropertyInfo(res.data)
@@ -126,30 +132,16 @@ const GeneralUserPropertyDetails = (props: any) => {
     setImage(src)
   }
 
-
-
-  // const fetchProperties = async()=>{
-  //   const response = fetch('https://ipfs.io/ipfs/QmVNkMHuWsP4Awo3zxyRh2H2efCwwwUsjZMS2bzEoWcbrH');
-  //   return (await response).json()
-  // }
-
-  // useEffect(()=>{
-  //   (async()=>{
-  //     const response = await fetchProperties()
-  //     console.log(response);
-      
-  //   })()
-  // },[])
-
   return (
     <Box>
       <HeaderContainer>
         <HeaderPath>
+          {console.log(propertyInfo)}
           <span>Properties / Details</span> / {props.match.params.propertyId}
         </HeaderPath>
         <Grid container justify="space-between" spacing={2}>
           <Grid item>
-            <HeaderTitle>{propertyInfo?.propertyDetails ? propertyInfo.propertyDetails.PropertyName : ''}</HeaderTitle>
+            <HeaderTitle>{propertyInfo ? propertyInfo?.PropertyName : ''}</HeaderTitle>
           </Grid>
           <Grid item>
             {loggedIn ? (
@@ -172,26 +164,15 @@ const GeneralUserPropertyDetails = (props: any) => {
                 <Grid className={classes.infoContStyle} spacing={2}>
                   <Grid item className={classes.infoContSlider}>
                     <div className={classes.infoItemImages}>
-                      <img src={image ? image : demoImage} alt="" />
+                      <img src={propertyInfo?.propertyFiles?.propertyImages?.images[0]?.hash} alt="" />
                     </div>
                     <div className={classes.pointers}>
                       <Slider {...settings}>
-                        <div className={classes.activeItem}>
-                          <img src={demoImage} alt="" />{' '}
-                        </div>
-                        
-                        <div onClick={(e: any) => changeImage(e.target.src)}>
-                          <img src={signUpActive} alt="" />{' '}
-                        </div>
-                        <div onClick={(e: any) => changeImage(e.target.src)}>
-                          <img src={upArrow} alt="" />{' '}
-                        </div>
-                        <div onClick={(e: any) => changeImage(e.target.src)}>
-                          <img src={demoImage} alt="" />{' '}
-                        </div>
-                        <div onClick={(e: any) => changeImage(e.target.src)}>
-                          <img src={demoImage} alt="" />{' '}
-                        </div>
+                        {propertyInfo?.propertyFiles?.propertyImages?.images.map((image: any) => (
+                          <div className={classes.activeItem}>
+                            <img src={image?.hash} alt="" />
+                          </div>
+                        ))}
                       </Slider>
                     </div>
                   </Grid>
@@ -207,20 +188,20 @@ const GeneralUserPropertyDetails = (props: any) => {
                       </Box>
                       <TabPanel className={classes.tadWrapper} value="1">
                         <div className={classes.topHeading}>
-                          <InfoBoldTxt>{propertyInfo.propertyDetails.Address1!}</InfoBoldTxt>
+                          <InfoBoldTxt>{propertyInfo?.Address1!}</InfoBoldTxt>
                           <InfoLightTxt>
-                            {`${propertyInfo.propertyDetails.Address2!},
-                                ${propertyInfo.propertyDetails.State!},
-                                ${propertyInfo.propertyDetails.City!},
-                                ${propertyInfo.propertyDetails.Country!} 
-                                ${propertyInfo.propertyDetails.PostalCode!}
+                            {`${propertyInfo?.Address2!},
+                                ${propertyInfo?.State!},
+                                ${propertyInfo?.City!},
+                                ${propertyInfo?.Country!} 
+                                ${propertyInfo?.PostalCode!}
                               `}
                           </InfoLightTxt>
                         </div>
                         <div className={classes.tadListingRow}>
                           <Grid item>
                             <InfoLightTxt>Onboarding date</InfoLightTxt>
-                            <InfoBoldTxt>{formatExtendedDateString(propertyInfo.propertyDetails.CreatedAt)}</InfoBoldTxt>
+                            <InfoBoldTxt>{formatExtendedDateString(propertyInfo?.CreatedAt)}</InfoBoldTxt>
                           </Grid>
                           <Grid item>
                             <InfoLightTxt>Status</InfoLightTxt>
@@ -228,12 +209,12 @@ const GeneralUserPropertyDetails = (props: any) => {
                           </Grid>
                           <Grid item>
                             <InfoLightTxt>Estimated value</InfoLightTxt>
-                            <InfoBoldTxt>{currencyString(propertyInfo.propertyDetails.CurrentValue)}</InfoBoldTxt>
+                            <InfoBoldTxt>{currencyString(propertyInfo?.CurrentValue)}</InfoBoldTxt>
                           </Grid>
                         </div>
                         <TreasuryOwnerCont className={classes.ownerCont}>
                           <InfoLightTxt>Owner</InfoLightTxt>
-                          <InfoBoldTxt>{getFullName(propertyInfo.propertyDetails.Fname, propertyInfo.propertyDetails.Lname)}</InfoBoldTxt>
+                          <InfoBoldTxt>{getFullName(propertyInfo?.Fname, propertyInfo?.Lname)}</InfoBoldTxt>
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path
                               d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"
@@ -256,10 +237,12 @@ const GeneralUserPropertyDetails = (props: any) => {
                             <Tab label="Facts" value="2" />
                           </TabList>
                           <TabPanel value="1">
-                            <Features data={propertyInfo.propertyDetails} />
+                            {console.log(propertyInfo)
+                            }
+                            <Features data={propertyInfo} />
                           </TabPanel>
                           <TabPanel value="2">
-                            <RentalFacts data={propertyInfo.propertyDetails} />
+                            <RentalFacts data={propertyInfo} />
                           </TabPanel>
                         </TabContext>
                       </TabPanel>

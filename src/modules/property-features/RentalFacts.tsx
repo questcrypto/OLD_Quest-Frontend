@@ -23,7 +23,7 @@ const RentalFacts = (props: any) => {
 
             <span>Roof</span>
           </FeatureName>
-          <FeatureValue>{data.Roof}</FeatureValue>
+          <FeatureValue>{data?.Roof}</FeatureValue>
         </FeatureInfo>
         <FeatureInfo>
           <FeatureName>
@@ -31,28 +31,28 @@ const RentalFacts = (props: any) => {
 
             <span>Heating</span>
           </FeatureName>
-          <FeatureValue>{data.Heating}</FeatureValue>
+          <FeatureValue>{data?.Heating}</FeatureValue>
         </FeatureInfo>
         <FeatureInfo>
           <FeatureName>
             <img src={air} className={classes.featureImage} alt="" />
             <span>Air Conditioning</span>
           </FeatureName>
-          <FeatureValue>{data.AC}</FeatureValue>
+          <FeatureValue>{data?.AC}</FeatureValue>
         </FeatureInfo>
         <FeatureInfo>
           <FeatureName>
             <img src={floor} className={classes.featureImage} alt="" />
             <span>Floor</span>
           </FeatureName>
-          <FeatureValue>{data.Floor}</FeatureValue>
+          <FeatureValue>{data?.Floor}</FeatureValue>
         </FeatureInfo>
         <FeatureInfo>
           <FeatureName>
             <img src={windowImg} className={classes.featureImage} alt="" />
             <span>Window Covering</span>
           </FeatureName>
-          <FeatureValue>{data.WindowCovering}</FeatureValue>
+          <FeatureValue>{data?.WindowCovering.map((item:any)=><>{item}</>)}</FeatureValue>
         </FeatureInfo>
         <FeatureInfo>
           <FeatureName>
@@ -68,14 +68,14 @@ const RentalFacts = (props: any) => {
             <img src={pool} className={classes.featureImage} alt="" />
             <span>Pool</span>
           </FeatureName>
-          <FeatureValue>{data.Pool}</FeatureValue>
+          <FeatureValue>{data?.Pool}</FeatureValue>
         </FeatureInfo>
         <FeatureInfo>
           <FeatureName>
             <img src={pool} className={classes.featureImage} alt="" />
             <span>Pool Features</span>
           </FeatureName>
-          <FeatureValue>{data.PoolFeature}</FeatureValue>
+          <FeatureValue>{data?.PoolFeature?.map((item:any)=><>{item?.label}</>)}</FeatureValue>
         </FeatureInfo>
         <FeatureInfo>
           <FeatureName>
@@ -89,14 +89,14 @@ const RentalFacts = (props: any) => {
             <img src={land} className={classes.featureImage} alt="" />
             <span>Landscaping</span>
           </FeatureName>
-          <FeatureValue>{data.Landscaping}</FeatureValue>
+          <FeatureValue>{data?.Landscaping.map((item:any)=><>{item.label}</>)}</FeatureValue>
         </FeatureInfo>
         <FeatureInfo>
           <FeatureName>
             <img src={plot} className={classes.featureImage} alt="" />
             <span>Lot Facts</span>
           </FeatureName>
-          <FeatureValue>{`${data.Lotfacts} m2`}</FeatureValue>
+          <FeatureValue>{data?.Lotfacts}</FeatureValue>
         </FeatureInfo>
       </Grid>
     </Grid>

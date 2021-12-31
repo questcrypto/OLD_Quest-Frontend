@@ -11,6 +11,7 @@ import PropertiesOnboard from 'shared/properties-onboard/PropertiesOnboard'
 import PropertyCards from 'shared/components/property-cards'
 import { apiBaseUrl } from 'services/global-constant'
 import axios from 'axios'
+import Web3 from 'web3'
 import {
   getApproveProperties,
   getOnAuctionProperties,
@@ -22,14 +23,18 @@ import {
 import { refreshPublishedPropertiesList } from 'logic/api/ownerPropertiesServices'
 import FilterSideBar from 'modules/app/components/filtersidebar/FilterSideBar'
 import FilterButton from 'modules/app/components/filterbuttons/FilterButton'
+import { QUESTFACTORYABI } from 'modules/property-form/QuestFactoryABI'
+import { QUESTPROPERTYABI } from 'modules/property-form/QuestPropertiesABI'
+import { log } from 'console'
 
 const GeneralUserDashboard = (props: any) => {
   console.log('GeneralUserDashboard')
   const classes = useStyles()
+  const QUEST_FACTORY_ADDRESS = '0xacCc6efa277D21Fd2427915eC1F1c17043Aee305'
   // const [activeTab, setActiveTab] = useState('published')
   const [activeTab, setActiveTab] = useState('All')
   const [newPropertiesList, setNewPropertiesList] = useState<any>([])
-  const [newPropertyLoading, setNewPropertyLoading] = useState(false)
+  const [newPropertyLoading, setNewPropertyLoading] = useState(true)
   const [approvedProperties, setApprovedProperties] = useState<any>([])
   const [approvedLoading, setApprovedLoading] = useState(false)
   const [publishedProperties, setPublishedProperties] = useState<any>([])
@@ -43,25 +48,61 @@ const GeneralUserDashboard = (props: any) => {
   const [showFilterSideBar, setShowFilterSideBar] = useState(false)
   const [showButtonName, setShowButtonName] = useState<any>([])
   const [showPropertyList, setShowPropertyList] = useState<any>([])
+  const [hashValue, setHashValue] = useState<any>([])
   const { userInfo } = props
 
-  useEffect(() => {
-    getAllPropertiesList(setNewPropertiesList, setNewPropertiesList)
-    getApproveProperties(setApprovedLoading, setApprovedProperties)
-    getPublishedProperties(setPublishedLoading, setPublishedProperties)
-    getPreAuctionProperties(setPreAuctionLoading, setPreAuctionProperties)
-    getOnAuctionProperties(setOnAuctionLoading, setOnAuctionProperties)
-    getPostAuctionProperties(setPostAuctionLoading, setPostAuctionProperties)
-  }, [userInfo])
+  // useEffect(() => {
+  //   getAllPropertiesList(setNewPropertiesList, setNewPropertiesList)
+  //   getApproveProperties(setApprovedLoading, setApprovedProperties)
+  //   getPublishedProperties(setPublishedLoading, setPublishedProperties)
+  //   getPreAuctionProperties(setPreAuctionLoading, setPreAuctionProperties)
+  //   getOnAuctionProperties(setOnAuctionLoading, setOnAuctionProperties)
+  //   getPostAuctionProperties(setPostAuctionLoading, setPostAuctionProperties)
+  // }, [userInfo])
 
-  useEffect(()=>{
-   console.log(publishedProperties,"publishedProperties");
-   console.log(approvedProperties,"approvedProperties");
-   console.log(publishedProperties,"publishedProperties");
-   console.log(onAuctionProperties,"onAuctionProperties");
-   console.log(postAuctionProperties,"postAuctionProperties");
-  })
+  const triggerFunc2 = async () => {
+    fetchPropertiesFromBlockchain()
+  }
+  //Fetch The Properties
+  const fetchPropertiesFromBlockchain = async () => {
+    let baseURIS = []
+    const web3 = new Web3(window.ethereum)
+    const factoryContractInstance = new web3.eth.Contract(QUESTFACTORYABI, QUEST_FACTORY_ADDRESS)
+    const lengthOfProxyArray = await factoryContractInstance.methods.getProxyLength().call()
+    console.log(lengthOfProxyArray, '<---lengthOfProxyArray--->')
+    for (let i = 0; i < lengthOfProxyArray; i++) {
+      const propertyAddress = await factoryContractInstance.methods.proxies(i).call()
+      // console.log(propertyAddress)
+      const propertyContractInstance = new web3.eth.Contract(QUESTPROPERTYABI, propertyAddress)
+      const baseURI = await propertyContractInstance.methods.uri(1).call()
+      baseURIS.push(baseURI)
+    }
+    console.log(baseURIS, '<---Base URIs--->')
+    setHashValue(baseURIS)
+  }
+
+  useEffect(() => {
+    triggerFunc2()
+  }, [])
+
+  useEffect(() => {
+    const getHashProperites=async()=>{
+      const hashProperties = await Promise.all(
+        hashValue?.map(async (item:any) => {
+          return await axios.get(`${item}`).then((res: any) => {return {"item": res.data, "hash": item}})
+        })
+      )
+      console.log("hashProperties",hashProperties)
+      if(hashProperties.length > 0){
+    setNewPropertiesList(hashProperties)
+    setNewPropertyLoading(false)
+      }
+    }
+    getHashProperites()
+  }, [hashValue.length])
+
   //handlefiltersidebar
+
   const showFilterSidebar = () => {
     if (showFilterSideBar === true) {
       setShowFilterSideBar(false)
@@ -69,6 +110,9 @@ const GeneralUserDashboard = (props: any) => {
       setShowFilterSideBar(true)
     }
   }
+
+  useEffect(()=>{console.log(newPropertiesList);
+  },[newPropertiesList.length])
 
   const handleSearch = (event: any) => {
     const searchWord = event.target.value
@@ -83,6 +127,8 @@ const GeneralUserDashboard = (props: any) => {
     }
   }
 
+  console.log(activeTab , JSON.stringify(newPropertiesList));
+  
   return (
     <Grid>
       {/* <Grid container spacing={2} className={classes.headerStyle}>
@@ -145,7 +191,7 @@ const GeneralUserDashboard = (props: any) => {
         ) : (
           <>
             <div>
-              {activeTab === 'All' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} />}
+              {activeTab === 'All' && <PropertyCards list={newPropertiesList} dataLoading={newPropertyLoading} setNewPropertyLoading={setNewPropertyLoading}/>}
               {activeTab === 'new' && <PropertyCards list={[]} dataLoading={newPropertyLoading} />}
               {activeTab === 'approved' && <PropertyCards list={approvedProperties} dataLoading={approvedLoading} />}
               {activeTab === 'published' && (

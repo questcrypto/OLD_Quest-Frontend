@@ -110,9 +110,7 @@ export const lotFacts = [
     label: 'Interior Lot',
     value: 'Interior Lot',
   },
-
   { label: 'Corner Lot', value: 'Corner Lot' },
-
   { label: 'Flag Lot', value: 'Flag Lot' },
   { label: 'Cul-de-Sac Lot', value: 'Cul-de-Sac Lot' },
   { label: 'Key Lot', value: 'Key Lot' },
@@ -133,16 +131,16 @@ export const Landscaping = [
 ]
 
 export const RoomConstants = [
-  { label: '1', value: '1' },
-  { label: '2', value: '2' },
-  { label: '3', value: '3' },
-  { label: '4', value: '4' },
-  { label: '5', value: '5' },
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: 3 },
+  { label: '4', value: 4 },
+  { label: '5', value: 5 },
 ]
 
 export const BoolValue = [
-  { label: 'yes', value: 'yes' },
-  { label: 'no ', value: 'no' },
+  { label: 'yes', value: 1 },
+  { label: 'no ', value: 0 },
 ]
 
 export const RoofValues = [

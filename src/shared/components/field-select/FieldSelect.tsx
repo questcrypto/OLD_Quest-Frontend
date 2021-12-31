@@ -5,7 +5,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import { colors } from 'shared/styles/theme'
 import { TextWrappper } from '../styles'
-import Icon from '../chatIcon/Icon'
 import { IconButton, Tooltip } from '@material-ui/core'
 import Icons from '../chatIcon/infoIcon'
 
@@ -96,7 +95,7 @@ const FieldSelect = (props: any) => {
               <span className="tooltiptext">
                 For more details please visit<a href={props?.link} target='_blank'>Website</a>
               </span>
-              <Icon />
+              <Icons />
             </IconButton>
             )}
           </TextWrappper>

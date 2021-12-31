@@ -90,7 +90,7 @@ export const propertyFormSchema = Yup.object().shape({
   YearBuilt: Yup.date().max(new Date(Date.now()), 'date must be equal or less than current date ').required('Date is required'),
   Zoning: Yup.string().required('This field is required'),
   Landscaping: Yup.string().required('This field is required'),
-  Lotfacts: Yup.number().required('This field is required'),
+  Lotfacts: Yup.string().required('This field is required'),
 
   Address1: Yup.string().required('This field is required'),
   Address2: Yup.string().required('This field is required'),
@@ -150,7 +150,7 @@ export const propertyFormSchema = Yup.object().shape({
   Patio: Yup.string().required('This field is required'),
   Garage: Yup.string().required('This field is required'),
   Carpot: Yup.string().required('This field is required'),
-  ParkingSpace: Yup.number().integer().required('This field is required'),
+  ParkingSpace: Yup.string().required('This field is required'),
   FinBasmt: Yup.string().required('This field is required'),
   Basement: Yup.string().required('This field is required'),
   Driveway: Yup.string().required('This field is required'),

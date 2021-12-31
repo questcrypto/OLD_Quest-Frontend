@@ -335,9 +335,11 @@ const AddPropertyForm = (props: any) => {
       // const receipt = await pushToBlockchain(_baseURI, TREASURY_ADMIN, 0x10, PROPERTY_OWNER)
       // console.log(receipt)
       if (imageList.length > 0 && documentList.length > 0) {
+        console.log("calling above formdata");
         const formData = new FormData()
         const dataFiles = getFileData()
         for (const item of dataFiles) {
+          console.log(item, "Prince");
           formData.append('file', item)
         }
         const data = { ...values }
@@ -350,8 +352,10 @@ const AddPropertyForm = (props: any) => {
         // formData.append('IPFSHash', nftCid);
         console.log(formData, '<--formData--> calling')
         try {
+          console.log("waiting forapi call");
           setLoading(true)
-          await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
+          console.log("waiting forapi call");
+          // await axios.post(`${apiBaseUrl}/properties/Addproperties`, formData)
           // history.push(Paths.root)
           // history.push(Paths.dashboard)
           if (loggedIn) {

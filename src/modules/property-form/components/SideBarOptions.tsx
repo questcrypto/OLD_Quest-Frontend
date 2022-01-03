@@ -51,22 +51,22 @@ export const sideBarOptionData = [
   },
   {
     number: 11,
-    name: 'Right of Management (NFT)',
+    name: 'Right of Management',
     ref: 'rightOfEquityRef',
   },
   {
     number: 12,
-    name: 'Right of Income (NFT)',
+    name: 'Right of Income',
     ref: 'rightOfMaintenanceRef',
   },
   {
     number: 13,
-    name: 'Right of Equity(NFT)',
+    name: 'Right of Equity',
     ref: 'rightOfGovernenceRef',
   },
   {
     number: 14,
-    name: 'Right of Occupancy(NFT)',
+    name: 'Right of Occupancy',
     ref: 'rightOfPossesionRef',
   },
   {

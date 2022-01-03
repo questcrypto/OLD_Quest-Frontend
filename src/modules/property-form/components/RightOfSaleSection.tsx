@@ -67,7 +67,7 @@ const RightOfSaleSection = (props: any) => {
         <FormTitleNumber>14</FormTitleNumber>
       </Grid>
       <Grid item xs={10} container direction="column">
-        <FormTitle>Right of Occupancy(NFT)</FormTitle>
+        <FormTitle>Right of Occupancy</FormTitle>
         <Grid
           container
           spacing={3}

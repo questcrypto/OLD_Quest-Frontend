@@ -67,7 +67,7 @@ const RightOfGovernance = (props: any) => {
         <FormTitleNumber>15</FormTitleNumber>
       </Grid>
       <Grid item xs={10} container direction="column">
-        <FormTitle>Right of Governance (NFT)</FormTitle>
+        <FormTitle>Right of Governance</FormTitle>
         <Grid
           container
           spacing={3}

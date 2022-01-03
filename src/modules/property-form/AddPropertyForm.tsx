@@ -350,7 +350,7 @@ const AddPropertyForm = (props: any) => {
         formData.append('PropertyDocs', JSON.stringify(documentData))
         formData.append('FloorDetails', JSON.stringify(values.FloorDetails))
         // formData.append('IPFSHash', nftCid);
-        console.log(formData, '<--formData--> calling')
+        console.log(imageData, '<--formData--> calling')
         try {
           console.log("waiting forapi call");
           setLoading(true)
